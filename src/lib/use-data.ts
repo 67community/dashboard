@@ -126,7 +126,12 @@ export function useData(refreshIntervalMs = 120_000) {
 
   const fetch_ = useCallback(async () => {
     try {
-      const res = await fetch("/api/data", { cache: "no-store" })
+      // Try API route first (reads live file on Mac mini dev)
+      // Falls back to /data.json (Vercel static public/ file)
+      let res = await fetch("/api/data", { cache: "no-store" })
+      if (!res.ok) {
+        res = await fetch("/data.json", { cache: "no-store" })
+      }
       if (!res.ok) throw new Error(`HTTP ${res.status}`)
       const json: DashboardData = await res.json()
       setData(json)
