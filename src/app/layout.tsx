@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import "./globals.css"
 import { TopBar } from "@/components/layout/top-bar"
+import { DataProvider } from "@/lib/data-context"
 
 const inter = Inter({
   subsets: ["latin"],
@@ -16,6 +17,19 @@ export const metadata: Metadata = {
   },
 }
 
+// Twitter widgets script — loaded async, harmless if blocked
+const TWITTER_WIDGET_SCRIPT = `
+window.twttr = (function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0], t = window.twttr || {};
+  if (d.getElementById(id)) return t;
+  js = d.createElement(s); js.id = id;
+  js.src = "https://platform.twitter.com/widgets.js";
+  fjs.parentNode.insertBefore(js, fjs);
+  t._e = []; t.ready = function(f) { t._e.push(f); };
+  return t;
+}(document, "script", "twitter-wjs"));
+`
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -24,10 +38,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable} antialiased`}>
-        <TopBar />
-        <main className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          {children}
-        </main>
+        {/* eslint-disable-next-line @next/next/no-sync-scripts */}
+        <script dangerouslySetInnerHTML={{ __html: TWITTER_WIDGET_SCRIPT }} />
+        <DataProvider>
+          <TopBar />
+          <main className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            {children}
+          </main>
+        </DataProvider>
       </body>
     </html>
   )
