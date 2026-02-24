@@ -2,23 +2,23 @@ import { NextResponse } from "next/server"
 import fs from "fs"
 import path from "path"
 
-// Path to the existing data.json from the old dashboard (kept in sync by update-data.py / GitHub Actions)
-const DATA_PATH = path.join(
-  process.env.DATA_JSON_PATH ||
-  "/Users/oscarbrendon/.openclaw/workspace/mission-control/data.json"
-)
+// Priority: env var → local workspace path → public/ (bundled in repo)
+const PATHS = [
+  process.env.DATA_JSON_PATH,
+  "/Users/oscarbrendon/.openclaw/workspace/mission-control/data.json",
+  path.join(process.cwd(), "public", "data.json"),
+].filter(Boolean) as string[]
 
 export async function GET() {
-  try {
-    const raw = fs.readFileSync(DATA_PATH, "utf-8")
-    const data = JSON.parse(raw)
-    return NextResponse.json(data, {
-      headers: {
-        "Cache-Control": "no-store",
-        "Access-Control-Allow-Origin": "*",
-      },
-    })
-  } catch (err) {
-    return NextResponse.json({ error: "Could not read data.json", detail: String(err) }, { status: 500 })
+  for (const p of PATHS) {
+    try {
+      if (!fs.existsSync(p)) continue
+      const raw = fs.readFileSync(p, "utf-8")
+      const data = JSON.parse(raw)
+      return NextResponse.json(data, {
+        headers: { "Cache-Control": "no-store, max-age=0" },
+      })
+    } catch {}
   }
+  return NextResponse.json({ error: "data.json not found" }, { status: 500 })
 }
