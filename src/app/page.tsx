@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import { TokenHealthCard }     from "@/components/cards/token-health"
 import { SocialPulseCard }     from "@/components/cards/social-pulse"
 import { CommunityCard }       from "@/components/cards/community"
@@ -18,23 +19,30 @@ export default function Dashboard() {
       <div style={{ marginBottom:40 }}>
         <div style={{ display:"flex", alignItems:"flex-start", justifyContent:"space-between", gap:24 }}>
           {/* Left */}
-          <div>
-            <p style={{ fontSize:"0.6875rem", fontWeight:700, letterSpacing:"0.09em", textTransform:"uppercase", color:"#C8820A", marginBottom:10 }}>
-              The Official 67 Coin · Operations
-            </p>
-            <h1 style={{
-              fontSize:"clamp(1.75rem, 4vw, 2.375rem)",
-              fontWeight:900,
-              letterSpacing:"-0.045em",
-              color:"#09090B",
-              lineHeight:1.05,
-              margin:0,
-            }}>
-              Mission Control
-            </h1>
-            <p style={{ fontSize:"0.9375rem", color:"#71717A", fontWeight:500, marginTop:8, lineHeight:1.5 }}>
-              Everything $67 in one place — tap any card to expand.
-            </p>
+          <div style={{ display:"flex", alignItems:"flex-start", gap:18 }}>
+            {/* Logo */}
+            <div style={{ width:56, height:56, borderRadius:"50%", overflow:"hidden", flexShrink:0, boxShadow:"0 4px 20px rgba(245,166,35,0.35)", marginTop:4 }}>
+              <Image src="/logo.png" alt="67" width={56} height={56}
+                style={{ width:56, height:56, objectFit:"cover", borderRadius:"50%" }} priority />
+            </div>
+            <div>
+              <p style={{ fontSize:"0.6875rem", fontWeight:700, letterSpacing:"0.09em", textTransform:"uppercase", color:"#C8820A", marginBottom:10 }}>
+                The Official 67 Coin · Operations
+              </p>
+              <h1 style={{
+                fontSize:"clamp(1.75rem, 4vw, 2.375rem)",
+                fontWeight:900,
+                letterSpacing:"-0.045em",
+                color:"#09090B",
+                lineHeight:1.05,
+                margin:0,
+              }}>
+                Mission Control
+              </h1>
+              <p style={{ fontSize:"0.9375rem", color:"#71717A", fontWeight:500, marginTop:8, lineHeight:1.5 }}>
+                Everything $67 in one place — tap any card to expand.
+              </p>
+            </div>
           </div>
 
           {/* Live price chip */}
@@ -111,13 +119,13 @@ export default function Dashboard() {
             </p>
           </div>
 
-          {/* Big 67 circle */}
-          <div className="gold-gradient hidden-mobile" style={{
-            width:104, height:104, borderRadius:"50%", flexShrink:0,
-            display:"flex", alignItems:"center", justifyContent:"center",
-            boxShadow:"0 0 60px rgba(245,166,35,0.5), 0 0 120px rgba(245,166,35,0.15)",
+          {/* Logo */}
+          <div className="hidden-mobile" style={{
+            width:108, height:108, borderRadius:"50%", flexShrink:0, overflow:"hidden",
+            boxShadow:"0 0 60px rgba(245,166,35,0.55), 0 0 130px rgba(245,166,35,0.18)",
           }}>
-            <span style={{ fontSize:"2.75rem", fontWeight:900, color:"#000", letterSpacing:"-0.06em" }}>67</span>
+            <Image src="/logo.png" alt="67" width={108} height={108}
+              style={{ width:108, height:108, objectFit:"cover", borderRadius:"50%" }} />
           </div>
         </div>
       </div>

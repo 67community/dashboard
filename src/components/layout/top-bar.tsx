@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { usePathname } from "next/navigation"
 import { RefreshCw, AlertTriangle } from "lucide-react"
 import { TeamAvatarGroup } from "@/components/team/team-avatar"
@@ -44,13 +45,18 @@ export function TopBar() {
 
             {/* Logo */}
             <div style={{ display:"flex", alignItems:"center", gap:12 }}>
-              <div className="gold-gradient" style={{
-                width:32, height:32, borderRadius:"50%",
-                display:"flex", alignItems:"center", justifyContent:"center",
-                boxShadow:"0 2px 12px rgba(245,166,35,0.45)",
-                flexShrink:0,
+              <div style={{
+                width:34, height:34, borderRadius:"50%", flexShrink:0, overflow:"hidden",
+                boxShadow:"0 2px 14px rgba(245,166,35,0.50)",
               }}>
-                <span style={{ fontSize:"0.875rem", fontWeight:900, color:"#000" }}>67</span>
+                <Image
+                  src="/logo.png"
+                  alt="67 Logo"
+                  width={34}
+                  height={34}
+                  style={{ width:34, height:34, objectFit:"cover", borderRadius:"50%" }}
+                  priority
+                />
               </div>
               <span style={{ fontSize:"0.875rem", fontWeight:700, color:"rgba(255,255,255,0.88)", letterSpacing:"-0.01em" }}>
                 Mission Control
