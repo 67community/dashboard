@@ -1,87 +1,80 @@
 "use client"
 
-import { Bot, CheckCircle2, XCircle } from "lucide-react"
+import { Bot } from "lucide-react"
 import { DashboardCard } from "@/components/ui/dashboard-card"
 import { useAppData } from "@/lib/data-context"
 
-function timeAgo(ts: string): string {
-  if (!ts || ts === "unknown") return "unknown"
+function ago(ts: string): string {
+  if (!ts || ts === "unknown") return "—"
   try {
-    const secs = Math.floor((Date.now() - new Date(ts).getTime()) / 1000)
-    if (secs < 60) return `${secs}s ago`
-    if (secs < 3600) return `${Math.floor(secs / 60)}m ago`
-    if (secs < 86400) return `${Math.floor(secs / 3600)}h ago`
-    return `${Math.floor(secs / 86400)}d ago`
-  } catch { return ts }
+    const s = Math.floor((Date.now() - new Date(ts).getTime()) / 1000)
+    if (s < 60) return `${s}s`
+    if (s < 3600) return `${Math.floor(s/60)}m`
+    if (s < 86400) return `${Math.floor(s/3600)}h`
+    return `${Math.floor(s/86400)}d`
+  } catch { return "—" }
 }
 
 export function AgentStatusCard() {
   const { data } = useAppData()
   const bots = data?.agents ?? []
-  const running = bots.filter((b) => b.status === "green").length
+  const on = bots.filter(b => b.status === "green").length
+  const total = bots.length
+  const allGood = on === total && total > 0
 
   const collapsed = (
-    <div className="space-y-2.5 mt-1">
-      <div className="flex items-center justify-between mb-1">
-        <span className="text-sm text-gray-500">{running}/{bots.length} bots active</span>
-        <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${
-          running === bots.length && bots.length > 0
-            ? "bg-green-50 text-green-700"
-            : running === 0 && bots.length > 0
-            ? "bg-red-50 text-red-700"
-            : "bg-amber-50 text-amber-700"
-        }`}>
-          {bots.length === 0 ? "Loading..." : running === bots.length ? "All Systems Go" : `${bots.length - running} offline`}
-        </span>
-      </div>
-      {bots.slice(0, 5).map((bot) => (
-        <div key={bot.name} className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className={`w-2 h-2 rounded-full ${bot.status === "green" ? "bg-green-400" : "bg-red-400"}`} />
-            <span className="text-xs text-gray-600">{bot.name}</span>
+    <div className="space-y-3">
+      <div className="flex items-center justify-between">
+        <div>
+          <div className="flex items-end gap-2">
+            <span className="metric-value">{total === 0 ? "—" : `${on}/${total}`}</span>
           </div>
-          <span className="text-xs text-gray-400">{timeAgo(bot.last_run)}</span>
+          <p className="metric-label mt-1">Bots Active</p>
         </div>
-      ))}
+        <div className={`px-3 py-1.5 rounded-2xl text-xs font-bold ${allGood ? "bg-green-100 text-green-700" : total === 0 ? "bg-gray-100 text-gray-500" : "bg-red-100 text-red-600"}`}>
+          {total === 0 ? "Loading" : allGood ? "All Systems Go ✓" : `${total - on} Offline`}
+        </div>
+      </div>
+      <div className="space-y-2">
+        {bots.slice(0, 5).map((b) => (
+          <div key={b.name} className="flex items-center gap-2.5">
+            <div className={`w-2 h-2 rounded-full flex-shrink-0 ${b.status === "green" ? "bg-green-400 dot-green" : "bg-red-400"}`} />
+            <span className="text-xs text-[#4A4035] font-medium flex-1">{b.name}</span>
+            <span className="text-xs text-[#C8C0B4] font-medium">{ago(b.last_run)}</span>
+          </div>
+        ))}
+      </div>
     </div>
   )
 
   const expanded = (
     <div className="space-y-4">
+      {/* Summary */}
       <div className="grid grid-cols-2 gap-3">
-        <div className="bg-green-50 rounded-2xl p-4 border border-green-100">
-          <CheckCircle2 className="w-5 h-5 text-green-500 mb-2" />
-          <p className="text-2xl font-bold text-green-700">{running}</p>
-          <p className="text-xs text-green-600 mt-0.5">Running</p>
+        <div className="bg-green-50 rounded-2xl p-4 border border-green-200">
+          <p className="text-3xl font-black text-green-700">{on}</p>
+          <p className="text-xs font-bold text-green-600 mt-0.5 tracking-widest uppercase">Running</p>
         </div>
-        <div className={`rounded-2xl p-4 border ${bots.length - running > 0 ? "bg-red-50 border-red-100" : "bg-gray-50 border-gray-100"}`}>
-          <XCircle className={`w-5 h-5 mb-2 ${bots.length - running > 0 ? "text-red-400" : "text-gray-300"}`} />
-          <p className={`text-2xl font-bold ${bots.length - running > 0 ? "text-red-700" : "text-gray-400"}`}>
-            {bots.length - running}
-          </p>
-          <p className={`text-xs mt-0.5 ${bots.length - running > 0 ? "text-red-600" : "text-gray-400"}`}>Offline</p>
+        <div className={`rounded-2xl p-4 border ${total - on > 0 ? "bg-red-50 border-red-200" : "bg-[#F2EDE4] border-[#DDD7CC]"}`}>
+          <p className={`text-3xl font-black ${total - on > 0 ? "text-red-600" : "text-[#C8C0B4]"}`}>{total - on}</p>
+          <p className={`text-xs font-bold mt-0.5 tracking-widest uppercase ${total - on > 0 ? "text-red-500" : "text-[#C8C0B4]"}`}>Offline</p>
         </div>
       </div>
 
-      <div className="bg-gray-50 rounded-2xl p-4 space-y-2.5">
-        {bots.map((bot) => (
-          <div key={bot.name} className="flex items-center justify-between bg-white rounded-xl px-4 py-3 shadow-sm">
-            <div className="flex items-center gap-3">
-              <div className={`w-2.5 h-2.5 rounded-full ${
-                bot.status === "green"
-                  ? "bg-green-400 shadow-[0_0_6px_2px_rgba(74,222,128,0.4)]"
-                  : "bg-red-400"
-              }`} />
-              <div>
-                <p className="text-sm font-semibold text-gray-800">{bot.name}</p>
-                <p className="text-xs text-gray-400">{bot.schedule}</p>
-              </div>
+      {/* Bot list */}
+      <div className="space-y-2">
+        {bots.map((b) => (
+          <div key={b.name} className="flex items-center gap-3 bg-white rounded-2xl px-4 py-3.5 border border-[#EDE8DF]">
+            <div className={`w-3 h-3 rounded-full flex-shrink-0 ${b.status === "green" ? "bg-green-400 dot-green" : "bg-red-400"}`} />
+            <div className="flex-1">
+              <p className="text-sm font-bold text-[#0D0D0D]">{b.name}</p>
+              <p className="text-xs text-[#9A9082]">{b.schedule}</p>
             </div>
             <div className="text-right">
-              <p className={`text-xs font-medium ${bot.status === "green" ? "text-green-600" : "text-red-500"}`}>
-                {bot.status === "green" ? "Running" : "Offline"}
+              <p className={`text-xs font-bold ${b.status === "green" ? "text-green-600" : "text-red-500"}`}>
+                {b.status === "green" ? "● Running" : "● Offline"}
               </p>
-              <p className="text-xs text-gray-400">{timeAgo(bot.last_run)}</p>
+              <p className="text-xs text-[#C8C0B4]">{ago(b.last_run)} ago</p>
             </div>
           </div>
         ))}
@@ -91,6 +84,7 @@ export function AgentStatusCard() {
 
   return (
     <DashboardCard title="Agent Status" icon={<Bot className="w-4 h-4" />}
-      accentColor="#10b981" collapsed={collapsed} expanded={expanded} />
+      accentColor="#10B981" collapsed={collapsed} expanded={expanded}
+      badge={allGood ? "ALL GO" : undefined} />
   )
 }
