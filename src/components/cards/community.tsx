@@ -7,30 +7,35 @@ import { useAppData } from "@/lib/data-context"
 export function CommunityCard() {
   const { data } = useAppData()
   const c = data?.community
-  const m = c?.discord_members ?? 0
+  const members = c?.discord_members ?? 0
+  const fmtM = members >= 1000 ? `${(members/1000).toFixed(1)}K` : members.toLocaleString()
+  const goal = 10000
+  const pct = Math.min((members / goal) * 100, 100)
 
   const collapsed = (
-    <div className="space-y-5">
-      <div className="flex items-end justify-between">
+    <div style={{ display:"flex", flexDirection:"column", gap:20 }}>
+      {/* Hero */}
+      <div style={{ display:"flex", alignItems:"flex-end", justifyContent:"space-between" }}>
         <div>
-          <p className="display-number">{m >= 1000 ? `${(m/1000).toFixed(1)}K` : m.toLocaleString()}</p>
-          <p className="display-label mt-1.5">Discord Members</p>
+          <p className="hero-label" style={{ marginBottom:6 }}>Discord Members</p>
+          <p className="hero-number">{fmtM}</p>
         </div>
-        <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-2xl"
-          style={{ background: "#E8FBF0" }}>
-          <span className="dot-live w-2 h-2 inline-block" />
-          <span className="text-xs font-bold" style={{ color: "#1A8743" }}>113 online</span>
+        <div style={{ display:"flex", alignItems:"center", gap:6, background:"#ECFDF5", padding:"6px 12px", borderRadius:99 }}>
+          <span className="dot-on" style={{ width:7, height:7 }} />
+          <span style={{ fontSize:"0.75rem", fontWeight:700, color:"#059669" }}>113 online</span>
         </div>
       </div>
-      <div className="grid grid-cols-3 gap-2">
+
+      {/* 3 stats */}
+      <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:8 }}>
         {[
-          { l: "New 24h",   v: String(c?.new_joins_24h ?? "—") },
-          { l: "Active 7d", v: (c?.active_7d ?? 0) >= 1000 ? `${((c?.active_7d??0)/1000).toFixed(1)}K` : String(c?.active_7d ?? "—") },
-          { l: "Telegram",  v: (c?.telegram_members ?? 0) >= 1000 ? `${((c?.telegram_members??0)/1000).toFixed(1)}K` : String(c?.telegram_members ?? "—") },
-        ].map(x => (
-          <div key={x.l} className="stat-pill text-center">
-            <p className="text-lg font-black text-[#111110] tracking-tight">{x.v}</p>
-            <p className="display-label mt-0.5">{x.l}</p>
+          { label:"New 24h",   value: String(c?.new_joins_24h ?? "—") },
+          { label:"Active 7d", value: (c?.active_7d ?? 0) >= 1000 ? `${((c?.active_7d??0)/1000).toFixed(1)}K` : String(c?.active_7d ?? "—") },
+          { label:"Telegram",  value: (c?.telegram_members ?? 0) >= 1000 ? `${((c?.telegram_members??0)/1000).toFixed(1)}K` : String(c?.telegram_members ?? "—") },
+        ].map(s => (
+          <div key={s.label} className="inset-cell" style={{ textAlign:"center" }}>
+            <p className="metric-md">{s.value}</p>
+            <p className="metric-label">{s.label}</p>
           </div>
         ))}
       </div>
@@ -38,52 +43,56 @@ export function CommunityCard() {
   )
 
   const expanded = (
-    <div className="space-y-5">
-      {/* Big number */}
-      <div className="rounded-2xl p-5 text-center"
-        style={{ background: "linear-gradient(135deg, #5865F2, #7289DA)" }}>
-        <p className="display-label text-white/50 mb-2">Discord Members</p>
-        <p style={{ fontSize: "3.5rem", fontWeight: 900, color: "white", letterSpacing: "-0.05em", lineHeight: 1 }}>
-          {m >= 1000 ? `${(m/1000).toFixed(1)}K` : m.toLocaleString()}
-        </p>
-        <div className="flex items-center justify-center gap-1.5 mt-3">
-          <span className="dot-live w-2.5 h-2.5 inline-block" style={{ background: "#43B581" }} />
-          <span className="text-sm font-semibold text-white/80">113 members online now</span>
+    <div style={{ display:"flex", flexDirection:"column", gap:16 }}>
+      {/* Big Discord block */}
+      <div style={{ background:"linear-gradient(135deg, #5865F2, #7289DA)", borderRadius:16, padding:"24px 20px", textAlign:"center" }}>
+        <p className="hero-label" style={{ color:"rgba(255,255,255,0.5)", marginBottom:10 }}>Discord Members</p>
+        <p style={{ fontSize:"4rem", fontWeight:900, color:"#fff", letterSpacing:"-0.055em", lineHeight:1 }}>{fmtM}</p>
+        <div style={{ display:"flex", alignItems:"center", justifyContent:"center", gap:8, marginTop:10 }}>
+          <span className="dot-on" style={{ background:"#43B581" }} />
+          <span style={{ fontSize:"0.875rem", fontWeight:600, color:"rgba(255,255,255,0.75)" }}>113 members online</span>
         </div>
       </div>
 
-      {/* Stats grid */}
-      <div className="grid grid-cols-2 gap-2.5">
+      {/* Stats 2×2 */}
+      <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8 }}>
         {[
-          { l: "New Joins 24h",  v: String(c?.new_joins_24h ?? "—"),  bg: "#EFF6FF", tc: "#1D4ED8" },
-          { l: "Active 7d",      v: (c?.active_7d??0).toLocaleString(), bg: "#F0FDF4", tc: "#15803D" },
-          { l: "Telegram",       v: (c?.telegram_members??0).toLocaleString(), bg: "#F0F9FF", tc: "#0369A1" },
-          { l: "CG Watchlist",   v: (c?.watchlist_count??0).toLocaleString(), bg: "#FFF7ED", tc: "#C2410C" },
-        ].map(x => (
-          <div key={x.l} className="rounded-2xl p-4" style={{ background: x.bg }}>
-            <p className="text-2xl font-black tracking-tight" style={{ color: x.tc }}>{x.v}</p>
-            <p className="text-xs font-semibold mt-0.5" style={{ color: x.tc, opacity: 0.7 }}>{x.l}</p>
+          { label:"New Joins 24h", value: String(c?.new_joins_24h ?? "—"), bg:"#EFF6FF", color:"#2563EB" },
+          { label:"Active 7d",     value: (c?.active_7d??0).toLocaleString(), bg:"#ECFDF5", color:"#059669" },
+          { label:"Telegram",      value: (c?.telegram_members??0).toLocaleString(), bg:"#F0F9FF", color:"#0284C7" },
+          { label:"CG Watchlist",  value: (c?.watchlist_count??0).toLocaleString(), bg:"#FFF7ED", color:"#EA580C" },
+        ].map(s => (
+          <div key={s.label} style={{ background:s.bg, borderRadius:12, padding:"14px 16px" }}>
+            <p style={{ fontSize:"1.5rem", fontWeight:800, letterSpacing:"-0.04em", color:s.color, lineHeight:1 }}>{s.value}</p>
+            <p style={{ fontSize:"0.6875rem", fontWeight:600, color:s.color, opacity:0.65, marginTop:4 }}>{s.label}</p>
           </div>
         ))}
       </div>
 
-      {/* Growth bar */}
-      <div className="stat-pill">
-        <div className="flex justify-between items-center mb-3">
-          <p className="display-label">Goal: 10,000 Discord Members</p>
-          <span className="text-sm font-black" style={{ color: "#5865F2" }}>{((m/10000)*100).toFixed(1)}%</span>
+      {/* Goal progress */}
+      <div className="inset-cell">
+        <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:10 }}>
+          <p className="hero-label">Goal: 10,000 Members</p>
+          <span style={{ fontSize:"0.875rem", fontWeight:800, color:"#5865F2" }}>{pct.toFixed(1)}%</span>
         </div>
-        <div className="progress-track h-3">
-          <div className="progress-fill h-3" style={{ width: `${Math.min((m/10000)*100,100)}%`, background: "linear-gradient(90deg, #5865F2, #7289DA)" }} />
+        <div className="prog-track" style={{ height:10 }}>
+          <div className="prog-fill" style={{ height:10, width:`${pct}%`, background:"linear-gradient(90deg,#5865F2,#7289DA)" }} />
         </div>
-        <p className="text-xs text-[#6B7280] mt-2">{(10000-m).toLocaleString()} members to go</p>
+        <p style={{ fontSize:"0.75rem", color:"#A1A1AA", marginTop:8 }}>
+          {(goal - members).toLocaleString()} members to go
+        </p>
       </div>
     </div>
   )
 
   return (
-    <DashboardCard title="Community" subtitle="Discord · Telegram"
-      icon={<Users className="w-[18px] h-[18px]" />}
-      accentColor="#5865F2" collapsed={collapsed} expanded={expanded} />
+    <DashboardCard
+      title="Community"
+      subtitle="Discord · Telegram"
+      icon={<Users style={{ width:16, height:16 }} />}
+      accentColor="#5865F2"
+      collapsed={collapsed}
+      expanded={expanded}
+    />
   )
 }

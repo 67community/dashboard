@@ -7,96 +7,89 @@ import { Task, Priority, Category } from "@/lib/types"
 import { TEAM_MEMBERS } from "@/lib/mock-data"
 import { TeamAvatar } from "@/components/team/team-avatar"
 
-const PRIORITY_STYLES: Record<Priority, string> = {
-  Low: "bg-[#F2F2F3] text-[#6B7280]",
-  Medium: "bg-blue-100 text-blue-700",
-  High: "bg-orange-100 text-orange-700",
-  Urgent: "bg-red-100 text-red-700",
+const PRIORITY: Record<Priority, { bg:string; color:string }> = {
+  Low:    { bg:"#F4F4F5", color:"#71717A" },
+  Medium: { bg:"#EFF6FF", color:"#2563EB" },
+  High:   { bg:"#FFF7ED", color:"#C2410C" },
+  Urgent: { bg:"#FEF2F2", color:"#DC2626" },
+}
+const CATEGORY: Record<Category, { bg:string; color:string }> = {
+  Website: { bg:"#F5F3FF", color:"#7C3AED" },
+  Discord: { bg:"#EEF2FF", color:"#4338CA" },
+  Content: { bg:"#FDF2F8", color:"#BE185D" },
+  Token:   { bg:"#FFFBEB", color:"#D97706" },
+  Merch:   { bg:"#F0FDFA", color:"#0F766E" },
+  Design:  { bg:"#FFF1F2", color:"#BE123C" },
+  Other:   { bg:"#F4F4F5", color:"#71717A" },
 }
 
-const CATEGORY_STYLES: Record<Category, string> = {
-  Website: "bg-violet-100 text-violet-700",
-  Discord: "bg-indigo-100 text-indigo-700",
-  Content: "bg-pink-100 text-pink-700",
-  Token: "bg-amber-100 text-amber-700",
-  Merch: "bg-teal-100 text-teal-700",
-  Design: "bg-rose-100 text-rose-700",
-  Other: "bg-[#F2F2F3] text-[#6B7280]",
-}
+interface Props { task: Task; onOpen: (task: Task) => void; isDragOverlay?: boolean }
 
-interface TaskCardProps {
-  task: Task
-  onOpen: (task: Task) => void
-  isDragOverlay?: boolean
-}
-
-export function TaskCard({ task, onOpen, isDragOverlay = false }: TaskCardProps) {
-  const {
-    attributes,
-    listeners,
-    setNodeRef,
-    transform,
-    transition,
-    isDragging,
-  } = useSortable({ id: task.id })
-
-  const style = {
-    transform: CSS.Transform.toString(transform),
-    transition,
-  }
-
-  const assignee = TEAM_MEMBERS.find((m) => m.id === task.assigneeId)
-  const doneSubtasks = task.subtasks.filter((s) => s.done).length
+export function TaskCard({ task, onOpen, isDragOverlay = false }: Props) {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: task.id })
+  const assignee = TEAM_MEMBERS.find(m => m.id === task.assigneeId)
+  const doneSubtasks = task.subtasks.filter(s => s.done).length
+  const P = PRIORITY[task.priority]
+  const C = CATEGORY[task.category]
 
   return (
     <div
       ref={setNodeRef}
-      style={style}
-      className={`bg-[#FFFFFF] rounded-2xl border border-[rgba(0,0,0,0.05)] p-3.5 shadow-sm group cursor-pointer select-none
-        ${isDragging ? "opacity-40" : ""}
-        ${isDragOverlay ? "drag-overlay shadow-xl" : "hover:border-[rgba(0,0,0,0.10)] hover:shadow-md transition-all"}
-      `}
+      style={{ transform: CSS.Transform.toString(transform), transition }}
       onClick={() => onOpen(task)}
     >
-      {/* Drag handle + title row */}
-      <div className="flex items-start gap-2">
-        <button
-          {...attributes}
-          {...listeners}
-          className="mt-0.5 p-0.5 opacity-0 group-hover:opacity-40 hover:!opacity-80 transition-opacity cursor-grab active:cursor-grabbing flex-shrink-0"
-          onClick={(e) => e.stopPropagation()}
-        >
-          <GripVertical className="w-3.5 h-3.5 text-[#9CA3AF]" />
-        </button>
-        <p className="text-sm font-medium text-[#1F2937] leading-snug flex-1">{task.title}</p>
-      </div>
-
-      {/* Badges */}
-      <div className="flex flex-wrap gap-1.5 mt-2.5 ml-5">
-        <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${PRIORITY_STYLES[task.priority]}`}>
-          {task.priority}
-        </span>
-        <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${CATEGORY_STYLES[task.category]}`}>
-          {task.category}
-        </span>
-      </div>
-
-      {/* Footer */}
-      <div className="flex items-center justify-between mt-3 ml-5">
-        <div className="flex items-center gap-3">
-          {task.subtasks.length > 0 && (
-            <span className="text-xs text-[#9CA3AF]">
-              ✓ {doneSubtasks}/{task.subtasks.length}
-            </span>
-          )}
-          {task.dueDate && (
-            <div className="flex items-center gap-1 text-xs text-[#9CA3AF]">
-              <Calendar className="w-3 h-3" />
-              {new Date(task.dueDate).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
-            </div>
-          )}
+      <div style={{
+        background:"#FFFFFF",
+        borderRadius:14,
+        border:"1px solid rgba(0,0,0,0.06)",
+        padding:"14px 14px",
+        boxShadow:"0 1px 4px rgba(0,0,0,0.04)",
+        cursor:"pointer",
+        opacity: isDragging ? 0.4 : 1,
+        transition:"box-shadow 0.15s, border-color 0.15s",
+        ...(isDragOverlay ? { boxShadow:"0 16px 40px rgba(0,0,0,0.14)", transform:"rotate(1.5deg) scale(1.03)" } : {}),
+      }}
+        onMouseEnter={e => { if (!isDragging) { (e.currentTarget as HTMLDivElement).style.boxShadow="0 4px 16px rgba(0,0,0,0.08)"; (e.currentTarget as HTMLDivElement).style.borderColor="rgba(0,0,0,0.10)" }}}
+        onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.boxShadow="0 1px 4px rgba(0,0,0,0.04)"; (e.currentTarget as HTMLDivElement).style.borderColor="rgba(0,0,0,0.06)"}}
+      >
+        {/* Grip + title */}
+        <div style={{ display:"flex", alignItems:"flex-start", gap:6 }}>
+          <button
+            {...attributes} {...listeners}
+            onClick={e => e.stopPropagation()}
+            style={{ marginTop:2, padding:2, background:"none", border:"none", cursor:"grab", flexShrink:0, opacity:0.3, color:"#A1A1AA" }}>
+            <GripVertical style={{ width:13, height:13 }} />
+          </button>
+          <p style={{ fontSize:"0.8125rem", fontWeight:600, color:"#09090B", lineHeight:1.5, flex:1 }}>{task.title}</p>
         </div>
-        {assignee && <TeamAvatar member={assignee} size="sm" showTooltip />}
+
+        {/* Tags */}
+        <div style={{ display:"flex", flexWrap:"wrap", gap:6, marginTop:10, marginLeft:19 }}>
+          <span style={{ fontSize:"0.6875rem", fontWeight:600, padding:"2px 8px", borderRadius:99, background:P.bg, color:P.color }}>
+            {task.priority}
+          </span>
+          <span style={{ fontSize:"0.6875rem", fontWeight:600, padding:"2px 8px", borderRadius:99, background:C.bg, color:C.color }}>
+            {task.category}
+          </span>
+        </div>
+
+        {/* Footer */}
+        <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginTop:10, marginLeft:19 }}>
+          <div style={{ display:"flex", alignItems:"center", gap:12 }}>
+            {task.subtasks.length > 0 && (
+              <span style={{ fontSize:"0.6875rem", color:"#A1A1AA", fontWeight:500 }}>
+                ✓ {doneSubtasks}/{task.subtasks.length}
+              </span>
+            )}
+            {task.dueDate && (
+              <div style={{ display:"flex", alignItems:"center", gap:4, fontSize:"0.6875rem", color:"#A1A1AA" }}>
+                <Calendar style={{ width:11, height:11 }} />
+                {new Date(task.dueDate).toLocaleDateString("en-US", { month:"short", day:"numeric" })}
+              </div>
+            )}
+          </div>
+          {assignee && <TeamAvatar member={assignee} size="sm" showTooltip />}
+        </div>
       </div>
     </div>
   )

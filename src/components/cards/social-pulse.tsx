@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect } from "react"
-import { BarChart2, Flame, Heart, MessageCircle } from "lucide-react"
+import { BarChart2, Flame, Heart, MessageCircle, Share2 } from "lucide-react"
 import { DashboardCard } from "@/components/ui/dashboard-card"
 import { useAppData } from "@/lib/data-context"
 
@@ -10,53 +10,80 @@ declare global { interface Window { twttr?: { widgets?: { load: () => void } } }
 export function SocialPulseCard() {
   const { data } = useAppData()
   const s = data?.social_pulse
-  const followers = s?.twitter_followers ?? 0
+  const followers  = s?.twitter_followers ?? 0
   const engagement = s?.engagement_rate ?? 0
-  const streak = s?.posting_streak_days ?? 0
+  const streak     = s?.posting_streak_days ?? 0
+  const fmtF = followers >= 1000 ? `${(followers/1000).toFixed(1)}K` : followers.toLocaleString()
 
   useEffect(() => {
-    const t = setTimeout(() => { window.twttr?.widgets?.load() }, 1000)
+    const t = setTimeout(() => window.twttr?.widgets?.load(), 1000)
     return () => clearTimeout(t)
-  }, [s?.best_tweet_week?.tweet_id, s?.best_tweet_2d?.tweet_id])
+  }, [s?.best_tweet_week?.tweet_id])
 
-  const fmtFollowers = followers >= 1000 ? `${(followers/1000).toFixed(1)}K` : followers.toLocaleString()
+  const TweetCard = ({ tweet }: { tweet: NonNullable<typeof s>["best_tweet_week"] }) => {
+    if (!tweet) return null
+    if (tweet.embed_html) return (
+      <div style={{ borderRadius:12, overflow:"hidden" }} dangerouslySetInnerHTML={{ __html: tweet.embed_html }} />
+    )
+    return (
+      <a href={tweet.tweet_url} target="_blank" rel="noopener noreferrer" onClick={e=>e.stopPropagation()}
+        style={{ display:"block", textDecoration:"none" }}>
+        <div className="inset-cell" style={{ cursor:"pointer" }}>
+          <p style={{ fontSize:"0.875rem", color:"#09090B", lineHeight:1.55, marginBottom:12 }}>{tweet.text}</p>
+          <div style={{ display:"flex", alignItems:"center", gap:16 }}>
+            <span style={{ display:"flex", alignItems:"center", gap:4, fontSize:"0.75rem", fontWeight:600, color:"#EF4444" }}>
+              <Heart style={{ width:13, height:13 }} />{tweet.likes}
+            </span>
+            <span style={{ display:"flex", alignItems:"center", gap:4, fontSize:"0.75rem", fontWeight:600, color:"#6366F1" }}>
+              <MessageCircle style={{ width:13, height:13 }} />{tweet.replies}
+            </span>
+            <span style={{ marginLeft:"auto", fontSize:"0.6875rem", color:"#A1A1AA" }}>{tweet.date}</span>
+          </div>
+        </div>
+      </a>
+    )
+  }
 
   const collapsed = (
-    <div className="space-y-5">
-      {/* Hero */}
-      <div className="flex items-end justify-between">
+    <div style={{ display:"flex", flexDirection:"column", gap:20 }}>
+      {/* Hero — followers */}
+      <div style={{ display:"flex", alignItems:"flex-end", justifyContent:"space-between" }}>
         <div>
-          <p className="display-number">{fmtFollowers}</p>
-          <p className="display-label mt-1.5">X Followers</p>
+          <p className="hero-label" style={{ marginBottom:6 }}>X Followers</p>
+          <p className="hero-number">{fmtF}</p>
         </div>
-        <div className="text-right">
-          <p style={{ fontSize: "2rem", fontWeight: 800, letterSpacing: "-0.04em", color: "#34C759" }}>
+        <div style={{ textAlign:"right" }}>
+          <p style={{ fontSize:"2rem", fontWeight:800, letterSpacing:"-0.04em", color:"#10B981", lineHeight:1 }}>
             {engagement.toFixed(1)}%
           </p>
-          <p className="display-label">Engagement</p>
+          <p className="hero-label">Engagement</p>
         </div>
       </div>
 
-      {/* Streak pill */}
+      {/* Streak */}
       {streak > 0 && (
-        <div className="flex items-center gap-2 rounded-2xl px-4 py-2.5"
-          style={{ background: "linear-gradient(135deg, #FFF7E6, #FFF0CC)" }}>
-          <Flame className="w-4 h-4 text-amber-500" />
-          <span className="text-sm font-bold text-amber-700">{streak}-day posting streak</span>
-          <span className="ml-auto text-base">🔥</span>
+        <div style={{ display:"flex", alignItems:"center", gap:10, background:"#FFFBEB", borderRadius:12, padding:"10px 14px" }}>
+          <Flame style={{ width:16, height:16, color:"#F59E0B" }} />
+          <span style={{ fontSize:"0.8125rem", fontWeight:700, color:"#92400E" }}>{streak}-day posting streak</span>
+          <span style={{ marginLeft:"auto" }}>🔥</span>
         </div>
       )}
 
       {/* Best tweet preview */}
       {s?.best_tweet_week && (
-        <div className="rounded-2xl p-4" style={{ background: "#F2F2F3" }}>
-          <p className="text-xs text-[#6B7280] line-clamp-2 leading-relaxed mb-2.5">
-            {s.best_tweet_week.text.slice(0, 120)}…
+        <div className="inset-cell">
+          <p style={{ fontSize:"0.8125rem", color:"#3F3F46", lineHeight:1.5, marginBottom:10,
+            display:"-webkit-box", WebkitLineClamp:2, WebkitBoxOrient:"vertical", overflow:"hidden" }}>
+            {s.best_tweet_week.text}
           </p>
-          <div className="flex items-center gap-3 text-xs font-bold text-[#6B7280]">
-            <span className="flex items-center gap-1"><Heart className="w-3 h-3 text-[#FF3B30]" />{s.best_tweet_week.likes}</span>
-            <span className="flex items-center gap-1"><MessageCircle className="w-3 h-3 text-[#30B0C7]" />{s.best_tweet_week.replies}</span>
-            <span className="ml-auto text-[#9CA3AF]">{s.best_tweet_week.date}</span>
+          <div style={{ display:"flex", alignItems:"center", gap:12 }}>
+            <span style={{ display:"flex", alignItems:"center", gap:3, fontSize:"0.6875rem", fontWeight:700, color:"#A1A1AA" }}>
+              <Heart style={{ width:11, height:11, color:"#EF4444" }} />{s.best_tweet_week.likes}
+            </span>
+            <span style={{ display:"flex", alignItems:"center", gap:3, fontSize:"0.6875rem", fontWeight:700, color:"#A1A1AA" }}>
+              <MessageCircle style={{ width:11, height:11, color:"#6366F1" }} />{s.best_tweet_week.replies}
+            </span>
+            <span style={{ marginLeft:"auto", fontSize:"0.6875rem", color:"#A1A1AA" }}>{s.best_tweet_week.date}</span>
           </div>
         </div>
       )}
@@ -64,85 +91,70 @@ export function SocialPulseCard() {
   )
 
   const expanded = (
-    <div className="space-y-5">
-      {/* Stats */}
-      <div className="grid grid-cols-3 gap-2.5">
-        <div className="stat-pill">
-          <p className="display-label mb-2">Followers</p>
-          <p className="text-2xl font-black text-[#111110] tracking-tight">{fmtFollowers}</p>
+    <div style={{ display:"flex", flexDirection:"column", gap:16 }}>
+      {/* Stats row */}
+      <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:8 }}>
+        <div className="inset-cell">
+          <p className="metric-xl">{fmtF}</p>
+          <p className="metric-label">Followers</p>
         </div>
-        <div className="stat-pill">
-          <p className="display-label mb-2">Engagement</p>
-          <p className="text-2xl font-black tracking-tight" style={{ color: "#34C759" }}>{engagement.toFixed(1)}%</p>
+        <div className="inset-cell">
+          <p className="metric-xl" style={{ color:"#10B981" }}>{engagement.toFixed(1)}%</p>
+          <p className="metric-label">Engagement</p>
         </div>
-        <div className="rounded-2xl p-3.5" style={{ background: "linear-gradient(135deg, #FFF7E6, #FFE9A0)" }}>
-          <p className="display-label text-amber-600 mb-2">Streak</p>
-          <p className="text-2xl font-black text-amber-700">{streak}d 🔥</p>
+        <div style={{ background:"#FFFBEB", borderRadius:12, padding:"14px 16px" }}>
+          <p className="metric-xl" style={{ color:"#D97706" }}>{streak}d</p>
+          <p className="metric-label" style={{ color:"#92400E" }}>🔥 Streak</p>
         </div>
       </div>
 
-      {/* Content performance */}
+      {/* Content type stats */}
       {s?.content_type_stats && (
-        <div className="stat-pill">
-          <div className="flex items-center justify-between mb-3">
-            <p className="display-label">Content Performance</p>
-            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full"
-              style={{ background: "#FFF7E6", color: "#C8820A" }}>
-              Best: {(s.best_content_type ?? "").replace("_", " ")}
-            </span>
+        <div className="inset-cell">
+          <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:14 }}>
+            <p className="hero-label">Content Performance</p>
+            {s.best_content_type && (
+              <span className="badge-gold">Best: {s.best_content_type.replace("_"," ")}</span>
+            )}
           </div>
-          <div className="space-y-2">
+          <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
             {Object.entries(s.content_type_stats).map(([type, st]) => (
-              <div key={type} className="flex items-center justify-between">
-                <span className="text-xs font-semibold text-[#374151] capitalize w-32">{type.replace("_"," ")}</span>
-                <span className="text-xs text-[#6B7280]">{st.count} posts</span>
-                <span className="text-xs font-bold text-[#111110]">{st.avg_eng.toFixed(0)} avg</span>
+              <div key={type} style={{ display:"flex", alignItems:"center", gap:12 }}>
+                <span style={{ fontSize:"0.8125rem", fontWeight:600, color:"#3F3F46", width:100, textTransform:"capitalize" }}>{type.replace("_"," ")}</span>
+                <span style={{ fontSize:"0.75rem", color:"#A1A1AA", width:50 }}>{st.count} posts</span>
+                <span style={{ fontSize:"0.8125rem", fontWeight:700, color:"#09090B", marginLeft:"auto" }}>{st.avg_eng.toFixed(0)} avg</span>
               </div>
             ))}
           </div>
         </div>
       )}
 
-      {/* Tweets */}
+      {/* Best tweet this week */}
       {s?.best_tweet_week && (
         <div>
-          <p className="display-label mb-3">Best This Week</p>
-          {s.best_tweet_week.embed_html
-            ? <div className="rounded-2xl overflow-hidden" dangerouslySetInnerHTML={{ __html: s.best_tweet_week.embed_html }} />
-            : <a href={s.best_tweet_week.tweet_url} target="_blank" rel="noopener noreferrer" onClick={e=>e.stopPropagation()}
-                className="block stat-pill hover:bg-[#E8E8EA] transition-colors">
-                <p className="text-sm text-[#111110] leading-relaxed">{s.best_tweet_week.text}</p>
-                <div className="flex gap-4 mt-3 text-xs font-bold text-[#6B7280]">
-                  <span>❤️ {s.best_tweet_week.likes}</span>
-                  <span>💬 {s.best_tweet_week.replies}</span>
-                </div>
-              </a>
-          }
+          <p className="hero-label" style={{ marginBottom:10 }}>Best This Week</p>
+          <TweetCard tweet={s.best_tweet_week} />
         </div>
       )}
 
+      {/* Trending 48h */}
       {s?.best_tweet_2d && (
         <div>
-          <p className="display-label mb-3">Trending 48h</p>
-          {s.best_tweet_2d.embed_html
-            ? <div className="rounded-2xl overflow-hidden" dangerouslySetInnerHTML={{ __html: s.best_tweet_2d.embed_html }} />
-            : <a href={s.best_tweet_2d.tweet_url} target="_blank" rel="noopener noreferrer" onClick={e=>e.stopPropagation()}
-                className="block stat-pill hover:bg-[#E8E8EA] transition-colors">
-                <p className="text-sm text-[#111110] leading-relaxed">{s.best_tweet_2d.text}</p>
-                <div className="flex gap-4 mt-3 text-xs font-bold text-[#6B7280]">
-                  <span>❤️ {s.best_tweet_2d.likes}</span>
-                  <span>💬 {s.best_tweet_2d.replies}</span>
-                </div>
-              </a>
-          }
+          <p className="hero-label" style={{ marginBottom:10 }}>Trending 48h</p>
+          <TweetCard tweet={s.best_tweet_2d} />
         </div>
       )}
     </div>
   )
 
   return (
-    <DashboardCard title="Social Pulse" subtitle="@67coinX"
-      icon={<BarChart2 className="w-[18px] h-[18px]" />}
-      accentColor="#1D9BF0" collapsed={collapsed} expanded={expanded} />
+    <DashboardCard
+      title="Social Pulse"
+      subtitle="@67coinX"
+      icon={<BarChart2 style={{ width:16, height:16 }} />}
+      accentColor="#1D9BF0"
+      collapsed={collapsed}
+      expanded={expanded}
+    />
   )
 }

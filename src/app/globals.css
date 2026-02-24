@@ -8,37 +8,30 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-inter);
-  --color-ring: var(--ring);
-  --color-input: var(--input);
   --color-border: var(--border);
   --color-muted-foreground: var(--muted-foreground);
-  --color-muted: var(--muted);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
 }
 
-/* ══════════════════════════════════════════════════════════════
-   Apple × Notion × 67coin  —  Clean light theme
-   Background: white/off-white  |  Accents: 67 gold + dark nav
-═══════════════════════════════════════════════════════════════*/
+/* ═══════════════════════════════════════════════════════
+   67 Mission Control — Design System
+   Apple × Notion quality. Clean, white, premium.
+═══════════════════════════════════════════════════════ */
 :root {
-  /* Surface — pure white / near-white like Notion */
-  --background:       #F7F7F8;
+  --background:       #F4F4F5;   /* barely-grey page bg */
   --card:             #FFFFFF;
-  --card-foreground:  #111110;
-  --foreground:       #111110;
-  --muted:            #F2F2F3;
-  --muted-foreground: #6B7280;
-  --border:           rgba(0,0,0,0.07);
-  --input:            #E8E8EA;
+  --card-foreground:  #09090B;
+  --foreground:       #09090B;
+  --muted:            #F4F4F5;
+  --muted-foreground: #71717A;
+  --border:           rgba(0,0,0,0.06);
+  --input:            #E4E4E7;
   --ring:             #F5A623;
-
-  /* 67 Brand */
-  --gold:       #F5A623;
-  --gold-light: #FFD966;
-  --gold-dark:  #C8820A;
-
-  --radius: 1.25rem;
+  --gold:             #F5A623;
+  --gold-dark:        #C8820A;
+  --gold-light:       #FBBF24;
+  --radius:           18px;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -52,112 +45,135 @@ html {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-inter), "SF Pro Display", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: var(--font-inter), "SF Pro Display", -apple-system, sans-serif;
   margin: 0;
 }
 
-/* ── Scrollbar ─────────────────────────────────────────────── */
-::-webkit-scrollbar { width: 4px; height: 4px; }
+/* ── Scrollbar ─────────────────────────────── */
+::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.10); border-radius: 99px; }
 
-/* ── Card — pure white, soft shadow, hover lift ─────────────── */
-.apple-card {
+/* ══ CARDS ════════════════════════════════════════════ */
+.mc-card {
   background: #FFFFFF;
-  border-radius: 20px;
+  border-radius: var(--radius);
+  border: 1px solid rgba(0,0,0,0.06);
   box-shadow:
-    0 1px 2px rgba(0,0,0,0.04),
-    0 2px 6px rgba(0,0,0,0.04),
-    0 4px 20px rgba(0,0,0,0.06),
-    0 0 0 1px rgba(0,0,0,0.05);
-  transition:
-    box-shadow 0.25s cubic-bezier(0.4,0,0.2,1),
-    transform  0.25s cubic-bezier(0.4,0,0.2,1);
-  will-change: transform;
+    0 1px 3px rgba(0,0,0,0.04),
+    0 4px 16px rgba(0,0,0,0.05);
+  transition: transform 0.22s cubic-bezier(.4,0,.2,1),
+              box-shadow 0.22s cubic-bezier(.4,0,.2,1);
 }
-.apple-card:hover {
-  box-shadow:
-    0 2px 4px rgba(0,0,0,0.05),
-    0 6px 16px rgba(0,0,0,0.08),
-    0 16px 40px rgba(0,0,0,0.10),
-    0 0 0 1px rgba(0,0,0,0.06);
+.mc-card-hover:hover {
   transform: translateY(-2px);
+  box-shadow:
+    0 4px 8px rgba(0,0,0,0.06),
+    0 12px 32px rgba(0,0,0,0.08);
+  cursor: pointer;
 }
-.apple-card-clickable { cursor: pointer; }
 
-/* ── Typography scale ──────────────────────────────────────── */
-.display-number {
-  font-size: 2.625rem;
+/* ══ TYPOGRAPHY ═══════════════════════════════════════ */
+.hero-number {
+  font-size: 3rem;
   font-weight: 800;
-  letter-spacing: -0.05em;
+  letter-spacing: -0.055em;
   line-height: 1;
-  color: #111110;
+  color: #09090B;
+  font-variant-numeric: tabular-nums;
 }
-.display-label {
+.hero-label {
   font-size: 0.6875rem;
   font-weight: 600;
-  letter-spacing: 0.07em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #9CA3AF;
+  color: #A1A1AA;
 }
-.metric-value {
-  font-size: 1.125rem;
+.metric-xl {
+  font-size: 1.875rem;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: #09090B;
+  font-variant-numeric: tabular-nums;
+}
+.metric-lg {
+  font-size: 1.375rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: #09090B;
+}
+.metric-md {
+  font-size: 1rem;
   font-weight: 700;
   letter-spacing: -0.02em;
-  color: #111110;
+  color: #09090B;
+}
+.metric-label {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  color: #A1A1AA;
+  margin-top: 2px;
 }
 
-/* ── Gold ──────────────────────────────────────────────────── */
-.gold-gradient { background: linear-gradient(135deg, #F5A623 0%, #FFD966 60%, #F5A623 100%); }
+/* ══ INSET CELL ═══════════════════════════════════════ */
+.inset-cell {
+  background: #F8F8F9;
+  border-radius: 12px;
+  padding: 14px 16px;
+}
+.inset-cell-dark {
+  background: #09090B;
+  border-radius: 12px;
+  padding: 16px 18px;
+}
+
+/* ══ BADGE ════════════════════════════════════════════ */
+.badge-up    { display:inline-flex; align-items:center; gap:3px; padding:3px 9px; border-radius:99px; background:#ECFDF5; color:#059669; font-size:0.6875rem; font-weight:700; }
+.badge-down  { display:inline-flex; align-items:center; gap:3px; padding:3px 9px; border-radius:99px; background:#FEF2F2; color:#DC2626; font-size:0.6875rem; font-weight:700; }
+.badge-gold  { display:inline-flex; align-items:center; gap:3px; padding:3px 9px; border-radius:99px; background:#FFFBEB; color:#C8820A; font-size:0.6875rem; font-weight:700; }
+.badge-blue  { display:inline-flex; align-items:center; gap:3px; padding:3px 9px; border-radius:99px; background:#EFF6FF; color:#2563EB; font-size:0.6875rem; font-weight:700; }
+
+/* ══ PROGRESS ═════════════════════════════════════════ */
+.prog-track { background: #E4E4E7; border-radius: 99px; overflow: hidden; }
+.prog-fill  { border-radius: 99px; transition: width 0.9s cubic-bezier(.4,0,.2,1); }
+
+/* ══ STATUS DOT ═══════════════════════════════════════ */
+@keyframes pulse-green {
+  0%,100% { box-shadow: 0 0 0 0   rgba(16,185,129,.5); }
+  50%      { box-shadow: 0 0 0 5px rgba(16,185,129, 0); }
+}
+.dot-on  { width:8px; height:8px; border-radius:50%; background:#10B981; animation: pulse-green 2s infinite; display:inline-block; flex-shrink:0; }
+.dot-off { width:8px; height:8px; border-radius:50%; background:#EF4444; display:inline-block; flex-shrink:0; }
+
+/* ══ GOLD ═════════════════════════════════════════════ */
+.gold-gradient { background: linear-gradient(135deg,#F5A623 0%,#FBBF24 55%,#F5A623 100%); }
 .gold-text {
-  background: linear-gradient(135deg, #C8820A, #F5A623 50%, #FFD966);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  background: linear-gradient(135deg,#C8820A,#F5A623 50%,#FBBF24);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-/* ── Badge pills ───────────────────────────────────────────── */
-.badge-up   { background: #ECFDF5; color: #059669; font-size: 0.6875rem; font-weight: 700; padding: 3px 9px; border-radius: 99px; display:inline-flex; align-items:center; gap:3px; }
-.badge-down { background: #FEF2F2; color: #DC2626; font-size: 0.6875rem; font-weight: 700; padding: 3px 9px; border-radius: 99px; display:inline-flex; align-items:center; gap:3px; }
-
-/* ── Stat inset ────────────────────────────────────────────── */
-.stat-pill {
-  background: #F7F7F8;
-  border-radius: 14px;
-  padding: 14px 16px;
-  border: 1px solid rgba(0,0,0,0.04);
+/* ══ MODAL ANIMATION ══════════════════════════════════ */
+@keyframes slide-up {
+  from { opacity:0; transform: translateY(20px) scale(0.97); }
+  to   { opacity:1; transform: translateY(0)    scale(1);    }
 }
+.anim-slide-up { animation: slide-up 0.24s cubic-bezier(.34,1.4,.64,1) forwards; }
 
-/* ── Progress ──────────────────────────────────────────────── */
-.progress-track { background: #EBEBED; border-radius: 99px; overflow: hidden; }
-.progress-fill  { border-radius: 99px; transition: width 0.8s cubic-bezier(0.4,0,0.2,1); }
-
-/* ── Status dots ───────────────────────────────────────────── */
-@keyframes live-pulse {
-  0%,100% { box-shadow: 0 0 0 0   rgba(16,185,129,0.5); }
-  50%      { box-shadow: 0 0 0 5px rgba(16,185,129,0);   }
-}
-.dot-live { background: #10B981; border-radius: 50%; animation: live-pulse 2s infinite; }
-.dot-off  { background: #EF4444; border-radius: 50%; }
-
-/* ── Modal sheet ───────────────────────────────────────────── */
-@keyframes sheet-up {
-  from { opacity: 0; transform: translateY(24px) scale(0.97); }
-  to   { opacity: 1; transform: translateY(0)    scale(1); }
-}
-.modal-sheet { animation: sheet-up 0.26s cubic-bezier(0.34,1.4,0.64,1) forwards; }
-
-/* ── Skeleton shimmer ──────────────────────────────────────── */
+/* ══ SKELETON ═════════════════════════════════════════ */
 @keyframes shimmer {
   0%   { background-position: -200% 0; }
   100% { background-position:  200% 0; }
 }
 .skeleton {
-  background: linear-gradient(90deg, #EBEBED 25%, #F5F5F6 50%, #EBEBED 75%);
+  background: linear-gradient(90deg,#E4E4E7 25%,#F0F0F2 50%,#E4E4E7 75%);
   background-size: 200% 100%;
-  animation: shimmer 1.4s ease-in-out infinite;
-  border-radius: 10px;
+  animation: shimmer 1.5s ease-in-out infinite;
+  border-radius: 8px;
 }
 
-/* ── Drag overlay ──────────────────────────────────────────── */
-.dragging { opacity: 0.85; transform: rotate(1.5deg) scale(1.04); box-shadow: 0 24px 60px rgba(0,0,0,0.15); }
+/* ══ DRAG ═════════════════════════════════════════════ */
+.is-dragging { opacity:.88; transform: rotate(1.5deg) scale(1.04); box-shadow: 0 20px 50px rgba(0,0,0,.14); }
+
+/* ══ DIVIDER ══════════════════════════════════════════ */
+.divider { height:1px; background: rgba(0,0,0,0.06); }

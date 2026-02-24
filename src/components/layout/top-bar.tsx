@@ -5,11 +5,10 @@ import { usePathname } from "next/navigation"
 import { RefreshCw, AlertTriangle } from "lucide-react"
 import { TeamAvatarGroup } from "@/components/team/team-avatar"
 import { useAppData } from "@/lib/data-context"
-import { clsx } from "clsx"
 
 const NAV = [
-  { href: "/",        label: "Dashboard" },
-  { href: "/kanban",  label: "Tasks"     },
+  { href: "/",       label: "Dashboard" },
+  { href: "/kanban", label: "Tasks"     },
 ]
 
 function timeAgo(d: Date | null) {
@@ -26,58 +25,72 @@ export function TopBar() {
   const alerts = data?.alerts ?? []
 
   return (
-    <div className="sticky top-0 z-50">
-      {/* ── Alert banner ── */}
+    <div style={{ position:"sticky", top:0, zIndex:50 }}>
+      {/* Alert */}
       {alerts.length > 0 && (
-        <div style={{ background: "#C0392B" }} className="text-white text-xs font-semibold px-6 py-2 flex items-center gap-2">
-          <AlertTriangle className="w-3.5 h-3.5 flex-shrink-0" />
+        <div style={{ background:"#DC2626", color:"#fff", fontSize:"0.75rem", fontWeight:600, padding:"8px 24px", display:"flex", alignItems:"center", gap:8 }}>
+          <AlertTriangle style={{ width:14, height:14, flexShrink:0 }} />
           {alerts.map((a, i) => <span key={i}>{a.message}</span>)}
         </div>
       )}
 
-      {/* ── Nav bar — dark as per 67coin.com ── */}
-      <header style={{ background: "#0D0D0D", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
-        <div className="max-w-[1400px] mx-auto px-6 sm:px-10">
-          <div className="flex items-center justify-between h-14">
+      {/* Nav — dark, 67coin brand */}
+      <header style={{
+        background: "#0A0A0A",
+        borderBottom: "1px solid rgba(255,255,255,0.06)",
+      }}>
+        <div style={{ maxWidth:1440, margin:"0 auto", padding:"0 40px" }}>
+          <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", height:56 }}>
 
             {/* Logo */}
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full gold-gradient flex items-center justify-center"
-                style={{ boxShadow: "0 2px 12px rgba(245,166,35,0.40)" }}>
-                <span className="text-black font-black text-sm">67</span>
+            <div style={{ display:"flex", alignItems:"center", gap:12 }}>
+              <div className="gold-gradient" style={{
+                width:32, height:32, borderRadius:"50%",
+                display:"flex", alignItems:"center", justifyContent:"center",
+                boxShadow:"0 2px 12px rgba(245,166,35,0.45)",
+                flexShrink:0,
+              }}>
+                <span style={{ fontSize:"0.875rem", fontWeight:900, color:"#000" }}>67</span>
               </div>
-              <span className="text-sm font-bold tracking-tight" style={{ color: "rgba(255,255,255,0.90)" }}>
+              <span style={{ fontSize:"0.875rem", fontWeight:700, color:"rgba(255,255,255,0.88)", letterSpacing:"-0.01em" }}>
                 Mission Control
               </span>
             </div>
 
-            {/* Nav pills */}
-            <nav className="flex items-center gap-0.5 rounded-2xl p-1" style={{ background: "rgba(255,255,255,0.07)" }}>
+            {/* Nav tabs */}
+            <nav style={{ display:"flex", alignItems:"center", gap:2, background:"rgba(255,255,255,0.06)", borderRadius:12, padding:4 }}>
               {NAV.map(({ href, label }) => (
                 <Link key={href} href={href}
-                  className={clsx(
-                    "px-5 py-1.5 rounded-xl text-sm font-semibold transition-all duration-200",
-                    path === href
-                      ? "text-black"
-                      : "hover:text-white"
-                  )}
-                  style={path === href
-                    ? { background: "#F5A623", color: "#000" }
-                    : { color: "rgba(255,255,255,0.45)" }
-                  }>
+                  style={{
+                    padding:"7px 20px",
+                    borderRadius:9,
+                    fontSize:"0.8125rem",
+                    fontWeight:600,
+                    textDecoration:"none",
+                    transition:"all 0.15s",
+                    ...(path === href
+                      ? { background:"#F5A623", color:"#000" }
+                      : { color:"rgba(255,255,255,0.4)" }
+                    ),
+                  }}>
                   {label}
                 </Link>
               ))}
             </nav>
 
-            {/* Right — sync + avatars */}
-            <div className="flex items-center gap-5">
+            {/* Right */}
+            <div style={{ display:"flex", alignItems:"center", gap:20 }}>
               <button onClick={refresh} disabled={loading}
-                className="hidden sm:flex items-center gap-1.5 text-xs font-medium transition-colors"
-                style={{ color: "rgba(255,255,255,0.35)" }}
-                onMouseEnter={e => (e.currentTarget.style.color="rgba(255,255,255,0.70)")}
-                onMouseLeave={e => (e.currentTarget.style.color="rgba(255,255,255,0.35)")}>
-                <RefreshCw className={`w-3 h-3 ${loading ? "animate-spin" : ""}`} />
+                style={{
+                  display:"flex", alignItems:"center", gap:6,
+                  fontSize:"0.75rem", fontWeight:500,
+                  color:"rgba(255,255,255,0.3)",
+                  background:"none", border:"none", cursor:"pointer",
+                  transition:"color 0.15s",
+                }}
+                onMouseEnter={e => (e.currentTarget.style.color="rgba(255,255,255,0.7)")}
+                onMouseLeave={e => (e.currentTarget.style.color="rgba(255,255,255,0.3)")}>
+                <RefreshCw style={{ width:12, height:12 }} className={loading ? "animate-spin" : ""} />
                 {loading ? "Syncing…" : timeAgo(lastFetched)}
               </button>
               <TeamAvatarGroup />

@@ -7,93 +7,82 @@ import { Plus } from "lucide-react"
 import { Task, KanbanColumn as KanbanColumnType } from "@/lib/types"
 import { TaskCard } from "./task-card"
 
-const COLUMN_STYLES: Record<KanbanColumnType, { dot: string; badge: string }> = {
-  Backlog: { dot: "bg-[#9CA3AF]", badge: "bg-[#F2F2F3] text-[#6B7280]" },
-  Todo: { dot: "bg-blue-400", badge: "bg-blue-50 text-blue-700" },
-  "In Progress": { dot: "bg-amber-400", badge: "bg-amber-50 text-amber-700" },
-  Review: { dot: "bg-purple-400", badge: "bg-purple-50 text-purple-700" },
-  Done: { dot: "bg-green-400", badge: "bg-green-50 text-green-700" },
+const COL: Record<KanbanColumnType, { dot: string; bg: string; text: string }> = {
+  Backlog:      { dot:"#A1A1AA", bg:"#F4F4F5", text:"#71717A" },
+  Todo:         { dot:"#3B82F6", bg:"#EFF6FF", text:"#2563EB" },
+  "In Progress":{ dot:"#F59E0B", bg:"#FFFBEB", text:"#D97706" },
+  Review:       { dot:"#8B5CF6", bg:"#F5F3FF", text:"#7C3AED" },
+  Done:         { dot:"#10B981", bg:"#ECFDF5", text:"#059669" },
 }
 
-interface KanbanColumnProps {
+interface Props {
   column: KanbanColumnType
   tasks: Task[]
   onOpenTask: (task: Task) => void
   onAddTask: (column: KanbanColumnType, title: string) => void
 }
 
-export function KanbanColumnComponent({ column, tasks, onOpenTask, onAddTask }: KanbanColumnProps) {
+export function KanbanColumnComponent({ column, tasks, onOpenTask, onAddTask }: Props) {
   const [adding, setAdding] = useState(false)
   const [newTitle, setNewTitle] = useState("")
-
   const { setNodeRef, isOver } = useDroppable({ id: column })
-  const styles = COLUMN_STYLES[column]
+  const s = COL[column]
 
   const handleAdd = () => {
     if (newTitle.trim()) {
       onAddTask(column, newTitle.trim())
-      setNewTitle("")
-      setAdding(false)
+      setNewTitle(""); setAdding(false)
     }
   }
 
   return (
-    <div className="flex flex-col gap-3 min-w-[260px] w-[260px]">
+    <div style={{ display:"flex", flexDirection:"column", gap:12, minWidth:268, width:268 }}>
       {/* Column header */}
-      <div className="flex items-center justify-between px-1">
-        <div className="flex items-center gap-2">
-          <div className={`w-2 h-2 rounded-full ${styles.dot}`} />
-          <h3 className="text-sm font-semibold text-[#374151]">{column}</h3>
-          <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${styles.badge}`}>
+      <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", padding:"0 4px" }}>
+        <div style={{ display:"flex", alignItems:"center", gap:8 }}>
+          <span style={{ width:8, height:8, borderRadius:"50%", background:s.dot, display:"inline-block", flexShrink:0 }} />
+          <span style={{ fontSize:"0.8125rem", fontWeight:700, color:"#09090B" }}>{column}</span>
+          <span style={{ fontSize:"0.6875rem", fontWeight:700, padding:"2px 7px", borderRadius:99, background:s.bg, color:s.text }}>
             {tasks.length}
           </span>
         </div>
-        <button
-          onClick={() => setAdding(true)}
-          className="w-6 h-6 rounded-lg bg-[#F2F2F3] hover:bg-[#E8E8EA] flex items-center justify-center transition-colors"
-        >
-          <Plus className="w-3.5 h-3.5 text-gray-500" />
+        <button onClick={() => setAdding(true)}
+          style={{ width:26, height:26, borderRadius:8, background:"#F4F4F5", border:"none", cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center" }}>
+          <Plus style={{ width:14, height:14, color:"#71717A" }} />
         </button>
       </div>
 
       {/* Drop zone */}
-      <div
-        ref={setNodeRef}
-        className={`flex flex-col gap-2.5 min-h-[120px] p-2 rounded-2xl transition-colors ${
-          isOver ? "bg-[#FFF8EC] border-2 border-[#F5A623]/40 border-dashed" : "bg-[#F2F2F3]/50"
-        }`}
-      >
-        <SortableContext items={tasks.map((t) => t.id)} strategy={verticalListSortingStrategy}>
-          {tasks.map((task) => (
-            <TaskCard key={task.id} task={task} onOpen={onOpenTask} />
-          ))}
+      <div ref={setNodeRef}
+        style={{
+          display:"flex", flexDirection:"column", gap:8,
+          minHeight:120, padding:8, borderRadius:16, transition:"all 0.15s",
+          background: isOver ? "#FFFBEB" : "rgba(244,244,245,0.5)",
+          border: isOver ? "2px dashed rgba(245,166,35,0.45)" : "2px solid transparent",
+        }}>
+        <SortableContext items={tasks.map(t => t.id)} strategy={verticalListSortingStrategy}>
+          {tasks.map(task => <TaskCard key={task.id} task={task} onOpen={onOpenTask} />)}
         </SortableContext>
 
-        {/* Add task inline */}
         {adding && (
-          <div className="bg-[#FFFFFF] rounded-2xl border border-[rgba(0,0,0,0.07)] p-3 shadow-sm">
-            <textarea
-              autoFocus
-              className="w-full text-sm text-[#374151] bg-transparent resize-none outline-none min-h-[60px] placeholder:text-[#9CA3AF]"
-              placeholder="Task title..."
+          <div style={{ background:"#FFFFFF", borderRadius:14, border:"1px solid rgba(0,0,0,0.07)", padding:14, boxShadow:"0 2px 8px rgba(0,0,0,0.06)" }}>
+            <textarea autoFocus
+              style={{ width:"100%", fontSize:"0.875rem", color:"#09090B", background:"transparent", border:"none", outline:"none", resize:"none", minHeight:60 }}
+              placeholder="Task title…"
               value={newTitle}
-              onChange={(e) => setNewTitle(e.target.value)}
-              onKeyDown={(e) => {
+              onChange={e => setNewTitle(e.target.value)}
+              onKeyDown={e => {
                 if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); handleAdd() }
                 if (e.key === "Escape") { setAdding(false); setNewTitle("") }
               }}
             />
-            <div className="flex gap-2 mt-2">
-              <button
-                onClick={handleAdd}
-                className="px-3 py-1.5 bg-amber-500 hover:bg-amber-600 text-white text-xs font-semibold rounded-xl transition-colors"
-              >
+            <div style={{ display:"flex", gap:8, marginTop:8 }}>
+              <button onClick={handleAdd}
+                style={{ padding:"6px 14px", background:"#F5A623", color:"#000", fontSize:"0.75rem", fontWeight:700, borderRadius:9, border:"none", cursor:"pointer" }}>
                 Add
               </button>
-              <button
-                onClick={() => { setAdding(false); setNewTitle("") }}
-                className="px-3 py-1.5 bg-[#F2F2F3] hover:bg-[#E8E8EA] text-gray-600 text-xs font-semibold rounded-xl transition-colors"
-              >
+              <button onClick={() => { setAdding(false); setNewTitle("") }}
+                style={{ padding:"6px 14px", background:"#F4F4F5", color:"#71717A", fontSize:"0.75rem", fontWeight:600, borderRadius:9, border:"none", cursor:"pointer" }}>
                 Cancel
               </button>
             </div>
@@ -101,7 +90,7 @@ export function KanbanColumnComponent({ column, tasks, onOpenTask, onAddTask }: 
         )}
 
         {tasks.length === 0 && !adding && (
-          <div className="flex items-center justify-center h-16 text-xs text-gray-400">
+          <div style={{ display:"flex", alignItems:"center", justifyContent:"center", height:64, fontSize:"0.75rem", color:"#D4D4D8", fontWeight:500 }}>
             Drop tasks here
           </div>
         )}
