@@ -11,127 +11,144 @@
   --color-ring: var(--ring);
   --color-input: var(--input);
   --color-border: var(--border);
-  --color-destructive: var(--destructive);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
   --color-muted-foreground: var(--muted-foreground);
   --color-muted: var(--muted);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-secondary: var(--secondary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
-  --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
-  --color-gold: #F5A623;
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --radius-2xl: calc(var(--radius) + 8px);
+  --color-card-foreground: var(--card-foreground);
 }
 
+/* ── Apple Design System ─────────────────────────────────────── */
 :root {
-  --radius: 0.875rem;
-  /* 67coin.com warm cream palette */
-  --background: #F2EDE4;
-  --foreground: #0D0D0D;
-  --card: #FDFAF6;
-  --card-foreground: #0D0D0D;
-  --popover: #FDFAF6;
-  --popover-foreground: #0D0D0D;
-  --primary: #F5A623;
-  --primary-foreground: #0D0D0D;
-  --secondary: #EDE8DF;
-  --secondary-foreground: #0D0D0D;
-  --muted: #E8E2D8;
-  --muted-foreground: #7A7060;
-  --accent: #EDE8DF;
-  --accent-foreground: #0D0D0D;
-  --destructive: #E53935;
-  --border: #DDD7CC;
-  --input: #DDD7CC;
-  --ring: #F5A623;
+  /* Apple's exact background color */
+  --background:       #F5F5F7;
+  --card:             #FFFFFF;
+  --card-foreground:  #1D1D1F;
+  --foreground:       #1D1D1F;
+  --muted:            #F5F5F7;
+  --muted-foreground: #6E6E73;
+  --border:           rgba(0,0,0,0.08);
+  --input:            #E5E5EA;
+  --ring:             #F5A623;
+
+  /* 67 Brand */
+  --gold:             #F5A623;
+  --gold-light:       #FFD966;
+  --gold-dark:        #C8820A;
+
+  --radius: 1.25rem;
 }
 
-* {
-  border-color: var(--color-border);
-}
+*, *::before, *::after { box-sizing: border-box; }
 
 html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 body {
-  background-color: var(--background);
+  background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: var(--font-inter), "SF Pro Display", -apple-system, BlinkMacSystemFont, sans-serif;
+  margin: 0;
 }
 
-/* Scrollbar */
-::-webkit-scrollbar { width: 5px; height: 5px; }
+/* ── Scrollbar ────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 4px; height: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #C8C0B4; border-radius: 10px; }
-::-webkit-scrollbar-thumb:hover { background: #A89F93; }
+::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.12); border-radius: 99px; }
 
-/* Gold gradient */
-.gold-gradient { background: linear-gradient(135deg, #F5A623 0%, #FFD06B 60%, #F5A623 100%); }
-.gold-text { background: linear-gradient(135deg, #D4820A, #F5A623); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-
-/* Card styles */
-.mc-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04), 0 0 0 1px rgba(255,255,255,0.6) inset;
-  transition: box-shadow 0.2s ease, transform 0.2s ease;
+/* ── Apple-quality card ───────────────────────────────────────── */
+.apple-card {
+  background: #FFFFFF;
+  border-radius: 22px;
+  box-shadow:
+    0 1px 1px rgba(0,0,0,0.04),
+    0 2px 4px rgba(0,0,0,0.04),
+    0 4px 16px rgba(0,0,0,0.06),
+    0 0 0 0.5px rgba(0,0,0,0.06);
+  transition: box-shadow 0.3s cubic-bezier(0.4,0,0.2,1),
+              transform  0.3s cubic-bezier(0.4,0,0.2,1);
+  will-change: transform;
 }
-.mc-card:hover {
-  box-shadow: 0 8px 32px rgba(0,0,0,0.09), 0 0 0 1px rgba(255,255,255,0.6) inset;
-  transform: translateY(-2px);
+.apple-card:hover {
+  box-shadow:
+    0 2px 2px rgba(0,0,0,0.04),
+    0 4px 8px rgba(0,0,0,0.06),
+    0 8px 32px rgba(0,0,0,0.10),
+    0 0 0 0.5px rgba(0,0,0,0.08);
+  transform: translateY(-3px);
 }
+.apple-card-clickable { cursor: pointer; }
 
-/* Number display */
-.metric-value {
-  font-size: 2rem;
+/* ── Typography ───────────────────────────────────────────────── */
+.display-number {
+  font-size: 2.75rem;
   font-weight: 800;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.05em;
   line-height: 1;
-  color: #0D0D0D;
+  color: #1D1D1F;
 }
-.metric-label {
-  font-size: 0.7rem;
+.display-label {
+  font-size: 0.6875rem;
   font-weight: 600;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.07em;
   text-transform: uppercase;
-  color: #9A9082;
+  color: #8E8E93;
+}
+.section-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #8E8E93;
 }
 
-/* Status dot pulse */
-@keyframes pulse-green {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); }
-  50% { box-shadow: 0 0 0 5px rgba(34, 197, 94, 0); }
-}
-.dot-green { animation: pulse-green 2s infinite; }
+/* ── Gold gradient ────────────────────────────────────────────── */
+.gold-gradient  { background: linear-gradient(135deg, #F5A623 0%, #FFD966 50%, #F5A623 100%); }
+.gold-text      { background: linear-gradient(135deg, #C8820A, #F5A623 50%, #FFD966); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 
-/* Skeleton loading */
+/* ── Pill badge ───────────────────────────────────────────────── */
+.badge-up    { background: #E8FBF0; color: #1A8743; font-size: 0.6875rem; font-weight: 700; padding: 2px 8px; border-radius: 99px; display:inline-flex; align-items:center; gap: 3px; }
+.badge-down  { background: #FEECEC; color: #D93025; font-size: 0.6875rem; font-weight: 700; padding: 2px 8px; border-radius: 99px; display:inline-flex; align-items:center; gap: 3px; }
+
+/* ── Stat row pill ────────────────────────────────────────────── */
+.stat-pill {
+  background: #F5F5F7;
+  border-radius: 14px;
+  padding: 12px 16px;
+}
+
+/* ── Progress bar ─────────────────────────────────────────────── */
+.progress-track { background: #E5E5EA; border-radius: 99px; overflow: hidden; }
+.progress-fill  { border-radius: 99px; transition: width 0.8s cubic-bezier(0.4,0,0.2,1); }
+
+/* ── Status dot ───────────────────────────────────────────────── */
+@keyframes live-pulse {
+  0%,100% { box-shadow: 0 0 0 0 rgba(52,199,89,0.5); }
+  50%      { box-shadow: 0 0 0 5px rgba(52,199,89,0); }
+}
+.dot-live { background: #34C759; border-radius: 50%; animation: live-pulse 2s infinite; }
+.dot-off  { background: #FF3B30; border-radius: 50%; }
+
+/* ── Modal animation ──────────────────────────────────────────── */
+@keyframes sheet-up {
+  from { opacity: 0; transform: translateY(24px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0)    scale(1); }
+}
+.modal-sheet { animation: sheet-up 0.28s cubic-bezier(0.34,1.4,0.64,1) forwards; }
+
+/* ── Shimmer skeleton ─────────────────────────────────────────── */
 @keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
 }
 .skeleton {
-  background: linear-gradient(90deg, #E8E2D8 25%, #F0EBE2 50%, #E8E2D8 75%);
+  background: linear-gradient(90deg, #E5E5EA 25%, #EFEFF4 50%, #E5E5EA 75%);
   background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
-  border-radius: 8px;
+  animation: shimmer 1.4s ease-in-out infinite;
+  border-radius: 10px;
 }
 
-/* Drag overlay */
-.drag-overlay { opacity: 0.9; transform: rotate(1.5deg) scale(1.02); box-shadow: 0 20px 60px rgba(0,0,0,0.15); }
-
-/* Modal animation */
-@keyframes modal-in {
-  from { opacity: 0; transform: translateY(20px) scale(0.97); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
-}
-.modal-enter { animation: modal-in 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+/* ── Drag ─────────────────────────────────────────────────────── */
+.dragging { opacity: 0.85; transform: rotate(1.5deg) scale(1.03); box-shadow: 0 24px 60px rgba(0,0,0,0.18); }

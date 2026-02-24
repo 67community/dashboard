@@ -1,41 +1,39 @@
 "use client"
 
-import { TokenHealthCard } from "@/components/cards/token-health"
-import { SocialPulseCard } from "@/components/cards/social-pulse"
-import { CommunityCard } from "@/components/cards/community"
+import { TokenHealthCard }    from "@/components/cards/token-health"
+import { SocialPulseCard }    from "@/components/cards/social-pulse"
+import { CommunityCard }      from "@/components/cards/community"
 import { ContentPipelineCard } from "@/components/cards/content-pipeline"
-import { AgentStatusCard } from "@/components/cards/agent-status"
-import { MilestonesCard } from "@/components/cards/milestones"
-import { useAppData } from "@/lib/data-context"
+import { AgentStatusCard }    from "@/components/cards/agent-status"
+import { MilestonesCard }     from "@/components/cards/milestones"
+import { useAppData }         from "@/lib/data-context"
 
 export default function Dashboard() {
   const { data } = useAppData()
 
   return (
     <div>
-      {/* Page header */}
-      <div className="mb-8">
-        <div className="flex items-end justify-between">
-          <div>
-            <h2 className="text-3xl font-black text-[#0D0D0D] tracking-tight">
-              Overview
-            </h2>
-            <p className="text-sm text-[#9A9082] mt-1.5 font-medium">
-              Everything happening with{" "}
-              <span className="font-black gold-text">$67</span>{" "}
-              in one place. Click any card to expand.
-            </p>
-          </div>
-          {data?.last_updated && (
-            <p className="hidden sm:block text-xs text-[#C8C0B4] font-medium">
-              Data from {new Date(data.last_updated).toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" })}
-            </p>
-          )}
+      {/* ── Page header ── */}
+      <div className="mb-8 flex items-end justify-between">
+        <div>
+          <h1 style={{ fontSize: "2rem", fontWeight: 900, letterSpacing: "-0.04em", color: "#1D1D1F", lineHeight: 1 }}>
+            Overview
+          </h1>
+          <p className="text-sm font-medium mt-1.5" style={{ color: "#6E6E73" }}>
+            Everything happening with{" "}
+            <span className="font-black gold-text">$67</span>{" "}
+            — tap any card to expand.
+          </p>
         </div>
+        {data?.last_updated && (
+          <p className="hidden sm:block text-xs font-medium" style={{ color: "#C7C7CC" }}>
+            Updated {new Date(data.last_updated).toLocaleTimeString("en-US",{ hour:"2-digit", minute:"2-digit" })}
+          </p>
+        )}
       </div>
 
-      {/* 3-column grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      {/* ── Card grid ── */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
         <TokenHealthCard />
         <SocialPulseCard />
         <CommunityCard />
@@ -44,29 +42,45 @@ export default function Dashboard() {
         <MilestonesCard />
       </div>
 
-      {/* Season 2 Banner */}
-      <div className="mt-8 relative overflow-hidden rounded-3xl bg-[#0D0D0D] p-8">
-        {/* Background decoration */}
-        <div className="absolute top-0 right-0 w-64 h-64 rounded-full opacity-5"
-          style={{ background: "radial-gradient(circle, #F5A623, transparent)", transform: "translate(30%, -30%)" }} />
-        <div className="absolute bottom-0 left-0 w-48 h-48 rounded-full opacity-5"
-          style={{ background: "radial-gradient(circle, #F5A623, transparent)", transform: "translate(-30%, 30%)" }} />
+      {/* ── Season 2 Banner ── */}
+      <div className="mt-6 relative rounded-[26px] overflow-hidden"
+        style={{ background: "#1D1D1F" }}>
+        {/* Glow blobs */}
+        <div className="absolute" style={{
+          width: 300, height: 300, borderRadius: "50%", top: -80, right: -80,
+          background: "radial-gradient(circle, rgba(245,166,35,0.18) 0%, transparent 70%)",
+          pointerEvents: "none",
+        }} />
+        <div className="absolute" style={{
+          width: 200, height: 200, borderRadius: "50%", bottom: -60, left: -40,
+          background: "radial-gradient(circle, rgba(245,166,35,0.12) 0%, transparent 70%)",
+          pointerEvents: "none",
+        }} />
 
-        <div className="relative flex items-center justify-between">
+        <div className="relative flex items-center justify-between p-8 sm:p-10">
           <div>
-            <p className="text-xs font-bold tracking-[0.3em] uppercase mb-2"
-              style={{ color: "#F5A623" }}>Coming Soon</p>
-            <h3 className="text-3xl font-black text-white tracking-tight leading-tight">
-              Season 2 is Loading
-              <span className="inline-block ml-2 animate-pulse">...</span>
-            </h3>
-            <p className="text-sm text-white/40 mt-2 font-medium">
-              More exchanges. Bigger community. Unstoppable momentum.
+            <p style={{ fontSize: "0.625rem", fontWeight: 800, letterSpacing: "0.22em", textTransform: "uppercase", color: "#F5A623", marginBottom: "0.75rem" }}>
+              Coming Soon
             </p>
-            <p className="text-xs text-white/25 mt-1 font-bold tracking-widest">#67to67Billion</p>
+            <h2 style={{ fontSize: "2rem", fontWeight: 900, color: "white", letterSpacing: "-0.04em", lineHeight: 1.1, marginBottom: "0.75rem" }}>
+              Season 2 is Loading…
+            </h2>
+            <p style={{ fontSize: "0.875rem", color: "rgba(255,255,255,0.45)", fontWeight: 500, lineHeight: 1.5 }}>
+              More exchanges. Bigger community.<br />
+              Unstoppable momentum.
+            </p>
+            <p style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.2)", fontWeight: 700, letterSpacing: "0.1em", marginTop: "1rem" }}>
+              #67to67Billion
+            </p>
           </div>
-          <div className="hidden sm:flex items-center justify-center w-24 h-24 rounded-full gold-gradient shadow-2xl shadow-amber-400/30 flex-shrink-0">
-            <span className="text-black font-black text-3xl tracking-tight">67</span>
+          {/* Big 67 coin */}
+          <div className="hidden sm:flex items-center justify-center flex-shrink-0"
+            style={{
+              width: 100, height: 100, borderRadius: "50%",
+              background: "linear-gradient(135deg, #F5A623, #FFD966)",
+              boxShadow: "0 0 60px rgba(245,166,35,0.4), 0 0 120px rgba(245,166,35,0.1)",
+            }}>
+            <span style={{ fontSize: "2.5rem", fontWeight: 900, color: "black", letterSpacing: "-0.05em" }}>67</span>
           </div>
         </div>
       </div>

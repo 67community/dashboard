@@ -1,85 +1,109 @@
 "use client"
 
 import { useState, ReactNode } from "react"
-import { X, Maximize2 } from "lucide-react"
+import { X } from "lucide-react"
 
-interface DashboardCardProps {
+interface Props {
   title: string
+  subtitle?: string
   icon: ReactNode
-  accentColor?: string
+  accentColor: string
   collapsed: ReactNode
   expanded: ReactNode
   className?: string
-  badge?: string
+  liveTag?: boolean
 }
 
-export function DashboardCard({
-  title, icon, accentColor = "#F5A623", collapsed, expanded, className = "", badge,
-}: DashboardCardProps) {
+export function DashboardCard({ title, subtitle, icon, accentColor, collapsed, expanded, className = "", liveTag }: Props) {
   const [open, setOpen] = useState(false)
 
   return (
     <>
+      {/* ── Grid card ── */}
       <div
-        className={`mc-card cursor-pointer overflow-hidden group ${className}`}
+        className={`apple-card apple-card-clickable overflow-hidden ${className}`}
         onClick={() => setOpen(true)}
       >
-        {/* Top accent line */}
-        <div className="h-[3px] w-full rounded-t-[20px]" style={{ background: `linear-gradient(90deg, ${accentColor}, ${accentColor}88)` }} />
+        {/* Thin top accent */}
+        <div className="h-[2.5px]" style={{ background: `linear-gradient(90deg, ${accentColor}CC, ${accentColor}44)` }} />
 
-        <div className="p-5">
+        <div className="p-6">
           {/* Header */}
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex items-start justify-between mb-5">
             <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-xl flex items-center justify-center"
-                style={{ backgroundColor: `${accentColor}18` }}>
-                <span style={{ color: accentColor }} className="w-4 h-4">{icon}</span>
+              {/* Icon blob */}
+              <div className="w-9 h-9 rounded-[11px] flex items-center justify-center flex-shrink-0"
+                style={{ background: `${accentColor}18` }}>
+                <span style={{ color: accentColor }} className="flex items-center justify-center w-[18px] h-[18px]">
+                  {icon}
+                </span>
               </div>
               <div>
-                <p className="text-xs font-semibold tracking-widest uppercase" style={{ color: accentColor }}>
-                  {title}
-                </p>
+                <p className="text-sm font-bold text-[#1D1D1F] leading-none">{title}</p>
+                {subtitle && <p className="text-xs text-[#8E8E93] mt-0.5">{subtitle}</p>}
               </div>
             </div>
             <div className="flex items-center gap-2">
-              {badge && (
-                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-green-100 text-green-700">
-                  {badge}
+              {liveTag && (
+                <span className="flex items-center gap-1.5 text-[10px] font-bold text-[#34C759] bg-[#E8FBF0] px-2 py-0.5 rounded-full">
+                  <span className="dot-live w-1.5 h-1.5 inline-block" />
+                  LIVE
                 </span>
               )}
-              <Maximize2 className="w-3.5 h-3.5 text-[#C8C0B4] group-hover:text-[#9A9082] transition-colors" />
+              <div className="w-5 h-5 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                style={{ background: "#F5F5F7" }}>
+                <svg className="w-2.5 h-2.5 text-[#8E8E93]" viewBox="0 0 10 10" fill="none">
+                  <path d="M1 9L9 1M9 1H3M9 1V7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                </svg>
+              </div>
             </div>
           </div>
 
           {/* Content */}
-          <div>{collapsed}</div>
+          {collapsed}
         </div>
       </div>
 
-      {/* Full modal */}
+      {/* ── Full-screen sheet modal ── */}
       {open && (
-        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-6"
-          onClick={(e) => e.target === e.currentTarget && setOpen(false)}>
-          <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setOpen(false)} />
-          <div className="relative w-full sm:max-w-2xl max-h-[92vh] rounded-t-3xl sm:rounded-3xl overflow-hidden flex flex-col modal-enter shadow-2xl"
-            style={{ background: "#FDFAF6", border: "1px solid #DDD7CC" }}>
-            {/* Modal accent */}
-            <div className="h-1 flex-shrink-0" style={{ background: `linear-gradient(90deg, ${accentColor}, ${accentColor}88)` }} />
-            {/* Modal header */}
-            <div className="flex items-center justify-between px-6 py-4 border-b border-[#DDD7CC] flex-shrink-0">
+        <div className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center sm:p-6"
+          onClick={(e) => { if (e.target === e.currentTarget) setOpen(false) }}>
+          {/* Backdrop */}
+          <div className="absolute inset-0 bg-black/30 backdrop-blur-sm" onClick={() => setOpen(false)} />
+
+          {/* Sheet */}
+          <div
+            className="relative w-full sm:max-w-xl max-h-[90vh] flex flex-col overflow-hidden modal-sheet"
+            style={{
+              background: "rgba(255,255,255,0.96)",
+              backdropFilter: "blur(40px)",
+              WebkitBackdropFilter: "blur(40px)",
+              borderRadius: "24px",
+              boxShadow: "0 8px 40px rgba(0,0,0,0.16), 0 0 0 0.5px rgba(0,0,0,0.08)",
+            }}>
+
+            {/* Top accent */}
+            <div className="h-[3px] flex-shrink-0" style={{ background: `linear-gradient(90deg, ${accentColor}, ${accentColor}44)` }} />
+
+            {/* Sheet header */}
+            <div className="flex items-center justify-between px-6 py-4 border-b flex-shrink-0" style={{ borderColor: "rgba(0,0,0,0.07)" }}>
               <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-xl flex items-center justify-center"
-                  style={{ backgroundColor: `${accentColor}18` }}>
+                <div className="w-9 h-9 rounded-[11px] flex items-center justify-center" style={{ background: `${accentColor}18` }}>
                   <span style={{ color: accentColor }}>{icon}</span>
                 </div>
-                <h2 className="text-base font-bold text-[#0D0D0D] tracking-tight">{title}</h2>
+                <div>
+                  <h2 className="text-base font-bold text-[#1D1D1F] leading-none">{title}</h2>
+                  {subtitle && <p className="text-xs text-[#8E8E93] mt-0.5">{subtitle}</p>}
+                </div>
               </div>
               <button onClick={() => setOpen(false)}
-                className="w-8 h-8 rounded-full bg-[#E8E2D8] hover:bg-[#DDD7CC] flex items-center justify-center transition-colors">
-                <X className="w-4 h-4 text-[#7A7060]" />
+                className="w-7 h-7 rounded-full flex items-center justify-center transition-colors"
+                style={{ background: "#F5F5F7" }}>
+                <X className="w-3.5 h-3.5 text-[#8E8E93]" />
               </button>
             </div>
-            {/* Modal content */}
+
+            {/* Sheet content */}
             <div className="overflow-y-auto flex-1 p-6">{expanded}</div>
           </div>
         </div>
