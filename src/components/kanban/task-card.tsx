@@ -8,7 +8,7 @@ import { TEAM_MEMBERS } from "@/lib/mock-data"
 import { TeamAvatar } from "@/components/team/team-avatar"
 
 const PRIORITY_STYLES: Record<Priority, string> = {
-  Low: "bg-[#EDE8DF] text-[#6B6560]",
+  Low: "bg-[#F2F2F3] text-[#6B7280]",
   Medium: "bg-blue-100 text-blue-700",
   High: "bg-orange-100 text-orange-700",
   Urgent: "bg-red-100 text-red-700",
@@ -21,7 +21,7 @@ const CATEGORY_STYLES: Record<Category, string> = {
   Token: "bg-amber-100 text-amber-700",
   Merch: "bg-teal-100 text-teal-700",
   Design: "bg-rose-100 text-rose-700",
-  Other: "bg-[#EDE8DF] text-[#6B6560]",
+  Other: "bg-[#F2F2F3] text-[#6B7280]",
 }
 
 interface TaskCardProps {
@@ -52,9 +52,9 @@ export function TaskCard({ task, onOpen, isDragOverlay = false }: TaskCardProps)
     <div
       ref={setNodeRef}
       style={style}
-      className={`bg-[#FAF7F2] rounded-2xl border border-[rgba(120,95,60,0.08)] p-3.5 shadow-sm group cursor-pointer select-none
+      className={`bg-[#FFFFFF] rounded-2xl border border-[rgba(0,0,0,0.05)] p-3.5 shadow-sm group cursor-pointer select-none
         ${isDragging ? "opacity-40" : ""}
-        ${isDragOverlay ? "drag-overlay shadow-xl" : "hover:border-[rgba(120,95,60,0.14)] hover:shadow-md transition-all"}
+        ${isDragOverlay ? "drag-overlay shadow-xl" : "hover:border-[rgba(0,0,0,0.10)] hover:shadow-md transition-all"}
       `}
       onClick={() => onOpen(task)}
     >
@@ -66,9 +66,9 @@ export function TaskCard({ task, onOpen, isDragOverlay = false }: TaskCardProps)
           className="mt-0.5 p-0.5 opacity-0 group-hover:opacity-40 hover:!opacity-80 transition-opacity cursor-grab active:cursor-grabbing flex-shrink-0"
           onClick={(e) => e.stopPropagation()}
         >
-          <GripVertical className="w-3.5 h-3.5 text-[#A8A29A]" />
+          <GripVertical className="w-3.5 h-3.5 text-[#9CA3AF]" />
         </button>
-        <p className="text-sm font-medium text-[#2A2520] leading-snug flex-1">{task.title}</p>
+        <p className="text-sm font-medium text-[#1F2937] leading-snug flex-1">{task.title}</p>
       </div>
 
       {/* Badges */}
@@ -85,12 +85,12 @@ export function TaskCard({ task, onOpen, isDragOverlay = false }: TaskCardProps)
       <div className="flex items-center justify-between mt-3 ml-5">
         <div className="flex items-center gap-3">
           {task.subtasks.length > 0 && (
-            <span className="text-xs text-[#A8A29A]">
+            <span className="text-xs text-[#9CA3AF]">
               ✓ {doneSubtasks}/{task.subtasks.length}
             </span>
           )}
           {task.dueDate && (
-            <div className="flex items-center gap-1 text-xs text-[#A8A29A]">
+            <div className="flex items-center gap-1 text-xs text-[#9CA3AF]">
               <Calendar className="w-3 h-3" />
               {new Date(task.dueDate).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
             </div>

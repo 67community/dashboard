@@ -16,13 +16,13 @@ export function ContentPipelineCard() {
           <p className="display-label mt-1.5">Drafts in Queue</p>
         </div>
         <div className="text-right">
-          <p className="text-sm font-bold text-[#1A1A18]">{lastPost}</p>
+          <p className="text-sm font-bold text-[#111110]">{lastPost}</p>
           <p className="display-label">Last Post</p>
         </div>
       </div>
-      <div className="rounded-2xl p-4 flex items-center gap-3" style={{ background: "#EDE8DF" }}>
+      <div className="rounded-2xl p-4 flex items-center gap-3" style={{ background: "#F2F2F3" }}>
         <Calendar className="w-4 h-4 flex-shrink-0" style={{ color: "#EC4899" }} />
-        <p className="text-xs font-semibold" style={{ color: "#7A7570" }}>
+        <p className="text-xs font-semibold" style={{ color: "#6B7280" }}>
           AI content pipeline launching in Sprint 3
         </p>
       </div>
@@ -38,13 +38,13 @@ export function ContentPipelineCard() {
           { l: "Last Post", v: lastPost, sub: ""       },
         ].map(x => (
           <div key={x.l} className="stat-pill text-center">
-            <p className="text-2xl font-black text-[#1A1A18] tracking-tight">{x.v}</p>
+            <p className="text-2xl font-black text-[#111110] tracking-tight">{x.v}</p>
             <p className="display-label mt-1">{x.l}</p>
           </div>
         ))}
       </div>
 
-      <div className="rounded-2xl p-5" style={{ background: "#1A1A18" }}>
+      <div className="rounded-2xl p-5" style={{ background: "#111110" }}>
         <Calendar className="w-5 h-5 mb-3" style={{ color: "#EC4899" }} />
         <p className="text-sm font-bold text-white mb-1.5">Content Calendar</p>
         <p className="text-xs leading-relaxed" style={{ color: "rgba(255,255,255,0.45)" }}>
@@ -62,7 +62,7 @@ export function ContentPipelineCard() {
           { l: "Memes",                v: 10, c: "#1D9BF0" },
         ].map(x => (
           <div key={x.l} className="mb-3">
-            <div className="flex justify-between text-xs font-semibold mb-1.5" style={{ color: "#7A7570" }}>
+            <div className="flex justify-between text-xs font-semibold mb-1.5" style={{ color: "#6B7280" }}>
               <span>{x.l}</span><span>{x.v}%</span>
             </div>
             <div className="progress-track h-1.5">

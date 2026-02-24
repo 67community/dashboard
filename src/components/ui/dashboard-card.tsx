@@ -39,8 +39,8 @@ export function DashboardCard({ title, subtitle, icon, accentColor, collapsed, e
                 </span>
               </div>
               <div>
-                <p className="text-sm font-bold leading-none" style={{ color: "#1A1A18" }}>{title}</p>
-                {subtitle && <p className="text-xs mt-0.5" style={{ color: "#7A7570" }}>{subtitle}</p>}
+                <p className="text-sm font-bold leading-none" style={{ color: "#111110" }}>{title}</p>
+                {subtitle && <p className="text-xs mt-0.5" style={{ color: "#6B7280" }}>{subtitle}</p>}
               </div>
             </div>
             <div className="flex items-center gap-2">
@@ -52,8 +52,8 @@ export function DashboardCard({ title, subtitle, icon, accentColor, collapsed, e
                 </span>
               )}
               <div className="w-5 h-5 rounded-full flex items-center justify-center"
-                style={{ background: "rgba(120,95,60,0.08)" }}>
-                <svg className="w-2.5 h-2.5" viewBox="0 0 10 10" fill="none" style={{ color: "#7A7570" }}>
+                style={{ background: "rgba(0,0,0,0.05)" }}>
+                <svg className="w-2.5 h-2.5" viewBox="0 0 10 10" fill="none" style={{ color: "#6B7280" }}>
                   <path d="M1 9L9 1M9 1H3M9 1V7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
                 </svg>
               </div>
@@ -76,9 +76,9 @@ export function DashboardCard({ title, subtitle, icon, accentColor, collapsed, e
           <div
             className="relative w-full sm:max-w-xl max-h-[90vh] flex flex-col overflow-hidden modal-sheet"
             style={{
-              background: "#FAF7F2",
+              background: "#FFFFFF",
               borderRadius: "24px",
-              boxShadow: "0 8px 60px rgba(100,75,40,0.18), 0 0 0 1px rgba(120,95,60,0.08)",
+              boxShadow: "0 8px 60px rgba(0,0,0,0.14), 0 0 0 1px rgba(0,0,0,0.05)",
             }}>
 
             {/* Top accent */}
@@ -86,20 +86,20 @@ export function DashboardCard({ title, subtitle, icon, accentColor, collapsed, e
 
             {/* Sheet header */}
             <div className="flex items-center justify-between px-6 py-4 flex-shrink-0"
-              style={{ borderBottom: "1px solid rgba(120,95,60,0.09)" }}>
+              style={{ borderBottom: "1px solid rgba(0,0,0,0.06)" }}>
               <div className="flex items-center gap-3">
                 <div className="w-9 h-9 rounded-[11px] flex items-center justify-center" style={{ background: `${accentColor}18` }}>
                   <span style={{ color: accentColor }}>{icon}</span>
                 </div>
                 <div>
-                  <h2 className="text-base font-bold leading-none" style={{ color: "#1A1A18" }}>{title}</h2>
-                  {subtitle && <p className="text-xs mt-0.5" style={{ color: "#7A7570" }}>{subtitle}</p>}
+                  <h2 className="text-base font-bold leading-none" style={{ color: "#111110" }}>{title}</h2>
+                  {subtitle && <p className="text-xs mt-0.5" style={{ color: "#6B7280" }}>{subtitle}</p>}
                 </div>
               </div>
               <button onClick={() => setOpen(false)}
                 className="w-7 h-7 rounded-full flex items-center justify-center transition-colors"
-                style={{ background: "rgba(120,95,60,0.08)" }}>
-                <X className="w-3.5 h-3.5" style={{ color: "#7A7570" }} />
+                style={{ background: "rgba(0,0,0,0.05)" }}>
+                <X className="w-3.5 h-3.5" style={{ color: "#6B7280" }} />
               </button>
             </div>
 

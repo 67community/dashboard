@@ -28,14 +28,14 @@ export default function Dashboard() {
               fontSize: "clamp(1.75rem, 4vw, 2.5rem)",
               fontWeight: 900,
               letterSpacing: "-0.04em",
-              color: "#1A1A18",
+              color: "#111110",
               lineHeight: 1.05,
             }}>
               Operations Overview
             </h1>
-            <p className="mt-2" style={{ fontSize: "0.9375rem", color: "#7A7570", fontWeight: 500 }}>
+            <p className="mt-2" style={{ fontSize: "0.9375rem", color: "#6B7280", fontWeight: 500 }}>
               Tap any card to expand full details — everything{" "}
-              <span style={{ color: "#1A1A18", fontWeight: 700 }}>$67</span>{" "}
+              <span style={{ color: "#111110", fontWeight: 700 }}>$67</span>{" "}
               in one place.
             </p>
           </div>
@@ -44,7 +44,7 @@ export default function Dashboard() {
           {livePrice && (
             <div className="hidden sm:flex flex-col items-end flex-shrink-0 gap-1.5">
               <div className="px-4 py-2 rounded-[14px]"
-                style={{ background: "#1A1A18" }}>
+                style={{ background: "#111110" }}>
                 <p className="text-xs font-semibold mb-0.5" style={{ color: "rgba(255,255,255,0.4)", letterSpacing: "0.06em", textTransform: "uppercase" }}>
                   Live Price
                 </p>
@@ -60,7 +60,7 @@ export default function Dashboard() {
         </div>
 
         {/* Divider */}
-        <div className="mt-8 h-px" style={{ background: "rgba(120,95,60,0.10)" }} />
+        <div className="mt-8 h-px" style={{ background: "rgba(0,0,0,0.07)" }} />
       </div>
 
       {/* ── Card grid — 3 columns on large, 2 on medium, 1 on mobile ── */}

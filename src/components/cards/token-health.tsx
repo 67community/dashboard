@@ -45,7 +45,7 @@ export function TokenHealthCard() {
         ].map(x => (
           <div key={x.l} className="stat-pill">
             <p className="display-label mb-1.5">{x.l}</p>
-            <p className="text-base font-bold text-[#1A1A18] tracking-tight">{x.v}</p>
+            <p className="text-base font-bold text-[#111110] tracking-tight">{x.v}</p>
           </div>
         ))}
       </div>
@@ -55,20 +55,20 @@ export function TokenHealthCard() {
   const expanded = (
     <div className="space-y-5">
       {/* Big price */}
-      <div className="bg-[#EDE8DF] rounded-2xl p-5">
+      <div className="bg-[#F2F2F3] rounded-2xl p-5">
         <p className="display-label mb-2">Live Price</p>
-        <p style={{ fontSize: "3rem", fontWeight: 800, letterSpacing: "-0.05em", lineHeight: 1, color: "#1A1A18" }}>
+        <p style={{ fontSize: "3rem", fontWeight: 800, letterSpacing: "-0.05em", lineHeight: 1, color: "#111110" }}>
           {$p(price)}
         </p>
         <div className="flex items-center gap-2 mt-2.5">
           <Chg v={c24h} />
-          <span className="text-xs text-[#7A7570]">·</span>
+          <span className="text-xs text-[#6B7280]">·</span>
           <Chg v={t?.price_change_1h ?? 0} />
-          <span className="text-xs text-[#7A7570] font-medium">1h</span>
+          <span className="text-xs text-[#6B7280] font-medium">1h</span>
           {t?.price_change_7d !== undefined && <>
-            <span className="text-xs text-[#7A7570]">·</span>
+            <span className="text-xs text-[#6B7280]">·</span>
             <Chg v={t.price_change_7d} />
-            <span className="text-xs text-[#7A7570] font-medium">7d</span>
+            <span className="text-xs text-[#6B7280] font-medium">7d</span>
           </>}
         </div>
       </div>
@@ -83,13 +83,13 @@ export function TokenHealthCard() {
         ].map(x => (
           <div key={x.l} className="stat-pill">
             <p className="display-label mb-1.5">{x.l}</p>
-            <p className="text-xl font-bold text-[#1A1A18] tracking-tight">{x.v}</p>
+            <p className="text-xl font-bold text-[#111110] tracking-tight">{x.v}</p>
           </div>
         ))}
       </div>
 
       {/* ATH */}
-      <div className="rounded-2xl p-5 overflow-hidden relative" style={{ background: "linear-gradient(135deg, #1A1A18, #252520)" }}>
+      <div className="rounded-2xl p-5 overflow-hidden relative" style={{ background: "linear-gradient(135deg, #111110, #252520)" }}>
         <div className="absolute top-0 right-0 w-32 h-32 rounded-full opacity-10"
           style={{ background: "radial-gradient(circle, #F5A623, transparent)", transform: "translate(30%,-30%)" }} />
         <p className="display-label text-white/40 mb-2">All-Time High</p>
@@ -121,11 +121,11 @@ export function TokenHealthCard() {
               return (
                 <div key={i} className="flex items-center gap-2.5">
                   {ex.logo && <img src={ex.logo} alt="" className="w-4 h-4 rounded-sm object-cover flex-shrink-0" onError={(e) => { (e.target as HTMLImageElement).style.display="none" }} />}
-                  <span className="text-xs font-semibold text-[#1A1A18] w-28 truncate">{ex.exchange}</span>
+                  <span className="text-xs font-semibold text-[#111110] w-28 truncate">{ex.exchange}</span>
                   <div className="flex-1 progress-track h-1.5">
                     <div className="progress-fill h-1.5" style={{ width:`${pct}%`, background: ex.is_dex ? "#30B0C7" : "#F5A623" }} />
                   </div>
-                  <span className="text-xs font-bold text-[#1A1A18] w-14 text-right">{$(ex.volume_usd)}</span>
+                  <span className="text-xs font-bold text-[#111110] w-14 text-right">{$(ex.volume_usd)}</span>
                 </div>
               )
             })}
@@ -141,8 +141,8 @@ export function TokenHealthCard() {
           ["CMC","https://coinmarketcap.com/currencies/the-official-67-coin-onchain/"]
         ].map(([l,h]) => (
           <a key={l} href={h} target="_blank" rel="noopener noreferrer" onClick={e=>e.stopPropagation()}
-            className="px-3.5 py-2 rounded-xl text-xs font-bold text-[#1A1A18] hover:bg-[#E5DFD5] transition-colors"
-            style={{ background: "#EDE8DF" }}>
+            className="px-3.5 py-2 rounded-xl text-xs font-bold text-[#111110] hover:bg-[#E8E8EA] transition-colors"
+            style={{ background: "#F2F2F3" }}>
             {l} ↗
           </a>
         ))}

@@ -29,7 +29,7 @@ export function CommunityCard() {
           { l: "Telegram",  v: (c?.telegram_members ?? 0) >= 1000 ? `${((c?.telegram_members??0)/1000).toFixed(1)}K` : String(c?.telegram_members ?? "—") },
         ].map(x => (
           <div key={x.l} className="stat-pill text-center">
-            <p className="text-lg font-black text-[#1A1A18] tracking-tight">{x.v}</p>
+            <p className="text-lg font-black text-[#111110] tracking-tight">{x.v}</p>
             <p className="display-label mt-0.5">{x.l}</p>
           </div>
         ))}
@@ -76,7 +76,7 @@ export function CommunityCard() {
         <div className="progress-track h-3">
           <div className="progress-fill h-3" style={{ width: `${Math.min((m/10000)*100,100)}%`, background: "linear-gradient(90deg, #5865F2, #7289DA)" }} />
         </div>
-        <p className="text-xs text-[#7A7570] mt-2">{(10000-m).toLocaleString()} members to go</p>
+        <p className="text-xs text-[#6B7280] mt-2">{(10000-m).toLocaleString()} members to go</p>
       </div>
     </div>
   )

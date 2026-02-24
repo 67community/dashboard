@@ -34,8 +34,8 @@ export function AgentStatusCard() {
         {bots.slice(0, 5).map(b => (
           <div key={b.name} className="flex items-center gap-2.5">
             <span className={`w-2 h-2 rounded-full flex-shrink-0 ${b.status === "green" ? "dot-live" : "dot-off"}`} />
-            <span className="text-xs font-semibold text-[#3C3630] flex-1">{b.name}</span>
-            <span className="text-xs text-[#A8A29A] font-medium">{ago(b.last_run)}</span>
+            <span className="text-xs font-semibold text-[#374151] flex-1">{b.name}</span>
+            <span className="text-xs text-[#9CA3AF] font-medium">{ago(b.last_run)}</span>
           </div>
         ))}
       </div>
@@ -50,11 +50,11 @@ export function AgentStatusCard() {
           <p className="text-3xl font-black tracking-tight" style={{ color: "#15803D" }}>{on}</p>
           <p className="text-xs font-bold mt-0.5 tracking-widest uppercase" style={{ color: "#15803D", opacity: 0.7 }}>Running</p>
         </div>
-        <div className="rounded-2xl p-4" style={{ background: bots.length - on > 0 ? "#FEF2F2" : "#EDE8DF" }}>
-          <p className="text-3xl font-black tracking-tight" style={{ color: bots.length - on > 0 ? "#DC2626" : "#A8A29A" }}>
+        <div className="rounded-2xl p-4" style={{ background: bots.length - on > 0 ? "#FEF2F2" : "#F2F2F3" }}>
+          <p className="text-3xl font-black tracking-tight" style={{ color: bots.length - on > 0 ? "#DC2626" : "#9CA3AF" }}>
             {bots.length - on}
           </p>
-          <p className="text-xs font-bold mt-0.5 tracking-widest uppercase" style={{ color: bots.length - on > 0 ? "#DC2626" : "#A8A29A", opacity: 0.7 }}>
+          <p className="text-xs font-bold mt-0.5 tracking-widest uppercase" style={{ color: bots.length - on > 0 ? "#DC2626" : "#9CA3AF", opacity: 0.7 }}>
             Offline
           </p>
         </div>
@@ -65,14 +65,14 @@ export function AgentStatusCard() {
         <div key={b.name} className="flex items-center gap-3.5 stat-pill">
           <span className={`w-3 h-3 rounded-full flex-shrink-0 ${b.status === "green" ? "dot-live" : "dot-off"}`} />
           <div className="flex-1">
-            <p className="text-sm font-bold text-[#1A1A18]">{b.name}</p>
-            <p className="text-xs text-[#7A7570]">{b.schedule}</p>
+            <p className="text-sm font-bold text-[#111110]">{b.name}</p>
+            <p className="text-xs text-[#6B7280]">{b.schedule}</p>
           </div>
           <div className="text-right">
             <p className="text-xs font-bold" style={{ color: b.status === "green" ? "#34C759" : "#FF3B30" }}>
               {b.status === "green" ? "Running" : "Offline"}
             </p>
-            <p className="text-xs text-[#A8A29A]">{ago(b.last_run)} ago</p>
+            <p className="text-xs text-[#9CA3AF]">{ago(b.last_run)} ago</p>
           </div>
         </div>
       ))}

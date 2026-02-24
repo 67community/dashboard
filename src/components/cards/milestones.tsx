@@ -28,7 +28,7 @@ export function MilestonesCard() {
           return (
             <div key={m.label}>
               <div className="flex justify-between items-center mb-2">
-                <span className="text-xs font-semibold text-[#3C3630] truncate max-w-[65%]">{m.label}</span>
+                <span className="text-xs font-semibold text-[#374151] truncate max-w-[65%]">{m.label}</span>
                 <span className="text-xs font-black" style={{ color: COLORS[i] }}>{p.toFixed(0)}%</span>
               </div>
               <div className="progress-track h-2">
@@ -48,13 +48,13 @@ export function MilestonesCard() {
         return (
           <div key={m.label} className="stat-pill">
             <div className="flex justify-between items-center mb-3">
-              <p className="text-sm font-bold text-[#1A1A18]">{m.label}</p>
+              <p className="text-sm font-bold text-[#111110]">{m.label}</p>
               <span className="text-lg font-black" style={{ color: COLORS[i%COLORS.length] }}>{p.toFixed(0)}%</span>
             </div>
             <div className="progress-track h-3 mb-2.5">
               <div className="progress-fill h-3" style={{ width:`${p}%`, background:COLORS[i%COLORS.length] }} />
             </div>
-            <div className="flex justify-between text-xs font-semibold text-[#7A7570]">
+            <div className="flex justify-between text-xs font-semibold text-[#6B7280]">
               <span>{fv(m.label, m.current)} now</span>
               <span>{fv(m.label, m.target)} goal</span>
             </div>
@@ -64,7 +64,7 @@ export function MilestonesCard() {
 
       {wins.length > 0 && (
         <div className="rounded-2xl p-5 overflow-hidden relative"
-          style={{ background: "linear-gradient(135deg, #1A1A18, #252520)" }}>
+          style={{ background: "linear-gradient(135deg, #111110, #252520)" }}>
           <div className="absolute inset-0 opacity-5"
             style={{ background: "radial-gradient(circle at 80% 20%, #F5A623, transparent)" }} />
           <p className="display-label text-white/40 mb-4">🏆 Recent Wins</p>
