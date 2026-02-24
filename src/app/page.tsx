@@ -9,31 +9,62 @@ import { MilestonesCard }     from "@/components/cards/milestones"
 import { useAppData }         from "@/lib/data-context"
 
 export default function Dashboard() {
-  const { data } = useAppData()
+  const { data, livePrice, liveChange24h } = useAppData()
+  const up = (liveChange24h ?? data?.token_health?.price_change_24h ?? 0) >= 0
 
   return (
     <div>
       {/* ── Page header ── */}
-      <div className="mb-8 flex items-end justify-between">
-        <div>
-          <h1 style={{ fontSize: "2rem", fontWeight: 900, letterSpacing: "-0.04em", color: "#1A1A18", lineHeight: 1 }}>
-            Overview
-          </h1>
-          <p className="text-sm font-medium mt-1.5" style={{ color: "#7A7570" }}>
-            Everything happening with{" "}
-            <span className="font-black gold-text">$67</span>{" "}
-            — tap any card to expand.
-          </p>
+      <div className="mb-10">
+        {/* Top row */}
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            {/* Eyebrow */}
+            <p className="display-label mb-2" style={{ color: "#C8820A" }}>
+              The Official 67 Coin · Mission Control
+            </p>
+            {/* Title */}
+            <h1 style={{
+              fontSize: "clamp(1.75rem, 4vw, 2.5rem)",
+              fontWeight: 900,
+              letterSpacing: "-0.04em",
+              color: "#1A1A18",
+              lineHeight: 1.05,
+            }}>
+              Operations Overview
+            </h1>
+            <p className="mt-2" style={{ fontSize: "0.9375rem", color: "#7A7570", fontWeight: 500 }}>
+              Tap any card to expand full details — everything{" "}
+              <span style={{ color: "#1A1A18", fontWeight: 700 }}>$67</span>{" "}
+              in one place.
+            </p>
+          </div>
+
+          {/* Live price chip */}
+          {livePrice && (
+            <div className="hidden sm:flex flex-col items-end flex-shrink-0 gap-1.5">
+              <div className="px-4 py-2 rounded-[14px]"
+                style={{ background: "#1A1A18" }}>
+                <p className="text-xs font-semibold mb-0.5" style={{ color: "rgba(255,255,255,0.4)", letterSpacing: "0.06em", textTransform: "uppercase" }}>
+                  Live Price
+                </p>
+                <p style={{ fontSize: "1.4rem", fontWeight: 800, letterSpacing: "-0.04em", color: "white", lineHeight: 1 }}>
+                  ${livePrice < 0.001 ? livePrice.toFixed(6) : livePrice.toFixed(5)}
+                </p>
+              </div>
+              <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${up ? "badge-up" : "badge-down"}`}>
+                {up ? "▲" : "▼"} {Math.abs(liveChange24h ?? 0).toFixed(2)}% 24h
+              </span>
+            </div>
+          )}
         </div>
-        {data?.last_updated && (
-          <p className="hidden sm:block text-xs font-medium" style={{ color: "#A8A29A" }}>
-            Updated {new Date(data.last_updated).toLocaleTimeString("en-US",{ hour:"2-digit", minute:"2-digit" })}
-          </p>
-        )}
+
+        {/* Divider */}
+        <div className="mt-8 h-px" style={{ background: "rgba(120,95,60,0.10)" }} />
       </div>
 
-      {/* ── Card grid ── */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+      {/* ── Card grid — 3 columns on large, 2 on medium, 1 on mobile ── */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
         <TokenHealthCard />
         <SocialPulseCard />
         <CommunityCard />
@@ -43,44 +74,60 @@ export default function Dashboard() {
       </div>
 
       {/* ── Season 2 Banner ── */}
-      <div className="mt-6 relative rounded-[26px] overflow-hidden"
-        style={{ background: "#1A1A18" }}>
-        {/* Glow blobs */}
-        <div className="absolute" style={{
-          width: 300, height: 300, borderRadius: "50%", top: -80, right: -80,
-          background: "radial-gradient(circle, rgba(245,166,35,0.18) 0%, transparent 70%)",
-          pointerEvents: "none",
+      <div className="mt-6 relative rounded-[28px] overflow-hidden"
+        style={{ background: "#0D0D0D" }}>
+        {/* Warm glow blobs */}
+        <div className="absolute pointer-events-none" style={{
+          width: 360, height: 360, borderRadius: "50%",
+          top: -100, right: -80,
+          background: "radial-gradient(circle, rgba(245,166,35,0.16) 0%, transparent 65%)",
         }} />
-        <div className="absolute" style={{
-          width: 200, height: 200, borderRadius: "50%", bottom: -60, left: -40,
-          background: "radial-gradient(circle, rgba(245,166,35,0.12) 0%, transparent 70%)",
-          pointerEvents: "none",
+        <div className="absolute pointer-events-none" style={{
+          width: 220, height: 220, borderRadius: "50%",
+          bottom: -80, left: -40,
+          background: "radial-gradient(circle, rgba(245,166,35,0.10) 0%, transparent 65%)",
         }} />
 
-        <div className="relative flex items-center justify-between p-8 sm:p-10">
+        <div className="relative flex items-center justify-between p-8 sm:p-12">
           <div>
-            <p style={{ fontSize: "0.625rem", fontWeight: 800, letterSpacing: "0.22em", textTransform: "uppercase", color: "#F5A623", marginBottom: "0.75rem" }}>
+            <p style={{
+              fontSize: "0.625rem", fontWeight: 800,
+              letterSpacing: "0.22em", textTransform: "uppercase",
+              color: "#F5A623", marginBottom: "0.875rem",
+            }}>
               Coming Soon
             </p>
-            <h2 style={{ fontSize: "2rem", fontWeight: 900, color: "white", letterSpacing: "-0.04em", lineHeight: 1.1, marginBottom: "0.75rem" }}>
+            <h2 style={{
+              fontSize: "clamp(1.6rem, 4vw, 2.25rem)",
+              fontWeight: 900, color: "white",
+              letterSpacing: "-0.04em", lineHeight: 1.1,
+              marginBottom: "0.875rem",
+            }}>
               Season 2 is Loading…
             </h2>
-            <p style={{ fontSize: "0.875rem", color: "rgba(255,255,255,0.45)", fontWeight: 500, lineHeight: 1.5 }}>
+            <p style={{
+              fontSize: "0.9375rem", color: "rgba(255,255,255,0.42)",
+              fontWeight: 500, lineHeight: 1.6,
+            }}>
               More exchanges. Bigger community.<br />
               Unstoppable momentum.
             </p>
-            <p style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.2)", fontWeight: 700, letterSpacing: "0.1em", marginTop: "1rem" }}>
+            <p style={{
+              fontSize: "0.75rem", color: "rgba(255,255,255,0.18)",
+              fontWeight: 700, letterSpacing: "0.1em", marginTop: "1.25rem",
+            }}>
               #67to67Billion
             </p>
           </div>
-          {/* Big 67 coin */}
+
+          {/* 67 coin circle */}
           <div className="hidden sm:flex items-center justify-center flex-shrink-0"
             style={{
-              width: 100, height: 100, borderRadius: "50%",
+              width: 110, height: 110, borderRadius: "50%",
               background: "linear-gradient(135deg, #F5A623, #FFD966)",
-              boxShadow: "0 0 60px rgba(245,166,35,0.4), 0 0 120px rgba(245,166,35,0.1)",
+              boxShadow: "0 0 60px rgba(245,166,35,0.45), 0 0 120px rgba(245,166,35,0.12)",
             }}>
-            <span style={{ fontSize: "2.5rem", fontWeight: 900, color: "black", letterSpacing: "-0.05em" }}>67</span>
+            <span style={{ fontSize: "2.75rem", fontWeight: 900, color: "black", letterSpacing: "-0.05em" }}>67</span>
           </div>
         </div>
       </div>

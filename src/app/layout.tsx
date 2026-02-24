@@ -32,7 +32,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <DataProvider>
           <TopBar />
-          <main className="max-w-[1440px] mx-auto px-5 sm:px-8 py-8">
+          <main className="max-w-[1440px] mx-auto px-5 sm:px-10 py-10">
             {children}
           </main>
         </DataProvider>
