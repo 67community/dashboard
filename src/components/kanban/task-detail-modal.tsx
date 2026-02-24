@@ -7,7 +7,7 @@ import { TEAM_MEMBERS } from "@/lib/mock-data"
 import { TeamAvatar } from "@/components/team/team-avatar"
 
 const PRIORITY_STYLES: Record<Priority, string> = {
-  Low: "bg-gray-100 text-gray-600 border-gray-200",
+  Low: "bg-[#EDE8DF] text-[#6B6560] border-[rgba(120,95,60,0.10)]",
   Medium: "bg-blue-50 text-blue-700 border-blue-200",
   High: "bg-orange-50 text-orange-700 border-orange-200",
   Urgent: "bg-red-50 text-red-700 border-red-200",
@@ -59,19 +59,19 @@ export function TaskDetailModal({ task, onClose, onUpdate }: TaskDetailModalProp
 
       <div className="relative w-full sm:max-w-2xl max-h-[90vh] bg-white rounded-t-3xl sm:rounded-3xl shadow-2xl overflow-hidden flex flex-col animate-in slide-in-from-bottom-4 duration-300">
         {/* Header */}
-        <div className="flex items-start justify-between px-6 py-5 border-b border-gray-100 flex-shrink-0">
+        <div className="flex items-start justify-between px-6 py-5 border-b border-[rgba(120,95,60,0.08)] flex-shrink-0">
           <div className="flex-1 pr-4">
             <input
-              className="w-full text-lg font-bold text-gray-900 bg-transparent border-none outline-none focus:ring-0 resize-none"
+              className="w-full text-lg font-bold text-[#1A1A18] bg-transparent border-none outline-none focus:ring-0 resize-none"
               value={localTask.title}
               onChange={(e) => update({ title: e.target.value })}
             />
           </div>
           <button
             onClick={onClose}
-            className="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors flex-shrink-0"
+            className="w-8 h-8 rounded-full bg-[#EDE8DF] hover:bg-[#E5DFD5] flex items-center justify-center transition-colors flex-shrink-0"
           >
-            <X className="w-4 h-4 text-gray-500" />
+            <X className="w-4 h-4 text-[#7A7570]" />
           </button>
         </div>
 
@@ -83,7 +83,7 @@ export function TaskDetailModal({ task, onClose, onUpdate }: TaskDetailModalProp
             <select
               value={localTask.column}
               onChange={(e) => update({ column: e.target.value as KanbanColumn })}
-              className="text-xs px-3 py-1.5 bg-gray-100 rounded-xl border-none outline-none cursor-pointer font-medium text-gray-700"
+              className="text-xs px-3 py-1.5 bg-[#EDE8DF] rounded-xl border-none outline-none cursor-pointer font-medium text-[#3C3630]"
             >
               {COLUMNS.map((c) => <option key={c} value={c}>{c}</option>)}
             </select>
@@ -101,7 +101,7 @@ export function TaskDetailModal({ task, onClose, onUpdate }: TaskDetailModalProp
             <select
               value={localTask.category}
               onChange={(e) => update({ category: e.target.value as Category })}
-              className="text-xs px-3 py-1.5 bg-gray-100 rounded-xl border-none outline-none cursor-pointer font-medium text-gray-700"
+              className="text-xs px-3 py-1.5 bg-[#EDE8DF] rounded-xl border-none outline-none cursor-pointer font-medium text-[#3C3630]"
             >
               {CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
             </select>
@@ -110,11 +110,11 @@ export function TaskDetailModal({ task, onClose, onUpdate }: TaskDetailModalProp
           {/* Assignee + Due date */}
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2">
-              <User className="w-3.5 h-3.5 text-gray-400" />
+              <User className="w-3.5 h-3.5 text-[#A8A29A]" />
               <select
                 value={localTask.assigneeId || ""}
                 onChange={(e) => update({ assigneeId: e.target.value || undefined })}
-                className="text-xs bg-transparent border-none outline-none cursor-pointer text-gray-600"
+                className="text-xs bg-transparent border-none outline-none cursor-pointer text-[#6B6560]"
               >
                 <option value="">Unassigned</option>
                 {TEAM_MEMBERS.map((m) => <option key={m.id} value={m.id}>{m.name}</option>)}
@@ -123,21 +123,21 @@ export function TaskDetailModal({ task, onClose, onUpdate }: TaskDetailModalProp
             </div>
 
             <div className="flex items-center gap-2">
-              <Calendar className="w-3.5 h-3.5 text-gray-400" />
+              <Calendar className="w-3.5 h-3.5 text-[#A8A29A]" />
               <input
                 type="date"
                 value={localTask.dueDate || ""}
                 onChange={(e) => update({ dueDate: e.target.value || undefined })}
-                className="text-xs bg-transparent border-none outline-none cursor-pointer text-gray-600"
+                className="text-xs bg-transparent border-none outline-none cursor-pointer text-[#6B6560]"
               />
             </div>
           </div>
 
           {/* Description */}
           <div>
-            <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Description</p>
+            <p className="text-xs font-semibold text-[#A8A29A] uppercase tracking-wider mb-2">Description</p>
             <textarea
-              className="w-full min-h-[80px] text-sm text-gray-700 bg-gray-50 rounded-xl p-3 border border-gray-100 outline-none focus:border-amber-200 focus:ring-1 focus:ring-amber-200 resize-none transition-colors"
+              className="w-full min-h-[80px] text-sm text-[#3C3630] bg-[#EDE8DF] rounded-xl p-3 border border-[rgba(120,95,60,0.07)] outline-none focus:border-amber-200 focus:ring-1 focus:ring-amber-200 resize-none transition-colors"
               placeholder="Add a description..."
               value={localTask.description || ""}
               onChange={(e) => update({ description: e.target.value })}
@@ -146,7 +146,7 @@ export function TaskDetailModal({ task, onClose, onUpdate }: TaskDetailModalProp
 
           {/* Subtasks */}
           <div>
-            <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">
+            <p className="text-xs font-semibold text-[#A8A29A] uppercase tracking-wider mb-2">
               Subtasks {localTask.subtasks.length > 0 && `(${localTask.subtasks.filter(s => s.done).length}/${localTask.subtasks.length})`}
             </p>
             <div className="space-y-1.5">
@@ -159,9 +159,9 @@ export function TaskDetailModal({ task, onClose, onUpdate }: TaskDetailModalProp
                   {st.done ? (
                     <CheckSquare className="w-4 h-4 text-green-500 flex-shrink-0" />
                   ) : (
-                    <Square className="w-4 h-4 text-gray-300 group-hover:text-gray-400 flex-shrink-0" />
+                    <Square className="w-4 h-4 text-gray-300 group-hover:text-[#A8A29A] flex-shrink-0" />
                   )}
-                  <span className={`text-sm ${st.done ? "line-through text-gray-400" : "text-gray-700"}`}>
+                  <span className={`text-sm ${st.done ? "line-through text-[#A8A29A]" : "text-[#3C3630]"}`}>
                     {st.title}
                   </span>
                 </div>
@@ -169,7 +169,7 @@ export function TaskDetailModal({ task, onClose, onUpdate }: TaskDetailModalProp
             </div>
             <div className="flex items-center gap-2 mt-2">
               <input
-                className="flex-1 text-sm bg-gray-50 rounded-xl px-3 py-2 border border-gray-100 outline-none focus:border-amber-200 focus:ring-1 focus:ring-amber-200 transition-colors placeholder:text-gray-400"
+                className="flex-1 text-sm bg-gray-50 rounded-xl px-3 py-2 border border-gray-100 outline-none focus:border-amber-200 focus:ring-1 focus:ring-amber-200 transition-colors placeholder:text-[#A8A29A]"
                 placeholder="Add subtask..."
                 value={newSubtask}
                 onChange={(e) => setNewSubtask(e.target.value)}
@@ -187,19 +187,19 @@ export function TaskDetailModal({ task, onClose, onUpdate }: TaskDetailModalProp
           {/* Activity */}
           {localTask.activity.length > 0 && (
             <div>
-              <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Activity</p>
+              <p className="text-xs font-semibold text-[#A8A29A] uppercase tracking-wider mb-2">Activity</p>
               <div className="space-y-1.5">
                 {localTask.activity.map((a) => {
                   const actor = TEAM_MEMBERS.find((m) => m.id === a.actorId)
                   return (
-                    <div key={a.id} className="flex items-center gap-2 text-xs text-gray-500">
+                    <div key={a.id} className="flex items-center gap-2 text-xs text-[#7A7570]">
                       <div className="w-5 h-5 rounded-full flex items-center justify-center text-white text-xs font-semibold flex-shrink-0"
                         style={{ backgroundColor: actor?.color || "#ccc" }}>
                         {actor?.initials.charAt(0)}
                       </div>
-                      <span className="font-medium text-gray-600">{actor?.name || a.actorId}</span>
+                      <span className="font-medium text-[#6B6560]">{actor?.name || a.actorId}</span>
                       <span>{a.action}</span>
-                      <span className="text-gray-400">{new Date(a.timestamp).toLocaleDateString()}</span>
+                      <span className="text-[#A8A29A]">{new Date(a.timestamp).toLocaleDateString()}</span>
                     </div>
                   )
                 })}

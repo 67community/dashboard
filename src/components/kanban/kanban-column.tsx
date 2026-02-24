@@ -8,7 +8,7 @@ import { Task, KanbanColumn as KanbanColumnType } from "@/lib/types"
 import { TaskCard } from "./task-card"
 
 const COLUMN_STYLES: Record<KanbanColumnType, { dot: string; badge: string }> = {
-  Backlog: { dot: "bg-gray-400", badge: "bg-gray-100 text-gray-600" },
+  Backlog: { dot: "bg-[#A8A29A]", badge: "bg-[#EDE8DF] text-[#6B6560]" },
   Todo: { dot: "bg-blue-400", badge: "bg-blue-50 text-blue-700" },
   "In Progress": { dot: "bg-amber-400", badge: "bg-amber-50 text-amber-700" },
   Review: { dot: "bg-purple-400", badge: "bg-purple-50 text-purple-700" },
@@ -43,14 +43,14 @@ export function KanbanColumnComponent({ column, tasks, onOpenTask, onAddTask }: 
       <div className="flex items-center justify-between px-1">
         <div className="flex items-center gap-2">
           <div className={`w-2 h-2 rounded-full ${styles.dot}`} />
-          <h3 className="text-sm font-semibold text-gray-700">{column}</h3>
+          <h3 className="text-sm font-semibold text-[#3C3630]">{column}</h3>
           <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${styles.badge}`}>
             {tasks.length}
           </span>
         </div>
         <button
           onClick={() => setAdding(true)}
-          className="w-6 h-6 rounded-lg bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors"
+          className="w-6 h-6 rounded-lg bg-[#EDE8DF] hover:bg-[#E5DFD5] flex items-center justify-center transition-colors"
         >
           <Plus className="w-3.5 h-3.5 text-gray-500" />
         </button>
@@ -60,7 +60,7 @@ export function KanbanColumnComponent({ column, tasks, onOpenTask, onAddTask }: 
       <div
         ref={setNodeRef}
         className={`flex flex-col gap-2.5 min-h-[120px] p-2 rounded-2xl transition-colors ${
-          isOver ? "bg-amber-50 border-2 border-amber-200 border-dashed" : "bg-gray-50/50"
+          isOver ? "bg-[#FFF8EC] border-2 border-[#F5A623]/40 border-dashed" : "bg-[#EDE8DF]/50"
         }`}
       >
         <SortableContext items={tasks.map((t) => t.id)} strategy={verticalListSortingStrategy}>
@@ -71,10 +71,10 @@ export function KanbanColumnComponent({ column, tasks, onOpenTask, onAddTask }: 
 
         {/* Add task inline */}
         {adding && (
-          <div className="bg-white rounded-2xl border border-gray-200 p-3 shadow-sm">
+          <div className="bg-[#FAF7F2] rounded-2xl border border-[rgba(120,95,60,0.10)] p-3 shadow-sm">
             <textarea
               autoFocus
-              className="w-full text-sm text-gray-700 bg-transparent resize-none outline-none min-h-[60px] placeholder:text-gray-400"
+              className="w-full text-sm text-[#3C3630] bg-transparent resize-none outline-none min-h-[60px] placeholder:text-[#A8A29A]"
               placeholder="Task title..."
               value={newTitle}
               onChange={(e) => setNewTitle(e.target.value)}
@@ -92,7 +92,7 @@ export function KanbanColumnComponent({ column, tasks, onOpenTask, onAddTask }: 
               </button>
               <button
                 onClick={() => { setAdding(false); setNewTitle("") }}
-                className="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-600 text-xs font-semibold rounded-xl transition-colors"
+                className="px-3 py-1.5 bg-[#EDE8DF] hover:bg-[#E5DFD5] text-gray-600 text-xs font-semibold rounded-xl transition-colors"
               >
                 Cancel
               </button>

@@ -16,17 +16,17 @@ export default function Dashboard() {
       {/* ── Page header ── */}
       <div className="mb-8 flex items-end justify-between">
         <div>
-          <h1 style={{ fontSize: "2rem", fontWeight: 900, letterSpacing: "-0.04em", color: "#1D1D1F", lineHeight: 1 }}>
+          <h1 style={{ fontSize: "2rem", fontWeight: 900, letterSpacing: "-0.04em", color: "#1A1A18", lineHeight: 1 }}>
             Overview
           </h1>
-          <p className="text-sm font-medium mt-1.5" style={{ color: "#6E6E73" }}>
+          <p className="text-sm font-medium mt-1.5" style={{ color: "#7A7570" }}>
             Everything happening with{" "}
             <span className="font-black gold-text">$67</span>{" "}
             — tap any card to expand.
           </p>
         </div>
         {data?.last_updated && (
-          <p className="hidden sm:block text-xs font-medium" style={{ color: "#C7C7CC" }}>
+          <p className="hidden sm:block text-xs font-medium" style={{ color: "#A8A29A" }}>
             Updated {new Date(data.last_updated).toLocaleTimeString("en-US",{ hour:"2-digit", minute:"2-digit" })}
           </p>
         )}
@@ -44,7 +44,7 @@ export default function Dashboard() {
 
       {/* ── Season 2 Banner ── */}
       <div className="mt-6 relative rounded-[26px] overflow-hidden"
-        style={{ background: "#1D1D1F" }}>
+        style={{ background: "#1A1A18" }}>
         {/* Glow blobs */}
         <div className="absolute" style={{
           width: 300, height: 300, borderRadius: "50%", top: -80, right: -80,
