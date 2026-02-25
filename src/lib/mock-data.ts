@@ -4,7 +4,7 @@ export const TEAM_MEMBERS: TeamMember[] = [
   // Order: Brandon → Jamie → Nick → WJP → Gen → Oscar → Crispy
   { id: "brandon", name: "Brandon Trevillian",initials: "BT", role: "Founder", status: "Active", color: "#f97316",  avatar: "/avatars/brandon.png", discord_id: "1444130836415905993" },
   { id: "jamie",   name: "Jamie Trevillian",  initials: "JT", role: "Founder", status: "Active", color: "#F5A623",  avatar: "/avatars/jamie.png",   discord_id: "1440075589557158100" },
-  { id: "nick",    name: "Nick",              initials: "NK", role: "Founder", status: "Active", color: "#14B8A6",  avatar: "/avatars/goodgod.png" },
+  { id: "nick",    name: "Nick",              initials: "NK", role: "Founder", status: "Active", color: "#14B8A6",  avatar: "/avatars/goodgod.png", discord_id: "682831521396031498" },
   { id: "weston",  name: "WJP",               initials: "WJ", role: "Vision",  status: "Active", color: "#8b5cf6",  avatar: "/avatars/wjp.png",     discord_id: "788495124061487154" },
   { id: "gen",     name: "Gen",               initials: "GN", role: "Founder", status: "Active", color: "#EC4899",  avatar: "/avatars/gen.png",     discord_id: "965681608604647514" },
   { id: "oscar",   name: "Oscar Brendon",     initials: "OB", role: "Dev",     status: "Active", color: "#6366f1",  discord_id: "767811814557089802" },
