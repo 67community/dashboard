@@ -192,78 +192,65 @@ export default function Dashboard() {
         <div className="enter-8"><MilestonesCard /></div>
       </div>
 
-      {/* ══ Season 2 Banner — Stripe gradient, same as hero ══ */}
+      {/* ══ Season 2 Banner — full-width, both corners ════════ */}
       <div className="enter-9" style={{
-        marginTop:24, borderRadius:24, overflow:"hidden",
-        position:"relative", minHeight:200,
+        marginTop:24, marginLeft:-40, marginRight:-40,
+        position:"relative", minHeight:220, overflow:"hidden",
       }}>
-        {/* ── Background layers ── */}
-        {/* Base: dark left → warm mid → gold right */}
+        {/* Base gradient */}
         <div style={{ position:"absolute", inset:0,
-          background:"linear-gradient(115deg, #08080F 0%, #150D28 25%, #1E0D00 55%, #6B3000 80%, #B87010 100%)" }} />
-        {/* Gold flare — stronger, centered-right */}
+          background:"linear-gradient(105deg, #08080F 0%, #120920 30%, #1A1000 55%, #5A2800 80%, #A06000 100%)" }} />
+        {/* LEFT corner — purple/teal burst */}
         <div style={{ position:"absolute", inset:0,
-          background:"radial-gradient(ellipse at 85% 50%, rgba(245,166,35,0.75) 0%, transparent 50%)" }} />
-        {/* Cyan/teal accent — season 2 feels futuristic */}
+          background:"radial-gradient(ellipse at 0% 50%, rgba(120,60,220,0.55) 0%, transparent 38%)" }} />
         <div style={{ position:"absolute", inset:0,
-          background:"radial-gradient(ellipse at 15% 80%, rgba(56,189,248,0.22) 0%, transparent 40%)" }} />
-        {/* Purple depth left */}
+          background:"radial-gradient(ellipse at 8% 85%, rgba(56,189,248,0.25) 0%, transparent 30%)" }} />
+        {/* RIGHT corner — gold burst */}
         <div style={{ position:"absolute", inset:0,
-          background:"radial-gradient(ellipse at 0% 20%, rgba(120,60,200,0.45) 0%, transparent 40%)" }} />
+          background:"radial-gradient(ellipse at 100% 50%, rgba(245,166,35,0.80) 0%, transparent 42%)" }} />
+        <div style={{ position:"absolute", inset:0,
+          background:"radial-gradient(ellipse at 92% 10%, rgba(255,200,60,0.35) 0%, transparent 30%)" }} />
         {/* Diagonal rays */}
         <div style={{ position:"absolute", inset:0,
-          backgroundImage:`repeating-linear-gradient(112deg, transparent, transparent 28px, rgba(255,255,255,0.03) 28px, rgba(255,255,255,0.03) 29px)` }} />
-        {/* Top shimmer line */}
+          backgroundImage:`repeating-linear-gradient(112deg, transparent, transparent 28px, rgba(255,255,255,0.025) 28px, rgba(255,255,255,0.025) 29px)` }} />
+        {/* Top shimmer */}
         <div style={{ position:"absolute", top:0, left:0, right:0, height:1,
-          background:"linear-gradient(90deg, transparent 0%, rgba(245,166,35,0.6) 40%, rgba(255,255,255,0.2) 60%, transparent 100%)" }} />
+          background:"linear-gradient(90deg, rgba(120,60,220,0.5) 0%, rgba(255,255,255,0.15) 30%, rgba(245,166,35,0.6) 70%, transparent 100%)" }} />
+        {/* Bottom shimmer */}
+        <div style={{ position:"absolute", bottom:0, left:0, right:0, height:1,
+          background:"linear-gradient(90deg, transparent 0%, rgba(245,166,35,0.2) 50%, transparent 100%)" }} />
 
-        {/* ── Content ── */}
-        <div style={{ position:"relative", zIndex:1,
-          display:"flex", alignItems:"center", justifyContent:"space-between",
-          padding:"44px 52px" }}>
-          <div>
-            {/* Pill badge */}
-            <div style={{ display:"inline-flex", alignItems:"center", gap:6,
-              background:"rgba(245,166,35,0.15)", border:"1px solid rgba(245,166,35,0.3)",
-              borderRadius:99, padding:"4px 12px", marginBottom:18 }}>
-              <span style={{ width:6, height:6, borderRadius:"50%", background:"#F5A623",
-                boxShadow:"0 0 6px rgba(245,166,35,0.8)", display:"inline-block" }} />
-              <span style={{ fontSize:"0.6875rem", fontWeight:700, letterSpacing:"0.1em",
-                textTransform:"uppercase", color:"#F5A623" }}>Coming Soon</span>
-            </div>
-
-            <h2 style={{ fontSize:"clamp(2rem, 4vw, 2.75rem)", fontWeight:900,
-              color:"#FFFFFF", letterSpacing:"-0.05em", lineHeight:1.05,
-              margin:"0 0 14px 0" }}>
-              Season 2 is Loading…
-            </h2>
-            <p style={{ fontSize:"1.0625rem", color:"rgba(255,255,255,0.5)",
-              fontWeight:500, lineHeight:1.6, margin:0, letterSpacing:"-0.01em" }}>
-              Unstoppable momentum.
-            </p>
-
-            {/* Hashtag */}
-            <p style={{ fontSize:"0.75rem", color:"rgba(255,255,255,0.2)",
-              fontWeight:800, letterSpacing:"0.12em", marginTop:20,
-              textTransform:"uppercase" }}>
-              #67to67Billion
-            </p>
+        {/* ── Content — centered ── */}
+        <div style={{
+          position:"relative", zIndex:1,
+          display:"flex", flexDirection:"column", alignItems:"center",
+          justifyContent:"center", textAlign:"center",
+          padding:"52px 60px",
+        }}>
+          {/* Pill badge */}
+          <div style={{ display:"inline-flex", alignItems:"center", gap:6,
+            background:"rgba(245,166,35,0.12)", border:"1px solid rgba(245,166,35,0.28)",
+            borderRadius:99, padding:"5px 14px", marginBottom:20 }}>
+            <span style={{ width:6, height:6, borderRadius:"50%", background:"#F5A623",
+              boxShadow:"0 0 8px rgba(245,166,35,0.9)", display:"inline-block" }} />
+            <span style={{ fontSize:"0.6875rem", fontWeight:700, letterSpacing:"0.1em",
+              textTransform:"uppercase", color:"#F5A623" }}>Coming Soon</span>
           </div>
 
-          {/* Logo with glow ring */}
-          <div className="hidden-mobile" style={{ flexShrink:0, position:"relative" }}>
-            {/* Glow ring */}
-            <div style={{ position:"absolute", inset:-20,
-              background:"radial-gradient(circle, rgba(245,166,35,0.4) 0%, transparent 65%)",
-              borderRadius:"50%" }} />
-            <div style={{ width:120, height:120, borderRadius:"50%", overflow:"hidden",
-              position:"relative", zIndex:1,
-              boxShadow:"0 0 0 1.5px rgba(245,166,35,0.4), 0 0 40px rgba(245,166,35,0.5)" }}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="https://raw.githubusercontent.com/67coin/67/main/logo.png" alt="67"
-                style={{ width:120, height:120, objectFit:"cover", display:"block" }} />
-            </div>
-          </div>
+          <h2 style={{ fontSize:"clamp(2.25rem, 5vw, 3.5rem)", fontWeight:900,
+            color:"#FFFFFF", letterSpacing:"-0.055em", lineHeight:1.05,
+            margin:"0 0 16px 0" }}>
+            Season 2 is Loading…
+          </h2>
+          <p style={{ fontSize:"1.125rem", color:"rgba(255,255,255,0.45)",
+            fontWeight:500, letterSpacing:"-0.01em", maxWidth:480, lineHeight:1.6 }}>
+            Unstoppable momentum.
+          </p>
+          <p style={{ fontSize:"0.6875rem", color:"rgba(255,255,255,0.18)",
+            fontWeight:800, letterSpacing:"0.15em", marginTop:24,
+            textTransform:"uppercase" }}>
+            #67to67Billion
+          </p>
         </div>
       </div>
 
