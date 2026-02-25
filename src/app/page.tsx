@@ -101,59 +101,6 @@ export default function Dashboard() {
         {/* Divider */}
         <div className="divider" style={{ marginTop:32 }} />
       </div>}
-
-      {/* ══ Hero Stats — 2×2 compact grid, Token Health inset style ══════ */}
-      <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8, marginBottom:28 }}
-        className="hero-stats-grid enter-2">
-        {([
-          {
-            label: "Live Price",
-            raw:   livePrice ?? data?.token_health?.price ?? 0,
-            fmt:   (n: number) => n > 0 ? `$${n < 0.001 ? n.toFixed(6) : n.toFixed(5)}` : "—",
-            sub:   `${up ? "▲" : "▼"} ${Math.abs(liveChange24h ?? data?.token_health?.price_change_24h ?? 0).toFixed(2)}% today`,
-            upState: up,
-          },
-          {
-            label: "Market Cap",
-            raw:   data?.token_health?.market_cap ?? 0,
-            fmt:   (n: number) => n >= 1e6 ? `$${(n/1e6).toFixed(2)}M` : n >= 1e3 ? `$${(n/1e3).toFixed(0)}K` : n > 0 ? `$${n}` : "—",
-            sub:   `Rank #${data?.token_health?.cmc_rank ?? "—"} on CMC`,
-            upState: null,
-          },
-          {
-            label: "Discord",
-            raw:   data?.community?.discord_members ?? 0,
-            fmt:   (n: number) => n >= 1000 ? `${(n/1000).toFixed(1)}K` : n > 0 ? String(Math.round(n)) : "—",
-            sub:   "113 online now",
-            upState: null,
-          },
-          {
-            label: "X Followers",
-            raw:   data?.social_pulse?.twitter_followers ?? 0,
-            fmt:   (n: number) => n >= 1000 ? `${(n/1000).toFixed(1)}K` : n > 0 ? String(Math.round(n)) : "—",
-            sub:   `${(data?.social_pulse?.engagement_rate ?? 0).toFixed(1)}% engagement`,
-            upState: null,
-          },
-        ] as const).map(s => (
-          <div key={s.label} className="inset-cell">
-            <p className="metric-label" style={{ marginBottom:6 }}>{s.label}</p>
-            <AnimatedNumber
-              value={s.raw}
-              format={s.fmt as (n: number) => string}
-              duration={1200}
-              className="metric-lg"
-              style={{ display:"block", marginBottom:6, fontVariantNumeric:"tabular-nums" }}
-            />
-            <p style={{
-              fontSize:"0.8125rem", fontWeight:600,
-              color: s.upState === true ? "#1A8343" : s.upState === false ? "#C0392B" : "#8E8E93"
-            }}>
-              {s.sub}
-            </p>
-          </div>
-        ))}
-      </div>
-
       <style>{`
         @media (max-width: 500px)  { .hero-stats-grid { grid-template-columns: 1fr !important; } }
       `}</style>
