@@ -64,6 +64,17 @@ export interface ContentTypeStats {
   [key: string]: { count: number; total_eng: number; avg_eng: number }
 }
 
+export interface Mention {
+  tweet_id: string
+  tweet_url: string
+  text: string
+  author: string
+  author_handle: string
+  likes: number
+  replies: number
+  date: string
+}
+
 export interface SocialPulseData {
   twitter_followers: number
   follower_change_24h: number
@@ -75,6 +86,9 @@ export interface SocialPulseData {
   total_engagement_7d: number
   best_content_type: string
   content_type_stats: ContentTypeStats
+  x_community_members?: number
+  x_community_delta_24h?: number
+  mentions?: Mention[]
 }
 
 export interface CommunityData {

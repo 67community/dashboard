@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect } from "react"
-import { BarChart2, Flame, Heart, MessageCircle, Share2 } from "lucide-react"
+import { BarChart2, Flame, Heart, MessageCircle, Users } from "lucide-react"
 import { DashboardCard } from "@/components/ui/dashboard-card"
 import { useAppData } from "@/lib/data-context"
 
@@ -9,15 +9,36 @@ declare global { interface Window { twttr?: { widgets?: { load: () => void } } }
 
 const LOGO = "https://raw.githubusercontent.com/67coin/67/main/logo.png"
 
+function DeltaBadge({ value, inline }: { value?: number; inline?: boolean }) {
+  if (value === undefined || value === null || value === 0) return null
+  const pos = value > 0
+  return (
+    <span style={{
+      display: "inline-flex", alignItems: "center",
+      fontSize: inline ? "0.75rem" : "0.6875rem",
+      fontWeight: 700,
+      color: pos ? "#16A34A" : "#DC2626",
+      background: pos ? "#DCFCE7" : "#FEE2E2",
+      borderRadius: 99, padding: "2px 8px", marginLeft: 6,
+    }}>
+      {pos ? "+" : ""}{value.toLocaleString()}
+    </span>
+  )
+}
+
 export function SocialPulseCard() {
   const { data } = useAppData()
   const s = data?.social_pulse
-  const followers  = s?.twitter_followers ?? 0
-  const engagement = s?.engagement_rate ?? 0
-  const streak     = s?.posting_streak_days ?? 0
-  const fmtF = followers >= 1000 ? `${(followers/1000).toFixed(1)}K` : followers.toLocaleString()
+  const followers       = s?.twitter_followers ?? 0
+  const followerDelta   = s?.follower_change_24h ?? 0
+  const engagement      = s?.engagement_rate ?? 0
+  const streak          = s?.posting_streak_days ?? 0
+  const communityM      = s?.x_community_members ?? 0
+  const communityDelta  = s?.x_community_delta_24h ?? 0
+  const mentions        = s?.mentions ?? []
+  const fmtF  = followers >= 1000  ? `${(followers/1000).toFixed(1)}K`  : followers.toLocaleString()
+  const fmtCM = communityM >= 1000 ? `${(communityM/1000).toFixed(1)}K` : communityM.toLocaleString()
 
-  // Load Twitter widgets on mount and when tweet IDs change
   useEffect(() => {
     const timers = [
       setTimeout(() => window.twttr?.widgets?.load(), 800),
@@ -26,7 +47,6 @@ export function SocialPulseCard() {
     return () => timers.forEach(clearTimeout)
   }, [s?.best_tweet_week?.tweet_id, s?.best_tweet_2d?.tweet_id])
 
-  // Called when modal opens — fire multiple retries to ensure widgets render
   const handleOpen = () => {
     [300, 800, 1800, 3500].forEach(ms =>
       setTimeout(() => window.twttr?.widgets?.load(), ms)
@@ -36,7 +56,6 @@ export function SocialPulseCard() {
   const TweetCard = ({ tweet }: { tweet: NonNullable<typeof s>["best_tweet_week"] }) => {
     if (!tweet) return null
     if (tweet.embed_html) {
-      // Force light theme on embeds
       const lightHtml = tweet.embed_html
         .replace(/data-theme="dark"/g, 'data-theme="light"')
         .replace(/data-theme='dark'/g, "data-theme='light'")
@@ -66,11 +85,14 @@ export function SocialPulseCard() {
 
   const collapsed = (
     <div style={{ display:"flex", flexDirection:"column", gap:20 }}>
-      {/* Hero — followers */}
+      {/* Hero row — Followers + Engagement */}
       <div style={{ display:"flex", alignItems:"flex-end", justifyContent:"space-between" }}>
         <div>
           <p className="hero-label" style={{ marginBottom:6 }}>X Followers</p>
-          <p className="hero-number">{fmtF}</p>
+          <div style={{ display:"flex", alignItems:"center" }}>
+            <p className="hero-number">{fmtF}</p>
+            <DeltaBadge value={followerDelta} inline />
+          </div>
         </div>
         <div style={{ textAlign:"right" }}>
           <p style={{ fontSize:"2rem", fontWeight:800, letterSpacing:"-0.04em", color:"#10B981", lineHeight:1 }}>
@@ -79,6 +101,17 @@ export function SocialPulseCard() {
           <p className="hero-label">Engagement</p>
         </div>
       </div>
+
+      {/* X Community row */}
+      {communityM > 0 && (
+        <div style={{ display:"flex", alignItems:"center", gap:10, background:"rgba(0,0,0,0.03)", borderRadius:12, padding:"10px 14px" }}>
+          <Users style={{ width:15, height:15, color:"#8E8E93" }} />
+          <span style={{ fontSize:"0.8125rem", fontWeight:700, color:"#09090B" }}>
+            X Community: {fmtCM}
+          </span>
+          <DeltaBadge value={communityDelta} />
+        </div>
+      )}
 
       {/* Streak */}
       {streak > 0 && (
@@ -89,28 +122,18 @@ export function SocialPulseCard() {
         </div>
       )}
 
-      {/* Best tweet preview — premium mini card */}
+      {/* Best tweet preview */}
       {s?.best_tweet_week && (
-        <div style={{
-          borderRadius:14, border:"1px solid rgba(245,166,35,0.12)",
-          background:"rgba(245,166,35,0.03)", padding:"14px 16px",
-          position:"relative", overflow:"hidden",
-        }}>
-          {/* Twitter blue left accent */}
+        <div style={{ borderRadius:14, border:"1px solid rgba(245,166,35,0.12)", background:"rgba(245,166,35,0.03)", padding:"14px 16px", position:"relative", overflow:"hidden" }}>
           <div style={{ position:"absolute", left:0, top:0, bottom:0, width:3, background:"#F5A623", borderRadius:"99px 0 0 99px" }} />
           <div style={{ paddingLeft:8 }}>
-            {/* Author */}
             <div style={{ display:"flex", alignItems:"center", gap:6, marginBottom:7 }}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={LOGO} alt="67" width={18} height={18}
-                style={{ width:18, height:18, borderRadius:"50%", objectFit:"cover" }} />
+              <img src={LOGO} alt="67" width={18} height={18} style={{ width:18, height:18, borderRadius:"50%", objectFit:"cover" }} />
               <span style={{ fontSize:"0.75rem", fontWeight:700, color:"#09090B" }}>The Official 67 Coin</span>
               <span style={{ fontSize:"0.6875rem", color:"#A1A1AA" }}>@67coinX</span>
             </div>
-            <p style={{
-              fontSize:"0.8125rem", color:"#09090B", lineHeight:1.55, marginBottom:10,
-              display:"-webkit-box", WebkitLineClamp:2, WebkitBoxOrient:"vertical", overflow:"hidden",
-            }}>
+            <p style={{ fontSize:"0.8125rem", color:"#09090B", lineHeight:1.55, marginBottom:10, display:"-webkit-box", WebkitLineClamp:2, WebkitBoxOrient:"vertical", overflow:"hidden" }}>
               {s.best_tweet_week.text}
             </p>
             <div style={{ display:"flex", alignItems:"center", gap:14 }}>
@@ -131,11 +154,23 @@ export function SocialPulseCard() {
   const expanded = (
     <div style={{ display:"flex", flexDirection:"column", gap:16 }}>
       {/* Stats row */}
-      <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:8 }}>
+      <div style={{ display:"grid", gridTemplateColumns: communityM > 0 ? "1fr 1fr 1fr 1fr" : "1fr 1fr 1fr", gap:8 }}>
         <div className="inset-cell">
-          <p className="metric-xl">{fmtF}</p>
-          <p className="metric-label">Followers</p>
+          <div style={{ display:"flex", alignItems:"center" }}>
+            <p className="metric-xl">{fmtF}</p>
+            <DeltaBadge value={followerDelta} />
+          </div>
+          <p className="metric-label">X Followers</p>
         </div>
+        {communityM > 0 && (
+          <div className="inset-cell">
+            <div style={{ display:"flex", alignItems:"center" }}>
+              <p className="metric-xl">{fmtCM}</p>
+              <DeltaBadge value={communityDelta} />
+            </div>
+            <p className="metric-label">X Community</p>
+          </div>
+        )}
         <div className="inset-cell">
           <p className="metric-xl" style={{ color:"#10B981" }}>{engagement.toFixed(1)}%</p>
           <p className="metric-label">Engagement</p>
@@ -145,6 +180,39 @@ export function SocialPulseCard() {
           <p className="metric-label" style={{ color:"#92400E" }}>🔥 Streak</p>
         </div>
       </div>
+
+      {/* X Mentions Feed */}
+      {mentions.length > 0 && (
+        <div>
+          <p className="hero-label" style={{ marginBottom:10 }}>X Mentions Feed</p>
+          <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
+            {mentions.slice(0, 5).map((m, i) => (
+              <a key={i} href={m.tweet_url} target="_blank" rel="noopener noreferrer"
+                onClick={e=>e.stopPropagation()} style={{ textDecoration:"none" }}>
+                <div className="inset-cell" style={{ cursor:"pointer" }}>
+                  <div style={{ display:"flex", alignItems:"center", gap:6, marginBottom:6 }}>
+                    <span style={{ fontSize:"0.75rem", fontWeight:700, color:"#09090B" }}>{m.author}</span>
+                    <span style={{ fontSize:"0.6875rem", color:"#A1A1AA" }}>@{m.author_handle}</span>
+                    <span style={{ marginLeft:"auto", fontSize:"0.6875rem", color:"#D4D4D8" }}>{m.date}</span>
+                  </div>
+                  <p style={{ fontSize:"0.8125rem", color:"#3F3F46", lineHeight:1.5, marginBottom:8,
+                    display:"-webkit-box", WebkitLineClamp:2, WebkitBoxOrient:"vertical", overflow:"hidden" }}>
+                    {m.text}
+                  </p>
+                  <div style={{ display:"flex", gap:12 }}>
+                    <span style={{ display:"flex", alignItems:"center", gap:3, fontSize:"0.6875rem", color:"#A1A1AA" }}>
+                      <Heart style={{ width:11, height:11, color:"#F43F5E" }} />{m.likes}
+                    </span>
+                    <span style={{ display:"flex", alignItems:"center", gap:3, fontSize:"0.6875rem", color:"#A1A1AA" }}>
+                      <MessageCircle style={{ width:11, height:11, color:"#8E8E93" }} />{m.replies}
+                    </span>
+                  </div>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Content type stats */}
       {s?.content_type_stats && (
