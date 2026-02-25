@@ -108,7 +108,7 @@ export function TokenHealthCard() {
       {/* ── Price Chart ── */}
       <PriceChart currentPrice={price} />
 
-      {/* ── 4 stats ── */}
+      {/* ── Stats grid ── */}
       <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8 }}>
         {[
           { label:"Market Cap",   value: fmt$(mcap) },
@@ -123,6 +123,39 @@ export function TokenHealthCard() {
         ))}
       </div>
 
+      {/* ── 24h Buys / Sells — always visible ── */}
+      <div className="inset-cell">
+        <p className="hero-label" style={{ marginBottom:12 }}>24h Transactions</p>
+        <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8, marginBottom:12 }}>
+          <div style={{ background:"#E8F8EE", borderRadius:10, padding:"12px 14px" }}>
+            <p style={{ fontSize:"1.5rem", fontWeight:800, letterSpacing:"-0.04em", color:"#1A8343" }}>
+              {(t?.buys_24h ?? 0).toLocaleString()}
+            </p>
+            <p style={{ fontSize:"0.75rem", fontWeight:600, color:"#1A8343", marginTop:3 }}>Buys</p>
+          </div>
+          <div style={{ background:"#FEF0F0", borderRadius:10, padding:"12px 14px" }}>
+            <p style={{ fontSize:"1.5rem", fontWeight:800, letterSpacing:"-0.04em", color:"#C0392B" }}>
+              {(t?.sells_24h ?? 0).toLocaleString()}
+            </p>
+            <p style={{ fontSize:"0.75rem", fontWeight:600, color:"#C0392B", marginTop:3 }}>Sells</p>
+          </div>
+        </div>
+        {/* Buy pressure bar */}
+        {(t?.buys_24h ?? 0) + (t?.sells_24h ?? 0) > 0 && (
+          <>
+            <div className="prog-track" style={{ height:7 }}>
+              <div className="prog-fill" style={{
+                height:7, background:"#34C759",
+                width:`${((t?.buys_24h ?? 0)/((t?.buys_24h ?? 0)+(t?.sells_24h ?? 0)))*100}%`
+              }} />
+            </div>
+            <p style={{ fontSize:"0.6875rem", color:"#8E8E93", marginTop:6 }}>
+              {(((t?.buys_24h ?? 0)/((t?.buys_24h ?? 0)+(t?.sells_24h ?? 0)))*100).toFixed(0)}% buy pressure
+            </p>
+          </>
+        )}
+      </div>
+
       {/* ── ATH ── */}
       {t?.ath && (
         <div className="inset-cell-dark">
@@ -133,23 +166,6 @@ export function TokenHealthCard() {
           <p style={{ fontSize:"0.75rem", color:"rgba(255,255,255,0.35)", marginTop:6 }}>
             {Math.abs(t.ath_change_pct ?? 0).toFixed(1)}% below ATH · {t.ath_date}
           </p>
-        </div>
-      )}
-
-      {/* ── Buy/sell ── */}
-      {t?.buys_24h && (
-        <div className="inset-cell">
-          <div style={{ display:"flex", justifyContent:"space-between", marginBottom:8 }}>
-            <span style={{ fontSize:"0.75rem", fontWeight:700, color:"#1A8343" }}>
-              Buys {t.buys_24h.toLocaleString()} ({((t.buys_24h/(t.buys_24h+t.sells_24h))*100).toFixed(0)}%)
-            </span>
-            <span style={{ fontSize:"0.75rem", fontWeight:700, color:"#C0392B" }}>
-              Sells {t.sells_24h.toLocaleString()}
-            </span>
-          </div>
-          <div className="prog-track" style={{ height:8 }}>
-            <div className="prog-fill" style={{ height:8, width:`${(t.buys_24h/(t.buys_24h+t.sells_24h))*100}%`, background:"#34C759" }} />
-          </div>
         </div>
       )}
 
