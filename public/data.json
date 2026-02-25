@@ -160,7 +160,7 @@
     "best_content_type": "culture_drop"
   },
   "community": {
-    "discord_members": 5340,
+    "discord_members": 1466,
     "active_7d": 1870,
     "new_joins_24h": 42,
     "open_tickets": 3,
@@ -220,9 +220,11 @@
     ],
     "sentiment_up_pct": 100.0,
     "sentiment_down_pct": 0.0,
-    "discord_delta_24h": 42,
+    "discord_delta_24h": 0,
     "telegram_delta_24h": 6,
-    "watchlist_delta_24h": 1
+    "watchlist_delta_24h": 1,
+    "online_now": 125,
+    "updated_at": "2026-02-25T21:45:45.578200Z"
   },
   "content_pipeline": {
     "scheduled_posts": [
@@ -438,9 +440,9 @@
     "767811814557089802": "online",
     "965681608604647514": "dnd",
     "788495124061487154": "online",
-    "1444130836415905993": "online",
+    "1444130836415905993": "offline",
     "1440075589557158100": "offline",
     "682831521396031498": "offline"
   },
-  "presence_updated": "2026-02-25T21:40:08.331877Z"
+  "presence_updated": "2026-02-25T21:45:07.006109Z"
 }
