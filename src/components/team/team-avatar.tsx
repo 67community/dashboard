@@ -28,8 +28,8 @@ export function TeamAvatar({ member, size = "md", discordStatus }: { member: Tea
       fontWeight:800, color:"#fff",
       cursor: url ? "pointer" : "default", userSelect:"none",
       boxShadow: hover
-        ? `0 0 0 2.5px ${member.color}55, 0 4px 12px ${member.color}44`
-        : "0 0 0 2px rgba(10,10,10,0.8)",
+        ? `0 0 0 2.5px ${member.color}, 0 4px 12px ${member.color}66`
+        : `0 0 0 2px rgba(255,255,255,0.3), 0 0 0 3.5px rgba(0,0,0,0.7)`,
       transition:"box-shadow 0.2s",
       position:"relative", zIndex: hover ? 10 : 1,
     }}>
