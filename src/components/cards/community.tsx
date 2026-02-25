@@ -34,6 +34,7 @@ export function CommunityCard() {
   const goal = 10000
   const pct = Math.min((members / goal) * 100, 100)
 
+  const onlineNow       = (c as Record<string, unknown>)?.online_now as number ?? 0
   const discordDelta    = c?.discord_delta_24h as number | undefined
   const telegramDelta   = c?.telegram_delta_24h as number | undefined
   const watchlistDelta  = c?.watchlist_delta_24h as number | undefined
@@ -51,7 +52,7 @@ export function CommunityCard() {
         </div>
         <span style={{ display:"inline-flex", alignItems:"center", gap:6, background:"#E8F8EE", padding:"6px 12px", borderRadius:99, marginTop:4 }}>
           <span className="dot-on" style={{ width:7, height:7 }} />
-          <span style={{ fontSize:"0.75rem", fontWeight:700, color:"#1A8343" }}>113 online</span>
+          <span style={{ fontSize:"0.75rem", fontWeight:700, color:"#1A8343" }}>{onlineNow} online</span>
         </span>
       </div>
 
@@ -92,7 +93,7 @@ export function CommunityCard() {
         </div>
         <div style={{ display:"flex", alignItems:"center", justifyContent:"center", gap:8, marginTop:10 }}>
           <span className="dot-on" style={{ background:"#43B581" }} />
-          <span style={{ fontSize:"0.875rem", fontWeight:600, color:"rgba(255,255,255,0.75)" }}>113 members online</span>
+          <span style={{ fontSize:"0.875rem", fontWeight:600, color:"rgba(255,255,255,0.75)" }}>{onlineNow} members online</span>
         </div>
       </div>
 
