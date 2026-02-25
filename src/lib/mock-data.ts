@@ -6,8 +6,8 @@ export const TEAM_MEMBERS: TeamMember[] = [
   { id: "brandon", name: "Brandon Trevillian",initials: "BT", role: "Founder", status: "Active", color: "#f97316" },
   { id: "weston",  name: "Weston",            initials: "WJ", role: "Vision",  status: "Active", color: "#8b5cf6" },
   { id: "crispy",  name: "Crispy",            initials: "CR", role: "Build",   status: "Active", color: "#10b981" },
-  { id: "gen",     name: "Gen",               initials: "GN", role: "Admin",   status: "Active", color: "#EC4899" },
-  { id: "nick",    name: "Nick",              initials: "NK", role: "Admin",   status: "Active", color: "#14B8A6" },
+  { id: "gen",     name: "Gen",               initials: "GN", role: "Founder", status: "Active", color: "#EC4899" },
+  { id: "nick",    name: "Nick",              initials: "NK", role: "Founder", status: "Active", color: "#14B8A6" },
 ]
 
 export const INITIAL_TASKS: Task[] = [
