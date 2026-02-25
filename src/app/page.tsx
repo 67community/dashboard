@@ -8,6 +8,7 @@ import { ContentPipelineCard } from "@/components/cards/content-pipeline"
 import { AgentStatusCard }     from "@/components/cards/agent-status"
 import { MilestonesCard }      from "@/components/cards/milestones"
 import { useAppData }          from "@/lib/data-context"
+import { AnimatedNumber }      from "@/components/ui/animated-number"
 
 export default function Dashboard() {
   const { data, livePrice, liveChange24h } = useAppData()
@@ -16,7 +17,7 @@ export default function Dashboard() {
   return (
     <div>
       {/* ══ Page Header ════════════════════════════════════════ */}
-      <div style={{ marginBottom:40 }}>
+      <div style={{ marginBottom:40 }} className="enter-1">
         <div style={{ display:"flex", alignItems:"flex-start", justifyContent:"space-between", gap:24 }}>
           {/* Left */}
           <div style={{ display:"flex", alignItems:"flex-start", gap:18 }}>
@@ -55,43 +56,48 @@ export default function Dashboard() {
 
       {/* ══ Hero Stats Row — Apple style, breathable ══════════ */}
       <div style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:14, marginBottom:32 }}
-        className="hero-stats-grid">
-        {[
+        className="hero-stats-grid enter-2">
+        {([
           {
-            label:"Live Price",
-            value: livePrice
-              ? `$${livePrice < 0.001 ? livePrice.toFixed(6) : livePrice.toFixed(5)}`
-              : "—",
-            sub: `${up ? "▲" : "▼"} ${Math.abs(liveChange24h ?? data?.token_health?.price_change_24h ?? 0).toFixed(2)}% today`,
-            up,
+            label: "Live Price",
+            raw:   livePrice ?? data?.token_health?.price ?? 0,
+            fmt:   (n: number) => n > 0 ? `$${n < 0.001 ? n.toFixed(6) : n.toFixed(5)}` : "—",
+            sub:   `${up ? "▲" : "▼"} ${Math.abs(liveChange24h ?? data?.token_health?.price_change_24h ?? 0).toFixed(2)}% today`,
+            upState: up,
           },
           {
-            label:"Market Cap",
-            value: (() => { const m = data?.token_health?.market_cap ?? 0; return m >= 1e6 ? `$${(m/1e6).toFixed(2)}M` : m >= 1e3 ? `$${(m/1e3).toFixed(0)}K` : "—" })(),
-            sub:`Rank #${data?.token_health?.cmc_rank ?? "—"} on CMC`,
-            up: null,
+            label: "Market Cap",
+            raw:   data?.token_health?.market_cap ?? 0,
+            fmt:   (n: number) => n >= 1e6 ? `$${(n/1e6).toFixed(2)}M` : n >= 1e3 ? `$${(n/1e3).toFixed(0)}K` : n > 0 ? `$${n}` : "—",
+            sub:   `Rank #${data?.token_health?.cmc_rank ?? "—"} on CMC`,
+            upState: null,
           },
           {
-            label:"Discord Members",
-            value: (() => { const m = data?.community?.discord_members ?? 0; return m >= 1000 ? `${(m/1000).toFixed(1)}K` : m > 0 ? String(m) : "—" })(),
-            sub:"113 online now",
-            up: null,
+            label: "Discord",
+            raw:   data?.community?.discord_members ?? 0,
+            fmt:   (n: number) => n >= 1000 ? `${(n/1000).toFixed(1)}K` : n > 0 ? String(Math.round(n)) : "—",
+            sub:   "113 online now",
+            upState: null,
           },
           {
-            label:"X Followers",
-            value: (() => { const f = data?.social_pulse?.twitter_followers ?? 0; return f >= 1000 ? `${(f/1000).toFixed(1)}K` : f > 0 ? String(f) : "—" })(),
-            sub:`${(data?.social_pulse?.engagement_rate ?? 0).toFixed(1)}% engagement rate`,
-            up: null,
+            label: "X Followers",
+            raw:   data?.social_pulse?.twitter_followers ?? 0,
+            fmt:   (n: number) => n >= 1000 ? `${(n/1000).toFixed(1)}K` : n > 0 ? String(Math.round(n)) : "—",
+            sub:   `${(data?.social_pulse?.engagement_rate ?? 0).toFixed(1)}% engagement`,
+            upState: null,
           },
-        ].map(s => (
+        ] as const).map(s => (
           <div key={s.label} className="mc-card" style={{ padding:"24px 26px 22px" }}>
             <p style={{ fontSize:"0.75rem", fontWeight:600, letterSpacing:"0.06em", textTransform:"uppercase", color:"#8E8E93", marginBottom:12 }}>
               {s.label}
             </p>
-            <p style={{ fontSize:"2.25rem", fontWeight:800, letterSpacing:"-0.05em", color:"#1D1D1F", lineHeight:1, marginBottom:10, fontVariantNumeric:"tabular-nums" }}>
-              {s.value}
-            </p>
-            <p style={{ fontSize:"0.875rem", fontWeight:600, color: s.up === true ? "#1A8343" : s.up === false ? "#C0392B" : "#8E8E93" }}>
+            <AnimatedNumber
+              value={s.raw}
+              format={s.fmt as (n: number) => string}
+              duration={1200}
+              style={{ display:"block", fontSize:"2.25rem", fontWeight:800, letterSpacing:"-0.05em", color:"#1D1D1F", lineHeight:1, marginBottom:10, fontVariantNumeric:"tabular-nums" }}
+            />
+            <p style={{ fontSize:"0.875rem", fontWeight:600, color: s.upState === true ? "#1A8343" : s.upState === false ? "#C0392B" : "#8E8E93" }}>
               {s.sub}
             </p>
           </div>
@@ -111,16 +117,16 @@ export default function Dashboard() {
       }}
         className="cards-grid"
       >
-        <TokenHealthCard />
-        <SocialPulseCard />
-        <CommunityCard />
-        <ContentPipelineCard />
-        <AgentStatusCard />
-        <MilestonesCard />
+        <div className="enter-3"><TokenHealthCard /></div>
+        <div className="enter-4"><SocialPulseCard /></div>
+        <div className="enter-5"><CommunityCard /></div>
+        <div className="enter-6"><ContentPipelineCard /></div>
+        <div className="enter-7"><AgentStatusCard /></div>
+        <div className="enter-8"><MilestonesCard /></div>
       </div>
 
       {/* ══ Season 2 Banner ════════════════════════════════════ */}
-      <div style={{
+      <div className="enter-9" style={{
         marginTop:24,
         borderRadius:20,
         overflow:"hidden",
