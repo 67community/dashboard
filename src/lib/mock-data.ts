@@ -1,13 +1,14 @@
 import { TeamMember, Task, Milestone, AgentBot, TokenHealth, SocialPulse, CommunityStats } from "./types"
 
 export const TEAM_MEMBERS: TeamMember[] = [
-  { id: "oscar",   name: "Oscar Brendon",     initials: "OB", role: "Dev",     status: "Active", color: "#6366f1",  discord_id: "767811814557089802" },
-  { id: "jamie",   name: "Jamie Trevillian",  initials: "JT", role: "Founder", status: "Active", color: "#F5A623",  avatar: "/avatars/jamie.png",   discord_id: "1440075589557158100" },
+  // Order: Brandon → Jamie → Nick → WJP → Gen → Oscar → Crispy
   { id: "brandon", name: "Brandon Trevillian",initials: "BT", role: "Founder", status: "Active", color: "#f97316",  avatar: "/avatars/brandon.png", discord_id: "1444130836415905993" },
-  { id: "weston",  name: "WJP",               initials: "WJ", role: "Vision",  status: "Active", color: "#8b5cf6",  avatar: "/avatars/wjp.png",     discord_id: "788495124061487154" },
-  { id: "crispy",  name: "Crispy",            initials: "CR", role: "Build",   status: "Active", color: "#10b981",  avatar: "/avatars/crispy.png",  discord_id: "201710326347988993" },
-  { id: "gen",     name: "Gen",               initials: "GN", role: "Founder", status: "Active", color: "#EC4899",  avatar: "/avatars/gen.png",     discord_id: "965681608604647514" },
+  { id: "jamie",   name: "Jamie Trevillian",  initials: "JT", role: "Founder", status: "Active", color: "#F5A623",  avatar: "/avatars/jamie.png",   discord_id: "1440075589557158100" },
   { id: "nick",    name: "Nick",              initials: "NK", role: "Founder", status: "Active", color: "#14B8A6",  avatar: "/avatars/goodgod.png" },
+  { id: "weston",  name: "WJP",               initials: "WJ", role: "Vision",  status: "Active", color: "#8b5cf6",  avatar: "/avatars/wjp.png",     discord_id: "788495124061487154" },
+  { id: "gen",     name: "Gen",               initials: "GN", role: "Founder", status: "Active", color: "#EC4899",  avatar: "/avatars/gen.png",     discord_id: "965681608604647514" },
+  { id: "oscar",   name: "Oscar Brendon",     initials: "OB", role: "Dev",     status: "Active", color: "#6366f1",  discord_id: "767811814557089802" },
+  { id: "crispy",  name: "Crispy",            initials: "CR", role: "Build",   status: "Active", color: "#10b981",  avatar: "/avatars/crispy.png",  discord_id: "201710326347988993" },
 ]
 
 export const INITIAL_TASKS: Task[] = [

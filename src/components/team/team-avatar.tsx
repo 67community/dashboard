@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { TeamMember } from "@/lib/types"
 import { TEAM_MEMBERS } from "@/lib/mock-data"
+import { usePresence, STATUS_COLOR, STATUS_LABEL, type DiscordStatus } from "@/lib/use-presence"
 
 function discordUrl(member: TeamMember) {
   if (member.discord_id) return `https://discord.com/users/${member.discord_id}`
@@ -11,10 +12,12 @@ function discordUrl(member: TeamMember) {
 
 const SIZE = { sm: 28, md: 36, lg: 44 }
 
-export function TeamAvatar({ member, size = "md" }: { member: TeamMember; size?: "sm"|"md"|"lg" }) {
+export function TeamAvatar({ member, size = "md", discordStatus }: { member: TeamMember; size?: "sm"|"md"|"lg"; discordStatus?: DiscordStatus }) {
   const [hover, setHover] = useState(false)
   const px = SIZE[size]
   const url = discordUrl(member)
+  const statusColor = discordStatus ? STATUS_COLOR[discordStatus] : (member.status === "Active" ? "#23A559" : "#82858A")
+  const statusLabel = discordStatus ? STATUS_LABEL[discordStatus] : member.status
 
   const avatarCircle = (
     <div style={{
@@ -52,17 +55,17 @@ export function TeamAvatar({ member, size = "md" }: { member: TeamMember; size?:
         : avatarCircle
       }
 
-      {/* Active dot */}
-      {member.status === "Active" && (
-        <div style={{
-          position:"absolute", bottom:-1, right:-1,
-          width: px <= 28 ? 8 : 10,
-          height: px <= 28 ? 8 : 10,
-          borderRadius:"50%", background:"#34C759",
-          border:"2px solid #0A0A0A",
-          zIndex:2,
-        }} />
-      )}
+      {/* Status dot — always shown */}
+      <div style={{
+        position:"absolute", bottom:-1, right:-1,
+        width: px <= 28 ? 8 : 10,
+        height: px <= 28 ? 8 : 10,
+        borderRadius:"50%", background: statusColor,
+        border:"2px solid #0A0A0A",
+        zIndex:2,
+        boxShadow: (discordStatus === "online" || (!discordStatus && member.status === "Active"))
+          ? `0 0 5px ${statusColor}99` : "none",
+      }} />
 
       {/* Premium hover tooltip */}
       {hover && (
@@ -103,12 +106,11 @@ export function TeamAvatar({ member, size = "md" }: { member: TeamMember; size?:
               paddingTop:8, borderTop:"1px solid rgba(255,255,255,0.06)" }}>
               <div style={{
                 width:7, height:7, borderRadius:"50%",
-                background: member.status === "Active" ? "#34C759" : "#FF3B30",
-                boxShadow: member.status === "Active" ? "0 0 6px #34C75988" : "none",
+                background: statusColor,
+                boxShadow: `0 0 6px ${statusColor}88`,
               }} />
-              <span style={{ fontSize:"0.6875rem", fontWeight:600,
-                color: member.status === "Active" ? "#34C759" : "#FF3B30" }}>
-                {member.status}
+              <span style={{ fontSize:"0.6875rem", fontWeight:600, color: statusColor }}>
+                {statusLabel}
               </span>
             </div>
           </div>
@@ -126,13 +128,17 @@ export function TeamAvatar({ member, size = "md" }: { member: TeamMember; size?:
 }
 
 export function TeamAvatarGroup() {
+  const presence = usePresence()
   return (
     <div style={{ display:"flex", alignItems:"center" }}>
-      {TEAM_MEMBERS.map((m, i) => (
-        <div key={m.id} style={{ marginLeft: i === 0 ? 0 : -8, position:"relative", zIndex: TEAM_MEMBERS.length - i }}>
-          <TeamAvatar member={m} size="sm" />
-        </div>
-      ))}
+      {TEAM_MEMBERS.map((m, i) => {
+        const status = m.discord_id ? presence[m.discord_id] : undefined
+        return (
+          <div key={m.id} style={{ marginLeft: i === 0 ? 0 : -8, position:"relative", zIndex: TEAM_MEMBERS.length - i }}>
+            <TeamAvatar member={m} size="sm" discordStatus={status} />
+          </div>
+        )
+      })}
     </div>
   )
 }
