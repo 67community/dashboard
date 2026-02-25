@@ -46,10 +46,10 @@ export function useTasks() {
     setLoading(true)
     try {
       const [{ data: rows }, { data: subs }, { data: coms }, { data: acts }] = await Promise.all([
-        supabase.from("tasks").select("*").order("position"),
-        supabase.from("subtasks").select("*").order("position"),
-        supabase.from("comments").select("*").order("created_at"),
-        supabase.from("activity").select("*").order("timestamp"),
+        supabase!.from("tasks").select("*").order("position"),
+        supabase!.from("subtasks").select("*").order("position"),
+        supabase!.from("comments").select("*").order("created_at"),
+        supabase!.from("activity").select("*").order("timestamp"),
       ])
       if (rows) {
         setTasks(rows.map(r => rowToTask(
@@ -71,21 +71,21 @@ export function useTasks() {
     fetchAll()
     if (!isSupabaseConfigured) return
 
-    const channel = supabase
+    const channel = supabase!
       .channel("tasks-realtime")
       .on("postgres_changes", { event: "*", schema: "public", table: "tasks" }, fetchAll)
       .on("postgres_changes", { event: "*", schema: "public", table: "subtasks" }, fetchAll)
       .on("postgres_changes", { event: "*", schema: "public", table: "comments" }, fetchAll)
       .subscribe()
 
-    return () => { supabase.removeChannel(channel) }
+    return () => { supabase!.removeChannel(channel) }
   }, [fetchAll])
 
   // ── Move column ──────────────────────────────────────────────────────────
   const moveTask = useCallback(async (taskId: string, newCol: KanbanColumn) => {
     setTasks(prev => prev.map(t => t.id === taskId ? { ...t, column: newCol } : t))
     if (isSupabaseConfigured) {
-      await supabase.from("tasks").update({ column: newCol }).eq("id", taskId)
+      await supabase!.from("tasks").update({ column: newCol }).eq("id", taskId)
     }
   }, [])
 
@@ -108,7 +108,7 @@ export function useTasks() {
     setTasks(prev => [...prev, newTask])
 
     if (isSupabaseConfigured) {
-      const { data } = await supabase.from("tasks").insert({
+      const { data } = await supabase!.from("tasks").insert({
         id:          newTask.id,
         title:       newTask.title,
         description: newTask.description,
@@ -135,7 +135,7 @@ export function useTasks() {
       if (changes.column)      dbChanges.column      = changes.column
       if (changes.dueDate !== undefined)     dbChanges.due_date    = changes.dueDate
       if (Object.keys(dbChanges).length) {
-        await supabase.from("tasks").update(dbChanges).eq("id", taskId)
+        await supabase!.from("tasks").update(dbChanges).eq("id", taskId)
       }
     }
   }, [])
@@ -144,7 +144,7 @@ export function useTasks() {
   const deleteTask = useCallback(async (taskId: string) => {
     setTasks(prev => prev.filter(t => t.id !== taskId))
     if (isSupabaseConfigured) {
-      await supabase.from("tasks").delete().eq("id", taskId)
+      await supabase!.from("tasks").delete().eq("id", taskId)
     }
   }, [])
 
@@ -161,7 +161,7 @@ export function useTasks() {
       return { ...t, subtasks: subs }
     }))
     if (isSupabaseConfigured) {
-      await supabase.from("subtasks").update({ done: newDone }).eq("id", subtaskId)
+      await supabase!.from("subtasks").update({ done: newDone }).eq("id", subtaskId)
     }
   }, [])
 
@@ -170,7 +170,7 @@ export function useTasks() {
     const comment: Comment = { id: `c_${Date.now()}`, authorId, text, createdAt: new Date().toISOString() }
     setTasks(prev => prev.map(t => t.id === taskId ? { ...t, comments: [...t.comments, comment] } : t))
     if (isSupabaseConfigured) {
-      await supabase.from("comments").insert({ id: comment.id, task_id: taskId, author_id: authorId, text })
+      await supabase!.from("comments").insert({ id: comment.id, task_id: taskId, author_id: authorId, text })
     }
   }, [])
 
@@ -179,7 +179,7 @@ export function useTasks() {
     const sub: SubTask = { id: `s_${Date.now()}`, title, done: false }
     setTasks(prev => prev.map(t => t.id === taskId ? { ...t, subtasks: [...t.subtasks, sub] } : t))
     if (isSupabaseConfigured) {
-      await supabase.from("subtasks").insert({ id: sub.id, task_id: taskId, title, done: false })
+      await supabase!.from("subtasks").insert({ id: sub.id, task_id: taskId, title, done: false })
     }
   }, [])
 
@@ -188,7 +188,7 @@ export function useTasks() {
     const log: ActivityLog = { id: `a_${Date.now()}`, actorId, action, timestamp: new Date().toISOString() }
     setTasks(prev => prev.map(t => t.id === taskId ? { ...t, activity: [...t.activity, log] } : t))
     if (isSupabaseConfigured) {
-      await supabase.from("activity").insert({ id: log.id, task_id: taskId, actor_id: actorId, action })
+      await supabase!.from("activity").insert({ id: log.id, task_id: taskId, actor_id: actorId, action })
     }
   }, [])
 

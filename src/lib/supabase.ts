@@ -1,10 +1,20 @@
-import { createClient } from "@supabase/supabase-js"
+import { createClient, SupabaseClient } from "@supabase/supabase-js"
 
-const url  = process.env.NEXT_PUBLIC_SUPABASE_URL  ?? ""
-const key  = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? ""
-
-export const supabase = createClient(url, key)
+const url = process.env.NEXT_PUBLIC_SUPABASE_URL ?? ""
+const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? ""
 
 /** Returns true when Supabase credentials are configured */
 export const isSupabaseConfigured =
   url.startsWith("https://") && key.length > 10
+
+// Only create client when credentials are present — avoids build-time crash
+let _client: SupabaseClient | null = null
+
+export function getSupabaseClient(): SupabaseClient | null {
+  if (!isSupabaseConfigured) return null
+  if (!_client) _client = createClient(url, key)
+  return _client
+}
+
+/** @deprecated use getSupabaseClient() */
+export const supabase = isSupabaseConfigured ? createClient(url, key) : null
