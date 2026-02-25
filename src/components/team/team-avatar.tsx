@@ -4,11 +4,39 @@ import { useState } from "react"
 import { TeamMember } from "@/lib/types"
 import { TEAM_MEMBERS } from "@/lib/mock-data"
 
+function discordUrl(member: TeamMember) {
+  if (member.discord_id) return `https://discord.com/users/${member.discord_id}`
+  return null
+}
+
 const SIZE = { sm: 28, md: 36, lg: 44 }
 
 export function TeamAvatar({ member, size = "md" }: { member: TeamMember; size?: "sm"|"md"|"lg" }) {
   const [hover, setHover] = useState(false)
   const px = SIZE[size]
+  const url = discordUrl(member)
+
+  const avatarCircle = (
+    <div style={{
+      width:px, height:px, borderRadius:"50%",
+      background: member.color,
+      display:"flex", alignItems:"center", justifyContent:"center",
+      fontSize: px <= 28 ? "0.5625rem" : px <= 36 ? "0.6875rem" : "0.875rem",
+      fontWeight:800, color:"#fff",
+      cursor: url ? "pointer" : "default", userSelect:"none",
+      boxShadow: hover
+        ? `0 0 0 2.5px ${member.color}55, 0 4px 12px ${member.color}44`
+        : "0 0 0 2px rgba(10,10,10,0.8)",
+      transition:"box-shadow 0.2s",
+      position:"relative", zIndex: hover ? 10 : 1,
+    }}>
+      {member.avatar
+        ? <img src={member.avatar} alt={member.name}
+            style={{ width:"100%", height:"100%", borderRadius:"50%", objectFit:"cover" }} />
+        : member.initials
+      }
+    </div>
+  )
 
   return (
     <div
@@ -16,26 +44,13 @@ export function TeamAvatar({ member, size = "md" }: { member: TeamMember; size?:
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >
-      {/* Avatar circle */}
-      <div style={{
-        width:px, height:px, borderRadius:"50%",
-        background: member.color,
-        display:"flex", alignItems:"center", justifyContent:"center",
-        fontSize: px <= 28 ? "0.5625rem" : px <= 36 ? "0.6875rem" : "0.875rem",
-        fontWeight:800, color:"#fff",
-        cursor:"default", userSelect:"none",
-        boxShadow: hover
-          ? `0 0 0 2.5px ${member.color}55, 0 4px 12px ${member.color}44`
-          : "0 0 0 2px rgba(10,10,10,0.8)",
-        transition:"box-shadow 0.2s",
-        position:"relative", zIndex: hover ? 10 : 1,
-      }}>
-        {member.avatar
-          ? <img src={member.avatar} alt={member.name}
-              style={{ width:"100%", height:"100%", borderRadius:"50%", objectFit:"cover" }} />
-          : member.initials
-        }
-      </div>
+      {/* Avatar circle — clickable if discord_id present */}
+      {url
+        ? <a href={url} target="_blank" rel="noreferrer" style={{ textDecoration:"none", display:"block" }}>
+            {avatarCircle}
+          </a>
+        : avatarCircle
+      }
 
       {/* Active dot */}
       {member.status === "Active" && (
