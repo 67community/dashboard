@@ -13,29 +13,29 @@ export function CommunityCard() {
   const pct = Math.min((members / goal) * 100, 100)
 
   const collapsed = (
-    <div style={{ display:"flex", flexDirection:"column", gap:20 }}>
+    <div style={{ display:"flex", flexDirection:"column", gap:22 }}>
       {/* Hero */}
-      <div style={{ display:"flex", alignItems:"flex-end", justifyContent:"space-between" }}>
+      <div style={{ display:"flex", alignItems:"flex-start", justifyContent:"space-between" }}>
         <div>
-          <p className="hero-label" style={{ marginBottom:6 }}>Discord Members</p>
+          <p className="hero-label" style={{ marginBottom:8 }}>Discord Members</p>
           <p className="hero-number">{fmtM}</p>
         </div>
-        <div style={{ display:"flex", alignItems:"center", gap:6, background:"#ECFDF5", padding:"6px 12px", borderRadius:99 }}>
+        <span style={{ display:"inline-flex", alignItems:"center", gap:6, background:"#E8F8EE", padding:"6px 12px", borderRadius:99, marginTop:4 }}>
           <span className="dot-on" style={{ width:7, height:7 }} />
-          <span style={{ fontSize:"0.75rem", fontWeight:700, color:"#059669" }}>113 online</span>
-        </div>
+          <span style={{ fontSize:"0.75rem", fontWeight:700, color:"#1A8343" }}>113 online</span>
+        </span>
       </div>
 
-      {/* 3 stats */}
-      <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:8 }}>
+      {/* Stats — clean, no boxes */}
+      <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:"14px 0", borderTop:"1px solid rgba(0,0,0,0.06)", paddingTop:18 }}>
         {[
           { label:"New 24h",   value: String(c?.new_joins_24h ?? "—") },
           { label:"Active 7d", value: (c?.active_7d ?? 0) >= 1000 ? `${((c?.active_7d??0)/1000).toFixed(1)}K` : String(c?.active_7d ?? "—") },
           { label:"Telegram",  value: (c?.telegram_members ?? 0) >= 1000 ? `${((c?.telegram_members??0)/1000).toFixed(1)}K` : String(c?.telegram_members ?? "—") },
         ].map(s => (
-          <div key={s.label} className="inset-cell" style={{ textAlign:"center" }}>
-            <p className="metric-md">{s.value}</p>
-            <p className="metric-label">{s.label}</p>
+          <div key={s.label}>
+            <p style={{ fontSize:"1.25rem", fontWeight:700, letterSpacing:"-0.025em", color:"#1D1D1F" }}>{s.value}</p>
+            <p style={{ fontSize:"0.6875rem", fontWeight:500, color:"#8E8E93", marginTop:2 }}>{s.label}</p>
           </div>
         ))}
       </div>

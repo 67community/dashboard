@@ -22,27 +22,27 @@ export function AgentStatusCard() {
   const allGood = on === bots.length && bots.length > 0
 
   const collapsed = (
-    <div style={{ display:"flex", flexDirection:"column", gap:20 }}>
+    <div style={{ display:"flex", flexDirection:"column", gap:22 }}>
       {/* Hero */}
-      <div style={{ display:"flex", alignItems:"flex-end", justifyContent:"space-between" }}>
+      <div style={{ display:"flex", alignItems:"flex-start", justifyContent:"space-between" }}>
         <div>
-          <p className="hero-label" style={{ marginBottom:6 }}>Bots Active</p>
+          <p className="hero-label" style={{ marginBottom:8 }}>Bots Active</p>
           <p className="hero-number">{bots.length === 0 ? "—" : `${on}/${bots.length}`}</p>
         </div>
         {bots.length > 0 && (
-          <span className={allGood ? "badge-up" : "badge-down"}>
-            {allGood ? "All systems go ✓" : `${bots.length - on} offline`}
+          <span className={allGood ? "badge-up" : "badge-down"} style={{ marginTop:6 }}>
+            {allGood ? "All good ✓" : `${bots.length - on} offline`}
           </span>
         )}
       </div>
 
-      {/* Bot list preview */}
-      <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
+      {/* Bot list — clean, readable */}
+      <div style={{ display:"flex", flexDirection:"column", gap:12, borderTop:"1px solid rgba(0,0,0,0.06)", paddingTop:18 }}>
         {bots.slice(0, 5).map(b => (
           <div key={b.name} style={{ display:"flex", alignItems:"center", gap:10 }}>
             <span className={b.status === "green" ? "dot-on" : "dot-off"} />
-            <span style={{ fontSize:"0.8125rem", fontWeight:600, color:"#3F3F46", flex:1 }}>{b.name}</span>
-            <span style={{ fontSize:"0.75rem", color:"#A1A1AA", fontWeight:500 }}>{ago(b.last_run)} ago</span>
+            <span style={{ fontSize:"0.875rem", fontWeight:600, color:"#1D1D1F", flex:1 }}>{b.name}</span>
+            <span style={{ fontSize:"0.75rem", color:"#8E8E93" }}>{ago(b.last_run)} ago</span>
           </div>
         ))}
       </div>

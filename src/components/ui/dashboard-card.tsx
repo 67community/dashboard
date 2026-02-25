@@ -30,7 +30,7 @@ export function DashboardCard({
         {/* Accent bar */}
         <div style={{ height: 3, background: `linear-gradient(90deg, ${accentColor}, ${accentColor}33)`, flexShrink: 0 }} />
 
-        <div className="flex flex-col flex-1 p-6 gap-5">
+        <div className="flex flex-col flex-1 gap-5" style={{ padding:"24px 26px 26px" }}>
           {/* Header row */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">

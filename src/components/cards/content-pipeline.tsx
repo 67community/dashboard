@@ -16,24 +16,19 @@ export function ContentPipelineCard() {
   ]
 
   const collapsed = (
-    <div style={{ display:"flex", flexDirection:"column", gap:20 }}>
+    <div style={{ display:"flex", flexDirection:"column", gap:22 }}>
       {/* Hero */}
-      <div style={{ display:"flex", alignItems:"flex-end", justifyContent:"space-between" }}>
-        <div>
-          <p className="hero-label" style={{ marginBottom:6 }}>Drafts in Queue</p>
-          <p className="hero-number">0</p>
-        </div>
-        <div style={{ textAlign:"right" }}>
-          <p style={{ fontSize:"0.9375rem", fontWeight:700, color:"#09090B" }}>{lastPost}</p>
-          <p className="hero-label">Last Post</p>
-        </div>
+      <div>
+        <p className="hero-label" style={{ marginBottom:8 }}>Drafts in Queue</p>
+        <p className="hero-number">0</p>
+        <p style={{ fontSize:"0.875rem", color:"#8E8E93", marginTop:6 }}>Last post: {lastPost}</p>
       </div>
 
       {/* Sprint 3 notice */}
-      <div style={{ display:"flex", alignItems:"center", gap:12, background:"#F9F0FF", borderRadius:12, padding:"12px 14px" }}>
+      <div style={{ display:"flex", alignItems:"center", gap:12, borderTop:"1px solid rgba(0,0,0,0.06)", paddingTop:18 }}>
         <Calendar style={{ width:16, height:16, color:"#8B5CF6", flexShrink:0 }} />
-        <p style={{ fontSize:"0.8125rem", fontWeight:600, color:"#6D28D9" }}>
-          AI content pipeline launching in Sprint 3
+        <p style={{ fontSize:"0.875rem", fontWeight:600, color:"#6D28D9" }}>
+          AI pipeline launching Sprint 3
         </p>
       </div>
     </div>

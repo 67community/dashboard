@@ -20,26 +20,26 @@ export function MilestonesCard() {
   const wins = data?.recent_wins ?? []
 
   const collapsed = (
-    <div style={{ display:"flex", flexDirection:"column", gap:18 }}>
+    <div style={{ display:"flex", flexDirection:"column", gap:22 }}>
       <div>
-        <p className="hero-label" style={{ marginBottom:6 }}>Progress Tracker</p>
+        <p className="hero-label" style={{ marginBottom:8 }}>Goals Progress</p>
         <p className="hero-number">{ms.length === 0 ? "—" : `${ms.filter(m => pct(m.current, m.target) >= 100).length}/${ms.length}`}</p>
-        <p style={{ fontSize:"0.75rem", color:"#A1A1AA", marginTop:4, fontWeight:500 }}>goals complete</p>
+        <p style={{ fontSize:"0.875rem", color:"#8E8E93", marginTop:6, fontWeight:500 }}>goals complete</p>
       </div>
 
-      <div style={{ display:"flex", flexDirection:"column", gap:14 }}>
+      <div style={{ display:"flex", flexDirection:"column", gap:16, borderTop:"1px solid rgba(0,0,0,0.06)", paddingTop:18 }}>
         {ms.length === 0
-          ? [1,2,3].map(i => <div key={i} className="skeleton" style={{ height:40 }} />)
+          ? [1,2,3].map(i => <div key={i} className="skeleton" style={{ height:32 }} />)
           : ms.slice(0,3).map((m, i) => {
             const p = pct(m.current, m.target)
             return (
               <div key={m.label}>
-                <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:7 }}>
-                  <span style={{ fontSize:"0.8125rem", fontWeight:600, color:"#3F3F46" }}>{m.label}</span>
-                  <span style={{ fontSize:"0.8125rem", fontWeight:800, color: COLORS[i] }}>{p.toFixed(0)}%</span>
+                <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:8 }}>
+                  <span style={{ fontSize:"0.875rem", fontWeight:600, color:"#1D1D1F" }}>{m.label}</span>
+                  <span style={{ fontSize:"0.875rem", fontWeight:700, color: COLORS[i] }}>{p.toFixed(0)}%</span>
                 </div>
-                <div className="prog-track" style={{ height:6 }}>
-                  <div className="prog-fill" style={{ height:6, width:`${p}%`, background:COLORS[i] }} />
+                <div className="prog-track" style={{ height:5 }}>
+                  <div className="prog-fill" style={{ height:5, width:`${p}%`, background:COLORS[i] }} />
                 </div>
               </div>
             )
