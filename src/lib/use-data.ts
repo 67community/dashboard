@@ -85,6 +85,10 @@ export interface CommunityData {
   unanswered_posts: number
   telegram_members: number
   watchlist_count: number
+  online_now?: number
+  discord_delta_24h?: number
+  telegram_delta_24h?: number
+  watchlist_delta_24h?: number
 }
 
 export interface AgentData {
