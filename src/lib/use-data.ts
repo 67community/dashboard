@@ -40,6 +40,13 @@ export interface TokenHealthData {
   exchange_volumes: ExchangeVolume[]
   total_volume_24h: number
   biggest_trades: BiggestTrades
+  // 24h snapshot deltas
+  volume_change_pct?: number
+  volume_change_usd?: number
+  mcap_change_pct?: number
+  mcap_change_usd?: number
+  liquidity_change_pct?: number
+  liquidity_change_usd?: number
 }
 
 export interface BestTweet {
