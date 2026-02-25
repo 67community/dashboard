@@ -123,6 +123,55 @@ export function TokenHealthCard() {
         ))}
       </div>
 
+      {/* ── Bullish / Bearish Sentiment — CMC style ── */}
+      {(() => {
+        const total  = (t?.buys_24h ?? 0) + (t?.sells_24h ?? 0)
+        const bullPct = total > 0 ? Math.round((t?.buys_24h ?? 0) / total * 100) : 55
+        const bearPct = 100 - bullPct
+        const isBull  = bullPct >= 50
+
+        return (
+          <div className="inset-cell">
+            <p className="hero-label" style={{ marginBottom:14 }}>Market Sentiment · 24h</p>
+
+            {/* CMC-style split bar */}
+            <div style={{ display:"flex", height:36, borderRadius:10, overflow:"hidden", marginBottom:12 }}>
+              <div style={{
+                flex: bullPct, background:"linear-gradient(90deg,#1A8343,#34C759)",
+                display:"flex", alignItems:"center", paddingLeft:12, gap:6, minWidth:60,
+              }}>
+                <span style={{ fontSize:"1.125rem" }}>👍</span>
+                <span style={{ fontSize:"0.8125rem", fontWeight:800, color:"#fff" }}>{bullPct}%</span>
+              </div>
+              <div style={{
+                flex: bearPct, background:"linear-gradient(90deg,#C0392B,#E74C3C)",
+                display:"flex", alignItems:"center", justifyContent:"flex-end", paddingRight:12, gap:6, minWidth:60,
+              }}>
+                <span style={{ fontSize:"0.8125rem", fontWeight:800, color:"#fff" }}>{bearPct}%</span>
+                <span style={{ fontSize:"1.125rem" }}>👎</span>
+              </div>
+            </div>
+
+            {/* Labels */}
+            <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center" }}>
+              <span style={{ fontSize:"0.8125rem", fontWeight:700, color:"#1A8343" }}>
+                {isBull ? "🟢 Bullish" : ""}
+              </span>
+              <span style={{
+                fontSize:"0.75rem", fontWeight:700, padding:"3px 10px", borderRadius:99,
+                background: isBull ? "#E8F8EE" : "#FEF0F0",
+                color: isBull ? "#1A8343" : "#C0392B",
+              }}>
+                {isBull ? "Bullish Majority" : "Bearish Majority"}
+              </span>
+              <span style={{ fontSize:"0.8125rem", fontWeight:700, color:"#C0392B" }}>
+                {!isBull ? "🔴 Bearish" : ""}
+              </span>
+            </div>
+          </div>
+        )
+      })()}
+
       {/* ── 24h Buys / Sells — always visible ── */}
       <div className="inset-cell">
         <p className="hero-label" style={{ marginBottom:12 }}>24h Transactions</p>
