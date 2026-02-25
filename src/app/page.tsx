@@ -16,11 +16,10 @@ export default function Dashboard() {
 
   return (
     <div>
-      {/* ══ Stripe-style hero band — full width ════════════════ */}
+      {/* ══ Stripe-style hero band ══════════════════════════════ */}
       <div className="enter-1" style={{
-        position:"relative", overflow:"hidden",
-        marginLeft:-40, marginRight:-40, marginTop:-40,
-        marginBottom:36, padding:"56px 88px 60px",
+        position:"relative", borderRadius:24, overflow:"hidden",
+        marginBottom:36, padding:"44px 48px 52px",
         background:"#0A0A0A",
         minHeight:180,
       }}>
@@ -193,9 +192,9 @@ export default function Dashboard() {
         <div className="enter-8"><MilestonesCard /></div>
       </div>
 
-      {/* ══ Season 2 Banner — full-width, flush bottom ════════ */}
+      {/* ══ Season 2 Banner ════════════════════════════════════ */}
       <div className="enter-9" style={{
-        marginTop:28, marginLeft:-40, marginRight:-40, marginBottom:0,
+        marginTop:24, borderRadius:24,
         position:"relative", minHeight:220, overflow:"hidden",
       }}>
         {/* Base gradient */}
