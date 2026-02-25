@@ -30,9 +30,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script dangerouslySetInnerHTML={{ __html: TWITTER_SCRIPT }} />
       </head>
       <body>
+        {/* Ambient blobs — frosted glass backdrop */}
+        <div aria-hidden style={{ position:"fixed", inset:0, zIndex:0, pointerEvents:"none", overflow:"hidden" }}>
+          <div style={{ position:"absolute", top:"-10%", left:"-5%",  width:600, height:600, borderRadius:"50%", background:"radial-gradient(circle, rgba(245,166,35,0.12) 0%, transparent 70%)", filter:"blur(40px)" }} />
+          <div style={{ position:"absolute", top:"30%",  right:"-8%", width:500, height:500, borderRadius:"50%", background:"radial-gradient(circle, rgba(99,102,241,0.08) 0%, transparent 70%)",  filter:"blur(40px)" }} />
+          <div style={{ position:"absolute", bottom:"5%",left:"20%",  width:700, height:400, borderRadius:"50%", background:"radial-gradient(circle, rgba(245,166,35,0.07) 0%, transparent 70%)", filter:"blur(50px)" }} />
+        </div>
         <DataProvider>
           <TopBar />
-          <main style={{ maxWidth:1440, margin:"0 auto", padding:"40px 40px" }}>
+          <main style={{ maxWidth:1440, margin:"0 auto", padding:"40px 40px", position:"relative", zIndex:1 }}>
             {children}
           </main>
         </DataProvider>
