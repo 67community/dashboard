@@ -34,7 +34,7 @@ export function CommunityCard() {
           { label:"Telegram",  value: (c?.telegram_members ?? 0) >= 1000 ? `${((c?.telegram_members??0)/1000).toFixed(1)}K` : String(c?.telegram_members ?? "—") },
         ].map(s => (
           <div key={s.label}>
-            <p style={{ fontSize:"1.25rem", fontWeight:700, letterSpacing:"-0.025em", color:"#1D1D1F" }}>{s.value}</p>
+            <p style={{ fontSize:"1.375rem", fontWeight:700, letterSpacing:"-0.025em", color:"#1D1D1F" }}>{s.value}</p>
             <p style={{ fontSize:"0.6875rem", fontWeight:500, color:"#8E8E93", marginTop:2 }}>{s.label}</p>
           </div>
         ))}

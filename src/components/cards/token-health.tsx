@@ -51,8 +51,8 @@ export function TokenHealthCard() {
           { label:"CMC Rank",    value: `#${t?.cmc_rank ?? "—"}` },
         ].map(s => (
           <div key={s.label}>
-            <p style={{ fontSize:"1.125rem", fontWeight:700, letterSpacing:"-0.02em", color:"#1D1D1F" }}>{s.value}</p>
-            <p style={{ fontSize:"0.6875rem", fontWeight:500, color:"#8E8E93", marginTop:2 }}>{s.label}</p>
+            <p style={{ fontSize:"1.375rem", fontWeight:700, letterSpacing:"-0.03em", color:"#1D1D1F" }}>{s.value}</p>
+            <p style={{ fontSize:"0.8125rem", fontWeight:500, color:"#8E8E93", marginTop:3 }}>{s.label}</p>
           </div>
         ))}
       </div>

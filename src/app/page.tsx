@@ -84,14 +84,14 @@ export default function Dashboard() {
             up: null,
           },
         ].map(s => (
-          <div key={s.label} className="mc-card" style={{ padding:"22px 24px" }}>
-            <p style={{ fontSize:"0.6875rem", fontWeight:600, letterSpacing:"0.05em", textTransform:"uppercase", color:"#8E8E93", marginBottom:10 }}>
+          <div key={s.label} className="mc-card" style={{ padding:"24px 26px 22px" }}>
+            <p style={{ fontSize:"0.75rem", fontWeight:600, letterSpacing:"0.06em", textTransform:"uppercase", color:"#8E8E93", marginBottom:12 }}>
               {s.label}
             </p>
-            <p style={{ fontSize:"2rem", fontWeight:700, letterSpacing:"-0.045em", color:"#1D1D1F", lineHeight:1, marginBottom:8, fontVariantNumeric:"tabular-nums" }}>
+            <p style={{ fontSize:"2.25rem", fontWeight:800, letterSpacing:"-0.05em", color:"#1D1D1F", lineHeight:1, marginBottom:10, fontVariantNumeric:"tabular-nums" }}>
               {s.value}
             </p>
-            <p style={{ fontSize:"0.8125rem", fontWeight:500, color: s.up === true ? "#1A8343" : s.up === false ? "#C0392B" : "#8E8E93" }}>
+            <p style={{ fontSize:"0.875rem", fontWeight:600, color: s.up === true ? "#1A8343" : s.up === false ? "#C0392B" : "#8E8E93" }}>
               {s.sub}
             </p>
           </div>

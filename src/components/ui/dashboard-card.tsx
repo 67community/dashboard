@@ -39,8 +39,8 @@ export function DashboardCard({
                 <span style={{ color: accentColor, display:"flex" }}>{icon}</span>
               </div>
               <div>
-                <p style={{ fontSize:"0.8125rem", fontWeight:700, color:"#09090B", lineHeight:1 }}>{title}</p>
-                {subtitle && <p style={{ fontSize:"0.6875rem", color:"#A1A1AA", marginTop:2 }}>{subtitle}</p>}
+                <p style={{ fontSize:"0.9375rem", fontWeight:700, color:"#1D1D1F", lineHeight:1, letterSpacing:"-0.01em" }}>{title}</p>
+                {subtitle && <p style={{ fontSize:"0.8125rem", color:"#8E8E93", marginTop:3, fontWeight:500 }}>{subtitle}</p>}
               </div>
             </div>
             <div className="flex items-center gap-2">

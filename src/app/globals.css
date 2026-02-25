@@ -96,55 +96,56 @@ body {
    Apple's type scale — huge display → tiny label
 ═══════════════════════════════════════════════════════ */
 .hero-number {
-  font-size: 3.25rem;
-  font-weight: 700;
-  letter-spacing: -0.055em;
+  font-size: 3.5rem;
+  font-weight: 800;
+  letter-spacing: -0.06em;
   line-height: 1;
   color: #1D1D1F;
   font-variant-numeric: tabular-nums;
+  font-feature-settings: "kern" 1, "tnum" 1;
 }
 .hero-label {
-  font-size: 0.6875rem;  /* 11pt — Apple's exact caption size */
+  font-size: 0.75rem;
   font-weight: 600;
-  letter-spacing: 0.07em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--tertiary);
+  color: #8E8E93;
 }
 .metric-xl {
-  font-size: 2rem;
-  font-weight: 700;
-  letter-spacing: -0.04em;
+  font-size: 2.25rem;
+  font-weight: 800;
+  letter-spacing: -0.045em;
   color: #1D1D1F;
   font-variant-numeric: tabular-nums;
 }
 .metric-lg {
-  font-size: 1.5rem;
+  font-size: 1.625rem;
   font-weight: 700;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.035em;
   color: #1D1D1F;
 }
 .metric-md {
-  font-size: 1.0625rem;
+  font-size: 1.1875rem;
   font-weight: 700;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.025em;
   color: #1D1D1F;
 }
 .metric-label {
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
   font-weight: 500;
-  color: var(--tertiary);
-  margin-top: 3px;
+  color: #8E8E93;
+  margin-top: 4px;
 }
 .card-title {
-  font-size: 0.875rem;
+  font-size: 0.9375rem;
   font-weight: 700;
   color: #1D1D1F;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.015em;
 }
 .card-subtitle {
-  font-size: 0.75rem;
-  color: var(--tertiary);
-  margin-top: 1px;
+  font-size: 0.8125rem;
+  color: #8E8E93;
+  margin-top: 2px;
 }
 
 /* ══ STATUS BADGES ════════════════════════════════════ */

@@ -41,7 +41,7 @@ export function AgentStatusCard() {
         {bots.slice(0, 5).map(b => (
           <div key={b.name} style={{ display:"flex", alignItems:"center", gap:10 }}>
             <span className={b.status === "green" ? "dot-on" : "dot-off"} />
-            <span style={{ fontSize:"0.875rem", fontWeight:600, color:"#1D1D1F", flex:1 }}>{b.name}</span>
+            <span style={{ fontSize:"1rem", fontWeight:600, color:"#1D1D1F", flex:1 }}>{b.name}</span>
             <span style={{ fontSize:"0.75rem", color:"#8E8E93" }}>{ago(b.last_run)} ago</span>
           </div>
         ))}
