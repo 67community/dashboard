@@ -12,10 +12,11 @@ interface Props {
   expanded: ReactNode
   className?: string
   liveTag?: boolean
+  onOpen?: () => void
 }
 
 export function DashboardCard({
-  title, subtitle, icon, accentColor, collapsed, expanded, className = "", liveTag
+  title, subtitle, icon, accentColor, collapsed, expanded, className = "", liveTag, onOpen
 }: Props) {
   const [open, setOpen] = useState(false)
 
@@ -23,7 +24,7 @@ export function DashboardCard({
     <>
       {/* ── Grid tile ── */}
       <div
-        onClick={() => setOpen(true)}
+        onClick={() => { setOpen(true); onOpen?.() }}
         className={`mc-card mc-card-hover flex flex-col overflow-hidden select-none ${className}`}
       >
         {/* Accent bar */}

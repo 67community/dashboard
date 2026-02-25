@@ -15,16 +15,34 @@ export function SocialPulseCard() {
   const streak     = s?.posting_streak_days ?? 0
   const fmtF = followers >= 1000 ? `${(followers/1000).toFixed(1)}K` : followers.toLocaleString()
 
+  // Load Twitter widgets on mount and when tweet IDs change
   useEffect(() => {
-    const t = setTimeout(() => window.twttr?.widgets?.load(), 1000)
-    return () => clearTimeout(t)
-  }, [s?.best_tweet_week?.tweet_id])
+    const timers = [
+      setTimeout(() => window.twttr?.widgets?.load(), 800),
+      setTimeout(() => window.twttr?.widgets?.load(), 2500),
+    ]
+    return () => timers.forEach(clearTimeout)
+  }, [s?.best_tweet_week?.tweet_id, s?.best_tweet_2d?.tweet_id])
+
+  // Called when modal opens — fire multiple retries to ensure widgets render
+  const handleOpen = () => {
+    [300, 800, 1800, 3500].forEach(ms =>
+      setTimeout(() => window.twttr?.widgets?.load(), ms)
+    )
+  }
 
   const TweetCard = ({ tweet }: { tweet: NonNullable<typeof s>["best_tweet_week"] }) => {
     if (!tweet) return null
-    if (tweet.embed_html) return (
-      <div style={{ borderRadius:12, overflow:"hidden" }} dangerouslySetInnerHTML={{ __html: tweet.embed_html }} />
-    )
+    if (tweet.embed_html) {
+      // Force light theme on embeds
+      const lightHtml = tweet.embed_html
+        .replace(/data-theme="dark"/g, 'data-theme="light"')
+        .replace(/data-theme='dark'/g, "data-theme='light'")
+      return (
+        <div style={{ borderRadius:12, overflow:"hidden" }}
+          dangerouslySetInnerHTML={{ __html: lightHtml }} />
+      )
+    }
     return (
       <a href={tweet.tweet_url} target="_blank" rel="noopener noreferrer" onClick={e=>e.stopPropagation()}
         style={{ display:"block", textDecoration:"none" }}>
@@ -155,6 +173,7 @@ export function SocialPulseCard() {
       accentColor="#1D9BF0"
       collapsed={collapsed}
       expanded={expanded}
+      onOpen={handleOpen}
     />
   )
 }
