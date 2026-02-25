@@ -102,8 +102,8 @@ export default function Dashboard() {
         <div className="divider" style={{ marginTop:32 }} />
       </div>}
 
-      {/* ══ Hero Stats Row — Apple style, breathable ══════════ */}
-      <div style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:14, marginBottom:32 }}
+      {/* ══ Hero Stats — 2×2 compact grid, Token Health inset style ══════ */}
+      <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8, marginBottom:28 }}
         className="hero-stats-grid enter-2">
         {([
           {
@@ -135,17 +135,19 @@ export default function Dashboard() {
             upState: null,
           },
         ] as const).map(s => (
-          <div key={s.label} className="inset-cell" style={{ padding:"20px 22px 18px" }}>
-            <p style={{ fontSize:"0.75rem", fontWeight:600, letterSpacing:"0.06em", textTransform:"uppercase", color:"#8E8E93", marginBottom:10 }}>
-              {s.label}
-            </p>
+          <div key={s.label} className="inset-cell">
+            <p className="metric-label" style={{ marginBottom:6 }}>{s.label}</p>
             <AnimatedNumber
               value={s.raw}
               format={s.fmt as (n: number) => string}
               duration={1200}
-              style={{ display:"block", fontSize:"2.25rem", fontWeight:800, letterSpacing:"-0.05em", color:"#1D1D1F", lineHeight:1, marginBottom:8, fontVariantNumeric:"tabular-nums" }}
+              className="metric-lg"
+              style={{ display:"block", marginBottom:6, fontVariantNumeric:"tabular-nums" }}
             />
-            <p style={{ fontSize:"0.875rem", fontWeight:600, color: s.upState === true ? "#1A8343" : s.upState === false ? "#C0392B" : "#8E8E93" }}>
+            <p style={{
+              fontSize:"0.8125rem", fontWeight:600,
+              color: s.upState === true ? "#1A8343" : s.upState === false ? "#C0392B" : "#8E8E93"
+            }}>
               {s.sub}
             </p>
           </div>
@@ -153,7 +155,6 @@ export default function Dashboard() {
       </div>
 
       <style>{`
-        @media (max-width: 900px)  { .hero-stats-grid { grid-template-columns: repeat(2,1fr) !important; } }
         @media (max-width: 500px)  { .hero-stats-grid { grid-template-columns: 1fr !important; } }
       `}</style>
 
