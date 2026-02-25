@@ -46,13 +46,25 @@ export function TokenHealthCard() {
       {/* Stats — clean horizontal row, no nested boxes */}
       <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:"14px 0", borderTop:"1px solid rgba(0,0,0,0.06)", paddingTop:18 }}>
         {[
-          { label:"Market Cap",  value: fmt$(mcap) },
-          { label:"Volume 24h",  value: fmt$(t?.total_volume_24h ?? 0) },
-          { label:"Holders",     value: (t?.holders ?? 0).toLocaleString() },
-          { label:"CMC Rank",    value: `#${t?.cmc_rank ?? "—"}` },
+          { label:"Market Cap",  value: fmt$(mcap),                          trend: null },
+          { label:"Volume 24h",  value: fmt$(t?.total_volume_24h ?? 0),      trend: null },
+          { label:"Holders",     value: (t?.holders ?? 0).toLocaleString(),  trend: t?.holder_trend ?? 0 },
+          { label:"CMC Rank",    value: `#${t?.cmc_rank ?? "—"}`,            trend: null },
         ].map(s => (
           <div key={s.label}>
-            <p style={{ fontSize:"1.375rem", fontWeight:700, letterSpacing:"-0.03em", color:"#1D1D1F" }}>{s.value}</p>
+            <div style={{ display:"flex", alignItems:"center", gap:8, flexWrap:"wrap" }}>
+              <p style={{ fontSize:"1.375rem", fontWeight:700, letterSpacing:"-0.03em", color:"#1D1D1F" }}>{s.value}</p>
+              {s.trend !== null && s.trend !== 0 && (
+                <span style={{
+                  fontSize:"0.75rem", fontWeight:800, letterSpacing:"-0.01em",
+                  padding:"2px 7px", borderRadius:99,
+                  background: s.trend > 0 ? "#E8F8EE" : "#FEF0F0",
+                  color:      s.trend > 0 ? "#1A8343" : "#C0392B",
+                }}>
+                  {s.trend > 0 ? `+${s.trend}` : s.trend}
+                </span>
+              )}
+            </div>
             <p style={{ fontSize:"0.8125rem", fontWeight:500, color:"#8E8E93", marginTop:3 }}>{s.label}</p>
           </div>
         ))}
@@ -111,14 +123,26 @@ export function TokenHealthCard() {
       {/* ── Stats grid ── */}
       <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8 }}>
         {[
-          { label:"Market Cap",   value: fmt$(mcap) },
-          { label:"Volume 24h",   value: fmt$(t?.total_volume_24h ?? 0) },
-          { label:"Holders",      value: (t?.holders ?? 0).toLocaleString() },
-          { label:"Liquidity",    value: fmt$(t?.liquidity ?? 0) },
+          { label:"Market Cap",  value: fmt$(mcap),                          trend: null },
+          { label:"Volume 24h",  value: fmt$(t?.total_volume_24h ?? 0),      trend: null },
+          { label:"Holders",     value: (t?.holders ?? 0).toLocaleString(),  trend: t?.holder_trend ?? 0 },
+          { label:"Liquidity",   value: fmt$(t?.liquidity ?? 0),             trend: null },
         ].map(s => (
           <div key={s.label} className="inset-cell">
-            <p className="metric-lg">{s.value}</p>
-            <p className="metric-label">{s.label}</p>
+            <div style={{ display:"flex", alignItems:"center", gap:7, flexWrap:"wrap", marginBottom:4 }}>
+              <p className="metric-lg" style={{ margin:0 }}>{s.value}</p>
+              {s.trend !== null && s.trend !== 0 && (
+                <span style={{
+                  fontSize:"0.75rem", fontWeight:800,
+                  padding:"2px 8px", borderRadius:99,
+                  background: s.trend > 0 ? "#E8F8EE" : "#FEF0F0",
+                  color:      s.trend > 0 ? "#1A8343" : "#C0392B",
+                }}>
+                  {s.trend > 0 ? `+${s.trend}` : s.trend}
+                </span>
+              )}
+            </div>
+            <p className="metric-label" style={{ marginTop:0 }}>{s.label}</p>
           </div>
         ))}
       </div>
