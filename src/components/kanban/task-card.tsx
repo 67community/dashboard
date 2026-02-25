@@ -88,7 +88,7 @@ export function TaskCard({ task, onOpen, isDragOverlay = false }: Props) {
               </div>
             )}
           </div>
-          {assignee && <TeamAvatar member={assignee} size="sm" showTooltip />}
+          {assignee && <TeamAvatar member={assignee} size="sm" />}
         </div>
       </div>
     </div>

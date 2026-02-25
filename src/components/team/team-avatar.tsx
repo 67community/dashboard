@@ -1,56 +1,140 @@
 "use client"
 
+import { useState } from "react"
 import { TeamMember } from "@/lib/types"
 import { TEAM_MEMBERS } from "@/lib/mock-data"
 
-interface TeamAvatarProps {
-  member: TeamMember
-  size?: "sm" | "md" | "lg"
-  showTooltip?: boolean
-}
+const SIZE = { sm: 28, md: 36, lg: 44 }
 
-const sizeMap = {
-  sm: "w-7 h-7 text-xs",
-  md: "w-9 h-9 text-sm",
-  lg: "w-11 h-11 text-base",
-}
+export function TeamAvatar({ member, size = "md" }: { member: TeamMember; size?: "sm"|"md"|"lg" }) {
+  const [hover, setHover] = useState(false)
+  const px = SIZE[size]
 
-export function TeamAvatar({ member, size = "md", showTooltip = false }: TeamAvatarProps) {
   return (
-    <div className="relative group">
-      <div
-        className={`${sizeMap[size]} rounded-full flex items-center justify-center font-semibold text-white shadow-sm ring-2 ring-white cursor-default select-none`}
-        style={{ backgroundColor: member.color }}
-        title={showTooltip ? `${member.name} — ${member.role}` : undefined}
-      >
-        {member.avatar ? (
-          <img src={member.avatar} alt={member.name} className="w-full h-full rounded-full object-cover" />
-        ) : (
-          member.initials
-        )}
+    <div
+      style={{ position:"relative" }}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+    >
+      {/* Avatar circle */}
+      <div style={{
+        width:px, height:px, borderRadius:"50%",
+        background: member.color,
+        display:"flex", alignItems:"center", justifyContent:"center",
+        fontSize: px <= 28 ? "0.5625rem" : px <= 36 ? "0.6875rem" : "0.875rem",
+        fontWeight:800, color:"#fff",
+        cursor:"default", userSelect:"none",
+        boxShadow: hover
+          ? `0 0 0 2.5px ${member.color}55, 0 4px 12px ${member.color}44`
+          : "0 0 0 2px rgba(10,10,10,0.8)",
+        transition:"box-shadow 0.2s",
+        position:"relative", zIndex: hover ? 10 : 1,
+      }}>
+        {member.avatar
+          ? <img src={member.avatar} alt={member.name}
+              style={{ width:"100%", height:"100%", borderRadius:"50%", objectFit:"cover" }} />
+          : member.initials
+        }
       </div>
+
+      {/* Active dot */}
       {member.status === "Active" && (
-        <div className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-green-400 rounded-full ring-2 ring-white" />
+        <div style={{
+          position:"absolute", bottom:-1, right:-1,
+          width: px <= 28 ? 8 : 10,
+          height: px <= 28 ? 8 : 10,
+          borderRadius:"50%", background:"#34C759",
+          border:"2px solid #0A0A0A",
+          zIndex:2,
+        }} />
       )}
-      {showTooltip && (
-        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded-md whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50">
-          {member.name}
-          <div className="text-gray-400">{member.role}</div>
+
+      {/* Premium hover tooltip */}
+      {hover && (
+        <div style={{
+          position:"absolute", top:"calc(100% + 10px)", left:"50%", transform:"translateX(-50%)",
+          zIndex:200, pointerEvents:"none",
+          animation:"tooltipFade 0.16s ease-out",
+        }}>
+          {/* Arrow */}
+          <div style={{
+            position:"absolute", top:-5, left:"50%", transform:"translateX(-50%)",
+            width:10, height:10, background:"rgba(18,18,20,0.96)",
+            clipPath:"polygon(50% 0%, 0% 100%, 100% 100%)",
+          }} />
+
+          <div style={{
+            background:"rgba(18,18,20,0.96)",
+            backdropFilter:"blur(20px)", WebkitBackdropFilter:"blur(20px)",
+            border:"1px solid rgba(255,255,255,0.08)",
+            borderRadius:14, padding:"12px 14px",
+            minWidth:148, boxShadow:"0 12px 32px rgba(0,0,0,0.4)",
+          }}>
+            {/* Color bar + name */}
+            <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:8 }}>
+              <div style={{ width:3, height:32, borderRadius:99, background:member.color, flexShrink:0 }} />
+              <div>
+                <p style={{ fontSize:"0.875rem", fontWeight:800, color:"#FFFFFF", letterSpacing:"-0.02em", lineHeight:1.2 }}>
+                  {member.name}
+                </p>
+                <p style={{ fontSize:"0.6875rem", fontWeight:500, color:"rgba(255,255,255,0.4)", marginTop:2 }}>
+                  {member.role}
+                </p>
+              </div>
+            </div>
+
+            {/* Status row */}
+            <div style={{ display:"flex", alignItems:"center", gap:6,
+              paddingTop:8, borderTop:"1px solid rgba(255,255,255,0.06)" }}>
+              <div style={{
+                width:7, height:7, borderRadius:"50%",
+                background: member.status === "Active" ? "#34C759" : "#FF3B30",
+                boxShadow: member.status === "Active" ? "0 0 6px #34C75988" : "none",
+              }} />
+              <span style={{ fontSize:"0.6875rem", fontWeight:600,
+                color: member.status === "Active" ? "#34C759" : "#FF3B30" }}>
+                {member.status}
+              </span>
+            </div>
+          </div>
         </div>
       )}
+
+      <style>{`
+        @keyframes tooltipFade {
+          from { opacity:0; transform:translateX(-50%) translateY(-4px); }
+          to   { opacity:1; transform:translateX(-50%) translateY(0); }
+        }
+      `}</style>
     </div>
   )
 }
 
 export function TeamAvatarGroup() {
+  const visible = TEAM_MEMBERS.slice(0, 5)
+  const extra   = TEAM_MEMBERS.length - visible.length
+
   return (
-    <div className="flex items-center -space-x-2">
-      {TEAM_MEMBERS.map((member) => (
-        <TeamAvatar key={member.id} member={member} size="sm" showTooltip />
-      ))}
-      <div className="w-7 h-7 rounded-full bg-gray-100 border-2 border-white flex items-center justify-center text-xs text-gray-500 font-medium cursor-default">
-        +{TEAM_MEMBERS.length}
+    <div style={{ display:"flex", alignItems:"center", gap:-4 }}>
+      <div style={{ display:"flex", alignItems:"center" }}>
+        {visible.map((m, i) => (
+          <div key={m.id} style={{ marginLeft: i === 0 ? 0 : -8, position:"relative", zIndex: visible.length - i }}>
+            <TeamAvatar member={m} size="sm" />
+          </div>
+        ))}
       </div>
+      {extra > 0 && (
+        <div style={{
+          width:28, height:28, borderRadius:"50%",
+          background:"rgba(255,255,255,0.1)",
+          border:"2px solid rgba(255,255,255,0.12)",
+          display:"flex", alignItems:"center", justifyContent:"center",
+          fontSize:"0.5625rem", fontWeight:800, color:"rgba(255,255,255,0.6)",
+          marginLeft:-8,
+        }}>
+          +{extra}
+        </div>
+      )}
     </div>
   )
 }
