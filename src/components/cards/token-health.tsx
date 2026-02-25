@@ -179,19 +179,33 @@ export function TokenHealthCard() {
         </div>
       )}
 
-      {/* ── Links ── */}
-      <div style={{ display:"flex", flexWrap:"wrap", gap:8 }}>
+      {/* ── Links — premium with logos ── */}
+      <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8 }}>
         {[
-          ["DexScreener","https://dexscreener.com/solana/DMAFl613xtipUA3JFNycZaVwT7XsIYf9CR3QmrmZqhB6"],
-          ["Solscan","https://solscan.io/token/9AvytnUKsLxPxFHFqS6VLxaxt5p6BhYNr53SD2Chpump"],
-          ["CoinGecko","https://www.coingecko.com/en/coins/the-official-67-coin"],
-          ["CMC","https://coinmarketcap.com/currencies/the-official-67-coin-onchain/"],
-        ].map(([l,h]) => (
-          <a key={l} href={h} target="_blank" rel="noopener noreferrer" onClick={e=>e.stopPropagation()}
-            style={{ display:"inline-flex", alignItems:"center", gap:5, padding:"8px 14px",
-              borderRadius:10, background:"#F5F5F7", fontSize:"0.8125rem", fontWeight:600,
-              color:"#1D1D1F", textDecoration:"none" }}>
-            {l} <ExternalLink style={{ width:11, height:11, color:"#8E8E93" }} />
+          { label:"DexScreener",   url:"https://dexscreener.com/solana/DMAFl613xtipUA3JFNycZaVwT7XsIYf9CR3QmrmZqhB6", favicon:"https://dexscreener.com/favicon.ico" },
+          { label:"Solscan",       url:"https://solscan.io/token/9AvytnUKsLxPxFHFqS6VLxaxt5p6BhYNr53SD2Chpump",   favicon:"https://solscan.io/favicon.ico" },
+          { label:"CoinGecko",     url:"https://www.coingecko.com/en/coins/the-official-67-coin",                   favicon:"https://www.coingecko.com/favicon.ico" },
+          { label:"CoinMarketCap", url:"https://coinmarketcap.com/currencies/the-official-67-coin-onchain/",        favicon:"https://coinmarketcap.com/favicon.ico" },
+        ].map(({ label, url, favicon }) => (
+          <a key={label} href={url} target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()}
+            style={{
+              display:"flex", alignItems:"center", gap:10,
+              padding:"12px 14px", borderRadius:12,
+              background:"#F5F5F7",
+              border:"1px solid rgba(0,0,0,0.06)",
+              textDecoration:"none",
+              transition:"background 0.15s",
+            }}
+            onMouseEnter={e => (e.currentTarget.style.background = "#EEEEF0")}
+            onMouseLeave={e => (e.currentTarget.style.background = "#F5F5F7")}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={favicon} alt="" width={18} height={18}
+              style={{ width:18, height:18, borderRadius:4, objectFit:"contain", flexShrink:0 }}
+              onError={e => { (e.target as HTMLImageElement).style.display="none" }} />
+            <span style={{ fontSize:"0.8125rem", fontWeight:600, color:"#1D1D1F", flex:1,
+              letterSpacing:"-0.01em" }}>{label}</span>
+            <ExternalLink style={{ width:12, height:12, color:"#C7C7CC", flexShrink:0 }} />
           </a>
         ))}
       </div>
