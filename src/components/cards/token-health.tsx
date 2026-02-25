@@ -123,87 +123,68 @@ export function TokenHealthCard() {
         ))}
       </div>
 
-      {/* ── Bullish / Bearish Sentiment — CMC style ── */}
+      {/* ── 24h Buys / Sells + Sentiment ── */}
       {(() => {
-        const total  = (t?.buys_24h ?? 0) + (t?.sells_24h ?? 0)
-        const bullPct = total > 0 ? Math.round((t?.buys_24h ?? 0) / total * 100) : 55
-        const bearPct = 100 - bullPct
-        const isBull  = bullPct >= 50
+        const totalTx  = (t?.buys_24h ?? 0) + (t?.sells_24h ?? 0)
+        const bullPct  = totalTx > 0 ? Math.round((t?.buys_24h ?? 0) / totalTx * 100) : 55
+        const bearPct  = 100 - bullPct
+        const isBull   = bullPct >= 50
+        const sentColor = isBull ? "#34C759" : "#FF3B30"
+        const sentBg    = isBull ? "#E8F8EE"  : "#FEF0F0"
+        const sentLabel = isBull ? "Bullish"  : "Bearish"
 
         return (
           <div className="inset-cell">
-            <p className="hero-label" style={{ marginBottom:14 }}>Market Sentiment · 24h</p>
+            <p className="hero-label" style={{ marginBottom:12 }}>24h Transactions</p>
 
-            {/* CMC-style split bar */}
-            <div style={{ display:"flex", height:36, borderRadius:10, overflow:"hidden", marginBottom:12 }}>
-              <div style={{
-                flex: bullPct, background:"linear-gradient(90deg,#1A8343,#34C759)",
-                display:"flex", alignItems:"center", paddingLeft:12, gap:6, minWidth:60,
-              }}>
-                <span style={{ fontSize:"1.125rem" }}>👍</span>
-                <span style={{ fontSize:"0.8125rem", fontWeight:800, color:"#fff" }}>{bullPct}%</span>
+            {/* Buy / Sell count cards */}
+            <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8, marginBottom:14 }}>
+              <div style={{ background:"#E8F8EE", borderRadius:10, padding:"12px 14px" }}>
+                <p style={{ fontSize:"1.5rem", fontWeight:800, letterSpacing:"-0.04em", color:"#1A8343" }}>
+                  {(t?.buys_24h ?? 0).toLocaleString()}
+                </p>
+                <p style={{ fontSize:"0.75rem", fontWeight:600, color:"#1A8343", marginTop:3 }}>Buys</p>
               </div>
-              <div style={{
-                flex: bearPct, background:"linear-gradient(90deg,#C0392B,#E74C3C)",
-                display:"flex", alignItems:"center", justifyContent:"flex-end", paddingRight:12, gap:6, minWidth:60,
-              }}>
-                <span style={{ fontSize:"0.8125rem", fontWeight:800, color:"#fff" }}>{bearPct}%</span>
-                <span style={{ fontSize:"1.125rem" }}>👎</span>
+              <div style={{ background:"#FEF0F0", borderRadius:10, padding:"12px 14px" }}>
+                <p style={{ fontSize:"1.5rem", fontWeight:800, letterSpacing:"-0.04em", color:"#C0392B" }}>
+                  {(t?.sells_24h ?? 0).toLocaleString()}
+                </p>
+                <p style={{ fontSize:"0.75rem", fontWeight:600, color:"#C0392B", marginTop:3 }}>Sells</p>
               </div>
             </div>
 
-            {/* Labels */}
-            <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center" }}>
-              <span style={{ fontSize:"0.8125rem", fontWeight:700, color:"#1A8343" }}>
-                {isBull ? "🟢 Bullish" : ""}
-              </span>
-              <span style={{
-                fontSize:"0.75rem", fontWeight:700, padding:"3px 10px", borderRadius:99,
-                background: isBull ? "#E8F8EE" : "#FEF0F0",
-                color: isBull ? "#1A8343" : "#C0392B",
+            {/* CMC split bar — clean, no bottom labels */}
+            <div style={{ display:"flex", height:28, borderRadius:8, overflow:"hidden", marginBottom:10 }}>
+              <div style={{
+                flex: bullPct, background:"linear-gradient(90deg,#1A8343,#34C759)",
+                display:"flex", alignItems:"center", paddingLeft:10, gap:5, minWidth:50,
               }}>
-                {isBull ? "Bullish Majority" : "Bearish Majority"}
-              </span>
-              <span style={{ fontSize:"0.8125rem", fontWeight:700, color:"#C0392B" }}>
-                {!isBull ? "🔴 Bearish" : ""}
-              </span>
+                <span style={{ fontSize:"0.875rem" }}>👍</span>
+                <span style={{ fontSize:"0.75rem", fontWeight:800, color:"rgba(255,255,255,0.95)" }}>{bullPct}%</span>
+              </div>
+              <div style={{
+                flex: bearPct, background:"linear-gradient(90deg,#C0392B,#E74C3C)",
+                display:"flex", alignItems:"center", justifyContent:"flex-end", paddingRight:10, gap:5, minWidth:50,
+              }}>
+                <span style={{ fontSize:"0.75rem", fontWeight:800, color:"rgba(255,255,255,0.95)" }}>{bearPct}%</span>
+                <span style={{ fontSize:"0.875rem" }}>👎</span>
+              </div>
+            </div>
+
+            {/* Animated sentiment indicator */}
+            <div style={{ display:"flex", alignItems:"center", gap:7 }}>
+              <span className="sentiment-dot" style={{ "--dot-color": sentColor } as React.CSSProperties} />
+              <span style={{ fontSize:"0.75rem", fontWeight:700, color: sentColor }}>{sentLabel}</span>
+              <span style={{ fontSize:"0.6875rem", color:"#8E8E93" }}>· Market Sentiment</span>
+              <span style={{
+                marginLeft:"auto", fontSize:"0.6875rem", fontWeight:700,
+                padding:"2px 8px", borderRadius:99,
+                background: sentBg, color: sentColor,
+              }}>{bullPct}% {sentLabel}</span>
             </div>
           </div>
         )
       })()}
-
-      {/* ── 24h Buys / Sells — always visible ── */}
-      <div className="inset-cell">
-        <p className="hero-label" style={{ marginBottom:12 }}>24h Transactions</p>
-        <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8, marginBottom:12 }}>
-          <div style={{ background:"#E8F8EE", borderRadius:10, padding:"12px 14px" }}>
-            <p style={{ fontSize:"1.5rem", fontWeight:800, letterSpacing:"-0.04em", color:"#1A8343" }}>
-              {(t?.buys_24h ?? 0).toLocaleString()}
-            </p>
-            <p style={{ fontSize:"0.75rem", fontWeight:600, color:"#1A8343", marginTop:3 }}>Buys</p>
-          </div>
-          <div style={{ background:"#FEF0F0", borderRadius:10, padding:"12px 14px" }}>
-            <p style={{ fontSize:"1.5rem", fontWeight:800, letterSpacing:"-0.04em", color:"#C0392B" }}>
-              {(t?.sells_24h ?? 0).toLocaleString()}
-            </p>
-            <p style={{ fontSize:"0.75rem", fontWeight:600, color:"#C0392B", marginTop:3 }}>Sells</p>
-          </div>
-        </div>
-        {/* Buy pressure bar */}
-        {(t?.buys_24h ?? 0) + (t?.sells_24h ?? 0) > 0 && (
-          <>
-            <div className="prog-track" style={{ height:7 }}>
-              <div className="prog-fill" style={{
-                height:7, background:"#34C759",
-                width:`${((t?.buys_24h ?? 0)/((t?.buys_24h ?? 0)+(t?.sells_24h ?? 0)))*100}%`
-              }} />
-            </div>
-            <p style={{ fontSize:"0.6875rem", color:"#8E8E93", marginTop:6 }}>
-              {(((t?.buys_24h ?? 0)/((t?.buys_24h ?? 0)+(t?.sells_24h ?? 0)))*100).toFixed(0)}% buy pressure
-            </p>
-          </>
-        )}
-      </div>
 
       {/* ── ATH ── */}
       {t?.ath && (

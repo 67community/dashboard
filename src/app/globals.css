@@ -180,6 +180,18 @@ body {
 }
 .dot-on  { width:8px; height:8px; border-radius:50%; background:#34C759; animation: pulse-green 2s infinite; display:inline-block; flex-shrink:0; }
 .dot-off { width:8px; height:8px; border-radius:50%; background:#FF3B30; display:inline-block; flex-shrink:0; }
+.sentiment-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--dot-color, #34C759);
+  display: inline-block; flex-shrink: 0;
+  box-shadow: 0 0 0 0 var(--dot-color, #34C759);
+  animation: sentiment-pulse 2s cubic-bezier(0.455,0.03,0.515,0.955) infinite;
+}
+@keyframes sentiment-pulse {
+  0%   { box-shadow: 0 0 0 0   color-mix(in srgb, var(--dot-color, #34C759) 60%, transparent); }
+  60%  { box-shadow: 0 0 0 6px color-mix(in srgb, var(--dot-color, #34C759) 0%,  transparent); }
+  100% { box-shadow: 0 0 0 0   color-mix(in srgb, var(--dot-color, #34C759) 0%,  transparent); }
+}
 
 /* ══ ENTRANCE ANIMATIONS ══════════════════════════════ */
 @keyframes fade-up {
