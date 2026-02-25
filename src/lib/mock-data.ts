@@ -7,7 +7,7 @@ export const TEAM_MEMBERS: TeamMember[] = [
   { id: "nick",    name: "Nick",              initials: "NK", role: "Founder", status: "Active", color: "#14B8A6",  avatar: "/avatars/goodgod.png", discord_id: "682831521396031498" },
   { id: "weston",  name: "WJP",               initials: "WJ", role: "Vision",  status: "Active", color: "#8b5cf6",  avatar: "/avatars/wjp.png",     discord_id: "788495124061487154" },
   { id: "gen",     name: "Gen",               initials: "GN", role: "Founder", status: "Active", color: "#EC4899",  avatar: "/avatars/gen.png",     discord_id: "965681608604647514" },
-  { id: "oscar",   name: "Oscar Brendon",     initials: "OB", role: "Dev",     status: "Active", color: "#6366f1",  discord_id: "767811814557089802" },
+  { id: "oscar",   name: "Oscar Brendon",     initials: "OB", role: "Dev",     status: "Active", color: "#6366f1",  avatar: "/avatars/oscar.png",   discord_id: "767811814557089802" },
   { id: "crispy",  name: "Crispy",            initials: "CR", role: "Build",   status: "Active", color: "#10b981",  avatar: "/avatars/crispy.png",  discord_id: "201710326347988993" },
 ]
 
