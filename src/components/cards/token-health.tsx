@@ -153,34 +153,23 @@ export function TokenHealthCard() {
               </div>
             </div>
 
-            {/* CMC split bar — clean, no bottom labels */}
-            <div style={{ display:"flex", height:28, borderRadius:8, overflow:"hidden", marginBottom:10 }}>
+            {/* Single clean sentiment pill */}
+            <div style={{ display:"flex", alignItems:"center", gap:8 }}>
               <div style={{
-                flex: bullPct, background:"linear-gradient(90deg,#1A8343,#34C759)",
-                display:"flex", alignItems:"center", paddingLeft:10, gap:5, minWidth:50,
+                display:"inline-flex", alignItems:"center", gap:7,
+                padding:"7px 14px", borderRadius:99,
+                background: sentBg,
+                border:`1.5px solid ${sentColor}22`,
               }}>
-                <span style={{ fontSize:"0.875rem" }}>👍</span>
-                <span style={{ fontSize:"0.75rem", fontWeight:800, color:"rgba(255,255,255,0.95)" }}>{bullPct}%</span>
+                <span className="sentiment-dot" style={{ "--dot-color": sentColor } as React.CSSProperties} />
+                <span style={{ fontSize:"0.8125rem", fontWeight:700, color: sentColor, letterSpacing:"-0.01em" }}>
+                  {sentLabel}
+                </span>
+                <span style={{ fontSize:"0.8125rem", fontWeight:800, color: sentColor }}>
+                  {bullPct}%
+                </span>
               </div>
-              <div style={{
-                flex: bearPct, background:"linear-gradient(90deg,#C0392B,#E74C3C)",
-                display:"flex", alignItems:"center", justifyContent:"flex-end", paddingRight:10, gap:5, minWidth:50,
-              }}>
-                <span style={{ fontSize:"0.75rem", fontWeight:800, color:"rgba(255,255,255,0.95)" }}>{bearPct}%</span>
-                <span style={{ fontSize:"0.875rem" }}>👎</span>
-              </div>
-            </div>
-
-            {/* Animated sentiment indicator */}
-            <div style={{ display:"flex", alignItems:"center", gap:7 }}>
-              <span className="sentiment-dot" style={{ "--dot-color": sentColor } as React.CSSProperties} />
-              <span style={{ fontSize:"0.75rem", fontWeight:700, color: sentColor }}>{sentLabel}</span>
-              <span style={{ fontSize:"0.6875rem", color:"#8E8E93" }}>· Market Sentiment</span>
-              <span style={{
-                marginLeft:"auto", fontSize:"0.6875rem", fontWeight:700,
-                padding:"2px 8px", borderRadius:99,
-                background: sentBg, color: sentColor,
-              }}>{bullPct}% {sentLabel}</span>
+              <span style={{ fontSize:"0.6875rem", color:"#8E8E93" }}>market sentiment</span>
             </div>
           </div>
         )
