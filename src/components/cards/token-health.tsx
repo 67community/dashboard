@@ -128,10 +128,10 @@ export function TokenHealthCard() {
         const totalTx  = (t?.buys_24h ?? 0) + (t?.sells_24h ?? 0)
         const bullPct  = totalTx > 0 ? Math.round((t?.buys_24h ?? 0) / totalTx * 100) : 55
         const bearPct  = 100 - bullPct
-        const isBull   = bullPct >= 50
-        const sentColor = isBull ? "#34C759" : "#FF3B30"
-        const sentBg    = isBull ? "#E8F8EE"  : "#FEF0F0"
-        const sentLabel = isBull ? "Bullish"  : "Bearish"
+        const sentiment = bullPct > 55 ? "Bullish" : bullPct < 45 ? "Bearish" : "Neutral"
+        const sentColor = sentiment === "Bullish" ? "#34C759" : sentiment === "Bearish" ? "#FF3B30" : "#F5A623"
+        const sentBg    = sentiment === "Bullish" ? "#E8F8EE" : sentiment === "Bearish" ? "#FEF0F0"  : "#FFF8EC"
+        const sentLabel = sentiment
 
         return (
           <div className="inset-cell">
