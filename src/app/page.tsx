@@ -17,7 +17,7 @@ export default function Dashboard() {
   return (
     <div>
       {/* ══ Stripe-style hero band ══════════════════════════════ */}
-      <div className="enter-1" style={{
+      <div className="enter-1 hero-band" style={{
         position:"relative", borderRadius:24, overflow:"hidden",
         marginBottom:36, padding:"44px 48px 52px",
         background:"#0A0A0A",
@@ -143,7 +143,7 @@ export default function Dashboard() {
           background:"linear-gradient(90deg, transparent 0%, rgba(245,166,35,0.4) 50%, transparent 100%)" }} />
 
         {/* ── Content — centered ── */}
-        <div style={{
+        <div className="season-banner-inner" style={{
           position:"relative", zIndex:1,
           display:"flex", flexDirection:"column", alignItems:"center",
           justifyContent:"center", textAlign:"center",

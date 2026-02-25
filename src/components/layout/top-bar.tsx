@@ -43,11 +43,24 @@ export function TopBar() {
 
   return (
     <div style={{ position:"sticky", top:0, zIndex:50 }}>
+      <style>{`
+        @media (max-width: 640px) {
+          .topbar-inner { padding: 0 16px !important; }
+          .topbar-logo-text { display: none !important; }
+          .topbar-sync { display: none !important; }
+          .topbar-avatars { display: none !important; }
+          .topbar-nav a { padding: 5px 12px !important; font-size: 0.75rem !important; }
+        }
+        @media (max-width: 420px) {
+          .topbar-nav { display: none !important; }
+          .topbar-logo-text { display: none !important; }
+        }
+      `}</style>
       <header style={{
         background: "#0A0A0A",
         borderBottom: "1px solid rgba(255,255,255,0.06)",
       }}>
-        <div style={{ maxWidth:1440, margin:"0 auto", padding:"0 32px" }}>
+        <div style={{ maxWidth:1440, margin:"0 auto", padding:"0 32px" }} className="topbar-inner">
           <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", height:52 }}>
 
             {/* Logo + name */}
@@ -58,13 +71,13 @@ export function TopBar() {
                 <img src={LOGO} alt="67" width={30} height={30}
                   style={{ width:30, height:30, objectFit:"cover", display:"block" }} />
               </div>
-              <span style={{ fontSize:"0.8125rem", fontWeight:700, color:"rgba(255,255,255,0.85)", letterSpacing:"-0.01em" }}>
+              <span className="topbar-logo-text" style={{ fontSize:"0.8125rem", fontWeight:700, color:"rgba(255,255,255,0.85)", letterSpacing:"-0.01em" }}>
                 Mission Control
               </span>
             </div>
 
             {/* Nav — refined segmented control */}
-            <nav style={{
+            <nav className="topbar-nav" style={{
               display:"flex", alignItems:"center",
               background:"rgba(255,255,255,0.05)",
               borderRadius:8, padding:3, gap:1,
@@ -88,6 +101,7 @@ export function TopBar() {
             {/* Right */}
             <div style={{ display:"flex", alignItems:"center", gap:16 }}>
               <button onClick={refresh} disabled={loading}
+                className="topbar-sync"
                 style={{ display:"flex", alignItems:"center", gap:5, fontSize:"0.6875rem", fontWeight:500,
                   color:"rgba(255,255,255,0.28)", background:"none", border:"none", cursor:"pointer" }}
                 onMouseEnter={e => (e.currentTarget.style.color="rgba(255,255,255,0.65)")}
@@ -175,7 +189,7 @@ export function TopBar() {
               </div>
               <style>{`@keyframes fadeDown { from{opacity:0;transform:translateY(-6px)} to{opacity:1;transform:translateY(0)} }`}</style>
 
-              <TeamAvatarGroup />
+              <div className="topbar-avatars"><TeamAvatarGroup /></div>
             </div>
 
           </div>
