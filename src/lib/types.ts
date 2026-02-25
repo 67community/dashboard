@@ -9,6 +9,7 @@ export interface TeamMember {
   role: TeamRole
   status: TeamStatus
   color: string
+  discord_id?: string
 }
 
 export type Priority = "Low" | "Medium" | "High" | "Urgent"
