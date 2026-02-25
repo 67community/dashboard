@@ -36,12 +36,12 @@ export function AgentStatusCard() {
         )}
       </div>
 
-      {/* Bot list — clean, readable */}
-      <div style={{ display:"flex", flexDirection:"column", gap:12, borderTop:"1px solid rgba(0,0,0,0.06)", paddingTop:18 }}>
+      {/* Bot list — inset-cell rows */}
+      <div style={{ display:"flex", flexDirection:"column", gap:8, borderTop:"1px solid rgba(0,0,0,0.06)", paddingTop:16 }}>
         {bots.slice(0, 5).map(b => (
-          <div key={b.name} style={{ display:"flex", alignItems:"center", gap:10 }}>
+          <div key={b.name} className="inset-cell" style={{ display:"flex", alignItems:"center", gap:10 }}>
             <span className={b.status === "green" ? "dot-on" : "dot-off"} />
-            <span style={{ fontSize:"1rem", fontWeight:600, color:"#1D1D1F", flex:1 }}>{b.name}</span>
+            <span style={{ fontSize:"0.9375rem", fontWeight:600, color:"#1D1D1F", flex:1 }}>{b.name}</span>
             <span style={{ fontSize:"0.75rem", color:"#8E8E93" }}>{ago(b.last_run)} ago</span>
           </div>
         ))}

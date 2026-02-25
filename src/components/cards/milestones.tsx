@@ -27,13 +27,13 @@ export function MilestonesCard() {
         <p style={{ fontSize:"0.875rem", color:"#8E8E93", marginTop:6, fontWeight:500 }}>goals complete</p>
       </div>
 
-      <div style={{ display:"flex", flexDirection:"column", gap:16, borderTop:"1px solid rgba(0,0,0,0.06)", paddingTop:18 }}>
+      <div style={{ display:"flex", flexDirection:"column", gap:8, borderTop:"1px solid rgba(0,0,0,0.06)", paddingTop:16 }}>
         {ms.length === 0
-          ? [1,2,3].map(i => <div key={i} className="skeleton" style={{ height:32 }} />)
+          ? [1,2,3].map(i => <div key={i} className="skeleton" style={{ height:42 }} />)
           : ms.slice(0,3).map((m, i) => {
             const p = pct(m.current, m.target)
             return (
-              <div key={m.label}>
+              <div key={m.label} className="inset-cell">
                 <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:8 }}>
                   <span style={{ fontSize:"0.875rem", fontWeight:600, color:"#1D1D1F" }}>{m.label}</span>
                   <span style={{ fontSize:"0.875rem", fontWeight:700, color: COLORS[i] }}>{p.toFixed(0)}%</span>

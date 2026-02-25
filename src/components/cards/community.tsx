@@ -26,16 +26,16 @@ export function CommunityCard() {
         </span>
       </div>
 
-      {/* Stats — clean, no boxes */}
-      <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:"14px 0", borderTop:"1px solid rgba(0,0,0,0.06)", paddingTop:18 }}>
+      {/* Stats — inset-cell grey boxes */}
+      <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:8, borderTop:"1px solid rgba(0,0,0,0.06)", paddingTop:16 }}>
         {[
           { label:"New 24h",   value: String(c?.new_joins_24h ?? "—") },
           { label:"Active 7d", value: (c?.active_7d ?? 0) >= 1000 ? `${((c?.active_7d??0)/1000).toFixed(1)}K` : String(c?.active_7d ?? "—") },
           { label:"Telegram",  value: (c?.telegram_members ?? 0) >= 1000 ? `${((c?.telegram_members??0)/1000).toFixed(1)}K` : String(c?.telegram_members ?? "—") },
         ].map(s => (
-          <div key={s.label}>
-            <p style={{ fontSize:"1.375rem", fontWeight:700, letterSpacing:"-0.025em", color:"#1D1D1F" }}>{s.value}</p>
-            <p style={{ fontSize:"0.6875rem", fontWeight:500, color:"#8E8E93", marginTop:2 }}>{s.label}</p>
+          <div key={s.label} className="inset-cell" style={{ textAlign:"center" }}>
+            <p style={{ fontSize:"1.25rem", fontWeight:700, letterSpacing:"-0.03em", color:"#1D1D1F", margin:0 }}>{s.value}</p>
+            <p style={{ fontSize:"0.6875rem", fontWeight:500, color:"#8E8E93", marginTop:4 }}>{s.label}</p>
           </div>
         ))}
       </div>
