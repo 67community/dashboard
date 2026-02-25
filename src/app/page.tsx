@@ -45,32 +45,77 @@ export default function Dashboard() {
             </div>
           </div>
 
-          {/* Live price chip */}
-          {livePrice ? (
-            <div style={{ flexShrink:0 }}>
-              <div style={{
-                background:"#0A0A0A",
-                borderRadius:14,
-                padding:"14px 18px",
-                minWidth:130,
-              }}>
-                <p style={{ fontSize:"0.625rem", fontWeight:700, letterSpacing:"0.09em", textTransform:"uppercase", color:"rgba(255,255,255,0.3)", marginBottom:6 }}>
-                  Live Price
-                </p>
-                <p style={{ fontSize:"1.5rem", fontWeight:800, letterSpacing:"-0.05em", color:"#fff", lineHeight:1 }}>
-                  ${livePrice < 0.001 ? livePrice.toFixed(6) : livePrice.toFixed(5)}
-                </p>
-                <span className={up ? "badge-up" : "badge-down"} style={{ marginTop:8, display:"inline-flex" }}>
-                  {up ? "▲" : "▼"} {Math.abs(liveChange24h ?? 0).toFixed(2)}% 24h
-                </span>
-              </div>
-            </div>
-          ) : null}
+          {/* spacing */}
+          <div />
         </div>
 
         {/* Divider */}
         <div className="divider" style={{ marginTop:32 }} />
       </div>
+
+      {/* ══ Hero Stats Row ═════════════════════════════════════ */}
+      <div style={{
+        display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:12, marginBottom:28,
+      }} className="hero-stats-grid">
+        {[
+          {
+            label:"PRICE",
+            value: livePrice
+              ? `$${livePrice < 0.001 ? livePrice.toFixed(6) : livePrice.toFixed(5)}`
+              : `$${(data?.token_health?.price ?? 0).toFixed(6)}`,
+            sub: `${(liveChange24h ?? data?.token_health?.price_change_24h ?? 0) >= 0 ? "▲" : "▼"} ${Math.abs(liveChange24h ?? data?.token_health?.price_change_24h ?? 0).toFixed(2)}% 24h`,
+            subColor: (liveChange24h ?? data?.token_health?.price_change_24h ?? 0) >= 0 ? "#059669" : "#DC2626",
+            accent:"#F5A623",
+          },
+          {
+            label:"MARKET CAP",
+            value: (() => { const m = data?.token_health?.market_cap ?? 0; return m >= 1e6 ? `$${(m/1e6).toFixed(2)}M` : `$${(m/1e3).toFixed(0)}K` })(),
+            sub:`CMC #${data?.token_health?.cmc_rank ?? "—"}`,
+            subColor:"#A1A1AA",
+            accent:"#8B5CF6",
+          },
+          {
+            label:"DISCORD",
+            value: (() => { const m = data?.community?.discord_members ?? 0; return m >= 1000 ? `${(m/1000).toFixed(1)}K` : String(m || "—") })(),
+            sub:"113 online now",
+            subColor:"#10B981",
+            accent:"#5865F2",
+          },
+          {
+            label:"X FOLLOWERS",
+            value: (() => { const f = data?.social_pulse?.twitter_followers ?? 0; return f >= 1000 ? `${(f/1000).toFixed(1)}K` : String(f || "—") })(),
+            sub:`${(data?.social_pulse?.engagement_rate ?? 0).toFixed(1)}% engagement`,
+            subColor:"#A1A1AA",
+            accent:"#1D9BF0",
+          },
+        ].map(s => (
+          <div key={s.label} style={{
+            background:"#FFFFFF",
+            borderRadius:16,
+            border:"1px solid rgba(0,0,0,0.06)",
+            padding:"18px 20px",
+            boxShadow:"0 1px 3px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.04)",
+            borderTop:`3px solid ${s.accent}`,
+            position:"relative",
+          }}>
+            <p style={{ fontSize:"0.5875rem", fontWeight:700, letterSpacing:"0.1em", textTransform:"uppercase", color:"#A1A1AA", marginBottom:8 }}>
+              {s.label}
+            </p>
+            <p style={{ fontSize:"1.625rem", fontWeight:800, letterSpacing:"-0.04em", color:"#09090B", lineHeight:1, marginBottom:6 }}>
+              {s.value}
+            </p>
+            <p style={{ fontSize:"0.6875rem", fontWeight:600, color:s.subColor }}>
+              {s.sub}
+            </p>
+          </div>
+        ))}
+      </div>
+
+      {/* Responsive hero stats */}
+      <style>{`
+        @media (max-width: 768px) { .hero-stats-grid { grid-template-columns: repeat(2,1fr) !important; } }
+        @media (max-width: 480px) { .hero-stats-grid { grid-template-columns: 1fr !important; } }
+      `}</style>
 
       {/* ══ Cards Grid ═════════════════════════════════════════ */}
       <div style={{

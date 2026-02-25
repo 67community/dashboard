@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { RefreshCw, AlertTriangle } from "lucide-react"
+import { RefreshCw, Bell } from "lucide-react"
 import { TeamAvatarGroup } from "@/components/team/team-avatar"
 import { useAppData } from "@/lib/data-context"
 
@@ -25,61 +25,77 @@ export function TopBar() {
   const path = usePathname()
   const { lastFetched, loading, refresh, data } = useAppData()
   const alerts = data?.alerts ?? []
+  const hasAlert = alerts.length > 0
 
   return (
     <div style={{ position:"sticky", top:0, zIndex:50 }}>
-      {/* Alert */}
-      {alerts.length > 0 && (
-        <div style={{ background:"#DC2626", color:"#fff", fontSize:"0.75rem", fontWeight:600, padding:"8px 24px", display:"flex", alignItems:"center", gap:8 }}>
-          <AlertTriangle style={{ width:14, height:14, flexShrink:0 }} />
-          {alerts.map((a, i) => <span key={i}>{a.message}</span>)}
-        </div>
-      )}
+      <header style={{
+        background: "#0A0A0A",
+        borderBottom: "1px solid rgba(255,255,255,0.06)",
+      }}>
+        <div style={{ maxWidth:1440, margin:"0 auto", padding:"0 32px" }}>
+          <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", height:52 }}>
 
-      {/* Nav — dark, 67coin brand */}
-      <header style={{ background:"#0A0A0A", borderBottom:"1px solid rgba(255,255,255,0.06)" }}>
-        <div style={{ maxWidth:1440, margin:"0 auto", padding:"0 40px" }}>
-          <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", height:56 }}>
-
-            {/* Logo */}
-            <div style={{ display:"flex", alignItems:"center", gap:12 }}>
-              <div style={{ width:34, height:34, borderRadius:"50%", flexShrink:0, overflow:"hidden", boxShadow:"0 2px 14px rgba(245,166,35,0.50)" }}>
+            {/* Logo + name */}
+            <div style={{ display:"flex", alignItems:"center", gap:10 }}>
+              <div style={{ width:30, height:30, borderRadius:"50%", overflow:"hidden", flexShrink:0,
+                boxShadow:"0 0 12px rgba(245,166,35,0.45)" }}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={LOGO} alt="67" width={34} height={34}
-                  style={{ width:34, height:34, objectFit:"cover", borderRadius:"50%", display:"block" }} />
+                <img src={LOGO} alt="67" width={30} height={30}
+                  style={{ width:30, height:30, objectFit:"cover", display:"block" }} />
               </div>
-              <span style={{ fontSize:"0.875rem", fontWeight:700, color:"rgba(255,255,255,0.88)", letterSpacing:"-0.01em" }}>
+              <span style={{ fontSize:"0.8125rem", fontWeight:700, color:"rgba(255,255,255,0.85)", letterSpacing:"-0.01em" }}>
                 Mission Control
               </span>
             </div>
 
-            {/* Nav tabs */}
-            <nav style={{ display:"flex", alignItems:"center", gap:2, background:"rgba(255,255,255,0.06)", borderRadius:12, padding:4 }}>
+            {/* Nav — refined segmented control */}
+            <nav style={{
+              display:"flex", alignItems:"center",
+              background:"rgba(255,255,255,0.05)",
+              borderRadius:8, padding:3, gap:1,
+            }}>
               {NAV.map(({ href, label }) => (
-                <Link key={href} href={href}
-                  style={{
-                    padding:"7px 20px", borderRadius:9,
-                    fontSize:"0.8125rem", fontWeight:600,
-                    textDecoration:"none", transition:"all 0.15s",
-                    ...(path === href
-                      ? { background:"#F5A623", color:"#000" }
-                      : { color:"rgba(255,255,255,0.4)" }
-                    ),
-                  }}>
+                <Link key={href} href={href} style={{
+                  padding:"5px 16px", borderRadius:6,
+                  fontSize:"0.8125rem", fontWeight:600,
+                  textDecoration:"none", transition:"all 0.12s",
+                  letterSpacing:"-0.01em",
+                  ...(path === href
+                    ? { background:"#F5A623", color:"#000", boxShadow:"0 1px 3px rgba(0,0,0,0.2)" }
+                    : { color:"rgba(255,255,255,0.38)" }
+                  ),
+                }}>
                   {label}
                 </Link>
               ))}
             </nav>
 
             {/* Right */}
-            <div style={{ display:"flex", alignItems:"center", gap:20 }}>
+            <div style={{ display:"flex", alignItems:"center", gap:16 }}>
               <button onClick={refresh} disabled={loading}
-                style={{ display:"flex", alignItems:"center", gap:6, fontSize:"0.75rem", fontWeight:500, color:"rgba(255,255,255,0.3)", background:"none", border:"none", cursor:"pointer" }}
-                onMouseEnter={e => (e.currentTarget.style.color="rgba(255,255,255,0.7)")}
-                onMouseLeave={e => (e.currentTarget.style.color="rgba(255,255,255,0.3)")}>
-                <RefreshCw style={{ width:12, height:12 }} className={loading ? "animate-spin" : ""} />
+                style={{ display:"flex", alignItems:"center", gap:5, fontSize:"0.6875rem", fontWeight:500,
+                  color:"rgba(255,255,255,0.28)", background:"none", border:"none", cursor:"pointer" }}
+                onMouseEnter={e => (e.currentTarget.style.color="rgba(255,255,255,0.65)")}
+                onMouseLeave={e => (e.currentTarget.style.color="rgba(255,255,255,0.28)")}>
+                <RefreshCw style={{ width:11, height:11 }} className={loading ? "animate-spin" : ""} />
                 {loading ? "Syncing…" : timeAgo(lastFetched)}
               </button>
+
+              {/* Alert bell — replaces the ugly full-width red bar */}
+              {hasAlert && (
+                <div style={{ position:"relative", cursor:"pointer" }}
+                  title={alerts.map(a => a.message).join(" · ")}>
+                  <Bell style={{ width:16, height:16, color:"rgba(255,255,255,0.5)" }} />
+                  <span style={{
+                    position:"absolute", top:-3, right:-3,
+                    width:7, height:7, borderRadius:"50%",
+                    background:"#EF4444",
+                    border:"1.5px solid #0A0A0A",
+                  }} />
+                </div>
+              )}
+
               <TeamAvatarGroup />
             </div>
 

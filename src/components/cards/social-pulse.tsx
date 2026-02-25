@@ -7,6 +7,8 @@ import { useAppData } from "@/lib/data-context"
 
 declare global { interface Window { twttr?: { widgets?: { load: () => void } } } }
 
+const LOGO = "https://raw.githubusercontent.com/67coin/67/main/logo.png"
+
 export function SocialPulseCard() {
   const { data } = useAppData()
   const s = data?.social_pulse
@@ -87,21 +89,39 @@ export function SocialPulseCard() {
         </div>
       )}
 
-      {/* Best tweet preview */}
+      {/* Best tweet preview — premium mini card */}
       {s?.best_tweet_week && (
-        <div className="inset-cell">
-          <p style={{ fontSize:"0.8125rem", color:"#3F3F46", lineHeight:1.5, marginBottom:10,
-            display:"-webkit-box", WebkitLineClamp:2, WebkitBoxOrient:"vertical", overflow:"hidden" }}>
-            {s.best_tweet_week.text}
-          </p>
-          <div style={{ display:"flex", alignItems:"center", gap:12 }}>
-            <span style={{ display:"flex", alignItems:"center", gap:3, fontSize:"0.6875rem", fontWeight:700, color:"#A1A1AA" }}>
-              <Heart style={{ width:11, height:11, color:"#EF4444" }} />{s.best_tweet_week.likes}
-            </span>
-            <span style={{ display:"flex", alignItems:"center", gap:3, fontSize:"0.6875rem", fontWeight:700, color:"#A1A1AA" }}>
-              <MessageCircle style={{ width:11, height:11, color:"#6366F1" }} />{s.best_tweet_week.replies}
-            </span>
-            <span style={{ marginLeft:"auto", fontSize:"0.6875rem", color:"#A1A1AA" }}>{s.best_tweet_week.date}</span>
+        <div style={{
+          borderRadius:14, border:"1px solid rgba(29,155,240,0.15)",
+          background:"rgba(29,155,240,0.03)", padding:"14px 16px",
+          position:"relative", overflow:"hidden",
+        }}>
+          {/* Twitter blue left accent */}
+          <div style={{ position:"absolute", left:0, top:0, bottom:0, width:3, background:"#1D9BF0", borderRadius:"99px 0 0 99px" }} />
+          <div style={{ paddingLeft:8 }}>
+            {/* Author */}
+            <div style={{ display:"flex", alignItems:"center", gap:6, marginBottom:7 }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={LOGO} alt="67" width={18} height={18}
+                style={{ width:18, height:18, borderRadius:"50%", objectFit:"cover" }} />
+              <span style={{ fontSize:"0.75rem", fontWeight:700, color:"#09090B" }}>The Official 67 Coin</span>
+              <span style={{ fontSize:"0.6875rem", color:"#A1A1AA" }}>@67coinX</span>
+            </div>
+            <p style={{
+              fontSize:"0.8125rem", color:"#09090B", lineHeight:1.55, marginBottom:10,
+              display:"-webkit-box", WebkitLineClamp:2, WebkitBoxOrient:"vertical", overflow:"hidden",
+            }}>
+              {s.best_tweet_week.text}
+            </p>
+            <div style={{ display:"flex", alignItems:"center", gap:14 }}>
+              <span style={{ display:"flex", alignItems:"center", gap:4, fontSize:"0.6875rem", fontWeight:600, color:"#A1A1AA" }}>
+                <Heart style={{ width:11, height:11, color:"#F43F5E" }} />{s.best_tweet_week.likes}
+              </span>
+              <span style={{ display:"flex", alignItems:"center", gap:4, fontSize:"0.6875rem", fontWeight:600, color:"#A1A1AA" }}>
+                <MessageCircle style={{ width:11, height:11, color:"#1D9BF0" }} />{s.best_tweet_week.replies}
+              </span>
+              <span style={{ marginLeft:"auto", fontSize:"0.6875rem", color:"#D4D4D8" }}>{s.best_tweet_week.date}</span>
+            </div>
           </div>
         </div>
       )}
