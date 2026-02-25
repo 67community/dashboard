@@ -111,30 +111,13 @@ export function TeamAvatar({ member, size = "md" }: { member: TeamMember; size?:
 }
 
 export function TeamAvatarGroup() {
-  const visible = TEAM_MEMBERS.slice(0, 5)
-  const extra   = TEAM_MEMBERS.length - visible.length
-
   return (
-    <div style={{ display:"flex", alignItems:"center", gap:-4 }}>
-      <div style={{ display:"flex", alignItems:"center" }}>
-        {visible.map((m, i) => (
-          <div key={m.id} style={{ marginLeft: i === 0 ? 0 : -8, position:"relative", zIndex: visible.length - i }}>
-            <TeamAvatar member={m} size="sm" />
-          </div>
-        ))}
-      </div>
-      {extra > 0 && (
-        <div style={{
-          width:28, height:28, borderRadius:"50%",
-          background:"rgba(255,255,255,0.1)",
-          border:"2px solid rgba(255,255,255,0.12)",
-          display:"flex", alignItems:"center", justifyContent:"center",
-          fontSize:"0.5625rem", fontWeight:800, color:"rgba(255,255,255,0.6)",
-          marginLeft:-8,
-        }}>
-          +{extra}
+    <div style={{ display:"flex", alignItems:"center" }}>
+      {TEAM_MEMBERS.map((m, i) => (
+        <div key={m.id} style={{ marginLeft: i === 0 ? 0 : -8, position:"relative", zIndex: TEAM_MEMBERS.length - i }}>
+          <TeamAvatar member={m} size="sm" />
         </div>
-      )}
+      ))}
     </div>
   )
 }
