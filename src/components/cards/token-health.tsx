@@ -43,28 +43,29 @@ export function TokenHealthCard() {
         </div>
       </div>
 
-      {/* Stats — clean horizontal row, no nested boxes */}
-      <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:"14px 0", borderTop:"1px solid rgba(0,0,0,0.06)", paddingTop:18 }}>
+      {/* Stats — inset-cell grey boxes */}
+      <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8, paddingTop:16, borderTop:"1px solid rgba(0,0,0,0.06)" }}>
         {[
           { label:"Market Cap",  value: fmt$(mcap),                         pct: t?.mcap_change_pct },
           { label:"Volume 24h",  value: fmt$(t?.total_volume_24h ?? 0),     pct: t?.volume_change_pct },
           { label:"Holders",     value: (t?.holders ?? 0).toLocaleString(), pct: null, abs: t?.holder_trend ?? 0 },
           { label:"CMC Rank",    value: `#${t?.cmc_rank ?? "—"}`,           pct: null },
         ].map(s => {
-          const delta = s.pct ?? 0
+          const delta    = s.pct ?? 0
           const absDelta = s.abs ?? 0
-          const showPct = s.pct !== undefined && s.pct !== null && delta !== 0
-          const showAbs = !showPct && absDelta !== 0
+          const showPct  = s.pct !== undefined && s.pct !== null && delta !== 0
+          const showAbs  = !showPct && absDelta !== 0
+          const positive = (showPct ? delta : absDelta) > 0
           return (
-            <div key={s.label}>
-              <div style={{ display:"flex", alignItems:"center", gap:8, flexWrap:"wrap" }}>
-                <p style={{ fontSize:"1.375rem", fontWeight:700, letterSpacing:"-0.03em", color:"#1D1D1F" }}>{s.value}</p>
+            <div key={s.label} className="inset-cell">
+              <div style={{ display:"flex", alignItems:"center", gap:7, flexWrap:"wrap", marginBottom:4 }}>
+                <p style={{ fontSize:"1.25rem", fontWeight:700, letterSpacing:"-0.03em", color:"#1D1D1F", margin:0 }}>{s.value}</p>
                 {(showPct || showAbs) && (
                   <span style={{
-                    fontSize:"0.75rem", fontWeight:800, letterSpacing:"-0.01em",
-                    padding:"2px 7px", borderRadius:99,
-                    background: (showPct ? delta : absDelta) > 0 ? "#E8F8EE" : "#FEF0F0",
-                    color:      (showPct ? delta : absDelta) > 0 ? "#1A8343" : "#C0392B",
+                    fontSize:"0.6875rem", fontWeight:800, letterSpacing:"-0.01em",
+                    padding:"2px 6px", borderRadius:99,
+                    background: positive ? "#E8F8EE" : "#FEF0F0",
+                    color:      positive ? "#1A8343" : "#C0392B",
                   }}>
                     {showPct
                       ? `${delta > 0 ? "+" : ""}${delta.toFixed(1)}%`
@@ -73,7 +74,7 @@ export function TokenHealthCard() {
                   </span>
                 )}
               </div>
-              <p style={{ fontSize:"0.8125rem", fontWeight:500, color:"#8E8E93", marginTop:3 }}>{s.label}</p>
+              <p style={{ fontSize:"0.75rem", fontWeight:500, color:"#8E8E93", margin:0 }}>{s.label}</p>
             </div>
           )
         })}
