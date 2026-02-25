@@ -1,6 +1,6 @@
 "use client"
 
-import Image from "next/image"
+
 import { TokenHealthCard }     from "@/components/cards/token-health"
 import { SocialPulseCard }     from "@/components/cards/social-pulse"
 import { CommunityCard }       from "@/components/cards/community"
@@ -22,8 +22,8 @@ export default function Dashboard() {
           <div style={{ display:"flex", alignItems:"flex-start", gap:18 }}>
             {/* Logo */}
             <div style={{ width:56, height:56, borderRadius:"50%", overflow:"hidden", flexShrink:0, boxShadow:"0 4px 20px rgba(245,166,35,0.35)", marginTop:4 }}>
-              <Image src="/logo.png" alt="67" width={56} height={56}
-                style={{ width:56, height:56, objectFit:"cover", borderRadius:"50%" }} priority />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="https://raw.githubusercontent.com/67coin/67/main/logo.png" alt="67" width={56} height={56} style={{ width:56, height:56, objectFit:"cover", borderRadius:"50%", display:"block" }} />
             </div>
             <div>
               <p style={{ fontSize:"0.6875rem", fontWeight:700, letterSpacing:"0.09em", textTransform:"uppercase", color:"#C8820A", marginBottom:10 }}>
@@ -124,8 +124,8 @@ export default function Dashboard() {
             width:108, height:108, borderRadius:"50%", flexShrink:0, overflow:"hidden",
             boxShadow:"0 0 60px rgba(245,166,35,0.55), 0 0 130px rgba(245,166,35,0.18)",
           }}>
-            <Image src="/logo.png" alt="67" width={108} height={108}
-              style={{ width:108, height:108, objectFit:"cover", borderRadius:"50%" }} />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="https://raw.githubusercontent.com/67coin/67/main/logo.png" alt="67" width={108} height={108} style={{ width:108, height:108, objectFit:"cover", borderRadius:"50%", display:"block" }} />
           </div>
         </div>
       </div>

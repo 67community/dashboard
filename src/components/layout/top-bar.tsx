@@ -1,11 +1,12 @@
 "use client"
 
 import Link from "next/link"
-import Image from "next/image"
 import { usePathname } from "next/navigation"
 import { RefreshCw, AlertTriangle } from "lucide-react"
 import { TeamAvatarGroup } from "@/components/team/team-avatar"
 import { useAppData } from "@/lib/data-context"
+
+const LOGO = "https://raw.githubusercontent.com/67coin/67/main/logo.png"
 
 const NAV = [
   { href: "/",       label: "Dashboard" },
@@ -36,27 +37,16 @@ export function TopBar() {
       )}
 
       {/* Nav — dark, 67coin brand */}
-      <header style={{
-        background: "#0A0A0A",
-        borderBottom: "1px solid rgba(255,255,255,0.06)",
-      }}>
+      <header style={{ background:"#0A0A0A", borderBottom:"1px solid rgba(255,255,255,0.06)" }}>
         <div style={{ maxWidth:1440, margin:"0 auto", padding:"0 40px" }}>
           <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", height:56 }}>
 
             {/* Logo */}
             <div style={{ display:"flex", alignItems:"center", gap:12 }}>
-              <div style={{
-                width:34, height:34, borderRadius:"50%", flexShrink:0, overflow:"hidden",
-                boxShadow:"0 2px 14px rgba(245,166,35,0.50)",
-              }}>
-                <Image
-                  src="/logo.png"
-                  alt="67 Logo"
-                  width={34}
-                  height={34}
-                  style={{ width:34, height:34, objectFit:"cover", borderRadius:"50%" }}
-                  priority
-                />
+              <div style={{ width:34, height:34, borderRadius:"50%", flexShrink:0, overflow:"hidden", boxShadow:"0 2px 14px rgba(245,166,35,0.50)" }}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={LOGO} alt="67" width={34} height={34}
+                  style={{ width:34, height:34, objectFit:"cover", borderRadius:"50%", display:"block" }} />
               </div>
               <span style={{ fontSize:"0.875rem", fontWeight:700, color:"rgba(255,255,255,0.88)", letterSpacing:"-0.01em" }}>
                 Mission Control
@@ -68,12 +58,9 @@ export function TopBar() {
               {NAV.map(({ href, label }) => (
                 <Link key={href} href={href}
                   style={{
-                    padding:"7px 20px",
-                    borderRadius:9,
-                    fontSize:"0.8125rem",
-                    fontWeight:600,
-                    textDecoration:"none",
-                    transition:"all 0.15s",
+                    padding:"7px 20px", borderRadius:9,
+                    fontSize:"0.8125rem", fontWeight:600,
+                    textDecoration:"none", transition:"all 0.15s",
                     ...(path === href
                       ? { background:"#F5A623", color:"#000" }
                       : { color:"rgba(255,255,255,0.4)" }
@@ -87,13 +74,7 @@ export function TopBar() {
             {/* Right */}
             <div style={{ display:"flex", alignItems:"center", gap:20 }}>
               <button onClick={refresh} disabled={loading}
-                style={{
-                  display:"flex", alignItems:"center", gap:6,
-                  fontSize:"0.75rem", fontWeight:500,
-                  color:"rgba(255,255,255,0.3)",
-                  background:"none", border:"none", cursor:"pointer",
-                  transition:"color 0.15s",
-                }}
+                style={{ display:"flex", alignItems:"center", gap:6, fontSize:"0.75rem", fontWeight:500, color:"rgba(255,255,255,0.3)", background:"none", border:"none", cursor:"pointer" }}
                 onMouseEnter={e => (e.currentTarget.style.color="rgba(255,255,255,0.7)")}
                 onMouseLeave={e => (e.currentTarget.style.color="rgba(255,255,255,0.3)")}>
                 <RefreshCw style={{ width:12, height:12 }} className={loading ? "animate-spin" : ""} />
