@@ -36,8 +36,8 @@ async function fetchBiggestTrades() {
 // ── CoinGecko coin data ────────────────────────────────────────────────────────
 async function fetchCG() {
   const res = await fetch(
-    `https://api.coingecko.com/api/v3/coins/${CG_ID}?localization=false&tickers=false&community_data=false&developer_data=false`,
-    { next: { revalidate: 120 } }
+    `https://api.coingecko.com/api/v3/coins/${CG_ID}?localization=false&tickers=false&market_data=true&community_data=true&developer_data=false`,
+    { next: { revalidate: 300 } }
   )
   return res.ok ? await res.json() : null
 }
@@ -218,10 +218,13 @@ export async function GET() {
     social_pulse:     static_?.social_pulse     ?? { twitter_followers: 0, follower_change_24h: 0, posting_streak_days: 0, engagement_rate: 0, avg_engagement: 0, total_engagement_7d: 0, best_content_type: "tweet", content_type_stats: {} },
     community: {
       ...(static_?.community ?? { discord_members: 0, active_7d: 0, new_joins_24h: 0, open_tickets: 0, unanswered_posts: 0, telegram_members: 0, watchlist_count: 0 }),
-      // Live Discord data (overrides static when token is set)
+      // Live Discord data (overrides static when DISCORD_TOKEN env var is set)
       ...(discord ? { discord_members: discord.members, online_now: discord.online } : {}),
-      // Live CoinGecko watchlist + telegram
-      ...(cg ? { watchlist_count: cg.watchlist_portfolio_users ?? static_?.community?.watchlist_count ?? 0 } : {}),
+      // Live CoinGecko: telegram members + watchlist (no auth needed)
+      ...(cg ? {
+        telegram_members: cg.community_data?.telegram_channel_user_count ?? static_?.community?.telegram_members ?? 0,
+        watchlist_count:  cg.watchlist_portfolio_users ?? static_?.community?.watchlist_count ?? 0,
+      } : {}),
     },
     content_pipeline: static_?.content_pipeline ?? [],
     agents:           static_?.agents           ?? [],
