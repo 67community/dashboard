@@ -97,7 +97,7 @@ export function MilestonesCard() {
       title="Milestones"
       subtitle="Goals & Achievements"
       icon={<Trophy style={{ width:16, height:16 }} />}
-      accentColor="#8B5CF6"
+      accentColor="#F5A623"
       collapsed={collapsed}
       expanded={expanded}
     />

@@ -89,7 +89,7 @@ export function AgentStatusCard() {
       title="Agent Status"
       subtitle="Bots & Automation"
       icon={<Bot style={{ width:16, height:16 }} />}
-      accentColor="#10B981"
+      accentColor="#F5A623"
       collapsed={collapsed}
       expanded={expanded}
     />

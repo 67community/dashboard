@@ -92,12 +92,12 @@ export function SocialPulseCard() {
       {/* Best tweet preview — premium mini card */}
       {s?.best_tweet_week && (
         <div style={{
-          borderRadius:14, border:"1px solid rgba(29,155,240,0.15)",
-          background:"rgba(29,155,240,0.03)", padding:"14px 16px",
+          borderRadius:14, border:"1px solid rgba(245,166,35,0.12)",
+          background:"rgba(245,166,35,0.03)", padding:"14px 16px",
           position:"relative", overflow:"hidden",
         }}>
           {/* Twitter blue left accent */}
-          <div style={{ position:"absolute", left:0, top:0, bottom:0, width:3, background:"#1D9BF0", borderRadius:"99px 0 0 99px" }} />
+          <div style={{ position:"absolute", left:0, top:0, bottom:0, width:3, background:"#F5A623", borderRadius:"99px 0 0 99px" }} />
           <div style={{ paddingLeft:8 }}>
             {/* Author */}
             <div style={{ display:"flex", alignItems:"center", gap:6, marginBottom:7 }}>
@@ -118,7 +118,7 @@ export function SocialPulseCard() {
                 <Heart style={{ width:11, height:11, color:"#F43F5E" }} />{s.best_tweet_week.likes}
               </span>
               <span style={{ display:"flex", alignItems:"center", gap:4, fontSize:"0.6875rem", fontWeight:600, color:"#A1A1AA" }}>
-                <MessageCircle style={{ width:11, height:11, color:"#1D9BF0" }} />{s.best_tweet_week.replies}
+                <MessageCircle style={{ width:11, height:11, color:"#8E8E93" }} />{s.best_tweet_week.replies}
               </span>
               <span style={{ marginLeft:"auto", fontSize:"0.6875rem", color:"#D4D4D8" }}>{s.best_tweet_week.date}</span>
             </div>
@@ -190,7 +190,7 @@ export function SocialPulseCard() {
       title="Social Pulse"
       subtitle="@67coinX"
       icon={<BarChart2 style={{ width:16, height:16 }} />}
-      accentColor="#1D9BF0"
+      accentColor="#F5A623"
       collapsed={collapsed}
       expanded={expanded}
       onOpen={handleOpen}

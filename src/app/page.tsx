@@ -23,39 +23,20 @@ export default function Dashboard() {
         background:"#0A0A0A",
         minHeight:180,
       }}>
-        {/* Multi-layer gradient — dark navy → gold, diagonal */}
+        {/* Dark → gold gradient — single brand color, clean */}
         <div style={{ position:"absolute", inset:0, pointerEvents:"none" }}>
-          {/* Base gradient */}
-          <div style={{
-            position:"absolute", inset:0,
-            background:"linear-gradient(115deg, #0D0D14 0%, #1A1028 30%, #2D1A0E 60%, #7A3D00 80%, #C8820A 100%)",
-          }} />
+          {/* Base: pure dark to warm dark */}
+          <div style={{ position:"absolute", inset:0,
+            background:"linear-gradient(115deg, #0A0A0A 0%, #111108 40%, #2A1A00 70%, #7A4500 90%, #C8820A 100%)" }} />
           {/* Gold flare right */}
-          <div style={{
-            position:"absolute", inset:0,
-            background:"radial-gradient(ellipse at 90% 50%, rgba(245,166,35,0.65) 0%, transparent 55%)",
-          }} />
-          {/* Purple/dark flare left */}
-          <div style={{
-            position:"absolute", inset:0,
-            background:"radial-gradient(ellipse at 5% 60%, rgba(80,40,160,0.5) 0%, transparent 45%)",
-          }} />
-          {/* Diagonal ray lines — exact Stripe technique */}
-          <div style={{
-            position:"absolute", inset:0,
-            backgroundImage:`repeating-linear-gradient(
-              112deg,
-              transparent,
-              transparent 28px,
-              rgba(255,255,255,0.025) 28px,
-              rgba(255,255,255,0.025) 29px
-            )`,
-          }} />
-          {/* Noise overlay for texture */}
-          <div style={{
-            position:"absolute", inset:0, opacity:0.04,
-            backgroundImage:"url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
-          }} />
+          <div style={{ position:"absolute", inset:0,
+            background:"radial-gradient(ellipse at 95% 50%, rgba(245,166,35,0.70) 0%, transparent 50%)" }} />
+          {/* Subtle warm center */}
+          <div style={{ position:"absolute", inset:0,
+            background:"radial-gradient(ellipse at 55% 100%, rgba(245,166,35,0.12) 0%, transparent 50%)" }} />
+          {/* Diagonal rays */}
+          <div style={{ position:"absolute", inset:0,
+            backgroundImage:`repeating-linear-gradient(112deg, transparent, transparent 28px, rgba(255,255,255,0.022) 28px, rgba(255,255,255,0.022) 29px)` }} />
         </div>
 
         {/* Content */}
@@ -197,28 +178,21 @@ export default function Dashboard() {
         marginTop:24, borderRadius:24,
         position:"relative", minHeight:220, overflow:"hidden",
       }}>
-        {/* Base gradient */}
+        {/* Base: dark → gold, same language as hero */}
         <div style={{ position:"absolute", inset:0,
-          background:"linear-gradient(105deg, #08080F 0%, #120920 30%, #1A1000 55%, #5A2800 80%, #A06000 100%)" }} />
-        {/* LEFT corner — purple/teal burst */}
+          background:"linear-gradient(115deg, #0A0A0A 0%, #111108 40%, #2A1A00 70%, #7A4500 90%, #C8820A 100%)" }} />
+        {/* LEFT gold glow */}
         <div style={{ position:"absolute", inset:0,
-          background:"radial-gradient(ellipse at 0% 50%, rgba(120,60,220,0.55) 0%, transparent 38%)" }} />
+          background:"radial-gradient(ellipse at 5% 50%, rgba(245,166,35,0.18) 0%, transparent 40%)" }} />
+        {/* RIGHT gold burst */}
         <div style={{ position:"absolute", inset:0,
-          background:"radial-gradient(ellipse at 8% 85%, rgba(56,189,248,0.25) 0%, transparent 30%)" }} />
-        {/* RIGHT corner — gold burst */}
-        <div style={{ position:"absolute", inset:0,
-          background:"radial-gradient(ellipse at 100% 50%, rgba(245,166,35,0.80) 0%, transparent 42%)" }} />
-        <div style={{ position:"absolute", inset:0,
-          background:"radial-gradient(ellipse at 92% 10%, rgba(255,200,60,0.35) 0%, transparent 30%)" }} />
+          background:"radial-gradient(ellipse at 95% 50%, rgba(245,166,35,0.75) 0%, transparent 48%)" }} />
         {/* Diagonal rays */}
         <div style={{ position:"absolute", inset:0,
-          backgroundImage:`repeating-linear-gradient(112deg, transparent, transparent 28px, rgba(255,255,255,0.025) 28px, rgba(255,255,255,0.025) 29px)` }} />
+          backgroundImage:`repeating-linear-gradient(112deg, transparent, transparent 28px, rgba(255,255,255,0.022) 28px, rgba(255,255,255,0.022) 29px)` }} />
         {/* Top shimmer */}
         <div style={{ position:"absolute", top:0, left:0, right:0, height:1,
-          background:"linear-gradient(90deg, rgba(120,60,220,0.5) 0%, rgba(255,255,255,0.15) 30%, rgba(245,166,35,0.6) 70%, transparent 100%)" }} />
-        {/* Bottom shimmer */}
-        <div style={{ position:"absolute", bottom:0, left:0, right:0, height:1,
-          background:"linear-gradient(90deg, transparent 0%, rgba(245,166,35,0.2) 50%, transparent 100%)" }} />
+          background:"linear-gradient(90deg, transparent 0%, rgba(245,166,35,0.4) 50%, transparent 100%)" }} />
 
         {/* ── Content — centered ── */}
         <div style={{

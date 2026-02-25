@@ -89,7 +89,7 @@ export function ContentPipelineCard() {
       title="Content Pipeline"
       subtitle="Posts & Scheduling"
       icon={<Calendar style={{ width:16, height:16 }} />}
-      accentColor="#EC4899"
+      accentColor="#F5A623"
       collapsed={collapsed}
       expanded={expanded}
     />

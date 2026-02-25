@@ -90,7 +90,7 @@ export function CommunityCard() {
       title="Community"
       subtitle="Discord · Telegram"
       icon={<Users style={{ width:16, height:16 }} />}
-      accentColor="#5865F2"
+      accentColor="#F5A623"
       collapsed={collapsed}
       expanded={expanded}
     />
