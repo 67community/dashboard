@@ -134,12 +134,23 @@ export function DashboardCard({
       <div
         onClick={() => { setOpen(true); onOpen?.() }}
         className={`mc-card mc-card-hover flex flex-col overflow-hidden select-none ${className}`}
-        style={{ cursor: "pointer" }}
+        style={{ cursor: "pointer", position: "relative" }}
       >
-        {/* Accent bar */}
-        <div style={{ height: 3, background: `linear-gradient(90deg,${accentColor},${accentColor}33)`, flexShrink: 0 }} />
+        {/* Stripe-style ambient glow — unique per card */}
+        <div style={{
+          position: "absolute", inset: 0, pointerEvents: "none", zIndex: 0,
+          background: `radial-gradient(ellipse at 0% 0%, ${accentColor}14 0%, transparent 55%)`,
+        }} />
+        {/* Diagonal ray lines — subtle, matching hero */}
+        <div style={{
+          position: "absolute", inset: 0, pointerEvents: "none", zIndex: 0,
+          backgroundImage: `repeating-linear-gradient(112deg, transparent, transparent 22px, ${accentColor}07 22px, ${accentColor}07 23px)`,
+        }} />
 
-        <div className="flex flex-col flex-1 gap-5" style={{ padding: "24px 26px 26px" }}>
+        {/* Accent bar */}
+        <div style={{ height: 3, background: `linear-gradient(90deg,${accentColor},${accentColor}33)`, flexShrink: 0, position: "relative", zIndex: 1 }} />
+
+        <div className="flex flex-col flex-1 gap-5" style={{ padding: "24px 26px 26px", position: "relative", zIndex: 1 }}>
           {/* Header */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
