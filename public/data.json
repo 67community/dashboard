@@ -1,84 +1,97 @@
 {
-  "last_updated": "2026-02-24T19:23:01.265474Z",
+  "last_updated": "2026-02-25T02:22:40.927257Z",
   "token_health": {
-    "price": 0.001617,
-    "price_change_m5": 3.27,
-    "price_change_1h": 3.36,
-    "price_change_6h": 0.16,
-    "price_change_24h": -24.93,
-    "market_cap": 1616616,
-    "liquidity": 222416.82,
-    "volume_m5": 1259.19,
-    "volume_1h": 3825.1,
-    "volume_6h": 88923.39,
-    "volume_24h": 276948.08,
-    "volume_ratio_1h": 0.33,
-    "buys_24h": 1626,
-    "sells_24h": 1305,
-    "buys_1h": 34,
-    "sells_1h": 46,
-    "holders": 17519,
-    "holder_trend": -3,
+    "price": 0.001677,
+    "price_change_m5": -2.04,
+    "price_change_1h": -3.14,
+    "price_change_6h": 2.05,
+    "price_change_24h": -10.83,
+    "market_cap": 1676997,
+    "liquidity": 232923.44,
+    "volume_m5": 2789.38,
+    "volume_1h": 10643.72,
+    "volume_6h": 76512.99,
+    "volume_24h": 278508.15,
+    "volume_ratio_1h": 0.92,
+    "buys_24h": 1498,
+    "sells_24h": 1333,
+    "buys_1h": 85,
+    "sells_1h": 48,
+    "holders": 16827,
+    "holder_trend": -692,
     "sentiment": "neutral",
     "_source": "dexscreener",
-    "coingecko_rank": 2509,
+    "coingecko_rank": 2431,
     "ath": 0.04363399,
     "ath_date": "2025-11-19",
-    "ath_change_pct": -96.41,
-    "price_change_7d": -41.02,
+    "ath_change_pct": -96.03,
+    "price_change_7d": -25.8,
     "exchange_volumes": [
       {
         "exchange": "XT.COM",
         "pair": "67/USDT",
-        "volume_usd": 502391,
+        "volume_usd": 497827,
         "is_dex": false,
         "logo": "https://coin-images.coingecko.com/markets/images/404/small/xt_logo_%E7%BB%BF.png?1761205934"
       },
       {
         "exchange": "PumpSwap (DEX)",
         "pair": "DEX pool",
-        "volume_usd": 277890,
+        "volume_usd": 293624,
         "is_dex": true,
         "logo": "https://coin-images.coingecko.com/markets/images/11879/small/pumpfun.jpg?1740376296"
       },
       {
         "exchange": "KCEX",
         "pair": "67/USDT",
-        "volume_usd": 168589,
+        "volume_usd": 170348,
         "is_dex": false,
         "logo": "https://coin-images.coingecko.com/markets/images/11953/small/photo_2025-05-27_02-31-22.jpg?1748284326"
       },
       {
         "exchange": "LBank",
         "pair": "67/USDT",
-        "volume_usd": 90762,
+        "volume_usd": 101849,
         "is_dex": false,
         "logo": "https://coin-images.coingecko.com/markets/images/118/small/LBank_200_200.png?1757347528"
       },
       {
         "exchange": "MEXC",
         "pair": "67/USDT",
-        "volume_usd": 66521,
+        "volume_usd": 68023,
         "is_dex": false,
         "logo": "https://coin-images.coingecko.com/markets/images/409/small/logo_new.png?1743600043"
       },
       {
         "exchange": "Meteora (DEX)",
         "pair": "DEX pool",
-        "volume_usd": 16431.0,
+        "volume_usd": 23152,
         "is_dex": true,
         "logo": "https://coin-images.coingecko.com/markets/images/1520/small/meteora.jpeg?1710908196"
+      },
+      {
+        "exchange": "Bilaxy",
+        "pair": "67/USDT",
+        "volume_usd": 16708.0,
+        "is_dex": false,
+        "logo": "https://coin-images.coingecko.com/markets/images/193/small/bilaxy.png?1706864324"
       }
     ],
-    "cmc_rank": 1712,
-    "total_volume_24h": 1275569.74306556,
+    "cmc_rank": 1682,
+    "total_volume_24h": 1290477.91979019,
+    "volume_change_pct": 0.0,
+    "volume_change_usd": 0.0,
+    "mcap_change_pct": 0.0,
+    "mcap_change_usd": 0,
+    "liquidity_change_pct": 0.0,
+    "liquidity_change_usd": 0.0,
     "biggest_trades": {
-      "biggest_buy_usd": 1127.31,
-      "biggest_buy_tx": "45QG1Vf3QkKuq6LJFBx7JdyTKSWycoWBeCYkQMbaNmyeqR9YqxSSGkDsAYPXRuuQAWMYFCKCTb19i6jMXy1Yy1Qi",
-      "biggest_buy_time": "2026-02-24T19:19:06Z",
-      "biggest_sell_usd": 1244.74,
-      "biggest_sell_tx": "3gAG4tZy3t3Y2UrQW3JgFRB9mydpYLHx2vT7GEGMTr2z3jG6MeJ2UGMktYNLAJ1H1T3g4HhfykD7gwifxSwr9Akv",
-      "biggest_sell_time": "2026-02-24T17:30:33Z",
+      "biggest_buy_usd": 2451.0,
+      "biggest_buy_tx": "3Lh44X26zSEzLZX1vSR4UaNFLY4wg21fKKqkfFeCYrFvBxw14aX4UcMT4v74V5eptiZqePKDDuc7QXFErBcu4FsZ",
+      "biggest_buy_time": "2026-02-25T00:49:43Z",
+      "biggest_sell_usd": 7026.58,
+      "biggest_sell_tx": "4VFQWHa5eg8skSPv1sSfXNRyQUzYt2qB3z7rz2cq45LDYpTakpjkVNVJ5QbKt6tAznuBkCs8VCSehZYuK5qa35zv",
+      "biggest_sell_time": "2026-02-25T01:20:04Z",
       "_trades_in_window": 300
     }
   },
@@ -86,34 +99,38 @@
     "twitter_followers": 1628,
     "follower_change_24h": 0,
     "posting_streak_days": 6,
-    "engagement_rate": 6.29,
+    "engagement_rate": 6.235,
     "_source": "nitter_rss+twitter_cdn",
     "best_tweet_week": {
       "tweet_id": "2025675106899333180",
       "tweet_url": "https://x.com/67coinX/status/2025675106899333180",
       "text": "More dev buys to support the community.\n\nBuilding our treasury, just in time for Season 2.\n\n#67season2 #67to67billion",
-      "likes": 130,
+      "likes": 128,
       "replies": 21,
       "img_url": "https://pbs.twimg.com/media/HBykYp5WwAAbqrq.jpg",
       "date": "Feb 22",
       "embed_html": "<blockquote class=\"twitter-tweet\" align=\"center\" data-width=\"520\" data-dnt=\"true\" data-theme=\"dark\"><p lang=\"en\" dir=\"ltr\">More dev buys to support the community.<br><br>Building our treasury, just in time for Season 2.<a href=\"https://twitter.com/hashtag/67season2?src=hash&amp;ref_src=twsrc%5Etfw\">#67season2</a> <a href=\"https://twitter.com/hashtag/67to67billion?src=hash&amp;ref_src=twsrc%5Etfw\">#67to67billion</a> <a href=\"https://t.co/GsTeU1UUUY\">pic.twitter.com/GsTeU1UUUY</a></p>&mdash; The Official 67 Coin (@67coinX) <a href=\"https://twitter.com/67coinX/status/2025675106899333180?ref_src=twsrc%5Etfw\">February 22, 2026</a></blockquote>\n\n"
     },
     "best_tweet_2d": {
-      "tweet_id": "2025727458561917090",
-      "tweet_url": "https://x.com/67coinX/status/2025727458561917090",
-      "text": "The K-pop group AB6IX is presenting a concert called \"6IX TO SEVEN\" in Seoul in May.\n\n67 is a worldwide cultural movement currently getting more and more viral in Asia.\n\n@Official_Upbit just FYI \ud83d\ude07\n\nht",
-      "likes": 126,
-      "replies": 26,
+      "tweet_id": "2025945503913886046",
+      "tweet_url": "https://x.com/67coinX/status/2025945503913886046",
+      "text": "\ud83d\udc40\ud83d\udc40\n\nhttps://x.com/SolanaSensei/status/2025850377825099973?s=20",
+      "likes": 103,
+      "replies": 16,
       "img_url": null,
       "date": "Feb 23",
-      "embed_html": "<blockquote class=\"twitter-tweet\" align=\"center\" data-width=\"520\" data-dnt=\"true\" data-theme=\"dark\"><p lang=\"en\" dir=\"ltr\">The K-pop group AB6IX is presenting a concert called &quot;6IX TO SEVEN&quot; in Seoul in May.<br><br>67 is a worldwide cultural movement currently getting more and more viral in Asia.<a href=\"https://twitter.com/Official_Upbit?ref_src=twsrc%5Etfw\">@Official_Upbit</a> just FYI \ud83d\ude07<a href=\"https://t.co/Zjmlv6ntbr\">https://t.co/Zjmlv6ntbr</a></p>&mdash; The Official 67 Coin (@67coinX) <a href=\"https://twitter.com/67coinX/status/2025727458561917090?ref_src=twsrc%5Etfw\">February 23, 2026</a></blockquote>\n\n"
+      "embed_html": "<blockquote class=\"twitter-tweet\" align=\"center\" data-width=\"520\" data-dnt=\"true\" data-theme=\"dark\"><p lang=\"qme\" dir=\"ltr\">\ud83d\udc40\ud83d\udc40<a href=\"https://t.co/Nk1MKX6P45\">https://t.co/Nk1MKX6P45</a></p>&mdash; The Official 67 Coin (@67coinX) <a href=\"https://twitter.com/67coinX/status/2025945503913886046?ref_src=twsrc%5Etfw\">February 23, 2026</a></blockquote>\n\n"
     },
-    "avg_engagement": 102.4,
+    "avg_engagement": 101.5,
     "twitter_followers_updated_at": "2026-02-24T14:44:47.155984Z",
-    "total_engagement_7d": 1024,
+    "total_engagement_7d": 1015,
     "follower_history": [
       {
         "date": "2026-02-24",
+        "count": 1628
+      },
+      {
+        "date": "2026-02-25",
         "count": 1628
       }
     ],
@@ -121,13 +138,13 @@
     "content_type_stats": {
       "announcement": {
         "count": 3,
-        "total_eng": 319,
-        "avg_eng": 106.3
+        "total_eng": 318,
+        "avg_eng": 106.0
       },
       "thesis": {
         "count": 2,
-        "total_eng": 223,
-        "avg_eng": 111.5
+        "total_eng": 220,
+        "avg_eng": 110.0
       },
       "culture_drop": {
         "count": 1,
@@ -136,8 +153,8 @@
       },
       "meme": {
         "count": 4,
-        "total_eng": 330,
-        "avg_eng": 82.5
+        "total_eng": 325,
+        "avg_eng": 81.2
       }
     },
     "best_content_type": "culture_drop"
@@ -154,48 +171,55 @@
       {
         "exchange": "XT.COM",
         "pair": "67/USDT",
-        "volume_usd": 502391,
+        "volume_usd": 497827,
         "is_dex": false,
         "logo": "https://coin-images.coingecko.com/markets/images/404/small/xt_logo_%E7%BB%BF.png?1761205934"
       },
       {
         "exchange": "PumpSwap (DEX)",
         "pair": "DEX pool",
-        "volume_usd": 277890,
+        "volume_usd": 293624,
         "is_dex": true,
         "logo": "https://coin-images.coingecko.com/markets/images/11879/small/pumpfun.jpg?1740376296"
       },
       {
         "exchange": "KCEX",
         "pair": "67/USDT",
-        "volume_usd": 168589,
+        "volume_usd": 170348,
         "is_dex": false,
         "logo": "https://coin-images.coingecko.com/markets/images/11953/small/photo_2025-05-27_02-31-22.jpg?1748284326"
       },
       {
         "exchange": "LBank",
         "pair": "67/USDT",
-        "volume_usd": 90762,
+        "volume_usd": 101849,
         "is_dex": false,
         "logo": "https://coin-images.coingecko.com/markets/images/118/small/LBank_200_200.png?1757347528"
       },
       {
         "exchange": "MEXC",
         "pair": "67/USDT",
-        "volume_usd": 66521,
+        "volume_usd": 68023,
         "is_dex": false,
         "logo": "https://coin-images.coingecko.com/markets/images/409/small/logo_new.png?1743600043"
       },
       {
         "exchange": "Meteora (DEX)",
         "pair": "DEX pool",
-        "volume_usd": 16431.0,
+        "volume_usd": 23152,
         "is_dex": true,
         "logo": "https://coin-images.coingecko.com/markets/images/1520/small/meteora.jpeg?1710908196"
+      },
+      {
+        "exchange": "Bilaxy",
+        "pair": "67/USDT",
+        "volume_usd": 16708.0,
+        "is_dex": false,
+        "logo": "https://coin-images.coingecko.com/markets/images/193/small/bilaxy.png?1706864324"
       }
     ],
-    "sentiment_up_pct": 33.33,
-    "sentiment_down_pct": 66.67
+    "sentiment_up_pct": 100.0,
+    "sentiment_down_pct": 0.0
   },
   "content_pipeline": {
     "scheduled_posts": [
@@ -232,7 +256,7 @@
     {
       "name": "X Raid Bot",
       "status": "green",
-      "last_run": "2026-02-24T19:23:10.956543Z",
+      "last_run": "2026-02-25T02:22:52.268696Z",
       "errors_24h": 0,
       "schedule": "Every 3 min"
     },
@@ -316,79 +340,94 @@
   "alerts": [
     {
       "type": "danger",
-      "message": "\u26a0\ufe0f Price down -24.9% in 24h",
-      "timestamp": "2026-02-24T19:23:11.036768Z"
+      "message": "\u26a0\ufe0f Price down -10.8% in 24h",
+      "timestamp": "2026-02-25T02:22:52.368186Z"
     }
   ],
   "coingecko": {
-    "coingecko_rank": 2509,
+    "coingecko_rank": 2431,
     "ath": 0.04363399,
     "ath_date": "2025-11-19",
-    "ath_change_pct": -96.41,
+    "ath_change_pct": -96.03,
     "atl": 7.72e-05,
-    "price_change_7d": -41.02,
-    "price_change_1h": 0.52,
+    "price_change_7d": -25.8,
+    "price_change_1h": -4.86,
     "watchlist_count": 8262,
     "telegram_members": 2236,
-    "sentiment_up_pct": 33.33,
-    "sentiment_down_pct": 66.67,
+    "sentiment_up_pct": 100.0,
+    "sentiment_down_pct": 0.0,
     "top_exchanges": [
       {
         "exchange": "XT.COM",
         "pair": "67/USDT",
-        "volume_usd": 502391,
+        "volume_usd": 497827,
         "is_dex": false,
         "logo": "https://coin-images.coingecko.com/markets/images/404/small/xt_logo_%E7%BB%BF.png?1761205934"
       },
       {
         "exchange": "PumpSwap (DEX)",
         "pair": "DEX pool",
-        "volume_usd": 277890,
+        "volume_usd": 293624,
         "is_dex": true,
         "logo": "https://coin-images.coingecko.com/markets/images/11879/small/pumpfun.jpg?1740376296"
       },
       {
         "exchange": "KCEX",
         "pair": "67/USDT",
-        "volume_usd": 168589,
+        "volume_usd": 170348,
         "is_dex": false,
         "logo": "https://coin-images.coingecko.com/markets/images/11953/small/photo_2025-05-27_02-31-22.jpg?1748284326"
       },
       {
         "exchange": "LBank",
         "pair": "67/USDT",
-        "volume_usd": 90762,
+        "volume_usd": 101849,
         "is_dex": false,
         "logo": "https://coin-images.coingecko.com/markets/images/118/small/LBank_200_200.png?1757347528"
       },
       {
         "exchange": "MEXC",
         "pair": "67/USDT",
-        "volume_usd": 66521,
+        "volume_usd": 68023,
         "is_dex": false,
         "logo": "https://coin-images.coingecko.com/markets/images/409/small/logo_new.png?1743600043"
       },
       {
         "exchange": "Meteora (DEX)",
         "pair": "DEX pool",
-        "volume_usd": 16431.0,
+        "volume_usd": 23152,
         "is_dex": true,
         "logo": "https://coin-images.coingecko.com/markets/images/1520/small/meteora.jpeg?1710908196"
+      },
+      {
+        "exchange": "Bilaxy",
+        "pair": "67/USDT",
+        "volume_usd": 16708.0,
+        "is_dex": false,
+        "logo": "https://coin-images.coingecko.com/markets/images/193/small/bilaxy.png?1706864324"
       }
     ],
     "_source": "coingecko"
   },
   "coinmarketcap": {
-    "cmc_rank": 1712,
+    "cmc_rank": 1682,
     "cmc_id": "38918",
-    "price": 0.0016049331174230672,
-    "volume_24h": 1275569.74306556,
-    "market_cap": 1604419.5388254917,
-    "change_1h": 1.93496003,
-    "change_24h": -25.1247497,
-    "change_7d": -43.45927946,
-    "change_30d": -82.37032624,
+    "price": 0.0017038127215206196,
+    "volume_24h": 1290477.91979019,
+    "market_cap": 1703267.501449733,
+    "change_1h": -5.42402854,
+    "change_24h": -9.05272485,
+    "change_7d": -22.71756695,
+    "change_30d": -81.31552599,
     "market_pairs": 45,
     "_source": "coinmarketcap"
+  },
+  "_snapshot_24h": {
+    "timestamp": "2026-02-25T02:22:44.628584Z",
+    "volume_24h": 278508.15,
+    "total_volume_24h": 1290477.91979019,
+    "market_cap": 1676997,
+    "liquidity": 232923.44,
+    "holders": 16827
   }
 }
