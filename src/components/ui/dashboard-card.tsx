@@ -1,6 +1,7 @@
 "use client"
 
-import { useState, ReactNode } from "react"
+import { useState, ReactNode, useEffect, useRef } from "react"
+import { createPortal } from "react-dom"
 import { X, Maximize2 } from "lucide-react"
 
 interface Props {
@@ -18,96 +19,170 @@ interface Props {
 export function DashboardCard({
   title, subtitle, icon, accentColor, collapsed, expanded, className = "", liveTag, onOpen
 }: Props) {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen]       = useState(false)
+  const [mounted, setMounted] = useState(false)
+  const scrollY               = useRef(0)
+
+  // Portal needs document to be available (SSR guard)
+  useEffect(() => { setMounted(true) }, [])
+
+  // Lock body scroll when modal is open
+  useEffect(() => {
+    if (open) {
+      scrollY.current = window.scrollY
+      document.body.style.overflow = "hidden"
+    } else {
+      document.body.style.overflow = ""
+    }
+    return () => { document.body.style.overflow = "" }
+  }, [open])
+
+  // Close on Escape
+  useEffect(() => {
+    if (!open) return
+    const handler = (e: KeyboardEvent) => { if (e.key === "Escape") setOpen(false) }
+    window.addEventListener("keydown", handler)
+    return () => window.removeEventListener("keydown", handler)
+  }, [open])
+
+  const modal = open && mounted ? createPortal(
+    <div
+      style={{
+        position: "fixed", inset: 0, zIndex: 9999,
+        display: "flex", alignItems: "center", justifyContent: "center",
+        padding: 24,
+      }}
+      onClick={e => { if (e.target === e.currentTarget) setOpen(false) }}
+    >
+      {/* Backdrop */}
+      <div
+        style={{
+          position: "absolute", inset: 0,
+          background: "rgba(0,0,0,0.40)",
+          backdropFilter: "blur(8px)",
+          WebkitBackdropFilter: "blur(8px)",
+          animation: "fade-in 0.18s ease both",
+        }}
+        onClick={() => setOpen(false)}
+      />
+
+      {/* Sheet */}
+      <div
+        className="anim-slide-up"
+        style={{
+          position: "relative",
+          width: "100%", maxWidth: 560,
+          maxHeight: "88vh",
+          display: "flex", flexDirection: "column",
+          background: "#FFFFFF",
+          borderRadius: 24,
+          boxShadow:
+            "0 0 0 0.5px rgba(0,0,0,0.08), " +
+            "0 8px 32px rgba(0,0,0,0.12), " +
+            "0 40px 80px rgba(0,0,0,0.16)",
+          overflow: "hidden",
+        }}
+      >
+        {/* Accent line */}
+        <div style={{ height: 3, background: `linear-gradient(90deg,${accentColor},${accentColor}33)`, flexShrink: 0 }} />
+
+        {/* Modal header */}
+        <div style={{
+          display: "flex", alignItems: "center", justifyContent: "space-between",
+          padding: "18px 24px",
+          borderBottom: "1px solid rgba(0,0,0,0.06)",
+          flexShrink: 0,
+        }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+            <div style={{
+              width: 36, height: 36, borderRadius: 11,
+              background: `${accentColor}18`,
+              display: "flex", alignItems: "center", justifyContent: "center",
+            }}>
+              <span style={{ color: accentColor, display: "flex" }}>{icon}</span>
+            </div>
+            <div>
+              <p style={{ fontSize: "0.9375rem", fontWeight: 700, color: "#1D1D1F", lineHeight: 1, letterSpacing: "-0.01em" }}>{title}</p>
+              {subtitle && <p style={{ fontSize: "0.8125rem", color: "#8E8E93", marginTop: 3, fontWeight: 500 }}>{subtitle}</p>}
+            </div>
+          </div>
+          <button
+            onClick={() => setOpen(false)}
+            style={{
+              width: 32, height: 32, borderRadius: "50%",
+              background: "#F4F4F5", border: "none", cursor: "pointer",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              transition: "background 0.15s",
+            }}
+            onMouseEnter={e => (e.currentTarget.style.background = "#E8E8ED")}
+            onMouseLeave={e => (e.currentTarget.style.background = "#F4F4F5")}
+          >
+            <X style={{ width: 14, height: 14, color: "#6E6E73" }} />
+          </button>
+        </div>
+
+        {/* Scrollable content */}
+        <div style={{ overflowY: "auto", flex: 1, padding: 24 }}>{expanded}</div>
+      </div>
+    </div>,
+    document.body
+  ) : null
 
   return (
     <>
-      {/* ── Grid tile ── */}
+      {/* ── Grid tile ───────────────────────────────────────── */}
       <div
         onClick={() => { setOpen(true); onOpen?.() }}
         className={`mc-card mc-card-hover flex flex-col overflow-hidden select-none ${className}`}
+        style={{ cursor: "pointer" }}
       >
         {/* Accent bar */}
-        <div style={{ height: 3, background: `linear-gradient(90deg, ${accentColor}, ${accentColor}33)`, flexShrink: 0 }} />
+        <div style={{ height: 3, background: `linear-gradient(90deg,${accentColor},${accentColor}33)`, flexShrink: 0 }} />
 
-        <div className="flex flex-col flex-1 gap-5" style={{ padding:"24px 26px 26px" }}>
-          {/* Header row */}
+        <div className="flex flex-col flex-1 gap-5" style={{ padding: "24px 26px 26px" }}>
+          {/* Header */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-[10px] flex items-center justify-center flex-shrink-0"
-                style={{ background: `${accentColor}14` }}>
-                <span style={{ color: accentColor, display:"flex" }}>{icon}</span>
+              <div
+                className="w-8 h-8 rounded-[10px] flex items-center justify-center flex-shrink-0"
+                style={{ background: `${accentColor}14` }}
+              >
+                <span style={{ color: accentColor, display: "flex" }}>{icon}</span>
               </div>
               <div>
-                <p style={{ fontSize:"0.9375rem", fontWeight:700, color:"#1D1D1F", lineHeight:1, letterSpacing:"-0.01em" }}>{title}</p>
-                {subtitle && <p style={{ fontSize:"0.8125rem", color:"#8E8E93", marginTop:3, fontWeight:500 }}>{subtitle}</p>}
+                <p style={{ fontSize: "0.9375rem", fontWeight: 700, color: "#1D1D1F", lineHeight: 1, letterSpacing: "-0.01em" }}>{title}</p>
+                {subtitle && <p style={{ fontSize: "0.8125rem", color: "#8E8E93", marginTop: 3, fontWeight: 500 }}>{subtitle}</p>}
               </div>
             </div>
+
             <div className="flex items-center gap-2">
               {liveTag && (
-                <span style={{ display:"inline-flex", alignItems:"center", gap:5, fontSize:"0.625rem", fontWeight:700, color:"#059669", background:"#ECFDF5", padding:"2px 8px", borderRadius:99 }}>
-                  <span className="dot-on" style={{ width:6, height:6 }} />
+                <span style={{
+                  display: "inline-flex", alignItems: "center", gap: 5,
+                  fontSize: "0.625rem", fontWeight: 700, color: "#059669",
+                  background: "#ECFDF5", padding: "2px 8px", borderRadius: 99,
+                }}>
+                  <span className="dot-on" style={{ width: 6, height: 6 }} />
                   LIVE
                 </span>
               )}
-              <div style={{ width:28, height:28, borderRadius:"50%", background:"#F4F4F5", display:"flex", alignItems:"center", justifyContent:"center" }}>
-                <Maximize2 style={{ width:12, height:12, color:"#A1A1AA" }} />
+              <div style={{
+                width: 28, height: 28, borderRadius: "50%",
+                background: "#F4F4F5",
+                display: "flex", alignItems: "center", justifyContent: "center",
+              }}>
+                <Maximize2 style={{ width: 12, height: 12, color: "#A1A1AA" }} />
               </div>
             </div>
           </div>
 
-          {/* Card body */}
+          {/* Collapsed body */}
           <div className="flex-1">{collapsed}</div>
         </div>
       </div>
 
-      {/* ── Full detail modal ── */}
-      {open && (
-        <div
-          className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center sm:p-6"
-          onClick={e => { if (e.target === e.currentTarget) setOpen(false) }}
-        >
-          {/* Backdrop */}
-          <div className="absolute inset-0" style={{ background:"rgba(0,0,0,0.35)", backdropFilter:"blur(6px)" }}
-            onClick={() => setOpen(false)} />
-
-          {/* Sheet */}
-          <div
-            className="anim-slide-up relative w-full sm:max-w-[560px] max-h-[88vh] flex flex-col"
-            style={{
-              background: "#FFFFFF",
-              borderRadius: 24,
-              boxShadow: "0 8px 40px rgba(0,0,0,0.14), 0 0 0 1px rgba(0,0,0,0.06)",
-              overflow: "hidden",
-            }}
-          >
-            {/* Accent line */}
-            <div style={{ height:3, background:`linear-gradient(90deg,${accentColor},${accentColor}33)`, flexShrink:0 }} />
-
-            {/* Sheet header */}
-            <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", padding:"18px 24px", borderBottom:"1px solid rgba(0,0,0,0.06)", flexShrink:0 }}>
-              <div style={{ display:"flex", alignItems:"center", gap:12 }}>
-                <div style={{ width:36, height:36, borderRadius:11, background:`${accentColor}14`, display:"flex", alignItems:"center", justifyContent:"center" }}>
-                  <span style={{ color:accentColor, display:"flex" }}>{icon}</span>
-                </div>
-                <div>
-                  <p style={{ fontSize:"0.9375rem", fontWeight:700, color:"#09090B", lineHeight:1 }}>{title}</p>
-                  {subtitle && <p style={{ fontSize:"0.75rem", color:"#A1A1AA", marginTop:3 }}>{subtitle}</p>}
-                </div>
-              </div>
-              <button
-                onClick={() => setOpen(false)}
-                style={{ width:32, height:32, borderRadius:"50%", background:"#F4F4F5", border:"none", cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center" }}
-              >
-                <X style={{ width:14, height:14, color:"#71717A" }} />
-              </button>
-            </div>
-
-            {/* Content */}
-            <div style={{ overflowY:"auto", flex:1, padding:24 }}>{expanded}</div>
-          </div>
-        </div>
-      )}
+      {/* ── Modal (portal → document.body) ─────────────────── */}
+      {modal}
     </>
   )
 }
