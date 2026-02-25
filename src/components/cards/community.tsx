@@ -4,6 +4,28 @@ import { Users } from "lucide-react"
 import { DashboardCard } from "@/components/ui/dashboard-card"
 import { useAppData } from "@/lib/data-context"
 
+function DeltaBadge({ value }: { value?: number }) {
+  if (value === undefined || value === null || value === 0) return null
+  const pos = value > 0
+  return (
+    <span style={{
+      display: "inline-flex",
+      alignItems: "center",
+      gap: 2,
+      fontSize: "0.6875rem",
+      fontWeight: 700,
+      color: pos ? "#16A34A" : "#DC2626",
+      background: pos ? "#DCFCE7" : "#FEE2E2",
+      borderRadius: 99,
+      padding: "2px 7px",
+      marginLeft: 6,
+      letterSpacing: "0.01em",
+    }}>
+      {pos ? "+" : ""}{value.toLocaleString()}
+    </span>
+  )
+}
+
 export function CommunityCard() {
   const { data } = useAppData()
   const c = data?.community
@@ -12,13 +34,20 @@ export function CommunityCard() {
   const goal = 10000
   const pct = Math.min((members / goal) * 100, 100)
 
+  const discordDelta    = c?.discord_delta_24h as number | undefined
+  const telegramDelta   = c?.telegram_delta_24h as number | undefined
+  const watchlistDelta  = c?.watchlist_delta_24h as number | undefined
+
   const collapsed = (
     <div style={{ display:"flex", flexDirection:"column", gap:22 }}>
       {/* Hero */}
       <div style={{ display:"flex", alignItems:"flex-start", justifyContent:"space-between" }}>
         <div>
           <p className="hero-label" style={{ marginBottom:8 }}>Discord Members</p>
-          <p className="hero-number">{fmtM}</p>
+          <div style={{ display:"flex", alignItems:"center" }}>
+            <p className="hero-number">{fmtM}</p>
+            <DeltaBadge value={discordDelta} />
+          </div>
         </div>
         <span style={{ display:"inline-flex", alignItems:"center", gap:6, background:"#E8F8EE", padding:"6px 12px", borderRadius:99, marginTop:4 }}>
           <span className="dot-on" style={{ width:7, height:7 }} />
@@ -29,12 +58,13 @@ export function CommunityCard() {
       {/* Stats — inset-cell grey boxes */}
       <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:8, borderTop:"1px solid rgba(0,0,0,0.06)", paddingTop:16 }}>
         {[
-          { label:"New 24h",   value: String(c?.new_joins_24h ?? "—") },
-          { label:"Active 7d", value: (c?.active_7d ?? 0) >= 1000 ? `${((c?.active_7d??0)/1000).toFixed(1)}K` : String(c?.active_7d ?? "—") },
-          { label:"Telegram",  value: (c?.telegram_members ?? 0) >= 1000 ? `${((c?.telegram_members??0)/1000).toFixed(1)}K` : String(c?.telegram_members ?? "—") },
+          { label:"New 24h",   value: String(c?.new_joins_24h ?? "—"), delta: undefined },
+          { label:"Active 7d", value: (c?.active_7d ?? 0) >= 1000 ? `${((c?.active_7d??0)/1000).toFixed(1)}K` : String(c?.active_7d ?? "—"), delta: undefined },
+          { label:"Telegram",  value: (c?.telegram_members ?? 0) >= 1000 ? `${((c?.telegram_members??0)/1000).toFixed(1)}K` : String(c?.telegram_members ?? "—"), delta: telegramDelta },
         ].map(s => (
           <div key={s.label} className="inset-cell" style={{ textAlign:"center" }}>
             <p style={{ fontSize:"1.25rem", fontWeight:700, letterSpacing:"-0.03em", color:"#1D1D1F", margin:0 }}>{s.value}</p>
+            {s.delta !== undefined && <DeltaBadge value={s.delta} />}
             <p style={{ fontSize:"0.6875rem", fontWeight:500, color:"#8E8E93", marginTop:4 }}>{s.label}</p>
           </div>
         ))}
@@ -47,7 +77,19 @@ export function CommunityCard() {
       {/* Big Discord block */}
       <div style={{ background:"linear-gradient(135deg, #5865F2, #7289DA)", borderRadius:16, padding:"24px 20px", textAlign:"center" }}>
         <p className="hero-label" style={{ color:"rgba(255,255,255,0.5)", marginBottom:10 }}>Discord Members</p>
-        <p style={{ fontSize:"4rem", fontWeight:900, color:"#fff", letterSpacing:"-0.055em", lineHeight:1 }}>{fmtM}</p>
+        <div style={{ display:"flex", alignItems:"center", justifyContent:"center", gap:8 }}>
+          <p style={{ fontSize:"4rem", fontWeight:900, color:"#fff", letterSpacing:"-0.055em", lineHeight:1 }}>{fmtM}</p>
+          {discordDelta !== undefined && discordDelta !== 0 && (
+            <span style={{
+              fontSize:"0.875rem", fontWeight:700,
+              color: discordDelta > 0 ? "#86EFAC" : "#FCA5A5",
+              background: discordDelta > 0 ? "rgba(134,239,172,0.15)" : "rgba(252,165,165,0.15)",
+              borderRadius:99, padding:"4px 10px", marginTop:8,
+            }}>
+              {discordDelta > 0 ? "+" : ""}{discordDelta.toLocaleString()}
+            </span>
+          )}
+        </div>
         <div style={{ display:"flex", alignItems:"center", justifyContent:"center", gap:8, marginTop:10 }}>
           <span className="dot-on" style={{ background:"#43B581" }} />
           <span style={{ fontSize:"0.875rem", fontWeight:600, color:"rgba(255,255,255,0.75)" }}>113 members online</span>
@@ -57,13 +99,25 @@ export function CommunityCard() {
       {/* Stats 2×2 */}
       <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8 }}>
         {[
-          { label:"New Joins 24h", value: String(c?.new_joins_24h ?? "—"), bg:"#EFF6FF", color:"#2563EB" },
-          { label:"Active 7d",     value: (c?.active_7d??0).toLocaleString(), bg:"#ECFDF5", color:"#059669" },
-          { label:"Telegram",      value: (c?.telegram_members??0).toLocaleString(), bg:"#F0F9FF", color:"#0284C7" },
-          { label:"CG Watchlist",  value: (c?.watchlist_count??0).toLocaleString(), bg:"#FFF7ED", color:"#EA580C" },
+          { label:"New Joins 24h", value: String(c?.new_joins_24h ?? "—"), bg:"#EFF6FF", color:"#2563EB", delta: undefined },
+          { label:"Active 7d",     value: (c?.active_7d??0).toLocaleString(), bg:"#ECFDF5", color:"#059669", delta: undefined },
+          { label:"Telegram",      value: (c?.telegram_members??0).toLocaleString(), bg:"#F0F9FF", color:"#0284C7", delta: telegramDelta },
+          { label:"Watchlist",     value: (c?.watchlist_count??0).toLocaleString(), bg:"#FFF7ED", color:"#EA580C", delta: watchlistDelta },
         ].map(s => (
           <div key={s.label} style={{ background:s.bg, borderRadius:12, padding:"14px 16px" }}>
-            <p style={{ fontSize:"1.5rem", fontWeight:800, letterSpacing:"-0.04em", color:s.color, lineHeight:1 }}>{s.value}</p>
+            <div style={{ display:"flex", alignItems:"center", gap:4, flexWrap:"wrap" }}>
+              <p style={{ fontSize:"1.5rem", fontWeight:800, letterSpacing:"-0.04em", color:s.color, lineHeight:1, margin:0 }}>{s.value}</p>
+              {s.delta !== undefined && s.delta !== 0 && (
+                <span style={{
+                  fontSize:"0.75rem", fontWeight:700,
+                  color: (s.delta as number) > 0 ? "#16A34A" : "#DC2626",
+                  background: (s.delta as number) > 0 ? "#DCFCE7" : "#FEE2E2",
+                  borderRadius:99, padding:"2px 7px",
+                }}>
+                  {(s.delta as number) > 0 ? "+" : ""}{(s.delta as number).toLocaleString()}
+                </span>
+              )}
+            </div>
             <p style={{ fontSize:"0.6875rem", fontWeight:600, color:s.color, opacity:0.65, marginTop:4 }}>{s.label}</p>
           </div>
         ))}
