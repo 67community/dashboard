@@ -135,15 +135,15 @@ export default function Dashboard() {
             upState: null,
           },
         ] as const).map(s => (
-          <div key={s.label} className="mc-card" style={{ padding:"24px 26px 22px" }}>
-            <p style={{ fontSize:"0.75rem", fontWeight:600, letterSpacing:"0.06em", textTransform:"uppercase", color:"#8E8E93", marginBottom:12 }}>
+          <div key={s.label} className="inset-cell" style={{ padding:"20px 22px 18px" }}>
+            <p style={{ fontSize:"0.75rem", fontWeight:600, letterSpacing:"0.06em", textTransform:"uppercase", color:"#8E8E93", marginBottom:10 }}>
               {s.label}
             </p>
             <AnimatedNumber
               value={s.raw}
               format={s.fmt as (n: number) => string}
               duration={1200}
-              style={{ display:"block", fontSize:"2.25rem", fontWeight:800, letterSpacing:"-0.05em", color:"#1D1D1F", lineHeight:1, marginBottom:10, fontVariantNumeric:"tabular-nums" }}
+              style={{ display:"block", fontSize:"2.25rem", fontWeight:800, letterSpacing:"-0.05em", color:"#1D1D1F", lineHeight:1, marginBottom:8, fontVariantNumeric:"tabular-nums" }}
             />
             <p style={{ fontSize:"0.875rem", fontWeight:600, color: s.upState === true ? "#1A8343" : s.upState === false ? "#C0392B" : "#8E8E93" }}>
               {s.sub}
