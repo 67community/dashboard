@@ -16,8 +16,75 @@ export default function Dashboard() {
 
   return (
     <div>
-      {/* ══ Page Header ════════════════════════════════════════ */}
-      <div style={{ marginBottom:40 }} className="enter-1">
+      {/* ══ Stripe-style hero band ══════════════════════════════ */}
+      <div className="enter-1" style={{
+        position:"relative", borderRadius:24, overflow:"hidden",
+        marginBottom:36, padding:"44px 48px 52px",
+        background:"#0A0A0A",
+        minHeight:180,
+      }}>
+        {/* Multi-layer gradient — dark navy → gold, diagonal */}
+        <div style={{ position:"absolute", inset:0, pointerEvents:"none" }}>
+          {/* Base gradient */}
+          <div style={{
+            position:"absolute", inset:0,
+            background:"linear-gradient(115deg, #0D0D14 0%, #1A1028 30%, #2D1A0E 60%, #7A3D00 80%, #C8820A 100%)",
+          }} />
+          {/* Gold flare right */}
+          <div style={{
+            position:"absolute", inset:0,
+            background:"radial-gradient(ellipse at 90% 50%, rgba(245,166,35,0.65) 0%, transparent 55%)",
+          }} />
+          {/* Purple/dark flare left */}
+          <div style={{
+            position:"absolute", inset:0,
+            background:"radial-gradient(ellipse at 5% 60%, rgba(80,40,160,0.5) 0%, transparent 45%)",
+          }} />
+          {/* Diagonal ray lines — exact Stripe technique */}
+          <div style={{
+            position:"absolute", inset:0,
+            backgroundImage:`repeating-linear-gradient(
+              112deg,
+              transparent,
+              transparent 28px,
+              rgba(255,255,255,0.025) 28px,
+              rgba(255,255,255,0.025) 29px
+            )`,
+          }} />
+          {/* Noise overlay for texture */}
+          <div style={{
+            position:"absolute", inset:0, opacity:0.04,
+            backgroundImage:"url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
+          }} />
+        </div>
+
+        {/* Content */}
+        <div style={{ position:"relative", zIndex:1 }}>
+          <div style={{ display:"flex", alignItems:"center", gap:16, marginBottom:14 }}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="https://raw.githubusercontent.com/67coin/67/main/logo.png" alt="67"
+              style={{ width:48, height:48, borderRadius:"50%", objectFit:"cover",
+                boxShadow:"0 0 24px rgba(245,166,35,0.6)" }} />
+            <p style={{ fontSize:"0.6875rem", fontWeight:700, letterSpacing:"0.12em",
+              textTransform:"uppercase", color:"rgba(245,166,35,0.85)" }}>
+              The Official 67 Coin · Operations
+            </p>
+          </div>
+          <h1 style={{
+            fontSize:"clamp(2rem, 4.5vw, 3rem)", fontWeight:900,
+            letterSpacing:"-0.05em", color:"#FFFFFF", lineHeight:1.05, margin:0,
+          }}>
+            Mission Control
+          </h1>
+          <p style={{ fontSize:"1rem", color:"rgba(255,255,255,0.45)", marginTop:10,
+            fontWeight:500, letterSpacing:"-0.01em" }}>
+            Everything $67 in one place — tap any card to expand.
+          </p>
+        </div>
+      </div>
+
+      {/* Old page header hidden */}
+      {false && <div style={{ marginBottom:40 }}>
         <div style={{ display:"flex", alignItems:"flex-start", justifyContent:"space-between", gap:24 }}>
           {/* Left */}
           <div style={{ display:"flex", alignItems:"flex-start", gap:18 }}>
@@ -52,7 +119,7 @@ export default function Dashboard() {
 
         {/* Divider */}
         <div className="divider" style={{ marginTop:32 }} />
-      </div>
+      </div>}
 
       {/* ══ Hero Stats Row — Apple style, breathable ══════════ */}
       <div style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:14, marginBottom:32 }}
