@@ -30,13 +30,52 @@ async function fetchCG() {
   return res.ok ? await res.json() : null
 }
 
-// ── CMC (holders) ─────────────────────────────────────────────────────────────
+// ── CMC ───────────────────────────────────────────────────────────────────────
 async function fetchCMC() {
   const res = await fetch(
     `https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?id=38918`,
     { headers: { "X-CMC_PRO_API_KEY": CMC_KEY }, next: { revalidate: 120 } }
   )
   return res.ok ? await res.json() : null
+}
+
+// ── Holders — Solana RPC (getProgramAccounts) ─────────────────────────────────
+async function fetchHolders(): Promise<number> {
+  const body = {
+    jsonrpc: "2.0", id: 1,
+    method: "getProgramAccounts",
+    params: [
+      "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+      {
+        encoding: "base64",
+        dataSlice: { offset: 64, length: 8 },
+        filters: [
+          { dataSize: 165 },
+          { memcmp: { offset: 0, bytes: TOKEN } },
+        ],
+      },
+    ],
+  }
+  const res = await fetch("https://api.mainnet-beta.solana.com", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+    next: { revalidate: 600 },   // cache 10 min — expensive call
+  })
+  if (!res.ok) return 0
+  const j = await res.json()
+  const accounts: { account: { data: string[] } }[] = j?.result ?? []
+  // count accounts with non-zero balance
+  let count = 0
+  for (const a of accounts) {
+    try {
+      const raw = Buffer.from(a.account.data[0], "base64")
+      const lo = raw.readUInt32LE(0)
+      const hi = raw.readUInt32LE(4)
+      if (lo !== 0 || hi !== 0) count++
+    } catch {}
+  }
+  return count
 }
 
 // ── public/data.json fallback ─────────────────────────────────────────────────
@@ -53,10 +92,11 @@ function readStaticJson() {
 
 // ── main ──────────────────────────────────────────────────────────────────────
 export async function GET() {
-  const [pair, cg, cmc] = await Promise.all([
+  const [pair, cg, cmc, holders] = await Promise.all([
     safe(fetchDex),
     safe(fetchCG),
     safe(fetchCMC),
+    safe(fetchHolders),
   ])
 
   // If all APIs fail, fall back to static file
@@ -82,7 +122,7 @@ export async function GET() {
     sells_24h:        pair?.txns?.h24?.sells ?? 0,
     buys_1h:          pair?.txns?.h1?.buys   ?? 0,
     sells_1h:         pair?.txns?.h1?.sells  ?? 0,
-    holders:          cg?.market_data?.holders ?? cmcData?.circulating_supply ?? 0,
+    holders:          holders ?? cg?.market_data?.holders ?? 0,
     holder_trend:     0,
     coingecko_rank:   cg?.market_cap_rank ?? 0,
     cmc_rank:         cmcData?.cmc_rank ?? 0,
