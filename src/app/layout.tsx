@@ -38,7 +38,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </div>
         <DataProvider>
           <TopBar />
-          <main style={{ maxWidth:1440, margin:"0 auto", padding:"40px 40px", position:"relative", zIndex:1 }}>
+          <main className="page-main">
             {children}
           </main>
         </DataProvider>

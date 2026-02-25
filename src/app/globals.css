@@ -244,3 +244,31 @@ body {
 
 /* ══ DIVIDER ══════════════════════════════════════════ */
 .divider { height: 1px; background: rgba(0,0,0,0.07); }
+
+/* ── Mobile responsive ─────────────────────────────────────── */
+.page-main {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 40px 40px;
+  position: relative;
+  z-index: 1;
+}
+.hero-band {
+  padding: 44px 48px 52px !important;
+}
+.season-banner-inner {
+  padding: 52px 60px !important;
+}
+
+@media (max-width: 768px) {
+  .page-main { padding: 20px 16px !important; }
+  .hero-band  { padding: 28px 24px 32px !important; border-radius: 16px !important; }
+  .cards-grid { gap: 12px !important; }
+  .season-banner-inner { padding: 32px 24px !important; }
+}
+
+@media (max-width: 640px) {
+  .page-main { padding: 12px 12px !important; }
+  .hero-band  { padding: 22px 20px 26px !important; border-radius: 14px !important; }
+  .cards-grid { gap: 10px !important; }
+}
