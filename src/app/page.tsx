@@ -111,7 +111,6 @@ export default function Dashboard() {
               Season 2 is Loading…
             </h2>
             <p style={{ fontSize:"0.9375rem", color:"rgba(255,255,255,0.38)", fontWeight:500, lineHeight:1.6, margin:0 }}>
-              More exchanges. Bigger community.<br />
               Unstoppable momentum.
             </p>
             <p style={{ fontSize:"0.75rem", color:"rgba(255,255,255,0.15)", fontWeight:800, letterSpacing:"0.1em", marginTop:18 }}>
