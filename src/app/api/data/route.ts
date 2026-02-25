@@ -95,6 +95,31 @@ async function fetchHolders(): Promise<number> {
   return count
 }
 
+// ── Discord — live member & online count ──────────────────────────────────────
+const DISCORD_TOKEN = process.env.DISCORD_TOKEN ?? ""
+const DISCORD_GUILD = "1440077830456082545"
+
+async function fetchDiscord(): Promise<{ members: number; online: number } | null> {
+  if (!DISCORD_TOKEN) return null
+  try {
+    const res = await fetch(
+      `https://discord.com/api/v10/guilds/${DISCORD_GUILD}?with_counts=true`,
+      {
+        headers: { Authorization: DISCORD_TOKEN, "User-Agent": "Mozilla/5.0" },
+        next: { revalidate: 300 }, // cache 5 min
+      }
+    )
+    if (!res.ok) return null
+    const g = await res.json()
+    return {
+      members: g.approximate_member_count ?? 0,
+      online:  g.approximate_presence_count ?? 0,
+    }
+  } catch {
+    return null
+  }
+}
+
 // ── static fallback ───────────────────────────────────────────────────────────
 function readStaticJson() {
   const LOCAL   = "/Users/oscarbrendon/.openclaw/workspace/mission-control/data.json"
@@ -107,12 +132,13 @@ function readStaticJson() {
 
 // ── main ──────────────────────────────────────────────────────────────────────
 export async function GET() {
-  const [pair, cg, cgTickers, cmc, holders] = await Promise.all([
+  const [pair, cg, cgTickers, cmc, holders, discord] = await Promise.all([
     safe(fetchDex),
     safe(fetchCG),
     safe(fetchCGTickers),
     safe(fetchCMC),
     safe(fetchHolders),
+    safe(fetchDiscord),
   ])
 
   if (!pair && !cg) {
@@ -190,7 +216,13 @@ export async function GET() {
     last_updated:     new Date().toISOString(),
     token_health,
     social_pulse:     static_?.social_pulse     ?? { twitter_followers: 0, follower_change_24h: 0, posting_streak_days: 0, engagement_rate: 0, avg_engagement: 0, total_engagement_7d: 0, best_content_type: "tweet", content_type_stats: {} },
-    community:        static_?.community        ?? { discord_members: 0, active_7d: 0, new_joins_24h: 0, open_tickets: 0, unanswered_posts: 0, telegram_members: 0, watchlist_count: cg?.watchlist_portfolio_users ?? 0 },
+    community: {
+      ...(static_?.community ?? { discord_members: 0, active_7d: 0, new_joins_24h: 0, open_tickets: 0, unanswered_posts: 0, telegram_members: 0, watchlist_count: 0 }),
+      // Live Discord data (overrides static when token is set)
+      ...(discord ? { discord_members: discord.members, online_now: discord.online } : {}),
+      // Live CoinGecko watchlist + telegram
+      ...(cg ? { watchlist_count: cg.watchlist_portfolio_users ?? static_?.community?.watchlist_count ?? 0 } : {}),
+    },
     content_pipeline: static_?.content_pipeline ?? [],
     agents:           static_?.agents           ?? [],
     milestones:       static_?.milestones       ?? [],

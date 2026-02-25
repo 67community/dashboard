@@ -34,10 +34,10 @@ export function CommunityCard() {
   const goal = 10000
   const pct = Math.min((members / goal) * 100, 100)
 
-  const onlineNow       = (c as Record<string, unknown>)?.online_now as number ?? 0
-  const discordDelta    = c?.discord_delta_24h as number | undefined
-  const telegramDelta   = c?.telegram_delta_24h as number | undefined
-  const watchlistDelta  = c?.watchlist_delta_24h as number | undefined
+  const onlineNow       = c?.online_now ?? 0
+  const discordDelta    = c?.discord_delta_24h
+  const telegramDelta   = c?.telegram_delta_24h
+  const watchlistDelta  = c?.watchlist_delta_24h
 
   const collapsed = (
     <div style={{ display:"flex", flexDirection:"column", gap:22 }}>
