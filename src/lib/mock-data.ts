@@ -1,11 +1,13 @@
 import { TeamMember, Task, Milestone, AgentBot, TokenHealth, SocialPulse, CommunityStats } from "./types"
 
 export const TEAM_MEMBERS: TeamMember[] = [
-  { id: "oscar", name: "Oscar Brendon", initials: "OB", role: "Dev", status: "Active", color: "#6366f1" },
-  { id: "jamie", name: "Jamie Trevillian", initials: "JT", role: "Founder", status: "Active", color: "#F5A623" },
-  { id: "brandon", name: "Brandon Trevillian", initials: "BT", role: "Founder", status: "Active", color: "#f97316" },
-  { id: "weston", name: "Weston", initials: "WJ", role: "Vision", status: "Active", color: "#8b5cf6" },
-  { id: "crispy", name: "Crispy", initials: "CR", role: "Build", status: "Active", color: "#10b981" },
+  { id: "oscar",   name: "Oscar Brendon",     initials: "OB", role: "Dev",     status: "Active", color: "#6366f1" },
+  { id: "jamie",   name: "Jamie Trevillian",  initials: "JT", role: "Founder", status: "Active", color: "#F5A623" },
+  { id: "brandon", name: "Brandon Trevillian",initials: "BT", role: "Founder", status: "Active", color: "#f97316" },
+  { id: "weston",  name: "Weston",            initials: "WJ", role: "Vision",  status: "Active", color: "#8b5cf6" },
+  { id: "crispy",  name: "Crispy",            initials: "CR", role: "Build",   status: "Active", color: "#10b981" },
+  { id: "gen",     name: "Gen",               initials: "GN", role: "Admin",   status: "Active", color: "#EC4899" },
+  { id: "nick",    name: "Nick",              initials: "NK", role: "Admin",   status: "Active", color: "#14B8A6" },
 ]
 
 export const INITIAL_TASKS: Task[] = [

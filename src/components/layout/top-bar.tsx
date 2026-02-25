@@ -1,8 +1,9 @@
 "use client"
 
+import { useState, useRef, useEffect } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { RefreshCw, Bell } from "lucide-react"
+import { RefreshCw, Bell, X } from "lucide-react"
 import { TeamAvatarGroup } from "@/components/team/team-avatar"
 import { useAppData } from "@/lib/data-context"
 
@@ -21,11 +22,24 @@ function timeAgo(d: Date | null) {
   return `${Math.floor(s/3600)}h ago`
 }
 
+const ALERT_ICON: Record<string, string> = { danger:"🔴", success:"🟢", warning:"🟡", info:"🔵" }
+
 export function TopBar() {
   const path = usePathname()
   const { lastFetched, loading, refresh, data } = useAppData()
-  const alerts = data?.alerts ?? []
+  const alerts   = data?.alerts ?? []
   const hasAlert = alerts.length > 0
+  const [bellOpen, setBellOpen] = useState(false)
+  const bellRef = useRef<HTMLDivElement>(null)
+
+  // Close dropdown on outside click
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (bellRef.current && !bellRef.current.contains(e.target as Node)) setBellOpen(false)
+    }
+    document.addEventListener("mousedown", handler)
+    return () => document.removeEventListener("mousedown", handler)
+  }, [])
 
   return (
     <div style={{ position:"sticky", top:0, zIndex:50 }}>
@@ -82,19 +96,84 @@ export function TopBar() {
                 {loading ? "Syncing…" : timeAgo(lastFetched)}
               </button>
 
-              {/* Alert bell — replaces the ugly full-width red bar */}
-              {hasAlert && (
-                <div style={{ position:"relative", cursor:"pointer" }}
-                  title={alerts.map(a => a.message).join(" · ")}>
-                  <Bell style={{ width:16, height:16, color:"rgba(255,255,255,0.5)" }} />
-                  <span style={{
-                    position:"absolute", top:-3, right:-3,
-                    width:7, height:7, borderRadius:"50%",
-                    background:"#EF4444",
-                    border:"1.5px solid #0A0A0A",
-                  }} />
-                </div>
-              )}
+              {/* Bell — always visible, opens alert dropdown */}
+              <div ref={bellRef} style={{ position:"relative" }}>
+                <button onClick={() => setBellOpen(o => !o)} style={{
+                  position:"relative", background:"none", border:"none", cursor:"pointer",
+                  padding:4, borderRadius:8, display:"flex", alignItems:"center", justifyContent:"center",
+                  transition:"background 0.15s",
+                }}
+                  onMouseEnter={e => (e.currentTarget.style.background = "rgba(255,255,255,0.08)")}
+                  onMouseLeave={e => (e.currentTarget.style.background = "transparent")}
+                >
+                  <Bell style={{ width:17, height:17, color: bellOpen ? "#F5A623" : "rgba(255,255,255,0.55)" }} />
+                  {hasAlert && (
+                    <span style={{
+                      position:"absolute", top:2, right:2,
+                      width:7, height:7, borderRadius:"50%",
+                      background:"#EF4444", border:"1.5px solid #0A0A0A",
+                    }} />
+                  )}
+                </button>
+
+                {/* Dropdown panel */}
+                {bellOpen && (
+                  <div style={{
+                    position:"absolute", top:"calc(100% + 10px)", right:0,
+                    width:320, background:"rgba(18,18,20,0.96)",
+                    backdropFilter:"blur(20px) saturate(180%)",
+                    WebkitBackdropFilter:"blur(20px) saturate(180%)",
+                    borderRadius:16,
+                    border:"1px solid rgba(255,255,255,0.08)",
+                    boxShadow:"0 20px 48px rgba(0,0,0,0.45)",
+                    zIndex:200, overflow:"hidden",
+                    animation:"fadeDown 0.18s ease-out",
+                  }}>
+                    {/* Header */}
+                    <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between",
+                      padding:"14px 18px 12px", borderBottom:"1px solid rgba(255,255,255,0.06)" }}>
+                      <span style={{ fontSize:"0.875rem", fontWeight:700, color:"#fff" }}>
+                        Alerts {hasAlert && <span style={{ background:"#EF4444", color:"#fff", fontSize:"0.6875rem", fontWeight:800,
+                          padding:"1px 6px", borderRadius:99, marginLeft:4 }}>{alerts.length}</span>}
+                      </span>
+                      <button onClick={() => setBellOpen(false)} style={{ background:"none", border:"none", cursor:"pointer", padding:2 }}>
+                        <X style={{ width:14, height:14, color:"rgba(255,255,255,0.4)" }} />
+                      </button>
+                    </div>
+
+                    {/* Alert list */}
+                    <div style={{ maxHeight:280, overflowY:"auto" }}>
+                      {alerts.length === 0 ? (
+                        <div style={{ padding:"28px 18px", textAlign:"center" }}>
+                          <p style={{ fontSize:"1.5rem", marginBottom:8 }}>✅</p>
+                          <p style={{ fontSize:"0.8125rem", color:"rgba(255,255,255,0.35)", fontWeight:500 }}>All clear — no alerts</p>
+                        </div>
+                      ) : alerts.map((a, i) => (
+                        <div key={i} style={{
+                          padding:"12px 18px",
+                          borderBottom: i < alerts.length-1 ? "1px solid rgba(255,255,255,0.04)" : "none",
+                          display:"flex", alignItems:"flex-start", gap:10,
+                        }}>
+                          <span style={{ fontSize:"0.9375rem", flexShrink:0, marginTop:1 }}>
+                            {ALERT_ICON[a.type] ?? "🔔"}
+                          </span>
+                          <div>
+                            <p style={{ fontSize:"0.8125rem", color:"rgba(255,255,255,0.9)", lineHeight:1.45, fontWeight:500 }}>
+                              {a.message}
+                            </p>
+                            {a.timestamp && (
+                              <p style={{ fontSize:"0.6875rem", color:"rgba(255,255,255,0.3)", marginTop:3 }}>
+                                {new Date(a.timestamp).toLocaleString([], { month:"short", day:"numeric", hour:"2-digit", minute:"2-digit" })}
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+              <style>{`@keyframes fadeDown { from{opacity:0;transform:translateY(-6px)} to{opacity:1;transform:translateY(0)} }`}</style>
 
               <TeamAvatarGroup />
             </div>
