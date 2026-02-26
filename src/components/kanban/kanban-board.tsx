@@ -59,11 +59,15 @@ function FilterBar({ filters, setFilters }: { filters: Filters; setFilters: (f: 
             color:      filters.assignee === m.id ? "#fff" : "#6B6B6B",
             boxShadow:  filters.assignee === m.id ? `0 1px 4px ${m.color}55` : "none",
           }}>
-          <span style={{
-            width:22, height:22, borderRadius:"50%", background: m.color,
-            display:"flex", alignItems:"center", justifyContent:"center",
-            fontSize:"0.625rem", fontWeight:800, color:"#fff", flexShrink:0,
-          }}>{m.initials}</span>
+          {m.avatar
+            ? <img src={m.avatar} alt={m.initials}
+                style={{ width:22, height:22, borderRadius:"50%", objectFit:"cover", flexShrink:0 }} />
+            : <span style={{
+                width:22, height:22, borderRadius:"50%", background: m.color,
+                display:"flex", alignItems:"center", justifyContent:"center",
+                fontSize:"0.625rem", fontWeight:800, color:"#fff", flexShrink:0,
+              }}>{m.initials}</span>
+          }
           {m.name.split(" ")[0]}
         </button>
       ))}
