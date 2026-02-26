@@ -104,9 +104,9 @@ export function CommunityCard() {
       {/* Stats */}
       <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:8, borderTop:"1px solid rgba(0,0,0,0.06)", paddingTop:16 }}>
         {[
-          { label:"New 24h",     value: String(c?.new_joins_24h ?? "—"), delta: undefined },
-          { label:"Active Today",value: activeUsersToday > 0 ? String(activeUsersToday) : (c?.active_7d ?? 0).toLocaleString(), delta: undefined },
-          { label:"Telegram",    value: (c?.telegram_members ?? 0).toLocaleString(), delta: telegramDelta },
+          { label:"New in Intros", value: recentJoins.length > 0 ? `${recentJoins.length}` : String(c?.new_joins_24h ?? "—"), delta: undefined },
+          { label:"Active Today",  value: activeUsersToday > 0 ? String(activeUsersToday) : "—", delta: undefined },
+          { label:"Telegram",      value: (c?.telegram_members ?? 0).toLocaleString(), delta: telegramDelta },
         ].map(s => (
           <div key={s.label} className="inset-cell" style={{ textAlign:"center" }}>
             <p style={{ fontSize:"1.25rem", fontWeight:700, letterSpacing:"-0.03em", color:"#1D1D1F", margin:0 }}>{s.value}</p>

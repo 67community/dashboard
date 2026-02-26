@@ -316,9 +316,12 @@ export async function GET() {
       ...(discord ? {
         discord_members:    discord.members,
         online_now:         discord.online,
-        // Auto delta: live count vs 24h snapshot in data.json
+        // Delta: live count vs 24h snapshot (from Mac mini) — best we can do without audit log
         discord_delta_24h:  discord.members - (static_?._snapshot_24h?.discord_members ?? discord.members),
-        new_joins_24h:      Math.max(0, discord.members - (static_?._snapshot_24h?.discord_members ?? discord.members)),
+        // new_joins: prefer intro-channel count (real), fallback to delta
+        new_joins_24h: discordActivity?.recent_joins?.length
+          ? discordActivity.recent_joins.length
+          : Math.max(0, discord.members - (static_?._snapshot_24h?.discord_members ?? discord.members)),
       } : {}),
       // Live CoinGecko: telegram members + watchlist (no auth needed)
       ...(cg ? {
