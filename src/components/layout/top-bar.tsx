@@ -45,15 +45,15 @@ export function TopBar() {
     <div style={{ position:"sticky", top:0, zIndex:50 }}>
       <style>{`
         @media (max-width: 640px) {
-          .topbar-inner { padding: 0 16px !important; }
+          .topbar-inner   { padding: 0 14px !important; }
           .topbar-logo-text { display: none !important; }
-          .topbar-sync { display: none !important; }
+          .topbar-sync    { display: none !important; }
           .topbar-avatars { display: none !important; }
-          .topbar-nav a { padding: 5px 12px !important; font-size: 0.75rem !important; }
+          .topbar-nav a   { padding: 5px 12px !important; font-size: 0.75rem !important; }
         }
-        @media (max-width: 420px) {
-          .topbar-nav { display: none !important; }
-          .topbar-logo-text { display: none !important; }
+        @media (max-width: 400px) {
+          .topbar-inner { padding: 0 10px !important; }
+          .topbar-nav a { padding: 4px 10px !important; font-size: 0.6875rem !important; }
         }
       `}</style>
       <header style={{
