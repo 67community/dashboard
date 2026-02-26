@@ -14,6 +14,7 @@ import { FeatureRequestCard }   from "@/components/cards/feature-request"
 import { OutreachCard }         from "@/components/cards/outreach"
 import { SightingsCard }        from "@/components/cards/sightings"
 import { RaidCoordinatorCard }  from "@/components/cards/raid-coordinator"
+import { DailyBriefingCard }    from "@/components/cards/daily-briefing"
 import { useAppData }          from "@/lib/data-context"
 import { AnimatedNumber }      from "@/components/ui/animated-number"
 
@@ -117,6 +118,7 @@ export default function Dashboard() {
         className="cards-grid"
         style={{ display:"grid", gridTemplateColumns:"repeat(3, 1fr)", gap:20 }}
       >
+        <div className="enter-2" style={{ display:"flex", minWidth:0 }}><DailyBriefingCard /></div>
         <div className="enter-3" style={{ display:"flex", minWidth:0 }}><TokenHealthCard /></div>
         <div className="enter-4" style={{ display:"flex", minWidth:0 }}><SocialPulseCard /></div>
         <div className="enter-5" style={{ display:"flex", minWidth:0 }}><CommunityCard /></div>
