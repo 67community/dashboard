@@ -288,41 +288,15 @@ export function ContentCreatorCard() {
   const expanded = (
     <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
 
-      {/* ── Platform ────────────────────────────────────────── */}
-      <div>
-        <p style={{
-          fontSize: "0.6875rem", fontWeight: 700, color: "#A1A1AA",
-          letterSpacing: "0.06em", textTransform: "uppercase", marginBottom: 8,
-        }}>Platform</p>
-        <div style={{ display: "flex", gap: 6 }}>
-          {PLATFORMS.map(p => {
-            const active = platform === p.id
-            return (
-              <button
-                key={p.id}
-                onClick={e => { e.stopPropagation(); switchPlatform(p.id) }}
-                style={{
-                  flex: 1, padding: "10px 6px", borderRadius: 11, cursor: "pointer",
-                  border:     active ? `2px solid ${p.accent}` : "2px solid transparent",
-                  background: active ? `${p.accent}12` : "#F4F4F5",
-                  display: "flex", flexDirection: "column", alignItems: "center", gap: 4,
-                  transition: "all 0.15s",
-                }}
-              >
-                <PlatformIcon id={p.id} size={20} active={active} />
-                <span style={{
-                  fontSize: "0.6875rem", fontWeight: active ? 700 : 500,
-                  color: active ? p.accent : "#9CA3AF",
-                }}>{p.label.split(" ")[0]}</span>
-                {active && (
-                  <span style={{
-                    width: 5, height: 5, borderRadius: "50%",
-                    background: p.accent, display: "block",
-                  }} />
-                )}
-              </button>
-            )
-          })}
+      {/* Current platform badge */}
+      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+        <div style={{ width: 32, height: 32, borderRadius: 9, background: `${activePlat.accent}15`,
+          display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <PlatformIcon id={activePlat.id} size={16} active />
+        </div>
+        <div>
+          <p style={{ fontSize: "0.875rem", fontWeight: 700, color: "#1D1D1F" }}>{activePlat.label}</p>
+          <p style={{ fontSize: "0.75rem", color: "#8E8E93" }}>Change platform on the card</p>
         </div>
       </div>
 
@@ -384,7 +358,7 @@ export function ContentCreatorCard() {
               }} />Generating...
             </>
           ) : (
-            <><Sparkles style={{ width: 14, height: 14 }} />Generate for {activeRegion.flag} {activePlat.label}</>
+            <><Sparkles style={{ width: 14, height: 14 }} />Generate for {activePlat.label}</>
           )}
         </button>
       </div>
@@ -400,7 +374,6 @@ export function ContentCreatorCard() {
           {drafts.map(d => {
             const tc   = TYPE_PILL[d.type] ?? TYPE_PILL.tweet
             const plat = PLATFORMS.find(p => p.id === d.platform)!
-            const reg  = REGIONS.find(r => r.id === d.region)!
             return (
               <div key={d.id} style={{
                 border:     `1px solid ${d.approved ? "#A7F3D0" : "rgba(0,0,0,0.07)"}`,
@@ -414,7 +387,6 @@ export function ContentCreatorCard() {
                     background: tc.bg, color: tc.color,
                   }}>{d.type}</span>
                   <PlatformIcon id={plat.id} size={14} active />
-                  <span style={{ fontSize: "0.8rem" }}>{reg.flag}</span>
                   <span style={{
                     fontSize: "0.75rem", color: "#A1A1AA", flex: 1,
                     overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis",
@@ -472,7 +444,7 @@ export function ContentCreatorCard() {
   return (
     <DashboardCard
       title="Content Creator"
-      subtitle="Region · Platform · AI"
+      subtitle="Platform · AI Draft Generator"
       icon={<PenLine style={{ width: 16, height: 16 }} />}
       accentColor="#F5A623"
       collapsed={collapsed}
