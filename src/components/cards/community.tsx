@@ -76,7 +76,6 @@ export function CommunityCard() {
   const onlineNow          = c?.online_now         ?? 0
   const discordDelta       = c?.discord_delta_24h
   const telegramDelta      = c?.telegram_delta_24h
-  const watchlistDelta     = c?.watchlist_delta_24h
   const recentJoins        = c?.recent_joins        ?? []
   const activeUsersToday   = c?.active_users_today  ?? 0
   const topChannels        = c?.top_channels        ?? []
@@ -164,9 +163,9 @@ export function CommunityCard() {
       <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8 }}>
         {[
           { label:"New Joins 24h", value: String(c?.new_joins_24h ?? "—"), bg:"#EFF6FF", color:"#2563EB", delta: undefined },
-          { label:"Active Today",  value: activeUsersToday > 0 ? String(activeUsersToday) : (c?.active_7d??0).toLocaleString(), bg:"#ECFDF5", color:"#059669", delta: undefined },
+          { label:"Active Today",  value: activeUsersToday > 0 ? String(activeUsersToday) : "—", bg:"#ECFDF5", color:"#059669", delta: undefined },
+          { label:"Online Now",    value: onlineNow.toLocaleString(), bg:"#F0FDF4", color:"#16A34A", delta: undefined },
           { label:"Telegram",      value: (c?.telegram_members??0).toLocaleString(), bg:"#F0F9FF", color:"#0284C7", delta: telegramDelta },
-          { label:"Watchlist",     value: (c?.watchlist_count??0).toLocaleString(), bg:"#FFF7ED", color:"#EA580C", delta: watchlistDelta },
         ].map(s => (
           <div key={s.label} style={{ background:s.bg, borderRadius:12, padding:"14px 16px" }}>
             <div style={{ display:"flex", alignItems:"center", gap:4, flexWrap:"wrap" }}>
@@ -278,7 +277,7 @@ export function CommunityCard() {
         {[
           { dot:"#10B981", text:`${c?.new_joins_24h ?? 0} new members joined`, sub:"last 24h" },
           { dot:"#3B82F6", text:`${onlineNow} members online now`, sub:"live" },
-          { dot:"#F5A623", text:`${(c?.watchlist_count ?? 0).toLocaleString()} DexScreener watchlists`, sub:(c?.watchlist_delta_24h ?? 0) > 0 ? `+${c!.watchlist_delta_24h} today` : "live" },
+          { dot:"#5865F2", text:`${activeUsersToday > 0 ? activeUsersToday : "—"} active users today`, sub:"#chat + #memes" },
           { dot:"#229ED9", text:`${(c?.telegram_members ?? 0).toLocaleString()} Telegram members`, sub:(c?.telegram_delta_24h ?? 0) > 0 ? `+${c!.telegram_delta_24h} today` : "live" },
         ].map((item, i) => (
           <div key={i} style={{ display:"flex", alignItems:"center", gap:10, padding:"8px 12px", background:"rgba(0,0,0,0.02)", borderRadius:10 }}>
