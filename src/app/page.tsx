@@ -15,6 +15,8 @@ import { OutreachCard }         from "@/components/cards/outreach"
 import { SightingsCard }        from "@/components/cards/sightings"
 import { RaidCoordinatorCard }  from "@/components/cards/raid-coordinator"
 import { DailyBriefingCard }    from "@/components/cards/daily-briefing"
+import { CommunityEventsCard }  from "@/components/cards/events"
+import { TeamNotesCard }        from "@/components/cards/team-notes"
 import { useAppData }          from "@/lib/data-context"
 import { AnimatedNumber }      from "@/components/ui/animated-number"
 
@@ -132,6 +134,8 @@ export default function Dashboard() {
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><OutreachCard /></div>
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><SightingsCard /></div>
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><RaidCoordinatorCard /></div>
+        <div className="enter-9" style={{ display:"flex", minWidth:0 }}><CommunityEventsCard /></div>
+        <div className="enter-9" style={{ display:"flex", minWidth:0 }}><TeamNotesCard /></div>
       </div>
 
       {/* ══ Season 2 Banner ════════════════════════════════════ */}
