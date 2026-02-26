@@ -165,67 +165,121 @@ export function ContentCreatorCard() {
 
   const queue = drafts.filter(d => !d.approved).length
 
-  // ── Collapsed ──
+  const lastDraft = drafts[0] ?? null
+
+  // ── Collapsed — fully interactive inline form ──
 
   const collapsed = (
-    <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
-      {/* Active platform badge + region */}
-      <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-        <div style={{
-          width: 38, height: 38, borderRadius: 11,
-          background: `${activePlat.accent}15`,
-          display: "flex", alignItems: "center", justifyContent: "center",
-          flexShrink: 0,
-        }}>
-          <PlatformIcon id={activePlat.id} size={20} active />
-        </div>
-        <div>
-          <p style={{ fontSize: "0.9375rem", fontWeight: 700, color: "#09090B", letterSpacing: "-0.01em" }}>
-            {activePlat.label}
-          </p>
-          <p style={{ fontSize: "0.8rem", color: "#8E8E93", fontWeight: 500 }}>
-            {activeRegion.flag} {activeRegion.label} · {queue > 0 ? `${queue} queued` : "ready"}
-          </p>
-        </div>
-      </div>
+    <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
 
-      {/* Platform logo bar */}
-      <div style={{
-        display: "flex", alignItems: "center", justifyContent: "center",
-        gap: 0, background: "#F4F4F5", borderRadius: 14, padding: "10px 16px",
-      }}>
-        {PLATFORMS.map((p, i) => {
+      {/* Platform selector — clickable pills */}
+      <div style={{ display: "flex", gap: 6 }}>
+        {PLATFORMS.map(p => {
           const active = platform === p.id
           return (
-            <div key={p.id} style={{ display: "flex", alignItems: "center" }}>
-              <div style={{
-                display: "flex", flexDirection: "column", alignItems: "center", gap: 4,
-                padding: "6px 14px", borderRadius: 10, minWidth: 56,
-                background: active ? "white" : "transparent",
-                boxShadow: active ? "0 1px 4px rgba(0,0,0,0.10)" : "none",
+            <button
+              key={p.id}
+              onClick={e => { e.stopPropagation(); switchPlatform(p.id) }}
+              style={{
+                flex: 1, display: "flex", flexDirection: "column", alignItems: "center",
+                gap: 4, padding: "8px 4px", borderRadius: 12, cursor: "pointer",
+                border:     active ? `2px solid ${p.accent}` : "2px solid transparent",
+                background: active ? `${p.accent}10` : "#F4F4F5",
                 transition: "all 0.15s",
-              }}>
-                <PlatformIcon id={p.id} size={18} active={active} />
-                <span style={{
-                  fontSize: "0.65rem", fontWeight: active ? 700 : 500,
-                  color: active ? "#0A0A0A" : "#A1A1AA",
-                  letterSpacing: "0.01em",
-                }}>{p.label.split(" ")[0]}</span>
-              </div>
-              {i < PLATFORMS.length - 1 && (
-                <div style={{ width: 1, height: 24, background: "#E4E4E7", margin: "0 2px" }} />
-              )}
-            </div>
+              }}
+            >
+              <PlatformIcon id={p.id} size={16} active={active} />
+              <span style={{
+                fontSize: "0.625rem", fontWeight: active ? 700 : 500,
+                color: active ? p.accent === "#0A0A0A" ? "#0A0A0A" : p.accent : "#A1A1AA",
+              }}>{p.label.split(" ")[0]}</span>
+            </button>
           )
         })}
       </div>
 
-      <div style={{ display: "flex", alignItems: "center", gap: 8, borderTop: "1px solid rgba(0,0,0,0.06)", paddingTop: 14 }}>
-        <PenLine style={{ width: 14, height: 14, color: "#A1A1AA", flexShrink: 0 }} />
-        <p style={{ fontSize: "0.8125rem", color: "#71717A", fontWeight: 500 }}>
-          Click to open creator
-        </p>
+      {/* Topic input */}
+      <div
+        onClick={e => e.stopPropagation()}
+        style={{ position: "relative" }}
+      >
+        <textarea
+          value={topic}
+          onChange={e => setTopic(e.target.value)}
+          onKeyDown={e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); generate() } }}
+          placeholder={`Topic for ${activePlat.label}…`}
+          rows={2}
+          style={{
+            width: "100%", resize: "none", boxSizing: "border-box",
+            padding: "10px 12px", borderRadius: 10, fontSize: "0.8125rem",
+            fontFamily: "inherit", fontWeight: 500, color: "#1D1D1F",
+            background: "#F4F4F5", border: "1.5px solid transparent",
+            outline: "none", lineHeight: 1.5,
+            transition: "border 0.15s",
+          }}
+          onFocus={e => { e.currentTarget.style.border = "1.5px solid #F5A623"; e.currentTarget.style.background = "#fff" }}
+          onBlur={e => { e.currentTarget.style.border = "1.5px solid transparent"; e.currentTarget.style.background = "#F4F4F5" }}
+        />
       </div>
+
+      {/* Generate button */}
+      <button
+        onClick={e => { e.stopPropagation(); generate() }}
+        disabled={loading || !topic.trim()}
+        style={{
+          width: "100%", padding: "10px 16px", borderRadius: 10,
+          background: loading || !topic.trim() ? "#E4E4E7" : "#F5A623",
+          color:      loading || !topic.trim() ? "#A1A1AA" : "#000",
+          border: "none", cursor: loading || !topic.trim() ? "default" : "pointer",
+          fontSize: "0.8125rem", fontWeight: 700, letterSpacing: "-0.01em",
+          display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
+          transition: "all 0.15s",
+        }}
+      >
+        {loading ? (
+          <><span style={{ width: 14, height: 14, border: "2px solid #A1A1AA", borderTopColor: "#6E6E73", borderRadius: "50%", display: "inline-block", animation: "spin 0.7s linear infinite" }} />Generating…</>
+        ) : (
+          <><Sparkles style={{ width: 13, height: 13 }} />Generate</>
+        )}
+      </button>
+
+      {/* Last draft preview */}
+      {lastDraft && (
+        <div
+          onClick={e => e.stopPropagation()}
+          style={{ background: "#F8F8FA", borderRadius: 10, padding: "10px 12px", borderLeft: `3px solid ${activePlat.accent === "#0A0A0A" ? "#374151" : activePlat.accent}` }}>
+          <p style={{ fontSize: "0.6875rem", fontWeight: 700, color: "#8E8E93", marginBottom: 4, textTransform: "uppercase", letterSpacing: "0.05em" }}>
+            Last draft · {lastDraft.type}
+          </p>
+          <p style={{
+            fontSize: "0.8125rem", color: "#374151", lineHeight: 1.5, margin: 0,
+            display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden",
+          }}>
+            {lastDraft.draft}
+          </p>
+          <div style={{ display: "flex", gap: 6, marginTop: 8 }}>
+            <button
+              onClick={async e => { e.stopPropagation(); await navigator.clipboard.writeText(lastDraft.draft); setCopied(lastDraft.id); setTimeout(() => setCopied(null), 1500) }}
+              style={{ fontSize: "0.6875rem", fontWeight: 600, color: "#6E6E73", background: "#EDEDF0", border: "none", borderRadius: 6, padding: "3px 8px", cursor: "pointer" }}
+            >
+              {copied === lastDraft.id ? "Copied ✓" : "Copy"}
+            </button>
+            <button
+              onClick={e => { e.stopPropagation(); approve(lastDraft.id) }}
+              style={{ fontSize: "0.6875rem", fontWeight: 600, color: "#059669", background: "#ECFDF5", border: "none", borderRadius: 6, padding: "3px 8px", cursor: "pointer" }}
+            >
+              Approve ✓
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Queue count hint */}
+      {queue > 0 && (
+        <p style={{ fontSize: "0.75rem", color: "#8E8E93", fontWeight: 500, textAlign: "center" }}>
+          {queue} draft{queue > 1 ? "s" : ""} in queue · tap to view all
+        </p>
+      )}
     </div>
   )
 
