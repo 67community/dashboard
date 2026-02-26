@@ -123,7 +123,7 @@ async function fetchDiscord(): Promise<{ members: number; online: number } | nul
       `https://discord.com/api/v10/guilds/${DISCORD_GUILD}?with_counts=true`,
       {
         headers: { Authorization: DISCORD_TOKEN, "User-Agent": "Mozilla/5.0" },
-        next: { revalidate: 300 }, // cache 5 min
+        next: { revalidate: 300 },
       }
     )
     if (!res.ok) return null
@@ -132,6 +132,81 @@ async function fetchDiscord(): Promise<{ members: number; online: number } | nul
       members: g.approximate_member_count ?? 0,
       online:  g.approximate_presence_count ?? 0,
     }
+  } catch {
+    return null
+  }
+}
+
+// ── Discord activity: recent joins + active users today ───────────────────────
+const INTRO_CH = "1459629395462586398"  // #👋-introductions
+const CHAT_CH  = "1458846146415034460"  // #💬-chat
+const MEMES_CH = "1458846213087432868"  // #🤣-memes
+
+function timeAgo(iso: string): string {
+  const secs = Math.floor((Date.now() - new Date(iso).getTime()) / 1000)
+  if (secs < 60)    return `${secs}s ago`
+  if (secs < 3600)  return `${Math.floor(secs/60)}m ago`
+  if (secs < 86400) return `${Math.floor(secs/3600)}h ago`
+  return `${Math.floor(secs/86400)}d ago`
+}
+
+interface RecentJoin { user: string; user_id: string; avatar: string; message: string; time_ago: string }
+
+async function fetchDiscordActivity(): Promise<{
+  recent_joins: RecentJoin[]
+  active_users_today: number
+  top_channels: { name: string; msgs_1h: number }[]
+} | null> {
+  if (!DISCORD_TOKEN) return null
+  const headers = { Authorization: DISCORD_TOKEN, "User-Agent": "Mozilla/5.0" }
+  try {
+    const [introMsgs, chatMsgs, memeMsgs] = await Promise.all([
+      fetch(`https://discord.com/api/v10/channels/${INTRO_CH}/messages?limit=30`, { headers, next: { revalidate: 180 } }).then(r => r.ok ? r.json() : []),
+      fetch(`https://discord.com/api/v10/channels/${CHAT_CH}/messages?limit=100`, { headers, next: { revalidate: 120 } }).then(r => r.ok ? r.json() : []),
+      fetch(`https://discord.com/api/v10/channels/${MEMES_CH}/messages?limit=100`, { headers, next: { revalidate: 120 } }).then(r => r.ok ? r.json() : []),
+    ])
+
+    // Recent unique members from #introductions
+    const seenIntro = new Set<string>()
+    const recent_joins: RecentJoin[] = []
+    for (const msg of (Array.isArray(introMsgs) ? introMsgs : [])) {
+      if (msg?.author?.bot) continue
+      if (seenIntro.has(msg.author.id)) continue
+      seenIntro.add(msg.author.id)
+      const h = msg.author.avatar
+      const avatar = h
+        ? `https://cdn.discordapp.com/avatars/${msg.author.id}/${h}.png`
+        : `https://cdn.discordapp.com/embed/avatars/${(parseInt(msg.author.id.slice(-2), 16) || 0) % 5}.png`
+      recent_joins.push({
+        user:     msg.author.username,
+        user_id:  msg.author.id,
+        avatar,
+        message:  (msg.content as string)?.replace(/<[^>]+>/g, "").slice(0, 80) ?? "",
+        time_ago: timeAgo(msg.timestamp),
+      })
+      if (recent_joins.length >= 6) break
+    }
+
+    // Active users today across chat + memes
+    const yesterday = new Date(Date.now() - 24 * 3600 * 1000).toISOString()
+    const activeSet = new Set<string>()
+    const hour1Ago  = new Date(Date.now() - 3600 * 1000).toISOString()
+    let chatMsgs1h = 0, memeMsgs1h = 0
+    for (const msg of (Array.isArray(chatMsgs) ? chatMsgs : [])) {
+      if (!msg?.author?.bot && msg.timestamp > yesterday) activeSet.add(msg.author.id)
+      if (msg.timestamp > hour1Ago) chatMsgs1h++
+    }
+    for (const msg of (Array.isArray(memeMsgs) ? memeMsgs : [])) {
+      if (!msg?.author?.bot && msg.timestamp > yesterday) activeSet.add(msg.author.id)
+      if (msg.timestamp > hour1Ago) memeMsgs1h++
+    }
+
+    const top_channels = [
+      { name: "💬-chat",  msgs_1h: chatMsgs1h  },
+      { name: "🤣-memes", msgs_1h: memeMsgs1h },
+    ].filter(c => c.msgs_1h > 0).sort((a, b) => b.msgs_1h - a.msgs_1h)
+
+    return { recent_joins, active_users_today: activeSet.size, top_channels }
   } catch {
     return null
   }
@@ -149,7 +224,7 @@ function readStaticJson() {
 
 // ── main ──────────────────────────────────────────────────────────────────────
 export async function GET() {
-  const [pair, cg, cgTickers, cmc, holders, discord, tgMembers] = await Promise.all([
+  const [pair, cg, cgTickers, cmc, holders, discord, tgMembers, discordActivity] = await Promise.all([
     safe(fetchDex),
     safe(fetchCG),
     safe(fetchCGTickers),
@@ -157,6 +232,7 @@ export async function GET() {
     safe(fetchHolders),
     safe(fetchDiscord),
     safe(fetchTelegram),
+    safe(fetchDiscordActivity),
   ])
 
   if (!pair && !cg) {
@@ -256,6 +332,16 @@ export async function GET() {
         telegram_members:   tgMembers,
         telegram_delta_24h: tgMembers - (static_?._snapshot_24h?.telegram_members ?? tgMembers),
       } : {}),
+      // Live Discord activity: real joins feed + active users today + channel stats
+      ...(discordActivity ? {
+        recent_joins:        discordActivity.recent_joins,
+        active_users_today:  discordActivity.active_users_today,
+        top_channels:        discordActivity.top_channels,
+      } : {
+        recent_joins:        static_?.community?.recent_joins        ?? [],
+        active_users_today:  static_?.community?.active_users_today  ?? 0,
+        top_channels:        static_?.community?.top_channels        ?? [],
+      }),
     },
     content_pipeline:  static_?.content_pipeline  ?? [],
     agents:            static_?.agents            ?? [],
