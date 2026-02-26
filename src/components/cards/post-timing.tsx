@@ -208,21 +208,30 @@ export function PostTimingCard() {
 
       {/* Platform tabs */}
       <div onClick={e => e.stopPropagation()} style={{ display:"flex", gap:4 }}>
-        {PLATFORMS.map((p, i) => (
-          <button key={p.key} onClick={e => { e.stopPropagation(); setSelPlat(i) }}
-            style={{
-              flex:1, padding:"7px 4px", borderRadius:10, border:"none", cursor:"pointer",
-              background: selPlat===i ? p.color : "#F4F4F5",
-              transition:"all 0.12s",
-              display:"flex", flexDirection:"column", alignItems:"center", gap:3,
-            }}>
-            <span style={{ color: selPlat===i ? "#fff" : "#8E8E93", display:"flex", lineHeight:1 }}>{p.logo}</span>
-            <span style={{ fontSize:"0.5625rem", fontWeight:700,
-              color: selPlat===i ? "#fff" : "#A1A1AA", letterSpacing:"0.03em" }}>
-              {p.key === "x" ? "X" : p.key === "tiktok" ? "TikTok" : "IG"}
-            </span>
-          </button>
-        ))}
+        {PLATFORMS.map((p, i) => {
+          const active = selPlat === i
+          const iconColor = active ? "#fff" : "#0A0A0A"
+          return (
+            <button key={p.key} onClick={e => { e.stopPropagation(); setSelPlat(i) }}
+              style={{
+                flex:1, padding:"7px 4px", borderRadius:10, border:"none", cursor:"pointer",
+                background: active ? p.color : "#F4F4F5",
+                transition:"all 0.12s",
+                display:"flex", flexDirection:"column", alignItems:"center", gap:3,
+              }}>
+              {p.key === "x"
+                ? <span style={{ fontSize:"1.1rem", fontWeight:900, color: iconColor, lineHeight:1 }}>𝕏</span>
+                : p.key === "tiktok"
+                  ? <span style={{ fontSize:"1.1rem", fontWeight:900, color: iconColor, lineHeight:1 }}>♪</span>
+                  : <span style={{ display:"flex", opacity: active ? 1 : 0.75 }}><IgLogo size={18} /></span>
+              }
+              <span style={{ fontSize:"0.5625rem", fontWeight:700,
+                color: active ? "#fff" : "#0A0A0A", letterSpacing:"0.03em" }}>
+                {p.key === "x" ? "X" : p.key === "tiktok" ? "TikTok" : "IG"}
+              </span>
+            </button>
+          )
+        })}
       </div>
 
       {/* Region flags with country names */}
