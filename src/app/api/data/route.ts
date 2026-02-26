@@ -257,12 +257,13 @@ export async function GET() {
         telegram_delta_24h: tgMembers - (static_?._snapshot_24h?.telegram_members ?? tgMembers),
       } : {}),
     },
-    content_pipeline: static_?.content_pipeline ?? [],
-    agents:           static_?.agents           ?? [],
-    milestones:       static_?.milestones       ?? [],
-    alerts:           static_?.alerts           ?? [],
-    recent_wins:      static_?.recent_wins      ?? [],
-    next_target:      static_?.next_target      ?? null,
+    content_pipeline:  static_?.content_pipeline  ?? [],
+    agents:            static_?.agents            ?? [],
+    milestones:        static_?.milestones        ?? [],
+    alerts:            static_?.alerts            ?? [],
+    recent_wins:       static_?.recent_wins       ?? [],
+    next_target:       static_?.next_target       ?? null,
+    tiktok_spotlight:  static_?.tiktok_spotlight  ?? [],
   }
 
   return NextResponse.json(out, { headers: { "Cache-Control": "no-store, max-age=0" } })
