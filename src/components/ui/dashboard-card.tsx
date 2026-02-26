@@ -150,7 +150,7 @@ export function DashboardCard({
         {/* Accent bar */}
         <div style={{ height: 3, background: `linear-gradient(90deg,${accentColor},${accentColor}33)`, flexShrink: 0, position: "relative", zIndex: 1 }} />
 
-        <div className="flex flex-col flex-1 gap-5" style={{ padding: "24px 26px 26px", position: "relative", zIndex: 1 }}>
+        <div className="mc-card-body">
           {/* Header */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
