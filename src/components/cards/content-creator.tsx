@@ -288,38 +288,6 @@ export function ContentCreatorCard() {
   const expanded = (
     <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
 
-      {/* ── Region ─────────────────────────────────────────── */}
-      <div>
-        <p style={{
-          fontSize: "0.6875rem", fontWeight: 700, color: "#A1A1AA",
-          letterSpacing: "0.06em", textTransform: "uppercase", marginBottom: 8,
-        }}>Target Market</p>
-        <div style={{ display: "flex", gap: 6 }}>
-          {REGIONS.map(r => {
-            const active = region === r.id
-            return (
-              <button
-                key={r.id}
-                onClick={e => { e.stopPropagation(); setRegion(r.id) }}
-                style={{
-                  flex: 1, padding: "9px 6px", borderRadius: 10, cursor: "pointer",
-                  border:     active ? "2px solid #F5A623" : "2px solid transparent",
-                  background: active ? "rgba(245,166,35,0.10)" : "#F4F4F5",
-                  display: "flex", flexDirection: "column", alignItems: "center", gap: 4,
-                  transition: "all 0.15s",
-                }}
-              >
-                <span style={{ fontSize: "1.3rem" }}>{r.flag}</span>
-                <span style={{
-                  fontSize: "0.6875rem", fontWeight: active ? 700 : 500,
-                  color: active ? "#92400E" : "#6B7280",
-                }}>{r.label}</span>
-              </button>
-            )
-          })}
-        </div>
-      </div>
-
       {/* ── Platform ────────────────────────────────────────── */}
       <div>
         <p style={{
