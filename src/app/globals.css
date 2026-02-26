@@ -253,12 +253,31 @@ body {
 @keyframes spin { to { transform: rotate(360deg); } }
 
 /* ── Mobile responsive ─────────────────────────────────────── */
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100%;
+}
+
+* {
+  min-width: 0;        /* prevent grid/flex blowout */
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Restore min-width on interactive / structural elements */
+button, input, select, textarea { min-width: revert; word-break: normal; }
+img, svg { min-width: 0; flex-shrink: 0; }
+
 .page-main {
   max-width: 1440px;
+  width: 100%;
   margin: 0 auto;
   padding: 40px 40px;
   position: relative;
   z-index: 1;
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 .hero-band {
   padding: 44px 48px 52px !important;
@@ -267,15 +286,58 @@ body {
   padding: 52px 60px !important;
 }
 
+/* ── Grid children — must have min-width: 0 ───────────────── */
+.cards-grid > * {
+  min-width: 0;
+  overflow: hidden;
+}
+
+/* ── hero-number responsive scale ────────────────────────── */
+@media (max-width: 480px) {
+  .hero-number { font-size: 2.5rem !important; }
+  .metric-xl   { font-size: 1.75rem !important; }
+}
+
+/* ── Tablet: 2-col grid ──────────────────────────────────── */
+@media (max-width: 1100px) and (min-width: 641px) {
+  .cards-grid { grid-template-columns: repeat(2, 1fr) !important; }
+}
+
+/* ── Mobile: full fixes ──────────────────────────────────── */
 @media (max-width: 768px) {
-  .page-main { padding: 20px 16px !important; }
-  .hero-band  { padding: 28px 24px 32px !important; border-radius: 16px !important; }
-  .cards-grid { gap: 12px !important; }
+  .page-main   { padding: 20px 16px !important; }
+  .hero-band   { padding: 28px 24px 32px !important; border-radius: 16px !important; }
+  .cards-grid  { gap: 12px !important; grid-template-columns: 1fr !important; }
   .season-banner-inner { padding: 32px 24px !important; }
 }
 
 @media (max-width: 640px) {
-  .page-main { padding: 12px 12px !important; }
+  .page-main  { padding: 12px 12px !important; }
   .hero-band  { padding: 22px 20px 26px !important; border-radius: 14px !important; }
-  .cards-grid { gap: 10px !important; }
+  .cards-grid { gap: 10px !important; grid-template-columns: 1fr !important; }
+}
+
+/* ── Dashboard modal — mobile ─────────────────────────────── */
+.mc-modal-wrap {
+  padding: 24px;
+}
+@media (max-width: 640px) {
+  .mc-modal-wrap {
+    padding: 10px !important;
+    align-items: flex-end !important;
+  }
+  .mc-modal-sheet {
+    max-height: 92vh !important;
+    border-radius: 20px 20px 0 0 !important;
+  }
+}
+
+/* ── Inset-cell 2-col grids inside cards — collapse on mobile */
+.inset-grid-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+@media (max-width: 480px) {
+  .inset-grid-2col { grid-template-columns: 1fr !important; }
 }

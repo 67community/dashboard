@@ -45,14 +45,15 @@ function VideoTile({ v, large = false }: { v: TikTokVideo; large?: boolean }) {
       onClick={e => e.stopPropagation()}
       style={{ textDecoration: "none", display: "block" }}
     >
-      <div style={{
-        borderRadius: 14,
-        overflow: "hidden",
-        border: "1.5px solid rgba(0,0,0,0.07)",
-        background: "#0A0A0A",
-        transition: "transform 0.15s",
-        cursor: "pointer",
-      }}
+      <div
+        style={{
+          borderRadius: 14,
+          overflow: "hidden",
+          border: "1.5px solid rgba(0,0,0,0.07)",
+          background: "#0A0A0A",
+          transition: "transform 0.15s",
+          cursor: "pointer",
+        }}
         onMouseEnter={e => (e.currentTarget.style.transform = "scale(1.02)")}
         onMouseLeave={e => (e.currentTarget.style.transform = "scale(1)")}
       >
@@ -94,12 +95,10 @@ function VideoTile({ v, large = false }: { v: TikTokVideo; large?: boolean }) {
             )}
           </div>
 
-          {/* Play button overlay */}
+          {/* Play button */}
           <div style={{
             position: "absolute", inset: 0,
             display: "flex", alignItems: "center", justifyContent: "center",
-            background: "rgba(0,0,0,0)",
-            transition: "background 0.15s",
           }}>
             <div style={{
               width: 36, height: 36, borderRadius: "50%",
@@ -152,14 +151,44 @@ function VideoTile({ v, large = false }: { v: TikTokVideo; large?: boolean }) {
   )
 }
 
+// ── Section header ────────────────────────────────────────────────────────────
+
+function SectionHeader({ tag, href }: { tag: string; href: string }) {
+  return (
+    <div style={{
+      display: "flex", alignItems: "center", justifyContent: "space-between",
+      marginBottom: 10,
+    }}>
+      <span style={{
+        fontSize: "0.6875rem", fontWeight: 700, letterSpacing: "0.07em",
+        textTransform: "uppercase", color: "#6B7280",
+        display: "flex", alignItems: "center", gap: 5,
+      }}>
+        <TikTokLogo size={11} />
+        #{tag}
+      </span>
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={e => e.stopPropagation()}
+        style={{
+          fontSize: "0.6875rem", fontWeight: 600, color: "#09090B",
+          textDecoration: "none", display: "flex", alignItems: "center", gap: 3,
+          opacity: 0.55,
+        }}
+      >
+        view all <ExternalLink style={{ width: 9, height: 9 }} />
+      </a>
+    </div>
+  )
+}
+
 // ── Empty state ───────────────────────────────────────────────────────────────
 
 function EmptyState() {
   return (
-    <div style={{
-      textAlign: "center", padding: "32px 16px",
-      color: "#C7C7CC",
-    }}>
+    <div style={{ textAlign: "center", padding: "32px 16px", color: "#C7C7CC" }}>
       <div style={{ marginBottom: 10, opacity: 0.5 }}>
         <TikTokLogo size={32} />
       </div>
@@ -180,18 +209,20 @@ export function TikTokSpotlightCard() {
   const videos: TikTokVideo[] = data?.tiktok_spotlight ?? []
   const lastUpdated = data?.last_updated
 
+  const coinVideos  = videos.filter(v => v.hashtag === "67coin")
+  const tag67Videos = videos.filter(v => v.hashtag === "67")
+
   const collapsed = (
     <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
-      {/* Hero */}
       <div>
-        <p className="hero-label" style={{ marginBottom: 8 }}>Latest #67coin</p>
+        <p className="hero-label" style={{ marginBottom: 8 }}>Latest TikToks</p>
         <p className="hero-number">{videos.length > 0 ? videos.length : "—"}</p>
         <p style={{ fontSize: "0.875rem", color: "#8E8E93", marginTop: 6 }}>
-          {videos.length > 0 ? "videos found · last 24h" : "waiting for first scrape"}
+          {videos.length > 0 ? `#67coin + #67 · ${coinVideos.length + tag67Videos.length} videos` : "waiting for first scrape"}
         </p>
       </div>
 
-      {/* Thumbnail preview */}
+      {/* Collapsed preview — show first 2 */}
       {videos.length > 0 ? (
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
           {videos.slice(0, 2).map((v, i) => (
@@ -210,12 +241,12 @@ export function TikTokSpotlightCard() {
   )
 
   const expanded = (
-    <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-      {/* Header info */}
+    <div style={{ display: "flex", flexDirection: "column", gap: 22 }}>
+      {/* Header */}
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <div>
           <p style={{ fontSize: "0.6875rem", fontWeight: 700, color: "#A1A1AA", letterSpacing: "0.06em", textTransform: "uppercase" }}>
-            #67coin on TikTok
+            TikTok Spotlight
           </p>
           {lastUpdated && (
             <p style={{ fontSize: "0.75rem", color: "#C7C7CC", marginTop: 2, display: "flex", alignItems: "center", gap: 4 }}>
@@ -224,34 +255,41 @@ export function TikTokSpotlightCard() {
             </p>
           )}
         </div>
-        <a
-          href="https://www.tiktok.com/tag/67coin"
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={e => e.stopPropagation()}
-          style={{
-            display: "flex", alignItems: "center", gap: 5,
-            fontSize: "0.75rem", fontWeight: 600,
-            color: "#09090B", textDecoration: "none",
-            background: "#F4F4F5", borderRadius: 99,
-            padding: "5px 12px", border: "1px solid rgba(0,0,0,0.08)",
-          }}
-        >
-          <TikTokLogo size={12} />
-          View all
-          <ExternalLink style={{ width: 10, height: 10, opacity: 0.5 }} />
-        </a>
       </div>
 
-      {/* Video tiles */}
-      {videos.length > 0 ? (
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
-          {videos.slice(0, 2).map((v, i) => (
-            <VideoTile key={i} v={v} large />
-          ))}
-        </div>
-      ) : (
+      {videos.length === 0 ? (
         <EmptyState />
+      ) : (
+        <>
+          {/* ── #67coin section ── */}
+          {coinVideos.length > 0 && (
+            <div>
+              <SectionHeader tag="67coin" href="https://www.tiktok.com/tag/67coin" />
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+                {coinVideos.slice(0, 2).map((v, i) => (
+                  <VideoTile key={i} v={v} large />
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* divider */}
+          {coinVideos.length > 0 && tag67Videos.length > 0 && (
+            <div style={{ borderTop: "1px solid rgba(0,0,0,0.07)", margin: "0 -4px" }} />
+          )}
+
+          {/* ── #67 section ── */}
+          {tag67Videos.length > 0 && (
+            <div>
+              <SectionHeader tag="67" href="https://www.tiktok.com/tag/67" />
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+                {tag67Videos.slice(0, 2).map((v, i) => (
+                  <VideoTile key={i} v={v} large />
+                ))}
+              </div>
+            </div>
+          )}
+        </>
       )}
 
       {/* Info box */}
@@ -266,9 +304,9 @@ export function TikTokSpotlightCard() {
             Auto-updated every hour
           </p>
           <p style={{ fontSize: "0.75rem", color: "#A1A1AA", lineHeight: 1.5 }}>
-            Mac mini scrapes <strong style={{ color: "#09090B" }}>tiktok.com/tag/67coin</strong> via
-            Playwright. Shows the 2 most recent community videos. If TikTok blocks the scrape,
-            last known results are kept until the next successful run.
+            Top 2 from <strong style={{ color: "#09090B" }}>#67coin</strong> (most views) +
+            Top 2 from <strong style={{ color: "#09090B" }}>#67</strong> (trending viral).
+            Scraped via TikTokApi on Mac mini.
           </p>
         </div>
       </div>

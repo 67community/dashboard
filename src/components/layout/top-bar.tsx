@@ -59,6 +59,8 @@ export function TopBar() {
       <header style={{
         background: "#0A0A0A",
         borderBottom: "1px solid rgba(255,255,255,0.06)",
+        width: "100%",
+        overflow: "hidden",
       }}>
         <div style={{ maxWidth:1440, margin:"0 auto", padding:"0 32px" }} className="topbar-inner">
           <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", height:52 }}>
@@ -134,7 +136,7 @@ export function TopBar() {
                 {bellOpen && (
                   <div style={{
                     position:"absolute", top:"calc(100% + 10px)", right:0,
-                    width:320, background:"rgba(18,18,20,0.96)",
+                    width:"min(320px, calc(100vw - 32px))", background:"rgba(18,18,20,0.96)",
                     backdropFilter:"blur(20px) saturate(180%)",
                     WebkitBackdropFilter:"blur(20px) saturate(180%)",
                     borderRadius:16,

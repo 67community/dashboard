@@ -1,97 +1,97 @@
 {
-  "last_updated": "2026-02-25T02:22:40.927257Z",
+  "last_updated": "2026-02-26T13:13:24.937564Z",
   "token_health": {
-    "price": 0.001677,
-    "price_change_m5": -2.04,
-    "price_change_1h": -3.14,
-    "price_change_6h": 2.05,
-    "price_change_24h": -10.83,
-    "market_cap": 1676997,
-    "liquidity": 232923.44,
-    "volume_m5": 2789.38,
-    "volume_1h": 10643.72,
-    "volume_6h": 76512.99,
-    "volume_24h": 278508.15,
-    "volume_ratio_1h": 0.92,
-    "buys_24h": 1498,
-    "sells_24h": 1333,
-    "buys_1h": 85,
-    "sells_1h": 48,
-    "holders": 16827,
-    "holder_trend": -692,
-    "sentiment": "neutral",
+    "price": 0.001845,
+    "price_change_m5": 1.0,
+    "price_change_1h": 4.36,
+    "price_change_6h": 5.65,
+    "price_change_24h": 4.01,
+    "market_cap": 1845319,
+    "liquidity": 252697.01,
+    "volume_m5": 8.7,
+    "volume_1h": 3230.12,
+    "volume_6h": 29135.75,
+    "volume_24h": 388042.24,
+    "volume_ratio_1h": 0.2,
+    "buys_24h": 1894,
+    "sells_24h": 1651,
+    "buys_1h": 12,
+    "sells_1h": 23,
+    "holders": 16816,
+    "holder_trend": 0,
+    "sentiment": "bull",
     "_source": "dexscreener",
-    "coingecko_rank": 2431,
+    "coingecko_rank": 2423,
     "ath": 0.04363399,
     "ath_date": "2025-11-19",
-    "ath_change_pct": -96.03,
-    "price_change_7d": -25.8,
+    "ath_change_pct": -95.78,
+    "price_change_7d": -23.38,
     "exchange_volumes": [
       {
         "exchange": "XT.COM",
         "pair": "67/USDT",
-        "volume_usd": 497827,
+        "volume_usd": 529481,
         "is_dex": false,
         "logo": "https://coin-images.coingecko.com/markets/images/404/small/xt_logo_%E7%BB%BF.png?1761205934"
       },
       {
         "exchange": "PumpSwap (DEX)",
         "pair": "DEX pool",
-        "volume_usd": 293624,
+        "volume_usd": 388176,
         "is_dex": true,
         "logo": "https://coin-images.coingecko.com/markets/images/11879/small/pumpfun.jpg?1740376296"
       },
       {
         "exchange": "KCEX",
         "pair": "67/USDT",
-        "volume_usd": 170348,
+        "volume_usd": 179801,
         "is_dex": false,
         "logo": "https://coin-images.coingecko.com/markets/images/11953/small/photo_2025-05-27_02-31-22.jpg?1748284326"
       },
       {
         "exchange": "LBank",
         "pair": "67/USDT",
-        "volume_usd": 101849,
+        "volume_usd": 106966,
         "is_dex": false,
         "logo": "https://coin-images.coingecko.com/markets/images/118/small/LBank_200_200.png?1757347528"
       },
       {
         "exchange": "MEXC",
         "pair": "67/USDT",
-        "volume_usd": 68023,
+        "volume_usd": 68930,
         "is_dex": false,
         "logo": "https://coin-images.coingecko.com/markets/images/409/small/logo_new.png?1743600043"
       },
       {
         "exchange": "Meteora (DEX)",
         "pair": "DEX pool",
-        "volume_usd": 23152,
+        "volume_usd": 32077,
         "is_dex": true,
         "logo": "https://coin-images.coingecko.com/markets/images/1520/small/meteora.jpeg?1710908196"
       },
       {
         "exchange": "Bilaxy",
         "pair": "67/USDT",
-        "volume_usd": 16708.0,
+        "volume_usd": 21853,
         "is_dex": false,
         "logo": "https://coin-images.coingecko.com/markets/images/193/small/bilaxy.png?1706864324"
       }
     ],
-    "cmc_rank": 1682,
-    "total_volume_24h": 1290477.91979019,
-    "volume_change_pct": 0.0,
-    "volume_change_usd": 0.0,
-    "mcap_change_pct": 0.0,
-    "mcap_change_usd": 0,
-    "liquidity_change_pct": 0.0,
-    "liquidity_change_usd": 0.0,
+    "cmc_rank": 1662,
+    "total_volume_24h": 1500099.88978849,
+    "volume_change_pct": -1.35,
+    "volume_change_usd": -20527.65,
+    "mcap_change_pct": -5.66,
+    "mcap_change_usd": -110713,
+    "liquidity_change_pct": -3.25,
+    "liquidity_change_usd": -8501.9,
     "biggest_trades": {
-      "biggest_buy_usd": 2451.0,
-      "biggest_buy_tx": "3Lh44X26zSEzLZX1vSR4UaNFLY4wg21fKKqkfFeCYrFvBxw14aX4UcMT4v74V5eptiZqePKDDuc7QXFErBcu4FsZ",
-      "biggest_buy_time": "2026-02-25T00:49:43Z",
-      "biggest_sell_usd": 7026.58,
-      "biggest_sell_tx": "4VFQWHa5eg8skSPv1sSfXNRyQUzYt2qB3z7rz2cq45LDYpTakpjkVNVJ5QbKt6tAznuBkCs8VCSehZYuK5qa35zv",
-      "biggest_sell_time": "2026-02-25T01:20:04Z",
+      "biggest_buy_usd": 2079.48,
+      "biggest_buy_tx": "iiT2NKHAfGTKJq9PhGwY2QVQJkxYW1yfV6vVgzof7f6mGrooT2vRut3SeSF5HmvN5qk968zQoQpLJhg9EnsVMBL",
+      "biggest_buy_time": "2026-02-26T07:44:43Z",
+      "biggest_sell_usd": 1502.63,
+      "biggest_sell_tx": "37V5mAAHHhxqiGvBz1kbiNtcS6zQxR6XwAxJTfxEGbt6AHeEJ1NAfCdkCvc9Df1XSXhxK5eEBU2ibPYbjTMHwPiw",
+      "biggest_sell_time": "2026-02-26T08:28:44Z",
       "_trades_in_window": 300
     }
   },
@@ -99,31 +99,31 @@
     "twitter_followers": 1628,
     "follower_change_24h": 0,
     "posting_streak_days": 6,
-    "engagement_rate": 6.235,
+    "engagement_rate": 3.814,
     "_source": "nitter_rss+twitter_cdn",
     "best_tweet_week": {
-      "tweet_id": "2025675106899333180",
-      "tweet_url": "https://x.com/67coinX/status/2025675106899333180",
-      "text": "More dev buys to support the community.\n\nBuilding our treasury, just in time for Season 2.\n\n#67season2 #67to67billion",
-      "likes": 128,
-      "replies": 21,
-      "img_url": "https://pbs.twimg.com/media/HBykYp5WwAAbqrq.jpg",
-      "date": "Feb 22",
-      "embed_html": "<blockquote class=\"twitter-tweet\" align=\"center\" data-width=\"520\" data-dnt=\"true\" data-theme=\"dark\"><p lang=\"en\" dir=\"ltr\">More dev buys to support the community.<br><br>Building our treasury, just in time for Season 2.<a href=\"https://twitter.com/hashtag/67season2?src=hash&amp;ref_src=twsrc%5Etfw\">#67season2</a> <a href=\"https://twitter.com/hashtag/67to67billion?src=hash&amp;ref_src=twsrc%5Etfw\">#67to67billion</a> <a href=\"https://t.co/GsTeU1UUUY\">pic.twitter.com/GsTeU1UUUY</a></p>&mdash; The Official 67 Coin (@67coinX) <a href=\"https://twitter.com/67coinX/status/2025675106899333180?ref_src=twsrc%5Etfw\">February 22, 2026</a></blockquote>\n\n"
-    },
-    "best_tweet_2d": {
       "tweet_id": "2025945503913886046",
       "tweet_url": "https://x.com/67coinX/status/2025945503913886046",
-      "text": "👀👀\n\nhttps://x.com/SolanaSensei/status/2025850377825099973?s=20",
-      "likes": 103,
+      "text": "\ud83d\udc40\ud83d\udc40\n\nhttps://x.com/SolanaSensei/status/2025850377825099973?s=20",
+      "likes": 102,
       "replies": 16,
       "img_url": null,
       "date": "Feb 23",
-      "embed_html": "<blockquote class=\"twitter-tweet\" align=\"center\" data-width=\"520\" data-dnt=\"true\" data-theme=\"dark\"><p lang=\"qme\" dir=\"ltr\">👀👀<a href=\"https://t.co/Nk1MKX6P45\">https://t.co/Nk1MKX6P45</a></p>&mdash; The Official 67 Coin (@67coinX) <a href=\"https://twitter.com/67coinX/status/2025945503913886046?ref_src=twsrc%5Etfw\">February 23, 2026</a></blockquote>\n\n"
+      "embed_html": "<blockquote class=\"twitter-tweet\" align=\"center\" data-width=\"520\" data-dnt=\"true\" data-theme=\"dark\"><p lang=\"qme\" dir=\"ltr\">\ud83d\udc40\ud83d\udc40<a href=\"https://t.co/Nk1MKX6P45\">https://t.co/Nk1MKX6P45</a></p>&mdash; The Official 67 Coin (@67coinX) <a href=\"https://twitter.com/67coinX/status/2025945503913886046?ref_src=twsrc%5Etfw\">February 23, 2026</a></blockquote>\n\n"
     },
-    "avg_engagement": 101.5,
-    "twitter_followers_updated_at": "2026-02-24T14:44:47.155984Z",
-    "total_engagement_7d": 1015,
+    "best_tweet_2d": {
+      "tweet_id": "2026634750484463718",
+      "tweet_url": "https://x.com/67coinX/status/2026634750484463718",
+      "text": "Important reminder: Do NOT 67 and drive.",
+      "likes": 93,
+      "replies": 9,
+      "img_url": null,
+      "date": "Feb 25",
+      "embed_html": "<blockquote class=\"twitter-tweet\" align=\"center\" data-width=\"520\" data-dnt=\"true\" data-theme=\"dark\"><p lang=\"en\" dir=\"ltr\">Important reminder: Do NOT 67 and drive. <a href=\"https://t.co/S3ADUWuAQG\">pic.twitter.com/S3ADUWuAQG</a></p>&mdash; The Official 67 Coin (@67coinX) <a href=\"https://twitter.com/67coinX/status/2026634750484463718?ref_src=twsrc%5Etfw\">February 25, 2026</a></blockquote>\n\n"
+    },
+    "avg_engagement": 62.1,
+    "twitter_followers_updated_at": "2026-02-25T23:30:12.564409Z",
+    "total_engagement_7d": 621,
     "follower_history": [
       {
         "date": "2026-02-24",
@@ -132,41 +132,40 @@
       {
         "date": "2026-02-25",
         "count": 1628
+      },
+      {
+        "date": "2026-02-26",
+        "count": 1628
       }
     ],
     "follower_growth_7d": 0,
     "content_type_stats": {
+      "meme": {
+        "count": 4,
+        "total_eng": 225,
+        "avg_eng": 56.2
+      },
       "announcement": {
-        "count": 3,
-        "total_eng": 318,
-        "avg_eng": 106.0
+        "count": 4,
+        "total_eng": 218,
+        "avg_eng": 54.5
       },
       "thesis": {
         "count": 2,
-        "total_eng": 220,
-        "avg_eng": 110.0
-      },
-      "culture_drop": {
-        "count": 1,
-        "total_eng": 152,
-        "avg_eng": 152.0
-      },
-      "meme": {
-        "count": 4,
-        "total_eng": 325,
-        "avg_eng": 81.2
+        "total_eng": 178,
+        "avg_eng": 89.0
       }
     },
-    "best_content_type": "culture_drop",
+    "best_content_type": "thesis",
     "x_community_members": 0,
     "x_community_delta_24h": 0,
-    "mentions": [],
-    "x_community_id": "1987949705322508569"
+    "x_community_id": "1987949705322508569",
+    "mentions": []
   },
   "community": {
-    "discord_members": 1465,
+    "discord_members": 1461,
     "active_7d": 1870,
-    "new_joins_24h": 0,
+    "new_joins_24h": 42,
     "open_tickets": 3,
     "unanswered_posts": 7,
     "telegram_members": 2242,
@@ -175,60 +174,158 @@
       {
         "exchange": "XT.COM",
         "pair": "67/USDT",
-        "volume_usd": 497827,
+        "volume_usd": 529481,
         "is_dex": false,
         "logo": "https://coin-images.coingecko.com/markets/images/404/small/xt_logo_%E7%BB%BF.png?1761205934"
       },
       {
         "exchange": "PumpSwap (DEX)",
         "pair": "DEX pool",
-        "volume_usd": 293624,
+        "volume_usd": 388176,
         "is_dex": true,
         "logo": "https://coin-images.coingecko.com/markets/images/11879/small/pumpfun.jpg?1740376296"
       },
       {
         "exchange": "KCEX",
         "pair": "67/USDT",
-        "volume_usd": 170348,
+        "volume_usd": 179801,
         "is_dex": false,
         "logo": "https://coin-images.coingecko.com/markets/images/11953/small/photo_2025-05-27_02-31-22.jpg?1748284326"
       },
       {
         "exchange": "LBank",
         "pair": "67/USDT",
-        "volume_usd": 101849,
+        "volume_usd": 106966,
         "is_dex": false,
         "logo": "https://coin-images.coingecko.com/markets/images/118/small/LBank_200_200.png?1757347528"
       },
       {
         "exchange": "MEXC",
         "pair": "67/USDT",
-        "volume_usd": 68023,
+        "volume_usd": 68930,
         "is_dex": false,
         "logo": "https://coin-images.coingecko.com/markets/images/409/small/logo_new.png?1743600043"
       },
       {
         "exchange": "Meteora (DEX)",
         "pair": "DEX pool",
-        "volume_usd": 23152,
+        "volume_usd": 32077,
         "is_dex": true,
         "logo": "https://coin-images.coingecko.com/markets/images/1520/small/meteora.jpeg?1710908196"
       },
       {
         "exchange": "Bilaxy",
         "pair": "67/USDT",
-        "volume_usd": 16708.0,
+        "volume_usd": 21853,
         "is_dex": false,
         "logo": "https://coin-images.coingecko.com/markets/images/193/small/bilaxy.png?1706864324"
       }
     ],
     "sentiment_up_pct": 100.0,
     "sentiment_down_pct": 0.0,
-    "discord_delta_24h": 0,
-    "telegram_delta_24h": 6,
-    "watchlist_delta_24h": 1,
-    "online_now": 108,
-    "updated_at": "2026-02-25T21:45:45.578200Z"
+    "online_now": 90,
+    "discord_delta_24h": 42,
+    "telegram_delta_24h": 0,
+    "watchlist_delta_24h": 0,
+    "recent_discord_activity": [
+      {
+        "type": "kick",
+        "user": "sounfazed",
+        "user_id": "696380710184943656",
+        "avatar": "https://cdn.discordapp.com/avatars/696380710184943656/087b78dd471c9217ac02ea42aed91a46.webp?size=64",
+        "time_ago": "18h ago",
+        "detail": "Warned \u00b7 Bad word usage"
+      },
+      {
+        "type": "join",
+        "user": "jesuslovesyou05258",
+        "user_id": "1344145084328972348",
+        "avatar": "https://cdn.discordapp.com/avatars/1344145084328972348/8569adcbd36c70a7578c017bf5604ea5.webp?size=64",
+        "time_ago": "11h ago",
+        "detail": "Introduced in Discord"
+      },
+      {
+        "type": "join",
+        "user": "p4rty_p0ison",
+        "user_id": "954906892168233040",
+        "avatar": "https://cdn.discordapp.com/avatars/954906892168233040/1893824d878a661922d1b21ca7961b32.webp?size=64",
+        "time_ago": "15h ago",
+        "detail": "Introduced in Discord"
+      },
+      {
+        "type": "join",
+        "user": "ggauvin",
+        "user_id": "965681608604647514",
+        "avatar": "https://cdn.discordapp.com/avatars/965681608604647514/6c28a0cb30c603a25b288844e5c53e2e.webp?size=64",
+        "time_ago": "1d ago",
+        "detail": "Introduced in Discord"
+      },
+      {
+        "type": "join",
+        "user": "w3b8",
+        "user_id": "908761821798871100",
+        "avatar": "https://cdn.discordapp.com/avatars/908761821798871100/3d999c0ac075bf55c426efb6ffdbc710.webp?size=64",
+        "time_ago": "1d ago",
+        "detail": "Introduced in Discord"
+      },
+      {
+        "type": "join",
+        "user": "abguy0254",
+        "user_id": "1387846802266656858",
+        "avatar": "https://cdn.discordapp.com/avatars/1387846802266656858/c1c8b7358ca9fd42b54a446f5d1e9498.webp?size=64",
+        "time_ago": "1d ago",
+        "detail": "Introduced in Discord"
+      },
+      {
+        "type": "join",
+        "user": "pingbit",
+        "user_id": "505736478341726221",
+        "avatar": "https://cdn.discordapp.com/avatars/505736478341726221/13c509e95656f44350d8ec6346934422.webp?size=64",
+        "time_ago": "3d ago",
+        "detail": "Introduced in Discord"
+      },
+      {
+        "type": "join",
+        "user": "_335laranja_",
+        "user_id": "829000178631442442",
+        "avatar": "https://cdn.discordapp.com/avatars/829000178631442442/1f0e0ab306ed466ff75f0ca3fa14a64d.webp?size=64",
+        "time_ago": "8d ago",
+        "detail": "Introduced in Discord"
+      },
+      {
+        "type": "join",
+        "user": "marziechockymilk",
+        "user_id": "1464960465703665917",
+        "avatar": "https://cdn.discordapp.com/avatars/1464960465703665917/8854b0674e382b8ded4eb2369db33973.webp?size=64",
+        "time_ago": "9d ago",
+        "detail": "Introduced in Discord"
+      },
+      {
+        "type": "join",
+        "user": "hazza9898",
+        "user_id": "800399454636212224",
+        "avatar": "https://cdn.discordapp.com/avatars/800399454636212224/7df3980462eb9330262f2f7d0212ce81.webp?size=64",
+        "time_ago": "13d ago",
+        "detail": "Introduced in Discord"
+      },
+      {
+        "type": "join",
+        "user": "casiopriv870",
+        "user_id": "1226223232445583402",
+        "avatar": "https://cdn.discordapp.com/avatars/1226223232445583402/69bf4e8082b6ea69620d0699ef5909b6.webp?size=64",
+        "time_ago": "13d ago",
+        "detail": "Introduced in Discord"
+      },
+      {
+        "type": "join",
+        "user": "franciscomark",
+        "user_id": "817139235210657813",
+        "avatar": "https://cdn.discordapp.com/avatars/817139235210657813/aebd611f851688ccf89380cc0c1e46bc.webp?size=64",
+        "time_ago": "14d ago",
+        "detail": "Introduced in Discord"
+      }
+    ],
+    "telegram_mod_events": []
   },
   "content_pipeline": {
     "scheduled_posts": [
@@ -265,7 +362,7 @@
     {
       "name": "X Raid Bot",
       "status": "green",
-      "last_run": "2026-02-25T02:22:52.268696Z",
+      "last_run": "2026-02-26T13:14:09.806330Z",
       "errors_24h": 0,
       "schedule": "Every 3 min"
     },
@@ -346,72 +443,66 @@
     }
   ],
   "next_target": "10K Holders by March 15",
-  "alerts": [
-    {
-      "type": "danger",
-      "message": "⚠️ Price down -10.8% in 24h",
-      "timestamp": "2026-02-25T02:22:52.368186Z"
-    }
-  ],
+  "alerts": [],
   "coingecko": {
-    "coingecko_rank": 2431,
+    "coingecko_rank": 2423,
     "ath": 0.04363399,
     "ath_date": "2025-11-19",
-    "ath_change_pct": -96.03,
+    "ath_change_pct": -95.78,
     "atl": 7.72e-05,
-    "price_change_7d": -25.8,
-    "price_change_1h": -4.86,
-    "watchlist_count": 8262,
-    "telegram_members": 2236,
+    "price_change_7d": -23.38,
+    "price_change_1h": 3.13,
+    "watchlist_count": 8263,
+    "telegram_members": 2242,
     "sentiment_up_pct": 100.0,
     "sentiment_down_pct": 0.0,
     "top_exchanges": [
       {
         "exchange": "XT.COM",
         "pair": "67/USDT",
-        "volume_usd": 497827,
+        "volume_usd": 529481,
         "is_dex": false,
         "logo": "https://coin-images.coingecko.com/markets/images/404/small/xt_logo_%E7%BB%BF.png?1761205934"
       },
       {
         "exchange": "PumpSwap (DEX)",
         "pair": "DEX pool",
-        "volume_usd": 293624,
+        "volume_usd": 388176,
         "is_dex": true,
         "logo": "https://coin-images.coingecko.com/markets/images/11879/small/pumpfun.jpg?1740376296"
       },
       {
         "exchange": "KCEX",
         "pair": "67/USDT",
-        "volume_usd": 170348,
+        "volume_usd": 179801,
         "is_dex": false,
         "logo": "https://coin-images.coingecko.com/markets/images/11953/small/photo_2025-05-27_02-31-22.jpg?1748284326"
       },
       {
         "exchange": "LBank",
         "pair": "67/USDT",
-        "volume_usd": 101849,
+        "volume_usd": 106966,
         "is_dex": false,
         "logo": "https://coin-images.coingecko.com/markets/images/118/small/LBank_200_200.png?1757347528"
       },
       {
         "exchange": "MEXC",
         "pair": "67/USDT",
-        "volume_usd": 68023,
+        "volume_usd": 68930,
         "is_dex": false,
         "logo": "https://coin-images.coingecko.com/markets/images/409/small/logo_new.png?1743600043"
       },
       {
         "exchange": "Meteora (DEX)",
         "pair": "DEX pool",
-        "volume_usd": 23152,
+        "volume_usd": 32077,
         "is_dex": true,
         "logo": "https://coin-images.coingecko.com/markets/images/1520/small/meteora.jpeg?1710908196"
       },
       {
         "exchange": "Bilaxy",
         "pair": "67/USDT",
-        "volume_usd": 16708.0,
+        "volume_usd": 21853,
         "is_dex": false,
         "logo": "https://coin-images.coingecko.com/markets/images/193/small/bilaxy.png?1706864324"
       }
@@ -419,25 +510,29 @@
     "_source": "coingecko"
   },
   "coinmarketcap": {
-    "cmc_rank": 1682,
+    "cmc_rank": 1662,
     "cmc_id": "38918",
-    "price": 0.0017038127215206196,
-    "volume_24h": 1290477.91979019,
-    "market_cap": 1703267.501449733,
-    "change_1h": -5.42402854,
-    "change_24h": -9.05272485,
-    "change_7d": -22.71756695,
-    "change_30d": -81.31552599,
+    "price": 0.0018304903902725052,
+    "volume_24h": 1500099.88978849,
+    "market_cap": 1829904.633347618,
+    "change_1h": 3.67214467,
+    "change_24h": 3.41861316,
+    "change_7d": -23.81291955,
+    "change_30d": -78.43339146,
     "market_pairs": 45,
     "_source": "coinmarketcap"
   },
   "_snapshot_24h": {
-    "timestamp": "2026-02-25T02:22:44.628584Z",
-    "volume_24h": 278508.15,
-    "total_volume_24h": 1290477.91979019,
-    "market_cap": 1676997,
-    "liquidity": 232923.44,
-    "holders": 16827
+    "timestamp": "2026-02-25T23:30:03.939066Z",
+    "volume_24h": 377401.78,
+    "total_volume_24h": 1520627.54153948,
+    "market_cap": 1956032,
+    "liquidity": 261198.91,
+    "holders": 16888,
+    "discord_members": 5340,
+    "telegram_members": 2242,
+    "watchlist_count": 8263,
+    "x_community_members": 0
   },
   "team_presence": {
     "201710326347988993": "dnd",
@@ -448,17 +543,55 @@
     "1440075589557158100": "offline",
     "682831521396031498": "offline"
   },
-  "presence_updated": "2026-02-26T11:40:07.099774Z",
+  "presence_updated": "2026-02-26T14:30:06.670709Z",
   "tiktok_spotlight": [
     {
-      "video_url": "https://www.tiktok.com/@kessycrypto/video/7543804787117018381",
-      "thumbnail_url": "https://p19-sign.tiktokcdn-us.com/tos-useast5-p-0068-tx/owVSugEQQDgoOZsfT9FShf9YYToRIEAvDBPRE9~tplv-tiktokx-dmt-logom:tos-useast5-i-0068-tx/owRCqFDgAWYfFisppoWRAaShdAIEQA4pDPelEg.image?dr=14573&x-expires=1772276400&x-signature=IePc941bRbzf0UuUjssYmuVmrTc%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=my",
-      "creator": "kessycrypto",
-      "creator_url": "https://www.tiktok.com/@kessycrypto",
-      "description": "67 coin #67 #67coin ",
-      "plays": 1084,
-      "views_text": "1.1K",
-      "scraped_at": "2026-02-26T11:40:41.567748Z"
+      "video_url": "https://www.tiktok.com/@mav67kid67/video/7561504794842647863",
+      "thumbnail_url": "https://p16-sign.tiktokcdn-us.com/tos-useast5-p-0068-tx/ockP347jsQGWI3fHIR7APRGKLbeFACJGfQXvnC~tplv-tiktokx-origin.image?dr=14575&x-expires=1772283600&x-signature=hvqhqQoiIbzFaSXvqlSY5%2BjZBqY%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=my",
+      "creator": "mav67kid67",
+      "creator_url": "https://www.tiktok.com/@mav67kid67",
+      "description": "(4PM EST) WEBSITE IS LIVE RIGHT NOW #67kid #67 #coin #annoucement ",
+      "plays": 115300,
+      "likes": 1934,
+      "views_text": "115.3K",
+      "hashtag": "67coin",
+      "scraped_at": "2026-02-26T13:13:55.302549Z"
+    },
+    {
+      "video_url": "https://www.tiktok.com/@67coinsolana/video/7546660229434346807",
+      "thumbnail_url": "https://p16-sign.tiktokcdn-us.com/tos-useast5-p-0068-tx/o4HY0BIxfABIwbAuEhCCBCP7wJi7IXFiQAvVPA~tplv-tiktokx-origin.image?dr=14575&x-expires=1772283600&x-signature=iCtYO9D9Io6coZjMTRzfTzbA4h8%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=my",
+      "creator": "67coinsolana",
+      "creator_url": "https://www.tiktok.com/@67coinsolana",
+      "description": "Your sign to buy 67coin #67 #viral #crypto #fyp #tjr ",
+      "plays": 4084,
+      "likes": 83,
+      "views_text": "4.1K",
+      "hashtag": "67coin",
+      "scraped_at": "2026-02-26T13:13:55.302549Z"
+    },
+    {
+      "video_url": "https://www.tiktok.com/@abrahamcreates/video/7598310130257497374",
+      "thumbnail_url": "https://p16-pu-sign-useast8.tiktokcdn-us.com/tos-useast8-p-0068-tx2/oMu9IeFFSiVFjLSyECDAI7crRQpAnBFEipEpfE~tplv-tiktokx-origin.image?dr=14575&x-expires=1772283600&x-signature=7bnno%2Fta1wj3kQcAgDZ8iL5R%2Fn8%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=my",
+      "creator": "abrahamcreates",
+      "creator_url": "https://www.tiktok.com/@abrahamcreates",
+      "description": "@Tyson #abrahamcreates #fyp #viral #67 #gcu",
+      "plays": 64700000,
+      "likes": 4400000,
+      "views_text": "64.7M",
+      "hashtag": "67",
+      "scraped_at": "2026-02-26T13:13:55.302549Z"
+    },
+    {
+      "video_url": "https://www.tiktok.com/@usernothere1001/video/7571787008964709633",
+      "thumbnail_url": "https://p77-sign-sg.tiktokcdn.com/tos-alisg-p-0037/oYiZAh9iADRnkEaAEqAYOOP71AIBARQUx6lCA~tplv-tiktokx-origin.image?dr=14575&x-expires=1772283600&x-signature=WfT2WPjJ72GaPb5%2F0HbRc6cEXt4%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=my",
+      "creator": "usernothere1001",
+      "creator_url": "https://www.tiktok.com/@usernothere1001",
+      "description": "On youTube:MY OVERPOWERED AAU TEAM HAS FINALLY RETURNED #67 #sixtyseven #sixseven #fyp #viral",
+      "plays": 38300000,
+      "likes": 1100000,
+      "views_text": "38.3M",
+      "hashtag": "67",
+      "scraped_at": "2026-02-26T13:13:55.302549Z"
     }
   ]
 }

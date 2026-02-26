@@ -152,6 +152,9 @@ export interface TikTokVideo {
   description:   string
   views_text:    string
   scraped_at:    string
+  hashtag?:      string   // "67coin" | "67"
+  plays?:        number
+  likes?:        number
 }
 
 export interface DashboardData {

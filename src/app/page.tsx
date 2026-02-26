@@ -109,22 +109,19 @@ export default function Dashboard() {
       `}</style>
 
       {/* ══ Cards Grid ═════════════════════════════════════════ */}
-      <div style={{
-        display:"grid",
-        gridTemplateColumns:"repeat(3, 1fr)",
-        gap:20,
-      }}
+      <div
         className="cards-grid"
+        style={{ display:"grid", gridTemplateColumns:"repeat(3, 1fr)", gap:20 }}
       >
-        <div className="enter-3" style={{ display:"flex" }}><TokenHealthCard /></div>
-        <div className="enter-4" style={{ display:"flex" }}><SocialPulseCard /></div>
-        <div className="enter-5" style={{ display:"flex" }}><CommunityCard /></div>
-        <div className="enter-6" style={{ display:"flex" }}><ContentPipelineCard /></div>
-        <div className="enter-7" style={{ display:"flex" }}><AgentStatusCard /></div>
-        <div className="enter-8" style={{ display:"flex" }}><MilestonesCard /></div>
-        <div className="enter-9" style={{ display:"flex" }}><ContentCreatorCard /></div>
-        <div className="enter-9" style={{ display:"flex" }}><PostTimingCard /></div>
-        <div className="enter-9" style={{ display:"flex" }}><TikTokSpotlightCard /></div>
+        <div className="enter-3" style={{ display:"flex", minWidth:0 }}><TokenHealthCard /></div>
+        <div className="enter-4" style={{ display:"flex", minWidth:0 }}><SocialPulseCard /></div>
+        <div className="enter-5" style={{ display:"flex", minWidth:0 }}><CommunityCard /></div>
+        <div className="enter-6" style={{ display:"flex", minWidth:0 }}><ContentPipelineCard /></div>
+        <div className="enter-7" style={{ display:"flex", minWidth:0 }}><AgentStatusCard /></div>
+        <div className="enter-8" style={{ display:"flex", minWidth:0 }}><MilestonesCard /></div>
+        <div className="enter-9" style={{ display:"flex", minWidth:0 }}><ContentCreatorCard /></div>
+        <div className="enter-9" style={{ display:"flex", minWidth:0 }}><PostTimingCard /></div>
+        <div className="enter-9" style={{ display:"flex", minWidth:0 }}><TikTokSpotlightCard /></div>
       </div>
 
       {/* ══ Season 2 Banner ════════════════════════════════════ */}
