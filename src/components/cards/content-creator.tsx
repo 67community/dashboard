@@ -172,32 +172,6 @@ export function ContentCreatorCard() {
   const collapsed = (
     <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
 
-      {/* Platform selector — clickable pills */}
-      <div style={{ display: "flex", gap: 6 }}>
-        {PLATFORMS.map(p => {
-          const active = platform === p.id
-          return (
-            <button
-              key={p.id}
-              onClick={e => { e.stopPropagation(); switchPlatform(p.id) }}
-              style={{
-                flex: 1, display: "flex", flexDirection: "column", alignItems: "center",
-                gap: 4, padding: "8px 4px", borderRadius: 12, cursor: "pointer",
-                border:     active ? `2px solid ${p.accent}` : "2px solid transparent",
-                background: active ? `${p.accent}10` : "#F4F4F5",
-                transition: "all 0.15s",
-              }}
-            >
-              <PlatformIcon id={p.id} size={16} active={active} />
-              <span style={{
-                fontSize: "0.625rem", fontWeight: active ? 700 : 500,
-                color: active ? p.accent === "#0A0A0A" ? "#0A0A0A" : p.accent : "#A1A1AA",
-              }}>{p.label.split(" ")[0]}</span>
-            </button>
-          )
-        })}
-      </div>
-
       {/* Topic input */}
       <div
         onClick={e => e.stopPropagation()}
@@ -207,7 +181,7 @@ export function ContentCreatorCard() {
           value={topic}
           onChange={e => setTopic(e.target.value)}
           onKeyDown={e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); generate() } }}
-          placeholder={`Topic for ${activePlat.label}…`}
+          placeholder="Topic or idea for $67…"
           rows={2}
           style={{
             width: "100%", resize: "none", boxSizing: "border-box",
@@ -247,7 +221,7 @@ export function ContentCreatorCard() {
       {lastDraft && (
         <div
           onClick={e => e.stopPropagation()}
-          style={{ background: "#F8F8FA", borderRadius: 10, padding: "10px 12px", borderLeft: `3px solid ${activePlat.accent === "#0A0A0A" ? "#374151" : activePlat.accent}` }}>
+          style={{ background: "#F8F8FA", borderRadius: 10, padding: "10px 12px", borderLeft: "3px solid #F5A623" }}>
           <p style={{ fontSize: "0.6875rem", fontWeight: 700, color: "#8E8E93", marginBottom: 4, textTransform: "uppercase", letterSpacing: "0.05em" }}>
             Last draft · {lastDraft.type}
           </p>
@@ -290,8 +264,8 @@ export function ContentCreatorCard() {
 
       {/* ── Generator Box ───────────────────────────────────── */}
       <div style={{
-        background: `linear-gradient(135deg, ${activePlat.accent}10, ${activePlat.accent}05)`,
-        border: `1px solid ${activePlat.accent}25`,
+        background: "linear-gradient(135deg, rgba(245,166,35,0.08), rgba(245,166,35,0.03))",
+        border: "1px solid rgba(245,166,35,0.2)",
         borderRadius: 14, padding: 14,
         display: "flex", flexDirection: "column", gap: 10,
       }}>
@@ -313,8 +287,8 @@ export function ContentCreatorCard() {
           style={{
             width: "100%", padding: "11px 16px", borderRadius: 10, border: "none",
             cursor:     loading || !topic.trim() ? "not-allowed" : "pointer",
-            background: loading || !topic.trim() ? "#E5E7EB" : activePlat.accent,
-            color:      loading || !topic.trim() ? "#9CA3AF" : "#fff",
+            background: loading || !topic.trim() ? "#E5E7EB" : "#F5A623",
+            color:      loading || !topic.trim() ? "#9CA3AF" : "#000",
             fontSize: "0.875rem", fontWeight: 700,
             display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
           }}
