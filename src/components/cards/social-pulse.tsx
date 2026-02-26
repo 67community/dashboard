@@ -1,7 +1,8 @@
 "use client"
 
 import { useEffect } from "react"
-import { BarChart2, Flame, Heart, MessageCircle, Users } from "lucide-react"
+import { BarChart2, Flame, Heart, MessageCircle, TrendingUp, Users } from "lucide-react"
+import { AreaChart, Area, ResponsiveContainer, Tooltip, XAxis } from "recharts"
 import { DashboardCard } from "@/components/ui/dashboard-card"
 import { useAppData } from "@/lib/data-context"
 
@@ -180,6 +181,36 @@ export function SocialPulseCard() {
           <p className="metric-label" style={{ color:"#92400E" }}>🔥 Streak</p>
         </div>
       </div>
+
+      {/* Follower History Chart */}
+      {s?.follower_history && s.follower_history.length > 1 && (
+        <div className="inset-cell">
+          <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:12 }}>
+            <p className="hero-label">Follower Growth</p>
+            <span style={{ display:"flex", alignItems:"center", gap:4, fontSize:"0.75rem", fontWeight:700, color: (s.follower_growth_7d ?? 0) >= 0 ? "#10B981" : "#EF4444" }}>
+              <TrendingUp style={{ width:12, height:12 }} />
+              {(s.follower_growth_7d ?? 0) >= 0 ? "+" : ""}{(s.follower_growth_7d ?? 0).toLocaleString()} / 7d
+            </span>
+          </div>
+          <ResponsiveContainer width="100%" height={80}>
+            <AreaChart data={s.follower_history.slice(-14)} margin={{ top:2, right:0, left:0, bottom:0 }}>
+              <defs>
+                <linearGradient id="fGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%"  stopColor="#F5A623" stopOpacity={0.3} />
+                  <stop offset="95%" stopColor="#F5A623" stopOpacity={0}   />
+                </linearGradient>
+              </defs>
+              <XAxis dataKey="date" tick={{ fontSize:9, fill:"#C7C7CC" }} tickLine={false} axisLine={false}
+                tickFormatter={(v: string) => v.slice(5)} interval="preserveStartEnd" />
+              <Tooltip
+                contentStyle={{ background:"#fff", border:"1px solid #F0F0F2", borderRadius:8, fontSize:12, padding:"6px 10px" }}
+                formatter={(v: number | undefined) => [(v ?? 0).toLocaleString(), "Followers"]}
+              />
+              <Area type="monotone" dataKey="count" stroke="#F5A623" strokeWidth={2} fill="url(#fGrad)" dot={false} />
+            </AreaChart>
+          </ResponsiveContainer>
+        </div>
+      )}
 
       {/* X Mentions Feed */}
       {mentions.length > 0 && (

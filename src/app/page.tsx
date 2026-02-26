@@ -5,6 +5,8 @@ import { TokenHealthCard }     from "@/components/cards/token-health"
 import { SocialPulseCard }     from "@/components/cards/social-pulse"
 import { CommunityCard }       from "@/components/cards/community"
 import { ContentPipelineCard } from "@/components/cards/content-pipeline"
+import { ContentCreatorCard }  from "@/components/cards/content-creator"
+import { PostTimingCard }      from "@/components/cards/post-timing"
 import { AgentStatusCard }     from "@/components/cards/agent-status"
 import { MilestonesCard }      from "@/components/cards/milestones"
 import { useAppData }          from "@/lib/data-context"
@@ -113,12 +115,14 @@ export default function Dashboard() {
       }}
         className="cards-grid"
       >
-        <div className="enter-3"><TokenHealthCard /></div>
-        <div className="enter-4"><SocialPulseCard /></div>
-        <div className="enter-5"><CommunityCard /></div>
-        <div className="enter-6"><ContentPipelineCard /></div>
-        <div className="enter-7"><AgentStatusCard /></div>
-        <div className="enter-8"><MilestonesCard /></div>
+        <div className="enter-3" style={{ display:"flex" }}><TokenHealthCard /></div>
+        <div className="enter-4" style={{ display:"flex" }}><SocialPulseCard /></div>
+        <div className="enter-5" style={{ display:"flex" }}><CommunityCard /></div>
+        <div className="enter-6" style={{ display:"flex" }}><ContentPipelineCard /></div>
+        <div className="enter-7" style={{ display:"flex" }}><AgentStatusCard /></div>
+        <div className="enter-8" style={{ display:"flex" }}><MilestonesCard /></div>
+        <div className="enter-9" style={{ display:"flex" }}><ContentCreatorCard /></div>
+        <div className="enter-9" style={{ display:"flex" }}><PostTimingCard /></div>
       </div>
 
       {/* ══ Season 2 Banner ════════════════════════════════════ */}

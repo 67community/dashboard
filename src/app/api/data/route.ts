@@ -96,8 +96,25 @@ async function fetchHolders(): Promise<number> {
 }
 
 // ── Discord — live member & online count ──────────────────────────────────────
-const DISCORD_TOKEN = process.env.DISCORD_TOKEN ?? ""
-const DISCORD_GUILD = "1440077830456082545"
+const DISCORD_TOKEN  = process.env.DISCORD_TOKEN ?? ""
+const DISCORD_GUILD  = "1440077830456082545"
+const TG_BOT_TOKEN   = process.env.TELEGRAM_BOT_TOKEN ?? ""
+const TG_CHANNEL_ID  = "-1003158749697"
+
+async function fetchTelegram(): Promise<number | null> {
+  if (!TG_BOT_TOKEN) return null
+  try {
+    const res = await fetch(
+      `https://api.telegram.org/bot${TG_BOT_TOKEN}/getChatMemberCount?chat_id=${TG_CHANNEL_ID}`,
+      { next: { revalidate: 300 } }
+    )
+    if (!res.ok) return null
+    const j = await res.json()
+    return j.ok ? (j.result as number) : null
+  } catch {
+    return null
+  }
+}
 
 async function fetchDiscord(): Promise<{ members: number; online: number } | null> {
   if (!DISCORD_TOKEN) return null
@@ -132,13 +149,14 @@ function readStaticJson() {
 
 // ── main ──────────────────────────────────────────────────────────────────────
 export async function GET() {
-  const [pair, cg, cgTickers, cmc, holders, discord] = await Promise.all([
+  const [pair, cg, cgTickers, cmc, holders, discord, tgMembers] = await Promise.all([
     safe(fetchDex),
     safe(fetchCG),
     safe(fetchCGTickers),
     safe(fetchCMC),
     safe(fetchHolders),
     safe(fetchDiscord),
+    safe(fetchTelegram),
   ])
 
   if (!pair && !cg) {
@@ -219,11 +237,24 @@ export async function GET() {
     community: {
       ...(static_?.community ?? { discord_members: 0, active_7d: 0, new_joins_24h: 0, open_tickets: 0, unanswered_posts: 0, telegram_members: 0, watchlist_count: 0 }),
       // Live Discord data (overrides static when DISCORD_TOKEN env var is set)
-      ...(discord ? { discord_members: discord.members, online_now: discord.online } : {}),
+      ...(discord ? {
+        discord_members:    discord.members,
+        online_now:         discord.online,
+        // Auto delta: live count vs 24h snapshot in data.json
+        discord_delta_24h:  discord.members - (static_?._snapshot_24h?.discord_members ?? discord.members),
+        new_joins_24h:      Math.max(0, discord.members - (static_?._snapshot_24h?.discord_members ?? discord.members)),
+      } : {}),
       // Live CoinGecko: telegram members + watchlist (no auth needed)
       ...(cg ? {
-        telegram_members: cg.community_data?.telegram_channel_user_count ?? static_?.community?.telegram_members ?? 0,
-        watchlist_count:  cg.watchlist_portfolio_users ?? static_?.community?.watchlist_count ?? 0,
+        telegram_members:    cg.community_data?.telegram_channel_user_count ?? static_?.community?.telegram_members ?? 0,
+        watchlist_count:     cg.watchlist_portfolio_users ?? static_?.community?.watchlist_count ?? 0,
+        telegram_delta_24h:  (cg.community_data?.telegram_channel_user_count ?? 0) - (static_?._snapshot_24h?.telegram_members ?? cg.community_data?.telegram_channel_user_count ?? 0),
+        watchlist_delta_24h: (cg.watchlist_portfolio_users ?? 0) - (static_?._snapshot_24h?.watchlist_count ?? cg.watchlist_portfolio_users ?? 0),
+      } : {}),
+      // Live Telegram Bot API (overrides CoinGecko when TELEGRAM_BOT_TOKEN is set)
+      ...(tgMembers ? {
+        telegram_members:   tgMembers,
+        telegram_delta_24h: tgMembers - (static_?._snapshot_24h?.telegram_members ?? tgMembers),
       } : {}),
     },
     content_pipeline: static_?.content_pipeline ?? [],
