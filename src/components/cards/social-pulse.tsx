@@ -37,8 +37,17 @@ export function SocialPulseCard() {
   const communityM      = s?.x_community_members ?? 0
   const communityDelta  = s?.x_community_delta_24h ?? 0
   const mentions        = s?.mentions ?? []
-  const fmtF  = followers >= 1000  ? `${(followers/1000).toFixed(1)}K`  : followers.toLocaleString()
-  const fmtCM = communityM >= 1000 ? `${(communityM/1000).toFixed(1)}K` : communityM.toLocaleString()
+  // Always show exact numbers — no K rounding
+  const fmtF  = followers.toLocaleString()
+  const fmtCM = communityM.toLocaleString()
+
+  // 3d and 7d follower growth from history
+  const history = s?.follower_history ?? []
+  const growth3d = history.length >= 2
+    ? (history[history.length - 1]?.count ?? 0) - (history[Math.max(0, history.length - 4)]?.count ?? 0)
+    : 0
+  const growth7d = s?.follower_growth_7d ?? 0
+  const avgEng = s?.avg_engagement ?? 0
 
   useEffect(() => {
     const timers = [
@@ -86,7 +95,7 @@ export function SocialPulseCard() {
 
   const collapsed = (
     <div style={{ display:"flex", flexDirection:"column", gap:20 }}>
-      {/* Hero row — Followers + Engagement */}
+      {/* Hero row — Followers exact + Engagement */}
       <div style={{ display:"flex", alignItems:"flex-end", justifyContent:"space-between" }}>
         <div>
           <p className="hero-label" style={{ marginBottom:6 }}>X Followers</p>
@@ -94,12 +103,25 @@ export function SocialPulseCard() {
             <p className="hero-number">{fmtF}</p>
             <DeltaBadge value={followerDelta} inline />
           </div>
+          {/* 3d / 7d growth mini row */}
+          <div style={{ display:"flex", gap:10, marginTop:6 }}>
+            <span style={{ fontSize:"0.72rem", fontWeight:600, color: growth3d >= 0 ? "#16A34A" : "#DC2626" }}>
+              {growth3d >= 0 ? "+" : ""}{growth3d} / 3d
+            </span>
+            <span style={{ fontSize:"0.72rem", color:"#D4D4D8" }}>·</span>
+            <span style={{ fontSize:"0.72rem", fontWeight:600, color: growth7d >= 0 ? "#16A34A" : "#DC2626" }}>
+              {growth7d >= 0 ? "+" : ""}{growth7d} / 7d
+            </span>
+          </div>
         </div>
         <div style={{ textAlign:"right" }}>
           <p style={{ fontSize:"2rem", fontWeight:800, letterSpacing:"-0.04em", color:"#10B981", lineHeight:1 }}>
             {engagement.toFixed(1)}%
           </p>
           <p className="hero-label">Engagement</p>
+          {avgEng > 0 && (
+            <p style={{ fontSize:"0.72rem", color:"#8E8E93", marginTop:3 }}>{avgEng.toFixed(0)} avg/tweet</p>
+          )}
         </div>
       </div>
 
@@ -154,14 +176,32 @@ export function SocialPulseCard() {
 
   const expanded = (
     <div style={{ display:"flex", flexDirection:"column", gap:16 }}>
-      {/* Stats row */}
-      <div style={{ display:"grid", gridTemplateColumns: communityM > 0 ? "1fr 1fr 1fr 1fr" : "1fr 1fr 1fr", gap:8 }}>
+      {/* Stats row — exact numbers */}
+      <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8 }}>
         <div className="inset-cell">
           <div style={{ display:"flex", alignItems:"center" }}>
             <p className="metric-xl">{fmtF}</p>
             <DeltaBadge value={followerDelta} />
           </div>
           <p className="metric-label">X Followers</p>
+          <div style={{ display:"flex", gap:10, marginTop:6 }}>
+            <span style={{ fontSize:"0.72rem", fontWeight:600, color: growth3d >= 0 ? "#16A34A" : "#DC2626" }}>
+              {growth3d >= 0 ? "+" : ""}{growth3d} / 3d
+            </span>
+            <span style={{ fontSize:"0.72rem", color:"#D4D4D8" }}>·</span>
+            <span style={{ fontSize:"0.72rem", fontWeight:600, color: growth7d >= 0 ? "#16A34A" : "#DC2626" }}>
+              {growth7d >= 0 ? "+" : ""}{growth7d} / 7d
+            </span>
+          </div>
+        </div>
+        <div className="inset-cell">
+          <p className="metric-xl" style={{ color:"#10B981" }}>{engagement.toFixed(1)}%</p>
+          <p className="metric-label">Engagement Rate</p>
+          {avgEng > 0 && (
+            <p style={{ fontSize:"0.75rem", fontWeight:600, color:"#6B7280", marginTop:4 }}>
+              {avgEng.toFixed(1)} avg interactions/tweet
+            </p>
+          )}
         </div>
         {communityM > 0 && (
           <div className="inset-cell">
@@ -172,13 +212,9 @@ export function SocialPulseCard() {
             <p className="metric-label">X Community</p>
           </div>
         )}
-        <div className="inset-cell">
-          <p className="metric-xl" style={{ color:"#10B981" }}>{engagement.toFixed(1)}%</p>
-          <p className="metric-label">Engagement</p>
-        </div>
         <div style={{ background:"#FFFBEB", borderRadius:12, padding:"14px 16px" }}>
           <p className="metric-xl" style={{ color:"#D97706" }}>{streak}d</p>
-          <p className="metric-label" style={{ color:"#92400E" }}>🔥 Streak</p>
+          <p className="metric-label" style={{ color:"#92400E" }}>🔥 Posting Streak</p>
         </div>
       </div>
 
@@ -187,10 +223,15 @@ export function SocialPulseCard() {
         <div className="inset-cell">
           <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:12 }}>
             <p className="hero-label">Follower Growth</p>
-            <span style={{ display:"flex", alignItems:"center", gap:4, fontSize:"0.75rem", fontWeight:700, color: (s.follower_growth_7d ?? 0) >= 0 ? "#10B981" : "#EF4444" }}>
-              <TrendingUp style={{ width:12, height:12 }} />
-              {(s.follower_growth_7d ?? 0) >= 0 ? "+" : ""}{(s.follower_growth_7d ?? 0).toLocaleString()} / 7d
-            </span>
+            <div style={{ display:"flex", gap:12 }}>
+              <span style={{ fontSize:"0.72rem", fontWeight:700, color: growth3d >= 0 ? "#10B981" : "#EF4444" }}>
+                {growth3d >= 0 ? "+" : ""}{growth3d} / 3d
+              </span>
+              <span style={{ display:"flex", alignItems:"center", gap:3, fontSize:"0.72rem", fontWeight:700, color: growth7d >= 0 ? "#10B981" : "#EF4444" }}>
+                <TrendingUp style={{ width:11, height:11 }} />
+                {growth7d >= 0 ? "+" : ""}{growth7d} / 7d
+              </span>
+            </div>
           </div>
           <ResponsiveContainer width="100%" height={80}>
             <AreaChart data={s.follower_history.slice(-14)} margin={{ top:2, right:0, left:0, bottom:0 }}>
