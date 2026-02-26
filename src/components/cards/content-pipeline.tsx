@@ -181,17 +181,14 @@ export function ContentPipelineCard() {
                 transition: "all 0.12s",
               }}
             >
-              <span style={{ fontSize: "0.5625rem", fontWeight: isSelected || isTodayCell ? 800 : 600,
-                color: isSelected ? "#000" : isTodayCell ? "#F5A623" : "#8E8E93", letterSpacing: "0.03em" }}>
+              <span style={{ fontSize: "0.5625rem", fontWeight: isSelected ? 800 : 600,
+                color: isSelected ? "#000" : "#8E8E93", letterSpacing: "0.03em" }}>
                 {d.day.slice(0,2)}
               </span>
               <span style={{ fontSize: "0.8125rem", fontWeight: 700,
                 color: isSelected ? "#000" : count > 0 ? "#374151" : "#D1D5DB" }}>
                 {count}
               </span>
-              {isTodayCell && !isSelected && (
-                <span style={{ width: 4, height: 4, borderRadius: "50%", background: "#F5A623", marginTop: 1 }} />
-              )}
             </button>
           )
         })}
