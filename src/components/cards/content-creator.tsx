@@ -288,36 +288,6 @@ export function ContentCreatorCard() {
   const expanded = (
     <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
 
-      {/* Current platform badge */}
-      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-        <div style={{ width: 32, height: 32, borderRadius: 9, background: `${activePlat.accent}15`,
-          display: "flex", alignItems: "center", justifyContent: "center" }}>
-          <PlatformIcon id={activePlat.id} size={16} active />
-        </div>
-        <div>
-          <p style={{ fontSize: "0.875rem", fontWeight: 700, color: "#1D1D1F" }}>{activePlat.label}</p>
-          <p style={{ fontSize: "0.75rem", color: "#8E8E93" }}>Change platform on the card</p>
-        </div>
-      </div>
-
-      {/* ── Content Type ────────────────────────────────────── */}
-      <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
-        {activePlat.types.map(t => (
-          <button
-            key={t.id}
-            onClick={e => { e.stopPropagation(); setType(t.id) }}
-            style={{
-              padding: "6px 14px", borderRadius: 99, cursor: "pointer",
-              border:     type === t.id ? `2px solid ${activePlat.accent}` : "2px solid transparent",
-              background: type === t.id ? `${activePlat.accent}15` : "#F4F4F5",
-              color:      type === t.id ? activePlat.accent : "#6B7280",
-              fontSize: "0.8rem", fontWeight: type === t.id ? 700 : 500,
-              transition: "all 0.12s",
-            }}
-          >{t.label}</button>
-        ))}
-      </div>
-
       {/* ── Generator Box ───────────────────────────────────── */}
       <div style={{
         background: `linear-gradient(135deg, ${activePlat.accent}10, ${activePlat.accent}05)`,
@@ -329,7 +299,7 @@ export function ContentCreatorCard() {
           value={topic}
           onChange={e => setTopic(e.target.value)}
           onKeyDown={e => e.key === "Enter" && generate()}
-          placeholder={`Topic or idea for ${activePlat.label}...`}
+          placeholder="Topic or idea for $67…"
           style={{
             width: "100%", padding: "10px 14px", borderRadius: 10,
             border: "1px solid rgba(0,0,0,0.08)",
@@ -358,7 +328,7 @@ export function ContentCreatorCard() {
               }} />Generating...
             </>
           ) : (
-            <><Sparkles style={{ width: 14, height: 14 }} />Generate for {activePlat.label}</>
+            <><Sparkles style={{ width: 14, height: 14 }} />Generate Draft</>  
           )}
         </button>
       </div>
@@ -444,7 +414,7 @@ export function ContentCreatorCard() {
   return (
     <DashboardCard
       title="Content Creator"
-      subtitle="Platform · AI Draft Generator"
+      subtitle="AI Draft Generator"
       icon={<PenLine style={{ width: 16, height: 16 }} />}
       accentColor="#F5A623"
       collapsed={collapsed}
