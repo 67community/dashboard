@@ -14,10 +14,11 @@ interface Props {
   className?: string
   liveTag?: boolean
   onOpen?: () => void
+  noAutoOpen?: boolean   // disable card-level click → only expand icon opens modal
 }
 
 export function DashboardCard({
-  title, subtitle, icon, accentColor, collapsed, expanded, className = "", liveTag, onOpen
+  title, subtitle, icon, accentColor, collapsed, expanded, className = "", liveTag, onOpen, noAutoOpen
 }: Props) {
   const [open, setOpen]       = useState(false)
   const [mounted, setMounted] = useState(false)
@@ -132,9 +133,9 @@ export function DashboardCard({
     <>
       {/* ── Grid tile ───────────────────────────────────────── */}
       <div
-        onClick={() => { setOpen(true); onOpen?.() }}
-        className={`mc-card mc-card-hover flex flex-col overflow-hidden select-none ${className}`}
-        style={{ cursor: "pointer", position: "relative" }}
+        onClick={noAutoOpen ? undefined : () => { setOpen(true); onOpen?.() }}
+        className={`mc-card ${noAutoOpen ? "" : "mc-card-hover"} flex flex-col overflow-hidden ${noAutoOpen ? "" : "select-none"} ${className}`}
+        style={{ cursor: noAutoOpen ? "default" : "pointer", position: "relative" }}
       >
         {/* Stripe-style ambient glow — unique per card */}
         <div style={{
@@ -177,13 +178,19 @@ export function DashboardCard({
                   LIVE
                 </span>
               )}
-              <div style={{
-                width: 28, height: 28, borderRadius: "50%",
-                background: "#F4F4F5",
-                display: "flex", alignItems: "center", justifyContent: "center",
-              }}>
+              <button
+                onClick={e => { e.stopPropagation(); setOpen(true); onOpen?.() }}
+                style={{
+                  width: 28, height: 28, borderRadius: "50%",
+                  background: "#F4F4F5", border: "none", cursor: "pointer",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  transition: "background 0.15s",
+                }}
+                onMouseEnter={e => (e.currentTarget.style.background = "#E8E8ED")}
+                onMouseLeave={e => (e.currentTarget.style.background = "#F4F4F5")}
+              >
                 <Maximize2 style={{ width: 12, height: 12, color: "#A1A1AA" }} />
-              </div>
+              </button>
             </div>
           </div>
 

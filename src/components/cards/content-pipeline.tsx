@@ -103,8 +103,9 @@ export function ContentPipelineCard() {
 
   const [schedule, setSchedule] = useState<DayRow[]>(DEFAULT_SCHEDULE)
   const [mix,      setMix]      = useState<MixRow[]>(DEFAULT_MIX)
-  const [editMode, setEditMode] = useState(false)
-  const [editMix,  setEditMix]  = useState(false)
+  const [editMode,     setEditMode]     = useState(false)
+  const [editMix,      setEditMix]      = useState(false)
+  const [selectedIdx,  setSelectedIdx]  = useState(-1)   // -1 = use today
 
   // Load from localStorage on mount
   useEffect(() => {
@@ -149,80 +150,84 @@ export function ContentPipelineCard() {
 
   const totalPosts = schedule.reduce((s, d) => s + d.slots.length, 0)
 
-  // today
+  // today + selected day
   const DAY_NAMES = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]
-  const todayName = DAY_NAMES[new Date().getDay()]
-  const todayIdx  = schedule.findIndex(d => d.day === todayName)
-  const todayRow  = schedule[todayIdx >= 0 ? todayIdx : 0]
+  const todayName  = DAY_NAMES[new Date().getDay()]
+  const todayIdx   = schedule.findIndex(d => d.day === todayName)
+  const activeIdx  = selectedIdx >= 0 ? selectedIdx : (todayIdx >= 0 ? todayIdx : 0)
+  const activeRow  = schedule[activeIdx]
+  const isToday    = activeIdx === (todayIdx >= 0 ? todayIdx : 0)
 
-  // ── Collapsed — interactive schedule view ────────────────────────────────
+  // ── Collapsed — fully interactive, no modal needed ───────────────────────
 
   const collapsed = (
     <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
 
-      {/* Mini 7-day strip */}
-      <div style={{ display: "flex", gap: 4 }}>
+      {/* Clickable 7-day strip */}
+      <div style={{ display: "flex", gap: 4 }} onClick={e => e.stopPropagation()}>
         {schedule.map((d, i) => {
-          const isToday = d.day === todayName
-          const count   = d.slots.length
+          const isTodayCell  = d.day === todayName
+          const isSelected   = i === activeIdx
+          const count        = d.slots.length
           return (
-            <div
+            <button
               key={d.day}
+              onClick={e => { e.stopPropagation(); setSelectedIdx(i) }}
               style={{
                 flex: 1, display: "flex", flexDirection: "column", alignItems: "center",
-                gap: 4, padding: "6px 2px", borderRadius: 8,
-                background: isToday ? "#F5A623" : count > 0 ? "#F4F4F5" : "transparent",
-                border: isToday ? "none" : "1.5px solid rgba(0,0,0,0.06)",
+                gap: 4, padding: "6px 2px", borderRadius: 8, border: "none", cursor: "pointer",
+                background: isSelected ? "#F5A623" : isTodayCell ? "#FFF5E0" : count > 0 ? "#F4F4F5" : "transparent",
+                outline: isSelected ? "none" : isTodayCell ? "1.5px solid #F5A623" : "1.5px solid rgba(0,0,0,0.06)",
+                transition: "all 0.12s",
               }}
             >
-              <span style={{ fontSize: "0.5625rem", fontWeight: isToday ? 800 : 600,
-                color: isToday ? "#000" : "#8E8E93", letterSpacing: "0.03em" }}>
+              <span style={{ fontSize: "0.5625rem", fontWeight: isSelected ? 800 : 600,
+                color: isSelected ? "#000" : isTodayCell ? "#C8820A" : "#8E8E93", letterSpacing: "0.03em" }}>
                 {d.day.slice(0,2)}
               </span>
               <span style={{ fontSize: "0.8125rem", fontWeight: 700,
-                color: isToday ? "#000" : count > 0 ? "#374151" : "#D1D5DB" }}>
+                color: isSelected ? "#000" : count > 0 ? "#374151" : "#D1D5DB" }}>
                 {count}
               </span>
-            </div>
+            </button>
           )
         })}
       </div>
 
-      {/* Today's posts */}
+      {/* Selected day's posts */}
       <div style={{ borderTop: "1px solid rgba(0,0,0,0.06)", paddingTop: 12 }}>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
           <p style={{ fontSize: "0.6875rem", fontWeight: 700, color: "#8E8E93",
             textTransform: "uppercase", letterSpacing: "0.07em" }}>
-            Today · {todayRow?.day}
+            {isToday ? "Today" : activeRow?.day} · {activeRow?.day}
           </p>
           <span style={{ fontSize: "0.75rem", fontWeight: 700, color: "#F5A623" }}>
-            {todayRow?.slots.length ?? 0} posts
+            {activeRow?.slots.length ?? 0} posts
           </span>
         </div>
 
-        {todayRow?.slots.length === 0 ? (
-          <p style={{ fontSize: "0.8125rem", color: "#A1A1AA", fontStyle: "italic" }}>Nothing scheduled — add a post below</p>
+        {activeRow?.slots.length === 0 ? (
+          <p style={{ fontSize: "0.8125rem", color: "#A1A1AA", fontStyle: "italic" }}>
+            Nothing scheduled — add below
+          </p>
         ) : (
           <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-            {todayRow?.slots.slice(0, 3).map((slot, i) => (
+            {activeRow?.slots.map((slot, i) => (
               <div key={i} style={{ display: "flex", alignItems: "center", gap: 8 }}>
                 <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#F5A623", flexShrink: 0 }} />
                 <span style={{ fontSize: "0.8125rem", color: "#374151", fontWeight: 500 }}>{slot}</span>
               </div>
             ))}
-            {todayRow && todayRow.slots.length > 3 && (
-              <p style={{ fontSize: "0.75rem", color: "#A1A1AA", marginLeft: 14 }}>+{todayRow.slots.length - 3} more</p>
-            )}
           </div>
         )}
       </div>
 
-      {/* Quick-add for today */}
+      {/* Quick-add for selected day */}
       <div onClick={e => e.stopPropagation()} style={{ display: "flex", alignItems: "center", gap: 8 }}>
-        {todayIdx >= 0 && (
-          <AddSlotInput onAdd={v => addSlot(todayIdx, v)} />
-        )}
-        <span style={{ fontSize: "0.75rem", color: "#A1A1AA" }}>add to today</span>
+        <AddSlotInput onAdd={v => addSlot(activeIdx, v)} />
+        <span style={{ fontSize: "0.75rem", color: "#A1A1AA" }}>
+          add to {isToday ? "today" : activeRow?.day}
+        </span>
       </div>
     </div>
   )
@@ -403,6 +408,7 @@ export function ContentPipelineCard() {
       accentColor="#F5A623"
       collapsed={collapsed}
       expanded={expanded}
+      noAutoOpen
     />
   )
 }
