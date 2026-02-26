@@ -93,6 +93,17 @@ export interface SocialPulseData {
   mentions?: Mention[]
 }
 
+export interface ActivityItem {
+  type:     "join" | "active" | "ban" | "kick" | "spam"
+  user:     string
+  user_id?: string
+  avatar?:  string
+  time_ago?: string
+  reason?:  string
+  detail?:  string
+  source?:  "discord" | "telegram"
+}
+
 export interface CommunityData {
   discord_members: number
   active_7d: number
@@ -105,6 +116,7 @@ export interface CommunityData {
   discord_delta_24h?: number
   telegram_delta_24h?: number
   watchlist_delta_24h?: number
+  recent_discord_activity?: ActivityItem[]
 }
 
 export interface AgentData {

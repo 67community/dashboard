@@ -3,6 +3,7 @@
 import { Users } from "lucide-react"
 import { DashboardCard } from "@/components/ui/dashboard-card"
 import { useAppData } from "@/lib/data-context"
+import type { ActivityItem } from "@/lib/use-data"
 
 function DeltaBadge({ value }: { value?: number }) {
   if (value === undefined || value === null || value === 0) return null
@@ -179,6 +180,69 @@ export function CommunityCard() {
           ))}
         </div>
       </div>
+
+      {/* Real Discord member activity — MEE6 + audit log */}
+      {(c?.recent_discord_activity ?? []).length > 0 && (
+        <div>
+          <p style={{ fontSize:"0.6875rem", fontWeight:700, color:"#A1A1AA", letterSpacing:"0.06em", textTransform:"uppercase", marginBottom:10 }}>
+            Members & Events
+          </p>
+          <div style={{ display:"flex", flexDirection:"column", gap:6 }}>
+            {(c!.recent_discord_activity as ActivityItem[]).map((item, i) => {
+              const typeConfig: Record<string, { bg: string; color: string; label: string }> = {
+                active: { bg:"#DCFCE7", color:"#15803D", label:"Active" },
+                join:   { bg:"#DBEAFE", color:"#1D4ED8", label:"Joined" },
+                ban:    { bg:"#FEE2E2", color:"#B91C1C", label:"Banned" },
+                kick:   { bg:"#FEF3C7", color:"#B45309", label:"Warned" },
+                spam:   { bg:"#FCE7F3", color:"#BE185D", label:"Spam"   },
+              }
+              const cfg = typeConfig[item.type] ?? typeConfig.active
+              // Use detail as label if available (e.g. "Warned · Bad word usage")
+              const displayLabel = item.detail ? item.detail.split("·")[0].trim() : cfg.label
+              const displayDetail = item.detail?.includes("·") ? item.detail.split("·").slice(1).join("·").trim() : ""
+              const fallbackAvatar = `https://cdn.discordapp.com/embed/avatars/${(parseInt(item.user_id?.slice(-1) ?? "0", 16) || 0) % 5}.png`
+              const isTg = item.source === "telegram"
+              return (
+                <div key={i} style={{ display:"flex", alignItems:"center", gap:10, padding:"8px 12px", background:"rgba(0,0,0,0.02)", borderRadius:10 }}>
+                  {/* Avatar or TG icon */}
+                  {isTg ? (
+                    <span style={{ width:28, height:28, borderRadius:"50%", flexShrink:0, background:"#229ED9", display:"flex", alignItems:"center", justifyContent:"center", fontSize:"0.875rem" }}>✈️</span>
+                  ) : (
+                    <img
+                      src={item.avatar || fallbackAvatar}
+                      alt={item.user}
+                      width={28} height={28}
+                      style={{ borderRadius:"50%", flexShrink:0, objectFit:"cover", background:"#E5E7EB" }}
+                      onError={(e) => { (e.target as HTMLImageElement).src = fallbackAvatar }}
+                    />
+                  )}
+                  {/* Username + detail */}
+                  <div style={{ flex:1, minWidth:0 }}>
+                    <p style={{ fontSize:"0.8125rem", fontWeight:600, color:"#1D1D1F", margin:0, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>
+                      {item.user}
+                    </p>
+                    {displayDetail && (
+                      <p style={{ fontSize:"0.6875rem", color:"#8E8E93", margin:0, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>
+                        {displayDetail}
+                      </p>
+                    )}
+                  </div>
+                  {/* Event badge */}
+                  <span style={{ fontSize:"0.6875rem", fontWeight:700, color: cfg.color, background: cfg.bg, borderRadius:99, padding:"2px 8px", flexShrink:0 }}>
+                    {displayLabel}
+                  </span>
+                  {/* Time */}
+                  {item.time_ago && (
+                    <span style={{ fontSize:"0.72rem", color:"#C7C7CC", flexShrink:0, whiteSpace:"nowrap" }}>
+                      {item.time_ago}
+                    </span>
+                  )}
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      )}
     </div>
   )
 
