@@ -176,19 +176,22 @@ export function ContentPipelineCard() {
               style={{
                 flex: 1, display: "flex", flexDirection: "column", alignItems: "center",
                 gap: 4, padding: "6px 2px", borderRadius: 8, border: "none", cursor: "pointer",
-                background: isSelected ? "#F5A623" : isTodayCell ? "#FFF5E0" : count > 0 ? "#F4F4F5" : "transparent",
-                outline: isSelected ? "none" : isTodayCell ? "1.5px solid #F5A623" : "1.5px solid rgba(0,0,0,0.06)",
+                background: isSelected ? "#F5A623" : count > 0 ? "#F4F4F5" : "transparent",
+                outline: isSelected ? "none" : "1.5px solid rgba(0,0,0,0.06)",
                 transition: "all 0.12s",
               }}
             >
-              <span style={{ fontSize: "0.5625rem", fontWeight: isSelected ? 800 : 600,
-                color: isSelected ? "#000" : isTodayCell ? "#C8820A" : "#8E8E93", letterSpacing: "0.03em" }}>
+              <span style={{ fontSize: "0.5625rem", fontWeight: isSelected || isTodayCell ? 800 : 600,
+                color: isSelected ? "#000" : isTodayCell ? "#F5A623" : "#8E8E93", letterSpacing: "0.03em" }}>
                 {d.day.slice(0,2)}
               </span>
               <span style={{ fontSize: "0.8125rem", fontWeight: 700,
                 color: isSelected ? "#000" : count > 0 ? "#374151" : "#D1D5DB" }}>
                 {count}
               </span>
+              {isTodayCell && !isSelected && (
+                <span style={{ width: 4, height: 4, borderRadius: "50%", background: "#F5A623", marginTop: 1 }} />
+              )}
             </button>
           )
         })}
