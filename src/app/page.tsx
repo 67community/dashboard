@@ -9,7 +9,8 @@ import { ContentCreatorCard }  from "@/components/cards/content-creator"
 import { PostTimingCard }        from "@/components/cards/post-timing"
 import { TikTokSpotlightCard }  from "@/components/cards/tiktok-spotlight"
 import { AgentStatusCard }      from "@/components/cards/agent-status"
-import { MilestonesCard }      from "@/components/cards/milestones"
+import { MilestonesCard }       from "@/components/cards/milestones"
+import { FeatureRequestCard }   from "@/components/cards/feature-request"
 import { useAppData }          from "@/lib/data-context"
 import { AnimatedNumber }      from "@/components/ui/animated-number"
 
@@ -122,6 +123,7 @@ export default function Dashboard() {
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><ContentCreatorCard /></div>
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><PostTimingCard /></div>
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><TikTokSpotlightCard /></div>
+        <div className="enter-9" style={{ display:"flex", minWidth:0 }}><FeatureRequestCard /></div>
       </div>
 
       {/* ══ Season 2 Banner ════════════════════════════════════ */}
