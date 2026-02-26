@@ -30,7 +30,7 @@ export function CommunityCard() {
   const { data } = useAppData()
   const c = data?.community
   const members = c?.discord_members ?? 0
-  const fmtM = members >= 1000 ? `${(members/1000).toFixed(1)}K` : members.toLocaleString()
+  const fmtM = members.toLocaleString()
   const goal = 10000
   const pct = Math.min((members / goal) * 100, 100)
 
@@ -60,8 +60,8 @@ export function CommunityCard() {
       <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:8, borderTop:"1px solid rgba(0,0,0,0.06)", paddingTop:16 }}>
         {[
           { label:"New 24h",   value: String(c?.new_joins_24h ?? "—"), delta: undefined },
-          { label:"Active 7d", value: (c?.active_7d ?? 0) >= 1000 ? `${((c?.active_7d??0)/1000).toFixed(1)}K` : String(c?.active_7d ?? "—"), delta: undefined },
-          { label:"Telegram",  value: (c?.telegram_members ?? 0) >= 1000 ? `${((c?.telegram_members??0)/1000).toFixed(1)}K` : String(c?.telegram_members ?? "—"), delta: telegramDelta },
+          { label:"Active 7d", value: (c?.active_7d ?? 0).toLocaleString(), delta: undefined },
+          { label:"Telegram",  value: (c?.telegram_members ?? 0).toLocaleString(), delta: telegramDelta },
         ].map(s => (
           <div key={s.label} className="inset-cell" style={{ textAlign:"center" }}>
             <p style={{ fontSize:"1.25rem", fontWeight:700, letterSpacing:"-0.03em", color:"#1D1D1F", margin:0 }}>{s.value}</p>
@@ -136,6 +136,28 @@ export function CommunityCard() {
         <p style={{ fontSize:"0.75rem", color:"#A1A1AA", marginTop:8 }}>
           {(goal - members).toLocaleString()} members to go
         </p>
+      </div>
+      {/* Recent Activity */}
+      <div>
+        <p style={{ fontSize:"0.6875rem", fontWeight:700, color:"#A1A1AA", letterSpacing:"0.06em", textTransform:"uppercase", marginBottom:10 }}>Recent Activity</p>
+        <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
+          {[
+            { type:"join",    user:"new_member_67",   time:"2m ago" },
+            { type:"ban",     user:"scam_bot_123",    time:"15m ago", note:"Spam detected" },
+            { type:"join",    user:"crypto_fan_sol",  time:"1h ago" },
+            { type:"message", user:"community_mod",   time:"2h ago",  note:"Pinned announcement" },
+          ].map((item, i) => (
+            <div key={i} style={{ display:"flex", alignItems:"center", gap:10, padding:"8px 12px", background:"rgba(0,0,0,0.02)", borderRadius:10 }}>
+              <span style={{
+                width:8, height:8, borderRadius:"50%", flexShrink:0,
+                background: item.type==="join" ? "#10B981" : item.type==="ban" ? "#EF4444" : "#3B82F6"
+              }} />
+              <span style={{ fontSize:"0.8125rem", fontWeight:600, color:"#1D1D1F", flex:1 }}>{item.user}</span>
+              {item.note && <span style={{ fontSize:"0.75rem", color:"#8E8E93" }}>{item.note}</span>}
+              <span style={{ fontSize:"0.75rem", color:"#C7C7CC", flexShrink:0 }}>{item.time}</span>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   )

@@ -78,6 +78,8 @@ export interface Mention {
 export interface SocialPulseData {
   twitter_followers: number
   follower_change_24h: number
+  follower_history?: { date: string; count: number }[]
+  follower_growth_7d?: number
   posting_streak_days: number
   engagement_rate: number
   best_tweet_week?: BestTweet
