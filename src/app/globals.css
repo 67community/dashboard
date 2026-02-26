@@ -317,6 +317,23 @@ img, svg { min-width: 0; flex-shrink: 0; }
   .cards-grid { gap: 10px !important; grid-template-columns: 1fr !important; }
 }
 
+/* ── Card body padding — responsive ─────────────────────── */
+.mc-card-body {
+  padding: 22px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 20px;
+  position: relative;
+  z-index: 1;
+}
+@media (max-width: 640px) {
+  .mc-card-body { padding: 16px 16px 18px !important; gap: 14px !important; }
+  .hero-number  { font-size: 2.25rem !important; }
+  .hero-label   { font-size: 0.6875rem !important; }
+  .card-title   { font-size: 0.875rem !important; }
+}
+
 /* ── Dashboard modal — mobile ─────────────────────────────── */
 .mc-modal-wrap {
   padding: 24px;
