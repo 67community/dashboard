@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Eye, Plus, ExternalLink, ChevronDown, ChevronUp } from "lucide-react"
+import { Eye, Plus, ExternalLink, ChevronDown, ChevronUp, Share2, Check } from "lucide-react"
 import { DashboardCard } from "@/components/ui/dashboard-card"
 
 // ── Types ─────────────────────────────────────────────────────────────────────
@@ -55,6 +55,37 @@ function SightingRow({ s, expanded, onToggle, onStatus, onDelete }: {
 }) {
   const plat = PLAT_CONFIG[s.platform]
   const stat = STATUS_CONFIG[s.status]
+  const [genning, setGenning] = useState(false)
+  const [drafted, setDrafted] = useState(false)
+
+  async function generatePost(e: React.MouseEvent) {
+    e.stopPropagation()
+    setGenning(true)
+    try {
+      const res  = await fetch("/api/sighting-to-post", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ title: s.title, platform: s.platform, url: s.url, note: s.note }),
+      })
+      const data = await res.json()
+      if (data.post) {
+        // Save to Announcements localStorage
+        const existing = JSON.parse(localStorage.getItem("67_announcements") ?? "[]")
+        const newAnn = {
+          id: Date.now().toString(), title: `67 Sighting: ${s.title.slice(0,40)}`,
+          body: data.post, channel: "x", type: "general",
+          status: "draft", createdAt: new Date().toISOString(),
+        }
+        localStorage.setItem("67_announcements", JSON.stringify([newAnn, ...existing]))
+        // Copy to clipboard
+        await navigator.clipboard.writeText(data.post).catch(() => {})
+        setDrafted(true)
+        setTimeout(() => setDrafted(false), 3000)
+      }
+    } catch {}
+    setGenning(false)
+  }
+
   return (
     <div className="inset-cell" style={{ display:"flex", flexDirection:"column", gap:0 }}>
       <button onClick={e => { e.stopPropagation(); onToggle() }}
@@ -102,6 +133,20 @@ function SightingRow({ s, expanded, onToggle, onStatus, onDelete }: {
               </button>
             ))}
           </div>
+          {/* Escalation — generate X post */}
+          <button onClick={generatePost} disabled={genning}
+            style={{ display:"flex", alignItems:"center", gap:5, padding:"5px 12px",
+              borderRadius:8, border:"none", cursor: genning ? "wait" : "pointer",
+              background: drafted ? "rgba(5,150,105,0.1)" : "rgba(0,0,0,0.05)",
+              color: drafted ? "#059669" : "#0A0A0A",
+              fontSize:"0.75rem", fontWeight:700, transition:"all 0.15s" }}>
+            {drafted
+              ? <><Check style={{ width:12,height:12 }} /> Drafted to Announcements + Copied!</>
+              : genning
+                ? "Generating…"
+                : <><Share2 style={{ width:12,height:12 }} /> Generate X Post</>}
+          </button>
+
           <button onClick={e => { e.stopPropagation(); onDelete(s.id) }}
             style={{ alignSelf:"flex-start", fontSize:"0.6875rem", color:"#EF4444",
               background:"none", border:"none", cursor:"pointer", padding:0 }}>Remove</button>
