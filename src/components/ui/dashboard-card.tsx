@@ -47,10 +47,10 @@ export function DashboardCard({
 
   const modal = open && mounted ? createPortal(
     <div
+      className="mc-modal-wrap"
       style={{
         position: "fixed", inset: 0, zIndex: 9999,
         display: "flex", alignItems: "center", justifyContent: "center",
-        padding: 24,
       }}
       onClick={e => { if (e.target === e.currentTarget) setOpen(false) }}
     >
@@ -68,7 +68,7 @@ export function DashboardCard({
 
       {/* Sheet */}
       <div
-        className="anim-slide-up"
+        className="anim-slide-up mc-modal-sheet"
         style={{
           position: "relative",
           width: "100%", maxWidth: 560,
