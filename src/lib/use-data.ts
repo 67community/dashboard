@@ -104,6 +104,19 @@ export interface ActivityItem {
   source?:  "discord" | "telegram"
 }
 
+export interface RecentJoin {
+  user:     string
+  user_id:  string
+  avatar:   string
+  message:  string
+  time_ago: string
+}
+
+export interface TopChannel {
+  name:     string
+  msgs_1h:  number
+}
+
 export interface CommunityData {
   discord_members: number
   active_7d: number
@@ -117,6 +130,10 @@ export interface CommunityData {
   telegram_delta_24h?: number
   watchlist_delta_24h?: number
   recent_discord_activity?: ActivityItem[]
+  // Live Discord activity feed
+  recent_joins?: RecentJoin[]
+  active_users_today?: number
+  top_channels?: TopChannel[]
 }
 
 export interface AgentData {
