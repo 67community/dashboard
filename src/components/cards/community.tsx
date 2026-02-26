@@ -137,24 +137,44 @@ export function CommunityCard() {
           {(goal - members).toLocaleString()} members to go
         </p>
       </div>
-      {/* Recent Activity */}
+      {/* Recent Activity — real data */}
       <div>
         <p style={{ fontSize:"0.6875rem", fontWeight:700, color:"#A1A1AA", letterSpacing:"0.06em", textTransform:"uppercase", marginBottom:10 }}>Recent Activity</p>
-        <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
+        <div style={{ display:"flex", flexDirection:"column", gap:6 }}>
           {[
-            { type:"join",    user:"new_member_67",   time:"2m ago" },
-            { type:"ban",     user:"scam_bot_123",    time:"15m ago", note:"Spam detected" },
-            { type:"join",    user:"crypto_fan_sol",  time:"1h ago" },
-            { type:"message", user:"community_mod",   time:"2h ago",  note:"Pinned announcement" },
-          ].map((item, i) => (
+            {
+              dot:  "#10B981",
+              icon: "👥",
+              text: `${c?.new_joins_24h ?? 0} new members joined`,
+              sub:  "last 24h",
+              show: true,
+            },
+            {
+              dot:  "#3B82F6",
+              icon: "🟢",
+              text: `${c?.online_now ?? 0} members online now`,
+              sub:  "live",
+              show: true,
+            },
+            {
+              dot:  "#F5A623",
+              icon: "👁",
+              text: `${(c?.watchlist_count ?? 0).toLocaleString()} DexScreener watchlists`,
+              sub:  (c?.watchlist_delta_24h ?? 0) > 0 ? `+${c!.watchlist_delta_24h} today` : "live",
+              show: true,
+            },
+            {
+              dot:  "#229ED9",
+              icon: "✈️",
+              text: `${(c?.telegram_members ?? 0).toLocaleString()} Telegram members`,
+              sub:  (c?.telegram_delta_24h ?? 0) > 0 ? `+${c!.telegram_delta_24h} today` : "live",
+              show: true,
+            },
+          ].filter(a => a.show).map((item, i) => (
             <div key={i} style={{ display:"flex", alignItems:"center", gap:10, padding:"8px 12px", background:"rgba(0,0,0,0.02)", borderRadius:10 }}>
-              <span style={{
-                width:8, height:8, borderRadius:"50%", flexShrink:0,
-                background: item.type==="join" ? "#10B981" : item.type==="ban" ? "#EF4444" : "#3B82F6"
-              }} />
-              <span style={{ fontSize:"0.8125rem", fontWeight:600, color:"#1D1D1F", flex:1 }}>{item.user}</span>
-              {item.note && <span style={{ fontSize:"0.75rem", color:"#8E8E93" }}>{item.note}</span>}
-              <span style={{ fontSize:"0.75rem", color:"#C7C7CC", flexShrink:0 }}>{item.time}</span>
+              <span style={{ width:8, height:8, borderRadius:"50%", flexShrink:0, background: item.dot }} />
+              <span style={{ fontSize:"0.8125rem", fontWeight:600, color:"#1D1D1F", flex:1 }}>{item.text}</span>
+              <span style={{ fontSize:"0.72rem", color:"#C7C7CC", flexShrink:0, whiteSpace:"nowrap" }}>{item.sub}</span>
             </div>
           ))}
         </div>
