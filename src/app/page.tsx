@@ -6,8 +6,9 @@ import { SocialPulseCard }     from "@/components/cards/social-pulse"
 import { CommunityCard }       from "@/components/cards/community"
 import { ContentPipelineCard } from "@/components/cards/content-pipeline"
 import { ContentCreatorCard }  from "@/components/cards/content-creator"
-import { PostTimingCard }      from "@/components/cards/post-timing"
-import { AgentStatusCard }     from "@/components/cards/agent-status"
+import { PostTimingCard }        from "@/components/cards/post-timing"
+import { TikTokSpotlightCard }  from "@/components/cards/tiktok-spotlight"
+import { AgentStatusCard }      from "@/components/cards/agent-status"
 import { MilestonesCard }      from "@/components/cards/milestones"
 import { useAppData }          from "@/lib/data-context"
 import { AnimatedNumber }      from "@/components/ui/animated-number"
@@ -123,6 +124,7 @@ export default function Dashboard() {
         <div className="enter-8" style={{ display:"flex" }}><MilestonesCard /></div>
         <div className="enter-9" style={{ display:"flex" }}><ContentCreatorCard /></div>
         <div className="enter-9" style={{ display:"flex" }}><PostTimingCard /></div>
+        <div className="enter-9" style={{ display:"flex" }}><TikTokSpotlightCard /></div>
       </div>
 
       {/* ══ Season 2 Banner ════════════════════════════════════ */}

@@ -132,6 +132,16 @@ export interface RecentWin {
   date: string
 }
 
+export interface TikTokVideo {
+  video_url:     string
+  thumbnail_url: string
+  creator:       string
+  creator_url:   string
+  description:   string
+  views_text:    string
+  scraped_at:    string
+}
+
 export interface DashboardData {
   last_updated: string
   token_health: TokenHealthData
@@ -141,6 +151,7 @@ export interface DashboardData {
   milestones: MilestoneData[]
   alerts: AlertData[]
   recent_wins: RecentWin[]
+  tiktok_spotlight?: TikTokVideo[]
 }
 
 // ── Hook ─────────────────────────────────────────────────────────────────────
