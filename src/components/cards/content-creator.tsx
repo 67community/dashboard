@@ -19,6 +19,50 @@ interface Draft {
   approved: boolean
 }
 
+// ─── Platform SVG Logos ─────────────────────────────────────────────────────────
+
+function XLogo({ size = 18, color = "#0A0A0A" }: { size?: number; color?: string }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill={color}>
+      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+    </svg>
+  )
+}
+
+function TikTokLogo({ size = 18 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+      <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.74a4.85 4.85 0 0 1-1.01-.05z" fill="#010101"/>
+      <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.74a4.85 4.85 0 0 1-1.01-.05z" fill="url(#tiktok-grad-cc)"/>
+      <defs>
+        <linearGradient id="tiktok-grad-cc" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="#69C9D0"/>
+          <stop offset="100%" stopColor="#EE1D52"/>
+        </linearGradient>
+      </defs>
+    </svg>
+  )
+}
+
+function InstagramLogo({ size = 18 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+      <defs>
+        <radialGradient id="ig-cc-rg" cx="30%" cy="107%" r="150%">
+          <stop offset="0%"   stopColor="#fdf497"/>
+          <stop offset="5%"   stopColor="#fdf497"/>
+          <stop offset="45%"  stopColor="#fd5949"/>
+          <stop offset="60%"  stopColor="#d6249f"/>
+          <stop offset="90%"  stopColor="#285AEB"/>
+        </radialGradient>
+      </defs>
+      <rect x="2" y="2" width="20" height="20" rx="6" fill="url(#ig-cc-rg)"/>
+      <circle cx="12" cy="12" r="4.5" stroke="white" strokeWidth="1.8" fill="none"/>
+      <circle cx="17.5" cy="6.5" r="1.2" fill="white"/>
+    </svg>
+  )
+}
+
 // ─── Config ─────────────────────────────────────────────────────────────────────
 
 const REGIONS: { id: Region; flag: string; label: string }[] = [
@@ -29,33 +73,36 @@ const REGIONS: { id: Region; flag: string; label: string }[] = [
 
 const PLATFORMS: {
   id:     Platform
-  emoji:  string
   label:  string
   accent: string
   types:  { id: string; label: string }[]
 }[] = [
   {
     id:     "x",
-    emoji:  "𝕏",
-    label:  "Twitter",
-    accent: "#1D9BF0",
+    label:  "X (Twitter)",
+    accent: "#0A0A0A",
     types:  [{ id: "tweet", label: "Tweet" }, { id: "thread", label: "Thread" }, { id: "announcement", label: "Announce" }],
   },
   {
     id:     "tiktok",
-    emoji:  "♪",
     label:  "TikTok",
-    accent: "#FF2D55",
+    accent: "#EE1D52",
     types:  [{ id: "hook", label: "Hook" }, { id: "caption", label: "Caption" }, { id: "cta", label: "CTA" }],
   },
   {
     id:     "instagram",
-    emoji:  "◈",
     label:  "Instagram",
     accent: "#E1306C",
     types:  [{ id: "post", label: "Post" }, { id: "reel", label: "Reel" }, { id: "story", label: "Story" }],
   },
 ]
+
+function PlatformIcon({ id, size = 18, active }: { id: Platform; size?: number; active?: boolean }) {
+  if (id === "x")         return <XLogo size={size} color={active ? "#0A0A0A" : "#A1A1AA"} />
+  if (id === "tiktok")    return <TikTokLogo size={size} />
+  if (id === "instagram") return <InstagramLogo size={size} />
+  return null
+}
 
 const TYPE_PILL: Record<string, { bg: string; color: string }> = {
   tweet:        { bg: "#EFF6FF", color: "#1D9BF0" },
@@ -128,10 +175,9 @@ export function ContentCreatorCard() {
           width: 38, height: 38, borderRadius: 11,
           background: `${activePlat.accent}15`,
           display: "flex", alignItems: "center", justifyContent: "center",
-          fontSize: "1.1rem", fontWeight: 800, color: activePlat.accent,
           flexShrink: 0,
         }}>
-          {activePlat.emoji}
+          <PlatformIcon id={activePlat.id} size={20} active />
         </div>
         <div>
           <p style={{ fontSize: "0.9375rem", fontWeight: 700, color: "#09090B", letterSpacing: "-0.01em" }}>
@@ -143,23 +189,33 @@ export function ContentCreatorCard() {
         </div>
       </div>
 
-      {/* Platform pills */}
-      <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
-        {PLATFORMS.map(p => {
+      {/* Platform logo bar */}
+      <div style={{
+        display: "flex", alignItems: "center", justifyContent: "center",
+        gap: 0, background: "#F4F4F5", borderRadius: 14, padding: "10px 16px",
+      }}>
+        {PLATFORMS.map((p, i) => {
           const active = platform === p.id
           return (
-            <span
-              key={p.id}
-              style={{
-                fontSize: "0.75rem", fontWeight: active ? 700 : 500,
-                padding: "4px 10px", borderRadius: 99,
-                background: active ? `${p.accent}15` : "#F4F4F5",
-                color:      active ? p.accent : "#9CA3AF",
-                border:     active ? `1.5px solid ${p.accent}50` : "1.5px solid transparent",
-              }}
-            >
-              {p.emoji} {p.label}
-            </span>
+            <div key={p.id} style={{ display: "flex", alignItems: "center" }}>
+              <div style={{
+                display: "flex", flexDirection: "column", alignItems: "center", gap: 4,
+                padding: "6px 14px", borderRadius: 10, minWidth: 56,
+                background: active ? "white" : "transparent",
+                boxShadow: active ? "0 1px 4px rgba(0,0,0,0.10)" : "none",
+                transition: "all 0.15s",
+              }}>
+                <PlatformIcon id={p.id} size={18} active={active} />
+                <span style={{
+                  fontSize: "0.65rem", fontWeight: active ? 700 : 500,
+                  color: active ? "#0A0A0A" : "#A1A1AA",
+                  letterSpacing: "0.01em",
+                }}>{p.label.split(" ")[0]}</span>
+              </div>
+              {i < PLATFORMS.length - 1 && (
+                <div style={{ width: 1, height: 24, background: "#E4E4E7", margin: "0 2px" }} />
+              )}
+            </div>
           )
         })}
       </div>
@@ -231,14 +287,11 @@ export function ContentCreatorCard() {
                   transition: "all 0.15s",
                 }}
               >
-                <span style={{
-                  fontSize: "1.1rem", fontWeight: 800,
-                  color: active ? p.accent : "#A1A1AA",
-                }}>{p.emoji}</span>
+                <PlatformIcon id={p.id} size={20} active={active} />
                 <span style={{
                   fontSize: "0.6875rem", fontWeight: active ? 700 : 500,
                   color: active ? p.accent : "#9CA3AF",
-                }}>{p.label}</span>
+                }}>{p.label.split(" ")[0]}</span>
                 {active && (
                   <span style={{
                     width: 5, height: 5, borderRadius: "50%",
@@ -338,7 +391,7 @@ export function ContentCreatorCard() {
                     padding: "2px 7px", borderRadius: 99,
                     background: tc.bg, color: tc.color,
                   }}>{d.type}</span>
-                  <span style={{ fontSize: "0.8rem", color: plat.accent }}>{plat.emoji}</span>
+                  <PlatformIcon id={plat.id} size={14} active />
                   <span style={{ fontSize: "0.8rem" }}>{reg.flag}</span>
                   <span style={{
                     fontSize: "0.75rem", color: "#A1A1AA", flex: 1,
