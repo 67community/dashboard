@@ -12,6 +12,8 @@ import { AgentStatusCard }      from "@/components/cards/agent-status"
 import { MilestonesCard }       from "@/components/cards/milestones"
 import { FeatureRequestCard }   from "@/components/cards/feature-request"
 import { OutreachCard }         from "@/components/cards/outreach"
+import { SightingsCard }        from "@/components/cards/sightings"
+import { RaidCoordinatorCard }  from "@/components/cards/raid-coordinator"
 import { useAppData }          from "@/lib/data-context"
 import { AnimatedNumber }      from "@/components/ui/animated-number"
 
@@ -126,6 +128,8 @@ export default function Dashboard() {
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><TikTokSpotlightCard /></div>
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><FeatureRequestCard /></div>
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><OutreachCard /></div>
+        <div className="enter-9" style={{ display:"flex", minWidth:0 }}><SightingsCard /></div>
+        <div className="enter-9" style={{ display:"flex", minWidth:0 }}><RaidCoordinatorCard /></div>
       </div>
 
       {/* ══ Season 2 Banner ════════════════════════════════════ */}
