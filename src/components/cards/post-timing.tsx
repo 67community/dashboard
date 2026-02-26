@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from "react"
 import { Clock } from "lucide-react"
 import { DashboardCard } from "@/components/ui/dashboard-card"
 
@@ -196,29 +197,62 @@ function RegionBox({ flag, country, tz, accent, tint, border, rows }: {
 // ── Card ──────────────────────────────────────────────────────────────────────────
 
 export function PostTimingCard() {
-  const collapsed = (
-    <div style={{ display:"flex", flexDirection:"column", gap:20 }}>
-      <div>
-        <p className="hero-label" style={{ marginBottom:8 }}>Platforms</p>
-        <p className="hero-number">3</p>
-        <p style={{ fontSize:"0.875rem", color:"#8E8E93", marginTop:6 }}>X · TikTok · Instagram</p>
-      </div>
+  const [selPlat,   setSelPlat]   = useState(0)   // 0=X, 1=TikTok, 2=Instagram
+  const [selRegion, setSelRegion] = useState(0)   // 0=US, 1=CN, 2=JP, 3=Global
 
-      {/* Country flag badges */}
-      <div style={{ display:"flex", gap:6, flexWrap:"wrap" }}>
-        {[{f:"🇺🇸",c:"#D97706"},{f:"🇨🇳",c:"#DC2626"},{f:"🇯🇵",c:"#2563EB"},{f:"🌍",c:"#059669"}].map(r => (
-          <span key={r.f} style={{
-            fontSize:"1rem", padding:"5px 10px", borderRadius:99,
-            background:`${r.c}10`, border:`1px solid ${r.c}25`,
-          }}>{r.f}</span>
+  const plat   = PLATFORMS[selPlat]
+  const region = plat.regions[selRegion]
+
+  const collapsed = (
+    <div style={{ display:"flex", flexDirection:"column", gap:14 }}>
+
+      {/* Platform tabs */}
+      <div onClick={e => e.stopPropagation()} style={{ display:"flex", gap:4 }}>
+        {PLATFORMS.map((p, i) => (
+          <button key={p.key} onClick={e => { e.stopPropagation(); setSelPlat(i) }}
+            style={{
+              flex:1, padding:"7px 4px", borderRadius:10, border:"none", cursor:"pointer",
+              background: selPlat===i ? p.color : "#F4F4F5",
+              transition:"all 0.12s",
+              display:"flex", flexDirection:"column", alignItems:"center", gap:3,
+            }}>
+            <span style={{ color: selPlat===i ? "#fff" : "#8E8E93", display:"flex", lineHeight:1 }}>{p.logo}</span>
+            <span style={{ fontSize:"0.5625rem", fontWeight:700,
+              color: selPlat===i ? "#fff" : "#A1A1AA", letterSpacing:"0.03em" }}>
+              {p.key === "x" ? "X" : p.key === "tiktok" ? "TikTok" : "IG"}
+            </span>
+          </button>
         ))}
       </div>
 
-      <div style={{ borderTop:"1px solid rgba(0,0,0,0.06)", paddingTop:16 }}>
-        <p style={{ fontSize:"0.625rem", fontWeight:700, color:"#F5A623", letterSpacing:"0.08em", textTransform:"uppercase", marginBottom:10 }}>
-          𝕏 Top Windows (US)
+      {/* Region flags with country names */}
+      <div onClick={e => e.stopPropagation()} style={{ display:"flex", gap:5 }}>
+        {plat.regions.map((r, i) => (
+          <button key={r.country} onClick={e => { e.stopPropagation(); setSelRegion(i) }}
+            style={{
+              flex:1, padding:"6px 4px", borderRadius:9, border:"none", cursor:"pointer",
+              background: selRegion===i ? `${r.accent}18` : "#F4F4F5",
+              outline: selRegion===i ? `1.5px solid ${r.accent}` : "1.5px solid transparent",
+              display:"flex", flexDirection:"column", alignItems:"center", gap:2,
+              transition:"all 0.12s",
+            }}>
+            <span style={{ fontSize:"1rem", lineHeight:1 }}>{r.flag}</span>
+            <span style={{ fontSize:"0.5rem", fontWeight:700,
+              color: selRegion===i ? r.accent : "#A1A1AA",
+              letterSpacing:"0.02em", textAlign:"center", lineHeight:1.2 }}>
+              {r.country === "United States" ? "US" : r.country === "Global" ? "World" : r.country}
+            </span>
+          </button>
+        ))}
+      </div>
+
+      {/* Selected region's top windows */}
+      <div style={{ borderTop:"1px solid rgba(0,0,0,0.06)", paddingTop:12 }}>
+        <p style={{ fontSize:"0.625rem", fontWeight:700, letterSpacing:"0.08em",
+          textTransform:"uppercase", marginBottom:10, color: region.accent }}>
+          {plat.key === "x" ? "𝕏" : plat.key === "tiktok" ? "TikTok" : "Instagram"} · {region.flag} {region.country} · {region.tz}
         </p>
-        {[{t:"9–11 AM",n:"Morning commute"},{t:"12–2 PM",n:"Lunch scroll"},{t:"7–9 PM",n:"Prime time"}].map(r => (
+        {region.rows.map(r => (
           <div key={r.t} style={{ display:"flex", justifyContent:"space-between", alignItems:"baseline", marginBottom:7 }}>
             <span style={{ fontSize:"1rem", fontWeight:800, color:"#1D1D1F", letterSpacing:"-0.025em" }}>{r.t}</span>
             <span style={{ fontSize:"0.75rem", color:"#A1A1AA", fontWeight:500 }}>{r.n}</span>
@@ -276,6 +310,7 @@ export function PostTimingCard() {
       accentColor="#F5A623"
       collapsed={collapsed}
       expanded={expanded}
+      noAutoOpen
     />
   )
 }
