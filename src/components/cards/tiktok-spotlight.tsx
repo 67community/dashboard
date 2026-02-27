@@ -1,9 +1,12 @@
 "use client"
 
+import { useEffect } from "react"
 import { ExternalLink, Eye, RefreshCw } from "lucide-react"
 import { DashboardCard } from "@/components/ui/dashboard-card"
 import { useAppData } from "@/lib/data-context"
 import type { TikTokVideo } from "@/lib/use-data"
+
+const TIKTOK_REFRESH_MS = 10 * 60 * 1000 // 10 minutes
 
 // ── TikTok logo SVG ───────────────────────────────────────────────────────────
 
@@ -237,9 +240,15 @@ function EmptyState() {
 // ── Main Card ─────────────────────────────────────────────────────────────────
 
 export function TikTokSpotlightCard() {
-  const { data } = useAppData()
+  const { data, refresh } = useAppData()
   const videos: TikTokVideo[] = data?.tiktok_spotlight ?? []
   const lastUpdated = data?.last_updated
+
+  // Auto-refresh every 10 minutes to pick up new scraper data
+  useEffect(() => {
+    const id = setInterval(() => refresh(), TIKTOK_REFRESH_MS)
+    return () => clearInterval(id)
+  }, [refresh])
 
   const coinPop  = videos.filter(v => v.hashtag === "67coin" && v.video_type === "popular")
   const coinRec  = videos.filter(v => v.hashtag === "67coin" && v.video_type === "recent")
@@ -382,7 +391,7 @@ export function TikTokSpotlightCard() {
         <RefreshCw style={{ width: 14, height: 14, color: "#A1A1AA", flexShrink: 0, marginTop: 1 }} />
         <div>
           <p style={{ fontSize: "0.8125rem", fontWeight: 600, color: "#3F3F46", marginBottom: 2 }}>
-            Auto-updated every hour
+            Auto-updated every 10 minutes
           </p>
           <p style={{ fontSize: "0.75rem", color: "#A1A1AA", lineHeight: 1.5 }}>
             🔥 <strong style={{ color: "#09090B" }}>Popular</strong> = most views ·
