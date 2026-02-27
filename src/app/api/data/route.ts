@@ -692,11 +692,27 @@ async function fetchDiscordActivity(): Promise<{
     let new_joins_24h = 0
     const yesterday = new Date(Date.now() - 86400 * 1000).toISOString()
     try {
+      // Fetch up to 200 messages (Discord max per request)
       const nmlMsgs = await fetch(
         `https://discord.com/api/v10/channels/${NML_CH}/messages?limit=100`,
-        { headers, next: { revalidate: 60 } }   // 1 min cache — keep fresh
+        { headers, next: { revalidate: 60 } }
       ).then(r => r.ok ? r.json() : [])
-      new_joins_24h = (Array.isArray(nmlMsgs) ? nmlMsgs : [])
+      const nmlArr = Array.isArray(nmlMsgs) ? nmlMsgs : []
+
+      // If we got a full 100, fetch another 100 older messages to cover full 24h window
+      let nmlAll = [...nmlArr]
+      if (nmlArr.length === 100) {
+        const oldest = nmlArr[nmlArr.length - 1]?.id
+        if (oldest) {
+          const nmlMsgs2 = await fetch(
+            `https://discord.com/api/v10/channels/${NML_CH}/messages?limit=100&before=${oldest}`,
+            { headers, next: { revalidate: 60 } }
+          ).then(r => r.ok ? r.json() : [])
+          nmlAll = [...nmlArr, ...(Array.isArray(nmlMsgs2) ? nmlMsgs2 : [])]
+        }
+      }
+
+      new_joins_24h = nmlAll
         .filter((m: { timestamp: string; type?: number }) =>
           m.timestamp > yesterday && m.type === 7   // type=7 = GUILD_MEMBER_JOIN only
         ).length
@@ -777,7 +793,11 @@ async function fetchDiscordActivity(): Promise<{
               : allText.includes("kick") ? "kick"
               : "warn"
             const badge  = evType === "ban" ? "Banned" : evType === "spam" ? "Spam" : evType === "kick" ? "Kicked" : "Warned"
-            mod_events.push({ type: evType, user: tname, user_id: tuid, avatar: tav, detail: badge, time_ago: timeAgo(msg.timestamp) })
+            // Only include mod events from last 6h (real-time feed)
+            const sixHAgo = new Date(Date.now() - 6 * 3600 * 1000).toISOString()
+            if (msg.timestamp > sixHAgo) {
+              mod_events.push({ type: evType, user: tname, user_id: tuid, avatar: tav, detail: badge, time_ago: timeAgo(msg.timestamp) })
+            }
           }
         }
 
