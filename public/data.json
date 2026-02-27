@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-02-27T20:32:52.268738Z",
+  "last_updated": "2026-02-27T22:20:15.755646Z",
   "token_health": {
     "price": 0.001845,
     "price_change_m5": 1.0,
@@ -104,12 +104,12 @@
     "best_tweet_week": {
       "tweet_id": "2025945503913886046",
       "tweet_url": "https://x.com/67coinX/status/2025945503913886046",
-      "text": "\ud83d\udc40\ud83d\udc40\n\nhttps://x.com/SolanaSensei/status/2025850377825099973?s=20",
+      "text": "👀👀\n\nhttps://x.com/SolanaSensei/status/2025850377825099973?s=20",
       "likes": 102,
       "replies": 16,
       "img_url": null,
       "date": "Feb 23",
-      "embed_html": "<blockquote class=\"twitter-tweet\" align=\"center\" data-width=\"520\" data-dnt=\"true\" data-theme=\"dark\"><p lang=\"qme\" dir=\"ltr\">\ud83d\udc40\ud83d\udc40<a href=\"https://t.co/Nk1MKX6P45\">https://t.co/Nk1MKX6P45</a></p>&mdash; The Official 67 Coin (@67coinX) <a href=\"https://twitter.com/67coinX/status/2025945503913886046?ref_src=twsrc%5Etfw\">February 23, 2026</a></blockquote>\n\n"
+      "embed_html": "<blockquote class=\"twitter-tweet\" align=\"center\" data-width=\"520\" data-dnt=\"true\" data-theme=\"dark\"><p lang=\"qme\" dir=\"ltr\">👀👀<a href=\"https://t.co/Nk1MKX6P45\">https://t.co/Nk1MKX6P45</a></p>&mdash; The Official 67 Coin (@67coinX) <a href=\"https://twitter.com/67coinX/status/2025945503913886046?ref_src=twsrc%5Etfw\">February 23, 2026</a></blockquote>\n\n"
     },
     "best_tweet_2d": {
       "tweet_id": "2026634750484463718",
@@ -234,7 +234,7 @@
         "user_id": "696380710184943656",
         "avatar": "https://cdn.discordapp.com/avatars/696380710184943656/087b78dd471c9217ac02ea42aed91a46.webp?size=64",
         "time_ago": "18h ago",
-        "detail": "Warned \u00b7 Bad word usage"
+        "detail": "Warned · Bad word usage"
       },
       {
         "type": "join",
@@ -446,7 +446,7 @@
   "alerts": [
     {
       "type": "warning",
-      "message": "\ud83e\udd16 5 bots are offline",
+      "message": "🤖 5 bots are offline",
       "timestamp": "2026-02-27T02:55:58.635955Z"
     }
   ],
@@ -544,72 +544,72 @@
     "767811814557089802": "online",
     "965681608604647514": "dnd",
     "788495124061487154": "online",
+    "682831521396031498": "idle",
     "1444130836415905993": "offline",
     "1440075589557158100": "offline",
-    "682831521396031498": "offline",
     "201710326347988993": "offline"
   },
-  "presence_updated": "2026-02-27T20:50:06.577715Z",
+  "presence_updated": "2026-02-27T22:20:07.327720Z",
   "tiktok_spotlight": [
     {
       "video_url": "https://www.tiktok.com/@67coin/video/7565627410092199182",
-      "thumbnail_url": "https://p16-sign.tiktokcdn-us.com/tos-useast5-p-0068-tx/oU0OVAIGjJgjkNvLIAAQDAIkJO3eefiAfWQdHx~tplv-tiktokx-origin.image?dr=14575&x-expires=1772395200&x-signature=jZsxI8ghzoNfx7QUtk3gS72KC2I%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=my",
+      "thumbnail_url": "https://p16-sign.tiktokcdn-us.com/tos-useast5-p-0068-tx/oU0OVAIGjJgjkNvLIAAQDAIkJO3eefiAfWQdHx~tplv-tiktokx-origin.image?dr=14575&x-expires=1772402400&x-signature=uTzgq55PNQuxAxKMc2oQewxz0A8%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=my",
       "creator": "67coin",
       "creator_url": "https://www.tiktok.com/@67coin",
       "description": "This generation is so cooked. #67 #67meme #67coin #67church #67genz Credit: IG: @thelighthatburnsthesky",
-      "plays": 3206,
+      "plays": 3207,
       "likes": 43,
       "views_text": "3.2K",
       "hashtag": "67coin",
       "video_type": "popular",
       "created_at": "2025-10-27T15:30:00Z",
-      "scraped_at": "2026-02-27T20:32:49.120585Z"
+      "scraped_at": "2026-02-27T22:20:12.733959Z"
     },
     {
-      "video_url": "https://www.tiktok.com/@67coin/video/7564853278362668343",
-      "thumbnail_url": "https://p16-sign.tiktokcdn-us.com/tos-useast5-p-0068-tx/oAA7DA1ZtkPldPzivnXFWJ4wBAIagiLBFATAE~tplv-tiktokx-origin.image?dr=14575&x-expires=1772395200&x-signature=tRlgu4L3sdruZWjqG2gzOPwYUvQ%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=my",
+      "video_url": "https://www.tiktok.com/@67coin/video/7565627410092199182",
+      "thumbnail_url": "https://p16-sign.tiktokcdn-us.com/tos-useast5-p-0068-tx/oU0OVAIGjJgjkNvLIAAQDAIkJO3eefiAfWQdHx~tplv-tiktokx-origin.image?dr=14575&x-expires=1772402400&x-signature=uTzgq55PNQuxAxKMc2oQewxz0A8%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=my",
       "creator": "67coin",
       "creator_url": "https://www.tiktok.com/@67coin",
-      "description": "67 in French: \"Bonjour, SIX SEPT\"! #67to67billion #67coin #67onchain #67takeover #67kid #real67kid #fyp#67meme  Credit: @kdotwu",
-      "plays": 1138,
-      "likes": 22,
-      "views_text": "1.1K",
+      "description": "This generation is so cooked. #67 #67meme #67coin #67church #67genz Credit: IG: @thelighthatburnsthesky",
+      "plays": 3207,
+      "likes": 43,
+      "views_text": "3.2K",
       "hashtag": "67coin",
       "video_type": "popular",
-      "created_at": "2025-10-24T19:30:00Z",
-      "scraped_at": "2026-02-27T20:32:49.120585Z"
+      "created_at": "2025-10-27T15:30:00Z",
+      "scraped_at": "2026-02-27T22:20:12.733959Z"
     },
     {
       "video_url": "https://www.tiktok.com/@67coin/video/7611332134107647246",
-      "thumbnail_url": "https://p19-sign.tiktokcdn-us.com/tos-useast5-p-85c255-tx/oYzrE0BdIiHB0jOBH40YgBlA0INOpGFfwCJi2A~tplv-tiktokx-origin.image?dr=14575&x-expires=1772395200&x-signature=YAuekuOtIoIARGlDwNMcq4kQHoI%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=my",
+      "thumbnail_url": "https://p16-sign.tiktokcdn-us.com/tos-useast5-p-85c255-tx/oYzrE0BdIiHB0jOBH40YgBlA0INOpGFfwCJi2A~tplv-tiktokx-origin.image?dr=14575&x-expires=1772402400&x-signature=zHAcMyYHKlo2i91agn9rG8s4%2BZM%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=my",
       "creator": "67coin",
       "creator_url": "https://www.tiktok.com/@67coin",
       "description": "67 is taking over the world Credit: TikTok: @gussyelgrande_ #67coin #67 #viral #fyp",
-      "plays": 660,
-      "likes": 12,
-      "views_text": "660",
+      "plays": 1164,
+      "likes": 18,
+      "views_text": "1.2K",
       "hashtag": "67coin",
       "video_type": "recent",
       "created_at": "2026-02-27T00:16:23Z",
-      "scraped_at": "2026-02-27T20:32:49.120585Z"
+      "scraped_at": "2026-02-27T22:20:12.733959Z"
     },
     {
       "video_url": "https://www.tiktok.com/@67coin/video/7610562713697209614",
-      "thumbnail_url": "https://p16-sign.tiktokcdn-us.com/tos-useast5-p-85c255-tx/oYieqOgQEUDEnShFi9BskpJa6NoDBwELQHpMfb~tplv-tiktokx-origin.image?dr=14575&x-expires=1772395200&x-signature=KA%2FQ9guWpCyw3InGFUs9SZJkHsI%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=my",
+      "thumbnail_url": "https://p19-sign.tiktokcdn-us.com/tos-useast5-p-85c255-tx/oYieqOgQEUDEnShFi9BskpJa6NoDBwELQHpMfb~tplv-tiktokx-origin.image?dr=14575&x-expires=1772402400&x-signature=aW9axGtgh%2B8rLgJISkHYKHSfOq0%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=my",
       "creator": "67coin",
       "creator_url": "https://www.tiktok.com/@67coin",
       "description": "POV: You're driving and your speed hits 67 #67 #viral #fyp # Credit: Instagram: @onerent.ae",
-      "plays": 925,
-      "likes": 26,
-      "views_text": "925",
+      "plays": 1542,
+      "likes": 36,
+      "views_text": "1.5K",
       "hashtag": "67coin",
       "video_type": "recent",
       "created_at": "2026-02-24T22:30:44Z",
-      "scraped_at": "2026-02-27T20:32:49.120585Z"
+      "scraped_at": "2026-02-27T22:20:12.733959Z"
     },
     {
       "video_url": "https://www.tiktok.com/@abrahamcreates/video/7598310130257497374",
-      "thumbnail_url": "https://p16-pu-sign-useast8.tiktokcdn-us.com/tos-useast8-p-0068-tx2/oMu9IeFFSiVFjLSyECDAI7crRQpAnBFEipEpfE~tplv-tiktokx-origin.image?dr=14575&x-expires=1772395200&x-signature=oINkkiPfnjZIiDIYm8biFif9V4A%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=my",
+      "thumbnail_url": "https://p16-pu-sign-useast8.tiktokcdn-us.com/tos-useast8-p-0068-tx2/oMu9IeFFSiVFjLSyECDAI7crRQpAnBFEipEpfE~tplv-tiktokx-origin.image?dr=14575&x-expires=1772402400&x-signature=BqMzOMWuuLrqLgyvJ7UDE7%2FiH2U%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=my",
       "creator": "abrahamcreates",
       "creator_url": "https://www.tiktok.com/@abrahamcreates",
       "description": "@Tyson #abrahamcreates #fyp #viral #67 #gcu",
@@ -619,11 +619,11 @@
       "hashtag": "67",
       "video_type": "popular",
       "created_at": "2026-01-22T22:04:14Z",
-      "scraped_at": "2026-02-27T20:32:49.120585Z"
+      "scraped_at": "2026-02-27T22:20:12.733959Z"
     },
     {
       "video_url": "https://www.tiktok.com/@usernothere1001/video/7571787008964709633",
-      "thumbnail_url": "https://p77-sign-sg.tiktokcdn.com/tos-alisg-p-0037/oYiZAh9iADRnkEaAEqAYOOP71AIBARQUx6lCA~tplv-tiktokx-origin.image?dr=14575&x-expires=1772395200&x-signature=RQOpbm23z6dCCqwlsMb1wvTsnNo%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=my",
+      "thumbnail_url": "https://p16-sign-sg.tiktokcdn.com/tos-alisg-p-0037/oYiZAh9iADRnkEaAEqAYOOP71AIBARQUx6lCA~tplv-tiktokx-origin.image?dr=14575&x-expires=1772402400&x-signature=ApF%2ByQEq5dV5imKMpoi2JKjj0fs%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=my",
       "creator": "usernothere1001",
       "creator_url": "https://www.tiktok.com/@usernothere1001",
       "description": "On youTube:MY OVERPOWERED AAU TEAM HAS FINALLY RETURNED #67 #sixtyseven #sixseven #fyp #viral",
@@ -633,35 +633,35 @@
       "hashtag": "67",
       "video_type": "popular",
       "created_at": "2025-11-12T10:41:04Z",
-      "scraped_at": "2026-02-27T20:32:49.120585Z"
+      "scraped_at": "2026-02-27T22:20:12.733959Z"
     },
     {
       "video_url": "https://www.tiktok.com/@scroll.challenge/video/7594135315913133334",
-      "thumbnail_url": "https://p16-pu-sign-no.tiktokcdn-eu.com/tos-no1a-p-0037-no/oIK8HAqV8kKDuEQpLYFfFBgfIkkuhQQuRKD3Ew~tplv-tiktokx-origin.image?dr=14575&x-expires=1772395200&x-signature=P63Uu1Mj9dx0R%2BZ1zcC70WQOTMU%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=my",
+      "thumbnail_url": "https://p16-pu-sign-no.tiktokcdn-eu.com/tos-no1a-p-0037-no/oIK8HAqV8kKDuEQpLYFfFBgfIkkuhQQuRKD3Ew~tplv-tiktokx-origin.image?dr=14575&x-expires=1772402400&x-signature=YrUau6WmItx26cA8ksn7Pz24J3g%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=my",
       "creator": "scroll.challenge",
       "creator_url": "https://www.tiktok.com/@scroll.challenge",
       "description": "Dit le mot en rythme de plus en plus vite ! #sixseven #67 ",
-      "plays": 14800,
+      "plays": 14900,
       "likes": 236,
-      "views_text": "14.8K",
+      "views_text": "14.9K",
       "hashtag": "67",
       "video_type": "recent",
       "created_at": "2026-01-11T16:03:40Z",
-      "scraped_at": "2026-02-27T20:32:49.120585Z"
+      "scraped_at": "2026-02-27T22:20:12.733959Z"
     },
     {
       "video_url": "https://www.tiktok.com/@viethours/video/7592393215009951031",
-      "thumbnail_url": "https://p16-sign.tiktokcdn-us.com/tos-useast5-p-0068-tx/o4lIVImbAAiyEhedRFf0ZpDBGlXmTEEykU6QCd~tplv-tiktokx-origin.image?dr=14575&x-expires=1772395200&x-signature=8LjFU3ttGaHE3HakkqlFvqYONhA%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=my",
+      "thumbnail_url": "https://p19-sign.tiktokcdn-us.com/tos-useast5-p-0068-tx/o4lIVImbAAiyEhedRFf0ZpDBGlXmTEEykU6QCd~tplv-tiktokx-origin.image?dr=14575&x-expires=1772402400&x-signature=38IO7j5co8FHt9nrod5uqjWsxDY%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=my",
       "creator": "viethours",
       "creator_url": "https://www.tiktok.com/@viethours",
-      "description": "Saying 67 in different languages \ud83d\ude02\ud83d\ude02 | #fyp #filter #67 ",
-      "plays": 49200,
+      "description": "Saying 67 in different languages 😂😂 | #fyp #filter #67 ",
+      "plays": 49400,
       "likes": 299,
-      "views_text": "49.2K",
+      "views_text": "49.4K",
       "hashtag": "67",
       "video_type": "recent",
       "created_at": "2026-01-06T23:25:01Z",
-      "scraped_at": "2026-02-27T20:32:49.120585Z"
+      "scraped_at": "2026-02-27T22:20:12.733959Z"
     }
   ],
   "raid_feed": [
