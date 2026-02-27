@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-02-26T13:13:24.937564Z",
+  "last_updated": "2026-02-27T16:30:00.836745Z",
   "token_health": {
     "price": 0.001845,
     "price_change_m5": 1.0,
@@ -104,12 +104,12 @@
     "best_tweet_week": {
       "tweet_id": "2025945503913886046",
       "tweet_url": "https://x.com/67coinX/status/2025945503913886046",
-      "text": "\ud83d\udc40\ud83d\udc40\n\nhttps://x.com/SolanaSensei/status/2025850377825099973?s=20",
+      "text": "👀👀\n\nhttps://x.com/SolanaSensei/status/2025850377825099973?s=20",
       "likes": 102,
       "replies": 16,
       "img_url": null,
       "date": "Feb 23",
-      "embed_html": "<blockquote class=\"twitter-tweet\" align=\"center\" data-width=\"520\" data-dnt=\"true\" data-theme=\"dark\"><p lang=\"qme\" dir=\"ltr\">\ud83d\udc40\ud83d\udc40<a href=\"https://t.co/Nk1MKX6P45\">https://t.co/Nk1MKX6P45</a></p>&mdash; The Official 67 Coin (@67coinX) <a href=\"https://twitter.com/67coinX/status/2025945503913886046?ref_src=twsrc%5Etfw\">February 23, 2026</a></blockquote>\n\n"
+      "embed_html": "<blockquote class=\"twitter-tweet\" align=\"center\" data-width=\"520\" data-dnt=\"true\" data-theme=\"dark\"><p lang=\"qme\" dir=\"ltr\">👀👀<a href=\"https://t.co/Nk1MKX6P45\">https://t.co/Nk1MKX6P45</a></p>&mdash; The Official 67 Coin (@67coinX) <a href=\"https://twitter.com/67coinX/status/2025945503913886046?ref_src=twsrc%5Etfw\">February 23, 2026</a></blockquote>\n\n"
     },
     "best_tweet_2d": {
       "tweet_id": "2026634750484463718",
@@ -234,7 +234,7 @@
         "user_id": "696380710184943656",
         "avatar": "https://cdn.discordapp.com/avatars/696380710184943656/087b78dd471c9217ac02ea42aed91a46.webp?size=64",
         "time_ago": "18h ago",
-        "detail": "Warned \u00b7 Bad word usage"
+        "detail": "Warned · Bad word usage"
       },
       {
         "type": "join",
@@ -446,7 +446,7 @@
   "alerts": [
     {
       "type": "warning",
-      "message": "\ud83e\udd16 5 bots are offline",
+      "message": "🤖 5 bots are offline",
       "timestamp": "2026-02-27T02:55:58.635955Z"
     }
   ],
@@ -542,30 +542,32 @@
   },
   "team_presence": {
     "767811814557089802": "online",
+    "965681608604647514": "dnd",
     "788495124061487154": "online",
+    "682831521396031498": "online",
     "1444130836415905993": "offline",
     "1440075589557158100": "offline",
-    "682831521396031498": "offline",
-    "965681608604647514": "offline",
     "201710326347988993": "offline"
   },
-  "presence_updated": "2026-02-27T16:45:07.307548Z",
+  "presence_updated": "2026-02-27T16:55:07.390951Z",
   "tiktok_spotlight": [
     {
       "video_url": "https://www.tiktok.com/@mav67kid67/video/7561504794842647863",
-      "thumbnail_url": "https://p16-sign.tiktokcdn-us.com/tos-useast5-p-0068-tx/ockP347jsQGWI3fHIR7APRGKLbeFACJGfQXvnC~tplv-tiktokx-origin.image?dr=14575&x-expires=1772283600&x-signature=hvqhqQoiIbzFaSXvqlSY5%2BjZBqY%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=my",
+      "thumbnail_url": "https://p16-sign.tiktokcdn-us.com/tos-useast5-p-0068-tx/ockP347jsQGWI3fHIR7APRGKLbeFACJGfQXvnC~tplv-tiktokx-origin.image?dr=14575&x-expires=1772319600&x-signature=BurQbNdtVMqFbnccj%2FakqMsVZV4%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=my",
       "creator": "mav67kid67",
       "creator_url": "https://www.tiktok.com/@mav67kid67",
       "description": "(4PM EST) WEBSITE IS LIVE RIGHT NOW #67kid #67 #coin #annoucement ",
-      "plays": 115300,
+      "plays": 115400,
       "likes": 1934,
-      "views_text": "115.3K",
+      "views_text": "115.4K",
       "hashtag": "67coin",
-      "scraped_at": "2026-02-26T13:13:55.302549Z"
+      "video_type": "popular",
+      "created_at": "2025-10-15T17:40:45Z",
+      "scraped_at": "2026-02-26T23:23:03.719049Z"
     },
     {
       "video_url": "https://www.tiktok.com/@67coinsolana/video/7546660229434346807",
-      "thumbnail_url": "https://p16-sign.tiktokcdn-us.com/tos-useast5-p-0068-tx/o4HY0BIxfABIwbAuEhCCBCP7wJi7IXFiQAvVPA~tplv-tiktokx-origin.image?dr=14575&x-expires=1772283600&x-signature=iCtYO9D9Io6coZjMTRzfTzbA4h8%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=my",
+      "thumbnail_url": "https://p16-sign.tiktokcdn-us.com/tos-useast5-p-0068-tx/o4HY0BIxfABIwbAuEhCCBCP7wJi7IXFiQAvVPA~tplv-tiktokx-origin.image?dr=14575&x-expires=1772319600&x-signature=gq%2FfOMTTd6hPxQYv6E091MKAE28%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=my",
       "creator": "67coinsolana",
       "creator_url": "https://www.tiktok.com/@67coinsolana",
       "description": "Your sign to buy 67coin #67 #viral #crypto #fyp #tjr ",
@@ -573,31 +575,93 @@
       "likes": 83,
       "views_text": "4.1K",
       "hashtag": "67coin",
-      "scraped_at": "2026-02-26T13:13:55.302549Z"
+      "video_type": "popular",
+      "created_at": "2025-09-05T17:36:57Z",
+      "scraped_at": "2026-02-26T23:23:03.719049Z"
+    },
+    {
+      "video_url": "https://www.tiktok.com/@67coin/video/7608622833979247886",
+      "thumbnail_url": "https://p19-sign.tiktokcdn-us.com/tos-useast5-p-85c255-tx/osr1BfdKBBS0i6dYtXiQ6vImyApIXrtwxFAoEC~tplv-tiktokx-origin.image?dr=14575&x-expires=1772319600&x-signature=tMUafNrTtdKgP3W1pf0tR4uKuw8%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=my",
+      "creator": "67coin",
+      "creator_url": "https://www.tiktok.com/@67coin",
+      "description": "Serbian President 67 😂 #Vucic #67 #67serbia #fyp Credit: Tiktok: @strahinja.a9",
+      "plays": 3522,
+      "likes": 567,
+      "views_text": "3.5K",
+      "hashtag": "67coin",
+      "video_type": "recent",
+      "created_at": "2026-02-19T17:03:23Z",
+      "scraped_at": "2026-02-26T23:23:03.719049Z"
+    },
+    {
+      "video_url": "https://www.tiktok.com/@tks_tt_flip/video/7602420758828158239",
+      "thumbnail_url": "https://p16-pu-sign-useast8.tiktokcdn-us.com/tos-useast8-p-0068-tx2/o0GeUIeBDIOAnL7IgqReSSxXvb95CjAoBTInAI~tplv-tiktokx-origin.image?dr=14575&x-expires=1772319600&x-signature=RSJq2g73Ca%2BoLgKlA5P%2FZm3End0%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=my",
+      "creator": "tks_tt_flip",
+      "creator_url": "https://www.tiktok.com/@tks_tt_flip",
+      "description": "Day 14 TKs TT Flip Red or Gold 67 #coinflip #redorgold #tokyotowercoin #67 #whataretheodds ",
+      "plays": 41,
+      "likes": 1,
+      "views_text": "41",
+      "hashtag": "67coin",
+      "video_type": "recent",
+      "created_at": "2026-02-02T23:55:29Z",
+      "scraped_at": "2026-02-26T23:23:03.719049Z"
     },
     {
       "video_url": "https://www.tiktok.com/@abrahamcreates/video/7598310130257497374",
-      "thumbnail_url": "https://p16-pu-sign-useast8.tiktokcdn-us.com/tos-useast8-p-0068-tx2/oMu9IeFFSiVFjLSyECDAI7crRQpAnBFEipEpfE~tplv-tiktokx-origin.image?dr=14575&x-expires=1772283600&x-signature=7bnno%2Fta1wj3kQcAgDZ8iL5R%2Fn8%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=my",
+      "thumbnail_url": "https://p16-pu-sign-useast8.tiktokcdn-us.com/tos-useast8-p-0068-tx2/oMu9IeFFSiVFjLSyECDAI7crRQpAnBFEipEpfE~tplv-tiktokx-origin.image?dr=14575&x-expires=1772319600&x-signature=2z11rpxYh9XfzpkrBwYMzaxmxO4%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=my",
       "creator": "abrahamcreates",
       "creator_url": "https://www.tiktok.com/@abrahamcreates",
       "description": "@Tyson #abrahamcreates #fyp #viral #67 #gcu",
-      "plays": 64700000,
+      "plays": 64900000,
       "likes": 4400000,
-      "views_text": "64.7M",
+      "views_text": "64.9M",
       "hashtag": "67",
-      "scraped_at": "2026-02-26T13:13:55.302549Z"
+      "video_type": "popular",
+      "created_at": "2026-01-22T22:04:14Z",
+      "scraped_at": "2026-02-26T23:23:03.719049Z"
     },
     {
       "video_url": "https://www.tiktok.com/@usernothere1001/video/7571787008964709633",
-      "thumbnail_url": "https://p77-sign-sg.tiktokcdn.com/tos-alisg-p-0037/oYiZAh9iADRnkEaAEqAYOOP71AIBARQUx6lCA~tplv-tiktokx-origin.image?dr=14575&x-expires=1772283600&x-signature=WfT2WPjJ72GaPb5%2F0HbRc6cEXt4%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=my",
+      "thumbnail_url": "https://p77-sign-sg.tiktokcdn.com/tos-alisg-p-0037/oYiZAh9iADRnkEaAEqAYOOP71AIBARQUx6lCA~tplv-tiktokx-origin.image?dr=14575&x-expires=1772319600&x-signature=0w2X1zMcZCH5kDfRcH58SxmAdHc%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=my",
       "creator": "usernothere1001",
       "creator_url": "https://www.tiktok.com/@usernothere1001",
       "description": "On youTube:MY OVERPOWERED AAU TEAM HAS FINALLY RETURNED #67 #sixtyseven #sixseven #fyp #viral",
-      "plays": 38300000,
+      "plays": 38400000,
       "likes": 1100000,
-      "views_text": "38.3M",
+      "views_text": "38.4M",
       "hashtag": "67",
-      "scraped_at": "2026-02-26T13:13:55.302549Z"
+      "video_type": "popular",
+      "created_at": "2025-11-12T10:41:04Z",
+      "scraped_at": "2026-02-26T23:23:03.719049Z"
+    },
+    {
+      "video_url": "https://www.tiktok.com/@yuvalispamm8/video/7610051206135762197",
+      "thumbnail_url": "https://p16-sign-sg.tiktokcdn.com/tos-alisg-p-0037/o8TVncIb1imAUUYTBwRVqxuZI6iBM31pDaAvE~tplv-tiktokx-origin.image?dr=14575&x-expires=1772319600&x-signature=HWJruXH%2BiQa9A4rBqFDZSc25RiI%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=my",
+      "creator": "yuvalispamm8",
+      "creator_url": "https://www.tiktok.com/@yuvalispamm8",
+      "description": "#foryou #67 #viral ",
+      "plays": 8493,
+      "likes": 441,
+      "views_text": "8.5K",
+      "hashtag": "67",
+      "video_type": "recent",
+      "created_at": "2026-02-23T13:25:26Z",
+      "scraped_at": "2026-02-26T23:23:03.719049Z"
+    },
+    {
+      "video_url": "https://www.tiktok.com/@svea8294/video/7607531310659210518",
+      "thumbnail_url": "https://p16-pu-sign-no.tiktokcdn-eu.com/tos-no1a-p-0037-no/ooeChsxIJDLLPfUgIg9LNSAe29JAcTbgGIjNIp~tplv-tiktokx-origin.image?dr=14575&x-expires=1772319600&x-signature=UE3O0qHuBCQIkgWYk0HjYLdTqm0%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=my",
+      "creator": "svea8294",
+      "creator_url": "https://www.tiktok.com/@svea8294",
+      "description": "❤️ #lipsing #song #67 #fy #fyp ",
+      "plays": 6000,
+      "likes": 280,
+      "views_text": "6.0K",
+      "hashtag": "67",
+      "video_type": "recent",
+      "created_at": "2026-02-16T18:26:56Z",
+      "scraped_at": "2026-02-26T23:23:03.719049Z"
     }
   ],
   "raid_feed": [
