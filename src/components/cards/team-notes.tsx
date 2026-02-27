@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react"
 import { StickyNote, Plus, Trash2, Pin } from "lucide-react"
 import { DashboardCard } from "@/components/ui/dashboard-card"
+import { addNotification } from "@/lib/notifications"
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -103,6 +104,12 @@ export function TeamNotesCard() {
       id: Date.now().toString(), text: text.trim(), author, color,
       pinned: false, createdAt: new Date().toISOString(),
     }, ...notes])
+    addNotification({
+      type:      "info",
+      category:  "note",
+      message:   `📝 New note from ${author}: "${text.trim().slice(0, 60)}${text.trim().length > 60 ? "…" : ""}"`,
+      timestamp: new Date().toISOString(),
+    })
     setText(""); setAddOpen(false)
   }
 
