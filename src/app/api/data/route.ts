@@ -714,17 +714,37 @@ async function fetchDiscordActivity(): Promise<{
 
     const mod_events: { type: string; user: string; user_id?: string; avatar?: string; detail: string; time_ago: string }[] = []
 
-    const channelResults = await Promise.allSettled(
-      communityChs.map(ch =>
-        fetch(
-          `https://discord.com/api/v10/channels/${ch.id}/messages?limit=100`,
-          { headers, next: { revalidate: 120 } }
-        ).then(r => r.ok
-          ? r.json().then((msgs: DiscordMsg[]) => ({ ch, msgs }))
-          : Promise.resolve({ ch, msgs: [] })
+    // Fetch channels in small batches to avoid Discord rate limits
+    // Prioritise highest-traffic channels first
+    const PRIORITY_CH = ["chat","67coin-chat","memes","giveaways","off-topic","general","trading","introductions","nfts","gaming"]
+    const sortedChs = [...communityChs].sort((a, b) => {
+      const ai = PRIORITY_CH.findIndex(p => a.name.toLowerCase().includes(p))
+      const bi = PRIORITY_CH.findIndex(p => b.name.toLowerCase().includes(p))
+      return (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi)
+    }).slice(0, 12)  // max 12 channels to stay within rate limits
+
+    const BATCH_SIZE = 4
+    const allChResults: { ch: { id: string; name: string }; msgs: DiscordMsg[] }[] = []
+    for (let i = 0; i < sortedChs.length; i += BATCH_SIZE) {
+      const batch = sortedChs.slice(i, i + BATCH_SIZE)
+      const batchResults = await Promise.allSettled(
+        batch.map(ch =>
+          fetch(
+            `https://discord.com/api/v10/channels/${ch.id}/messages?limit=100`,
+            { headers, cache: "no-store" }
+          ).then(r => r.ok
+            ? r.json().then((msgs: DiscordMsg[]) => ({ ch, msgs }))
+            : Promise.resolve({ ch, msgs: [] })
+          )
         )
       )
-    )
+      for (const r of batchResults) {
+        if (r.status === "fulfilled") allChResults.push(r.value)
+      }
+      if (i + BATCH_SIZE < sortedChs.length) await new Promise(res => setTimeout(res, 300))
+    }
+    const channelResults: PromiseSettledResult<{ ch: { id: string; name: string }; msgs: DiscordMsg[] }>[] =
+      allChResults.map(v => ({ status: "fulfilled" as const, value: v }))
 
     for (const result of channelResults) {
       if (result.status !== "fulfilled") continue
