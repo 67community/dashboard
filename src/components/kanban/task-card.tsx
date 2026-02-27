@@ -1,8 +1,9 @@
 "use client"
 
+import { useState } from "react"
 import { useSortable } from "@dnd-kit/sortable"
 import { CSS } from "@dnd-kit/utilities"
-import { Calendar, GripVertical } from "lucide-react"
+import { Calendar, GripVertical, Trash2 } from "lucide-react"
 import { Task, Priority, Category } from "@/lib/types"
 import { TEAM_MEMBERS } from "@/lib/mock-data"
 import { TeamAvatar } from "@/components/team/team-avatar"
@@ -23,9 +24,10 @@ const CATEGORY: Record<Category, { bg:string; color:string }> = {
   Other:   { bg:"#F4F4F5", color:"#71717A" },
 }
 
-interface Props { task: Task; onOpen: (task: Task) => void; isDragOverlay?: boolean }
+interface Props { task: Task; onOpen: (task: Task) => void; onDelete?: (id: string) => void; isDragOverlay?: boolean }
 
-export function TaskCard({ task, onOpen, isDragOverlay = false }: Props) {
+export function TaskCard({ task, onOpen, onDelete, isDragOverlay = false }: Props) {
+  const [hovered, setHovered] = useState(false)
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: task.id })
   const assignee = TEAM_MEMBERS.find(m => m.id === task.assigneeId)
   const doneSubtasks = task.subtasks.filter(s => s.done).length
@@ -39,6 +41,7 @@ export function TaskCard({ task, onOpen, isDragOverlay = false }: Props) {
       onClick={() => onOpen(task)}
     >
       <div style={{
+        position:"relative",
         background:"#FFFFFF",
         borderRadius:14,
         border:"1px solid rgba(0,0,0,0.06)",
@@ -49,9 +52,27 @@ export function TaskCard({ task, onOpen, isDragOverlay = false }: Props) {
         transition:"box-shadow 0.15s, border-color 0.15s",
         ...(isDragOverlay ? { boxShadow:"0 16px 40px rgba(0,0,0,0.14)", transform:"rotate(1.5deg) scale(1.03)" } : {}),
       }}
-        onMouseEnter={e => { if (!isDragging) { (e.currentTarget as HTMLDivElement).style.boxShadow="0 4px 16px rgba(0,0,0,0.08)"; (e.currentTarget as HTMLDivElement).style.borderColor="rgba(0,0,0,0.10)" }}}
-        onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.boxShadow="0 1px 4px rgba(0,0,0,0.04)"; (e.currentTarget as HTMLDivElement).style.borderColor="rgba(0,0,0,0.06)"}}
+        onMouseEnter={e => { setHovered(true); if (!isDragging) { (e.currentTarget as HTMLDivElement).style.boxShadow="0 4px 16px rgba(0,0,0,0.08)"; (e.currentTarget as HTMLDivElement).style.borderColor="rgba(0,0,0,0.10)" }}}
+        onMouseLeave={e => { setHovered(false); (e.currentTarget as HTMLDivElement).style.boxShadow="0 1px 4px rgba(0,0,0,0.04)"; (e.currentTarget as HTMLDivElement).style.borderColor="rgba(0,0,0,0.06)"}}
       >
+        {/* Delete button — appears on hover */}
+        {onDelete && hovered && !isDragOverlay && (
+          <button
+            onClick={e => { e.stopPropagation(); onDelete(task.id) }}
+            style={{
+              position:"absolute", top:8, right:8,
+              width:24, height:24, borderRadius:7,
+              background:"#FEF2F2", border:"none", cursor:"pointer",
+              display:"flex", alignItems:"center", justifyContent:"center",
+              transition:"all 0.15s", zIndex:2,
+            }}
+            onMouseEnter={e => (e.currentTarget.style.background="#FECACA")}
+            onMouseLeave={e => (e.currentTarget.style.background="#FEF2F2")}
+          >
+            <Trash2 style={{ width:11, height:11, color:"#DC2626" }} />
+          </button>
+        )}
+
         {/* Grip + title */}
         <div style={{ display:"flex", alignItems:"flex-start", gap:6 }}>
           <button
@@ -60,7 +81,7 @@ export function TaskCard({ task, onOpen, isDragOverlay = false }: Props) {
             style={{ marginTop:2, padding:2, background:"none", border:"none", cursor:"grab", flexShrink:0, opacity:0.3, color:"#A1A1AA" }}>
             <GripVertical style={{ width:13, height:13 }} />
           </button>
-          <p style={{ fontSize:"0.8125rem", fontWeight:600, color:"#09090B", lineHeight:1.5, flex:1 }}>{task.title}</p>
+          <p style={{ fontSize:"0.8125rem", fontWeight:600, color:"#09090B", lineHeight:1.5, flex:1, paddingRight: hovered && onDelete ? 20 : 0 }}>{task.title}</p>
         </div>
 
         {/* Tags */}

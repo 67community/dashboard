@@ -98,25 +98,69 @@ export function useDataNotifications(data: DashboardData | null) {
       }
     }
 
-    // ── 3. Discord mod alerts ────────────────────────────────────────────────
+    // ── 3. Discord alerts (spam / ban / kick / join spike) ───────────────────
     const currAct = data.community?.recent_discord_activity ?? []
     const prevAct = prev.community?.recent_discord_activity ?? []
-    const prevKeys = new Set(prevAct.map(a => `${a.type}_${a.user}_${a.time_ago}`))
+    const prevKeys = new Set(prevAct.map(a => `${a.type}_${a.user}_${a.time_ago ?? ""}`))
     for (const act of currAct) {
-      const key = `${act.type}_${act.user}_${act.time_ago}`
-      if (!prevKeys.has(key) && (act.type === "ban" || act.type === "kick" || act.type === "spam")) {
-        const emoji = act.type === "ban" ? "🚫" : act.type === "kick" ? "👢" : "⚠️"
-        fireAlert({ type:"warning", category:"discord", timestamp:now,
-          message:`${emoji} Discord ${act.type}: ${act.user}${act.reason ? ` — ${act.reason}` : ""}` })
+      const key = `${act.type}_${act.user}_${act.time_ago ?? ""}`
+      if (!prevKeys.has(key)) {
+        if (act.type === "ban") {
+          fireAlert({ type:"danger",  category:"discord", timestamp:now,
+            message:`🚫 Discord ban: ${act.user}${act.reason ? ` — ${act.reason}` : ""}` })
+        } else if (act.type === "kick") {
+          fireAlert({ type:"warning", category:"discord", timestamp:now,
+            message:`👢 Discord kick: ${act.user}${act.reason ? ` — ${act.reason}` : ""}` })
+        } else if (act.type === "spam") {
+          fireAlert({ type:"warning", category:"discord", timestamp:now,
+            message:`⚠️ Discord spam detected: ${act.user}${act.reason ? ` — ${act.reason}` : ""}` })
+        }
       }
     }
 
-    // ── 4. New news articles ─────────────────────────────────────────────────
+    // Discord new member spike (possible join spam / raid)
+    const currJoins = data.community?.new_joins_24h ?? 0
+    const prevJoins = prev.community?.new_joins_24h  ?? 0
+    if (currJoins > prevJoins + 50 && prevJoins > 0) {
+      fireAlert({ type:"info", category:"discord", timestamp:now,
+        message:`🟢 Discord join spike: +${currJoins - prevJoins} new members (was ${prevJoins}, now ${currJoins})` })
+    }
+
+    // ── 4. Telegram raid feed activity ───────────────────────────────────────
+    const currRaids = (data.raid_feed ?? []) as { message_id: number; date?: string }[]
+    const prevRaids = (prev.raid_feed ?? [])  as { message_id: number; date?: string }[]
+    const prevRaidIds = new Set(prevRaids.map(r => r.message_id))
+    const newRaids = currRaids.filter(r => !prevRaidIds.has(r.message_id))
+    if (newRaids.length >= 5) {
+      // 5+ new raids posted = active raid session
+      addNotification({ type:"success", category:"discord", timestamp:now,
+        message:`⚔️ Raid wave: ${newRaids.length} new targets posted in Telegram raid group` })
+    } else if (newRaids.length >= 1) {
+      addNotification({ type:"info", category:"discord", timestamp:now,
+        message:`⚔️ ${newRaids.length} new raid target${newRaids.length > 1 ? "s" : ""} posted` })
+    }
+
+    // ── 5. Backend alerts (price/holder/liquidity from data.json) ────────────
+    const currAlerts = (data.alerts ?? []) as { type: string; message: string; timestamp: string }[]
+    const prevAlerts = (prev.alerts ?? [])  as { type: string; message: string; timestamp: string }[]
+    const prevAlertMsgs = new Set(prevAlerts.map(a => a.message))
+    for (const alert of currAlerts) {
+      if (!prevAlertMsgs.has(alert.message)) {
+        addNotification({
+          type:      alert.type === "danger" ? "danger" : alert.type === "success" ? "success" : "warning",
+          category:  "price",
+          timestamp: alert.timestamp ?? now,
+          message:   alert.message,
+        })
+      }
+    }
+
+    // ── 6. New news articles ─────────────────────────────────────────────────
     const currNews = data.news_feed ?? []
     const prevNews = prev.news_feed ?? []
-    const prevNewsIds = new Set(prevNews.map(n => n.id))
-    const newArticles = currNews.filter(n => !prevNewsIds.has(n.id)).slice(0, 3)
-    for (const article of newArticles) {
+    const prevNewsIds = new Set(prevNews.map((n: { id: string }) => n.id))
+    const newArticles = currNews.filter((n: { id: string }) => !prevNewsIds.has(n.id)).slice(0, 3)
+    for (const article of newArticles as { id: string; title: string; source: string }[]) {
       addNotification({ type:"info", category:"news", timestamp:now,
         message:`📰 ${article.title} — ${article.source}` })
     }
