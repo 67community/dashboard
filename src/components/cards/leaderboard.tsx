@@ -27,8 +27,6 @@ const CAT_CONFIG: Record<LeaderCategory, { label: string; emoji: string; color: 
 const RANK_EMOJI = ["🥇", "🥈", "🥉"]
 
 const DEFAULT_ENTRIES: LeaderEntry[] = [
-  { id:"1", handle:"@mav67kid67",       score:1250, category:"creators",     badge:"OG Creator",    addedAt:"2026-01-01T00:00:00Z" },
-  { id:"2", handle:"@67coinsolana",     score:980,  category:"contributors", badge:"Team Member",   addedAt:"2026-01-01T00:00:00Z" },
   { id:"3", handle:"@abrahamcreates",   score:870,  category:"creators",     badge:"Viral Creator", addedAt:"2026-01-01T00:00:00Z" },
 ]
 
