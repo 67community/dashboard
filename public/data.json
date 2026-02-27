@@ -544,12 +544,12 @@
     "767811814557089802": "online",
     "965681608604647514": "dnd",
     "788495124061487154": "online",
-    "682831521396031498": "online",
     "1444130836415905993": "online",
     "1440075589557158100": "offline",
+    "682831521396031498": "offline",
     "201710326347988993": "offline"
   },
-  "presence_updated": "2026-02-27T17:30:08.199003Z",
+  "presence_updated": "2026-02-27T18:30:07.222916Z",
   "tiktok_spotlight": [
     {
       "video_url": "https://www.tiktok.com/@mav67kid67/video/7561504794842647863",
@@ -665,6 +665,46 @@
     }
   ],
   "raid_feed": [
+    {
+      "message_id": 5302,
+      "text": "Raid \n\nhttps://x.com/i/status/2027441902157512808",
+      "tweet_url": "https://x.com/i/web/status/2027441902157512808",
+      "photo": "",
+      "date": "2026-02-27T17:54:38Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 5301,
+      "text": "Raid \n\nhttps://x.com/i/status/2027441610657501187",
+      "tweet_url": "https://x.com/i/web/status/2027441610657501187",
+      "photo": "",
+      "date": "2026-02-27T17:54:32Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 5300,
+      "text": "Raid \n\nhttps://x.com/i/status/2027441409939124227",
+      "tweet_url": "https://x.com/i/web/status/2027441409939124227",
+      "photo": "",
+      "date": "2026-02-27T17:54:28Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 5299,
+      "text": "Raid \n\nhttps://x.com/i/status/2027442054473658782",
+      "tweet_url": "https://x.com/i/web/status/2027442054473658782",
+      "photo": "",
+      "date": "2026-02-27T17:54:25Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 5297,
+      "text": "https://x.com/67coinx/status/2027403892414398746?s=46\n@llVillainll @lenanacountter",
+      "tweet_url": "https://x.com/i/web/status/2027403892414398746",
+      "photo": "",
+      "date": "2026-02-27T17:51:56Z",
+      "chat_id": -1003708062172
+    },
     {
       "message_id": 5283,
       "text": "https://x.com/jasonredsheep/status/2027431720044400926?s=46",
