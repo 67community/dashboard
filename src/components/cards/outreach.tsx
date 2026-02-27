@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import { Share2, Plus, ChevronDown, ChevronUp, Mail, ExternalLink, Copy, Check, UserCheck, Search, Loader2, X } from "lucide-react"
 import { DashboardCard } from "@/components/ui/dashboard-card"
+import { aiHeaders } from "@/lib/ai-settings"
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -70,7 +71,7 @@ function DiscoverPanel({ onAdd }: { onAdd: (t: OutreachTarget) => void }) {
     setError("")
     setResults([])
     try {
-      const res  = await fetch("/api/discover-outreach")
+      const res  = await fetch("/api/discover-outreach", { headers: aiHeaders() })
       const data = await res.json()
       setResults(data.targets ?? [])
     } catch {
@@ -451,7 +452,7 @@ function AddForm({ onAdd }: { onAdd: (t: OutreachTarget) => void }) {
     try {
       const res = await fetch("/api/outreach-email", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", ...aiHeaders() },
         body: JSON.stringify({ name: name.trim(), type, platform: plat, note }),
       })
       const data = await res.json()

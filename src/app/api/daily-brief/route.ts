@@ -1,57 +1,16 @@
 import { NextResponse } from "next/server"
+import { callAI } from "@/app/api/_lib/ai-call"
 
 export async function POST(req: Request) {
   const ctx = await req.json()
-  const apiKey = process.env.ANTHROPIC_API_KEY
-
-  // Mock brief if no API key
-  if (!apiKey) {
-    return NextResponse.json({
-      brief: {
-        date: ctx.date,
-        headline: `$67 community strong — ${ctx.holders ?? "—"} holders, ${ctx.newSightings ?? 0} new sightings today. Keep the momentum going.`,
-        sections: [
-          {
-            icon: "📈", title: "Token Health",
-            items: [
-              `Price: $${ctx.price?.toFixed(8) ?? "—"} (${ctx.change24h >= 0 ? "+" : ""}${ctx.change24h?.toFixed(2) ?? "—"}% 24h)`,
-              `Holders: ${ctx.holders?.toLocaleString() ?? "—"} — keep driving community growth`,
-            ],
-          },
-          {
-            icon: "👥", title: "Community",
-            items: [
-              `Discord: ${ctx.discordMembers?.toLocaleString() ?? "—"} members`,
-              `Telegram: ${ctx.telegramMembers?.toLocaleString() ?? "—"} members`,
-            ],
-          },
-          {
-            icon: "⚡", title: "Today's Actions",
-            items: [
-              ctx.newSightings > 0 ? `${ctx.newSightings} new sightings need review — log them to X ASAP` : "No new sightings. Hunt for 67 content today.",
-              ctx.activeRaids > 0 ? `${ctx.activeRaids} active raid(s) in progress — keep the energy up` : "Queue up a raid for high-visibility content.",
-              ctx.pendingFeatures > 0 ? `${ctx.pendingFeatures} feature request(s) pending Nova's analysis` : "No pending feature requests.",
-            ],
-          },
-        ],
-      },
-    })
-  }
 
   try {
-    const res = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": apiKey,
-        "anthropic-version": "2023-06-01",
-      },
-      body: JSON.stringify({
-        model: "claude-sonnet-4-5",
-        max_tokens: 800,
-        messages: [{
-          role: "user",
-          content: `You are Nova, the AI operations manager for The Official 67 Coin ($67) on Solana.
+    const result = await callAI({
+      req,
+      maxTokens: 800,
+      messages: [{
+        role: "user",
+        content: `You are Nova, the AI operations manager for The Official 67 Coin ($67) on Solana.
 
 Generate a daily team briefing based on this data:
 - Date: ${ctx.date}
@@ -99,23 +58,50 @@ Return ONLY valid JSON in this exact format (no markdown, no explanation):
 }
 
 Tone: confident, concise, action-oriented. Like a team captain's morning briefing. No fluff.`,
-        }],
-      }),
+      }],
     })
 
-    const data = await res.json()
-    const text = data.content?.[0]?.text ?? ""
-
+    const text = result.text
     try {
       const jsonMatch = text.match(/\{[\s\S]*\}/)
       if (jsonMatch) {
         const parsed = JSON.parse(jsonMatch[0])
-        return NextResponse.json({ brief: parsed })
+        return NextResponse.json({ brief: parsed, _provider: result.provider })
       }
     } catch {}
 
     return NextResponse.json({ error: "Failed to parse response" }, { status: 500 })
-  } catch (e) {
-    return NextResponse.json({ error: String(e) }, { status: 500 })
+  } catch {
+    // Mock brief if no API key configured
+    return NextResponse.json({
+      brief: {
+        date: ctx.date,
+        headline: `$67 community strong — ${ctx.holders ?? "—"} holders, ${ctx.newSightings ?? 0} new sightings today. Keep the momentum going.`,
+        sections: [
+          {
+            icon: "📈", title: "Token Health",
+            items: [
+              `Price: $${ctx.price?.toFixed(8) ?? "—"} (${ctx.change24h >= 0 ? "+" : ""}${ctx.change24h?.toFixed(2) ?? "—"}% 24h)`,
+              `Holders: ${ctx.holders?.toLocaleString() ?? "—"} — keep driving community growth`,
+            ],
+          },
+          {
+            icon: "👥", title: "Community",
+            items: [
+              `Discord: ${ctx.discordMembers?.toLocaleString() ?? "—"} members`,
+              `Telegram: ${ctx.telegramMembers?.toLocaleString() ?? "—"} members`,
+            ],
+          },
+          {
+            icon: "⚡", title: "Today's Actions",
+            items: [
+              ctx.newSightings > 0 ? `${ctx.newSightings} new sightings need review — log them to X ASAP` : "No new sightings. Hunt for 67 content today.",
+              ctx.activeRaids > 0 ? `${ctx.activeRaids} active raid(s) in progress — keep the energy up` : "Queue up a raid for high-visibility content.",
+              ctx.pendingFeatures > 0 ? `${ctx.pendingFeatures} feature request(s) pending Nova's analysis` : "No pending feature requests.",
+            ],
+          },
+        ],
+      },
+    })
   }
 }

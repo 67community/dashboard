@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server"
-
-const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY ?? ""
+import { callAI } from "@/app/api/_lib/ai-call"
 
 // ── Region system prompts ──────────────────────────────────────────────────────
 
@@ -111,7 +110,7 @@ Each slide should be visually self-contained. Keep it simple and punchy.`,
 
 // ── Mock fallbacks ─────────────────────────────────────────────────────────────
 
-const MOCKS: Record<Platform, Record<string, string>> = {
+const MOCKS: Record<string, Record<string, string>> = {
   x: {
     tweet:        "🚀 $67coin is building something special — {topic}. The community is STRONG and the vision is clear. This is just the beginning. #67coin",
     thread:       "1/4 🧵 Let's talk about {topic} and why it matters for $67coin...\n\n2/4 The fundamentals are solid — fair launch, strong community, real utility.\n\n3/4 Here's what makes $67 different from every other memecoin out there...\n\n4/4 We're just getting started. Join the movement. #67coin",
@@ -129,8 +128,6 @@ const MOCKS: Record<Platform, Record<string, string>> = {
   },
 }
 
-type Platform = "x" | "tiktok" | "instagram"
-
 // ── Route handler ──────────────────────────────────────────────────────────────
 
 export async function POST(req: Request) {
@@ -141,10 +138,10 @@ export async function POST(req: Request) {
       platform = "x",
       region   = "america",
     } = await req.json() as {
-      topic:     string
-      type:      string
+      topic:    string
+      type:     string
       platform?: string
-      region?:   string
+      region?:  string
     }
 
     if (!topic?.trim()) {
@@ -164,36 +161,28 @@ export async function POST(req: Request) {
     const regionCtx  = REGION_CONTEXT[region] ?? REGION_CONTEXT.america
     const fullPrompt = `${regionCtx}\n\n---\n\n${basePrompt}`
 
-    // Mock if no API key
-    if (!ANTHROPIC_API_KEY) {
-      const mockMap  = MOCKS[(platform as Platform)] ?? MOCKS.x
+    try {
+      const result = await callAI({
+        req,
+        maxTokens: 700,
+        messages:  [{ role: "user", content: fullPrompt }],
+      })
+
+      return NextResponse.json({
+        draft:    result.text,
+        type:     baseKey,
+        topic,
+        platform,
+        region,
+        id:       Date.now(),
+        _provider: result.provider,
+      })
+    } catch {
+      // Fall back to mock
+      const mockMap  = MOCKS[platform] ?? MOCKS.x
       const mockText = (mockMap[baseKey] ?? Object.values(mockMap)[0]).replace("{topic}", topic)
       return NextResponse.json({ draft: mockText, type: baseKey, topic, platform, region, id: Date.now() })
     }
-
-    const res = await fetch("https://api.anthropic.com/v1/messages", {
-      method:  "POST",
-      headers: {
-        "x-api-key":         ANTHROPIC_API_KEY,
-        "anthropic-version": "2023-06-01",
-        "content-type":      "application/json",
-      },
-      body: JSON.stringify({
-        model:      "claude-sonnet-4-5",
-        max_tokens: 700,
-        messages:   [{ role: "user", content: fullPrompt }],
-      }),
-    })
-
-    if (!res.ok) {
-      console.error("Anthropic API error:", await res.text())
-      return NextResponse.json({ error: "AI generation failed" }, { status: 500 })
-    }
-
-    const j     = await res.json()
-    const draft = j.content?.[0]?.text ?? ""
-
-    return NextResponse.json({ draft, type: baseKey, topic, platform, region, id: Date.now() })
   } catch (e) {
     console.error("Draft route error:", e)
     return NextResponse.json({ error: "Server error" }, { status: 500 })

@@ -1,37 +1,20 @@
 import { NextResponse } from "next/server"
+import { callAI } from "@/app/api/_lib/ai-call"
 
 export async function POST(req: Request) {
-  const { what, why, how } = await req.json()
+  const { what, why, how } = await req.clone().json()
 
   if (!what || !why) {
     return NextResponse.json({ error: "Missing required fields" }, { status: 400 })
   }
 
-  const apiKey = process.env.ANTHROPIC_API_KEY
-  if (!apiKey) {
-    // Mock response if no API key
-    return NextResponse.json({
-      plan: `**Implementation Plan**\n\n**What:** ${what}\n\n**Priority:** Medium\n\n**Steps:**\n1. Analyze requirements\n2. Design solution\n3. Build & test\n4. Deploy\n\n**Estimated effort:** 2-3 days`,
-      priority: "medium",
-      effort: "2-3 days",
-      tags: ["feature", "enhancement"],
-    })
-  }
-
   try {
-    const res = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": apiKey,
-        "anthropic-version": "2023-06-01",
-      },
-      body: JSON.stringify({
-        model: "claude-sonnet-4-5",
-        max_tokens: 600,
-        messages: [{
-          role: "user",
-          content: `You are Nova, the AI for The Official 67 Coin ($67) Mission Control dashboard. A team member submitted a feature request.
+    const result = await callAI({
+      req,
+      maxTokens: 600,
+      messages: [{
+        role: "user",
+        content: `You are Nova, the AI for The Official 67 Coin ($67) Mission Control dashboard. A team member submitted a feature request.
 
 FEATURE REQUEST:
 - What: ${what}
@@ -47,18 +30,15 @@ Respond with a concise implementation plan in this exact JSON format:
 }
 
 Be practical. Consider that this is a Next.js dashboard. Keep it short and actionable.`,
-        }],
-      }),
+      }],
     })
 
-    const data = await res.json()
-    const text = data.content?.[0]?.text ?? ""
-
+    const text = result.text
     try {
       const jsonMatch = text.match(/\{[\s\S]*\}/)
       if (jsonMatch) {
         const parsed = JSON.parse(jsonMatch[0])
-        return NextResponse.json(parsed)
+        return NextResponse.json({ ...parsed, _provider: result.provider })
       }
     } catch {}
 
@@ -67,8 +47,15 @@ Be practical. Consider that this is a Next.js dashboard. Keep it short and actio
       priority: "medium",
       effort: "TBD",
       tags: ["feature"],
+      _provider: result.provider,
     })
-  } catch (e) {
-    return NextResponse.json({ error: String(e) }, { status: 500 })
+  } catch {
+    // Mock response if no API key configured
+    return NextResponse.json({
+      plan: `**Implementation Plan**\n\n**What:** ${what}\n\n**Priority:** Medium\n\n**Steps:**\n1. Analyze requirements\n2. Design solution\n3. Build & test\n4. Deploy\n\n**Estimated effort:** 2-3 days`,
+      priority: "medium",
+      effort: "2-3 days",
+      tags: ["feature", "enhancement"],
+    })
   }
 }
