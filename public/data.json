@@ -405,41 +405,41 @@
   "milestones": [
     {
       "label": "10K Holders",
-      "current": 6700,
+      "current": 16864,
       "target": 10000
     },
     {
-      "label": "20K Twitter Followers",
-      "current": 14200,
-      "target": 20000
+      "label": "5K Twitter Followers",
+      "current": 1628,
+      "target": 5000
     },
     {
-      "label": "$10M Market Cap",
-      "current": 8470000,
-      "target": 10000000
+      "label": "5K Discord Members",
+      "current": 1457,
+      "target": 5000
     },
     {
-      "label": "50 Day Post Streak",
-      "current": 18,
-      "target": 50
+      "label": "$6.7M Market Cap",
+      "current": 1464803,
+      "target": 6700000
     }
   ],
   "recent_wins": [
     {
-      "label": "Crossed 5K Discord members",
-      "date": "2026-02-20"
+      "label": "Listed on 14 exchanges",
+      "date": "2026-02-15"
+    },
+    {
+      "label": "Listed on CoinMarketCap",
+      "date": "2026-02-12"
     },
     {
       "label": "Listed on CoinGecko",
-      "date": "2026-02-17"
-    },
-    {
-      "label": "Agent v1 deployed",
-      "date": "2026-02-14"
-    },
-    {
-      "label": "First 1M impression day",
       "date": "2026-02-10"
+    },
+    {
+      "label": "Mission Control v2 launched",
+      "date": "2026-02-25"
     }
   ],
   "next_target": "10K Holders by March 15",
@@ -544,12 +544,12 @@
     "767811814557089802": "online",
     "965681608604647514": "dnd",
     "788495124061487154": "online",
-    "682831521396031498": "idle",
     "1444130836415905993": "offline",
     "1440075589557158100": "offline",
+    "682831521396031498": "offline",
     "201710326347988993": "offline"
   },
-  "presence_updated": "2026-02-27T19:45:06.779588Z",
+  "presence_updated": "2026-02-27T20:05:06.724856Z",
   "tiktok_spotlight": [
     {
       "video_url": "https://www.tiktok.com/@67coin/video/7608622833979247886",
