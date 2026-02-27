@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Share2, Plus, ChevronDown, ChevronUp, Mail, ExternalLink, Copy, Check, UserCheck } from "lucide-react"
+import { Share2, Plus, ChevronDown, ChevronUp, Mail, ExternalLink, Copy, Check, UserCheck, Search, Loader2, X } from "lucide-react"
 import { DashboardCard } from "@/components/ui/dashboard-card"
 
 // ── Types ─────────────────────────────────────────────────────────────────────
@@ -41,6 +41,207 @@ const TYPE_CONFIG: Record<string, { emoji: string; label: string }> = {
 }
 
 const STAGES: Stage[] = ["found", "contacted", "responded", "connected", "passed"]
+
+// ── Discovered target (from /api/discover-outreach) ──────────────────────────
+
+interface DiscoveredTarget {
+  id:          string
+  name:        string
+  type:        OutreachTarget["type"]
+  platform:    string
+  link?:       string
+  note:        string
+  source:      string
+  emailDraft?: string
+}
+
+// ── DiscoverPanel ─────────────────────────────────────────────────────────────
+
+function DiscoverPanel({ onAdd }: { onAdd: (t: OutreachTarget) => void }) {
+  const [open,     setOpen]     = useState(false)
+  const [loading,  setLoading]  = useState(false)
+  const [results,  setResults]  = useState<DiscoveredTarget[]>([])
+  const [error,    setError]    = useState("")
+  const [added,    setAdded]    = useState<Set<string>>(new Set())
+  const [dismissed, setDismissed] = useState<Set<string>>(new Set())
+
+  async function discover() {
+    setLoading(true)
+    setError("")
+    setResults([])
+    try {
+      const res  = await fetch("/api/discover-outreach")
+      const data = await res.json()
+      setResults(data.targets ?? [])
+    } catch {
+      setError("Discovery failed — try again.")
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  function addToPipeline(d: DiscoveredTarget) {
+    onAdd({
+      id:          Date.now().toString() + Math.random(),
+      name:        d.name,
+      type:        d.type,
+      platform:    d.platform,
+      link:        d.link,
+      note:        d.note,
+      emailDraft:  d.emailDraft,
+      stage:       "found",
+      createdAt:   new Date().toISOString(),
+      updatedAt:   new Date().toISOString(),
+    })
+    setAdded(prev => new Set([...prev, d.id]))
+  }
+
+  function dismiss(id: string) {
+    setDismissed(prev => new Set([...prev, id]))
+  }
+
+  const visible = results.filter(r => !dismissed.has(r.id))
+
+  return (
+    <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
+      {/* Discover button */}
+      <button
+        onClick={e => { e.stopPropagation(); if (!open) { setOpen(true); discover() } else setOpen(false) }}
+        style={{ display:"flex", alignItems:"center", justifyContent:"center", gap:8,
+          padding:"9px 14px", borderRadius:10, border:"none", cursor:"pointer",
+          background: open ? "#0A0A0A" : "#F5A623",
+          color: open ? "#FFF" : "#000",
+          fontSize:"0.875rem", fontWeight:700, transition:"all 0.15s" }}>
+        <Search style={{ width:14, height:14 }} />
+        {open ? "Close Discovery" : "🔍 Discover Targets"}
+      </button>
+
+      {/* Results panel */}
+      {open && (
+        <div style={{ background:"#F9F9F9", borderRadius:12, padding:12,
+          display:"flex", flexDirection:"column", gap:10,
+          border:"1.5px solid rgba(0,0,0,0.08)" }}>
+
+          {loading && (
+            <div style={{ display:"flex", alignItems:"center", gap:10, padding:"12px 0",
+              justifyContent:"center" }}>
+              <Loader2 style={{ width:16, height:16, color:"#F5A623", animation:"spin 1s linear infinite" }} />
+              <span style={{ fontSize:"0.875rem", color:"#8E8E93", fontWeight:500 }}>
+                Searching YouTube, Amazon, Etsy, web…
+              </span>
+            </div>
+          )}
+
+          {error && (
+            <p style={{ textAlign:"center", color:"#EF4444", fontSize:"0.8125rem" }}>{error}</p>
+          )}
+
+          {!loading && visible.length === 0 && !error && (
+            <p style={{ textAlign:"center", color:"#A1A1AA", fontSize:"0.875rem", padding:"8px 0" }}>
+              No new targets found. Try again later.
+            </p>
+          )}
+
+          {!loading && visible.length > 0 && (
+            <>
+              <p style={{ fontSize:"0.6875rem", fontWeight:700, color:"#8E8E93",
+                textTransform:"uppercase", letterSpacing:"0.07em" }}>
+                {visible.length} targets found — review and add to pipeline
+              </p>
+              {visible.map(d => {
+                const isAdded = added.has(d.id)
+                return (
+                  <div key={d.id}
+                    style={{ background:"#FFF", borderRadius:10, padding:"10px 12px",
+                      border:"1.5px solid rgba(0,0,0,0.07)",
+                      display:"flex", flexDirection:"column", gap:8,
+                      opacity: isAdded ? 0.5 : 1 }}>
+
+                    {/* Header */}
+                    <div style={{ display:"flex", alignItems:"center", gap:8 }}>
+                      <span style={{ fontSize:"1rem" }}>{TYPE_CONFIG[d.type]?.emoji ?? "⭐"}</span>
+                      <div style={{ flex:1, minWidth:0 }}>
+                        <p style={{ fontSize:"0.875rem", fontWeight:600, color:"#1D1D1F",
+                          overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{d.name}</p>
+                        <p style={{ fontSize:"0.6875rem", color:"#8E8E93" }}>
+                          {d.platform} · {TYPE_CONFIG[d.type]?.label ?? d.type} · via {d.source}
+                        </p>
+                      </div>
+                      {d.link && (
+                        <a href={d.link} target="_blank" rel="noopener noreferrer"
+                          onClick={e => e.stopPropagation()}
+                          style={{ color:"#2563EB", flexShrink:0 }}>
+                          <ExternalLink style={{ width:13, height:13 }} />
+                        </a>
+                      )}
+                      <button onClick={e => { e.stopPropagation(); dismiss(d.id) }}
+                        style={{ background:"none", border:"none", cursor:"pointer",
+                          color:"#C7C7CC", padding:2, flexShrink:0 }}>
+                        <X style={{ width:13, height:13 }} />
+                      </button>
+                    </div>
+
+                    {/* Note */}
+                    {d.note && (
+                      <p style={{ fontSize:"0.75rem", color:"#6B7280", lineHeight:1.4,
+                        overflow:"hidden", display:"-webkit-box",
+                        WebkitLineClamp:2, WebkitBoxOrient:"vertical" }}>
+                        {d.note}
+                      </p>
+                    )}
+
+                    {/* Email preview */}
+                    {d.emailDraft && (
+                      <div style={{ background:"rgba(37,99,235,0.04)", borderRadius:8,
+                        padding:"8px 10px", borderLeft:"3px solid #2563EB" }}>
+                        <p style={{ fontSize:"0.6875rem", fontWeight:700, color:"#2563EB",
+                          textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:4 }}>
+                          Draft Email
+                        </p>
+                        <p style={{ fontSize:"0.75rem", color:"#374151", lineHeight:1.5,
+                          overflow:"hidden", display:"-webkit-box",
+                          WebkitLineClamp:3, WebkitBoxOrient:"vertical",
+                          whiteSpace:"pre-wrap" }}>{d.emailDraft}</p>
+                      </div>
+                    )}
+
+                    {/* Actions */}
+                    <div style={{ display:"flex", gap:6 }}>
+                      <button
+                        onClick={e => { e.stopPropagation(); if (!isAdded) addToPipeline(d) }}
+                        disabled={isAdded}
+                        style={{ flex:1, padding:"6px 0", borderRadius:8, border:"none",
+                          cursor: isAdded ? "not-allowed" : "pointer",
+                          background: isAdded ? "#E5E5EA" : "#F5A623",
+                          color: isAdded ? "#A1A1AA" : "#000",
+                          fontSize:"0.75rem", fontWeight:700, transition:"all 0.15s" }}>
+                        {isAdded ? "✓ Added to Pipeline" : "Add to Pipeline"}
+                      </button>
+                      <button onClick={e => { e.stopPropagation(); dismiss(d.id) }}
+                        style={{ padding:"6px 12px", borderRadius:8,
+                          border:"1.5px solid rgba(0,0,0,0.1)", background:"none",
+                          cursor:"pointer", fontSize:"0.75rem", color:"#8E8E93" }}>
+                        Skip
+                      </button>
+                    </div>
+                  </div>
+                )
+              })}
+
+              <button onClick={e => { e.stopPropagation(); discover() }}
+                disabled={loading}
+                style={{ padding:"7px 0", borderRadius:8, border:"1.5px dashed rgba(0,0,0,0.1)",
+                  background:"none", cursor:"pointer", fontSize:"0.75rem", color:"#8E8E93",
+                  fontWeight:600 }}>
+                🔄 Search Again
+              </button>
+            </>
+          )}
+        </div>
+      )}
+    </div>
+  )
+}
 
 function timeAgo(iso: string) {
   const s = Math.floor((Date.now() - new Date(iso).getTime()) / 1000)
@@ -433,9 +634,9 @@ export function OutreachCard() {
         </div>
       )}
 
-      {/* Add target form */}
+      {/* Discover targets */}
       <div onClick={e => e.stopPropagation()}>
-        <AddForm onAdd={addTarget} />
+        <DiscoverPanel onAdd={addTarget} />
       </div>
 
       {/* Recent targets */}
@@ -499,7 +700,8 @@ export function OutreachCard() {
         </button>
       )}
 
-      {/* Add form */}
+      {/* Discover + manual add */}
+      <DiscoverPanel onAdd={addTarget} />
       <AddForm onAdd={addTarget} />
 
       {/* Filtered list */}
