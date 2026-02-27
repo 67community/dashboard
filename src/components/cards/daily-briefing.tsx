@@ -1,259 +1,220 @@
 "use client"
 
-import { useState, useEffect, useCallback } from "react"
-import { Newspaper, RefreshCw } from "lucide-react"
+import { Newspaper, TrendingUp, TrendingDown, Users, Zap, Target } from "lucide-react"
 import { DashboardCard } from "@/components/ui/dashboard-card"
 import { useAppData } from "@/lib/data-context"
+import { useMemo } from "react"
 
-// ── Types ─────────────────────────────────────────────────────────────────────
+// ── helpers ───────────────────────────────────────────────────────────────────
 
-interface BriefSection {
-  icon:  string
-  title: string
-  items: string[]
+function fmt(n: number) {
+  if (n >= 1_000_000) return (n / 1_000_000).toFixed(2) + "M"
+  if (n >= 1_000)     return (n / 1_000).toFixed(1) + "K"
+  return n.toLocaleString()
 }
 
-interface Brief {
-  date:      string
-  headline:  string
-  sections:  BriefSection[]
-  generatedAt: string
+function sign(n: number) { return n >= 0 ? "+" : "" }
+
+function today() {
+  return new Date().toLocaleDateString("en-US", { weekday:"long", month:"long", day:"numeric" })
 }
 
-function todayKey() {
-  return new Date().toISOString().slice(0, 10)
-}
+// ── Stat row ──────────────────────────────────────────────────────────────────
 
-function formatDate(iso: string) {
-  return new Date(iso).toLocaleDateString("en-US", {
-    weekday: "long", month: "long", day: "numeric"
-  })
+function Row({ label, value, delta, deltaLabel, color }: {
+  label: string; value: string; delta?: number; deltaLabel?: string; color?: string
+}) {
+  const up = (delta ?? 0) >= 0
+  return (
+    <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between",
+      padding:"7px 0", borderBottom:"1px solid rgba(0,0,0,0.05)" }}>
+      <span style={{ fontSize:"0.8125rem", color:"#6B7280", fontWeight:500 }}>{label}</span>
+      <div style={{ display:"flex", alignItems:"center", gap:8 }}>
+        <span style={{ fontSize:"0.875rem", fontWeight:700, color: color ?? "#1D1D1F",
+          fontVariantNumeric:"tabular-nums" }}>{value}</span>
+        {delta !== undefined && (
+          <span style={{ fontSize:"0.6875rem", fontWeight:700,
+            color: up ? "#059669" : "#EF4444",
+            background: up ? "rgba(5,150,105,0.08)" : "rgba(239,68,68,0.08)",
+            padding:"1px 7px", borderRadius:99 }}>
+            {sign(delta)}{deltaLabel ?? delta.toFixed(1) + "%"}
+          </span>
+        )}
+      </div>
+    </div>
+  )
 }
 
 // ── Card ──────────────────────────────────────────────────────────────────────
 
 export function DailyBriefingCard() {
-  const { data } = useAppData()
-  const [brief,   setBrief]   = useState<Brief | null>(null)
-  const [loading, setLoading] = useState(false)
-  const [error,   setError]   = useState<string | null>(null)
+  const { data, livePrice, liveChange24h } = useAppData()
 
-  // Load cached brief
-  useEffect(() => {
-    try {
-      const cached = localStorage.getItem(`67_brief_${todayKey()}`)
-      if (cached) setBrief(JSON.parse(cached))
-    } catch {}
-  }, [])
+  const th   = data?.token_health
+  const com  = data?.community
+  const sp   = data?.social_pulse
+  const news = data?.news_feed ?? []
+  const feed = (data?.raid_feed ?? []) as { date: string }[]
 
-  const generate = useCallback(async () => {
-    if (loading) return
-    setLoading(true); setError(null)
+  const price   = livePrice   ?? th?.price ?? 0
+  const ch24    = liveChange24h ?? th?.price_change_24h ?? 0
+  const mcap    = th?.market_cap ?? 0
+  const holders = th?.holders ?? 0
+  const liq     = th?.liquidity ?? 0
+  const vol     = th?.volume_24h ?? 0
 
-    // Build context from live data
-    const th = data?.token_health
-    const community = data?.community
-    const social = data?.social_pulse
+  const discordMembers  = com?.discord_members  ?? 0
+  const discordDelta    = com?.discord_delta_24h ?? 0
+  const discordOnline   = com?.online_now        ?? 0
+  const telegramMembers = com?.telegram_members  ?? 0
+  const newJoins        = com?.new_joins_24h     ?? 0
 
-    // Get stored sightings / feature requests / raids
-    let sightings: { title: string; status: string }[] = []
-    let features:  { what: string; status: string }[]  = []
-    let raids:     { target: string; status: string }[] = []
-    try { sightings = JSON.parse(localStorage.getItem("67_sightings")    ?? "[]").slice(0, 5) } catch {}
-    try { features  = JSON.parse(localStorage.getItem("67_feature_requests") ?? "[]").slice(0, 5) } catch {}
-    try { raids     = JSON.parse(localStorage.getItem("67_raids")         ?? "[]").slice(0, 3) } catch {}
+  const twitterFollowers = sp?.twitter_followers  ?? 0
+  const followerDelta    = sp?.follower_change_24h ?? 0
 
-    const ctx = {
-      date:      todayKey(),
-      price:     th?.price,
-      change24h: th?.price_change_24h,
-      mcap:      th?.market_cap,
-      holders:   th?.holders,
-      discordMembers: community?.discord_members,
-      telegramMembers: community?.telegram_members,
-      mentions:  social?.mentions?.length ?? 0,
-      newSightings:  sightings.filter(s => s.status === "new").length,
-      pendingFeatures: features.filter(f => f.status !== "done").length,
-      activeRaids: raids.filter(r => r.status === "active").length,
-      sightingTitles: sightings.slice(0, 3).map(s => s.title),
-    }
+  // Raids in last 24h
+  const raids24h = useMemo(() =>
+    feed.filter(r => {
+      try { return Date.now() - new Date(r.date).getTime() < 86_400_000 } catch { return false }
+    }).length, [feed])
 
-    try {
-      const res  = await fetch("/api/daily-brief", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(ctx),
-      })
-      const json = await res.json()
+  // Latest news headline
+  const latestNews = news[0]
 
-      if (json.brief) {
-        const b: Brief = { ...json.brief, generatedAt: new Date().toISOString() }
-        setBrief(b)
-        localStorage.setItem(`67_brief_${todayKey()}`, JSON.stringify(b))
-      } else {
-        setError("Failed to generate brief.")
-      }
-    } catch (e) {
-      setError(String(e))
-    } finally {
-      setLoading(false)
-    }
-  }, [data, loading])
+  // Whale activity
+  const whaleBuy  = th?.biggest_trades?.biggest_buy_usd  ?? 0
+  const whaleSell = th?.biggest_trades?.biggest_sell_usd ?? 0
 
-  // Auto-generate on first load if no cached brief
-  useEffect(() => {
-    if (!brief && data && !loading) generate()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data])
+  const priceUp = ch24 >= 0
 
-  const isToday = brief?.date === todayKey()
-
-  // ── Collapsed ────────────────────────────────────────────────────────────
+  // ── Collapsed — key numbers at a glance ───────────────────────────────────
   const collapsed = (
-    <div style={{ display:"flex", flexDirection:"column", gap:14 }}>
-      {loading && (
-        <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
-          {[1,2,3].map(i => <div key={i} className="skeleton" style={{ height: i===1 ? 48 : 32 }} />)}
-        </div>
-      )}
+    <div style={{ display:"flex", flexDirection:"column", gap:0 }}>
+      {/* Date */}
+      <p style={{ fontSize:"0.6875rem", fontWeight:600, color:"#A1A1AA", marginBottom:12 }}>
+        {today()}
+      </p>
 
-      {!loading && brief && (
-        <>
-          {/* Date + refresh */}
-          <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between" }}>
-            <span style={{ fontSize:"0.6875rem", fontWeight:600, color:"#8E8E93" }}>
-              {formatDate(brief.date)}
+      {/* Price block */}
+      <div style={{ display:"flex", alignItems:"center", gap:12, marginBottom:14,
+        padding:"10px 12px", borderRadius:12,
+        background: priceUp ? "rgba(5,150,105,0.06)" : "rgba(239,68,68,0.06)",
+        border: `1.5px solid ${priceUp ? "rgba(5,150,105,0.15)" : "rgba(239,68,68,0.15)"}` }}>
+        {priceUp
+          ? <TrendingUp style={{ width:18, height:18, color:"#059669", flexShrink:0 }} />
+          : <TrendingDown style={{ width:18, height:18, color:"#EF4444", flexShrink:0 }} />}
+        <div>
+          <p style={{ fontSize:"0.6875rem", color:"#8E8E93", fontWeight:600 }}>$67 Price</p>
+          <p style={{ fontSize:"1rem", fontWeight:800, color: priceUp ? "#059669" : "#EF4444",
+            fontVariantNumeric:"tabular-nums" }}>
+            ${price.toFixed(6)}
+            <span style={{ fontSize:"0.75rem", marginLeft:8 }}>
+              {sign(ch24)}{ch24.toFixed(2)}%
             </span>
-            <button onClick={e => { e.stopPropagation(); generate() }}
-              style={{ display:"flex", alignItems:"center", gap:4, background:"none", border:"none",
-                cursor:"pointer", color:"#A1A1AA", fontSize:"0.6875rem", fontWeight:600, padding:0 }}>
-              <RefreshCw style={{ width:11, height:11 }} /> Refresh
-            </button>
-          </div>
-
-          {/* Headline */}
-          <div style={{ background:"rgba(245,166,35,0.07)",
-            border:"1.5px solid rgba(245,166,35,0.25)", borderRadius:12, padding:"12px 14px" }}>
-            <p style={{ fontSize:"0.6875rem", fontWeight:700, color:"#F5A623",
-              textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:5 }}>Today's Brief</p>
-            <p style={{ fontSize:"0.9375rem", fontWeight:700, color:"#1D1D1F", lineHeight:1.45 }}>
-              {brief.headline}
-            </p>
-          </div>
-
-          {/* Top 2 sections collapsed */}
-          {brief.sections.slice(0, 2).map((sec, i) => (
-            <div key={i} style={{ borderTop: i === 0 ? "1px solid rgba(0,0,0,0.06)" : "none",
-              paddingTop: i === 0 ? 12 : 0 }}>
-              <p style={{ fontSize:"0.625rem", fontWeight:700, color:"#8E8E93",
-                textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:6 }}>
-                {sec.icon} {sec.title}
-              </p>
-              <div style={{ display:"flex", flexDirection:"column", gap:5 }}>
-                {sec.items.slice(0, 2).map((item, j) => (
-                  <div key={j} style={{ display:"flex", gap:8, alignItems:"flex-start" }}>
-                    <div style={{ width:5, height:5, borderRadius:"50%", background:"#F5A623",
-                      flexShrink:0, marginTop:5 }} />
-                    <p style={{ fontSize:"0.8125rem", color:"#374151", lineHeight:1.45 }}>{item}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
-
-          {!isToday && (
-            <p style={{ fontSize:"0.6875rem", color:"#A1A1AA", fontStyle:"italic" }}>
-              This brief is from yesterday. Refresh for today's.
-            </p>
-          )}
-        </>
-      )}
-
-      {!loading && error && (
-        <div style={{ textAlign:"center", padding:"8px 0" }}>
-          <p style={{ fontSize:"0.8125rem", color:"#EF4444" }}>{error}</p>
-          <button onClick={e => { e.stopPropagation(); generate() }}
-            style={{ marginTop:8, padding:"6px 16px", borderRadius:8, border:"none",
-              background:"#F5A623", color:"#000", fontSize:"0.8125rem", fontWeight:700,
-              cursor:"pointer" }}>Try Again</button>
+          </p>
         </div>
+        <div style={{ marginLeft:"auto", textAlign:"right" }}>
+          <p style={{ fontSize:"0.625rem", color:"#A1A1AA" }}>MCap</p>
+          <p style={{ fontSize:"0.8125rem", fontWeight:700, color:"#1D1D1F" }}>${fmt(mcap)}</p>
+        </div>
+      </div>
+
+      {/* Quick stats */}
+      <Row label="Holders"     value={fmt(holders)}     delta={undefined} />
+      <Row label="Volume 24h"  value={`$${fmt(vol)}`}   delta={th?.volume_change_pct}  />
+      <Row label="Liquidity"   value={`$${fmt(liq)}`}   delta={th?.liquidity_change_pct} />
+      <Row label="Discord"     value={`${fmt(discordMembers)} members`}
+           delta={newJoins > 0 ? newJoins : undefined}
+           deltaLabel={newJoins > 0 ? `+${newJoins} today` : undefined} />
+      {raids24h > 0 && (
+        <Row label="Raids (24h)" value={`${raids24h} tweets`} />
       )}
 
-      {!loading && !brief && !error && (
-        <button onClick={e => { e.stopPropagation(); generate() }}
-          style={{ padding:"10px 0", borderRadius:10, border:"none", background:"#F5A623",
-            color:"#000", fontSize:"0.875rem", fontWeight:700, cursor:"pointer", width:"100%" }}>
-          Generate Today's Brief
-        </button>
+      {/* Latest news */}
+      {latestNews && (
+        <div style={{ marginTop:10, padding:"8px 10px", background:"rgba(37,99,235,0.04)",
+          borderRadius:8, borderLeft:"3px solid #2563EB" }}>
+          <p style={{ fontSize:"0.625rem", fontWeight:700, color:"#2563EB",
+            textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:3 }}>Latest News</p>
+          <p style={{ fontSize:"0.75rem", color:"#374151", lineHeight:1.4 }}>{latestNews.title}</p>
+        </div>
       )}
     </div>
   )
 
-  // ── Expanded ─────────────────────────────────────────────────────────────
+  // ── Expanded — full breakdown ─────────────────────────────────────────────
   const expanded = (
     <div style={{ display:"flex", flexDirection:"column", gap:20 }}>
-      <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between" }}>
-        {brief && (
-          <p style={{ fontSize:"0.8125rem", fontWeight:600, color:"#8E8E93" }}>
-            {formatDate(brief.date)}
-          </p>
-        )}
-        <button onClick={generate} disabled={loading}
-          style={{ display:"flex", alignItems:"center", gap:6, padding:"7px 14px",
-            borderRadius:8, border:"1.5px solid rgba(0,0,0,0.1)", background:"none",
-            cursor: loading ? "wait" : "pointer", color: loading ? "#A1A1AA" : "#1D1D1F",
-            fontSize:"0.8125rem", fontWeight:600 }}>
-          <RefreshCw style={{ width:13, height:13 }} />
-          {loading ? "Generating…" : "Refresh Brief"}
-        </button>
+      <p style={{ fontSize:"0.875rem", fontWeight:700, color:"#1D1D1F" }}>{today()}</p>
+
+      {/* Token */}
+      <div>
+        <p style={{ fontSize:"0.625rem", fontWeight:700, color:"#8E8E93",
+          textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:4 }}>
+          📈 Token Health
+        </p>
+        <Row label="Price"      value={`$${price.toFixed(8)}`}  delta={ch24} />
+        <Row label="Market Cap" value={`$${fmt(mcap)}`}          delta={th?.mcap_change_pct} />
+        <Row label="Volume 24h" value={`$${fmt(vol)}`}           delta={th?.volume_change_pct} />
+        <Row label="Liquidity"  value={`$${fmt(liq)}`}           delta={th?.liquidity_change_pct} />
+        <Row label="Holders"    value={fmt(holders)}             delta={th?.holder_trend} deltaLabel={`${sign(th?.holder_trend ?? 0)}${th?.holder_trend ?? 0} today`} />
       </div>
 
-      {loading && (
-        <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
-          {[1,2,3,4,5].map(i => <div key={i} className="skeleton" style={{ height: i === 1 ? 60 : 40 }} />)}
+      {/* Whale */}
+      {(whaleBuy >= 1000 || whaleSell >= 1000) && (
+        <div>
+          <p style={{ fontSize:"0.625rem", fontWeight:700, color:"#8E8E93",
+            textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:4 }}>
+            🐋 Whale Activity
+          </p>
+          {whaleBuy >= 1000  && <Row label="Biggest Buy"  value={`$${fmt(whaleBuy)}`}  color="#059669" />}
+          {whaleSell >= 1000 && <Row label="Biggest Sell" value={`$${fmt(whaleSell)}`} color="#EF4444" />}
         </div>
       )}
 
-      {!loading && brief && (
-        <>
-          {/* Headline */}
-          <div style={{ background:"rgba(245,166,35,0.07)",
-            border:"1.5px solid rgba(245,166,35,0.25)", borderRadius:14, padding:"16px 18px" }}>
-            <p style={{ fontSize:"0.6875rem", fontWeight:700, color:"#F5A623",
-              textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:8 }}>Today's Headline</p>
-            <p style={{ fontSize:"1.0625rem", fontWeight:700, color:"#1D1D1F", lineHeight:1.45 }}>
-              {brief.headline}
-            </p>
-          </div>
+      {/* Community */}
+      <div>
+        <p style={{ fontSize:"0.625rem", fontWeight:700, color:"#8E8E93",
+          textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:4 }}>
+          👥 Community
+        </p>
+        <Row label="Discord Members" value={fmt(discordMembers)}
+             delta={discordDelta} deltaLabel={`${sign(discordDelta)}${discordDelta} today`} />
+        <Row label="Online Now"      value={`${discordOnline} online`} />
+        <Row label="New Joins 24h"   value={`+${newJoins}`} color="#059669" />
+        {telegramMembers > 0 && <Row label="Telegram" value={fmt(telegramMembers)} />}
+      </div>
 
-          {/* All sections */}
-          {brief.sections.map((sec, i) => (
-            <div key={i} style={{ borderTop:"1px solid rgba(0,0,0,0.06)", paddingTop:16 }}>
-              <p style={{ fontSize:"0.6875rem", fontWeight:700, color:"#8E8E93",
-                textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:10 }}>
-                {sec.icon} {sec.title}
-              </p>
-              <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
-                {sec.items.map((item, j) => (
-                  <div key={j} style={{ display:"flex", gap:10, alignItems:"flex-start" }}>
-                    <div style={{ width:6, height:6, borderRadius:"50%", background:"#F5A623",
-                      flexShrink:0, marginTop:6 }} />
-                    <p style={{ fontSize:"0.875rem", color:"#374151", lineHeight:1.55 }}>{item}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
-
-          <p style={{ fontSize:"0.6875rem", color:"#C7C7CC", textAlign:"right" }}>
-            Generated {new Date(brief.generatedAt).toLocaleTimeString()}
+      {/* Social */}
+      {twitterFollowers > 0 && (
+        <div>
+          <p style={{ fontSize:"0.625rem", fontWeight:700, color:"#8E8E93",
+            textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:4 }}>
+            📣 Social
           </p>
-        </>
+          <Row label="X Followers" value={fmt(twitterFollowers)}
+               delta={followerDelta} deltaLabel={`${sign(followerDelta)}${followerDelta} today`} />
+          {raids24h > 0 && <Row label="Raid Tweets (24h)" value={String(raids24h)} color="#F5A623" />}
+        </div>
       )}
 
-      {error && (
-        <div style={{ textAlign:"center", padding:"20px 0" }}>
-          <p style={{ color:"#EF4444" }}>{error}</p>
+      {/* News */}
+      {news.length > 0 && (
+        <div>
+          <p style={{ fontSize:"0.625rem", fontWeight:700, color:"#8E8E93",
+            textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:8 }}>
+            📰 Latest News
+          </p>
+          <div style={{ display:"flex", flexDirection:"column", gap:6 }}>
+            {news.slice(0, 3).map((n: any, i: number) => (
+              <div key={i} style={{ padding:"8px 10px", background:"rgba(0,0,0,0.03)",
+                borderRadius:8, display:"flex", flexDirection:"column", gap:2 }}>
+                <p style={{ fontSize:"0.8125rem", fontWeight:600, color:"#1D1D1F",
+                  lineHeight:1.35 }}>{n.title}</p>
+                <p style={{ fontSize:"0.6875rem", color:"#A1A1AA" }}>{n.source}</p>
+              </div>
+            ))}
+          </div>
         </div>
       )}
     </div>
@@ -262,7 +223,7 @@ export function DailyBriefingCard() {
   return (
     <DashboardCard
       title="Daily Briefing"
-      subtitle="AI · Every Morning · Action Items"
+      subtitle="Live · Real Data · No AI"
       icon={<Newspaper style={{ width:16, height:16 }} />}
       accentColor="#F5A623"
       collapsed={collapsed}
