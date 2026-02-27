@@ -40,10 +40,23 @@ export function CommunityLeaderboardCard() {
   const [note,     setNote]     = useState("")
 
   useEffect(() => {
+    const BANNED = ["mav67kid67", "67coinsolana"]
     try {
       const s = localStorage.getItem("67_leaderboard")
-      if (s) setEntries(JSON.parse(s))
-      else   localStorage.setItem("67_leaderboard", JSON.stringify(DEFAULT_ENTRIES))
+      if (s) {
+        // Filter out banned/scammer accounts on load
+        const parsed: LeaderEntry[] = JSON.parse(s)
+        const cleaned = parsed.filter(e =>
+          !BANNED.some(b => e.handle.toLowerCase().includes(b))
+        )
+        if (cleaned.length !== parsed.length) {
+          // Banned accounts were found — save cleaned version
+          localStorage.setItem("67_leaderboard", JSON.stringify(cleaned))
+        }
+        setEntries(cleaned.length > 0 ? cleaned : DEFAULT_ENTRIES)
+      } else {
+        localStorage.setItem("67_leaderboard", JSON.stringify(DEFAULT_ENTRIES))
+      }
     } catch {}
   }, [])
 
