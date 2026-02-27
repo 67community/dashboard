@@ -15,9 +15,24 @@ export interface AppNotification {
 const STORAGE_KEY = "67_notifications"
 const MAX_NOTIFS  = 50
 
+// Patterns to auto-remove from notifications (stale/unwanted)
+const BLOCKED_PATTERNS = [
+  /bots? are offline/i,
+  /offline.*bot/i,
+  /\d+ bots?.*offline/i,
+]
+
 export function getNotifications(): AppNotification[] {
   if (typeof window === "undefined") return []
-  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) ?? "[]") }
+  try {
+    const raw: AppNotification[] = JSON.parse(localStorage.getItem(STORAGE_KEY) ?? "[]")
+    // Auto-clean blocked patterns (e.g. old "5 bots are offline")
+    const cleaned = raw.filter(n => !BLOCKED_PATTERNS.some(p => p.test(n.message)))
+    if (cleaned.length !== raw.length) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(cleaned))
+    }
+    return cleaned
+  }
   catch { return [] }
 }
 
