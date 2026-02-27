@@ -26,6 +26,7 @@ import { ExchangeTrackerCard }    from "@/components/cards/exchange-tracker"
 import { AnnouncementsCard }      from "@/components/cards/announcements"
 import { PriceMilestonesCard }    from "@/components/cards/price-milestones"
 import { CommunityLeaderboardCard } from "@/components/cards/leaderboard"
+import { WalletTrackerCard }       from "@/components/cards/wallet-tracker"
 import { useAppData }          from "@/lib/data-context"
 import { AnimatedNumber }      from "@/components/ui/animated-number"
 
@@ -144,6 +145,7 @@ export default function Dashboard() {
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><XLiveFeedCard /></div>
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><NewsFeedCard /></div>
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><MarketTickerCard /></div>
+        <div className="enter-9" style={{ display:"flex", minWidth:0 }}><WalletTrackerCard /></div>
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><FeatureRequestCard /></div>
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><OutreachCard /></div>
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><SightingsCard /></div>
