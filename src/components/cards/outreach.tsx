@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Share2, Plus, ChevronDown, ChevronUp, Mail, ExternalLink } from "lucide-react"
+import { Share2, Plus, ChevronDown, ChevronUp, Mail, ExternalLink, Copy, Check, UserCheck } from "lucide-react"
 import { DashboardCard } from "@/components/ui/dashboard-card"
 
 // ── Types ─────────────────────────────────────────────────────────────────────
@@ -9,16 +9,18 @@ import { DashboardCard } from "@/components/ui/dashboard-card"
 type Stage = "found" | "contacted" | "responded" | "connected" | "passed"
 
 interface OutreachTarget {
-  id:          string
-  name:        string
-  type:        "creator" | "merch" | "builder" | "media" | "podcast" | "other"
-  platform:    string
-  link?:       string
-  note?:       string
-  stage:       Stage
-  createdAt:   string
-  updatedAt:   string
-  emailDraft?: string
+  id:           string
+  name:         string
+  type:         "creator" | "merch" | "music" | "media" | "podcast" | "other"
+  platform:     string
+  link?:        string
+  contact?:     string   // email address or DM link
+  note?:        string
+  handoffNote?: string   // for Nick/Jin after response
+  stage:        Stage
+  createdAt:    string
+  updatedAt:    string
+  emailDraft?:  string
 }
 
 const STAGE_CONFIG: Record<Stage, { label: string; color: string; bg: string }> = {
@@ -29,8 +31,13 @@ const STAGE_CONFIG: Record<Stage, { label: string; color: string; bg: string }> 
   passed:    { label: "Passed",    color: "#A1A1AA", bg: "#F4F4F5" },
 }
 
-const TYPE_EMOJI: Record<string, string> = {
-  creator: "🎥", merch: "👕", builder: "🔧", media: "📰", podcast: "🎙️", other: "⭐",
+const TYPE_CONFIG: Record<string, { emoji: string; label: string }> = {
+  creator: { emoji: "🎥", label: "Creator (TikTok/YT/IG)" },
+  merch:   { emoji: "👕", label: "Merch (Amazon/Etsy/Teespring)" },
+  music:   { emoji: "🎵", label: "Music (Spotify/SC/YT)" },
+  media:   { emoji: "📰", label: "Media / Blog" },
+  podcast: { emoji: "🎙️", label: "Podcast" },
+  other:   { emoji: "⭐", label: "Other" },
 }
 
 const STAGES: Stage[] = ["found", "contacted", "responded", "connected", "passed"]
@@ -55,21 +62,53 @@ function StageBadge({ stage }: { stage: Stage }) {
   )
 }
 
+// ── CopyButton ────────────────────────────────────────────────────────────────
+
+function CopyButton({ text }: { text: string }) {
+  const [copied, setCopied] = useState(false)
+  function copy() {
+    navigator.clipboard.writeText(text)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 1800)
+  }
+  return (
+    <button onClick={e => { e.stopPropagation(); copy() }}
+      style={{ padding:"3px 8px", borderRadius:6, border:"1.5px solid rgba(0,0,0,0.1)",
+        background: copied ? "rgba(5,150,105,0.08)" : "#FFF", cursor:"pointer",
+        display:"flex", alignItems:"center", gap:4, fontSize:"0.6875rem", fontWeight:600,
+        color: copied ? "#059669" : "#8E8E93", transition:"all 0.15s" }}>
+      {copied
+        ? <><Check style={{ width:10, height:10 }} /> Copied</>
+        : <><Copy style={{ width:10, height:10 }} /> Copy</>}
+    </button>
+  )
+}
+
 // ── TargetRow ─────────────────────────────────────────────────────────────────
 
-function TargetRow({ t, expanded, onToggle, onStageChange, onDelete }: {
+function TargetRow({ t, expanded, onToggle, onStageChange, onDelete, onHandoffNote }: {
   t: OutreachTarget
   expanded: boolean
   onToggle: () => void
   onStageChange: (id: string, stage: Stage) => void
   onDelete: (id: string) => void
+  onHandoffNote: (id: string, note: string) => void
 }) {
+  const [handoff, setHandoff] = useState(t.handoffNote ?? "")
+  const [savingHandoff, setSavingHandoff] = useState(false)
+
+  function saveHandoff() {
+    setSavingHandoff(true)
+    onHandoffNote(t.id, handoff)
+    setTimeout(() => setSavingHandoff(false), 800)
+  }
+
   return (
     <div className="inset-cell" style={{ display:"flex", flexDirection:"column", gap:0 }}>
       <button onClick={e => { e.stopPropagation(); onToggle() }}
         style={{ display:"flex", alignItems:"center", gap:8, background:"none", border:"none",
           cursor:"pointer", width:"100%", textAlign:"left", padding:0 }}>
-        <span style={{ fontSize:"1rem", flexShrink:0 }}>{TYPE_EMOJI[t.type]}</span>
+        <span style={{ fontSize:"1rem", flexShrink:0 }}>{TYPE_CONFIG[t.type]?.emoji ?? "⭐"}</span>
         <span style={{ flex:1, fontSize:"0.875rem", fontWeight:600, color:"#1D1D1F",
           overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{t.name}</span>
         <StageBadge stage={t.stage} />
@@ -84,6 +123,10 @@ function TargetRow({ t, expanded, onToggle, onStageChange, onDelete }: {
 
           {/* Meta */}
           <div style={{ display:"flex", gap:8, flexWrap:"wrap", alignItems:"center" }}>
+            <span style={{ fontSize:"0.75rem", color:"#8E8E93",
+              background:"#F4F4F5", padding:"2px 8px", borderRadius:6 }}>
+              {TYPE_CONFIG[t.type]?.label ?? t.type}
+            </span>
             <span style={{ fontSize:"0.75rem", color:"#8E8E93" }}>{t.platform}</span>
             {t.link && (
               <a href={t.link} target="_blank" rel="noopener noreferrer"
@@ -94,6 +137,18 @@ function TargetRow({ t, expanded, onToggle, onStageChange, onDelete }: {
             )}
             <span style={{ fontSize:"0.6875rem", color:"#C7C7CC" }}>{timeAgo(t.updatedAt)}</span>
           </div>
+
+          {/* Contact info */}
+          {t.contact && (
+            <div style={{ display:"flex", alignItems:"center", gap:8,
+              background:"rgba(37,99,235,0.04)", borderRadius:8, padding:"7px 10px",
+              border:"1px solid rgba(37,99,235,0.1)" }}>
+              <Mail style={{ width:12, height:12, color:"#2563EB", flexShrink:0 }} />
+              <span style={{ flex:1, fontSize:"0.8125rem", color:"#374151",
+                overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{t.contact}</span>
+              <CopyButton text={t.contact} />
+            </div>
+          )}
 
           {t.note && <p style={{ fontSize:"0.8125rem", color:"#374151" }}>{t.note}</p>}
 
@@ -120,12 +175,47 @@ function TargetRow({ t, expanded, onToggle, onStageChange, onDelete }: {
           {t.emailDraft && (
             <div style={{ background:"rgba(37,99,235,0.05)", borderRadius:8,
               padding:"10px 12px", borderLeft:"3px solid #2563EB" }}>
-              <p style={{ fontSize:"0.625rem", fontWeight:700, color:"#2563EB",
-                textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:6 }}>
-                <Mail style={{ width:10, height:10, display:"inline", marginRight:3 }} />Email Draft
-              </p>
+              <div style={{ display:"flex", alignItems:"center", gap:6, marginBottom:6 }}>
+                <p style={{ fontSize:"0.625rem", fontWeight:700, color:"#2563EB",
+                  textTransform:"uppercase", letterSpacing:"0.07em", flex:1 }}>
+                  <Mail style={{ width:10, height:10, display:"inline", marginRight:3 }} />
+                  AI Email Draft
+                </p>
+                <CopyButton text={t.emailDraft} />
+              </div>
               <p style={{ fontSize:"0.8125rem", color:"#374151", lineHeight:1.55,
                 whiteSpace:"pre-wrap" }}>{t.emailDraft}</p>
+            </div>
+          )}
+
+          {/* Handoff note (for Nick/Jin) - visible when responded or connected */}
+          {(t.stage === "responded" || t.stage === "connected") && (
+            <div style={{ background:"rgba(245,166,35,0.06)", borderRadius:8,
+              padding:"10px 12px", borderLeft:"3px solid #F5A623" }}>
+              <p style={{ fontSize:"0.625rem", fontWeight:700, color:"#D97706",
+                textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:6 }}>
+                <UserCheck style={{ width:10, height:10, display:"inline", marginRight:3 }} />
+                Handoff Notes (Nick / Jin)
+              </p>
+              <textarea
+                value={handoff}
+                onChange={e => setHandoff(e.target.value)}
+                onClick={e => e.stopPropagation()}
+                placeholder="Add context for the team before they take over the conversation..."
+                rows={3}
+                style={{ width:"100%", padding:"6px 8px", borderRadius:6,
+                  border:"1.5px solid rgba(245,166,35,0.25)", outline:"none",
+                  fontSize:"0.8125rem", fontFamily:"inherit", background:"#FFFDF7",
+                  resize:"none", boxSizing:"border-box" }}
+              />
+              <button
+                onClick={e => { e.stopPropagation(); saveHandoff() }}
+                style={{ marginTop:5, padding:"4px 12px", borderRadius:6, border:"none",
+                  background: savingHandoff ? "#059669" : "#F5A623",
+                  color: "#FFF", fontSize:"0.6875rem", fontWeight:700, cursor:"pointer",
+                  transition:"background 0.2s" }}>
+                {savingHandoff ? "Saved ✓" : "Save Note"}
+              </button>
             </div>
           )}
 
@@ -143,12 +233,13 @@ function TargetRow({ t, expanded, onToggle, onStageChange, onDelete }: {
 // ── Add Form ──────────────────────────────────────────────────────────────────
 
 function AddForm({ onAdd }: { onAdd: (t: OutreachTarget) => void }) {
-  const [open,  setOpen]  = useState(false)
-  const [name,  setName]  = useState("")
-  const [type,  setType]  = useState<OutreachTarget["type"]>("creator")
-  const [plat,  setPlat]  = useState("")
-  const [link,  setLink]  = useState("")
-  const [note,  setNote]  = useState("")
+  const [open,    setOpen]    = useState(false)
+  const [name,    setName]    = useState("")
+  const [type,    setType]    = useState<OutreachTarget["type"]>("creator")
+  const [plat,    setPlat]    = useState("")
+  const [link,    setLink]    = useState("")
+  const [contact, setContact] = useState("")
+  const [note,    setNote]    = useState("")
   const [genning, setGenning] = useState(false)
 
   async function submit() {
@@ -169,14 +260,24 @@ function AddForm({ onAdd }: { onAdd: (t: OutreachTarget) => void }) {
     onAdd({
       id: Date.now().toString(),
       name: name.trim(),
-      type, platform: plat || type, link: link || undefined,
-      note: note || undefined, emailDraft,
+      type,
+      platform: plat || type,
+      link:    link    || undefined,
+      contact: contact || undefined,
+      note:    note    || undefined,
+      emailDraft,
       stage: "found",
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     })
-    setName(""); setPlat(""); setLink(""); setNote(""); setOpen(false)
+    setName(""); setPlat(""); setLink(""); setContact(""); setNote("")
+    setOpen(false)
     setGenning(false)
+  }
+
+  const inputStyle = {
+    padding:"8px 10px", borderRadius:8, border:"1.5px solid rgba(0,0,0,0.1)",
+    outline:"none", fontSize:"0.875rem", fontFamily:"inherit", background:"#FFF",
   }
 
   if (!open) return (
@@ -191,37 +292,46 @@ function AddForm({ onAdd }: { onAdd: (t: OutreachTarget) => void }) {
   return (
     <div style={{ background:"#FAFAFA", borderRadius:12, padding:12,
       display:"flex", flexDirection:"column", gap:8 }} onClick={e => e.stopPropagation()}>
-      <input value={name} onChange={e => setName(e.target.value)} placeholder="Name / handle"
-        style={{ padding:"8px 10px", borderRadius:8, border:"1.5px solid rgba(0,0,0,0.1)",
-          outline:"none", fontSize:"0.875rem", fontFamily:"inherit", background:"#FFF" }}
+
+      <input value={name} onChange={e => setName(e.target.value)}
+        placeholder="Name / handle (e.g. @67tshirts, MavMusic)"
+        style={inputStyle}
         onFocus={e => e.target.style.borderColor="#F5A623"}
         onBlur={e  => e.target.style.borderColor="rgba(0,0,0,0.1)"} />
+
       <div style={{ display:"flex", gap:6 }}>
         <select value={type} onChange={e => setType(e.target.value as OutreachTarget["type"])}
-          style={{ flex:1, padding:"8px 10px", borderRadius:8, border:"1.5px solid rgba(0,0,0,0.1)",
-            outline:"none", fontSize:"0.875rem", fontFamily:"inherit", background:"#FFF" }}>
-          {Object.entries(TYPE_EMOJI).map(([k,v]) => (
-            <option key={k} value={k}>{v} {k}</option>
+          style={{ ...inputStyle, flex:1 }}>
+          {Object.entries(TYPE_CONFIG).map(([k, v]) => (
+            <option key={k} value={k}>{v.emoji} {v.label}</option>
           ))}
         </select>
-        <input value={plat} onChange={e => setPlat(e.target.value)} placeholder="Platform"
-          style={{ flex:1, padding:"8px 10px", borderRadius:8, border:"1.5px solid rgba(0,0,0,0.1)",
-            outline:"none", fontSize:"0.875rem", fontFamily:"inherit", background:"#FFF" }}
+        <input value={plat} onChange={e => setPlat(e.target.value)}
+          placeholder="Platform (TikTok, Amazon…)"
+          style={{ ...inputStyle, flex:1 }}
           onFocus={e => e.target.style.borderColor="#F5A623"}
           onBlur={e  => e.target.style.borderColor="rgba(0,0,0,0.1)"} />
       </div>
-      <input value={link} onChange={e => setLink(e.target.value)} placeholder="Profile URL (optional)"
-        style={{ padding:"8px 10px", borderRadius:8, border:"1.5px solid rgba(0,0,0,0.1)",
-          outline:"none", fontSize:"0.875rem", fontFamily:"inherit", background:"#FFF" }}
+
+      <input value={contact} onChange={e => setContact(e.target.value)}
+        placeholder="📧 Contact — email or DM link (for actual outreach)"
+        style={{ ...inputStyle, borderColor: contact ? "#F5A623" : "rgba(0,0,0,0.1)" }}
+        onFocus={e => e.target.style.borderColor="#F5A623"}
+        onBlur={e  => e.target.style.borderColor= contact ? "#F5A623" : "rgba(0,0,0,0.1)"} />
+
+      <input value={link} onChange={e => setLink(e.target.value)}
+        placeholder="Profile URL (optional)"
+        style={inputStyle}
         onFocus={e => e.target.style.borderColor="#F5A623"}
         onBlur={e  => e.target.style.borderColor="rgba(0,0,0,0.1)"} />
-      <textarea value={note} onChange={e => setNote(e.target.value)} placeholder="Notes (optional)"
+
+      <textarea value={note} onChange={e => setNote(e.target.value)}
+        placeholder="Notes — what makes them relevant to 67? (optional)"
         rows={2}
-        style={{ padding:"8px 10px", borderRadius:8, border:"1.5px solid rgba(0,0,0,0.1)",
-          outline:"none", fontSize:"0.875rem", fontFamily:"inherit", background:"#FFF",
-          resize:"none" }}
+        style={{ ...inputStyle, resize:"none" }}
         onFocus={e => e.target.style.borderColor="#F5A623"}
         onBlur={e  => e.target.style.borderColor="rgba(0,0,0,0.1)"} />
+
       <div style={{ display:"flex", gap:6 }}>
         <button onClick={submit} disabled={!name.trim() || genning}
           style={{ flex:1, padding:"8px 0", borderRadius:8, border:"none",
@@ -229,7 +339,7 @@ function AddForm({ onAdd }: { onAdd: (t: OutreachTarget) => void }) {
             background: !name.trim() || genning ? "#E5E5EA" : "#F5A623",
             color: !name.trim() || genning ? "#A1A1AA" : "#000",
             fontSize:"0.8125rem", fontWeight:700 }}>
-          {genning ? "Generating email…" : "Add + Draft Email"}
+          {genning ? "Drafting email…" : "Add + Draft Email"}
         </button>
         <button onClick={() => setOpen(false)}
           style={{ padding:"8px 14px", borderRadius:8, border:"1.5px solid rgba(0,0,0,0.1)",
@@ -244,8 +354,8 @@ function AddForm({ onAdd }: { onAdd: (t: OutreachTarget) => void }) {
 // ── Card ──────────────────────────────────────────────────────────────────────
 
 export function OutreachCard() {
-  const [targets,    setTargets]    = useState<OutreachTarget[]>([])
-  const [expandedId, setExpandedId] = useState<string | null>(null)
+  const [targets,     setTargets]     = useState<OutreachTarget[]>([])
+  const [expandedId,  setExpandedId]  = useState<string | null>(null)
   const [filterStage, setFilterStage] = useState<Stage | "all">("all")
 
   useEffect(() => {
@@ -269,6 +379,10 @@ export function OutreachCard() {
     save(targets.map(t => t.id === id ? { ...t, stage, updatedAt: new Date().toISOString() } : t))
   }
 
+  function updateHandoffNote(id: string, note: string) {
+    save(targets.map(t => t.id === id ? { ...t, handoffNote: note, updatedAt: new Date().toISOString() } : t))
+  }
+
   function deleteTarget(id: string) {
     save(targets.filter(t => t.id !== id))
     if (expandedId === id) setExpandedId(null)
@@ -276,14 +390,14 @@ export function OutreachCard() {
 
   const filtered = filterStage === "all" ? targets : targets.filter(t => t.stage === filterStage)
 
-  // Stage counts
   const counts = STAGES.reduce((acc, s) => {
     acc[s] = targets.filter(t => t.stage === s).length
     return acc
   }, {} as Record<Stage, number>)
 
+  const responded = counts.responded ?? 0
   const connected = counts.connected ?? 0
-  const active    = (counts.contacted ?? 0) + (counts.responded ?? 0)
+  const active    = (counts.contacted ?? 0) + responded
 
   // ── Collapsed ────────────────────────────────────────────────────────────
   const collapsed = (
@@ -308,6 +422,17 @@ export function OutreachCard() {
         </div>
       </div>
 
+      {/* Responded alert */}
+      {responded > 0 && (
+        <div style={{ background:"rgba(37,99,235,0.07)", borderRadius:10, padding:"8px 12px",
+          display:"flex", alignItems:"center", gap:8, border:"1px solid rgba(37,99,235,0.15)" }}>
+          <UserCheck style={{ width:14, height:14, color:"#2563EB", flexShrink:0 }} />
+          <p style={{ fontSize:"0.8125rem", color:"#2563EB", fontWeight:600 }}>
+            {responded} target{responded > 1 ? "s" : ""} responded — needs Nick / Jin handoff
+          </p>
+        </div>
+      )}
+
       {/* Add target form */}
       <div onClick={e => e.stopPropagation()}>
         <AddForm onAdd={addTarget} />
@@ -320,7 +445,7 @@ export function OutreachCard() {
           <div style={{ display:"flex", flexDirection:"column", gap:5 }}>
             {targets.slice(0,3).map(t => (
               <div key={t.id} style={{ display:"flex", alignItems:"center", gap:8 }}>
-                <span>{TYPE_EMOJI[t.type]}</span>
+                <span>{TYPE_CONFIG[t.type]?.emoji ?? "⭐"}</span>
                 <span style={{ flex:1, fontSize:"0.8125rem", color:"#374151", fontWeight:500,
                   overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{t.name}</span>
                 <StageBadge stage={t.stage} />
@@ -341,23 +466,38 @@ export function OutreachCard() {
         {(["all", ...STAGES] as const).map(s => {
           const cnt = s === "all" ? targets.length : (counts[s] ?? 0)
           const cfg = s === "all" ? null : STAGE_CONFIG[s]
-          const active = filterStage === s
+          const isActive = filterStage === s
           return (
             <button key={s} onClick={() => setFilterStage(s)}
               style={{ flex:1, padding:"7px 4px", borderRadius:10, border:"none", cursor:"pointer",
-                background: active ? (cfg?.bg ?? "#F5A623" + "22") : "#F4F4F5",
-                outline: active ? `1.5px solid ${cfg?.color ?? "#F5A623"}` : "none",
-                transition:"all 0.12s", display:"flex", flexDirection:"column", alignItems:"center", gap:3 }}>
+                background: isActive ? (cfg?.bg ?? "rgba(245,166,35,0.12)") : "#F4F4F5",
+                outline: isActive ? `1.5px solid ${cfg?.color ?? "#F5A623"}` : "none",
+                transition:"all 0.12s", display:"flex", flexDirection:"column",
+                alignItems:"center", gap:3 }}>
               <span style={{ fontSize:"0.875rem", fontWeight:800,
-                color: active ? (cfg?.color ?? "#F5A623") : "#1D1D1F" }}>{cnt}</span>
+                color: isActive ? (cfg?.color ?? "#F5A623") : "#1D1D1F" }}>{cnt}</span>
               <span style={{ fontSize:"0.5rem", fontWeight:700, textTransform:"uppercase",
-                letterSpacing:"0.05em", color: active ? (cfg?.color ?? "#F5A623") : "#A1A1AA" }}>
+                letterSpacing:"0.05em", color: isActive ? (cfg?.color ?? "#F5A623") : "#A1A1AA" }}>
                 {s === "all" ? "All" : STAGE_CONFIG[s].label}
               </span>
             </button>
           )
         })}
       </div>
+
+      {/* Responded handoff alert */}
+      {responded > 0 && filterStage !== "responded" && (
+        <button onClick={() => setFilterStage("responded")}
+          style={{ background:"rgba(37,99,235,0.07)", borderRadius:10, padding:"9px 12px",
+            display:"flex", alignItems:"center", gap:8, border:"1px solid rgba(37,99,235,0.15)",
+            cursor:"pointer", width:"100%", textAlign:"left" }}>
+          <UserCheck style={{ width:14, height:14, color:"#2563EB", flexShrink:0 }} />
+          <p style={{ fontSize:"0.8125rem", color:"#2563EB", fontWeight:600, flex:1 }}>
+            {responded} responded — Nick / Jin handoff needed
+          </p>
+          <span style={{ fontSize:"0.75rem", color:"#2563EB" }}>View →</span>
+        </button>
+      )}
 
       {/* Add form */}
       <AddForm onAdd={addTarget} />
@@ -366,14 +506,18 @@ export function OutreachCard() {
       <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
         {filtered.length === 0 ? (
           <p style={{ textAlign:"center", color:"#A1A1AA", fontSize:"0.875rem", padding:"20px 0" }}>
-            {filterStage === "all" ? "No targets yet. Add one above." : `No targets in "${STAGE_CONFIG[filterStage]?.label}" stage.`}
+            {filterStage === "all"
+              ? "No targets yet. Add merch sellers, musicians, TikTok creators building around 67."
+              : `No targets in "${STAGE_CONFIG[filterStage as Stage]?.label}" stage.`}
           </p>
         ) : filtered.map(t => (
           <TargetRow key={t.id} t={t}
             expanded={expandedId === t.id}
             onToggle={() => setExpandedId(v => v === t.id ? null : t.id)}
             onStageChange={updateStage}
-            onDelete={deleteTarget} />
+            onDelete={deleteTarget}
+            onHandoffNote={updateHandoffNote}
+          />
         ))}
       </div>
     </div>
