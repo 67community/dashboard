@@ -1,9 +1,11 @@
 "use client"
 
-import { Users } from "lucide-react"
+import { Users, Mic, Calendar, Zap, Trophy, Shield } from "lucide-react"
 import { DashboardCard } from "@/components/ui/dashboard-card"
 import { useAppData } from "@/lib/data-context"
-import type { ActivityItem, RecentJoin } from "@/lib/use-data"
+import type { ActivityItem, RecentJoin, TopChannel, VoiceChannel, ScheduledEvent, ModEvent, TopContributor } from "@/lib/use-data"
+
+// ── helpers ───────────────────────────────────────────────────────────────────
 
 function DeltaBadge({ value }: { value?: number }) {
   if (!value) return null
@@ -18,6 +20,17 @@ function DeltaBadge({ value }: { value?: number }) {
     }}>
       {pos ? "+" : ""}{value.toLocaleString()}
     </span>
+  )
+}
+
+function SectionLabel({ icon, label }: { icon: React.ReactNode; label: string }) {
+  return (
+    <div style={{ display:"flex", alignItems:"center", gap:6, marginBottom:10 }}>
+      <span style={{ color:"#A1A1AA", display:"flex" }}>{icon}</span>
+      <p style={{ fontSize:"0.6875rem", fontWeight:700, color:"#A1A1AA", letterSpacing:"0.06em", textTransform:"uppercase", margin:0 }}>
+        {label}
+      </p>
+    </div>
   )
 }
 
@@ -65,21 +78,53 @@ function AvatarStack({ joins }: { joins: RecentJoin[] }) {
   )
 }
 
+function typeConfig(type: string): { bg: string; color: string; label: string } {
+  const map: Record<string, { bg: string; color: string; label: string }> = {
+    join:  { bg:"#DBEAFE", color:"#1D4ED8", label:"Joined"  },
+    ban:   { bg:"#FEE2E2", color:"#B91C1C", label:"Banned"  },
+    kick:  { bg:"#FEF3C7", color:"#B45309", label:"Kicked"  },
+    spam:  { bg:"#FCE7F3", color:"#BE185D", label:"Spam"    },
+    warn:  { bg:"#FEF9C3", color:"#A16207", label:"Warned"  },
+  }
+  return map[type] ?? { bg:"#F3F4F6", color:"#374151", label:"Event" }
+}
+
+function timeToEvent(iso: string): string {
+  if (!iso) return ""
+  const diff = new Date(iso).getTime() - Date.now()
+  if (diff < 0) return "Ongoing"
+  const m = Math.floor(diff / 60000)
+  if (m < 60) return `in ${m}m`
+  const h = Math.floor(m / 60)
+  if (h < 24) return `in ${h}h`
+  return `in ${Math.floor(h / 24)}d`
+}
+
+// ── Main Component ────────────────────────────────────────────────────────────
+
 export function CommunityCard() {
   const { data } = useAppData()
   const c = data?.community
-  const members = c?.discord_members ?? 0
-  const fmtM    = members.toLocaleString()
-  const goal    = 10000
-  const pct     = Math.min((members / goal) * 100, 100)
 
-  const onlineNow          = c?.online_now         ?? 0
-  const discordDelta       = c?.discord_delta_24h
-  const telegramDelta      = c?.telegram_delta_24h
-  const recentJoins        = c?.recent_joins        ?? []
-  const activeUsersToday   = c?.active_users_today  ?? 0
-  const topChannels        = c?.top_channels        ?? []
+  const members       = c?.discord_members   ?? 0
+  const fmtM          = members.toLocaleString()
+  const goal          = 10000
+  const pct           = Math.min((members / goal) * 100, 100)
+  const onlineNow     = c?.online_now        ?? 0
+  const discordDelta  = c?.discord_delta_24h
+  const telegramDelta = c?.telegram_delta_24h
+  const recentJoins   = c?.recent_joins      ?? []
+  const activeToday   = c?.active_users_today ?? 0
+  const topChannels   = (c?.top_channels     ?? []) as TopChannel[]
+  const voiceChs      = (c?.voice_channels   ?? []) as VoiceChannel[]
+  const events        = (c?.scheduled_events ?? []) as ScheduledEvent[]
+  const boostLevel    = c?.boost_level       ?? 0
+  const boostCount    = c?.boost_count       ?? 0
+  const modEvents     = (c?.mod_events       ?? []) as ModEvent[]
+  const topContribs   = (c?.top_contributors ?? []) as TopContributor[]
+  const legacyActivity= (c?.recent_discord_activity ?? []) as ActivityItem[]
 
+  // ── Collapsed view ──────────────────────────────────────────────────────────
   const collapsed = (
     <div style={{ display:"flex", flexDirection:"column", gap:20 }}>
 
@@ -92,20 +137,32 @@ export function CommunityCard() {
             <DeltaBadge value={discordDelta} />
           </div>
         </div>
-        <span style={{
-          display:"inline-flex", alignItems:"center", gap:6,
-          background:"#E8F8EE", padding:"6px 12px", borderRadius:99, marginTop:4,
-        }}>
-          <span className="dot-on" style={{ width:7, height:7 }} />
-          <span style={{ fontSize:"0.75rem", fontWeight:700, color:"#1A8343" }}>{onlineNow} online</span>
-        </span>
+        <div style={{ display:"flex", flexDirection:"column", alignItems:"flex-end", gap:6 }}>
+          <span style={{
+            display:"inline-flex", alignItems:"center", gap:6,
+            background:"#E8F8EE", padding:"6px 12px", borderRadius:99,
+          }}>
+            <span className="dot-on" style={{ width:7, height:7 }} />
+            <span style={{ fontSize:"0.75rem", fontWeight:700, color:"#1A8343" }}>{onlineNow} online</span>
+          </span>
+          {voiceChs.length > 0 && (
+            <span style={{
+              display:"inline-flex", alignItems:"center", gap:5,
+              background:"#F0F4FF", padding:"4px 10px", borderRadius:99,
+              fontSize:"0.75rem", fontWeight:600, color:"#5865F2",
+            }}>
+              <Mic style={{ width:11, height:11 }} />
+              {voiceChs.reduce((a, v) => a + v.member_count, 0)} in voice
+            </span>
+          )}
+        </div>
       </div>
 
-      {/* Stats */}
+      {/* Stats row */}
       <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:8, borderTop:"1px solid rgba(0,0,0,0.06)", paddingTop:16 }}>
         {[
-          { label:"New in Intros", value: recentJoins.length > 0 ? `${recentJoins.length}` : String(c?.new_joins_24h ?? "—"), delta: undefined },
-          { label:"Active Today",  value: activeUsersToday > 0 ? String(activeUsersToday) : "—", delta: undefined },
+          { label:"New Joins 24h", value: String(c?.new_joins_24h ?? "—") },
+          { label:"Active Today",  value: activeToday > 0 ? String(activeToday) : "—" },
           { label:"Telegram",      value: (c?.telegram_members ?? 0).toLocaleString(), delta: telegramDelta },
         ].map(s => (
           <div key={s.label} className="inset-cell" style={{ textAlign:"center" }}>
@@ -134,51 +191,96 @@ export function CommunityCard() {
     </div>
   )
 
+  // ── Expanded view ──────────────────────────────────────────────────────────
   const expanded = (
-    <div style={{ display:"flex", flexDirection:"column", gap:16 }}>
+    <div style={{ display:"flex", flexDirection:"column", gap:18 }}>
 
-      {/* Big Discord block */}
-      <div style={{ background:"linear-gradient(135deg, #5865F2, #7289DA)", borderRadius:16, padding:"24px 20px", textAlign:"center" }}>
-        <p className="hero-label" style={{ color:"rgba(255,255,255,0.5)", marginBottom:10 }}>Discord Members</p>
-        <div style={{ display:"flex", alignItems:"center", justifyContent:"center", gap:8 }}>
-          <p style={{ fontSize:"4rem", fontWeight:900, color:"#fff", letterSpacing:"-0.055em", lineHeight:1, margin:0 }}>{fmtM}</p>
-          {!!discordDelta && (
+      {/* ── Discord header ── */}
+      <div style={{ background:"linear-gradient(135deg, #5865F2, #7289DA)", borderRadius:16, padding:"20px 18px" }}>
+        <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:12 }}>
+          <div>
+            <p style={{ fontSize:"0.6875rem", fontWeight:700, color:"rgba(255,255,255,0.55)", letterSpacing:"0.08em", textTransform:"uppercase", margin:0 }}>Discord</p>
+            <div style={{ display:"flex", alignItems:"baseline", gap:8, marginTop:4 }}>
+              <p style={{ fontSize:"3rem", fontWeight:900, color:"#fff", letterSpacing:"-0.055em", lineHeight:1, margin:0 }}>{fmtM}</p>
+              {!!discordDelta && (
+                <span style={{
+                  fontSize:"0.875rem", fontWeight:700,
+                  color: discordDelta > 0 ? "#86EFAC" : "#FCA5A5",
+                  background: discordDelta > 0 ? "rgba(134,239,172,0.18)" : "rgba(252,165,165,0.18)",
+                  borderRadius:99, padding:"3px 9px",
+                }}>
+                  {discordDelta > 0 ? "+" : ""}{discordDelta.toLocaleString()}
+                </span>
+              )}
+            </div>
+          </div>
+          {/* Boost badge */}
+          {boostCount > 0 && (
+            <div style={{ textAlign:"right" }}>
+              <div style={{
+                display:"inline-flex", alignItems:"center", gap:5,
+                background:"rgba(255,255,255,0.15)", borderRadius:99,
+                padding:"6px 12px",
+              }}>
+                <Zap style={{ width:13, height:13, color:"#FBB6FF" }} />
+                <span style={{ fontSize:"0.75rem", fontWeight:700, color:"#fff" }}>
+                  Lvl {boostLevel} · {boostCount} boosts
+                </span>
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Status pills */}
+        <div style={{ display:"flex", gap:8, flexWrap:"wrap" }}>
+          <span style={{
+            display:"inline-flex", alignItems:"center", gap:5,
+            background:"rgba(255,255,255,0.15)", borderRadius:99, padding:"5px 11px",
+            fontSize:"0.75rem", fontWeight:600, color:"#fff",
+          }}>
+            <span style={{ width:7, height:7, borderRadius:"50%", background:"#43B581", display:"inline-block" }} />
+            {onlineNow} online
+          </span>
+          <span style={{
+            display:"inline-flex", alignItems:"center", gap:5,
+            background:"rgba(255,255,255,0.15)", borderRadius:99, padding:"5px 11px",
+            fontSize:"0.75rem", fontWeight:600, color:"#fff",
+          }}>
+            👋 {c?.new_joins_24h ?? 0} joined today
+          </span>
+          <span style={{
+            display:"inline-flex", alignItems:"center", gap:5,
+            background:"rgba(255,255,255,0.15)", borderRadius:99, padding:"5px 11px",
+            fontSize:"0.75rem", fontWeight:600, color:"#fff",
+          }}>
+            💬 {activeToday} active today
+          </span>
+          {voiceChs.length > 0 && (
             <span style={{
-              fontSize:"0.875rem", fontWeight:700,
-              color: discordDelta > 0 ? "#86EFAC" : "#FCA5A5",
-              background: discordDelta > 0 ? "rgba(134,239,172,0.15)" : "rgba(252,165,165,0.15)",
-              borderRadius:99, padding:"4px 10px", marginTop:8,
+              display:"inline-flex", alignItems:"center", gap:5,
+              background:"rgba(255,255,255,0.15)", borderRadius:99, padding:"5px 11px",
+              fontSize:"0.75rem", fontWeight:600, color:"#fff",
             }}>
-              {discordDelta > 0 ? "+" : ""}{discordDelta.toLocaleString()}
+              <Mic style={{ width:11, height:11 }} />
+              {voiceChs.reduce((a, v) => a + v.member_count, 0)} in voice
             </span>
           )}
         </div>
-        <div style={{ display:"flex", alignItems:"center", justifyContent:"center", gap:8, marginTop:10 }}>
-          <span style={{ width:8, height:8, borderRadius:"50%", background:"#43B581", display:"inline-block" }} />
-          <span style={{ fontSize:"0.875rem", fontWeight:600, color:"rgba(255,255,255,0.75)" }}>{onlineNow} members online</span>
-        </div>
       </div>
 
-      {/* Stats 2×2 */}
+      {/* ── Membership + Telegram stats 2×2 ── */}
       <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8 }}>
         {[
-          { label:"New Joins 24h", value: String(c?.new_joins_24h ?? "—"), bg:"#EFF6FF", color:"#2563EB", delta: undefined },
-          { label:"Active Today",  value: activeUsersToday > 0 ? String(activeUsersToday) : "—", bg:"#ECFDF5", color:"#059669", delta: undefined },
-          { label:"Online Now",    value: onlineNow.toLocaleString(), bg:"#F0FDF4", color:"#16A34A", delta: undefined },
-          { label:"Telegram",      value: (c?.telegram_members??0).toLocaleString(), bg:"#F0F9FF", color:"#0284C7", delta: telegramDelta },
+          { label:"New Joins 24h", value: String(c?.new_joins_24h ?? "—"), bg:"#EFF6FF", color:"#2563EB" },
+          { label:"Active Today",  value: activeToday > 0 ? String(activeToday) : "—", bg:"#ECFDF5", color:"#059669" },
+          { label:"Telegram",      value: (c?.telegram_members ?? 0).toLocaleString(), bg:"#F0F9FF", color:"#0284C7", delta: telegramDelta },
+          { label:"Online Now",    value: onlineNow.toLocaleString(), bg:"#F0FDF4", color:"#16A34A" },
         ].map(s => (
-          <div key={s.label} style={{ background:s.bg, borderRadius:12, padding:"14px 16px" }}>
+          <div key={s.label} style={{ background:s.bg, borderRadius:12, padding:"13px 15px" }}>
             <div style={{ display:"flex", alignItems:"center", gap:4, flexWrap:"wrap" }}>
               <p style={{ fontSize:"1.5rem", fontWeight:800, letterSpacing:"-0.04em", color:s.color, lineHeight:1, margin:0 }}>{s.value}</p>
-              {s.delta !== undefined && !!s.delta && (
-                <span style={{
-                  fontSize:"0.75rem", fontWeight:700,
-                  color: (s.delta as number) > 0 ? "#16A34A" : "#DC2626",
-                  background: (s.delta as number) > 0 ? "#DCFCE7" : "#FEE2E2",
-                  borderRadius:99, padding:"2px 7px",
-                }}>
-                  {(s.delta as number) > 0 ? "+" : ""}{(s.delta as number).toLocaleString()}
-                </span>
+              {(s as { delta?: number }).delta !== undefined && !!((s as { delta?: number }).delta) && (
+                <DeltaBadge value={(s as { delta?: number }).delta} />
               )}
             </div>
             <p style={{ fontSize:"0.6875rem", fontWeight:600, color:s.color, opacity:0.65, marginTop:4 }}>{s.label}</p>
@@ -186,36 +288,43 @@ export function CommunityCard() {
         ))}
       </div>
 
-      {/* Goal progress */}
+      {/* ── Progress bar ── */}
       <div className="inset-cell">
-        <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:10 }}>
+        <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:8 }}>
           <p className="hero-label">Goal: 10,000 Members</p>
           <span style={{ fontSize:"0.875rem", fontWeight:800, color:"#5865F2" }}>{pct.toFixed(1)}%</span>
         </div>
-        <div className="prog-track" style={{ height:10 }}>
-          <div className="prog-fill" style={{ height:10, width:`${pct}%`, background:"linear-gradient(90deg,#5865F2,#7289DA)" }} />
+        <div className="prog-track" style={{ height:8 }}>
+          <div className="prog-fill" style={{ height:8, width:`${pct}%`, background:"linear-gradient(90deg,#5865F2,#7289DA)" }} />
         </div>
-        <p style={{ fontSize:"0.75rem", color:"#A1A1AA", marginTop:8 }}>
+        <p style={{ fontSize:"0.75rem", color:"#A1A1AA", marginTop:6 }}>
           {(goal - members).toLocaleString()} members to go
         </p>
       </div>
 
-      {/* Top active channels */}
-      {topChannels.length > 0 && (
+      {/* ── Voice Channels (live) ── */}
+      {voiceChs.length > 0 && (
         <div className="inset-cell">
-          <p style={{ fontSize:"0.6875rem", fontWeight:700, color:"#A1A1AA", letterSpacing:"0.06em", textTransform:"uppercase", marginBottom:10 }}>
-            Active Channels (last 1h)
-          </p>
+          <SectionLabel icon={<Mic style={{ width:12, height:12 }} />} label="Voice — Live Now" />
           <div style={{ display:"flex", flexDirection:"column", gap:6 }}>
-            {topChannels.map((ch) => (
-              <div key={ch.name} style={{ display:"flex", alignItems:"center", justifyContent:"space-between" }}>
-                <span style={{ fontSize:"0.8125rem", fontWeight:600, color:"#1D1D1F" }}>#{ch.name}</span>
+            {voiceChs.map((vc) => (
+              <div key={vc.name} style={{
+                display:"flex", alignItems:"center", justifyContent:"space-between",
+                padding:"8px 12px", background:"rgba(88,101,242,0.05)", borderRadius:10,
+                border:"1px solid rgba(88,101,242,0.12)",
+              }}>
+                <div>
+                  <p style={{ fontSize:"0.8125rem", fontWeight:700, color:"#1D1D1F", margin:0 }}>🔊 {vc.name}</p>
+                  <p style={{ fontSize:"0.6875rem", color:"#8E8E93", margin:0 }}>
+                    {vc.members.slice(0, 4).map(m => `@${m}`).join(", ")}{vc.member_count > 4 ? ` +${vc.member_count - 4}` : ""}
+                  </p>
+                </div>
                 <span style={{
-                  fontSize:"0.6875rem", fontWeight:700,
-                  color:"#5865F2", background:"#EFF1FE",
-                  borderRadius:99, padding:"2px 8px",
+                  background:"#EFF1FE", color:"#5865F2",
+                  borderRadius:99, padding:"3px 9px",
+                  fontSize:"0.75rem", fontWeight:700,
                 }}>
-                  {ch.msgs_1h} msgs
+                  {vc.member_count} {vc.member_count === 1 ? "person" : "people"}
                 </span>
               </div>
             ))}
@@ -223,17 +332,196 @@ export function CommunityCard() {
         </div>
       )}
 
-      {/* Recent Members — from #introductions */}
+      {/* ── Scheduled Events ── */}
+      {events.length > 0 && (
+        <div className="inset-cell">
+          <SectionLabel icon={<Calendar style={{ width:12, height:12 }} />} label="Upcoming Events" />
+          <div style={{ display:"flex", flexDirection:"column", gap:6 }}>
+            {events.map((ev, i) => (
+              <div key={i} style={{
+                display:"flex", alignItems:"center", justifyContent:"space-between",
+                padding:"9px 12px", background:"rgba(245,166,35,0.05)", borderRadius:10,
+                border:"1px solid rgba(245,166,35,0.15)",
+              }}>
+                <div style={{ flex:1, minWidth:0, marginRight:8 }}>
+                  <p style={{ fontSize:"0.8125rem", fontWeight:700, color:"#1D1D1F", margin:0,
+                    overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{ev.name}</p>
+                  {ev.description && (
+                    <p style={{ fontSize:"0.6875rem", color:"#8E8E93", margin:0,
+                      overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{ev.description}</p>
+                  )}
+                </div>
+                <div style={{ textAlign:"right", flexShrink:0 }}>
+                  <p style={{ fontSize:"0.75rem", fontWeight:700, color:"#F5A623", margin:0 }}>
+                    {timeToEvent(ev.start)}
+                  </p>
+                  {(ev.user_count ?? 0) > 0 && (
+                    <p style={{ fontSize:"0.6875rem", color:"#A1A1AA", margin:0 }}>
+                      {ev.user_count} interested
+                    </p>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* ── Top Active Channels ── */}
+      {topChannels.length > 0 && (
+        <div className="inset-cell">
+          <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:10 }}>
+            <SectionLabel icon={<span style={{ fontSize:"0.75rem" }}>💬</span>} label="Active Channels" />
+            <div style={{ display:"flex", gap:10, fontSize:"0.6rem", color:"#C7C7CC", fontWeight:600, letterSpacing:"0.04em" }}>
+              <span>24H</span><span style={{ opacity:0.5 }}>1H</span>
+            </div>
+          </div>
+          <div style={{ display:"flex", flexDirection:"column", gap:6 }}>
+            {topChannels.map((ch, i) => {
+              const max24h = topChannels[0]?.msgs_24h ?? 1
+              const barW = Math.max(16, ((ch.msgs_24h ?? ch.msgs_1h) / max24h) * 80)
+              return (
+                <div key={ch.name} style={{ display:"flex", alignItems:"center", gap:10 }}>
+                  <span style={{ fontSize:"0.75rem", color:"#C7C7CC", fontWeight:700, width:16, textAlign:"right" }}>
+                    {i + 1}
+                  </span>
+                  <span style={{ fontSize:"0.8125rem", fontWeight:600, color:"#1D1D1F", flex:1,
+                    overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>
+                    #{ch.name.replace(/^[\p{Emoji}\s]+/u, "")}
+                  </span>
+                  <div style={{ display:"flex", alignItems:"center", gap:6, flexShrink:0 }}>
+                    <div style={{
+                      height:6, width:barW,
+                      background:"#5865F2", borderRadius:99, opacity:0.65,
+                    }} />
+                    <span style={{ fontSize:"0.6875rem", fontWeight:700, color:"#5865F2", minWidth:28, textAlign:"right" }}>
+                      {ch.msgs_24h ?? "—"}
+                    </span>
+                    {(ch.msgs_1h ?? 0) > 0 && (
+                      <span style={{
+                        fontSize:"0.6rem", fontWeight:700,
+                        color:"#10B981", background:"#DCFCE7",
+                        borderRadius:99, padding:"1px 5px",
+                      }}>
+                        {ch.msgs_1h} live
+                      </span>
+                    )}
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* ── Top Contributors Today ── */}
+      {topContribs.length > 0 && (
+        <div className="inset-cell">
+          <SectionLabel icon={<Trophy style={{ width:12, height:12 }} />} label="Most Active Today" />
+          <div style={{ display:"flex", flexDirection:"column", gap:6 }}>
+            {topContribs.slice(0, 6).map((c, i) => (
+              <div key={c.user_id} style={{ display:"flex", alignItems:"center", gap:10 }}>
+                <span style={{
+                  fontSize:"0.6875rem", fontWeight:800, color:"#A1A1AA",
+                  width:16, textAlign:"right", flexShrink:0,
+                }}>
+                  {i === 0 ? "🥇" : i === 1 ? "🥈" : i === 2 ? "🥉" : `${i+1}`}
+                </span>
+                <img
+                  src={c.avatar}
+                  alt={c.user}
+                  width={24} height={24}
+                  style={{ borderRadius:"50%", flexShrink:0, objectFit:"cover", background:"#E5E7EB" }}
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src =
+                      `https://cdn.discordapp.com/embed/avatars/0.png`
+                  }}
+                />
+                <span style={{ fontSize:"0.8125rem", fontWeight:600, color:"#1D1D1F", flex:1,
+                  overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>
+                  {c.user}
+                </span>
+                <span style={{ fontSize:"0.6875rem", fontWeight:700, color:"#5865F2",
+                  background:"#EFF1FE", borderRadius:99, padding:"2px 8px", flexShrink:0 }}>
+                  {c.msg_count} msgs
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* ── Mod Events ── */}
+      {(modEvents.length > 0 || legacyActivity.filter(a => a.type !== "join").length > 0) && (
+        <div className="inset-cell">
+          <SectionLabel icon={<Shield style={{ width:12, height:12 }} />} label="Mod Events" />
+          <div style={{ display:"flex", flexDirection:"column", gap:6 }}>
+            {/* New mod events from route.ts */}
+            {modEvents.map((ev, i) => {
+              const cfg = typeConfig(ev.type)
+              const fallbackAv = `https://cdn.discordapp.com/embed/avatars/0.png`
+              return (
+                <div key={i} style={{
+                  display:"flex", alignItems:"center", gap:10,
+                  padding:"8px 12px", background:"rgba(0,0,0,0.02)", borderRadius:10,
+                }}>
+                  <img
+                    src={ev.avatar || fallbackAv}
+                    alt={ev.user}
+                    width={28} height={28}
+                    style={{ borderRadius:"50%", flexShrink:0, objectFit:"cover" }}
+                    onError={(e) => { (e.target as HTMLImageElement).src = fallbackAv }}
+                  />
+                  <span style={{ fontSize:"0.8125rem", fontWeight:600, color:"#1D1D1F", flex:1,
+                    overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{ev.user}</span>
+                  <span style={{ fontSize:"0.6875rem", fontWeight:700, color:cfg.color, background:cfg.bg,
+                    borderRadius:99, padding:"2px 8px", flexShrink:0 }}>{ev.detail}</span>
+                  <span style={{ fontSize:"0.72rem", color:"#C7C7CC", flexShrink:0 }}>{ev.time_ago}</span>
+                </div>
+              )
+            })}
+            {/* Legacy activity from Mac mini (67Bot) */}
+            {legacyActivity.filter(a => a.type !== "join").slice(0, 4).map((item, i) => {
+              const cfg = typeConfig(item.type)
+              const fallbackAv = `https://cdn.discordapp.com/embed/avatars/0.png`
+              const label = item.detail ? item.detail.split("·")[0].trim() : cfg.label
+              return (
+                <div key={`legacy-${i}`} style={{
+                  display:"flex", alignItems:"center", gap:10,
+                  padding:"8px 12px", background:"rgba(0,0,0,0.02)", borderRadius:10,
+                }}>
+                  {item.source === "telegram" ? (
+                    <span style={{ width:28, height:28, borderRadius:"50%", flexShrink:0,
+                      background:"#229ED9", display:"flex", alignItems:"center", justifyContent:"center", fontSize:"0.875rem" }}>✈️</span>
+                  ) : (
+                    <img src={item.avatar || fallbackAv} alt={item.user} width={28} height={28}
+                      style={{ borderRadius:"50%", flexShrink:0, objectFit:"cover" }}
+                      onError={(e) => { (e.target as HTMLImageElement).src = fallbackAv }} />
+                  )}
+                  <span style={{ fontSize:"0.8125rem", fontWeight:600, color:"#1D1D1F", flex:1,
+                    overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{item.user}</span>
+                  <span style={{ fontSize:"0.6875rem", fontWeight:700, color:cfg.color, background:cfg.bg,
+                    borderRadius:99, padding:"2px 8px", flexShrink:0 }}>{label}</span>
+                  {item.time_ago && <span style={{ fontSize:"0.72rem", color:"#C7C7CC", flexShrink:0 }}>{item.time_ago}</span>}
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* ── Recent Members from #introductions ── */}
       {recentJoins.length > 0 && (
         <div>
-          <p style={{ fontSize:"0.6875rem", fontWeight:700, color:"#A1A1AA", letterSpacing:"0.06em", textTransform:"uppercase", marginBottom:10 }}>
-            Recent Members
-          </p>
-          <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
+          <SectionLabel icon={<span style={{ fontSize:"0.75rem" }}>👋</span>} label="Recent Introductions (24h)" />
+          <div style={{ display:"flex", flexDirection:"column", gap:6 }}>
+            {recentJoins.length === 0 && (
+              <p style={{ fontSize:"0.75rem", color:"#A1A1AA", padding:"8px 0" }}>No new introductions in the last 24h</p>
+            )}
             {recentJoins.map((j) => (
               <div key={j.user_id} style={{
                 display:"flex", alignItems:"center", gap:10,
-                padding:"10px 12px", background:"rgba(0,0,0,0.02)", borderRadius:10,
+                padding:"9px 12px", background:"rgba(0,0,0,0.02)", borderRadius:10,
               }}>
                 <img
                   src={j.avatar}
@@ -248,7 +536,8 @@ export function CommunityCard() {
                 <div style={{ flex:1, minWidth:0 }}>
                   <p style={{ fontSize:"0.8125rem", fontWeight:700, color:"#1D1D1F", margin:0 }}>{j.user}</p>
                   {j.message && (
-                    <p style={{ fontSize:"0.6875rem", color:"#8E8E93", margin:0, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>
+                    <p style={{ fontSize:"0.6875rem", color:"#8E8E93", margin:0,
+                      overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>
                       {j.message}
                     </p>
                   )}
@@ -256,11 +545,9 @@ export function CommunityCard() {
                 <span style={{ fontSize:"0.7rem", color:"#C7C7CC", flexShrink:0, whiteSpace:"nowrap" }}>
                   {j.time_ago}
                 </span>
-                <span style={{
-                  fontSize:"0.6875rem", fontWeight:700,
+                <span style={{ fontSize:"0.6875rem", fontWeight:700,
                   color:"#2563EB", background:"#DBEAFE",
-                  borderRadius:99, padding:"2px 8px", flexShrink:0,
-                }}>
+                  borderRadius:99, padding:"2px 8px", flexShrink:0 }}>
                   Joined
                 </span>
               </div>
@@ -269,73 +556,13 @@ export function CommunityCard() {
         </div>
       )}
 
-      {/* Live stats row */}
-      <div style={{ display:"flex", flexDirection:"column", gap:6 }}>
-        <p style={{ fontSize:"0.6875rem", fontWeight:700, color:"#A1A1AA", letterSpacing:"0.06em", textTransform:"uppercase", marginBottom:4 }}>
-          Live Stats
-        </p>
-        {[
-          { dot:"#10B981", text:`${c?.new_joins_24h ?? 0} new members joined`, sub:"last 24h" },
-          { dot:"#3B82F6", text:`${onlineNow} members online now`, sub:"live" },
-          { dot:"#5865F2", text:`${activeUsersToday > 0 ? activeUsersToday : "—"} active users today`, sub:"#chat + #memes" },
-          { dot:"#229ED9", text:`${(c?.telegram_members ?? 0).toLocaleString()} Telegram members`, sub:(c?.telegram_delta_24h ?? 0) > 0 ? `+${c!.telegram_delta_24h} today` : "live" },
-        ].map((item, i) => (
-          <div key={i} style={{ display:"flex", alignItems:"center", gap:10, padding:"8px 12px", background:"rgba(0,0,0,0.02)", borderRadius:10 }}>
-            <span style={{ width:8, height:8, borderRadius:"50%", flexShrink:0, background:item.dot }} />
-            <span style={{ fontSize:"0.8125rem", fontWeight:600, color:"#1D1D1F", flex:1 }}>{item.text}</span>
-            <span style={{ fontSize:"0.72rem", color:"#C7C7CC", flexShrink:0, whiteSpace:"nowrap" }}>{item.sub}</span>
-          </div>
-        ))}
-      </div>
-
-      {/* Old activity items from Mac mini (67Bot logs) — only if present */}
-      {(c?.recent_discord_activity ?? []).length > 0 && (
-        <div>
-          <p style={{ fontSize:"0.6875rem", fontWeight:700, color:"#A1A1AA", letterSpacing:"0.06em", textTransform:"uppercase", marginBottom:10 }}>
-            Mod Events
-          </p>
-          <div style={{ display:"flex", flexDirection:"column", gap:6 }}>
-            {(c!.recent_discord_activity as ActivityItem[]).map((item, i) => {
-              const typeConfig: Record<string, { bg:string; color:string; label:string }> = {
-                active: { bg:"#DCFCE7", color:"#15803D", label:"Active" },
-                join:   { bg:"#DBEAFE", color:"#1D4ED8", label:"Joined" },
-                ban:    { bg:"#FEE2E2", color:"#B91C1C", label:"Banned" },
-                kick:   { bg:"#FEF3C7", color:"#B45309", label:"Warned" },
-                spam:   { bg:"#FCE7F3", color:"#BE185D", label:"Spam"   },
-              }
-              const cfg = typeConfig[item.type] ?? typeConfig.active
-              const displayLabel  = item.detail ? item.detail.split("·")[0].trim() : cfg.label
-              const displayDetail = item.detail?.includes("·") ? item.detail.split("·").slice(1).join("·").trim() : ""
-              const fallbackAvatar= `https://cdn.discordapp.com/embed/avatars/${(parseInt(item.user_id?.slice(-1)??"0",16)||0)%5}.png`
-              const isTg          = item.source === "telegram"
-              return (
-                <div key={i} style={{ display:"flex", alignItems:"center", gap:10, padding:"8px 12px", background:"rgba(0,0,0,0.02)", borderRadius:10 }}>
-                  {isTg ? (
-                    <span style={{ width:28, height:28, borderRadius:"50%", flexShrink:0, background:"#229ED9", display:"flex", alignItems:"center", justifyContent:"center", fontSize:"0.875rem" }}>✈️</span>
-                  ) : (
-                    <img src={item.avatar||fallbackAvatar} alt={item.user} width={28} height={28}
-                      style={{ borderRadius:"50%", flexShrink:0, objectFit:"cover", background:"#E5E7EB" }}
-                      onError={(e) => { (e.target as HTMLImageElement).src = fallbackAvatar }} />
-                  )}
-                  <div style={{ flex:1, minWidth:0 }}>
-                    <p style={{ fontSize:"0.8125rem", fontWeight:600, color:"#1D1D1F", margin:0, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{item.user}</p>
-                    {displayDetail && <p style={{ fontSize:"0.6875rem", color:"#8E8E93", margin:0, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{displayDetail}</p>}
-                  </div>
-                  <span style={{ fontSize:"0.6875rem", fontWeight:700, color:cfg.color, background:cfg.bg, borderRadius:99, padding:"2px 8px", flexShrink:0 }}>{displayLabel}</span>
-                  {item.time_ago && <span style={{ fontSize:"0.72rem", color:"#C7C7CC", flexShrink:0, whiteSpace:"nowrap" }}>{item.time_ago}</span>}
-                </div>
-              )
-            })}
-          </div>
-        </div>
-      )}
     </div>
   )
 
   return (
     <DashboardCard
       title="Community"
-      subtitle="Discord · Telegram"
+      subtitle="Discord · Telegram · Live"
       icon={<Users style={{ width:16, height:16 }} />}
       accentColor="#F5A623"
       collapsed={collapsed}

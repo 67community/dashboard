@@ -27,7 +27,7 @@ const COLOR_CONFIG: Record<NoteColor, { bg: string; border: string; accent: stri
 
 const COLORS: NoteColor[] = ["yellow", "blue", "green", "red", "purple"]
 
-const AUTHORS = ["Oscar", "WJP", "Brandon", "Jamie", "Gen", "Crispy", "Nick", "Nova"]
+const AUTHORS = ["Oscar", "WJP", "Brandon", "Jamie", "Gen", "Crispy", "Nick"]
 
 function timeAgo(iso: string) {
   const s = Math.floor((Date.now() - new Date(iso).getTime()) / 1000)
@@ -81,7 +81,7 @@ export function TeamNotesCard() {
   const [notes,    setNotes]   = useState<TeamNote[]>([])
   const [addOpen,  setAddOpen] = useState(false)
   const [text,     setText]    = useState("")
-  const [author,   setAuthor]  = useState("Nova")
+  const [author,   setAuthor]  = useState("Oscar")
   const [color,    setColor]   = useState<NoteColor>("yellow")
   const textRef = useRef<HTMLTextAreaElement>(null)
 

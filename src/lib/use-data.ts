@@ -113,8 +113,38 @@ export interface RecentJoin {
 }
 
 export interface TopChannel {
-  name:     string
-  msgs_1h:  number
+  name:      string
+  msgs_1h:   number
+  msgs_24h?: number
+}
+
+export interface VoiceChannel {
+  name: string
+  member_count: number
+  members: string[]    // usernames in voice
+}
+
+export interface ScheduledEvent {
+  name: string
+  start: string        // ISO
+  description?: string
+  user_count?: number  // interested members
+}
+
+export interface ModEvent {
+  type: string         // "ban" | "kick" | "spam" | "warn"
+  user: string
+  user_id?: string
+  avatar?: string
+  detail: string
+  time_ago: string
+}
+
+export interface TopContributor {
+  user: string
+  user_id: string
+  avatar: string
+  msg_count: number
 }
 
 export interface CommunityData {
@@ -134,6 +164,13 @@ export interface CommunityData {
   recent_joins?: RecentJoin[]
   active_users_today?: number
   top_channels?: TopChannel[]
+  // New enriched Discord data (all live from API)
+  voice_channels?: VoiceChannel[]
+  scheduled_events?: ScheduledEvent[]
+  boost_level?: number
+  boost_count?: number
+  mod_events?: ModEvent[]
+  top_contributors?: TopContributor[]
 }
 
 export interface AgentData {
@@ -161,6 +198,59 @@ export interface RecentWin {
   date: string
 }
 
+export interface YoutubeVideo {
+  video_id:            string
+  video_url:           string
+  title:               string
+  channel:             string
+  channel_id:          string
+  channel_url:         string
+  thumbnail_url:       string
+  views:               number
+  views_text:          string
+  likes?:              number
+  comments?:           number
+  channel_subscribers?: number
+  channel_subs_text?:  string
+  engagement_rate?:    number   // (likes+comments)/views*100
+  published_at:        string
+  duration?:           string
+  video_type:          string   // "popular" | "recent"
+}
+
+export interface YTDailyViews {
+  date:  string  // YYYY-MM-DD
+  views: number
+}
+
+export interface YTTrafficSource {
+  source: string
+  views:  number
+  pct:    number
+}
+
+export interface YTCountry {
+  country:  string
+  code:     string
+  views:    number
+  pct:      number
+}
+
+export interface YoutubeAnalytics {
+  channel_id:           string
+  channel_name:         string
+  subscribers:          number
+  total_views_30d:      number
+  watch_time_hours_30d: number
+  avg_view_duration_s:  number
+  subscriber_gains_30d: number
+  daily_views:          YTDailyViews[]
+  traffic_sources:      YTTrafficSource[]
+  top_countries:        YTCountry[]
+  has_data:             boolean
+  error?:               string
+}
+
 export interface TikTokVideo {
   video_url:     string
   thumbnail_url: string
@@ -169,9 +259,61 @@ export interface TikTokVideo {
   description:   string
   views_text:    string
   scraped_at:    string
-  hashtag?:      string   // "67coin" | "67"
+  hashtag?:      string       // "67coin" | "67"
   plays?:        number
   likes?:        number
+  video_type?:   string       // "popular" | "recent"
+  created_at?:   string       // ISO timestamp of TikTok post
+}
+
+export interface InstagramPost {
+  post_url:      string
+  thumbnail_url: string
+  creator:       string
+  creator_url:   string
+  caption:       string
+  likes:         number
+  comments:      number
+  views?:        number          // video/reel only
+  views_text?:   string
+  likes_text:    string
+  is_video:      boolean
+  hashtag?:      string          // "67coin" | "67"
+  post_type?:    string          // "popular" | "recent"
+  created_at?:   string          // ISO timestamp
+  scraped_at:    string
+}
+
+export interface MarketItem {
+  symbol:    string   // "BTC-USD", "^IXIC" etc.
+  name:      string   // "Bitcoin", "NASDAQ"
+  price:     number
+  change:    number   // absolute change
+  change_pct: number  // % change
+  currency:  string   // "USD"
+  kind:      string   // "crypto" | "index"
+  emoji:     string
+}
+
+export interface NewsItem {
+  id:         string      // unique hash
+  title:      string
+  url:        string
+  source:     string
+  published:  string      // ISO date
+  time_ago?:  string
+  sentiment?: string      // "positive" | "negative" | "neutral" (CryptoPanic)
+  kind?:      string      // "google" | "cryptopanic"
+  image?:     string
+}
+
+export interface RaidFeedItem {
+  message_id: number
+  text:       string
+  tweet_url:  string
+  photo?:     string
+  date:       string
+  chat_id?:   number
 }
 
 export interface DashboardData {
@@ -183,7 +325,13 @@ export interface DashboardData {
   milestones: MilestoneData[]
   alerts: AlertData[]
   recent_wins: RecentWin[]
-  tiktok_spotlight?: TikTokVideo[]
+  tiktok_spotlight?:    TikTokVideo[]
+  youtube_spotlight?:   YoutubeVideo[]
+  youtube_analytics?:   YoutubeAnalytics
+  instagram_spotlight?: InstagramPost[]
+  raid_feed?:           RaidFeedItem[]
+  news_feed?:           NewsItem[]
+  market_data?:         MarketItem[]
 }
 
 // ── Hook ─────────────────────────────────────────────────────────────────────
