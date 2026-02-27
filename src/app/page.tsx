@@ -23,7 +23,6 @@ import { CommunityEventsCard }  from "@/components/cards/events"
 import { TeamNotesCard }          from "@/components/cards/team-notes"
 import { ExchangeTrackerCard }    from "@/components/cards/exchange-tracker"
 import { AnnouncementsCard }      from "@/components/cards/announcements"
-import { PriceMilestonesCard }    from "@/components/cards/price-milestones"
 import { CommunityLeaderboardCard } from "@/components/cards/leaderboard"
 import { WalletTrackerCard }       from "@/components/cards/wallet-tracker"
 import { useAppData }          from "@/lib/data-context"
@@ -143,7 +142,6 @@ export default function Dashboard() {
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><TeamNotesCard /></div>
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><ExchangeTrackerCard /></div>
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><AnnouncementsCard /></div>
-        <div className="enter-9" style={{ display:"flex", minWidth:0 }}><PriceMilestonesCard /></div>
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><CommunityLeaderboardCard /></div>
       </div>
 
