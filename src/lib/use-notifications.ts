@@ -37,10 +37,47 @@ export function useDataNotifications(data: DashboardData | null) {
   useEffect(() => {
     if (!data) return
 
-    // On very first load just record state, don't fire anything
+    // On very first load: seed initial status notifications
     if (!initDone.current) {
-      prevRef.current = data
+      prevRef.current  = data
       initDone.current = true
+      const now = new Date().toISOString()
+
+      // Seed: recent raids count
+      const recentRaids = (data.raid_feed ?? []) as { message_id: number; date?: string }[]
+      const oneDayAgo   = Date.now() - 24 * 60 * 60 * 1000
+      const todayRaids  = recentRaids.filter(r => r.date && new Date(r.date).getTime() > oneDayAgo)
+      if (todayRaids.length > 0) {
+        addNotification({ type:"success", category:"discord", timestamp:now,
+          message:`⚔️ ${todayRaids.length} raid target${todayRaids.length > 1 ? "s" : ""} posted in the last 24h` })
+      }
+
+      // Seed: Discord member count
+      const members = data.community?.discord_members ?? 0
+      if (members > 0) {
+        addNotification({ type:"info", category:"discord", timestamp:now,
+          message:`👥 Discord: ${members.toLocaleString()} members · ${data.community?.new_joins_24h ?? 0} joined today` })
+      }
+
+      // Seed: price status
+      const price   = data.token_health?.price           ?? 0
+      const change  = data.token_health?.price_change_24h ?? 0
+      if (price > 0) {
+        const emoji = change >= 5 ? "🚀" : change <= -5 ? "🔴" : "💰"
+        addNotification({ type: change >= 5 ? "success" : change <= -5 ? "danger" : "info",
+          category:"price", timestamp:now,
+          message:`${emoji} $67 price: $${price.toFixed(6)}  (${change >= 0 ? "+" : ""}${change.toFixed(1)}% 24h)` })
+      }
+
+      // Seed: backend alerts
+      for (const alert of (data.alerts ?? []) as { type: string; message: string; timestamp: string }[]) {
+        addNotification({
+          type:      alert.type === "danger" ? "danger" : alert.type === "success" ? "success" : "warning",
+          category:  "price",
+          timestamp: alert.timestamp ?? now,
+          message:   alert.message,
+        })
+      }
       return
     }
 
