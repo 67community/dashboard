@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect, useCallback } from "react"
-import { Wallet, Plus, RefreshCw, ExternalLink, Trash2, Bell, BellOff, ChevronDown, ChevronUp, AlertTriangle } from "lucide-react"
+import { Wallet, Plus, RefreshCw, ExternalLink, Trash2, Bell, BellOff, ChevronDown, ChevronUp, AlertTriangle, Download, Loader2 } from "lucide-react"
 import { DashboardCard } from "@/components/ui/dashboard-card"
 
 // ── Types ─────────────────────────────────────────────────────────────────────
@@ -301,6 +301,145 @@ function AddWalletForm({ onAdd }: { onAdd: (w: TrackedWallet) => void }) {
   )
 }
 
+// ── Import Top Holders ────────────────────────────────────────────────────────
+
+function ImportTopHolders({ existing, onImport }: {
+  existing: string[]
+  onImport: (wallets: TrackedWallet[]) => void
+}) {
+  const [loading,  setLoading]  = useState(false)
+  const [holders,  setHolders]  = useState<{ rank:number; address:string; amount:number; pct:string; label:string }[]>([])
+  const [open,     setOpen]     = useState(false)
+  const [selected, setSelected] = useState<Set<string>>(new Set())
+  const [done,     setDone]     = useState(false)
+
+  async function fetch() {
+    setLoading(true)
+    setDone(false)
+    try {
+      const res  = await window.fetch("/api/top-holders")
+      const data = await res.json()
+      const newOnes = (data.holders ?? []).filter((h: any) => !existing.includes(h.address))
+      setHolders(newOnes)
+      setSelected(new Set(newOnes.slice(0, 10).map((h: any) => h.address)))
+      setOpen(true)
+    } catch {}
+    setLoading(false)
+  }
+
+  function toggle(addr: string) {
+    setSelected(prev => {
+      const n = new Set(prev)
+      n.has(addr) ? n.delete(addr) : n.add(addr)
+      return n
+    })
+  }
+
+  function importSelected() {
+    const toAdd = holders
+      .filter(h => selected.has(h.address))
+      .map(h => ({
+        address:        h.address,
+        label:          `Holder #${h.rank} (${h.pct}%)`,
+        alertThreshold: Math.floor(h.amount * 0.1), // alert if moves 10%
+        addedAt:        new Date().toISOString(),
+        muted:          false,
+      }))
+    onImport(toAdd)
+    setDone(true)
+    setOpen(false)
+  }
+
+  if (done) return (
+    <div style={{ padding:"8px 12px", borderRadius:10, background:"rgba(5,150,105,0.08)",
+      border:"1px solid rgba(5,150,105,0.15)", fontSize:"0.8125rem", color:"#059669", fontWeight:600,
+      textAlign:"center" }}>
+      ✓ {selected.size} wallets imported
+    </div>
+  )
+
+  return (
+    <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
+      <button
+        onClick={e => { e.stopPropagation(); if (!open) fetch(); else setOpen(false) }}
+        disabled={loading}
+        style={{ display:"flex", alignItems:"center", justifyContent:"center", gap:8,
+          padding:"9px 14px", borderRadius:10, border:"none", cursor: loading ? "wait" : "pointer",
+          background:"#0A0A0A", color:"#FFF",
+          fontSize:"0.875rem", fontWeight:700, transition:"all 0.15s" }}>
+        {loading
+          ? <><Loader2 style={{ width:14, height:14, animation:"spin 1s linear infinite" }} /> Fetching holders…</>
+          : <><Download style={{ width:14, height:14 }} /> Import Top Holders</>}
+      </button>
+
+      {open && holders.length > 0 && (
+        <div style={{ background:"#F9F9F9", borderRadius:12, padding:12,
+          display:"flex", flexDirection:"column", gap:8,
+          border:"1.5px solid rgba(0,0,0,0.08)" }}>
+
+          <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between" }}>
+            <p style={{ fontSize:"0.6875rem", fontWeight:700, color:"#8E8E93",
+              textTransform:"uppercase", letterSpacing:"0.07em" }}>
+              Top {holders.length} holders — select to import
+            </p>
+            <div style={{ display:"flex", gap:6 }}>
+              <button onClick={e => { e.stopPropagation(); setSelected(new Set(holders.map(h => h.address))) }}
+                style={{ fontSize:"0.6875rem", color:"#2563EB", background:"none", border:"none", cursor:"pointer", fontWeight:600 }}>
+                All
+              </button>
+              <button onClick={e => { e.stopPropagation(); setSelected(new Set()) }}
+                style={{ fontSize:"0.6875rem", color:"#8E8E93", background:"none", border:"none", cursor:"pointer" }}>
+                None
+              </button>
+            </div>
+          </div>
+
+          <div style={{ maxHeight:280, overflowY:"auto", display:"flex", flexDirection:"column", gap:4 }}>
+            {holders.map(h => {
+              const sel = selected.has(h.address)
+              return (
+                <button key={h.address}
+                  onClick={e => { e.stopPropagation(); toggle(h.address) }}
+                  style={{ display:"flex", alignItems:"center", gap:8, padding:"7px 10px",
+                    borderRadius:8, border:"none", cursor:"pointer", textAlign:"left",
+                    background: sel ? "rgba(245,166,35,0.08)" : "#FFF",
+                    outline: sel ? "1.5px solid rgba(245,166,35,0.4)" : "1.5px solid transparent",
+                    transition:"all 0.1s" }}>
+                  <span style={{ fontSize:"0.75rem", fontWeight:700, color:"#F5A623",
+                    width:22, flexShrink:0, textAlign:"center" }}>#{h.rank}</span>
+                  <span style={{ flex:1, fontSize:"0.75rem", fontFamily:"monospace",
+                    color:"#374151", overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>
+                    {h.address.slice(0,6)}…{h.address.slice(-4)}
+                  </span>
+                  <span style={{ fontSize:"0.75rem", fontWeight:700, color:"#1D1D1F", flexShrink:0 }}>
+                    {h.pct}%
+                  </span>
+                  <span style={{ width:14, height:14, borderRadius:4, flexShrink:0,
+                    background: sel ? "#F5A623" : "#E5E5EA",
+                    display:"flex", alignItems:"center", justifyContent:"center",
+                    fontSize:"0.625rem", color:"#FFF", fontWeight:800 }}>
+                    {sel ? "✓" : ""}
+                  </span>
+                </button>
+              )
+            })}
+          </div>
+
+          <button onClick={e => { e.stopPropagation(); importSelected() }}
+            disabled={selected.size === 0}
+            style={{ padding:"9px 0", borderRadius:8, border:"none",
+              cursor: selected.size === 0 ? "not-allowed" : "pointer",
+              background: selected.size === 0 ? "#E5E5EA" : "#F5A623",
+              color: selected.size === 0 ? "#A1A1AA" : "#000",
+              fontSize:"0.875rem", fontWeight:700 }}>
+            Import {selected.size} Wallet{selected.size !== 1 ? "s" : ""}
+          </button>
+        </div>
+      )}
+    </div>
+  )
+}
+
 // ── Card ──────────────────────────────────────────────────────────────────────
 
 export function WalletTrackerCard() {
@@ -357,6 +496,15 @@ export function WalletTrackerCard() {
     fetchData(updated)
   }
 
+  function addWallets(ws: TrackedWallet[]) {
+    const existing = new Set(wallets.map(w => w.address))
+    const newOnes  = ws.filter(w => !existing.has(w.address))
+    if (newOnes.length === 0) return
+    const updated = [...newOnes, ...wallets]
+    save(updated)
+    fetchData(updated)
+  }
+
   function removeWallet(address: string) {
     save(wallets.filter(w => w.address !== address))
     setWalletData(prev => { const n = { ...prev }; delete n[address]; return n })
@@ -406,8 +554,10 @@ export function WalletTrackerCard() {
         </div>
       )}
 
-      {/* Add form */}
-      <div onClick={e => e.stopPropagation()}>
+      {/* Import + Add */}
+      <div onClick={e => e.stopPropagation()}
+        style={{ display:"flex", flexDirection:"column", gap:8 }}>
+        <ImportTopHolders existing={wallets.map(w => w.address)} onImport={addWallets} />
         <AddWalletForm onAdd={addWallet} />
       </div>
 
@@ -481,7 +631,8 @@ export function WalletTrackerCard() {
         </div>
       )}
 
-      {/* Add form */}
+      {/* Import top holders + manual add */}
+      <ImportTopHolders existing={wallets.map(w => w.address)} onImport={addWallets} />
       <AddWalletForm onAdd={addWallet} />
 
       {/* Wallet list */}
