@@ -28,9 +28,10 @@ import { CommunityLeaderboardCard } from "@/components/cards/leaderboard"
 import { WalletTrackerCard }       from "@/components/cards/wallet-tracker"
 import { useAppData }          from "@/lib/data-context"
 import { AnimatedNumber }      from "@/components/ui/animated-number"
+import { McProgressBar }       from "@/components/mc-progress-bar"
 
 export default function Dashboard() {
-  const { data, livePrice, liveChange24h } = useAppData()
+  const { data, livePrice, liveChange24h, liveMcap } = useAppData()
   const up     = (liveChange24h ?? data?.token_health?.price_change_24h ?? 0) >= 0
   const market = (data?.market_data ?? []) as { symbol:string; name:string; emoji:string; price:number; change_pct:number; kind:string }[]
 
@@ -172,7 +173,7 @@ export default function Dashboard() {
           position:"relative", zIndex:1,
           display:"flex", flexDirection:"column", alignItems:"center",
           justifyContent:"center", textAlign:"center",
-          padding:"52px 60px",
+          padding:"52px 60px 56px",
         }}>
           {/* Pill badge */}
           <div style={{ display:"inline-flex", alignItems:"center", gap:6,
@@ -193,11 +194,11 @@ export default function Dashboard() {
             fontWeight:500, letterSpacing:"-0.01em", maxWidth:480, lineHeight:1.6 }}>
             Unstoppable momentum.
           </p>
-          <p style={{ fontSize:"0.6875rem", color:"rgba(255,255,255,0.18)",
-            fontWeight:800, letterSpacing:"0.15em", marginTop:24,
-            textTransform:"uppercase" }}>
-            #67to67Billion
-          </p>
+
+          {/* Live MC Progress Bar */}
+          <div style={{ width:"100%", maxWidth:680, marginTop:12 }}>
+            <McProgressBar mcap={liveMcap ?? data?.token_health?.market_cap ?? null} />
+          </div>
         </div>
       </div>
 
