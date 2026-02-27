@@ -731,7 +731,7 @@ async function fetchDiscordActivity(): Promise<{
         batch.map(ch =>
           fetch(
             `https://discord.com/api/v10/channels/${ch.id}/messages?limit=100`,
-            { headers, cache: "no-store" }
+            { headers, next: { revalidate: 120 } }
           ).then(r => r.ok
             ? r.json().then((msgs: DiscordMsg[]) => ({ ch, msgs }))
             : Promise.resolve({ ch, msgs: [] })
