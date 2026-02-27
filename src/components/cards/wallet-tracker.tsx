@@ -305,7 +305,7 @@ function AddWalletForm({ onAdd }: { onAdd: (w: TrackedWallet) => void }) {
 
 function ImportTopHolders({ existing, onImport }: {
   existing: string[]
-  onImport: (wallets: TrackedWallet[]) => void
+  onImport: (wallets: TrackedWallet[], preloadedAmounts: Record<string, number>) => void
 }) {
   const [loading,  setLoading]  = useState(false)
   const [holders,  setHolders]  = useState<{ rank:number; address:string; amount:number; pct:string; label:string }[]>([])
@@ -336,16 +336,18 @@ function ImportTopHolders({ existing, onImport }: {
   }
 
   function importSelected() {
-    const toAdd = holders
-      .filter(h => selected.has(h.address))
-      .map(h => ({
-        address:        h.address,
-        label:          `Holder #${h.rank} (${h.pct}%)`,
-        alertThreshold: Math.floor(h.amount * 0.1), // alert if moves 10%
-        addedAt:        new Date().toISOString(),
-        muted:          false,
-      }))
-    onImport(toAdd)
+    const selected_holders = holders.filter(h => selected.has(h.address))
+    const toAdd = selected_holders.map(h => ({
+      address:        h.address,
+      label:          `Holder #${h.rank} (${h.pct}%)`,
+      alertThreshold: Math.floor(h.amount * 0.1),
+      addedAt:        new Date().toISOString(),
+      muted:          false,
+    }))
+    // Pre-load amounts so card shows data immediately
+    const preloaded: Record<string, number> = {}
+    for (const h of selected_holders) preloaded[h.address] = h.amount
+    onImport(toAdd, preloaded)
     setDone(true)
     setOpen(false)
   }
@@ -448,6 +450,7 @@ export function WalletTrackerCard() {
   const [expandedId, setExpandedId] = useState<string | null>(null)
   const [loading,    setLoading]    = useState(false)
   const [lastFetch,  setLastFetch]  = useState<string | null>(null)
+  const [lastPrice,  setLastPrice]  = useState(0)
 
   // Load from localStorage
   useEffect(() => {
@@ -479,6 +482,7 @@ export function WalletTrackerCard() {
       for (const d of (data.wallets ?? [])) map[d.address] = d
       setWalletData(map)
       setLastFetch(new Date().toISOString())
+      if (data.price67) setLastPrice(data.price67)
     } catch {}
     setLoading(false)
   }, [])
@@ -496,12 +500,37 @@ export function WalletTrackerCard() {
     fetchData(updated)
   }
 
-  function addWallets(ws: TrackedWallet[]) {
+  function addWallets(ws: TrackedWallet[], preloadedAmounts?: Record<string, number>) {
     const existing = new Set(wallets.map(w => w.address))
     const newOnes  = ws.filter(w => !existing.has(w.address))
     if (newOnes.length === 0) return
     const updated = [...newOnes, ...wallets]
     save(updated)
+
+    // Pre-populate walletData with known amounts so UI is instant
+    if (preloadedAmounts && Object.keys(preloadedAmounts).length > 0) {
+      setWalletData(prev => {
+        const next = { ...prev }
+        for (const [addr, amt] of Object.entries(preloadedAmounts)) {
+          if (!next[addr]) {
+            next[addr] = {
+              address:     addr,
+              label:       ws.find(w => w.address === addr)?.label ?? addr,
+              balance67:   amt,
+              balanceSol:  0,
+              valueUsd:    amt * lastPrice,
+              isWhale:     amt >= (ws.find(w => w.address === addr)?.alertThreshold ?? 1_000_000),
+              recentAlert: false,
+              lastActive:  null,
+              recentTxs:   [],
+              price67:     lastPrice,
+            }
+          }
+        }
+        return next
+      })
+    }
+
     fetchData(updated)
   }
 
@@ -577,9 +606,17 @@ export function WalletTrackerCard() {
                   <span style={{ flex:1, fontSize:"0.8125rem", color:"#374151", fontWeight:500,
                     overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{w.label}</span>
                   {d ? (
-                    <span style={{ fontSize:"0.75rem", color:"#F5A623", fontWeight:700 }}>
-                      {fmt(d.balance67)} $67
-                    </span>
+                    <div style={{ textAlign:"right" }}>
+                      <p style={{ fontSize:"0.75rem", color:"#F5A623", fontWeight:700, lineHeight:1.2 }}>
+                        {fmt(d.balance67)}
+                        <span style={{ fontSize:"0.6rem", color:"#A1A1AA", fontWeight:500 }}> $67</span>
+                      </p>
+                      {d.valueUsd > 0 && (
+                        <p style={{ fontSize:"0.6875rem", color:"#059669", fontWeight:600, lineHeight:1.2 }}>
+                          {fmtUsd(d.valueUsd)}
+                        </p>
+                      )}
+                    </div>
                   ) : (
                     <span style={{ fontSize:"0.75rem", color:"#C7C7CC" }}>…</span>
                   )}
