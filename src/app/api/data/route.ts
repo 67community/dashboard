@@ -535,9 +535,9 @@ async function fetchTelegram(): Promise<number | null> {
 async function fetchRaidFeed(): Promise<unknown[] | null> {
   if (!TG_RAID_BOT) return null
   try {
-    // getUpdates without offset — always returns pending messages (up to 100)
+    // getUpdates without offset — always returns pending messages (no consumption)
     const res = await fetch(
-      `https://api.telegram.org/bot${TG_RAID_BOT}/getUpdates?limit=50&allowed_updates=["message"]`,
+      `https://api.telegram.org/bot${TG_RAID_BOT}/getUpdates?limit=100`,
       { cache: "no-store" }
     )
     if (!res.ok) return null
@@ -554,9 +554,9 @@ async function fetchRaidFeed(): Promise<unknown[] | null> {
       const text = msg.text ?? msg.caption ?? ""
       if (!text) continue
 
-      // Extract tweet URL from message
-      const tweetMatch = text.match(/https?:\/\/(twitter|x)\.com\/\S+\/status\/\d+/i)
-      const tweetUrl   = tweetMatch?.[0] ?? null
+      // Extract tweet URL from message (handles x.com/i/status/ and x.com/user/status/)
+      const tweetMatch = text.match(/https?:\/\/(twitter|x)\.com\/[^\s]+/i)
+      const tweetUrl   = tweetMatch?.[0]?.replace(/[)\].,!?]+$/, "") ?? null
 
       // Extract @handle
       const handleMatch = text.match(/@(\w+)/)
