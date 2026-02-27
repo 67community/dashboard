@@ -31,6 +31,25 @@ function timeAgo(iso: string): string {
   } catch { return "recently" }
 }
 
+// ── Sub-section label ─────────────────────────────────────────────────────────
+
+function SubLabel({ icon, label }: { icon: string; label: string }) {
+  return (
+    <div style={{
+      display: "flex", alignItems: "center", gap: 5,
+      marginBottom: 8,
+    }}>
+      <span style={{ fontSize: "0.75rem" }}>{icon}</span>
+      <span style={{
+        fontSize: "0.6875rem", fontWeight: 700, letterSpacing: "0.05em",
+        textTransform: "uppercase", color: "#A1A1AA",
+      }}>
+        {label}
+      </span>
+    </div>
+  )
+}
+
 // ── Video tile ────────────────────────────────────────────────────────────────
 
 function VideoTile({ v, large = false }: { v: TikTokVideo; large?: boolean }) {
@@ -94,6 +113,19 @@ function VideoTile({ v, large = false }: { v: TikTokVideo; large?: boolean }) {
               </span>
             )}
           </div>
+
+          {/* NEW badge for recent videos */}
+          {v.video_type === "recent" && (
+            <div style={{
+              position: "absolute", top: 8, right: 8,
+              background: "#10B981", borderRadius: 5,
+              padding: "2px 6px",
+              fontSize: "0.5rem", fontWeight: 800, color: "#fff",
+              letterSpacing: "0.05em", textTransform: "uppercase",
+            }}>
+              NEW
+            </div>
+          )}
 
           {/* Play button */}
           <div style={{
@@ -209,23 +241,33 @@ export function TikTokSpotlightCard() {
   const videos: TikTokVideo[] = data?.tiktok_spotlight ?? []
   const lastUpdated = data?.last_updated
 
-  const coinVideos  = videos.filter(v => v.hashtag === "67coin")
-  const tag67Videos = videos.filter(v => v.hashtag === "67")
+  const coinPop  = videos.filter(v => v.hashtag === "67coin" && v.video_type === "popular")
+  const coinRec  = videos.filter(v => v.hashtag === "67coin" && v.video_type === "recent")
+  const tag67Pop = videos.filter(v => v.hashtag === "67"     && v.video_type === "popular")
+  const tag67Rec = videos.filter(v => v.hashtag === "67"     && v.video_type === "recent")
+
+  // Fallback for old data without video_type
+  const coinAll  = videos.filter(v => v.hashtag === "67coin")
+  const tag67All = videos.filter(v => v.hashtag === "67")
+  const coinVideos  = (coinPop.length + coinRec.length)  > 0 ? null : coinAll
+  const tag67Videos = (tag67Pop.length + tag67Rec.length) > 0 ? null : tag67All
+
+  const totalCount = videos.length
 
   const collapsed = (
     <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
       <div>
-        <p className="hero-label" style={{ marginBottom: 8 }}>Latest TikToks</p>
-        <p className="hero-number">{videos.length > 0 ? videos.length : "—"}</p>
+        <p className="hero-label" style={{ marginBottom: 8 }}>TikTok Videos</p>
+        <p className="hero-number">{totalCount > 0 ? totalCount : "—"}</p>
         <p style={{ fontSize: "0.875rem", color: "#8E8E93", marginTop: 6 }}>
-          {videos.length > 0 ? `#67coin + #67 · ${coinVideos.length + tag67Videos.length} videos` : "waiting for first scrape"}
+          {totalCount > 0 ? `#67coin + #67 · popular & recent` : "waiting for first scrape"}
         </p>
       </div>
 
-      {/* Collapsed preview — show first 2 */}
-      {videos.length > 0 ? (
+      {/* Collapsed preview — top 2 popular from #67coin */}
+      {totalCount > 0 ? (
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
-          {videos.slice(0, 2).map((v, i) => (
+          {(coinPop.length > 0 ? coinPop : coinAll).slice(0, 2).map((v, i) => (
             <VideoTile key={i} v={v} />
           ))}
         </div>
@@ -239,6 +281,53 @@ export function TikTokSpotlightCard() {
       )}
     </div>
   )
+
+  // Helper to render a hashtag section with popular + recent sub-groups
+  const renderHashtagSection = (
+    tag: string,
+    href: string,
+    popVideos: TikTokVideo[],
+    recVideos: TikTokVideo[],
+    fallbackVideos: TikTokVideo[] | null,
+  ) => {
+    const hasPop = popVideos.length > 0
+    const hasRec = recVideos.length > 0
+    const hasFallback = fallbackVideos && fallbackVideos.length > 0
+    if (!hasPop && !hasRec && !hasFallback) return null
+
+    return (
+      <div>
+        <SectionHeader tag={tag} href={href} />
+
+        {/* Popular sub-section */}
+        {hasPop && (
+          <div style={{ marginBottom: hasRec ? 14 : 0 }}>
+            <SubLabel icon="🔥" label="Popular" />
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+              {popVideos.map((v, i) => <VideoTile key={i} v={v} large />)}
+            </div>
+          </div>
+        )}
+
+        {/* Recent sub-section */}
+        {hasRec && (
+          <div>
+            <SubLabel icon="🕐" label="Recent" />
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+              {recVideos.map((v, i) => <VideoTile key={i} v={v} large />)}
+            </div>
+          </div>
+        )}
+
+        {/* Fallback: old data without video_type */}
+        {!hasPop && !hasRec && hasFallback && (
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+            {fallbackVideos!.slice(0, 4).map((v, i) => <VideoTile key={i} v={v} large />)}
+          </div>
+        )}
+      </div>
+    )
+  }
 
   const expanded = (
     <div style={{ display: "flex", flexDirection: "column", gap: 22 }}>
@@ -255,39 +344,31 @@ export function TikTokSpotlightCard() {
             </p>
           )}
         </div>
+        <div style={{
+          background: "#F9F9F9", borderRadius: 8, padding: "4px 10px",
+          fontSize: "0.75rem", fontWeight: 600, color: "#6B7280",
+        }}>
+          {totalCount} videos
+        </div>
       </div>
 
-      {videos.length === 0 ? (
+      {totalCount === 0 ? (
         <EmptyState />
       ) : (
         <>
           {/* ── #67coin section ── */}
-          {coinVideos.length > 0 && (
-            <div>
-              <SectionHeader tag="67coin" href="https://www.tiktok.com/tag/67coin" />
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
-                {coinVideos.slice(0, 2).map((v, i) => (
-                  <VideoTile key={i} v={v} large />
-                ))}
-              </div>
-            </div>
+          {renderHashtagSection(
+            "67coin", "https://www.tiktok.com/tag/67coin",
+            coinPop, coinRec, coinVideos,
           )}
 
           {/* divider */}
-          {coinVideos.length > 0 && tag67Videos.length > 0 && (
-            <div style={{ borderTop: "1px solid rgba(0,0,0,0.07)", margin: "0 -4px" }} />
-          )}
+          <div style={{ borderTop: "1px solid rgba(0,0,0,0.07)", margin: "0 -4px" }} />
 
           {/* ── #67 section ── */}
-          {tag67Videos.length > 0 && (
-            <div>
-              <SectionHeader tag="67" href="https://www.tiktok.com/tag/67" />
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
-                {tag67Videos.slice(0, 2).map((v, i) => (
-                  <VideoTile key={i} v={v} large />
-                ))}
-              </div>
-            </div>
+          {renderHashtagSection(
+            "67", "https://www.tiktok.com/tag/67",
+            tag67Pop, tag67Rec, tag67Videos,
           )}
         </>
       )}
@@ -304,8 +385,8 @@ export function TikTokSpotlightCard() {
             Auto-updated every hour
           </p>
           <p style={{ fontSize: "0.75rem", color: "#A1A1AA", lineHeight: 1.5 }}>
-            Top 2 from <strong style={{ color: "#09090B" }}>#67coin</strong> (most views) +
-            Top 2 from <strong style={{ color: "#09090B" }}>#67</strong> (trending viral).
+            🔥 <strong style={{ color: "#09090B" }}>Popular</strong> = most views ·
+            🕐 <strong style={{ color: "#09090B" }}>Recent</strong> = latest posts · 2 each per tag.
             Scraped via TikTokApi on Mac mini.
           </p>
         </div>

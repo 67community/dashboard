@@ -7,7 +7,12 @@ import { CommunityCard }       from "@/components/cards/community"
 import { ContentPipelineCard } from "@/components/cards/content-pipeline"
 import { ContentCreatorCard }  from "@/components/cards/content-creator"
 import { PostTimingCard }        from "@/components/cards/post-timing"
-import { TikTokSpotlightCard }  from "@/components/cards/tiktok-spotlight"
+import { TikTokSpotlightCard }       from "@/components/cards/tiktok-spotlight"
+import { YouTubeSpotlightCard }      from "@/components/cards/youtube-spotlight"
+import { InstagramSpotlightCard }    from "@/components/cards/instagram-spotlight"
+import { XLiveFeedCard }             from "@/components/cards/x-live-feed"
+import { NewsFeedCard }              from "@/components/cards/news-feed"
+import { MarketTickerCard }          from "@/components/cards/market-ticker"
 import { AgentStatusCard }      from "@/components/cards/agent-status"
 import { MilestonesCard }       from "@/components/cards/milestones"
 import { FeatureRequestCard }   from "@/components/cards/feature-request"
@@ -134,6 +139,11 @@ export default function Dashboard() {
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><ContentCreatorCard /></div>
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><PostTimingCard /></div>
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><TikTokSpotlightCard /></div>
+        <div className="enter-9" style={{ display:"flex", minWidth:0 }}><YouTubeSpotlightCard /></div>
+        <div className="enter-9" style={{ display:"flex", minWidth:0 }}><InstagramSpotlightCard /></div>
+        <div className="enter-9" style={{ display:"flex", minWidth:0 }}><XLiveFeedCard /></div>
+        <div className="enter-9" style={{ display:"flex", minWidth:0 }}><NewsFeedCard /></div>
+        <div className="enter-9" style={{ display:"flex", minWidth:0 }}><MarketTickerCard /></div>
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><FeatureRequestCard /></div>
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><OutreachCard /></div>
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><SightingsCard /></div>

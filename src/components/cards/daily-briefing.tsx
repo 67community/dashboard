@@ -262,7 +262,7 @@ export function DailyBriefingCard() {
   return (
     <DashboardCard
       title="Daily Briefing"
-      subtitle="Nova · Every Morning · Action Items"
+      subtitle="AI · Every Morning · Action Items"
       icon={<Newspaper style={{ width:16, height:16 }} />}
       accentColor="#F5A623"
       collapsed={collapsed}

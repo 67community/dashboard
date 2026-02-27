@@ -84,7 +84,7 @@ function ReqRow({ r, expanded, onToggle }: { r: FeatureReq; expanded: boolean; o
             <div style={{ background:"#F9F9F9", borderRadius:8, padding:"10px 12px",
               borderLeft:`3px solid ${PRIORITY_COLOR[r.priority ?? "medium"]}` }}>
               <p style={{ fontSize:"0.6875rem", fontWeight:700, color:"#F5A623",
-                textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:6 }}>Nova's Plan</p>
+                textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:6 }}>AI Analysis</p>
               <p style={{ fontSize:"0.8125rem", color:"#374151", lineHeight:1.5 }}>{r.plan}</p>
               <div style={{ display:"flex", gap:6, marginTop:8, flexWrap:"wrap" }}>
                 {r.effort && (
@@ -211,7 +211,7 @@ export function FeatureRequestCard() {
             color: (!what.trim() || !why.trim() || loading) ? "#A1A1AA" : "#000",
             fontSize:"0.875rem", fontWeight:700, transition:"all 0.15s",
           }}>
-          {loading ? "Nova is thinking…" : "Submit to Nova ⚡"}
+          {loading ? "Analyzing…" : "Submit ⚡"}
         </button>
       </form>
 
@@ -221,7 +221,7 @@ export function FeatureRequestCard() {
           style={{ background:"rgba(245,166,35,0.07)", border:"1.5px solid rgba(245,166,35,0.3)",
             borderRadius:10, padding:"10px 12px" }}>
           <p style={{ fontSize:"0.625rem", fontWeight:700, color:"#F5A623",
-            textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:5 }}>⚡ Nova's Plan</p>
+            textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:5 }}>⚡ AI Analysis</p>
           <p style={{ fontSize:"0.8125rem", color:"#374151", lineHeight:1.5 }}>{quickPlan}</p>
         </div>
       )}
@@ -277,7 +277,7 @@ export function FeatureRequestCard() {
               background: (!what.trim() || !why.trim() || loading) ? "#E5E5EA" : "#F5A623",
               color: (!what.trim() || !why.trim() || loading) ? "#A1A1AA" : "#000",
               fontSize:"0.875rem", fontWeight:700, transition:"all 0.15s" }}>
-            {loading ? "Nova is thinking…" : "Submit to Nova ⚡"}
+            {loading ? "Analyzing…" : "Submit ⚡"}
           </button>
         </form>
       </div>
@@ -311,7 +311,7 @@ export function FeatureRequestCard() {
   return (
     <DashboardCard
       title="Feature Requests"
-      subtitle="Submit · Nova Plans · Gets Built"
+      subtitle="Submit · AI Plans · Gets Built"
       icon={<Zap style={{ width:16, height:16 }} />}
       accentColor="#F5A623"
       collapsed={collapsed}
