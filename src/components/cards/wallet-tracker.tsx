@@ -14,17 +14,26 @@ interface TrackedWallet {
   muted:          boolean
 }
 
+interface WalletTrade {
+  sig:       string
+  type:      "buy" | "sell"
+  amount67:  number
+  blockTime: number
+}
+
 interface WalletData {
-  address:     string
-  label:       string
-  balance67:   number
-  balanceSol:  number
-  valueUsd:    number
-  isWhale:     boolean
-  recentAlert: boolean
-  lastActive:  string | null
-  recentTxs:  { sig: string; slot: number; blockTime: number | null; err: boolean }[]
-  price67:     number
+  address:      string
+  label:        string
+  balance67:    number
+  balanceSol:   number
+  valueUsd:     number
+  isWhale:      boolean
+  recentAlert:  boolean
+  lastActive:   string | null
+  trades:       WalletTrade[]
+  totalBought:  number
+  totalSold:    number
+  price67:      number
 }
 
 const LS_KEY = "67_tracked_wallets"
@@ -154,25 +163,49 @@ function WalletRow({
             Last active: <strong style={{ color:"#374151" }}>{timeAgo(data.lastActive)}</strong>
           </p>
 
-          {/* Recent txs */}
-          {data.recentTxs.length > 0 && (
+          {/* Trade history */}
+          {data.trades && data.trades.length > 0 && (
             <div>
+              {/* Buy/Sell totals */}
+              <div style={{ display:"flex", gap:8, marginBottom:8 }}>
+                <div style={{ flex:1, background:"rgba(5,150,105,0.07)", borderRadius:8,
+                  padding:"6px 10px", textAlign:"center" }}>
+                  <p style={{ fontSize:"0.625rem", color:"#059669", fontWeight:700,
+                    textTransform:"uppercase", letterSpacing:"0.05em" }}>Total Bought</p>
+                  <p style={{ fontSize:"0.875rem", fontWeight:800, color:"#059669" }}>
+                    {fmt(data.totalBought ?? 0)} $67
+                  </p>
+                </div>
+                <div style={{ flex:1, background:"rgba(239,68,68,0.07)", borderRadius:8,
+                  padding:"6px 10px", textAlign:"center" }}>
+                  <p style={{ fontSize:"0.625rem", color:"#EF4444", fontWeight:700,
+                    textTransform:"uppercase", letterSpacing:"0.05em" }}>Total Sold</p>
+                  <p style={{ fontSize:"0.875rem", fontWeight:800, color:"#EF4444" }}>
+                    {fmt(data.totalSold ?? 0)} $67
+                  </p>
+                </div>
+              </div>
+
               <p style={{ fontSize:"0.625rem", fontWeight:700, color:"#8E8E93",
                 textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:6 }}>
-                Recent Transactions
+                Recent Trades
               </p>
               <div style={{ display:"flex", flexDirection:"column", gap:4 }}>
-                {data.recentTxs.slice(0, 4).map(tx => (
-                  <div key={tx.sig} style={{ display:"flex", alignItems:"center", gap:8 }}>
-                    <span style={{ width:6, height:6, borderRadius:"50%", flexShrink:0,
-                      background: tx.err ? "#EF4444" : "#059669" }} />
-                    <span style={{ flex:1, fontSize:"0.6875rem", color:"#374151",
-                      fontFamily:"monospace", overflow:"hidden",
-                      textOverflow:"ellipsis", whiteSpace:"nowrap" }}>
-                      {tx.sig.slice(0, 20)}…
+                {data.trades.slice(0, 5).map(tx => (
+                  <div key={tx.sig} style={{ display:"flex", alignItems:"center", gap:8,
+                    padding:"5px 8px", borderRadius:7,
+                    background: tx.type === "buy" ? "rgba(5,150,105,0.05)" : "rgba(239,68,68,0.05)" }}>
+                    <span style={{ fontSize:"0.75rem", flexShrink:0 }}>
+                      {tx.type === "buy" ? "🟢" : "🔴"}
+                    </span>
+                    <span style={{ fontSize:"0.75rem", fontWeight:700, color: tx.type === "buy" ? "#059669" : "#EF4444",
+                      flexShrink:0, textTransform:"uppercase" }}>{tx.type}</span>
+                    <span style={{ flex:1, fontSize:"0.8125rem", fontWeight:600, color:"#1D1D1F",
+                      fontVariantNumeric:"tabular-nums" }}>
+                      {fmt(tx.amount67)} $67
                     </span>
                     <span style={{ fontSize:"0.6875rem", color:"#A1A1AA", flexShrink:0 }}>
-                      {tx.blockTime ? timeAgo(new Date(tx.blockTime * 1000).toISOString()) : ""}
+                      {timeAgo(new Date(tx.blockTime * 1000).toISOString())}
                     </span>
                     <a href={`https://solscan.io/tx/${tx.sig}`} target="_blank"
                       rel="noopener noreferrer" onClick={e => e.stopPropagation()}
@@ -189,12 +222,12 @@ function WalletRow({
           <div style={{ display:"flex", gap:6 }}>
             <a href={`https://solscan.io/account/${wallet.address}`} target="_blank"
               rel="noopener noreferrer" onClick={e => e.stopPropagation()}
-              style={{ flex:1, padding:"6px 0", borderRadius:8,
-                border:"1.5px solid rgba(0,0,0,0.1)", background:"none",
-                cursor:"pointer", fontSize:"0.75rem", color:"#2563EB", fontWeight:600,
+              style={{ flex:1, padding:"7px 0", borderRadius:8,
+                border:"none", background:"#0A0A0A",
+                cursor:"pointer", fontSize:"0.75rem", color:"#FFF", fontWeight:700,
                 textAlign:"center", textDecoration:"none", display:"flex",
-                alignItems:"center", justifyContent:"center", gap:4 }}>
-              Solscan <ExternalLink style={{ width:11, height:11 }} />
+                alignItems:"center", justifyContent:"center", gap:5 }}>
+              <ExternalLink style={{ width:12, height:12 }} /> Solscan
             </a>
             <button onClick={e => { e.stopPropagation(); onMute() }}
               style={{ flex:1, padding:"6px 0", borderRadius:8,
@@ -514,16 +547,18 @@ export function WalletTrackerCard() {
         for (const [addr, amt] of Object.entries(preloadedAmounts)) {
           if (!next[addr]) {
             next[addr] = {
-              address:     addr,
-              label:       ws.find(w => w.address === addr)?.label ?? addr,
-              balance67:   amt,
-              balanceSol:  0,
-              valueUsd:    amt * lastPrice,
-              isWhale:     amt >= (ws.find(w => w.address === addr)?.alertThreshold ?? 1_000_000),
-              recentAlert: false,
-              lastActive:  null,
-              recentTxs:   [],
-              price67:     lastPrice,
+              address:      addr,
+              label:        ws.find(w => w.address === addr)?.label ?? addr,
+              balance67:    amt,
+              balanceSol:   0,
+              valueUsd:     amt * lastPrice,
+              isWhale:      amt >= (ws.find(w => w.address === addr)?.alertThreshold ?? 1_000_000),
+              recentAlert:  false,
+              lastActive:   null,
+              trades:       [],
+              totalBought:  0,
+              totalSold:    0,
+              price67:      lastPrice,
             }
           }
         }

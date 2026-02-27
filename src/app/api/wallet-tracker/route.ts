@@ -1,21 +1,32 @@
 import { NextResponse } from "next/server"
 
-const RPC      = "https://api.mainnet-beta.solana.com"
-const MINT_67  = "9AvytnUKsLxPxFHFqS6VLxaxt5p6BhYNr53SD2Chpump"
-const TOKEN_PGM = "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+const RPC     = "https://api.mainnet-beta.solana.com"
+const MINT_67 = "9AvytnUKsLxPxFHFqS6VLxaxt5p6BhYNr53SD2Chpump"
 
-async function rpc(method: string, params: unknown[]) {
+async function rpc(method: string, params: unknown[], revalidate = 60) {
   const res = await fetch(RPC, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ jsonrpc: "2.0", id: 1, method, params }),
-    next: { revalidate: 60 },
+    next: { revalidate },
   })
   const data = await res.json()
   return data.result
 }
 
-// Get $67 token balance for a wallet
+// ── Get token account address for $67 on this wallet ─────────────────────────
+async function getTokenAccount(wallet: string): Promise<string | null> {
+  try {
+    const result = await rpc("getTokenAccountsByOwner", [
+      wallet,
+      { mint: MINT_67 },
+      { encoding: "jsonParsed" },
+    ])
+    return result?.value?.[0]?.pubkey ?? null
+  } catch { return null }
+}
+
+// ── Get $67 balance ───────────────────────────────────────────────────────────
 async function get67Balance(wallet: string): Promise<number> {
   try {
     const result = await rpc("getTokenAccountsByOwner", [
@@ -23,31 +34,11 @@ async function get67Balance(wallet: string): Promise<number> {
       { mint: MINT_67 },
       { encoding: "jsonParsed" },
     ])
-    if (!result?.value?.length) return 0
-    const amount = result.value[0]?.account?.data?.parsed?.info?.tokenAmount?.uiAmount ?? 0
-    return amount
+    return result?.value?.[0]?.account?.data?.parsed?.info?.tokenAmount?.uiAmount ?? 0
   } catch { return 0 }
 }
 
-// Get recent transactions for a wallet (last 10)
-async function getRecentTxs(wallet: string): Promise<{
-  sig: string; slot: number; blockTime: number | null; err: boolean
-}[]> {
-  try {
-    const sigs = await rpc("getSignaturesForAddress", [
-      wallet,
-      { limit: 10 },
-    ])
-    return (sigs ?? []).map((s: any) => ({
-      sig:       s.signature,
-      slot:      s.slot,
-      blockTime: s.blockTime,
-      err:       !!s.err,
-    }))
-  } catch { return [] }
-}
-
-// Get SOL balance
+// ── Get SOL balance ───────────────────────────────────────────────────────────
 async function getSolBalance(wallet: string): Promise<number> {
   try {
     const result = await rpc("getBalance", [wallet])
@@ -55,7 +46,61 @@ async function getSolBalance(wallet: string): Promise<number> {
   } catch { return 0 }
 }
 
-// Fetch $67 price from DexScreener
+// ── Get $67 token trade history (buy/sell with amounts) ───────────────────────
+async function getTokenTrades(wallet: string, tokenAccount: string): Promise<{
+  sig: string; type: "buy" | "sell"; amount67: number; blockTime: number
+}[]> {
+  try {
+    // Get signatures for the TOKEN account (only $67 related txs)
+    const sigs = await rpc("getSignaturesForAddress", [
+      tokenAccount,
+      { limit: 15 },
+    ], 0)
+    if (!sigs?.length) return []
+
+    const trades: { sig: string; type: "buy" | "sell"; amount67: number; blockTime: number }[] = []
+
+    // Parse each tx to determine buy/sell and amount
+    const txResults = await Promise.all(
+      sigs.slice(0, 8).map((s: any) =>
+        rpc("getTransaction", [s.signature, { encoding: "jsonParsed", maxSupportedTransactionVersion: 0 }], 0)
+          .catch(() => null)
+      )
+    )
+
+    for (let i = 0; i < txResults.length; i++) {
+      const tx = txResults[i]
+      if (!tx || tx.meta?.err) continue
+
+      const blockTime = sigs[i]?.blockTime ?? 0
+      const sig       = sigs[i]?.signature ?? ""
+
+      // Find pre/post token balance for this wallet's token account
+      const preBalances  = tx.meta?.preTokenBalances  ?? []
+      const postBalances = tx.meta?.postTokenBalances ?? []
+
+      const preEntry  = preBalances.find((b: any)  => b.owner === wallet && b.mint === MINT_67)
+      const postEntry = postBalances.find((b: any) => b.owner === wallet && b.mint === MINT_67)
+
+      const pre  = parseFloat(preEntry?.uiTokenAmount?.uiAmountString  ?? "0")
+      const post = parseFloat(postEntry?.uiTokenAmount?.uiAmountString ?? "0")
+
+      const delta = post - pre
+      if (Math.abs(delta) < 1) continue // skip dust
+
+      trades.push({
+        sig,
+        type:     delta > 0 ? "buy" : "sell",
+        amount67: Math.abs(delta),
+        blockTime,
+      })
+    }
+
+    return trades.slice(0, 6)
+  } catch { return [] }
+}
+
+// ── $67 price ─────────────────────────────────────────────────────────────────
 async function get67Price(): Promise<number> {
   try {
     const res  = await fetch(
@@ -67,6 +112,8 @@ async function get67Price(): Promise<number> {
   } catch { return 0 }
 }
 
+// ── Handler ───────────────────────────────────────────────────────────────────
+
 export async function POST(req: Request) {
   const { wallets } = await req.json()
   if (!Array.isArray(wallets) || wallets.length === 0) {
@@ -77,40 +124,50 @@ export async function POST(req: Request) {
 
   const results = await Promise.all(
     wallets.slice(0, 12).map(async (w: { address: string; label: string; alertThreshold?: number }) => {
-      const [balance67, balanceSol, recentTxs] = await Promise.all([
+      // Fetch token account first — needed for trade history
+      const tokenAccount = await getTokenAccount(w.address)
+
+      const [balance67, balanceSol, trades] = await Promise.all([
         get67Balance(w.address),
         getSolBalance(w.address),
-        getRecentTxs(w.address),
+        tokenAccount ? getTokenTrades(w.address, tokenAccount) : Promise.resolve([]),
       ])
 
       const valueUsd   = balance67 * price67
       const threshold  = w.alertThreshold ?? 1_000_000
       const isWhale    = balance67 >= threshold
-      const lastActive = recentTxs[0]?.blockTime
-        ? new Date(recentTxs[0].blockTime * 1000).toISOString()
+
+      const lastTrade  = trades[0]
+      const lastActive = lastTrade?.blockTime
+        ? new Date(lastTrade.blockTime * 1000).toISOString()
         : null
 
-      // Check for recent large movement (last tx within 1h)
-      const recentAlert = recentTxs[0]?.blockTime
-        ? (Date.now() / 1000 - recentTxs[0].blockTime) < 3600
+      // Alert if last trade within 1h
+      const recentAlert = lastTrade?.blockTime
+        ? (Date.now() / 1000 - lastTrade.blockTime) < 3600
         : false
 
+      // Compute total bought / sold from history
+      const totalBought = trades.filter(t => t.type === "buy").reduce((s, t) => s + t.amount67, 0)
+      const totalSold   = trades.filter(t => t.type === "sell").reduce((s, t) => s + t.amount67, 0)
+
       return {
-        address:     w.address,
-        label:       w.label,
+        address:      w.address,
+        label:        w.label,
         balance67,
         balanceSol,
         valueUsd,
         isWhale,
         recentAlert,
         lastActive,
-        recentTxs:   recentTxs.slice(0, 5),
+        trades,         // recent buy/sell history
+        totalBought,
+        totalSold,
         price67,
       }
     })
   )
 
-  // Sort: whales first, then by balance
   results.sort((a, b) => {
     if (a.isWhale !== b.isWhale) return a.isWhale ? -1 : 1
     return b.balance67 - a.balance67
