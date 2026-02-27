@@ -68,31 +68,31 @@ export function McProgressBar({ mcap }: McProgressBarProps) {
       flexDirection: "column",
       alignItems: "center",
       gap: 0,
-      paddingTop: 32,
+      paddingTop: 16,
     }}>
       {/* Current MC label */}
       <div style={{
-        display: "flex", alignItems: "center", gap: 10, marginBottom: 20,
+        display: "flex", alignItems: "center", gap: 8, marginBottom: 12,
       }}>
         <span style={{
-          fontSize: "0.6875rem", fontWeight: 700, letterSpacing: "0.1em",
-          textTransform: "uppercase", color: "rgba(255,255,255,0.35)",
+          fontSize: "0.625rem", fontWeight: 700, letterSpacing: "0.09em",
+          textTransform: "uppercase", color: "rgba(255,255,255,0.3)",
         }}>
           Market Cap
         </span>
         <span style={{
-          fontSize: "1.75rem", fontWeight: 900, color: "#FFFFFF",
+          fontSize: "1.375rem", fontWeight: 900, color: "#FFFFFF",
           letterSpacing: "-0.04em", lineHeight: 1,
-          textShadow: "0 0 40px rgba(245,166,35,0.6)",
+          textShadow: "0 0 28px rgba(245,166,35,0.5)",
         }}>
           {fmtMC(mc)}
         </span>
         <span style={{
           background: "rgba(245,166,35,0.15)",
-          border: "1px solid rgba(245,166,35,0.3)",
-          borderRadius: 99, padding: "3px 10px",
-          fontSize: "0.6875rem", fontWeight: 800,
-          color: "#F5A623", letterSpacing: "0.05em",
+          border: "1px solid rgba(245,166,35,0.28)",
+          borderRadius: 99, padding: "2px 8px",
+          fontSize: "0.625rem", fontWeight: 800,
+          color: "#F5A623", letterSpacing: "0.04em",
         }}>
           {progress < 0.001 ? "<0.1%" : `${(progress * 100).toFixed(1)}%`} to 67B
         </span>
@@ -103,11 +103,11 @@ export function McProgressBar({ mcap }: McProgressBarProps) {
 
         {/* Bar track */}
         <div style={{
-          width: "100%", height: 22,
+          width: "100%", height: 14,
           background: "rgba(255,255,255,0.08)",
           borderRadius: 99,
           overflow: "visible",
-          boxShadow: "inset 0 1px 4px rgba(0,0,0,0.5)",
+          boxShadow: "inset 0 1px 3px rgba(0,0,0,0.5)",
           border: "1px solid rgba(255,255,255,0.07)",
           position: "relative",
         }}>
@@ -137,8 +137,8 @@ export function McProgressBar({ mcap }: McProgressBarProps) {
                 left: `${pos}%`,
                 top: "50%",
                 transform: "translate(-50%, -50%)",
-                width: 2,
-                height: 12,
+                width: 1,
+                height: 8,
                 background: passed ? "rgba(255,255,255,0.5)" : "rgba(255,255,255,0.15)",
                 borderRadius: 1,
                 zIndex: 2,
@@ -154,7 +154,7 @@ export function McProgressBar({ mcap }: McProgressBarProps) {
               left: `${fillWidth}%`,
               top: "50%",
               transform: "translate(-50%, -50%)",
-              width: 24, height: 24, borderRadius: "50%",
+              width: 18, height: 18, borderRadius: "50%",
               background: "radial-gradient(circle, #FBBF24, #F5A623)",
               boxShadow: glow
                 ? "0 0 0 5px rgba(245,166,35,0.25), 0 0 20px rgba(245,166,35,0.7)"
@@ -167,7 +167,7 @@ export function McProgressBar({ mcap }: McProgressBarProps) {
         </div>
 
         {/* Milestone labels */}
-        <div style={{ position: "relative", height: 28, marginTop: 8 }}>
+        <div style={{ position: "relative", height: 22, marginTop: 6 }}>
           {LABELS.map((label, i) => {
             const pos    = (i / N) * 100
             const passed = MILESTONES[i] <= mc
@@ -177,7 +177,7 @@ export function McProgressBar({ mcap }: McProgressBarProps) {
                 position: "absolute",
                 left: `${pos}%`,
                 transform: i === 0 ? "none" : i === N ? "translateX(-100%)" : "translateX(-50%)",
-                fontSize: isLast ? "0.875rem" : "0.75rem",
+                fontSize: isLast ? "0.75rem" : "0.6875rem",
                 fontWeight: isLast ? 900 : passed ? 700 : 400,
                 color: isLast
                   ? "#F5A623"
@@ -198,8 +198,8 @@ export function McProgressBar({ mcap }: McProgressBarProps) {
 
       {/* Target label */}
       <p style={{
-        marginTop: 20,
-        fontSize: "0.6875rem", fontWeight: 700,
+        marginTop: 12,
+        fontSize: "0.625rem", fontWeight: 700,
         letterSpacing: "0.12em", textTransform: "uppercase",
         color: "rgba(255,255,255,0.18)",
       }}>

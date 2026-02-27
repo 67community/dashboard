@@ -149,8 +149,8 @@ export default function Dashboard() {
 
       {/* ══ Season 2 Banner ════════════════════════════════════ */}
       <div className="enter-9" style={{
-        marginTop:24, borderRadius:24,
-        position:"relative", minHeight:220, overflow:"hidden",
+        marginTop:24, borderRadius:20,
+        position:"relative", overflow:"hidden",
       }}>
         {/* Base: dark → gold, same language as hero */}
         <div style={{ position:"absolute", inset:0,
@@ -173,30 +173,30 @@ export default function Dashboard() {
           position:"relative", zIndex:1,
           display:"flex", flexDirection:"column", alignItems:"center",
           justifyContent:"center", textAlign:"center",
-          padding:"52px 60px 56px",
+          padding:"28px 48px 32px",
         }}>
           {/* Pill badge */}
-          <div style={{ display:"inline-flex", alignItems:"center", gap:6,
+          <div style={{ display:"inline-flex", alignItems:"center", gap:5,
             background:"rgba(245,166,35,0.12)", border:"1px solid rgba(245,166,35,0.28)",
-            borderRadius:99, padding:"5px 14px", marginBottom:20 }}>
-            <span style={{ width:6, height:6, borderRadius:"50%", background:"#F5A623",
-              boxShadow:"0 0 8px rgba(245,166,35,0.9)", display:"inline-block" }} />
-            <span style={{ fontSize:"0.6875rem", fontWeight:700, letterSpacing:"0.1em",
+            borderRadius:99, padding:"4px 11px", marginBottom:12 }}>
+            <span style={{ width:5, height:5, borderRadius:"50%", background:"#F5A623",
+              boxShadow:"0 0 6px rgba(245,166,35,0.9)", display:"inline-block" }} />
+            <span style={{ fontSize:"0.625rem", fontWeight:700, letterSpacing:"0.1em",
               textTransform:"uppercase", color:"#F5A623" }}>Coming Soon</span>
           </div>
 
-          <h2 style={{ fontSize:"clamp(2.25rem, 5vw, 3.5rem)", fontWeight:900,
-            color:"#FFFFFF", letterSpacing:"-0.055em", lineHeight:1.05,
-            margin:"0 0 16px 0" }}>
+          <h2 style={{ fontSize:"clamp(1.5rem, 3.5vw, 2.25rem)", fontWeight:900,
+            color:"#FFFFFF", letterSpacing:"-0.045em", lineHeight:1.05,
+            margin:"0 0 6px 0" }}>
             Season 2 is Loading…
           </h2>
-          <p style={{ fontSize:"1.125rem", color:"rgba(255,255,255,0.45)",
-            fontWeight:500, letterSpacing:"-0.01em", maxWidth:480, lineHeight:1.6 }}>
+          <p style={{ fontSize:"0.9375rem", color:"rgba(255,255,255,0.4)",
+            fontWeight:500, letterSpacing:"-0.01em", maxWidth:440, lineHeight:1.5 }}>
             Unstoppable momentum.
           </p>
 
           {/* Live MC Progress Bar */}
-          <div style={{ width:"100%", maxWidth:680, marginTop:12 }}>
+          <div style={{ width:"100%", maxWidth:640, marginTop:4 }}>
             <McProgressBar mcap={liveMcap ?? data?.token_health?.market_cap ?? null} />
           </div>
         </div>
