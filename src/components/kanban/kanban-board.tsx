@@ -105,7 +105,7 @@ function FilterBar({ filters, setFilters }: { filters: Filters; setFilters: (f: 
 export function KanbanBoard() {
   const {
     tasks, loading, isLive,
-    moveTask, createTask, updateTask,
+    moveTask, createTask, updateTask, deleteTask,
   } = useTasks()
 
   const [activeTask,   setActiveTask]   = useState<Task | null>(null)
@@ -203,6 +203,7 @@ export function KanbanBoard() {
               tasks={getTasksByColumn(col)}
               onOpenTask={setSelectedTask}
               onAddTask={handleAddTask}
+              onDeleteTask={deleteTask}
             />
           ))}
         </div>

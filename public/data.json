@@ -104,12 +104,12 @@
     "best_tweet_week": {
       "tweet_id": "2025945503913886046",
       "tweet_url": "https://x.com/67coinX/status/2025945503913886046",
-      "text": "👀👀\n\nhttps://x.com/SolanaSensei/status/2025850377825099973?s=20",
+      "text": "\ud83d\udc40\ud83d\udc40\n\nhttps://x.com/SolanaSensei/status/2025850377825099973?s=20",
       "likes": 102,
       "replies": 16,
       "img_url": null,
       "date": "Feb 23",
-      "embed_html": "<blockquote class=\"twitter-tweet\" align=\"center\" data-width=\"520\" data-dnt=\"true\" data-theme=\"dark\"><p lang=\"qme\" dir=\"ltr\">👀👀<a href=\"https://t.co/Nk1MKX6P45\">https://t.co/Nk1MKX6P45</a></p>&mdash; The Official 67 Coin (@67coinX) <a href=\"https://twitter.com/67coinX/status/2025945503913886046?ref_src=twsrc%5Etfw\">February 23, 2026</a></blockquote>\n\n"
+      "embed_html": "<blockquote class=\"twitter-tweet\" align=\"center\" data-width=\"520\" data-dnt=\"true\" data-theme=\"dark\"><p lang=\"qme\" dir=\"ltr\">\ud83d\udc40\ud83d\udc40<a href=\"https://t.co/Nk1MKX6P45\">https://t.co/Nk1MKX6P45</a></p>&mdash; The Official 67 Coin (@67coinX) <a href=\"https://twitter.com/67coinX/status/2025945503913886046?ref_src=twsrc%5Etfw\">February 23, 2026</a></blockquote>\n\n"
     },
     "best_tweet_2d": {
       "tweet_id": "2026634750484463718",
@@ -234,7 +234,7 @@
         "user_id": "696380710184943656",
         "avatar": "https://cdn.discordapp.com/avatars/696380710184943656/087b78dd471c9217ac02ea42aed91a46.webp?size=64",
         "time_ago": "18h ago",
-        "detail": "Warned · Bad word usage"
+        "detail": "Warned \u00b7 Bad word usage"
       },
       {
         "type": "join",
@@ -446,7 +446,7 @@
   "alerts": [
     {
       "type": "warning",
-      "message": "🤖 5 bots are offline",
+      "message": "\ud83e\udd16 5 bots are offline",
       "timestamp": "2026-02-27T02:55:58.635955Z"
     }
   ],
@@ -543,20 +543,20 @@
   "team_presence": {
     "767811814557089802": "online",
     "965681608604647514": "dnd",
-    "788495124061487154": "online",
+    "788495124061487154": "idle",
+    "682831521396031498": "online",
     "1444130836415905993": "offline",
     "1440075589557158100": "offline",
-    "682831521396031498": "offline",
     "201710326347988993": "offline"
   },
-  "presence_updated": "2026-02-27T20:05:06.724856Z",
+  "presence_updated": "2026-02-27T20:25:07.020622Z",
   "tiktok_spotlight": [
     {
       "video_url": "https://www.tiktok.com/@67coin/video/7608622833979247886",
       "thumbnail_url": "https://p19-sign.tiktokcdn-us.com/tos-useast5-p-85c255-tx/osr1BfdKBBS0i6dYtXiQ6vImyApIXrtwxFAoEC~tplv-tiktokx-origin.image?dr=14575&x-expires=1772319600&x-signature=tMUafNrTtdKgP3W1pf0tR4uKuw8%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=my",
       "creator": "67coin",
       "creator_url": "https://www.tiktok.com/@67coin",
-      "description": "Serbian President 67 😂 #Vucic #67 #67serbia #fyp Credit: Tiktok: @strahinja.a9",
+      "description": "Serbian President 67 \ud83d\ude02 #Vucic #67 #67serbia #fyp Credit: Tiktok: @strahinja.a9",
       "plays": 3522,
       "likes": 567,
       "views_text": "3.5K",
@@ -626,7 +626,7 @@
       "thumbnail_url": "https://p16-pu-sign-no.tiktokcdn-eu.com/tos-no1a-p-0037-no/ooeChsxIJDLLPfUgIg9LNSAe29JAcTbgGIjNIp~tplv-tiktokx-origin.image?dr=14575&x-expires=1772319600&x-signature=UE3O0qHuBCQIkgWYk0HjYLdTqm0%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=my",
       "creator": "svea8294",
       "creator_url": "https://www.tiktok.com/@svea8294",
-      "description": "❤️ #lipsing #song #67 #fy #fyp ",
+      "description": "\u2764\ufe0f #lipsing #song #67 #fy #fyp ",
       "plays": 6000,
       "likes": 280,
       "views_text": "6.0K",

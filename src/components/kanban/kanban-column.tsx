@@ -20,9 +20,10 @@ interface Props {
   tasks: Task[]
   onOpenTask: (task: Task) => void
   onAddTask: (column: KanbanColumnType, title: string) => void
+  onDeleteTask?: (id: string) => void
 }
 
-export function KanbanColumnComponent({ column, tasks, onOpenTask, onAddTask }: Props) {
+export function KanbanColumnComponent({ column, tasks, onOpenTask, onAddTask, onDeleteTask }: Props) {
   const [adding, setAdding] = useState(false)
   const [newTitle, setNewTitle] = useState("")
   const { setNodeRef, isOver } = useDroppable({ id: column })
@@ -61,7 +62,7 @@ export function KanbanColumnComponent({ column, tasks, onOpenTask, onAddTask }: 
           border: isOver ? "2px dashed rgba(245,166,35,0.45)" : "2px solid transparent",
         }}>
         <SortableContext items={tasks.map(t => t.id)} strategy={verticalListSortingStrategy}>
-          {tasks.map(task => <TaskCard key={task.id} task={task} onOpen={onOpenTask} />)}
+          {tasks.map(task => <TaskCard key={task.id} task={task} onOpen={onOpenTask} onDelete={onDeleteTask} />)}
         </SortableContext>
 
         {adding && (
