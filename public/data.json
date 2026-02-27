@@ -443,7 +443,13 @@
     }
   ],
   "next_target": "10K Holders by March 15",
-  "alerts": [],
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "\ud83e\udd16 5 bots are offline",
+      "timestamp": "2026-02-27T02:55:58.635955Z"
+    }
+  ],
   "coingecko": {
     "coingecko_rank": 2423,
     "ath": 0.04363399,
@@ -538,12 +544,12 @@
     "201710326347988993": "dnd",
     "767811814557089802": "online",
     "965681608604647514": "dnd",
-    "788495124061487154": "online",
+    "788495124061487154": "idle",
     "1444130836415905993": "offline",
     "1440075589557158100": "offline",
     "682831521396031498": "offline"
   },
-  "presence_updated": "2026-02-27T02:40:08.674284Z",
+  "presence_updated": "2026-02-27T02:55:10.046025Z",
   "tiktok_spotlight": [
     {
       "video_url": "https://www.tiktok.com/@mav67kid67/video/7561504794842647863",
