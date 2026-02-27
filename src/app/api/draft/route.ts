@@ -179,7 +179,7 @@ export async function POST(req: Request) {
         "content-type":      "application/json",
       },
       body: JSON.stringify({
-        model:      "claude-haiku-4-5",
+        model:      "claude-sonnet-4-5",
         max_tokens: 700,
         messages:   [{ role: "user", content: fullPrompt }],
       }),
