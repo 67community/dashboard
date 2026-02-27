@@ -513,6 +513,8 @@ const DISCORD_TOKEN  = process.env.DISCORD_TOKEN ?? ""
 const DISCORD_GUILD  = "1440077830456082545"
 const TG_BOT_TOKEN   = process.env.TELEGRAM_BOT_TOKEN ?? ""
 const TG_CHANNEL_ID  = "-1003158749697"
+const TG_RAID_BOT    = process.env.TG_RAID_BOT_TOKEN ?? ""
+const TG_RAID_GROUP  = "-1003708062172"
 
 async function fetchTelegram(): Promise<number | null> {
   if (!TG_BOT_TOKEN) return null
@@ -524,6 +526,60 @@ async function fetchTelegram(): Promise<number | null> {
     if (!res.ok) return null
     const j = await res.json()
     return j.ok ? (j.result as number) : null
+  } catch {
+    return null
+  }
+}
+
+// ── Raid Feed — fetch latest tweets from Telegram "67 Raider" group ──────────
+async function fetchRaidFeed(): Promise<unknown[] | null> {
+  if (!TG_RAID_BOT) return null
+  try {
+    // getUpdates without offset — always returns pending messages (up to 100)
+    const res = await fetch(
+      `https://api.telegram.org/bot${TG_RAID_BOT}/getUpdates?limit=50&allowed_updates=["message"]`,
+      { cache: "no-store" }
+    )
+    if (!res.ok) return null
+    const j = await res.json()
+    if (!j.ok || !j.result) return null
+
+    // Filter messages from the raid group, parse tweet URLs
+    const items: unknown[] = []
+    for (const upd of j.result as any[]) {
+      const msg = upd.message
+      if (!msg) continue
+      if (String(msg.chat?.id) !== TG_RAID_GROUP) continue
+
+      const text = msg.text ?? msg.caption ?? ""
+      if (!text) continue
+
+      // Extract tweet URL from message
+      const tweetMatch = text.match(/https?:\/\/(twitter|x)\.com\/\S+\/status\/\d+/i)
+      const tweetUrl   = tweetMatch?.[0] ?? null
+
+      // Extract @handle
+      const handleMatch = text.match(/@(\w+)/)
+
+      items.push({
+        id:        String(upd.update_id),
+        text:      text.slice(0, 280),
+        date:      new Date((msg.date ?? 0) * 1000).toISOString(),
+        tweet_url: tweetUrl,
+        handle:    handleMatch ? handleMatch[0] : null,
+        photo:     msg.photo ? `https://t.me/c/${TG_RAID_GROUP.replace("-100","")}/${msg.message_id}` : null,
+      })
+    }
+
+    // Sort newest first, deduplicate by tweet_url
+    items.sort((a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    const seen = new Set<string>()
+    return items.filter((item: any) => {
+      const key = item.tweet_url ?? item.id
+      if (seen.has(key)) return false
+      seen.add(key)
+      return true
+    })
   } catch {
     return null
   }
@@ -860,7 +916,7 @@ function readStaticJson() {
 
 // ── main ──────────────────────────────────────────────────────────────────────
 export async function GET() {
-  const [pair, cg, cgTickers, cmc, holders, discord, tgMembers, discordActivity, youtubeVideos, youtubeAnalytics, newsFeed, marketData] = await Promise.all([
+  const [pair, cg, cgTickers, cmc, holders, discord, tgMembers, discordActivity, youtubeVideos, youtubeAnalytics, newsFeed, marketData, raidFeed] = await Promise.all([
     safe(fetchDex),
     safe(fetchCG),
     safe(fetchCGTickers),
@@ -873,6 +929,7 @@ export async function GET() {
     safe(fetchYouTubeAnalytics),
     safe(fetchNewsFeed),
     safe(fetchMarketData),
+    safe(fetchRaidFeed),
   ])
 
   if (!pair && !cg) {
@@ -1007,7 +1064,7 @@ export async function GET() {
       : (static_?.youtube_spotlight ?? []),
     youtube_analytics:   youtubeAnalytics ?? static_?.youtube_analytics ?? null,
     instagram_spotlight: static_?.instagram_spotlight ?? [],
-    raid_feed:           static_?.raid_feed           ?? [],
+    raid_feed:           (raidFeed as unknown[])?.length ? raidFeed : (static_?.raid_feed ?? []),
     news_feed:           (newsFeed as unknown[])?.length ? newsFeed : (static_?.news_feed ?? []),
     market_data:         (marketData as unknown[])?.length ? marketData : (static_?.market_data ?? []),
   }

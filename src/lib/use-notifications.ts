@@ -49,25 +49,36 @@ export function useDataNotifications(data: DashboardData | null) {
 
     const now = new Date().toISOString()
 
+    // ── Helper: fire notification + send to Discord ──────────────────────────
+    function fireAlert(n: Parameters<typeof addNotification>[0]) {
+      addNotification(n)
+      // Send to Discord webhook (fire-and-forget)
+      fetch("/api/discord-notify", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: n.message, type: n.type }),
+      }).catch(() => {})
+    }
+
     // ── 1. Price alerts ──────────────────────────────────────────────────────
     const price     = data.token_health?.price           ?? 0
     const ch24      = data.token_health?.price_change_24h ?? 0
     const prevCh24  = prev.token_health?.price_change_24h ?? 0
 
     if (ch24 <= -10 && prevCh24 > -10) {
-      addNotification({ type:"danger",  category:"price", timestamp:now,
+      fireAlert({ type:"danger",  category:"price", timestamp:now,
         message:`⚠️ $67 down ${ch24.toFixed(1)}% in 24h  ·  $${price.toFixed(6)}` })
     }
     if (ch24 >= 10 && prevCh24 < 10) {
-      addNotification({ type:"success", category:"price", timestamp:now,
+      fireAlert({ type:"success", category:"price", timestamp:now,
         message:`🚀 $67 up ${ch24.toFixed(1)}% in 24h!  ·  $${price.toFixed(6)}` })
     }
     if (ch24 >= 30 && prevCh24 < 30) {
-      addNotification({ type:"success", category:"price", timestamp:now,
+      fireAlert({ type:"success", category:"price", timestamp:now,
         message:`🔥 $67 PUMPING +${ch24.toFixed(1)}%! Price: $${price.toFixed(6)}` })
     }
     if (ch24 <= -20 && prevCh24 > -20) {
-      addNotification({ type:"danger",  category:"price", timestamp:now,
+      fireAlert({ type:"danger",  category:"price", timestamp:now,
         message:`🔴 $67 bleeding hard — ${ch24.toFixed(1)}% in 24h. Price: $${price.toFixed(6)}` })
     }
 
@@ -78,11 +89,11 @@ export function useDataNotifications(data: DashboardData | null) {
       const buyUsd  = bt.biggest_buy_usd  ?? 0
       const sellUsd = bt.biggest_sell_usd ?? 0
       if (buyUsd >= 5000 && buyUsd !== (prevBt?.biggest_buy_usd ?? 0)) {
-        addNotification({ type:"success", category:"whale", timestamp:now,
+        fireAlert({ type:"success", category:"whale", timestamp:now,
           message:`🐋🟢 Whale buy — $${buyUsd.toLocaleString()} of $67` })
       }
       if (sellUsd >= 5000 && sellUsd !== (prevBt?.biggest_sell_usd ?? 0)) {
-        addNotification({ type:"danger", category:"whale", timestamp:now,
+        fireAlert({ type:"danger", category:"whale", timestamp:now,
           message:`🐋🔴 Whale sell — $${sellUsd.toLocaleString()} of $67` })
       }
     }
@@ -95,7 +106,7 @@ export function useDataNotifications(data: DashboardData | null) {
       const key = `${act.type}_${act.user}_${act.time_ago}`
       if (!prevKeys.has(key) && (act.type === "ban" || act.type === "kick" || act.type === "spam")) {
         const emoji = act.type === "ban" ? "🚫" : act.type === "kick" ? "👢" : "⚠️"
-        addNotification({ type:"warning", category:"discord", timestamp:now,
+        fireAlert({ type:"warning", category:"discord", timestamp:now,
           message:`${emoji} Discord ${act.type}: ${act.user}${act.reason ? ` — ${act.reason}` : ""}` })
       }
     }
