@@ -544,12 +544,12 @@
     "767811814557089802": "online",
     "965681608604647514": "dnd",
     "788495124061487154": "online",
-    "1444130836415905993": "idle",
+    "682831521396031498": "idle",
+    "1444130836415905993": "offline",
     "1440075589557158100": "offline",
-    "682831521396031498": "offline",
     "201710326347988993": "offline"
   },
-  "presence_updated": "2026-02-27T18:35:06.833911Z",
+  "presence_updated": "2026-02-27T19:30:08.646949Z",
   "tiktok_spotlight": [
     {
       "video_url": "https://www.tiktok.com/@mav67kid67/video/7561504794842647863",
@@ -665,6 +665,70 @@
     }
   ],
   "raid_feed": [
+    {
+      "message_id": 5346,
+      "text": "Raid\n\nhttps://x.com/i/status/2027465654333284476",
+      "tweet_url": "https://x.com/i/web/status/2027465654333284476",
+      "photo": "",
+      "date": "2026-02-27T19:28:22Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 5345,
+      "text": "Raid\n\nhttps://x.com/beraatkaratepe/status/2027464602368315538?s=46",
+      "tweet_url": "https://x.com/i/web/status/2027464602368315538",
+      "photo": "",
+      "date": "2026-02-27T19:23:31Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 5344,
+      "text": "Raid\n\nhttps://x.com/dertli_adam59/status/2027464436517142751?s=46",
+      "tweet_url": "https://x.com/i/web/status/2027464436517142751",
+      "photo": "",
+      "date": "2026-02-27T19:22:52Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 5343,
+      "text": "Raid\n\nhttps://x.com/davidmozsar/status/2027464331768602625?s=46",
+      "tweet_url": "https://x.com/i/web/status/2027464331768602625",
+      "photo": "",
+      "date": "2026-02-27T19:22:28Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 5342,
+      "text": "Raid\n\nhttps://x.com/dedenovitaj/status/2027464044676882919?s=46",
+      "tweet_url": "https://x.com/i/web/status/2027464044676882919",
+      "photo": "",
+      "date": "2026-02-27T19:21:36Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 5339,
+      "text": "Raid\n\nhttps://x.com/harrodfrances/status/2027463492937089029?s=46",
+      "tweet_url": "https://x.com/i/web/status/2027463492937089029",
+      "photo": "",
+      "date": "2026-02-27T19:19:08Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 5337,
+      "text": "Raid\n\nhttps://x.com/beraatkaratepe/status/2027463144268877868?s=46",
+      "tweet_url": "https://x.com/i/web/status/2027463144268877868",
+      "photo": "",
+      "date": "2026-02-27T19:17:53Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 5321,
+      "text": "Raid\n\nhttps://x.com/aytuggkuscuu/status/2027456488151683169?s=46",
+      "tweet_url": "https://x.com/i/web/status/2027456488151683169",
+      "photo": "",
+      "date": "2026-02-27T18:51:43Z",
+      "chat_id": -1003708062172
+    },
     {
       "message_id": 5302,
       "text": "Raid \n\nhttps://x.com/i/status/2027441902157512808",
