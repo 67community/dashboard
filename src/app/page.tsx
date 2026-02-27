@@ -12,7 +12,6 @@ import { YouTubeSpotlightCard }      from "@/components/cards/youtube-spotlight"
 import { InstagramSpotlightCard }    from "@/components/cards/instagram-spotlight"
 import { XLiveFeedCard }             from "@/components/cards/x-live-feed"
 import { NewsFeedCard }              from "@/components/cards/news-feed"
-import { MarketTickerCard }          from "@/components/cards/market-ticker"
 import { AgentStatusCard }      from "@/components/cards/agent-status"
 import { MilestonesCard }       from "@/components/cards/milestones"
 import { FeatureRequestCard }   from "@/components/cards/feature-request"
@@ -32,37 +31,82 @@ import { AnimatedNumber }      from "@/components/ui/animated-number"
 
 export default function Dashboard() {
   const { data, livePrice, liveChange24h } = useAppData()
-  const up = (liveChange24h ?? data?.token_health?.price_change_24h ?? 0) >= 0
+  const up     = (liveChange24h ?? data?.token_health?.price_change_24h ?? 0) >= 0
+  const market = (data?.market_data ?? []) as { symbol:string; name:string; emoji:string; price:number; change_pct:number; kind:string }[]
+
+  function fmtP(n: number, kind: string) {
+    if (kind === "index") return n.toLocaleString("en-US", { maximumFractionDigits: 0 })
+    if (n >= 1) return n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+    return n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 4 })
+  }
 
   return (
     <div>
       {/* ══ Slim identity strip ═════════════════════════════════ */}
       <div className="enter-1" style={{
-        display:"flex", alignItems:"center", gap:12,
-        marginBottom:20, paddingBottom:16,
+        display:"flex", alignItems:"center", gap:8, flexWrap:"wrap",
+        marginBottom:20, paddingBottom:14,
         borderBottom:"1px solid rgba(0,0,0,0.07)",
       }}>
+        {/* Logo + title */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="https://raw.githubusercontent.com/67coin/67/main/logo.png" alt="67"
-          style={{ width:28, height:28, borderRadius:"50%", objectFit:"cover", flexShrink:0 }} />
-        <span style={{ fontSize:"0.8125rem", fontWeight:800, color:"#0A0A0A", letterSpacing:"-0.02em" }}>
+          style={{ width:26, height:26, borderRadius:"50%", objectFit:"cover", flexShrink:0 }} />
+        <span style={{ fontSize:"0.8125rem", fontWeight:800, color:"#0A0A0A",
+          letterSpacing:"-0.02em", marginRight:4 }}>
           Mission Control
         </span>
-        <span style={{ fontSize:"0.75rem", color:"#A1A1AA", fontWeight:500 }}>· $67</span>
-        {/* Live price pill */}
+
+        {/* Divider */}
+        <span style={{ width:1, height:14, background:"rgba(0,0,0,0.12)", flexShrink:0 }} />
+
+        {/* $67 live price pill */}
         {(livePrice ?? 0) > 0 && (
           <span style={{
-            marginLeft:"auto", fontSize:"0.75rem", fontWeight:700,
+            display:"inline-flex", alignItems:"center", gap:5,
+            fontSize:"0.6875rem", fontWeight:700,
             color: up ? "#059669" : "#EF4444",
-            background: up ? "rgba(5,150,105,0.08)" : "rgba(239,68,68,0.08)",
-            padding:"3px 10px", borderRadius:99,
+            background: up ? "rgba(5,150,105,0.09)" : "rgba(239,68,68,0.09)",
+            border: `1.5px solid ${up ? "rgba(5,150,105,0.15)" : "rgba(239,68,68,0.15)"}`,
+            padding:"3px 9px", borderRadius:99,
           }}>
+            <span style={{ fontWeight:800 }}>$67</span>
             ${(livePrice ?? 0).toFixed(6)}
-            <span style={{ marginLeft:5, fontSize:"0.6875rem" }}>
+            <span style={{ opacity:0.85 }}>
               {up ? "▲" : "▼"}{Math.abs(liveChange24h ?? 0).toFixed(1)}%
             </span>
           </span>
         )}
+
+        {/* Market pills */}
+        {market.map((m, i) => {
+          const mUp = m.change_pct >= 0
+          return (
+            <span key={i} style={{
+              display:"inline-flex", alignItems:"center", gap:4,
+              fontSize:"0.6875rem", fontWeight:600,
+              color:"#374151",
+              background:"#FFF",
+              border:"1.5px solid rgba(0,0,0,0.07)",
+              padding:"3px 8px", borderRadius:99,
+              whiteSpace:"nowrap",
+            }}>
+              <span style={{ fontSize:"0.7rem" }}>{m.emoji}</span>
+              <span style={{ fontWeight:700, color:"#1D1D1F" }}>
+                {m.symbol.replace("-USD","").replace("=F","")}
+              </span>
+              <span style={{ fontVariantNumeric:"tabular-nums" }}>
+                ${fmtP(m.price, m.kind)}
+              </span>
+              <span style={{
+                fontSize:"0.625rem", fontWeight:700,
+                color: mUp ? "#059669" : "#DC2626",
+              }}>
+                {mUp ? "▲" : "▼"}{Math.abs(m.change_pct).toFixed(1)}%
+              </span>
+            </span>
+          )
+        })}
       </div>
 
 
@@ -89,7 +133,6 @@ export default function Dashboard() {
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><InstagramSpotlightCard /></div>
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><XLiveFeedCard /></div>
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><NewsFeedCard /></div>
-        <div className="enter-9" style={{ display:"flex", minWidth:0 }}><MarketTickerCard /></div>
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><WalletTrackerCard /></div>
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><FeatureRequestCard /></div>
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><OutreachCard /></div>
