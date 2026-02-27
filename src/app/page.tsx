@@ -36,91 +36,36 @@ export default function Dashboard() {
 
   return (
     <div>
-      {/* ══ Stripe-style hero band ══════════════════════════════ */}
-      <div className="enter-1 hero-band" style={{
-        position:"relative", borderRadius:24, overflow:"hidden",
-        marginBottom:36, padding:"44px 48px 52px",
-        background:"#0A0A0A",
-        minHeight:180,
+      {/* ══ Slim identity strip ═════════════════════════════════ */}
+      <div className="enter-1" style={{
+        display:"flex", alignItems:"center", gap:12,
+        marginBottom:20, paddingBottom:16,
+        borderBottom:"1px solid rgba(0,0,0,0.07)",
       }}>
-        {/* Dark → gold gradient — single brand color, clean */}
-        <div style={{ position:"absolute", inset:0, pointerEvents:"none" }}>
-          {/* Base: pure dark to warm dark */}
-          <div style={{ position:"absolute", inset:0,
-            background:"linear-gradient(115deg, #0A0A0A 0%, #111108 40%, #2A1A00 70%, #7A4500 90%, #C8820A 100%)" }} />
-          {/* Gold flare right */}
-          <div style={{ position:"absolute", inset:0,
-            background:"radial-gradient(ellipse at 95% 50%, rgba(245,166,35,0.70) 0%, transparent 50%)" }} />
-          {/* Subtle warm center */}
-          <div style={{ position:"absolute", inset:0,
-            background:"radial-gradient(ellipse at 55% 100%, rgba(245,166,35,0.12) 0%, transparent 50%)" }} />
-          {/* Diagonal rays */}
-          <div style={{ position:"absolute", inset:0,
-            backgroundImage:`repeating-linear-gradient(112deg, transparent, transparent 28px, rgba(255,255,255,0.022) 28px, rgba(255,255,255,0.022) 29px)` }} />
-        </div>
-
-        {/* Content */}
-        <div style={{ position:"relative", zIndex:1 }}>
-          <div style={{ display:"flex", alignItems:"center", gap:16, marginBottom:14 }}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="https://raw.githubusercontent.com/67coin/67/main/logo.png" alt="67"
-              style={{ width:48, height:48, borderRadius:"50%", objectFit:"cover",
-                boxShadow:"0 0 24px rgba(245,166,35,0.6)" }} />
-            <p style={{ fontSize:"0.6875rem", fontWeight:700, letterSpacing:"0.12em",
-              textTransform:"uppercase", color:"rgba(245,166,35,0.85)" }}>
-              The Official 67 Coin · Operations
-            </p>
-          </div>
-          <h1 style={{
-            fontSize:"clamp(2rem, 4.5vw, 3rem)", fontWeight:900,
-            letterSpacing:"-0.05em", color:"#FFFFFF", lineHeight:1.05, margin:0,
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="https://raw.githubusercontent.com/67coin/67/main/logo.png" alt="67"
+          style={{ width:28, height:28, borderRadius:"50%", objectFit:"cover", flexShrink:0 }} />
+        <span style={{ fontSize:"0.8125rem", fontWeight:800, color:"#0A0A0A", letterSpacing:"-0.02em" }}>
+          Mission Control
+        </span>
+        <span style={{ fontSize:"0.75rem", color:"#A1A1AA", fontWeight:500 }}>· $67</span>
+        {/* Live price pill */}
+        {(livePrice ?? 0) > 0 && (
+          <span style={{
+            marginLeft:"auto", fontSize:"0.75rem", fontWeight:700,
+            color: up ? "#059669" : "#EF4444",
+            background: up ? "rgba(5,150,105,0.08)" : "rgba(239,68,68,0.08)",
+            padding:"3px 10px", borderRadius:99,
           }}>
-            Mission Control
-          </h1>
-          <p style={{ fontSize:"1rem", color:"rgba(255,255,255,0.45)", marginTop:10,
-            fontWeight:500, letterSpacing:"-0.01em" }}>
-            Everything $67 in one place — tap any card to expand.
-          </p>
-        </div>
+            ${(livePrice ?? 0).toFixed(6)}
+            <span style={{ marginLeft:5, fontSize:"0.6875rem" }}>
+              {up ? "▲" : "▼"}{Math.abs(liveChange24h ?? 0).toFixed(1)}%
+            </span>
+          </span>
+        )}
       </div>
 
-      {/* Old page header hidden */}
-      {false && <div style={{ marginBottom:40 }}>
-        <div style={{ display:"flex", alignItems:"flex-start", justifyContent:"space-between", gap:24 }}>
-          {/* Left */}
-          <div style={{ display:"flex", alignItems:"flex-start", gap:18 }}>
-            {/* Logo */}
-            <div style={{ width:56, height:56, borderRadius:"50%", overflow:"hidden", flexShrink:0, boxShadow:"0 4px 20px rgba(245,166,35,0.35)", marginTop:4 }}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="https://raw.githubusercontent.com/67coin/67/main/logo.png" alt="67" width={56} height={56} style={{ width:56, height:56, objectFit:"cover", borderRadius:"50%", display:"block" }} />
-            </div>
-            <div>
-              <p style={{ fontSize:"0.6875rem", fontWeight:700, letterSpacing:"0.09em", textTransform:"uppercase", color:"#C8820A", marginBottom:10 }}>
-                The Official 67 Coin · Operations
-              </p>
-              <h1 style={{
-                fontSize:"clamp(1.75rem, 4vw, 2.375rem)",
-                fontWeight:900,
-                letterSpacing:"-0.045em",
-                color:"#09090B",
-                lineHeight:1.05,
-                margin:0,
-              }}>
-                Mission Control
-              </h1>
-              <p style={{ fontSize:"0.9375rem", color:"#71717A", fontWeight:500, marginTop:8, lineHeight:1.5 }}>
-                Everything $67 in one place — tap any card to expand.
-              </p>
-            </div>
-          </div>
 
-          {/* spacing */}
-          <div />
-        </div>
-
-        {/* Divider */}
-        <div className="divider" style={{ marginTop:32 }} />
-      </div>}
       <style>{`
         @media (max-width: 500px)  { .hero-stats-grid { grid-template-columns: 1fr !important; } }
       `}</style>
