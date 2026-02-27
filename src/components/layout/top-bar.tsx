@@ -3,10 +3,12 @@
 import { useState, useRef, useEffect } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { RefreshCw, Bell, X, Check } from "lucide-react"
+import { RefreshCw, Bell, X, Check, Settings } from "lucide-react"
 import { TeamAvatarGroup } from "@/components/team/team-avatar"
 import { useAppData } from "@/lib/data-context"
 import { useNotifications, useDataNotifications } from "@/lib/use-notifications"
+import { SettingsModal } from "@/components/layout/settings-modal"
+import { loadAISettings } from "@/lib/ai-settings"
 
 const LOGO = "https://raw.githubusercontent.com/67coin/67/main/logo.png"
 
@@ -44,7 +46,16 @@ export function TopBar() {
   const { lastFetched, loading, refresh, data } = useAppData()
   const { notifs, unreadCount, markAllRead, clear } = useNotifications()
   const [bellOpen, setBellOpen] = useState(false)
+  const [settingsOpen, setSettingsOpen] = useState(false)
   const bellRef = useRef<HTMLDivElement>(null)
+
+  // Show indicator dot if no API key set
+  const [hasKey, setHasKey] = useState(true)
+  useEffect(() => {
+    const s = loadAISettings()
+    const key = s.provider === "openai" ? s.openaiKey : s.claudeKey
+    setHasKey(!!key || !!process.env.NEXT_PUBLIC_HAS_AI_KEY)
+  }, [settingsOpen])
 
   // Watch data changes and auto-fire notifications
   useDataNotifications(data)
@@ -162,6 +173,30 @@ export function TopBar() {
                 <RefreshCw style={{ width:11, height:11 }} className={loading ? "animate-spin" : ""} />
                 {loading ? "Syncing…" : timeAgo(lastFetched)}
               </button>
+
+              {/* Settings */}
+              <div style={{ position: "relative" }}>
+                <button
+                  onClick={() => setSettingsOpen(true)}
+                  title="AI Settings"
+                  style={{
+                    position: "relative", background: "none", border: "none", cursor: "pointer",
+                    padding: 6, borderRadius: 8, display: "flex", alignItems: "center",
+                    justifyContent: "center", transition: "background 0.15s",
+                  }}
+                  onMouseEnter={e => (e.currentTarget.style.background = "rgba(255,255,255,0.08)")}
+                  onMouseLeave={e => (e.currentTarget.style.background = "transparent")}
+                >
+                  <Settings style={{ width: 17, height: 17, color: "rgba(255,255,255,0.45)" }} />
+                  {!hasKey && (
+                    <span style={{
+                      position: "absolute", top: 3, right: 3,
+                      width: 7, height: 7, borderRadius: "50%",
+                      background: "#F59E0B", border: "1.5px solid #0A0A0A",
+                    }} />
+                  )}
+                </button>
+              </div>
 
               {/* Bell */}
               <div ref={bellRef} style={{ position:"relative" }}>
@@ -299,6 +334,8 @@ export function TopBar() {
           </div>
         </div>
       </header>
+
+      <SettingsModal open={settingsOpen} onClose={() => setSettingsOpen(false)} />
     </div>
   )
 }

@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import { Eye, Plus, ExternalLink, ChevronDown, ChevronUp, Share2, Check } from "lucide-react"
 import { DashboardCard } from "@/components/ui/dashboard-card"
+import { aiHeaders } from "@/lib/ai-settings"
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -64,7 +65,7 @@ function SightingRow({ s, expanded, onToggle, onStatus, onDelete }: {
     try {
       const res  = await fetch("/api/sighting-to-post", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", ...aiHeaders() },
         body: JSON.stringify({ title: s.title, platform: s.platform, url: s.url, note: s.note }),
       })
       const data = await res.json()

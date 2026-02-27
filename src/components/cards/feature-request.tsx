@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react"
 import { Zap, ChevronDown, ChevronUp, Clock } from "lucide-react"
 import { DashboardCard } from "@/components/ui/dashboard-card"
+import { aiHeaders } from "@/lib/ai-settings"
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -151,7 +152,7 @@ export function FeatureRequestCard() {
     try {
       const res  = await fetch("/api/feature-request", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", ...aiHeaders() },
         body: JSON.stringify({ what: newReq.what, why: newReq.why, how: newReq.how }),
       })
       const data = await res.json()

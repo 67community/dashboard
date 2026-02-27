@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+import { callAIRaw, resolveAIConfig, type AIProvider } from "@/app/api/_lib/ai-call"
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -110,8 +111,11 @@ async function searchDDG(query: string, type: "merch" | "creator" | "media" | "o
 
 // ── Generate email draft for a target ────────────────────────────────────────
 
-async function draftEmail(target: DiscoveredTarget): Promise<string> {
-  const apiKey = process.env.ANTHROPIC_API_KEY
+async function draftEmail(
+  target: DiscoveredTarget,
+  provider: AIProvider,
+  apiKey: string,
+): Promise<string> {
   if (!apiKey) return generateFallbackEmail(target)
 
   const toneMap: Record<string, string> = {
@@ -123,19 +127,13 @@ async function draftEmail(target: DiscoveredTarget): Promise<string> {
   }
 
   try {
-    const res = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": apiKey,
-        "anthropic-version": "2023-06-01",
-      },
-      body: JSON.stringify({
-        model: "claude-sonnet-4-5",
-        max_tokens: 400,
-        messages: [{
-          role: "user",
-          content: `Write a short outreach email for The Official 67 Coin ($67) movement to:
+    const result = await callAIRaw({
+      provider,
+      apiKey,
+      maxTokens: 400,
+      messages: [{
+        role: "user",
+        content: `Write a short outreach email for The Official 67 Coin ($67) movement to:
 
 Name: ${target.name}
 Type: ${target.type}
@@ -151,11 +149,9 @@ Rules:
 - Soft CTA at end
 - Sign off as "The 67 Team"
 - Return ONLY the email body`,
-        }],
-      }),
+      }],
     })
-    const data = await res.json()
-    return data.content?.[0]?.text ?? generateFallbackEmail(target)
+    return result.text || generateFallbackEmail(target)
   } catch {
     return generateFallbackEmail(target)
   }
@@ -174,7 +170,8 @@ function generateFallbackEmail(t: DiscoveredTarget): string {
 
 // ── Route handler ─────────────────────────────────────────────────────────────
 
-export async function GET() {
+export async function GET(req: Request) {
+  const { provider, apiKey } = resolveAIConfig(req)
   const [
     ytCreators,
     ytMusic,
@@ -201,11 +198,11 @@ export async function GET() {
     return true
   })
 
-  // Generate email drafts concurrently (max 8 at once)
+  // Generate email drafts concurrently
   const withEmails = await Promise.all(
     deduped.slice(0, 15).map(async t => ({
       ...t,
-      emailDraft: await draftEmail(t),
+      emailDraft: await draftEmail(t, provider, apiKey),
     }))
   )
 

@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { CheckCircle2, Copy, PenLine, Sparkles, Trash2 } from "lucide-react"
 import { DashboardCard } from "@/components/ui/dashboard-card"
+import { aiHeaders } from "@/lib/ai-settings"
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
 
@@ -143,7 +144,7 @@ export function ContentCreatorCard() {
     try {
       const res  = await fetch("/api/draft", {
         method:  "POST",
-        headers: { "content-type": "application/json" },
+        headers: { "content-type": "application/json", ...aiHeaders() },
         body:    JSON.stringify({ topic, type, platform, region }),
       })
       const json = await res.json() as Draft & { error?: string }

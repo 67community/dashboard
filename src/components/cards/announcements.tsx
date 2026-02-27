@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import { Megaphone, Plus, Copy, Check, Trash2, Wand2 } from "lucide-react"
 import { DashboardCard } from "@/components/ui/dashboard-card"
+import { aiHeaders } from "@/lib/ai-settings"
 
 type AnnChannel  = "discord" | "telegram" | "x" | "all"
 type AnnStatus   = "draft" | "approved" | "posted"
@@ -141,7 +142,7 @@ export function AnnouncementsCard() {
     setGenning(true)
     try {
       const res = await fetch("/api/announcement-draft", {
-        method:"POST", headers:{"Content-Type":"application/json"},
+        method:"POST", headers:{"Content-Type":"application/json", ...aiHeaders()},
         body: JSON.stringify({ title, type, channel }),
       })
       const data = await res.json()
