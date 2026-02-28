@@ -15,8 +15,12 @@ export interface ExchangeVolume {
 export interface BiggestTrades {
   biggest_buy_usd: number
   biggest_buy_tx: string
+  biggest_buy_wallet?: string
+  biggest_buy_time?: string
   biggest_sell_usd: number
   biggest_sell_tx: string
+  biggest_sell_wallet?: string
+  biggest_sell_time?: string
 }
 
 export interface TokenHealthData {

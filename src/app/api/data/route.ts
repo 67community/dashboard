@@ -210,7 +210,7 @@ async function fetchNewsFeed() {
     const rssResults = await Promise.allSettled(
       GN_QUERIES.map(q =>
         fetch(`https://news.google.com/rss/search?q=${encodeURIComponent(q)}&hl=en-US&gl=US&ceid=US:en`,
-          { next: { revalidate: 7200 } }).then(r => r.ok ? r.text() : "")
+          { next: { revalidate: 10800 } }).then(r => r.ok ? r.text() : "")
       )
     )
     const seenGN = new Set<string>()
@@ -228,7 +228,7 @@ async function fetchNewsFeed() {
   try {
     const feedResults = await Promise.allSettled(
       CRYPTO_RSS_FEEDS.map(f =>
-        fetch(f.url, { next: { revalidate: 7200 } })
+        fetch(f.url, { next: { revalidate: 10800 } })
           .then(r => r.ok ? r.text().then(xml => ({ xml, source: f.source })) : null)
       )
     )
