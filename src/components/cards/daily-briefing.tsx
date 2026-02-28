@@ -194,13 +194,13 @@ export function DailyBriefingCard() {
       {/* Quick stats grid */}
       <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8 }}>
         <StatCell label="Holders"    value={fmtExact(holders)} delta={th?.holder_trend}
-          deltaLabel={th?.holder_trend !== undefined ? `${sign(th.holder_trend)}${fmtExact(Math.abs(th.holder_trend ?? 0))} today` : undefined} />
+          deltaLabel={th?.holder_trend !== undefined ? `${sign(th.holder_trend)}${fmtExact(Math.abs(th.holder_trend ?? 0))} / 20h` : undefined} />
         <StatCell label="Liquidity"  value={fmtUSD(liq)} delta={th?.liquidity_change_pct}
           deltaLabel={th?.liquidity_change_pct !== undefined ? `${sign(th.liquidity_change_pct)}${th.liquidity_change_pct?.toFixed(1)}%` : undefined} />
         <StatCell label="Discord"    value={fmtExact(discordMembers)} delta={discordDelta}
-          deltaLabel={`${sign(discordDelta)}${fmtExact(Math.abs(discordDelta))} today`} />
+          deltaLabel={`${sign(discordDelta)}${fmtExact(Math.abs(discordDelta))} / 20h`} />
         <StatCell label="X Followers" value={fmtExact(twitterFollowers)} delta={followerDelta}
-          deltaLabel={`${sign(followerDelta)}${fmtExact(Math.abs(followerDelta))} today`} />
+          deltaLabel={`${sign(followerDelta)}${fmtExact(Math.abs(followerDelta))} / 20h`} />
       </div>
       {news[0] && (
         <div style={{ marginTop:12, padding:"9px 11px", background:"rgba(37,99,235,0.05)",
@@ -253,7 +253,7 @@ export function DailyBriefingCard() {
         <StatCell label="Volume 24h" value={fmtUSD(vol)} delta={th?.volume_change_pct}
           deltaLabel={th?.volume_change_pct !== undefined ? `${sign(th.volume_change_pct)}${th.volume_change_pct?.toFixed(1)}%` : undefined} />
         <StatCell label="Holders" value={fmtExact(holders)} delta={th?.holder_trend}
-          deltaLabel={th?.holder_trend !== undefined ? `${sign(th.holder_trend)}${fmtExact(Math.abs(th.holder_trend ?? 0))} today` : undefined} />
+          deltaLabel={th?.holder_trend !== undefined ? `${sign(th.holder_trend)}${fmtExact(Math.abs(th.holder_trend ?? 0))} / 20h` : undefined} />
         <StatCell label="Liquidity" value={fmtUSD(liq)} delta={th?.liquidity_change_pct}
           deltaLabel={th?.liquidity_change_pct !== undefined ? `${sign(th.liquidity_change_pct)}${th.liquidity_change_pct?.toFixed(1)}%` : undefined} />
       </div>
@@ -277,13 +277,13 @@ export function DailyBriefingCard() {
       <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8 }}>
         <StatCell label={`Discord · ${fmtExact(discordOnline)} online`}
           value={fmtExact(discordMembers)} delta={discordDelta}
-          deltaLabel={`${sign(discordDelta)}${fmtExact(Math.abs(discordDelta))} today`} />
+          deltaLabel={`${sign(discordDelta)}${fmtExact(Math.abs(discordDelta))} / 20h`} />
         {telegramMembers > 0 && (
           <StatCell label="Telegram" value={fmtExact(telegramMembers)} delta={telegramDelta}
-            deltaLabel={`${sign(telegramDelta)}${fmtExact(Math.abs(telegramDelta))} today`} />
+            deltaLabel={`${sign(telegramDelta)}${fmtExact(Math.abs(telegramDelta))} / 20h`} />
         )}
         <StatCell label="X Followers" value={fmtExact(twitterFollowers)} delta={followerDelta}
-          deltaLabel={`${sign(followerDelta)}${fmtExact(Math.abs(followerDelta))} today`} />
+          deltaLabel={`${sign(followerDelta)}${fmtExact(Math.abs(followerDelta))} / 20h`} />
         {raids24h > 0 && (
           <StatCell label="Raid Tweets (24h)" value={String(raids24h)} color="#F5A623" />
         )}
