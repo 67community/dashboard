@@ -541,15 +541,15 @@
     "x_community_members": 0
   },
   "team_presence": {
-    "767811814557089802": "online",
+    "767811814557089802": "idle",
+    "965681608604647514": "dnd",
     "788495124061487154": "idle",
     "1444130836415905993": "offline",
     "1440075589557158100": "offline",
     "682831521396031498": "offline",
-    "965681608604647514": "offline",
     "201710326347988993": "offline"
   },
-  "presence_updated": "2026-02-28T13:30:07.204101Z",
+  "presence_updated": "2026-02-28T14:30:08.103150Z",
   "tiktok_spotlight": [
     {
       "video_url": "https://www.tiktok.com/@67coin/video/7565627410092199182",
@@ -665,6 +665,118 @@
     }
   ],
   "raid_feed": [
+    {
+      "message_id": 5623,
+      "text": "Raid\n\nhttps://x.com/beraatkaratepe/status/2027749618126041518?s=46",
+      "tweet_url": "https://x.com/i/web/status/2027749618126041518",
+      "photo": "",
+      "date": "2026-02-28T14:16:08Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 5621,
+      "text": "Raid\n\nhttps://x.com/davidmozsar/status/2027749218866098525?s=46",
+      "tweet_url": "https://x.com/i/web/status/2027749218866098525",
+      "photo": "",
+      "date": "2026-02-28T14:14:29Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 5620,
+      "text": "Raid\n\nhttps://x.com/dedenovitaj/status/2027749019557237072?s=46",
+      "tweet_url": "https://x.com/i/web/status/2027749019557237072",
+      "photo": "",
+      "date": "2026-02-28T14:13:42Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 5619,
+      "text": "Raid\n\nhttps://x.com/harrodfrances/status/2027748748412039186?s=46",
+      "tweet_url": "https://x.com/i/web/status/2027748748412039186",
+      "photo": "",
+      "date": "2026-02-28T14:12:39Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 5617,
+      "text": "Raid \n\nhttps://x.com/i/status/2027744603151950221",
+      "tweet_url": "https://x.com/i/web/status/2027744603151950221",
+      "photo": "",
+      "date": "2026-02-28T14:01:11Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 5616,
+      "text": "Raid \n\nhttps://x.com/i/status/2027745402494042517",
+      "tweet_url": "https://x.com/i/web/status/2027745402494042517",
+      "photo": "",
+      "date": "2026-02-28T14:01:06Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 5615,
+      "text": "Raid \n\nhttps://x.com/i/status/2027745611668185176",
+      "tweet_url": "https://x.com/i/web/status/2027745611668185176",
+      "photo": "",
+      "date": "2026-02-28T14:01:03Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 5614,
+      "text": "Raid \n\nhttps://x.com/i/status/2027745794804084868",
+      "tweet_url": "https://x.com/i/web/status/2027745794804084868",
+      "photo": "",
+      "date": "2026-02-28T14:01:00Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 5613,
+      "text": "@lenanacountter",
+      "tweet_url": "",
+      "photo": "",
+      "date": "2026-02-28T13:56:22Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 5611,
+      "text": "https://x.com/i/status/2027744372431663467",
+      "tweet_url": "https://x.com/i/web/status/2027744372431663467",
+      "photo": "",
+      "date": "2026-02-28T13:55:33Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 5609,
+      "text": "Not working",
+      "tweet_url": "",
+      "photo": "",
+      "date": "2026-02-28T13:54:55Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 5608,
+      "text": "@veracrosss @lenanacountter",
+      "tweet_url": "",
+      "photo": "",
+      "date": "2026-02-28T13:54:38Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 5607,
+      "text": "https://x.com/i/status/2027743534745330100",
+      "tweet_url": "https://x.com/i/web/status/2027743534745330100",
+      "photo": "",
+      "date": "2026-02-28T13:54:23Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 5606,
+      "text": "https://x.com/i/status/2027743534745330100",
+      "tweet_url": "https://x.com/i/web/status/2027743534745330100",
+      "photo": "",
+      "date": "2026-02-28T13:54:15Z",
+      "chat_id": -1003708062172
+    },
     {
       "message_id": 5592,
       "text": "Raid\n\nhttps://x.com/jasonredsheep/status/2027730594637939030?s=46",
@@ -1351,102 +1463,6 @@
       "tweet_url": "",
       "photo": "https://api.telegram.org/file/bot***REMOVED_TG_TOKEN***:AAFFdKDuZp97NSITwClyw6MYI9WVhIO7nSo/photos/file_0.jpg",
       "date": "2026-02-27T06:13:52Z",
-      "chat_id": -1003708062172
-    },
-    {
-      "message_id": 5146,
-      "text": "Gm",
-      "tweet_url": "",
-      "photo": "",
-      "date": "2026-02-27T06:13:48Z",
-      "chat_id": -1003708062172
-    },
-    {
-      "message_id": 5145,
-      "text": "GM",
-      "tweet_url": "",
-      "photo": "",
-      "date": "2026-02-27T05:41:10Z",
-      "chat_id": -1003708062172
-    },
-    {
-      "message_id": 5144,
-      "text": "Raid \n\nhttps://x.com/i/status/2027255551965434357",
-      "tweet_url": "https://x.com/i/web/status/2027255551965434357",
-      "photo": "",
-      "date": "2026-02-27T05:40:57Z",
-      "chat_id": -1003708062172
-    },
-    {
-      "message_id": 5143,
-      "text": "Raid \n\nhttps://x.com/i/status/2027256996366369059",
-      "tweet_url": "https://x.com/i/web/status/2027256996366369059",
-      "photo": "",
-      "date": "2026-02-27T05:40:53Z",
-      "chat_id": -1003708062172
-    },
-    {
-      "message_id": 5142,
-      "text": "Raid \n\nhttps://x.com/i/status/2027256408685633694",
-      "tweet_url": "https://x.com/i/web/status/2027256408685633694",
-      "photo": "",
-      "date": "2026-02-27T05:40:49Z",
-      "chat_id": -1003708062172
-    },
-    {
-      "message_id": 5141,
-      "text": "Raid \n\nhttps://x.com/i/status/2027257356069855696",
-      "tweet_url": "https://x.com/i/web/status/2027257356069855696",
-      "photo": "",
-      "date": "2026-02-27T05:40:46Z",
-      "chat_id": -1003708062172
-    },
-    {
-      "message_id": 5136,
-      "text": "https://x.com/i/status/2027220310630580716",
-      "tweet_url": "https://x.com/i/web/status/2027220310630580716",
-      "photo": "",
-      "date": "2026-02-27T03:15:11Z",
-      "chat_id": -1003708062172
-    },
-    {
-      "message_id": 5133,
-      "text": "Raid\n\nhttps://x.com/yeekiddd/status/2027165929235210484?s=46",
-      "tweet_url": "https://x.com/i/web/status/2027165929235210484",
-      "photo": "",
-      "date": "2026-02-27T03:05:25Z",
-      "chat_id": -1003708062172
-    },
-    {
-      "message_id": 5134,
-      "text": "Raid\n\nhttps://x.com/aytuggkuscuu/status/2027218378016903196?s=46",
-      "tweet_url": "https://x.com/i/web/status/2027218378016903196",
-      "photo": "",
-      "date": "2026-02-27T03:05:25Z",
-      "chat_id": -1003708062172
-    },
-    {
-      "message_id": 5130,
-      "text": "https://x.com/i/status/2027214413108011353",
-      "tweet_url": "https://x.com/i/web/status/2027214413108011353",
-      "photo": "",
-      "date": "2026-02-27T02:58:16Z",
-      "chat_id": -1003708062172
-    },
-    {
-      "message_id": 5129,
-      "text": "https://x.com/i/status/2027216297319075941",
-      "tweet_url": "https://x.com/i/web/status/2027216297319075941",
-      "photo": "",
-      "date": "2026-02-27T02:57:41Z",
-      "chat_id": -1003708062172
-    },
-    {
-      "message_id": 5120,
-      "text": "https://x.com/i/status/2027198102386405561",
-      "tweet_url": "https://x.com/i/web/status/2027198102386405561",
-      "photo": "",
-      "date": "2026-02-27T01:44:39Z",
       "chat_id": -1003708062172
     }
   ]
