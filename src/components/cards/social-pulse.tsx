@@ -66,28 +66,32 @@ export function SocialPulseCard() {
 
   const TweetCard = ({ tweet }: { tweet: NonNullable<typeof s>["best_tweet_week"] }) => {
     if (!tweet) return null
-    if (tweet.embed_html) {
-      const lightHtml = tweet.embed_html
-        .replace(/data-theme="dark"/g, 'data-theme="light"')
-        .replace(/data-theme='dark'/g, "data-theme='light'")
-      return (
-        <div style={{ borderRadius:12, overflow:"hidden" }}
-          dangerouslySetInnerHTML={{ __html: lightHtml }} />
-      )
-    }
     return (
       <a href={tweet.tweet_url} target="_blank" rel="noopener noreferrer" onClick={e=>e.stopPropagation()}
         style={{ display:"block", textDecoration:"none" }}>
-        <div className="inset-cell" style={{ cursor:"pointer" }}>
-          <p style={{ fontSize:"0.875rem", color:"#09090B", lineHeight:1.55, marginBottom:12 }}>{tweet.text}</p>
-          <div style={{ display:"flex", alignItems:"center", gap:16 }}>
+        <div style={{ borderRadius:14, border:"1px solid rgba(0,0,0,0.07)", background:"#fff", overflow:"hidden", cursor:"pointer", boxShadow:"0 1px 4px rgba(0,0,0,0.06)" }}>
+          <div style={{ display:"flex", alignItems:"center", gap:8, padding:"12px 14px 8px" }}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={LOGO} alt="67" width={32} height={32} style={{ width:32, height:32, borderRadius:"50%", objectFit:"cover" }} />
+            <div>
+              <p style={{ fontSize:"0.8125rem", fontWeight:700, color:"#09090B", lineHeight:1.2 }}>The Official 67 Coin</p>
+              <p style={{ fontSize:"0.72rem", color:"#6B7280" }}>@67coinX · {tweet.date}</p>
+            </div>
+            <svg style={{ marginLeft:"auto", width:18, height:18, color:"#000" }} viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.253 5.622L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"/></svg>
+          </div>
+          <p style={{ fontSize:"0.875rem", color:"#09090B", lineHeight:1.6, padding:"0 14px 10px", margin:0 }}>{tweet.text}</p>
+          {tweet.img_url && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={tweet.img_url} alt="tweet media"
+              style={{ width:"100%", maxHeight:220, objectFit:"cover", display:"block", borderTop:"1px solid rgba(0,0,0,0.06)" }} />
+          )}
+          <div style={{ display:"flex", alignItems:"center", gap:16, padding:"10px 14px", borderTop:"1px solid rgba(0,0,0,0.06)", background:"rgba(0,0,0,0.02)" }}>
             <span style={{ display:"flex", alignItems:"center", gap:4, fontSize:"0.75rem", fontWeight:600, color:"#EF4444" }}>
               <Heart style={{ width:13, height:13 }} />{tweet.likes}
             </span>
             <span style={{ display:"flex", alignItems:"center", gap:4, fontSize:"0.75rem", fontWeight:600, color:"#6366F1" }}>
               <MessageCircle style={{ width:13, height:13 }} />{tweet.replies}
             </span>
-            <span style={{ marginLeft:"auto", fontSize:"0.6875rem", color:"#A1A1AA" }}>{tweet.date}</span>
           </div>
         </div>
       </a>
