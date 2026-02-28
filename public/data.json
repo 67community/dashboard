@@ -549,7 +549,7 @@
     "682831521396031498": "offline",
     "201710326347988993": "offline"
   },
-  "presence_updated": "2026-02-28T00:30:06.925564Z",
+  "presence_updated": "2026-02-28T02:30:06.985090Z",
   "tiktok_spotlight": [
     {
       "video_url": "https://www.tiktok.com/@67coin/video/7565627410092199182",
@@ -665,6 +665,22 @@
     }
   ],
   "raid_feed": [
+    {
+      "message_id": 5444,
+      "text": "Raidd",
+      "tweet_url": "",
+      "photo": "",
+      "date": "2026-02-28T02:01:17Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 5443,
+      "text": "https://x.com/67coinx/status/2027556903048396960?s=46",
+      "tweet_url": "https://x.com/i/web/status/2027556903048396960",
+      "photo": "",
+      "date": "2026-02-28T02:01:11Z",
+      "chat_id": -1003708062172
+    },
     {
       "message_id": 5422,
       "text": "Raid\n\nhttps://x.com/beraatkaratepe/status/2027538302891418008?s=46",
