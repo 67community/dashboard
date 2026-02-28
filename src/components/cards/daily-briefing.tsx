@@ -227,6 +227,31 @@ export function DailyBriefingCard() {
         {today()}
       </p>
 
+      {/* Price block — same as collapsed */}
+      <div style={{ display:"flex", alignItems:"center", gap:12,
+        padding:"12px 14px", borderRadius:14,
+        background: priceUp ? "rgba(5,150,105,0.06)" : "rgba(239,68,68,0.06)",
+        border: `1.5px solid ${priceUp ? "rgba(5,150,105,0.18)" : "rgba(239,68,68,0.18)"}` }}>
+        {priceUp
+          ? <TrendingUp  style={{ width:20, height:20, color:"#059669", flexShrink:0 }} />
+          : <TrendingDown style={{ width:20, height:20, color:"#EF4444", flexShrink:0 }} />}
+        <div>
+          <p style={{ fontSize:"0.6875rem", color:"#8E8E93", fontWeight:600 }}>$67 Price</p>
+          <p style={{ fontSize:"1.0625rem", fontWeight:800, color: priceUp ? "#059669" : "#EF4444",
+            fontVariantNumeric:"tabular-nums", letterSpacing:"-0.02em" }}>
+            ${price.toFixed(6)}
+            <span style={{ fontSize:"0.75rem", marginLeft:8, opacity:0.85 }}>
+              {sign(ch24)}{ch24.toFixed(2)}%
+            </span>
+          </p>
+        </div>
+        <div style={{ marginLeft:"auto", textAlign:"right" }}>
+          <p style={{ fontSize:"0.625rem", color:"#A1A1AA", fontWeight:600 }}>MCap</p>
+          <p style={{ fontSize:"0.875rem", fontWeight:800, color:"#1D1D1F" }}>{fmtUSD(mcap)}</p>
+          <p style={{ fontSize:"0.625rem", color:"#A1A1AA", marginTop:2 }}>Vol {fmtUSD(vol)}</p>
+        </div>
+      </div>
+
       <div>
         <Section emoji="📈" label="Token Health" />
         <Row label="Price"      value={`$${price.toFixed(8)}`}
