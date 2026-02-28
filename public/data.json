@@ -541,7 +541,7 @@
     "x_community_members": 0
   },
   "team_presence": {
-    "767811814557089802": "online",
+    "767811814557089802": "idle",
     "965681608604647514": "dnd",
     "788495124061487154": "online",
     "1444130836415905993": "offline",
@@ -549,7 +549,7 @@
     "682831521396031498": "offline",
     "201710326347988993": "offline"
   },
-  "presence_updated": "2026-02-28T03:30:07.364995Z",
+  "presence_updated": "2026-02-28T04:30:07.023872Z",
   "tiktok_spotlight": [
     {
       "video_url": "https://www.tiktok.com/@67coin/video/7565627410092199182",
@@ -665,6 +665,22 @@
     }
   ],
   "raid_feed": [
+    {
+      "message_id": 5467,
+      "text": "https://x.com/i/status/2027462325381267589",
+      "tweet_url": "https://x.com/i/web/status/2027462325381267589",
+      "photo": "",
+      "date": "2026-02-28T03:58:49Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 5466,
+      "text": "https://x.com/i/status/2027534114614554945",
+      "tweet_url": "https://x.com/i/web/status/2027534114614554945",
+      "photo": "",
+      "date": "2026-02-28T03:56:47Z",
+      "chat_id": -1003708062172
+    },
     {
       "message_id": 5457,
       "text": "https://x.com/i/status/2027387858705629388",
