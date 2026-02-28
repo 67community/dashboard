@@ -988,7 +988,8 @@ export async function GET() {
                 (t.market?.identifier ?? "").toLowerCase().includes("raydium") ||
                 (t.market?.identifier ?? "").toLowerCase().includes("orca") ||
                 (t.market?.identifier ?? "").toLowerCase().includes("meteora"),
-    logo:       t.market?.logo ?? undefined,
+    logo:         t.market?.logo ?? undefined,
+    volume_delta: 0,  // computed below after static_ is available
   }))
 
   // Total volume = sum of all exchange volumes
@@ -998,6 +999,16 @@ export async function GET() {
 
   // Biggest trades — live from GeckoTerminal, fallback to static
   const static_      = readStaticJson()
+
+  // Patch exchange volume deltas now that static_ is available
+  const snapExVols: Record<string, number> = {}
+  ;(static_?._snapshot_24h?.exchange_volumes ?? []).forEach((e: any) => {
+    if (e?.exchange) snapExVols[e.exchange] = e.volume_usd ?? 0
+  })
+  exchange_volumes.forEach((e: any) => {
+    const prev = snapExVols[e.exchange] ?? 0
+    e.volume_delta = prev ? Math.round((e.volume_usd - prev) * 100) / 100 : 0
+  })
   const static_th    = static_?.token_health ?? {}
   const biggest_trades = liveTrades ?? static_th.biggest_trades ?? {
     biggest_buy_usd: 0, biggest_buy_tx: "",
