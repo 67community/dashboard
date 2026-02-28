@@ -549,7 +549,7 @@
     "965681608604647514": "offline",
     "201710326347988993": "offline"
   },
-  "presence_updated": "2026-02-28T09:30:07.561613Z",
+  "presence_updated": "2026-02-28T10:30:06.530179Z",
   "tiktok_spotlight": [
     {
       "video_url": "https://www.tiktok.com/@67coin/video/7565627410092199182",
@@ -665,6 +665,22 @@
     }
   ],
   "raid_feed": [
+    {
+      "message_id": 5557,
+      "text": "Raid\n\nhttps://coinmarketcap.com/community/share/post/374157080",
+      "tweet_url": "",
+      "photo": "",
+      "date": "2026-02-28T10:19:24Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 5556,
+      "text": "Raid\n\nhttps://x.com/beraatkaratepe/status/2027689675687694797?s=46",
+      "tweet_url": "https://x.com/i/web/status/2027689675687694797",
+      "photo": "",
+      "date": "2026-02-28T10:17:55Z",
+      "chat_id": -1003708062172
+    },
     {
       "message_id": 5547,
       "text": "Raid\n\nhttps://x.com/dedenovitaj/status/2027676601324912886?s=46",
