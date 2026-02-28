@@ -113,10 +113,22 @@ export function TokenHealthCard() {
               <div className="prog-track" style={{ flex:1, height:5 }}>
                 <div className="prog-fill" style={{ height:5, width:`${pct}%`, background:color }} />
               </div>
-              <span style={{ fontSize:"0.8125rem", fontWeight:700, color:"#1D1D1F",
-                width:56, textAlign:"right", fontVariantNumeric:"tabular-nums" }}>
-                {fmt$(ex.volume_usd)}
-              </span>
+              <div style={{ display:"flex", flexDirection:"column", alignItems:"flex-end", gap:2 }}>
+                <span style={{ fontSize:"0.8125rem", fontWeight:700, color:"#1D1D1F",
+                  fontVariantNumeric:"tabular-nums" }}>
+                  {fmt$(ex.volume_usd)}
+                </span>
+                {ex.volume_delta !== 0 && ex.volume_delta !== undefined && (
+                  <span style={{
+                    fontSize:"0.5625rem", fontWeight:700,
+                    color: ex.volume_delta > 0 ? "#059669" : "#EF4444",
+                    background: ex.volume_delta > 0 ? "rgba(5,150,105,0.08)" : "rgba(239,68,68,0.08)",
+                    padding:"1px 5px", borderRadius:99
+                  }}>
+                    {ex.volume_delta > 0 ? "+" : ""}{fmt$(ex.volume_delta)}
+                  </span>
+                )}
+              </div>
             </div>
           )
         })}
