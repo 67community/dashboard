@@ -56,11 +56,14 @@ function Delta({ value, label }: { value: number; label?: string }) {
 
 function Section({ emoji, label }: { emoji: string; label: string }) {
   return (
-    <div style={{ display:"flex", alignItems:"center", gap:6, marginBottom:8, marginTop:4 }}>
-      <span style={{ fontSize:"0.75rem" }}>{emoji}</span>
-      <span style={{ fontSize:"0.625rem", fontWeight:800, color:"#8E8E93",
-        textTransform:"uppercase", letterSpacing:"0.1em" }}>{label}</span>
-      <div style={{ flex:1, height:1, background:"rgba(0,0,0,0.06)" }} />
+    <div style={{ display:"flex", alignItems:"center", gap:7, marginBottom:10, marginTop:6,
+      padding:"6px 10px", borderRadius:8,
+      background:"linear-gradient(135deg, rgba(245,166,35,0.06) 0%, rgba(245,166,35,0.02) 100%)",
+      border:"1px solid rgba(245,166,35,0.12)" }}>
+      <span style={{ fontSize:"0.8125rem" }}>{emoji}</span>
+      <span style={{ fontSize:"0.6875rem", fontWeight:800, color:"#374151",
+        textTransform:"uppercase", letterSpacing:"0.08em" }}>{label}</span>
+      <div style={{ flex:1, height:1, background:"rgba(245,166,35,0.2)" }} />
     </div>
   )
 }
@@ -310,7 +313,7 @@ export function DailyBriefingCard() {
   return (
     <DashboardCard
       title="Daily Briefing"
-      subtitle="Live · Real Data · No AI"
+      subtitle="Live · Real Data"
       icon={<Newspaper style={{ width:16, height:16 }} />}
       accentColor="#F5A623"
       collapsed={collapsed}

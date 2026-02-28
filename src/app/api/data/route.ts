@@ -22,6 +22,37 @@ async function fetchDex() {
   return j?.pair ?? null
 }
 
+// ── GeckoTerminal biggest trades (live, 24h window) ──────────────────────────
+const GT_POOL = "DMAFl613xtipUA3JFNycZaVwT7XsIYf9CR3QmrmZqhB6"
+async function fetchBiggestTradesLive() {
+  try {
+    const res = await fetch(
+      `https://api.geckoterminal.com/api/v2/networks/solana/pools/${GT_POOL}/trades?trade_volume_in_usd_greater_than=0`,
+      { next: { revalidate: 300 }, headers: { Accept: "application/json" } }
+    )
+    if (!res.ok) return null
+    const data = await res.json()
+    const trades: any[] = data?.data ?? []
+    const cutoff = Date.now() - 86_400_000
+    const in24h = trades
+      .map((t: any) => t.attributes)
+      .filter((a: any) => new Date(a.block_timestamp).getTime() > cutoff)
+    const buys  = in24h.filter((a: any) => a.kind === "buy")
+    const sells = in24h.filter((a: any) => a.kind === "sell")
+    const best  = (arr: any[]) => arr.length ? arr.reduce((m: any, t: any) => parseFloat(t.volume_in_usd) > parseFloat(m.volume_in_usd) ? t : m) : null
+    const bb = best(buys)
+    const bs = best(sells)
+    return {
+      biggest_buy_usd:    bb ? parseFloat(bb.volume_in_usd) : 0,
+      biggest_buy_tx:     bb?.tx_hash ?? "",
+      biggest_buy_time:   bb?.block_timestamp ?? "",
+      biggest_sell_usd:   bs ? parseFloat(bs.volume_in_usd) : 0,
+      biggest_sell_tx:    bs?.tx_hash ?? "",
+      biggest_sell_time:  bs?.block_timestamp ?? "",
+    }
+  } catch { return null }
+}
+
 // ── DexScreener recent txns (biggest trade) ───────────────────────────────────
 async function fetchBiggestTrades() {
   const res = await fetch(
@@ -916,7 +947,7 @@ function readStaticJson() {
 
 // ── main ──────────────────────────────────────────────────────────────────────
 export async function GET() {
-  const [pair, cg, cgTickers, cmc, holders, discord, tgMembers, discordActivity, youtubeVideos, youtubeAnalytics, newsFeed, marketData, raidFeed] = await Promise.all([
+  const [pair, cg, cgTickers, cmc, holders, discord, tgMembers, discordActivity, youtubeVideos, youtubeAnalytics, newsFeed, marketData, raidFeed, liveTrades] = await Promise.all([
     safe(fetchDex),
     safe(fetchCG),
     safe(fetchCGTickers),
@@ -930,6 +961,7 @@ export async function GET() {
     safe(fetchNewsFeed),
     safe(fetchMarketData),
     safe(fetchRaidFeed),
+    safe(fetchBiggestTradesLive),
   ])
 
   if (!pair && !cg) {
@@ -964,10 +996,10 @@ export async function GET() {
     ? exchange_volumes.reduce((s, e) => s + e.volume_usd, 0)
     : (pair?.volume?.h24 ?? 0)
 
-  // Biggest trades from static fallback (DexScreener doesn't expose individual txns)
+  // Biggest trades — live from GeckoTerminal, fallback to static
   const static_      = readStaticJson()
   const static_th    = static_?.token_health ?? {}
-  const biggest_trades = static_th.biggest_trades ?? {
+  const biggest_trades = liveTrades ?? static_th.biggest_trades ?? {
     biggest_buy_usd: 0, biggest_buy_tx: "",
     biggest_sell_usd: 0, biggest_sell_tx: "",
   }
