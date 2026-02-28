@@ -5,6 +5,7 @@ import { useState, useEffect, useCallback } from "react"
 // ── Types matching data.json ─────────────────────────────────────────────────
 
 export interface ExchangeVolume {
+  volume_delta?: number
   exchange: string
   pair: string
   volume_usd: number
