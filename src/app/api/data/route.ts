@@ -1045,22 +1045,21 @@ export async function GET() {
       ...(discord ? {
         discord_members:    discord.members,
         online_now:         discord.online,
-        // Delta = new_joins_24h from #new-members-log (most accurate, snapshot-based deltas are unreliable)
-        discord_delta_24h:  discordActivity?.new_joins_24h ?? static_?.community?.discord_delta_24h ?? 0,
+        // Delta = snapshot-based (cur members - 24h ago snapshot)
+        discord_delta_24h:  discord.members - (static_?._snapshot_24h?.discord_members ?? discord.members),
         new_joins_24h:      discordActivity?.new_joins_24h ?? static_?.community?.new_joins_24h ?? 0,
       } : {}),
       // Live CoinGecko: telegram members + watchlist (no auth needed)
       ...(cg ? {
-        telegram_members:    cg.community_data?.telegram_channel_user_count ?? static_?.community?.telegram_members ?? 0,
         watchlist_count:     cg.watchlist_portfolio_users ?? static_?.community?.watchlist_count ?? 0,
-        telegram_delta_24h:  (cg.community_data?.telegram_channel_user_count ?? 0) - (static_?._snapshot_24h?.telegram_members ?? cg.community_data?.telegram_channel_user_count ?? 0),
         watchlist_delta_24h: (cg.watchlist_portfolio_users ?? 0) - (static_?._snapshot_24h?.watchlist_count ?? cg.watchlist_portfolio_users ?? 0),
       } : {}),
-      // Live Telegram Bot API (overrides CoinGecko when TELEGRAM_BOT_TOKEN is set)
-      ...(tgMembers ? {
-        telegram_members:   tgMembers,
-        telegram_delta_24h: tgMembers - (static_?._snapshot_24h?.telegram_members ?? tgMembers),
-      } : {}),
+      // Telegram members: prefer Bot API (real-time), fallback CoinGecko — always snapshot-based delta
+      ...((() => {
+        const tgCur = tgMembers ?? cg?.community_data?.telegram_channel_user_count ?? static_?.community?.telegram_members ?? 0
+        const tgSnap = static_?._snapshot_24h?.telegram_members ?? tgCur
+        return tgCur ? { telegram_members: tgCur, telegram_delta_24h: tgCur - tgSnap } : {}
+      })()),
       // Live Discord activity: real joins feed + active users today + channel stats + enriched data
       ...(discordActivity ? {
         recent_joins:       discordActivity.recent_joins,
