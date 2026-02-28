@@ -2,7 +2,7 @@ import { NextResponse } from "next/server"
 import fs from "fs"
 import path from "path"
 
-const PAIR    = "DMAFl613xtipUA3JFNycZaVwT7XsIYf9CR3QmrmZqhB6"
+const PAIR    = "DMAFL613XTipuA3jFNYczavWT7XsiYf9cR3qmRMZQhB6"
 const TOKEN   = "9AvytnUKsLxPxFHFqS6VLxaxt5p6BhYNr53SD2Chpump"
 const CMC_KEY = process.env.CMC_API_KEY ?? "09873ed23c74499eb07885cb070f64e6"
 const CG_ID   = "the-official-67-coin"
@@ -23,7 +23,7 @@ async function fetchDex() {
 }
 
 // ── GeckoTerminal biggest trades (live, 24h window) ──────────────────────────
-const GT_POOL = "DMAFl613xtipUA3JFNycZaVwT7XsIYf9CR3QmrmZqhB6"
+const GT_POOL = "DMAFL613XTipuA3jFNYczavWT7XsiYf9cR3qmRMZQhB6"
 async function fetchBiggestTradesLive() {
   try {
     const res = await fetch(
