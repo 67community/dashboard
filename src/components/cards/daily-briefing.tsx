@@ -1,51 +1,135 @@
 "use client"
 
-import { Newspaper, TrendingUp, TrendingDown, Users, Zap, Target } from "lucide-react"
+import { Newspaper, TrendingUp, TrendingDown, ExternalLink, ArrowUpRight, ArrowDownRight, Minus } from "lucide-react"
 import { DashboardCard } from "@/components/ui/dashboard-card"
 import { useAppData } from "@/lib/data-context"
 import { useMemo } from "react"
 
 // ── helpers ───────────────────────────────────────────────────────────────────
 
-function fmt(n: number) {
-  if (n >= 1_000_000) return (n / 1_000_000).toFixed(2) + "M"
-  if (n >= 1_000)     return (n / 1_000).toFixed(1) + "K"
-  return n.toLocaleString()
+function fmtUSD(n: number) {
+  if (n >= 1_000_000) return "$" + (n / 1_000_000).toFixed(2) + "M"
+  if (n >= 1_000)     return "$" + (n / 1_000).toFixed(1) + "K"
+  return "$" + n.toLocaleString("en-US", { maximumFractionDigits: 0 })
 }
 
-function sign(n: number) { return n >= 0 ? "+" : "" }
+function fmtExact(n: number) {
+  return n.toLocaleString("en-US")
+}
+
+function sign(n: number) { return n > 0 ? "+" : "" }
 
 function today() {
   return new Date().toLocaleDateString("en-US", { weekday:"long", month:"long", day:"numeric" })
 }
 
-// ── Stat row ──────────────────────────────────────────────────────────────────
+function shortAddr(addr: string) {
+  if (!addr) return ""
+  return addr.slice(0, 6) + "…" + addr.slice(-4)
+}
 
-function Row({ label, value, delta, deltaLabel, color }: {
-  label: string; value: string; delta?: number; deltaLabel?: string; color?: string
+function timeAgo(iso: string) {
+  if (!iso) return ""
+  const diff = Date.now() - new Date(iso).getTime()
+  const h = Math.floor(diff / 3_600_000)
+  const m = Math.floor((diff % 3_600_000) / 60_000)
+  if (h > 0) return `${h}h ago`
+  return `${m}m ago`
+}
+
+function Delta({ value, label }: { value: number; label?: string }) {
+  const isUp   = value > 0
+  const isZero = value === 0
+  const color  = isZero ? "#8E8E93" : isUp ? "#059669" : "#EF4444"
+  const bg     = isZero ? "rgba(142,142,147,0.1)" : isUp ? "rgba(5,150,105,0.1)" : "rgba(239,68,68,0.1)"
+  const Icon   = isZero ? Minus : isUp ? ArrowUpRight : ArrowDownRight
+  const text   = label ?? (sign(value) + fmtExact(Math.abs(value)))
+  return (
+    <span style={{ display:"inline-flex", alignItems:"center", gap:2,
+      fontSize:"0.6875rem", fontWeight:700, color, background:bg,
+      padding:"2px 8px", borderRadius:99 }}>
+      <Icon style={{ width:10, height:10 }} />
+      {text}
+    </span>
+  )
+}
+
+function Section({ emoji, label }: { emoji: string; label: string }) {
+  return (
+    <div style={{ display:"flex", alignItems:"center", gap:6, marginBottom:8, marginTop:4 }}>
+      <span style={{ fontSize:"0.75rem" }}>{emoji}</span>
+      <span style={{ fontSize:"0.625rem", fontWeight:800, color:"#8E8E93",
+        textTransform:"uppercase", letterSpacing:"0.1em" }}>{label}</span>
+      <div style={{ flex:1, height:1, background:"rgba(0,0,0,0.06)" }} />
+    </div>
+  )
+}
+
+function Row({ label, value, delta, deltaLabel, color, sub, href }: {
+  label: string; value: string
+  delta?: number; deltaLabel?: string
+  color?: string; sub?: string; href?: string
 }) {
-  const up = (delta ?? 0) >= 0
   return (
     <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between",
-      padding:"7px 0", borderBottom:"1px solid rgba(0,0,0,0.05)" }}>
-      <span style={{ fontSize:"0.8125rem", color:"#6B7280", fontWeight:500 }}>{label}</span>
+      padding:"8px 0", borderBottom:"1px solid rgba(0,0,0,0.04)" }}>
+      <div>
+        <span style={{ fontSize:"0.8125rem", color:"#6B7280", fontWeight:500 }}>{label}</span>
+        {sub && <div style={{ fontSize:"0.6875rem", color:"#A1A1AA", marginTop:1 }}>{sub}</div>}
+      </div>
       <div style={{ display:"flex", alignItems:"center", gap:8 }}>
-        <span style={{ fontSize:"0.875rem", fontWeight:700, color: color ?? "#1D1D1F",
-          fontVariantNumeric:"tabular-nums" }}>{value}</span>
-        {delta !== undefined && (
-          <span style={{ fontSize:"0.6875rem", fontWeight:700,
-            color: up ? "#059669" : "#EF4444",
-            background: up ? "rgba(5,150,105,0.08)" : "rgba(239,68,68,0.08)",
-            padding:"1px 7px", borderRadius:99 }}>
-            {sign(delta)}{deltaLabel ?? delta.toFixed(1) + "%"}
-          </span>
+        {href ? (
+          <a href={href} target="_blank" rel="noopener noreferrer"
+            style={{ fontSize:"0.875rem", fontWeight:700, color: color ?? "#1D1D1F",
+              fontVariantNumeric:"tabular-nums", display:"flex", alignItems:"center", gap:3,
+              textDecoration:"none" }}>
+            {value}<ExternalLink style={{ width:11, height:11, opacity:0.5 }} />
+          </a>
+        ) : (
+          <span style={{ fontSize:"0.875rem", fontWeight:700, color: color ?? "#1D1D1F",
+            fontVariantNumeric:"tabular-nums" }}>{value}</span>
         )}
+        {delta !== undefined && <Delta value={delta} label={deltaLabel} />}
       </div>
     </div>
   )
 }
 
-// ── Card ──────────────────────────────────────────────────────────────────────
+function WhaleRow({ label, usd, tx, wallet, time, color }: {
+  label: string; usd: number; tx: string; wallet: string; time: string; color: string
+}) {
+  const isUp = color === "#059669"
+  return (
+    <div style={{ padding:"10px 12px", borderRadius:10, marginBottom:6,
+      background: isUp ? "rgba(5,150,105,0.05)" : "rgba(239,68,68,0.05)",
+      border: `1px solid ${isUp ? "rgba(5,150,105,0.15)" : "rgba(239,68,68,0.15)"}` }}>
+      <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between" }}>
+        <span style={{ fontSize:"0.75rem", fontWeight:700, color:"#6B7280" }}>{label}</span>
+        <span style={{ fontSize:"1rem", fontWeight:800, color, fontVariantNumeric:"tabular-nums" }}>
+          {fmtUSD(usd)}
+        </span>
+      </div>
+      <div style={{ display:"flex", alignItems:"center", gap:8, marginTop:5 }}>
+        {wallet && (
+          <a href={`https://solscan.io/account/${wallet}`} target="_blank" rel="noopener noreferrer"
+            style={{ fontSize:"0.6875rem", color:"#6B7280", fontFamily:"monospace",
+              textDecoration:"none", display:"flex", alignItems:"center", gap:2 }}>
+            💳 {shortAddr(wallet)}<ExternalLink style={{ width:9, height:9, opacity:0.5 }} />
+          </a>
+        )}
+        <div style={{ flex:1 }} />
+        {tx && (
+          <a href={`https://solscan.io/tx/${tx}`} target="_blank" rel="noopener noreferrer"
+            style={{ fontSize:"0.6875rem", color:"#2563EB",
+              textDecoration:"none", display:"flex", alignItems:"center", gap:2 }}>
+            View TX <ExternalLink style={{ width:9, height:9 }} />
+          </a>
+        )}
+        <span style={{ fontSize:"0.6875rem", color:"#A1A1AA" }}>{timeAgo(time)}</span>
+      </div>
+    </div>
+  )
+}
 
 export function DailyBriefingCard() {
   const { data, livePrice, liveChange24h } = useAppData()
@@ -67,152 +151,155 @@ export function DailyBriefingCard() {
   const discordDelta    = com?.discord_delta_24h ?? 0
   const discordOnline   = com?.online_now        ?? 0
   const telegramMembers = com?.telegram_members  ?? 0
-  const newJoins        = com?.new_joins_24h     ?? 0
+  const telegramDelta   = com?.telegram_delta_24h ?? 0
 
-  const twitterFollowers = sp?.twitter_followers  ?? 0
-  const followerDelta    = sp?.follower_change_24h ?? 0
+  const twitterFollowers = sp?.twitter_followers   ?? 0
+  const followerDelta    = sp?.follower_change_24h  ?? 0
 
-  // Raids in last 24h
+  const whaleBuy        = th?.biggest_trades?.biggest_buy_usd    ?? 0
+  const whaleBuyTx      = th?.biggest_trades?.biggest_buy_tx     ?? ""
+  const whaleBuyWallet  = th?.biggest_trades?.biggest_buy_wallet ?? ""
+  const whaleBuyTime    = th?.biggest_trades?.biggest_buy_time   ?? ""
+  const whaleSell       = th?.biggest_trades?.biggest_sell_usd   ?? 0
+  const whaleSellTx     = th?.biggest_trades?.biggest_sell_tx    ?? ""
+  const whaleSellWallet = th?.biggest_trades?.biggest_sell_wallet?? ""
+  const whaleSellTime   = th?.biggest_trades?.biggest_sell_time  ?? ""
+
   const raids24h = useMemo(() =>
     feed.filter(r => {
       try { return Date.now() - new Date(r.date).getTime() < 86_400_000 } catch { return false }
     }).length, [feed])
 
-  // Latest news headline
-  const latestNews = news[0]
-
-  // Whale activity
-  const whaleBuy  = th?.biggest_trades?.biggest_buy_usd  ?? 0
-  const whaleSell = th?.biggest_trades?.biggest_sell_usd ?? 0
-
   const priceUp = ch24 >= 0
 
-  // ── Collapsed — key numbers at a glance ───────────────────────────────────
   const collapsed = (
     <div style={{ display:"flex", flexDirection:"column", gap:0 }}>
-      {/* Date */}
       <p style={{ fontSize:"0.6875rem", fontWeight:600, color:"#A1A1AA", marginBottom:12 }}>
         {today()}
       </p>
-
-      {/* Price block */}
       <div style={{ display:"flex", alignItems:"center", gap:12, marginBottom:14,
-        padding:"10px 12px", borderRadius:12,
+        padding:"12px 14px", borderRadius:14,
         background: priceUp ? "rgba(5,150,105,0.06)" : "rgba(239,68,68,0.06)",
-        border: `1.5px solid ${priceUp ? "rgba(5,150,105,0.15)" : "rgba(239,68,68,0.15)"}` }}>
+        border: `1.5px solid ${priceUp ? "rgba(5,150,105,0.18)" : "rgba(239,68,68,0.18)"}` }}>
         {priceUp
-          ? <TrendingUp style={{ width:18, height:18, color:"#059669", flexShrink:0 }} />
-          : <TrendingDown style={{ width:18, height:18, color:"#EF4444", flexShrink:0 }} />}
+          ? <TrendingUp  style={{ width:20, height:20, color:"#059669", flexShrink:0 }} />
+          : <TrendingDown style={{ width:20, height:20, color:"#EF4444", flexShrink:0 }} />}
         <div>
           <p style={{ fontSize:"0.6875rem", color:"#8E8E93", fontWeight:600 }}>$67 Price</p>
-          <p style={{ fontSize:"1rem", fontWeight:800, color: priceUp ? "#059669" : "#EF4444",
-            fontVariantNumeric:"tabular-nums" }}>
+          <p style={{ fontSize:"1.0625rem", fontWeight:800, color: priceUp ? "#059669" : "#EF4444",
+            fontVariantNumeric:"tabular-nums", letterSpacing:"-0.02em" }}>
             ${price.toFixed(6)}
-            <span style={{ fontSize:"0.75rem", marginLeft:8 }}>
+            <span style={{ fontSize:"0.75rem", marginLeft:8, opacity:0.85 }}>
               {sign(ch24)}{ch24.toFixed(2)}%
             </span>
           </p>
         </div>
         <div style={{ marginLeft:"auto", textAlign:"right" }}>
-          <p style={{ fontSize:"0.625rem", color:"#A1A1AA" }}>MCap</p>
-          <p style={{ fontSize:"0.8125rem", fontWeight:700, color:"#1D1D1F" }}>${fmt(mcap)}</p>
+          <p style={{ fontSize:"0.625rem", color:"#A1A1AA", fontWeight:600 }}>MCap</p>
+          <p style={{ fontSize:"0.875rem", fontWeight:800, color:"#1D1D1F" }}>{fmtUSD(mcap)}</p>
+          <p style={{ fontSize:"0.625rem", color:"#A1A1AA", marginTop:2 }}>Vol {fmtUSD(vol)}</p>
         </div>
       </div>
-
-      {/* Quick stats */}
-      <Row label="Holders"     value={fmt(holders)}     delta={undefined} />
-      <Row label="Volume 24h"  value={`$${fmt(vol)}`}   delta={th?.volume_change_pct}  />
-      <Row label="Liquidity"   value={`$${fmt(liq)}`}   delta={th?.liquidity_change_pct} />
-      <Row label="Discord"     value={`${fmt(discordMembers)} members`}
-           delta={newJoins > 0 ? newJoins : undefined}
-           deltaLabel={newJoins > 0 ? `+${newJoins} today` : undefined} />
-      {raids24h > 0 && (
-        <Row label="Raids (24h)" value={`${raids24h} tweets`} />
-      )}
-
-      {/* Latest news */}
-      {latestNews && (
-        <div style={{ marginTop:10, padding:"8px 10px", background:"rgba(37,99,235,0.04)",
-          borderRadius:8, borderLeft:"3px solid #2563EB" }}>
-          <p style={{ fontSize:"0.625rem", fontWeight:700, color:"#2563EB",
-            textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:3 }}>Latest News</p>
-          <p style={{ fontSize:"0.75rem", color:"#374151", lineHeight:1.4 }}>{latestNews.title}</p>
+      <Row label="Holders"     value={fmtExact(holders)} />
+      <Row label="Liquidity"   value={fmtUSD(liq)} delta={th?.liquidity_change_pct}
+           deltaLabel={th?.liquidity_change_pct !== undefined ? `${sign(th.liquidity_change_pct)}${th.liquidity_change_pct?.toFixed(1)}%` : undefined} />
+      <Row label="Discord"     value={fmtExact(discordMembers)}
+           delta={discordDelta} deltaLabel={`${sign(discordDelta)}${fmtExact(Math.abs(discordDelta))} today`} />
+      <Row label="X Followers" value={fmtExact(twitterFollowers)}
+           delta={followerDelta} deltaLabel={`${sign(followerDelta)}${fmtExact(Math.abs(followerDelta))} today`} />
+      {news[0] && (
+        <div style={{ marginTop:12, padding:"9px 11px", background:"rgba(37,99,235,0.05)",
+          borderRadius:10, borderLeft:"3px solid #2563EB" }}>
+          <p style={{ fontSize:"0.625rem", fontWeight:800, color:"#2563EB",
+            textTransform:"uppercase", letterSpacing:"0.08em", marginBottom:3 }}>Latest News</p>
+          <p style={{ fontSize:"0.75rem", color:"#374151", lineHeight:1.45 }}>{news[0].title}</p>
         </div>
       )}
     </div>
   )
 
-  // ── Expanded — full breakdown ─────────────────────────────────────────────
   const expanded = (
-    <div style={{ display:"flex", flexDirection:"column", gap:20 }}>
-      <p style={{ fontSize:"0.875rem", fontWeight:700, color:"#1D1D1F" }}>{today()}</p>
+    <div style={{ display:"flex", flexDirection:"column", gap:16 }}>
+      <p style={{ fontSize:"0.9375rem", fontWeight:800, color:"#1D1D1F", letterSpacing:"-0.02em" }}>
+        {today()}
+      </p>
 
-      {/* Token */}
       <div>
-        <p style={{ fontSize:"0.625rem", fontWeight:700, color:"#8E8E93",
-          textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:4 }}>
-          📈 Token Health
-        </p>
-        <Row label="Price"      value={`$${price.toFixed(8)}`}  delta={ch24} />
-        <Row label="Market Cap" value={`$${fmt(mcap)}`}          delta={th?.mcap_change_pct} />
-        <Row label="Volume 24h" value={`$${fmt(vol)}`}           delta={th?.volume_change_pct} />
-        <Row label="Liquidity"  value={`$${fmt(liq)}`}           delta={th?.liquidity_change_pct} />
-        <Row label="Holders"    value={fmt(holders)}             delta={th?.holder_trend} deltaLabel={`${sign(th?.holder_trend ?? 0)}${th?.holder_trend ?? 0} today`} />
+        <Section emoji="📈" label="Token Health" />
+        <Row label="Price"      value={`$${price.toFixed(8)}`}
+             delta={ch24} deltaLabel={`${sign(ch24)}${ch24.toFixed(2)}%`} />
+        <Row label="Market Cap" value={fmtUSD(mcap)}
+             delta={th?.mcap_change_pct}
+             deltaLabel={th?.mcap_change_pct !== undefined ? `${sign(th.mcap_change_pct)}${th.mcap_change_pct?.toFixed(1)}%` : undefined} />
+        <Row label="Volume 24h" value={fmtUSD(vol)}
+             delta={th?.volume_change_pct}
+             deltaLabel={th?.volume_change_pct !== undefined ? `${sign(th.volume_change_pct)}${th.volume_change_pct?.toFixed(1)}%` : undefined} />
+        <Row label="Liquidity"  value={fmtUSD(liq)}
+             delta={th?.liquidity_change_pct}
+             deltaLabel={th?.liquidity_change_pct !== undefined ? `${sign(th.liquidity_change_pct)}${th.liquidity_change_pct?.toFixed(1)}%` : undefined} />
+        <Row label="Holders"    value={fmtExact(holders)}
+             delta={th?.holder_trend}
+             deltaLabel={th?.holder_trend !== undefined ? `${sign(th.holder_trend)}${fmtExact(Math.abs(th.holder_trend ?? 0))} today` : undefined} />
       </div>
 
-      {/* Whale */}
-      {(whaleBuy >= 1000 || whaleSell >= 1000) && (
-        <div>
-          <p style={{ fontSize:"0.625rem", fontWeight:700, color:"#8E8E93",
-            textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:4 }}>
-            🐋 Whale Activity
-          </p>
-          {whaleBuy >= 1000  && <Row label="Biggest Buy"  value={`$${fmt(whaleBuy)}`}  color="#059669" />}
-          {whaleSell >= 1000 && <Row label="Biggest Sell" value={`$${fmt(whaleSell)}`} color="#EF4444" />}
-        </div>
-      )}
-
-      {/* Community */}
       <div>
-        <p style={{ fontSize:"0.625rem", fontWeight:700, color:"#8E8E93",
-          textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:4 }}>
-          👥 Community
-        </p>
-        <Row label="Discord Members" value={fmt(discordMembers)}
-             delta={discordDelta} deltaLabel={`${sign(discordDelta)}${discordDelta} today`} />
-        <Row label="Online Now"      value={`${discordOnline} online`} />
-        <Row label="New Joins 24h"   value={`+${newJoins}`} color="#059669" />
-        {telegramMembers > 0 && <Row label="Telegram" value={fmt(telegramMembers)} />}
+        <Section emoji="🐋" label="Whale Activity" />
+        {whaleBuy > 0 && (
+          <WhaleRow label="Biggest Buy"  usd={whaleBuy}  tx={whaleBuyTx}
+            wallet={whaleBuyWallet}  time={whaleBuyTime}  color="#059669" />
+        )}
+        {whaleSell > 0 && (
+          <WhaleRow label="Biggest Sell" usd={whaleSell} tx={whaleSellTx}
+            wallet={whaleSellWallet} time={whaleSellTime} color="#EF4444" />
+        )}
+        {whaleBuy === 0 && whaleSell === 0 && (
+          <p style={{ fontSize:"0.8125rem", color:"#A1A1AA", padding:"8px 0" }}>No whale trades in 24h</p>
+        )}
       </div>
 
-      {/* Social */}
-      {twitterFollowers > 0 && (
-        <div>
-          <p style={{ fontSize:"0.625rem", fontWeight:700, color:"#8E8E93",
-            textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:4 }}>
-            📣 Social
-          </p>
-          <Row label="X Followers" value={fmt(twitterFollowers)}
-               delta={followerDelta} deltaLabel={`${sign(followerDelta)}${followerDelta} today`} />
-          {raids24h > 0 && <Row label="Raid Tweets (24h)" value={String(raids24h)} color="#F5A623" />}
-        </div>
-      )}
+      <div>
+        <Section emoji="👥" label="Community" />
+        <Row label="Discord Members"
+             value={fmtExact(discordMembers)}
+             delta={discordDelta}
+             deltaLabel={`${sign(discordDelta)}${fmtExact(Math.abs(discordDelta))} today`}
+             sub={`${fmtExact(discordOnline)} online now`} />
+        {telegramMembers > 0 && (
+          <Row label="Telegram"
+               value={fmtExact(telegramMembers)}
+               delta={telegramDelta}
+               deltaLabel={`${sign(telegramDelta)}${fmtExact(Math.abs(telegramDelta))} today`} />
+        )}
+      </div>
 
-      {/* News */}
+      <div>
+        <Section emoji="📣" label="Social" />
+        <Row label="X Followers"
+             value={fmtExact(twitterFollowers)}
+             delta={followerDelta}
+             deltaLabel={`${sign(followerDelta)}${fmtExact(Math.abs(followerDelta))} today`} />
+        {raids24h > 0 && (
+          <Row label="Raid Tweets (24h)" value={String(raids24h)} color="#F5A623" />
+        )}
+      </div>
+
       {news.length > 0 && (
         <div>
-          <p style={{ fontSize:"0.625rem", fontWeight:700, color:"#8E8E93",
-            textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:8 }}>
-            📰 Latest News
-          </p>
+          <Section emoji="📰" label="Latest News" />
           <div style={{ display:"flex", flexDirection:"column", gap:6 }}>
-            {news.slice(0, 3).map((n: any, i: number) => (
-              <div key={i} style={{ padding:"8px 10px", background:"rgba(0,0,0,0.03)",
-                borderRadius:8, display:"flex", flexDirection:"column", gap:2 }}>
-                <p style={{ fontSize:"0.8125rem", fontWeight:600, color:"#1D1D1F",
-                  lineHeight:1.35 }}>{n.title}</p>
-                <p style={{ fontSize:"0.6875rem", color:"#A1A1AA" }}>{n.source}</p>
-              </div>
+            {news.slice(0, 4).map((n: any, i: number) => (
+              <a key={i} href={n.url} target="_blank" rel="noopener noreferrer"
+                style={{ padding:"9px 11px", background:"rgba(0,0,0,0.03)",
+                  borderRadius:10, display:"flex", flexDirection:"column", gap:3,
+                  textDecoration:"none" }}>
+                <p style={{ fontSize:"0.8125rem", fontWeight:600, color:"#1D1D1F", lineHeight:1.35 }}>
+                  {n.title}
+                </p>
+                <div style={{ display:"flex", alignItems:"center", gap:4 }}>
+                  <p style={{ fontSize:"0.6875rem", color:"#A1A1AA" }}>{n.source}</p>
+                  <ExternalLink style={{ width:10, height:10, color:"#A1A1AA" }} />
+                </div>
+              </a>
             ))}
           </div>
         </div>
