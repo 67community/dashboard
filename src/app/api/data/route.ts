@@ -1066,7 +1066,7 @@ export async function GET() {
       }
       const delta3d = cur - countAt(3)
       const delta7d = cur - countAt(7)
-      return { ...sp, follower_change_24h: delta1d, follower_change_3d: delta3d, follower_change_7d: delta7d }
+      return { ...sp, follower_change_24h: delta1d, follower_change_3d: delta3d, follower_change_7d: delta7d, follower_change_20h: delta1d }
     })(),
     community: {
       ...(static_?.community ?? { discord_members: 0, active_7d: 0, new_joins_24h: 0, open_tickets: 0, unanswered_posts: 0, telegram_members: 0, watchlist_count: 0 }),

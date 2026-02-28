@@ -106,7 +106,7 @@ export function SocialPulseCard() {
           </div>
           {/* 1d / 3d / 7d growth mini row */}
           <div style={{ display:"flex", gap:8, marginTop:6, flexWrap:"wrap" }}>
-            {[["1d", growth1d], ["3d", growth3d], ["7d", growth7d]].map(([label, val]) => (
+            {[["20h", growth1d], ["3d", growth3d], ["7d", growth7d]].map(([label, val]) => (
               <span key={label as string} style={{ fontSize:"0.6875rem", fontWeight:700,
                 color: (val as number) > 0 ? "#059669" : (val as number) < 0 ? "#EF4444" : "#8E8E93",
                 background: (val as number) > 0 ? "rgba(5,150,105,0.08)" : (val as number) < 0 ? "rgba(239,68,68,0.08)" : "rgba(0,0,0,0.05)",
@@ -187,7 +187,7 @@ export function SocialPulseCard() {
           </div>
           <p className="metric-label">X Followers</p>
           <div style={{ display:"flex", gap:6, marginTop:6, flexWrap:"wrap" }}>
-            {[["1d", growth1d], ["3d", growth3d], ["7d", growth7d]].map(([label, val]) => (
+            {[["20h", growth1d], ["3d", growth3d], ["7d", growth7d]].map(([label, val]) => (
               <span key={label as string} style={{ fontSize:"0.6875rem", fontWeight:700,
                 color: (val as number) > 0 ? "#059669" : (val as number) < 0 ? "#EF4444" : "#8E8E93",
                 background: (val as number) > 0 ? "rgba(5,150,105,0.08)" : (val as number) < 0 ? "rgba(239,68,68,0.08)" : "rgba(0,0,0,0.05)",
@@ -228,7 +228,7 @@ export function SocialPulseCard() {
             <p className="hero-label">Follower Growth</p>
             <div style={{ display:"flex", gap:12 }}>
               <span style={{ fontSize:"0.72rem", fontWeight:700, color: growth3d >= 0 ? "#10B981" : "#EF4444" }}>
-                {growth1d >= 0 ? "+" : ""}{growth1d} / 1d
+                {growth1d >= 0 ? "+" : ""}{growth1d} / 20h
               </span>
               <span style={{ display:"flex", alignItems:"center", gap:3, fontSize:"0.72rem", fontWeight:700, color: growth3d >= 0 ? "#10B981" : "#EF4444" }}>
                 {growth3d >= 0 ? "+" : ""}{growth3d} / 3d
