@@ -1,22 +1,22 @@
 {
-  "last_updated": "2026-02-28T23:27:09.187777Z",
+  "last_updated": "2026-02-28T23:28:54.385961Z",
   "token_health": {
     "price": 0.00136,
     "price_change_m5": -0.76,
-    "price_change_1h": -0.07,
+    "price_change_1h": -0.02,
     "price_change_6h": 8.13,
     "price_change_24h": -1.76,
     "market_cap": 1359594,
     "liquidity": 213797.62,
     "volume_m5": 203.88,
-    "volume_1h": 3577.58,
+    "volume_1h": 3569.58,
     "volume_6h": 19407.73,
     "volume_24h": 116882.85,
     "volume_ratio_1h": 0.73,
     "buys_24h": 671,
     "sells_24h": 446,
     "buys_1h": 10,
-    "sells_1h": 20,
+    "sells_1h": 19,
     "holders": 16843,
     "holder_trend": -4,
     "sentiment": "neutral",
@@ -115,7 +115,7 @@
     "x_community_delta_24h": 87300,
     "x_community_id": "1987949705322508569",
     "mentions": [],
-    "x_community_last_scrape": 1772321229.187777
+    "x_community_last_scrape": 1772321345.389463
   },
   "community": {
     "discord_members": 1449,
@@ -274,7 +274,7 @@
       }
     ],
     "telegram_mod_events": [],
-    "active_users_today": 19,
+    "active_users_today": 22,
     "top_channels": [
       {
         "channel_id": "1458846146415034460",
@@ -403,7 +403,7 @@
     {
       "type": "success",
       "message": "\ud83d\udd25 Near ALL-TIME HIGH! Only 0.0% away \u2014 $0.001360",
-      "timestamp": "2026-02-28T23:29:21.427588Z"
+      "timestamp": "2026-02-28T23:31:04.901684Z"
     }
   ],
   "coingecko": {
@@ -467,13 +467,13 @@
   "coinmarketcap": {
     "cmc_rank": 1781,
     "cmc_id": "38918",
-    "price": 0.0013776076079355588,
+    "price": 0.0013750680554244945,
     "volume_24h": 1023167.96628688,
-    "market_cap": 1377166.7735010195,
-    "change_1h": 0.917431,
-    "change_24h": 0.60987702,
-    "change_7d": -48.82573526,
-    "change_30d": -76.71039862,
+    "market_cap": 1374628.0336467586,
+    "change_1h": 0.7315434,
+    "change_24h": 0.0209331,
+    "change_7d": -48.82389747,
+    "change_30d": -76.88651574,
     "market_pairs": 45,
     "_source": "coinmarketcap"
   },
@@ -513,7 +513,7 @@
       "hashtag": "67coin",
       "video_type": "popular",
       "created_at": "2025-10-27T15:30:00Z",
-      "scraped_at": "2026-02-28T23:27:42.342193Z"
+      "scraped_at": "2026-02-28T23:29:32.473735Z"
     },
     {
       "video_url": "https://www.tiktok.com/@67coin/video/7611332134107647246",
@@ -527,11 +527,11 @@
       "hashtag": "67coin",
       "video_type": "popular",
       "created_at": "2026-02-27T00:16:23Z",
-      "scraped_at": "2026-02-28T23:27:42.342193Z"
+      "scraped_at": "2026-02-28T23:29:32.473735Z"
     },
     {
       "video_url": "https://www.tiktok.com/@67coin/video/7611723330290257166",
-      "thumbnail_url": "https://p16-sign.tiktokcdn-us.com/tos-useast5-p-85c255-tx/oIeTRCGIIHCIE1FeegJAQD1LAIE7VoOwEuxDkj~tplv-tiktokx-origin.image?dr=14575&x-expires=1772492400&x-signature=inNCXP24d10U%2Fx4aVpnAbFmmt2U%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=my",
+      "thumbnail_url": "https://p19-sign.tiktokcdn-us.com/tos-useast5-p-85c255-tx/oIeTRCGIIHCIE1FeegJAQD1LAIE7VoOwEuxDkj~tplv-tiktokx-origin.image?dr=14575&x-expires=1772492400&x-signature=OPSp2lTA%2FCnUDHpRiFrh4d6hXQ4%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=my",
       "creator": "67coin",
       "creator_url": "https://www.tiktok.com/@67coin",
       "description": "World's fastest 67? #67coin #67 #viral #fyp Credit: TikTok: @67speed.com",
@@ -541,11 +541,11 @@
       "hashtag": "67coin",
       "video_type": "recent",
       "created_at": "2026-02-28T01:34:21Z",
-      "scraped_at": "2026-02-28T23:27:42.342193Z"
+      "scraped_at": "2026-02-28T23:29:32.473735Z"
     },
     {
       "video_url": "https://www.tiktok.com/@67coin/video/7610562713697209614",
-      "thumbnail_url": "https://p19-sign.tiktokcdn-us.com/tos-useast5-p-85c255-tx/oYieqOgQEUDEnShFi9BskpJa6NoDBwELQHpMfb~tplv-tiktokx-origin.image?dr=14575&x-expires=1772492400&x-signature=aJ%2FoPBKgBhtanHSA66JyTvScbqw%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=my",
+      "thumbnail_url": "https://p16-sign.tiktokcdn-us.com/tos-useast5-p-85c255-tx/oYieqOgQEUDEnShFi9BskpJa6NoDBwELQHpMfb~tplv-tiktokx-origin.image?dr=14575&x-expires=1772492400&x-signature=V0EA%2BTT1XRT5pY71tllu8DpxxbI%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=my",
       "creator": "67coin",
       "creator_url": "https://www.tiktok.com/@67coin",
       "description": "POV: You're driving and your speed hits 67 #67 #viral #fyp # Credit: Instagram: @onerent.ae",
@@ -555,7 +555,7 @@
       "hashtag": "67coin",
       "video_type": "recent",
       "created_at": "2026-02-24T22:30:44Z",
-      "scraped_at": "2026-02-28T23:27:42.342193Z"
+      "scraped_at": "2026-02-28T23:29:32.473735Z"
     },
     {
       "video_url": "https://www.tiktok.com/@abrahamcreates/video/7598310130257497374",
@@ -569,11 +569,11 @@
       "hashtag": "67",
       "video_type": "popular",
       "created_at": "2026-01-22T22:04:14Z",
-      "scraped_at": "2026-02-28T23:27:42.342193Z"
+      "scraped_at": "2026-02-28T23:29:32.473735Z"
     },
     {
       "video_url": "https://www.tiktok.com/@usernothere1001/video/7571787008964709633",
-      "thumbnail_url": "https://p16-sign-sg.tiktokcdn.com/tos-alisg-p-0037/oYiZAh9iADRnkEaAEqAYOOP71AIBARQUx6lCA~tplv-tiktokx-origin.image?dr=14575&x-expires=1772492400&x-signature=60A70GWKsTtwM7rGvArhrKrON4g%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=my",
+      "thumbnail_url": "https://p77-sign-sg.tiktokcdn.com/tos-alisg-p-0037/oYiZAh9iADRnkEaAEqAYOOP71AIBARQUx6lCA~tplv-tiktokx-origin.image?dr=14575&x-expires=1772492400&x-signature=gk6EzCwblC9csYUuwaGvINDj8Xg%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=my",
       "creator": "usernothere1001",
       "creator_url": "https://www.tiktok.com/@usernothere1001",
       "description": "On youTube:MY OVERPOWERED AAU TEAM HAS FINALLY RETURNED #67 #sixtyseven #sixseven #fyp #viral",
@@ -583,21 +583,21 @@
       "hashtag": "67",
       "video_type": "popular",
       "created_at": "2025-11-12T10:41:04Z",
-      "scraped_at": "2026-02-28T23:27:42.342193Z"
+      "scraped_at": "2026-02-28T23:29:32.473735Z"
     },
     {
       "video_url": "https://www.tiktok.com/@nejajeja/video/7608907112088915207",
-      "thumbnail_url": "https://p77-sign-sg.tiktokcdn.com/tos-alisg-p-0037/oUYiQQLair4NfO1wDBGAQkMejJTAiCEI4IICeD~tplv-tiktokx-origin.image?dr=14575&x-expires=1772492400&x-signature=nVWekcwAL7b%2BQRb9lQS9zxLAETg%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=my",
+      "thumbnail_url": "https://p16-sign-sg.tiktokcdn.com/tos-alisg-p-0037/oUYiQQLair4NfO1wDBGAQkMejJTAiCEI4IICeD~tplv-tiktokx-origin.image?dr=14575&x-expires=1772492400&x-signature=1esnnsZf7qOe%2FSmxULRC4NuLy7I%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=my",
       "creator": "nejajeja",
       "creator_url": "https://www.tiktok.com/@nejajeja",
       "description": "\u0434\u0430\u0441\u0442\u0438\u043d \u043b\u0443\u043a\u0430\u0441#\u043e\u0441\u0434 #67 #\u0434\u0430\u0441\u0442\u0438\u043d #\u043b\u0443\u043a\u0430\u0441 #\u0440\u0435\u043a\u043e\u043c\u0435\u043d\u0434\u0430\u0446\u0438\u0438 ",
-      "plays": 4192,
+      "plays": 4194,
       "likes": 185,
       "views_text": "4.2K",
       "hashtag": "67",
       "video_type": "recent",
       "created_at": "2026-02-20T11:25:52Z",
-      "scraped_at": "2026-02-28T23:27:42.342193Z"
+      "scraped_at": "2026-02-28T23:29:32.473735Z"
     },
     {
       "video_url": "https://www.tiktok.com/@abrahamcreates/video/7606855929195203871",
@@ -611,7 +611,7 @@
       "hashtag": "67",
       "video_type": "recent",
       "created_at": "2026-02-14T22:46:20Z",
-      "scraped_at": "2026-02-28T23:27:42.342193Z"
+      "scraped_at": "2026-02-28T23:29:32.473735Z"
     }
   ],
   "instagram_spotlight": [],
