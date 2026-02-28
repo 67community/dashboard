@@ -1,11 +1,10 @@
 "use client"
 
 import { useState, useRef, useEffect } from "react"
-import { useRouter, useSearchParams } from "next/navigation"
+import { useSearchParams } from "next/navigation"
 import { Suspense } from "react"
 
 function LoginForm() {
-  const router       = useRouter()
   const params       = useSearchParams()
   const from         = params.get("from") ?? "/"
   const [pw, setPw]  = useState("")
@@ -19,14 +18,27 @@ function LoginForm() {
     e.preventDefault()
     setLoading(true); setErr(false)
 
-    const res = await fetch("/api/auth/login", {
-      method:  "POST",
-      headers: { "Content-Type": "application/json" },
-      body:    JSON.stringify({ password: pw }),
-    })
+    const controller = new AbortController()
+    const timeout = setTimeout(() => controller.abort(), 8000)
+    let res: Response
+    try {
+      res = await fetch("/api/auth/login", {
+        method:  "POST",
+        headers: { "Content-Type": "application/json" },
+        body:    JSON.stringify({ password: pw }),
+        signal:  controller.signal,
+      })
+    } catch {
+      clearTimeout(timeout)
+      setErr(true)
+      setLoading(false)
+      inputRef.current?.focus()
+      return
+    }
+    clearTimeout(timeout)
 
     if (res.ok) {
-      router.push(from)
+      window.location.href = from
     } else {
       setErr(true)
       setPw("")
