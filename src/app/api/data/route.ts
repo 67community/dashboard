@@ -1049,7 +1049,25 @@ export async function GET() {
   const out = {
     last_updated:     new Date().toISOString(),
     token_health,
-    social_pulse:     static_?.social_pulse     ?? { twitter_followers: 0, follower_change_24h: 0, posting_streak_days: 0, engagement_rate: 0, avg_engagement: 0, total_engagement_7d: 0, best_content_type: "tweet", content_type_stats: {} },
+    social_pulse: (() => {
+      const sp = static_?.social_pulse ?? { twitter_followers: 0, follower_change_24h: 0, posting_streak_days: 0, engagement_rate: 0, avg_engagement: 0, total_engagement_7d: 0, best_content_type: "tweet", content_type_stats: {} }
+      const hist: { date: string; count: number }[] = sp.follower_history ?? []
+      const cur = sp.twitter_followers ?? 0
+      // snapshot-based 24h delta
+      const snap24  = static_?._snapshot_24h?.twitter_followers ?? cur
+      const delta1d = cur - snap24
+      // history-based 3d / 7d deltas
+      const now = new Date()
+      const daysAgo = (n: number) => new Date(now.getTime() - n * 86_400_000).toISOString().slice(0,10)
+      const countAt = (daysBack: number) => {
+        const target = daysAgo(daysBack)
+        const entry = [...hist].reverse().find(h => h.date <= target)
+        return entry?.count ?? cur
+      }
+      const delta3d = cur - countAt(3)
+      const delta7d = cur - countAt(7)
+      return { ...sp, follower_change_24h: delta1d, follower_change_3d: delta3d, follower_change_7d: delta7d }
+    })(),
     community: {
       ...(static_?.community ?? { discord_members: 0, active_7d: 0, new_joins_24h: 0, open_tickets: 0, unanswered_posts: 0, telegram_members: 0, watchlist_count: 0 }),
       // Live Discord data (overrides static when DISCORD_TOKEN env var is set)

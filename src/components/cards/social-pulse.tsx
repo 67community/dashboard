@@ -41,12 +41,13 @@ export function SocialPulseCard() {
   const fmtF  = followers.toLocaleString()
   const fmtCM = communityM.toLocaleString()
 
-  // 3d and 7d follower growth from history
-  const history = s?.follower_history ?? []
-  const growth3d = history.length >= 2
-    ? (history[history.length - 1]?.count ?? 0) - (history[Math.max(0, history.length - 4)]?.count ?? 0)
-    : 0
-  const growth7d = s?.follower_growth_7d ?? 0
+  // 1d/3d/7d follower deltas — from API-computed values (snapshot-based)
+  const history  = s?.follower_history ?? []
+  const growth1d = (s as any)?.follower_change_24h ?? 0
+  const growth3d = (s as any)?.follower_change_3d ?? (s?.follower_growth_7d !== undefined
+    ? (history.length >= 4 ? (history[history.length-1]?.count ?? 0) - (history[Math.max(0,history.length-4)]?.count ?? 0) : 0)
+    : 0)
+  const growth7d = (s as any)?.follower_change_7d ?? s?.follower_growth_7d ?? 0
   const avgEng = s?.avg_engagement ?? 0
 
   useEffect(() => {
@@ -103,15 +104,16 @@ export function SocialPulseCard() {
             <p className="hero-number">{fmtF}</p>
             <DeltaBadge value={followerDelta} inline />
           </div>
-          {/* 3d / 7d growth mini row */}
-          <div style={{ display:"flex", gap:10, marginTop:6 }}>
-            <span style={{ fontSize:"0.72rem", fontWeight:600, color: growth3d >= 0 ? "#16A34A" : "#DC2626" }}>
-              {growth3d >= 0 ? "+" : ""}{growth3d} / 3d
-            </span>
-            <span style={{ fontSize:"0.72rem", color:"#D4D4D8" }}>·</span>
-            <span style={{ fontSize:"0.72rem", fontWeight:600, color: growth7d >= 0 ? "#16A34A" : "#DC2626" }}>
-              {growth7d >= 0 ? "+" : ""}{growth7d} / 7d
-            </span>
+          {/* 1d / 3d / 7d growth mini row */}
+          <div style={{ display:"flex", gap:8, marginTop:6, flexWrap:"wrap" }}>
+            {[["1d", growth1d], ["3d", growth3d], ["7d", growth7d]].map(([label, val]) => (
+              <span key={label as string} style={{ fontSize:"0.6875rem", fontWeight:700,
+                color: (val as number) > 0 ? "#059669" : (val as number) < 0 ? "#EF4444" : "#8E8E93",
+                background: (val as number) > 0 ? "rgba(5,150,105,0.08)" : (val as number) < 0 ? "rgba(239,68,68,0.08)" : "rgba(0,0,0,0.05)",
+                padding:"2px 7px", borderRadius:99 }}>
+                {(val as number) > 0 ? "+" : ""}{val as number} / {label}
+              </span>
+            ))}
           </div>
         </div>
         <div style={{ textAlign:"right" }}>
@@ -184,14 +186,15 @@ export function SocialPulseCard() {
             <DeltaBadge value={followerDelta} />
           </div>
           <p className="metric-label">X Followers</p>
-          <div style={{ display:"flex", gap:10, marginTop:6 }}>
-            <span style={{ fontSize:"0.72rem", fontWeight:600, color: growth3d >= 0 ? "#16A34A" : "#DC2626" }}>
-              {growth3d >= 0 ? "+" : ""}{growth3d} / 3d
-            </span>
-            <span style={{ fontSize:"0.72rem", color:"#D4D4D8" }}>·</span>
-            <span style={{ fontSize:"0.72rem", fontWeight:600, color: growth7d >= 0 ? "#16A34A" : "#DC2626" }}>
-              {growth7d >= 0 ? "+" : ""}{growth7d} / 7d
-            </span>
+          <div style={{ display:"flex", gap:6, marginTop:6, flexWrap:"wrap" }}>
+            {[["1d", growth1d], ["3d", growth3d], ["7d", growth7d]].map(([label, val]) => (
+              <span key={label as string} style={{ fontSize:"0.6875rem", fontWeight:700,
+                color: (val as number) > 0 ? "#059669" : (val as number) < 0 ? "#EF4444" : "#8E8E93",
+                background: (val as number) > 0 ? "rgba(5,150,105,0.08)" : (val as number) < 0 ? "rgba(239,68,68,0.08)" : "rgba(0,0,0,0.05)",
+                padding:"2px 7px", borderRadius:99 }}>
+                {(val as number) > 0 ? "+" : ""}{val as number} / {label}
+              </span>
+            ))}
           </div>
         </div>
         <div className="inset-cell">
@@ -225,6 +228,9 @@ export function SocialPulseCard() {
             <p className="hero-label">Follower Growth</p>
             <div style={{ display:"flex", gap:12 }}>
               <span style={{ fontSize:"0.72rem", fontWeight:700, color: growth3d >= 0 ? "#10B981" : "#EF4444" }}>
+                {growth1d >= 0 ? "+" : ""}{growth1d} / 1d
+              </span>
+              <span style={{ display:"flex", alignItems:"center", gap:3, fontSize:"0.72rem", fontWeight:700, color: growth3d >= 0 ? "#10B981" : "#EF4444" }}>
                 {growth3d >= 0 ? "+" : ""}{growth3d} / 3d
               </span>
               <span style={{ display:"flex", alignItems:"center", gap:3, fontSize:"0.72rem", fontWeight:700, color: growth7d >= 0 ? "#10B981" : "#EF4444" }}>
