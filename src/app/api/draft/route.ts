@@ -40,43 +40,55 @@ End with a CTA to join the global movement.`,
 // ── X (Twitter) prompts ────────────────────────────────────────────────────────
 
 const X_PROMPTS: Record<string, string> = {
-  tweet: `Write ONE viral tweet for $67coin about: {topic}.
-Rules: max 280 chars, single tweet only, add 2-3 relevant emojis, end with #67coin.
-Do NOT add hashtags other than #67coin. Make it punchy and shareable.`,
+  tweet: `You are a real person in the 67 community. Write ONE tweet about: {topic}.
 
-  thread: `Write a 4-tweet thread for $67coin about: {topic}.
-Format: number each tweet (1/4, 2/4, 3/4, 4/4). Each tweet max 280 chars.
-Tweet 1: powerful hook — make people stop scrolling.
-Tweet 2-3: real value, insights, story.
-Tweet 4: strong CTA — follow, join community, buy.
-Separate tweets with a blank line.`,
+Context: $67coin is a Solana memecoin. The face of the movement is Maverick Trevillian — a viral dirt bike creator known for the 67 hand gesture (🤙 but with 67). Fair launch, no VCs, no team tokens, 100% community.
 
-  announcement: `Write a Twitter/Discord announcement for $67coin about: {topic}.
-Max 300 chars. High energy, community-focused, use emojis.
-Format: lead with emoji, clear message, end with action CTA.`,
+Rules:
+- Sound like a real person, NOT a crypto marketer
+- Max 280 chars
+- No "LFG", "wagmi", "ser", "gm" — those are cringe now
+- Can use "67 🤙" naturally
+- End with #67coin only
+- If it feels like something a bot wrote, rewrite it`,
+
+  thread: `You are a real person in the 67 community. Write a 4-tweet thread about: {topic}.
+
+Context: $67coin (Solana). Maverick Trevillian is the face — dirt bike viral creator, invented the 67 hand gesture. Fair launch, no VCs, no insiders.
+
+Format: 1/4, 2/4, 3/4, 4/4 — one blank line between each.
+- Tweet 1: hook that makes people genuinely curious, not hype
+- Tweet 2-3: real story, insight, or data — something worth reading
+- Tweet 4: natural CTA, not desperate
+- Tone: like a friend texting you an alpha, not a PR announcement
+- Max 280 chars per tweet`,
+
+  announcement: `Write a short Twitter/Discord announcement about: {topic}.
+Sound like it's from the 67 community team — real, direct, no corporate speak.
+Max 250 chars. Lead with what matters, not with emojis.`,
 }
 
 // ── TikTok prompts ─────────────────────────────────────────────────────────────
 
 const TIK_PROMPTS: Record<string, string> = {
-  hook: `Write a TikTok video HOOK SCRIPT for $67coin about: {topic}.
+  hook: `Write a TikTok video hook script for $67coin about: {topic}.
+
+The 67 brand: Maverick Trevillian — viral dirt bike creator, made the 67 hand gesture famous. Real kid, real movement, not a dev team in a discord.
+
 Rules:
-- First 3 seconds must grab attention (pattern interrupt, bold statement, or provocative question)
+- First line: something that makes people stop scrolling — a real statement, not fake hype
 - Max 4 lines total
-- High energy, conversational, like you're talking to a friend
-- Include ONE visual action cue in [brackets] (e.g., [point to screen], [zoom in], [show phone])
-- End on a cliffhanger that makes viewers watch the whole video`,
+- Sound like someone who genuinely believes in this, not a promoter
+- Include ONE visual cue in [brackets]
+- End with something that makes them want to watch the rest`,
 
-  caption: `Write a TikTok video CAPTION for $67coin about: {topic}.
-Rules: max 150 chars + exactly 5 hashtags on a new line.
-Caption: curiosity-driven, scroll-stopping, makes people want to watch.
-Hashtags: mix of niche (#67coin #solana) and broad (#crypto #memecoin #web3).`,
+  caption: `Write a TikTok caption for $67coin about: {topic}.
+Max 120 chars (leave room for hashtags).
+Sound curious and real — like you found something interesting, not selling something.
+New line: #67coin #solana #crypto #memecoin #67`,
 
-  cta: `Write a TikTok END-SCREEN CTA for $67coin about: {topic}.
-Exactly 2 sentences:
-1. Create urgency / FOMO (why now, why this token)
-2. Clear action (follow + link in bio)
-Do NOT sound desperate or scammy. Sound like an insider tip from a friend.`,
+  cta: `Write a TikTok end-screen line for $67coin about: {topic}.
+One sentence max. Don't say "LFG" or "ape in". Sound like a friend saying "hey, look into this".`,
 }
 
 // ── Instagram prompts ──────────────────────────────────────────────────────────
@@ -157,9 +169,18 @@ export async function POST(req: Request) {
     const baseKey    = Object.keys(promptMap).includes(type) ? type : Object.keys(promptMap)[0]
     const basePrompt = promptMap[baseKey].replace("{topic}", topic)
 
-    // Add region context
+    // Add region context + live $67 facts
     const regionCtx  = REGION_CONTEXT[region] ?? REGION_CONTEXT.america
-    const fullPrompt = `${regionCtx}\n\n---\n\n${basePrompt}`
+    const facts67 = `Current $67coin facts (use these naturally if relevant, don't force all of them):
+- Token: $67coin on Solana
+- CA: 9AvytnUKsLxPxFHFqS6VLxaxt5p6BhYNr53SD2Chpump
+- Twitter: @67coinX | Discord: discord.gg/67community
+- Face of the movement: Maverick Trevillian (@67Kid) — viral dirt bike creator, invented the "67" hand gesture
+- Fair launch on pump.fun — no team tokens, no VCs, 100% community
+- ~16,800+ holders, growing daily
+- Listed on 14+ exchanges including MEXC, Gate, BingX, BitMart
+- The number 67 = a universal hand gesture that unites people worldwide`
+    const fullPrompt = `${regionCtx}\n\n${facts67}\n\n---\n\n${basePrompt}`
 
     try {
       const result = await callAI({
