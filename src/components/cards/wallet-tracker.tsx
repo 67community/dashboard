@@ -66,7 +66,7 @@ function shortAddr(addr: string) {
 // ── WalletRow ─────────────────────────────────────────────────────────────────
 
 function WalletRow({
-  wallet, data, expanded, onToggle, onRemove, onMute,
+  wallet, data, expanded, onToggle, onRemove, onMute, onRename,
 }: {
   wallet:   TrackedWallet
   data?:    WalletData
@@ -74,7 +74,9 @@ function WalletRow({
   onToggle: () => void
   onRemove: () => void
   onMute:   () => void
+  onRename: (label: string) => void
 }) {
+  const [editingLabel, setEditingLabel] = useState(false)
   const hasAlert = data?.recentAlert && !wallet.muted
 
   return (
@@ -91,10 +93,28 @@ function WalletRow({
 
         <div style={{ flex:1, minWidth:0 }}>
           <div style={{ display:"flex", alignItems:"center", gap:6 }}>
-            <span style={{ fontSize:"0.875rem", fontWeight:700, color:"#1D1D1F",
-              overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>
-              {wallet.label}
-            </span>
+            {editingLabel ? (
+              <input
+                autoFocus
+                defaultValue={wallet.label}
+                onClick={e => e.stopPropagation()}
+                onBlur={e => { onRename(e.target.value.trim() || wallet.label); setEditingLabel(false) }}
+                onKeyDown={e => { e.stopPropagation(); if (e.key === "Enter") { onRename((e.target as HTMLInputElement).value.trim() || wallet.label); setEditingLabel(false) } if (e.key === "Escape") setEditingLabel(false) }}
+                style={{ fontSize:"0.875rem", fontWeight:700, color:"#1D1D1F", border:"1.5px solid #F5A623", borderRadius:6, padding:"1px 6px", width:"100%", background:"#FFFBEB", outline:"none" }}
+              />
+            ) : (
+              <span
+                title="Click to rename"
+                onClick={e => { e.stopPropagation(); setEditingLabel(true) }}
+                style={{ fontSize:"0.875rem", fontWeight:700, color:"#1D1D1F",
+                  overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap",
+                  cursor:"text", borderBottom:"1px dashed transparent" }}
+                onMouseEnter={e => (e.currentTarget.style.borderBottomColor = "#D1D5DB")}
+                onMouseLeave={e => (e.currentTarget.style.borderBottomColor = "transparent")}
+              >
+                {wallet.label}
+              </span>
+            )}
             {data?.isWhale && (
               <span style={{ fontSize:"0.6rem", fontWeight:700, color:"#D97706",
                 background:"rgba(217,119,6,0.1)", padding:"1px 6px", borderRadius:99 }}>
@@ -593,6 +613,11 @@ export function WalletTrackerCard() {
     fetchData(updated)
   }
 
+  function renameWallet(address: string, label: string) {
+    const updated = wallets.map(w => w.address === address ? { ...w, label } : w)
+    save(updated)
+  }
+
   function removeWallet(address: string) {
     save(wallets.filter(w => w.address !== address))
     setWalletData(prev => { const n = { ...prev }; delete n[address]; return n })
@@ -742,7 +767,8 @@ export function WalletTrackerCard() {
             expanded={expandedId === w.address}
             onToggle={() => setExpandedId(v => v === w.address ? null : w.address)}
             onRemove={() => removeWallet(w.address)}
-            onMute={() => toggleMute(w.address)} />
+            onMute={() => toggleMute(w.address)}
+            onRename={(label) => renameWallet(w.address, label)} />
         ))}
       </div>
     </div>
