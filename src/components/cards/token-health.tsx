@@ -179,6 +179,29 @@ export function TokenHealthCard() {
         })}
       </div>
 
+      {/* ── 20K Holders Milestone Progress ── */}
+      {(() => {
+        const holders   = t?.holders ?? 0
+        const goal      = 20000
+        const pct       = Math.min((holders / goal) * 100, 100)
+        const remaining = Math.max(goal - holders, 0)
+        return (
+          <div className="inset-cell" style={{ padding:"14px 16px" }}>
+            <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:8 }}>
+              <p style={{ fontSize:"0.75rem", fontWeight:700, color:"#09090B" }}>🎯 20K Holders Milestone</p>
+              <p style={{ fontSize:"0.75rem", fontWeight:700, color:"#6B7280" }}>{pct.toFixed(1)}%</p>
+            </div>
+            <div style={{ background:"#F3F4F6", borderRadius:99, height:8, overflow:"hidden", marginBottom:8 }}>
+              <div style={{ width:`${pct}%`, height:"100%", background:"linear-gradient(90deg,#F59E0B,#EF4444)", borderRadius:99, transition:"width 0.6s ease" }} />
+            </div>
+            <div style={{ display:"flex", justifyContent:"space-between" }}>
+              <p style={{ fontSize:"0.6875rem", fontWeight:600, color:"#6B7280" }}>{holders.toLocaleString()} holders</p>
+              <p style={{ fontSize:"0.6875rem", fontWeight:600, color:"#6B7280" }}>{remaining.toLocaleString()} to go</p>
+            </div>
+          </div>
+        )
+      })()}
+
       {/* ── 24h Buys / Sells + Sentiment ── */}
       {(() => {
         const totalTx  = (t?.buys_24h ?? 0) + (t?.sells_24h ?? 0)
