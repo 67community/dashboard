@@ -148,9 +148,10 @@ export async function POST(req: Request) {
   try {
     const {
       topic,
-      type     = "tweet",
-      platform = "x",
-      region   = "america",
+      type      = "tweet",
+      platform  = "x",
+      region    = "america",
+      variation = 1,
     } = await req.json() as {
       topic:    string
       type:     string
