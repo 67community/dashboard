@@ -208,6 +208,8 @@ export default function Dashboard() {
             <McProgressBar mcap={liveMcap ?? data?.token_health?.market_cap ?? null} />
           </div>
         </div>
+        {/* Bottom: Team Notes */}
+        <div className="enter-9" style={{ display:"flex", minWidth:0, maxHeight:280, overflow:"hidden" }}><TeamNotesCard /></div>
       </div>
 
       {/* Responsive grid styles */}
