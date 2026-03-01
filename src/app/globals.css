@@ -18,11 +18,11 @@
 ═══════════════════════════════════════════════════════ */
 :root {
   /* Apple's exact system palette */
-  --background:      #EFEFEF;   /* Frosted glass base */
+  --background:      #EFEFEF;
   --card:            #FFFFFF;
-  --foreground:      #1D1D1F;   /* Apple's primary text */
-  --secondary:       #6E6E73;   /* Apple's secondary text */
-  --tertiary:        #8E8E93;   /* Apple's tertiary / captions */
+  --foreground:      #1D1D1F;
+  --secondary:       #6E6E73;
+  --tertiary:        #8E8E93;
   --separator:       rgba(0,0,0,0.08);
   --fill-primary:    rgba(0,0,0,0.05);
   --fill-secondary:  rgba(0,0,0,0.03);
@@ -30,6 +30,17 @@
   --gold-dark:       #C8820A;
   --radius-card:     18px;
   --radius-inner:    12px;
+}
+
+[data-theme="dark"] {
+  --background:      #0A0A0B;
+  --card:            #1A1A1C;
+  --foreground:      #F5F5F7;
+  --secondary:       #A1A1AA;
+  --tertiary:        #71717A;
+  --separator:       rgba(255,255,255,0.08);
+  --fill-primary:    rgba(255,255,255,0.06);
+  --fill-secondary:  rgba(255,255,255,0.03);
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -91,7 +102,7 @@ body {
 
 /* ══ INNER SURFACE ════════════════════════════════════ */
 .inset-cell {
-  background: #F5F5F7;
+  background: var(--fill-primary);
   border-radius: var(--radius-inner);
   padding: 16px 18px;
 }
@@ -357,4 +368,22 @@ img, svg { min-width: 0; flex-shrink: 0; }
 }
 @media (max-width: 480px) {
   .inset-grid-2col { grid-template-columns: 1fr !important; }
+}
+
+/* ── Dark mode overrides ────────────────────────────────────── */
+[data-theme="dark"] .mc-card {
+  background: rgba(26,26,28,0.92);
+  box-shadow: 0 0 0 0.5px rgba(255,255,255,0.06),
+              0 8px 32px rgba(0,0,0,0.4),
+              0 40px 80px rgba(0,0,0,0.3);
+}
+[data-theme="dark"] .inset-cell {
+  background: rgba(255,255,255,0.05);
+  border-color: rgba(255,255,255,0.06);
+}
+[data-theme="dark"] body {
+  background: #0A0A0B;
+}
+[data-theme="dark"] p, [data-theme="dark"] span, [data-theme="dark"] div {
+  border-color: rgba(255,255,255,0.08);
 }
