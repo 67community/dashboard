@@ -2,9 +2,8 @@ import { NextResponse } from "next/server"
 
 // Multiple RPC fallbacks — public endpoints that support getTokenAccountsByOwner + getBalance
 const RPCS = [
+  "https://mainnet.helius-rpc.com/?api-key=8579d298-388b-497c-836d-51f39b224e63",
   "https://api.mainnet-beta.solana.com",
-  "https://rpc.ankr.com/solana",
-  "https://solana-mainnet.rpc.extrnode.com",
 ]
 const MINT_67 = "9AvytnUKsLxPxFHFqS6VLxaxt5p6BhYNr53SD2Chpump"
 

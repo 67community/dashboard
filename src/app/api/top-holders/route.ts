@@ -5,9 +5,8 @@ const SUPPLY = 999_680_000
 
 // Multiple RPC fallbacks
 const RPCS = [
+  "https://mainnet.helius-rpc.com/?api-key=8579d298-388b-497c-836d-51f39b224e63",
   "https://api.mainnet-beta.solana.com",
-  "https://solana-mainnet.rpc.extrnode.com",
-  "https://rpc.ankr.com/solana",
 ]
 
 async function rpcPost(method: string, params: unknown[]) {
