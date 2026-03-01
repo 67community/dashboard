@@ -274,7 +274,6 @@ export function TeamNotesCard() {
       accentColor="#F5A623"
       collapsed={collapsed}
       expanded={expanded}
-      noAutoOpen
     />
   )
 }
