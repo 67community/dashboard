@@ -246,7 +246,9 @@ export function CommunityCard() {
             background:"rgba(255,255,255,0.15)", borderRadius:99, padding:"5px 11px",
             fontSize:"0.75rem", fontWeight:600, color:"#fff",
           }}>
-            👋 {c?.new_joins_24h ?? 0} joined today
+            👋 {discordDelta != null
+              ? (discordDelta > 0 ? `+${discordDelta}` : String(discordDelta)) + " joined today"
+              : `${c?.new_joins_24h ?? 0} joined today`}
           </span>
           <span style={{
             display:"inline-flex", alignItems:"center", gap:5,
