@@ -196,7 +196,7 @@ export default function Dashboard() {
           </p>
 
           {/* Live MC Progress Bar */}
-          <div style={{ width:"100%", maxWidth:640, marginTop:4 }}>
+          <div style={{ width:"100%", maxWidth:"100%", marginTop:4 }}>
             <McProgressBar mcap={liveMcap ?? data?.token_health?.market_cap ?? null} />
           </div>
         </div>

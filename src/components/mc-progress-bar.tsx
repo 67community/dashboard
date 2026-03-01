@@ -99,7 +99,7 @@ export function McProgressBar({ mcap }: McProgressBarProps) {
       </div>
 
       {/* Track */}
-      <div style={{ position: "relative", width: "100%", maxWidth: 680 }}>
+      <div style={{ position: "relative", width: "100%", maxWidth: "100%" }}>
 
         {/* Bar track */}
         <div style={{
