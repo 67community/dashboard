@@ -124,6 +124,9 @@ export default function Dashboard() {
         </div>
       </div>
 
+      {/* ══ Team Notes — full width row above banner ══ */}
+      <div style={{ display:"flex", minWidth:0 }}><TeamNotesCard /></div>
+
       {/* ══ Season 2 Banner ════════════════════════════════════ */}
       <div style={{ marginTop:8, borderRadius:20, position:"relative", overflow:"hidden" }}>
         <div style={{ position:"absolute", inset:0, background:"linear-gradient(115deg, #0A0A0A 0%, #111108 40%, #2A1A00 70%, #7A4500 90%, #C8820A 100%)" }} />
@@ -163,7 +166,6 @@ export default function Dashboard() {
         <div className="enter-6" style={{ display:"flex", minWidth:0 }}><SightingsCard /></div>
         <div className="enter-7" style={{ display:"flex", minWidth:0 }}><CommunityEventsCard /></div>
         <div className="enter-7" style={{ display:"flex", minWidth:0 }}><CommunityLeaderboardCard /></div>
-        <div className="enter-7" style={{ display:"flex", minWidth:0, maxHeight:300, overflow:"hidden" }}><TeamNotesCard /></div>
       </div>
 
             {/* Responsive grid styles */}
