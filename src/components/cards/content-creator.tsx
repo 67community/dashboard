@@ -142,7 +142,6 @@ export function ContentCreatorCard() {
     if (!topic.trim() || loading) return
     setLoading(true)
     try {
-      // Generate 3 variations in parallel
       const results = await Promise.all([1,2,3].map((variation) =>
         fetch("/api/draft", {
           method:  "POST",
@@ -154,6 +153,28 @@ export function ContentCreatorCard() {
       if (valid.length > 0) {
         setDrafts(prev => [...valid.map(j => ({ ...j, platform, region, approved: false })), ...prev])
         setTopic("")
+      }
+    } catch (e) { console.error(e) }
+    finally     { setLoading(false) }
+  }
+
+  // Regenerate: replace current top 3 with new 3 (no blank flash)
+  async function generateNew() {
+    if (!topic.trim() || loading) return
+    setLoading(true)
+    try {
+      const results = await Promise.all([1,2,3].map((variation) =>
+        fetch("/api/draft", {
+          method:  "POST",
+          headers: { "content-type": "application/json", ...aiHeaders() },
+          body:    JSON.stringify({ topic, type, platform, region, variation }),
+        }).then(r => r.json() as Promise<Draft & { error?: string }>)
+      ))
+      const valid = results.filter(j => !j.error)
+      if (valid.length > 0) {
+        // Replace only the first 3 (current batch), keep approved ones
+        const newDrafts = valid.map(j => ({ ...j, platform, region, approved: false }))
+        setDrafts(prev => [...newDrafts, ...prev.filter(d => d.approved)])
       }
     } catch (e) { console.error(e) }
     finally     { setLoading(false) }
@@ -203,7 +224,7 @@ export function ContentCreatorCard() {
 
       {/* Generate button */}
       <button
-        onClick={e => { e.stopPropagation(); generate() }}
+        onClick={async e => { e.stopPropagation(); await generateNew() }}}
         disabled={loading || !topic.trim()}
         style={{
           width: "100%", padding: "10px 16px", borderRadius: 10,
@@ -287,7 +308,7 @@ export function ContentCreatorCard() {
           }}
         />
         <button
-          onClick={e => { e.stopPropagation(); generate() }}
+          onClick={async e => { e.stopPropagation(); await generateNew() }}}
           disabled={loading || !topic.trim()}
           style={{
             width: "100%", padding: "11px 16px", borderRadius: 10, border: "none",
@@ -327,7 +348,7 @@ export function ContentCreatorCard() {
                 ✨ 3 Options — pick one or regenerate
               </p>
               <button
-                onClick={e => { e.stopPropagation(); setDrafts([]); generate() }}
+                onClick={async e => { e.stopPropagation(); await generateNew() }}
                 disabled={loading}
                 style={{ display:"flex", alignItems:"center", gap:4, padding:"4px 10px",
                   borderRadius:99, border:"1.5px solid rgba(0,0,0,0.1)", background:"none",
