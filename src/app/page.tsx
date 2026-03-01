@@ -153,6 +153,8 @@ export default function Dashboard() {
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><SightingsCard /></div>
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><CommunityEventsCard /></div>
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><CommunityLeaderboardCard /></div>
+        {/* Team Notes — bottom left */}
+        <div className="enter-9" style={{ display:"flex", minWidth:0, maxHeight:300, overflow:"hidden" }}><TeamNotesCard /></div>
       </div>
 
       {/* ══ Top Section — Community | Coin | Announcements+Raid ══════ */}
@@ -220,10 +222,6 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* ══ Notes row ══════════════════════════════════════ */}
-      <div style={{ display:"grid", gridTemplateColumns:"repeat(3, 1fr)", gap:20 }}>
-        <div style={{ display:"flex", minWidth:0, maxHeight:300, overflow:"hidden" }}><TeamNotesCard /></div>
-      </div>
 
       {/* Responsive grid styles */}
       <style>{`
