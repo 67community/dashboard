@@ -634,27 +634,7 @@ export function WalletTrackerCard() {
 
   // ── Collapsed ────────────────────────────────────────────────────────────
   const collapsed = (
-    <div style={{ display:"flex", flexDirection:"column", gap:14 }}>
-
-      {/* Stats */}
-      <div style={{ display:"flex", gap:8 }}>
-        <div className="inset-cell" style={{ flex:1, textAlign:"center" }}>
-          <p style={{ fontSize:"1.5rem", fontWeight:800, color:"#1D1D1F", lineHeight:1 }}>{wallets.length}</p>
-          <p style={{ fontSize:"0.625rem", color:"#8E8E93", fontWeight:600,
-            textTransform:"uppercase", letterSpacing:"0.06em", marginTop:3 }}>Tracked</p>
-        </div>
-        <div className="inset-cell" style={{ flex:1, textAlign:"center" }}>
-          <p style={{ fontSize:"1.5rem", fontWeight:800, color:"#D97706", lineHeight:1 }}>{whales}</p>
-          <p style={{ fontSize:"0.625rem", color:"#8E8E93", fontWeight:600,
-            textTransform:"uppercase", letterSpacing:"0.06em", marginTop:3 }}>🐋 Whales</p>
-        </div>
-        <div className="inset-cell" style={{ flex:1, textAlign:"center" }}>
-          <p style={{ fontSize:"1.5rem", fontWeight:800,
-            color: alerts > 0 ? "#EF4444" : "#1D1D1F", lineHeight:1 }}>{alerts}</p>
-          <p style={{ fontSize:"0.625rem", color:"#8E8E93", fontWeight:600,
-            textTransform:"uppercase", letterSpacing:"0.06em", marginTop:3 }}>Alerts</p>
-        </div>
-      </div>
+    <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
 
       {/* Alert banner */}
       {alerts > 0 && (

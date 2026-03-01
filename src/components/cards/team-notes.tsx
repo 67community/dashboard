@@ -131,21 +131,7 @@ export function TeamNotesCard() {
   const unpinned  = sorted.filter(n => !n.pinned)
 
   const collapsed = (
-    <div style={{ display:"flex", flexDirection:"column", gap:12 }}>
-      {/* Stats */}
-      <div style={{ display:"flex", gap:8 }}>
-        <div className="inset-cell" style={{ flex:1, textAlign:"center" }}>
-          <p style={{ fontSize:"1.5rem", fontWeight:800, color:"#F5A623", lineHeight:1 }}>{pinned.length}</p>
-          <p style={{ fontSize:"0.625rem", color:"#8E8E93", fontWeight:600,
-            textTransform:"uppercase", letterSpacing:"0.06em", marginTop:3 }}>Pinned</p>
-        </div>
-        <div className="inset-cell" style={{ flex:1, textAlign:"center" }}>
-          <p style={{ fontSize:"1.5rem", fontWeight:800, color:"#1D1D1F", lineHeight:1 }}>{notes.length}</p>
-          <p style={{ fontSize:"0.625rem", color:"#8E8E93", fontWeight:600,
-            textTransform:"uppercase", letterSpacing:"0.06em", marginTop:3 }}>Total</p>
-        </div>
-      </div>
-
+    <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
       {/* Quick add */}
       <div onClick={e => e.stopPropagation()}>
         {!addOpen ? (
@@ -202,7 +188,7 @@ export function TeamNotesCard() {
       {sorted.length > 0 && (
         <div style={{ display:"flex", flexDirection:"column", gap:8 }}
           onClick={e => e.stopPropagation()}>
-          {sorted.slice(0, 3).map(n => (
+          {sorted.slice(0, 2).map(n => (
             <NoteCard key={n.id} n={n} onPin={togglePin} onDelete={deleteNote} />
           ))}
         </div>
