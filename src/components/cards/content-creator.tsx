@@ -224,7 +224,7 @@ export function ContentCreatorCard() {
 
       {/* Generate button */}
       <button
-        onClick={async e => { e.stopPropagation(); await generateNew() }}}
+        onClick={async e => { e.stopPropagation(); await generateNew() }}
         disabled={loading || !topic.trim()}
         style={{
           width: "100%", padding: "10px 16px", borderRadius: 10,
@@ -308,7 +308,7 @@ export function ContentCreatorCard() {
           }}
         />
         <button
-          onClick={async e => { e.stopPropagation(); await generateNew() }}}
+          onClick={async e => { e.stopPropagation(); await generateNew() }}
           disabled={loading || !topic.trim()}
           style={{
             width: "100%", padding: "11px 16px", borderRadius: 10, border: "none",
