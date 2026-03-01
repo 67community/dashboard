@@ -280,7 +280,7 @@ export function TeamNotesCard() {
   )
 
   return (
-    <DashboardCard
+    <DashboardCard compact
       title="Team Notes"
       subtitle="Pin · Share · Remember"
       icon={<StickyNote style={{ width:16, height:16 }} />}

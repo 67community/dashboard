@@ -387,7 +387,7 @@ export function ContentCreatorCard() {
   )
 
   return (
-    <DashboardCard
+    <DashboardCard compact
       title="Content Creator"
       subtitle="AI Draft Generator"
       icon={<PenLine style={{ width: 16, height: 16 }} />}

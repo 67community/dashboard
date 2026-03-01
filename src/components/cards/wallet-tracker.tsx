@@ -730,7 +730,7 @@ export function WalletTrackerCard() {
   )
 
   return (
-    <DashboardCard
+    <DashboardCard compact
       title="Wallet Tracker"
       subtitle="Track · Alert · Monitor"
       icon={<Wallet style={{ width:16, height:16 }} />}

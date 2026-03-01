@@ -15,10 +15,11 @@ interface Props {
   liveTag?: boolean
   onOpen?: () => void
   noAutoOpen?: boolean   // disable card-level click → only expand icon opens modal
+  compact?: boolean      // smaller header + tighter padding
 }
 
 export function DashboardCard({
-  title, subtitle, icon, accentColor, collapsed, expanded, className = "", liveTag, onOpen, noAutoOpen
+  title, subtitle, icon, accentColor, collapsed, expanded, className = "", liveTag, onOpen, noAutoOpen, compact
 }: Props) {
   const [open, setOpen]       = useState(false)
   const [mounted, setMounted] = useState(false)
@@ -156,14 +157,14 @@ export function DashboardCard({
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
               <div
-                className="w-8 h-8 rounded-[10px] flex items-center justify-center flex-shrink-0"
+                className={compact ? "w-6 h-6 rounded-[8px] flex items-center justify-center flex-shrink-0" : "w-8 h-8 rounded-[10px] flex items-center justify-center flex-shrink-0"}
                 style={{ background: `${accentColor}14` }}
               >
                 <span style={{ color: accentColor, display: "flex" }}>{icon}</span>
               </div>
               <div>
-                <p style={{ fontSize: "0.9375rem", fontWeight: 700, color: "#1D1D1F", lineHeight: 1, letterSpacing: "-0.01em" }}>{title}</p>
-                {subtitle && <p style={{ fontSize: "0.8125rem", color: "#8E8E93", marginTop: 3, fontWeight: 500 }}>{subtitle}</p>}
+                <p style={{ fontSize: compact ? "0.8125rem" : "0.9375rem", fontWeight: 700, color: "#1D1D1F", lineHeight: 1, letterSpacing: "-0.01em" }}>{title}</p>
+                {!compact && subtitle && <p style={{ fontSize: "0.8125rem", color: "#8E8E93", marginTop: 3, fontWeight: 500 }}>{subtitle}</p>}
               </div>
             </div>
 
