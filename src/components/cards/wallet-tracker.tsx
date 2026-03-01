@@ -778,6 +778,51 @@ export function WalletTrackerCard() {
   const expanded = (
     <div style={{ display:"flex", flexDirection:"column", gap:14 }}>
 
+      {/* 🐋 Whale Alert Feed — top of expanded */}
+      {wallets.filter(w => walletData[w.address]?.recentAlert && !w.muted).length > 0 && (
+        <div style={{ display:"flex", flexDirection:"column", gap:6 }}>
+          <div style={{ display:"flex", alignItems:"center", gap:6 }}>
+            <span style={{ fontSize:"0.6rem", fontWeight:800, color:"#D97706",
+              textTransform:"uppercase", letterSpacing:"0.08em" }}>🐋 Live Whale Alerts</span>
+            <span style={{ background:"#EF4444", color:"#fff", fontSize:"0.6rem",
+              fontWeight:800, padding:"1px 6px", borderRadius:99 }}>
+              {wallets.filter(w => walletData[w.address]?.recentAlert && !w.muted).length} active
+            </span>
+          </div>
+          {wallets.filter(w => walletData[w.address]?.recentAlert && !w.muted).map(w => {
+            const d = walletData[w.address]
+            const t = d?.trades?.[0]
+            const isBuy = t?.type === "buy"
+            return (
+              <div key={w.address} style={{
+                display:"flex", alignItems:"center", gap:10, padding:"10px 12px",
+                borderRadius:10,
+                background: isBuy ? "rgba(5,150,105,0.07)" : "rgba(239,68,68,0.07)",
+                border: `1px solid ${isBuy ? "rgba(5,150,105,0.2)" : "rgba(239,68,68,0.2)"}`,
+              }}>
+                <span style={{ fontSize:"1.125rem" }}>{isBuy ? "🟢" : "🔴"}</span>
+                <div style={{ flex:1, minWidth:0 }}>
+                  <p style={{ fontSize:"0.8125rem", fontWeight:800,
+                    color: isBuy ? "#059669" : "#EF4444" }}>
+                    {isBuy ? "BUY" : "SELL"} · {w.label}
+                  </p>
+                  <p style={{ fontSize:"0.75rem", color:"#6E6E73" }}>
+                    {t ? `${fmt(t.amount67)} $67 · ${fmtUsd(t.amount67 * (d?.price67 ?? 0))}` : "Large activity detected"}
+                  </p>
+                </div>
+                <a href={`https://solscan.io/account/${w.address}`} target="_blank" rel="noreferrer"
+                  style={{ display:"flex", alignItems:"center", gap:4, padding:"4px 10px",
+                    borderRadius:7, background:"rgba(99,102,241,0.1)",
+                    border:"1px solid rgba(99,102,241,0.2)", textDecoration:"none",
+                    fontSize:"0.6875rem", fontWeight:700, color:"#6366F1", flexShrink:0 }}>
+                  <ExternalLink style={{ width:11, height:11 }} /> Solscan
+                </a>
+              </div>
+            )
+          })}
+        </div>
+      )}
+
       {/* Header bar */}
       <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between" }}>
         <div style={{ display:"flex", gap:12 }}>
