@@ -171,20 +171,7 @@ export function KanbanBoard() {
 
   return (
     <>
-      {/* Supabase status bar */}
-      <div style={{
-        display:"flex", alignItems:"center", gap:8, marginBottom:20,
-        padding:"8px 14px", borderRadius:10, width:"fit-content",
-        background: isLive ? "rgba(16,185,129,0.08)" : "rgba(245,166,35,0.08)",
-        border: `1px solid ${isLive ? "rgba(16,185,129,0.2)" : "rgba(245,166,35,0.2)"}`,
-      }}>
-        <Database style={{ width:13, height:13, color: isLive ? "#10B981" : "#F5A623" }} />
-        {isLive
-          ? <><Wifi style={{ width:13, height:13, color:"#10B981" }} /><span style={{ fontSize:"0.75rem", fontWeight:600, color:"#10B981" }}>Supabase Live — changes saved in real-time</span></>
-          : <><WifiOff style={{ width:13, height:13, color:"#F5A623" }} /><span style={{ fontSize:"0.75rem", fontWeight:600, color:"#C8820A" }}>Local mode — configure Supabase to persist tasks</span></>
-        }
-        {loading && <span style={{ fontSize:"0.6875rem", color:"#8E8E93" }}>Syncing…</span>}
-      </div>
+
 
       <FilterBar filters={filters} setFilters={setFilters} />
 
