@@ -158,9 +158,10 @@ export function ContentCreatorCard() {
     finally     { setLoading(false) }
   }
 
-  // Regenerate: replace current top 3 with new 3 (no blank flash)
+  // Regenerate: clear all drafts, generate 3 fresh ones
   async function generateNew() {
     if (!topic.trim() || loading) return
+    setDrafts([])
     setLoading(true)
     try {
       const results = await Promise.all([1,2,3].map((variation) =>
@@ -172,9 +173,7 @@ export function ContentCreatorCard() {
       ))
       const valid = results.filter(j => !j.error)
       if (valid.length > 0) {
-        // Replace only the first 3 (current batch), keep approved ones
-        const newDrafts = valid.map(j => ({ ...j, platform, region, approved: false }))
-        setDrafts(prev => [...newDrafts, ...prev.filter(d => d.approved)])
+        setDrafts(valid.map(j => ({ ...j, platform, region, approved: false })))
       }
     } catch (e) { console.error(e) }
     finally     { setLoading(false) }
