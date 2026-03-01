@@ -224,7 +224,12 @@ export function CommunityCard() {
       <div style={{ background:"linear-gradient(135deg, #5865F2, #7289DA)", borderRadius:16, padding:"20px 18px" }}>
         <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:12 }}>
           <div>
+            <div style={{ display:"flex", alignItems:"center", gap:7 }}>
+            <svg width="16" height="12" viewBox="0 0 71 55" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M60.1 4.9A58.6 58.6 0 0045.6.9a40.5 40.5 0 00-1.8 3.7 54.2 54.2 0 00-16.2 0A39 39 0 0025.8.9 58.5 58.5 0 0011.3 5C1.6 19.1-1 32.8.3 46.4a59 59 0 0018 9.1 44.7 44.7 0 003.8-6.2 38.4 38.4 0 01-6-2.9l1.5-1.1a42.2 42.2 0 0036.2 0l1.5 1.1a38.4 38.4 0 01-6 2.9 44.7 44.7 0 003.8 6.2 58.7 58.7 0 0018-9.1C72 30.6 68 17 60.1 4.9zM23.7 38.2c-3.5 0-6.4-3.2-6.4-7.2s2.8-7.2 6.4-7.2c3.5 0 6.4 3.2 6.3 7.2 0 4-2.8 7.2-6.3 7.2zm23.6 0c-3.5 0-6.4-3.2-6.4-7.2s2.8-7.2 6.4-7.2c3.5 0 6.3 3.2 6.3 7.2 0 4-2.8 7.2-6.3 7.2z" fill="white" opacity="0.7"/>
+            </svg>
             <p style={{ fontSize:"0.6875rem", fontWeight:700, color:"rgba(255,255,255,0.55)", letterSpacing:"0.08em", textTransform:"uppercase", margin:0 }}>Discord</p>
+          </div>
             <div style={{ display:"flex", alignItems:"baseline", gap:8, marginTop:4 }}>
               <p style={{ fontSize:"3rem", fontWeight:900, color:"#fff", letterSpacing:"-0.055em", lineHeight:1, margin:0 }}>{fmtM}</p>
               {!!discordDelta && (
@@ -332,7 +337,18 @@ export function CommunityCard() {
             </div>
             {xCommunity > 0 && (
               <div style={{ textAlign:"right" }}>
-                <p style={{ fontSize:"1.25rem", fontWeight:800, color:"#F5A623", lineHeight:1, margin:0 }}>{xCommunity.toLocaleString()}</p>
+                <div style={{ display:"flex", alignItems:"center", gap:6, justifyContent:"flex-end" }}>
+                  <p style={{ fontSize:"1.25rem", fontWeight:800, color:"#F5A623", lineHeight:1, margin:0 }}>{xCommunity.toLocaleString()}</p>
+                  {xCommunityDelta !== 0 && (
+                    <span style={{
+                      fontSize:"0.6875rem", fontWeight:800, padding:"2px 7px", borderRadius:99,
+                      background: xCommunityDelta > 0 ? "rgba(5,150,105,0.25)" : "rgba(239,68,68,0.25)",
+                      color: xCommunityDelta > 0 ? "#34D399" : "#F87171",
+                    }}>
+                      {xCommunityDelta > 0 ? "+" : ""}{xCommunityDelta}
+                    </span>
+                  )}
+                </div>
                 <p style={{ fontSize:"0.625rem", color:"rgba(255,255,255,0.5)", fontWeight:600, textTransform:"uppercase", letterSpacing:"0.06em" }}>Community</p>
               </div>
             )}
