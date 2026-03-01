@@ -181,7 +181,7 @@ function timeAgoStr(iso: string): string {
 }
 
 // Keywords to match in crypto RSS feeds
-const NEWS_KEYWORDS = ["67coin", "67 coin", "$67", "maverick 67", "official 67"]
+const NEWS_KEYWORDS = ["67coin", "the official 67", "$67 solana", "maverick 67", "official 67 coin", "67 coin solana", "pump.fun"]
 
 function matchesKeyword(text: string): boolean {
   const lower = text.toLowerCase()
@@ -236,7 +236,7 @@ async function fetchNewsFeed() {
   }[] = []
 
   // ── Google News RSS (searches directly for 67coin) ─────────────────────────
-  const GN_QUERIES = ["67coin", '"67 coin" crypto', '"67 coin" solana', 'maverick "67 coin"', '$67 memecoin']
+  const GN_QUERIES = ['"The Official 67 Coin"', '"67coin" solana', 'maverick "67 coin"', '$67 solana memecoin', '"67 coin" pump.fun']
   try {
     const rssResults = await Promise.allSettled(
       GN_QUERIES.map(q =>
