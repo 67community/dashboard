@@ -213,7 +213,7 @@ export default function Dashboard() {
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><EmailInboxCard /></div>
       </div>
 
-      {/* Responsive grid styles */
+      {/* Responsive grid styles */}
       <style>{`
         @media (max-width: 1024px) { .cards-grid { grid-template-columns: repeat(2, 1fr) !important; } }
         @media (max-width: 640px)  { .cards-grid { grid-template-columns: 1fr !important; } }
