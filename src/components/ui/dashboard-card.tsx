@@ -152,7 +152,7 @@ export function DashboardCard({
         {/* Accent bar */}
         <div style={{ height: 3, background: `linear-gradient(90deg,${accentColor},${accentColor}33)`, flexShrink: 0, position: "relative", zIndex: 1 }} />
 
-        <div className="mc-card-body">
+        <div className="mc-card-body" style={compact ? { gap: 0, paddingBottom: 12 } : undefined}>
           {/* Header */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
@@ -196,7 +196,7 @@ export function DashboardCard({
           </div>
 
           {/* Collapsed body */}
-          <div className="flex-1" style={compact ? { maxHeight: 80, overflow: "hidden" } : undefined}>{collapsed}</div>
+          <div className="flex-1" style={compact ? { maxHeight: 0, overflow: "hidden", padding: 0, margin: 0 } : undefined}>{collapsed}</div>
         </div>
       </div>
 
