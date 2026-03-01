@@ -108,16 +108,16 @@ function WalletRow({
         </div>
 
         {data ? (
-          <div style={{ display:"flex", gap:6, alignItems:"center", flexShrink:0 }}>
-            <div style={{ textAlign:"right" }}>
-              <p style={{ fontSize:"0.875rem", fontWeight:800,
-                color: data.balance67 > 0 ? "#F5A623" : "#C7C7CC", lineHeight:1.1 }}>
-                {fmt(data.balance67)} <span style={{ fontSize:"0.6rem", color:"#8E8E93", fontWeight:600 }}>$67</span>
-              </p>
-              <div style={{ display:"flex", gap:6, justifyContent:"flex-end", alignItems:"center" }}>
-                <span style={{ fontSize:"0.6875rem", color:"#9945FF", fontWeight:700 }}>{data.balanceSol.toFixed(2)} SOL</span>
-                <span style={{ fontSize:"0.6875rem", color:"#059669", fontWeight:700 }}>{fmtUsd(data.valueUsd)}</span>
-              </div>
+          <div style={{ textAlign:"right", flexShrink:0 }}>
+            <p style={{ fontSize:"0.875rem", fontWeight:800,
+              color: data.balance67 > 0 ? "#F5A623" : "#C7C7CC", lineHeight:1.1 }}>
+              {fmt(data.balance67)} <span style={{ fontSize:"0.6rem", color:"#8E8E93", fontWeight:600 }}>$67</span>
+            </p>
+            <div style={{ display:"flex", gap:5, justifyContent:"flex-end", flexWrap:"wrap" }}>
+              <span style={{ fontSize:"0.6rem", color:"#9945FF", fontWeight:700 }}>{data.balanceSol.toFixed(2)} SOL</span>
+              <span style={{ fontSize:"0.6rem", color:"#059669", fontWeight:700 }}>{fmtUsd(data.valueUsd)}</span>
+              {data.totalBought > 0 && <span style={{ fontSize:"0.6rem", color:"#059669", fontWeight:700 }}>↑{fmt(data.totalBought)}</span>}
+              {data.totalSold > 0 && <span style={{ fontSize:"0.6rem", color:"#EF4444", fontWeight:700 }}>↓{fmt(data.totalSold)}</span>}
             </div>
           </div>
         ) : (
@@ -518,6 +518,25 @@ export function WalletTrackerCard() {
       const data = await res.json()
       const map: Record<string, WalletData> = {}
       for (const d of (data.wallets ?? [])) map[d.address] = d
+
+      // 🔔 Browser notification on high activity
+      const alerts = (data.wallets ?? []).filter((d: WalletData) => d.recentAlert)
+      if (alerts.length > 0 && "Notification" in window) {
+        if (Notification.permission === "default") Notification.requestPermission()
+        if (Notification.permission === "granted") {
+          for (const a of alerts) {
+            const lastTrade = a.trades?.[0]
+            if (lastTrade) {
+              const usd = (lastTrade.amount67 * (data.price67 ?? 0)).toFixed(0)
+              new Notification(`🚨 $67 ${lastTrade.type.toUpperCase()} Alert`, {
+                body: `${a.label}: ${lastTrade.type === "buy" ? "Bought" : "Sold"} ${lastTrade.amount67.toLocaleString(undefined,{maximumFractionDigits:0})} $67 (~$${usd})`,
+                icon: "/favicon.ico",
+              })
+            }
+          }
+        }
+      }
+
       setWalletData(map)
       setLastFetch(new Date().toISOString())
       if (data.price67) setLastPrice(data.price67)
