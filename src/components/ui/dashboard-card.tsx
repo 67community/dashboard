@@ -43,7 +43,7 @@ export function DashboardCard({
   // Close on Escape
   useEffect(() => {
     if (!open) return
-    const handler = (e: KeyboardEvent) => { if (e.key === "Escape") setOpen(false) }
+    const handler = (e: KeyboardEvent) => { if (e.key === "Escape") { setOpen(false); onClose?.() } }
     window.addEventListener("keydown", handler)
     return () => window.removeEventListener("keydown", handler)
   }, [open])
