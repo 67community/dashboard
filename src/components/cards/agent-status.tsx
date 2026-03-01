@@ -86,7 +86,7 @@ export function AgentStatusCard() {
 
   return (
     <DashboardCard
-      title="Agent Status"
+      title="Activities"
       subtitle="Bots & Automation"
       icon={<Bot style={{ width:16, height:16 }} />}
       accentColor="#F5A623"

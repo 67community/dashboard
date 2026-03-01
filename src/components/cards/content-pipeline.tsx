@@ -402,7 +402,7 @@ export function ContentPipelineCard() {
 
   return (
     <DashboardCard
-      title="Content Pipeline"
+      title="Content"
       subtitle="Calendar · Schedule · Mix"
       icon={<Calendar style={{ width: 16, height: 16 }} />}
       accentColor="#F5A623"

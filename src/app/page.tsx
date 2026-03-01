@@ -115,11 +115,14 @@ export default function Dashboard() {
         @media (max-width: 500px)  { .hero-stats-grid { grid-template-columns: 1fr !important; } }
       `}</style>
 
-      {/* ══ Compact Tool Row ══════════════════════════════════ */}
-      <div style={{ display:"grid", gridTemplateColumns:"repeat(3, 1fr)", gap:12, marginBottom:8 }}>
-        <div style={{ display:"flex", minWidth:0, maxHeight:280, overflow:"hidden" }}><ContentCreatorCard /></div>
-        <div style={{ display:"flex", minWidth:0, maxHeight:280, overflow:"hidden" }}><WalletTrackerCard /></div>
-        <div style={{ display:"flex", minWidth:0, maxHeight:280, overflow:"hidden" }}><TeamNotesCard /></div>
+      {/* ══ Top Section — Community | Coin | Announcements+Raid ══════ */}
+      <div style={{ display:"grid", gridTemplateColumns:"repeat(3, 1fr)", gap:20, marginBottom:0, alignItems:"start" }}>
+        <div style={{ display:"flex", minWidth:0 }}><CommunityCard /></div>
+        <div style={{ display:"flex", minWidth:0 }}><TokenHealthCard /></div>
+        <div style={{ display:"flex", flexDirection:"column", gap:20, minWidth:0 }}>
+          <AnnouncementsCard />
+          <RaidCoordinatorCard />
+        </div>
       </div>
 
       {/* ══ Cards Grid ═════════════════════════════════════════ */}
@@ -127,24 +130,30 @@ export default function Dashboard() {
         className="cards-grid"
         style={{ display:"grid", gridTemplateColumns:"repeat(3, 1fr)", gap:20 }}
       >
-        <div className="enter-2" style={{ display:"flex", minWidth:0 }}><DailyBriefingCard /></div>
-        <div className="enter-3" style={{ display:"flex", minWidth:0 }}><TokenHealthCard /></div>
+        {/* Row: Content | Activities | X Spotlight */}
+        <div className="enter-2" style={{ display:"flex", minWidth:0 }}><ContentPipelineCard /></div>
+        <div className="enter-2" style={{ display:"flex", minWidth:0 }}><AgentStatusCard /></div>
+        <div className="enter-2" style={{ display:"flex", minWidth:0 }}><SocialPulseCard /></div>
+        {/* Row: TikTok | YouTube | Content Creator */}
+        <div className="enter-3" style={{ display:"flex", minWidth:0 }}><TikTokSpotlightCard /></div>
+        <div className="enter-3" style={{ display:"flex", minWidth:0 }}><YouTubeSpotlightCard /></div>
+        <div className="enter-3" style={{ display:"flex", minWidth:0, maxHeight:280, overflow:"hidden" }}><ContentCreatorCard /></div>
+        {/* Row: Wallet Tracker | Outreach | News Feed */}
+        <div className="enter-4" style={{ display:"flex", minWidth:0, maxHeight:280, overflow:"hidden" }}><WalletTrackerCard /></div>
+        <div className="enter-4" style={{ display:"flex", minWidth:0 }}><OutreachCard /></div>
+        <div className="enter-4" style={{ display:"flex", minWidth:0 }}><NewsFeedCard /></div>
+        {/* Row: X Live Feed | Post Timing | Daily Briefing */}
+        <div className="enter-5" style={{ display:"flex", minWidth:0 }}><XLiveFeedCard /></div>
+        <div className="enter-5" style={{ display:"flex", minWidth:0 }}><PostTimingCard /></div>
+        <div className="enter-5" style={{ display:"flex", minWidth:0 }}><DailyBriefingCard /></div>
         <div className="enter-4" style={{ display:"flex", minWidth:0 }}><SocialPulseCard /></div>
-        <div className="enter-5" style={{ display:"flex", minWidth:0 }}><CommunityCard /></div>
-        <div className="enter-6" style={{ display:"flex", minWidth:0 }}><YouTubeSpotlightCard /></div>
-        <div className="enter-6" style={{ display:"flex", minWidth:0 }}><TikTokSpotlightCard /></div>
         <div className="enter-6" style={{ display:"flex", minWidth:0 }}><PostTimingCard /></div>
-        <div className="enter-7" style={{ display:"flex", minWidth:0 }}><XLiveFeedCard /></div>
-        <div className="enter-8" style={{ display:"flex", minWidth:0 }}><NewsFeedCard /></div>
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><EmailInboxCard /></div>
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><InstagramSpotlightCard /></div>
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><FeatureRequestCard /></div>
-        <div className="enter-9" style={{ display:"flex", minWidth:0 }}><OutreachCard /></div>
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><SightingsCard /></div>
-        <div className="enter-9" style={{ display:"flex", minWidth:0 }}><RaidCoordinatorCard /></div>
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><CommunityEventsCard /></div>
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><ExchangeTrackerCard /></div>
-        <div className="enter-9" style={{ display:"flex", minWidth:0 }}><AnnouncementsCard /></div>
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><CommunityLeaderboardCard /></div>
       </div>
 
@@ -201,9 +210,12 @@ export default function Dashboard() {
             <McProgressBar mcap={liveMcap ?? data?.token_health?.market_cap ?? null} />
           </div>
         </div>
+        {/* Bottom row: Notes + Email */}
+        <div className="enter-9" style={{ display:"flex", minWidth:0, maxHeight:280, overflow:"hidden" }}><TeamNotesCard /></div>
+        <div className="enter-9" style={{ display:"flex", minWidth:0 }}><EmailInboxCard /></div>
       </div>
 
-      {/* Responsive grid styles */}
+      {/* Responsive grid styles */
       <style>{`
         @media (max-width: 1024px) { .cards-grid { grid-template-columns: repeat(2, 1fr) !important; } }
         @media (max-width: 640px)  { .cards-grid { grid-template-columns: 1fr !important; } }
