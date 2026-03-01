@@ -126,6 +126,8 @@ export function CommunityCard() {
   const legacyActivity= (c?.recent_discord_activity ?? []) as ActivityItem[]
   // X / Twitter
   const xFollowers    = sp?.twitter_followers    ?? 0
+  const bestTweet48h  = sp?.best_tweet_2d
+  const bestTweetWeek = sp?.best_tweet_week
   const xDelta        = sp?.follower_change_24h  ?? 0
   const xCommunity    = sp?.x_community_members  ?? 0
   const xCommunityDelta = sp?.x_community_delta_24h ?? 0
@@ -370,6 +372,50 @@ export function CommunityCard() {
           </div>
         </div>
       </div>
+
+      {/* ── Trending Posts ── */}
+      {(bestTweet48h || bestTweetWeek) && (
+        <div>
+          <p style={{ fontSize:"0.6875rem", fontWeight:800, color:"#8E8E93",
+            textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:10 }}>
+            Trending Posts
+          </p>
+          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:12 }}>
+            {[
+              { label:"Best · 48h", tweet: bestTweet48h },
+              { label:"Best · 7 days", tweet: bestTweetWeek },
+            ].map(({ label, tweet }) => tweet ? (
+              <a key={label} href={tweet.tweet_url} target="_blank" rel="noreferrer"
+                style={{ textDecoration:"none", display:"block",
+                  background:"#000", borderRadius:14, padding:"14px 16px",
+                  border:"1px solid rgba(255,255,255,0.08)" }}>
+                <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:8 }}>
+                  <span style={{ fontSize:"0.625rem", fontWeight:800, color:"rgba(255,255,255,0.4)",
+                    textTransform:"uppercase", letterSpacing:"0.08em" }}>{label}</span>
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="white" opacity="0.5">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.739l7.73-8.835L1.254 2.25H8.08l4.258 5.63 5.906-5.63Z"/>
+                  </svg>
+                </div>
+                <p style={{ fontSize:"0.8125rem", color:"#fff", lineHeight:1.5, margin:"0 0 10px 0",
+                  display:"-webkit-box", WebkitLineClamp:3, WebkitBoxOrient:"vertical", overflow:"hidden" }}>
+                  {tweet.text}
+                </p>
+                <div style={{ display:"flex", gap:14 }}>
+                  <span style={{ fontSize:"0.75rem", color:"rgba(255,255,255,0.5)", fontWeight:600 }}>
+                    ❤️ {tweet.likes.toLocaleString()}
+                  </span>
+                  <span style={{ fontSize:"0.75rem", color:"rgba(255,255,255,0.5)", fontWeight:600 }}>
+                    💬 {tweet.replies.toLocaleString()}
+                  </span>
+                  <span style={{ fontSize:"0.75rem", color:"rgba(255,255,255,0.35)", marginLeft:"auto" }}>
+                    {new Date(tweet.date).toLocaleDateString()}
+                  </span>
+                </div>
+              </a>
+            ) : null)}
+          </div>
+        </div>
+      )}
 
       {/* ── Progress bar ── */}
       <div className="inset-cell">
@@ -644,6 +690,7 @@ export function CommunityCard() {
 
   return (
     <DashboardCard
+      expandedMaxWidth={900}
       title="Community"
       subtitle="Discord · Telegram · X"
       icon={<Users style={{ width:16, height:16 }} />}
