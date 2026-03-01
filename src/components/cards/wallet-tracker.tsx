@@ -884,6 +884,7 @@ export function WalletTrackerCard() {
   return (
     <DashboardCard compact
       title="Wallet Tracker"
+      noAutoOpen
       subtitle="Track · Alert · Monitor"
       icon={<Wallet style={{ width:16, height:16 }} />}
       accentColor="#F5A623"
