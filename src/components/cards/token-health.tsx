@@ -1,4 +1,5 @@
 "use client"
+import React from "react"
 
 import { TrendingUp, TrendingDown, Coins, ExternalLink } from "lucide-react"
 import { DashboardCard } from "@/components/ui/dashboard-card"
@@ -21,6 +22,79 @@ function Chg({ v, size="sm" }: { v: number; size?: "sm"|"md" }) {
       <Icon style={{ width:11, height:11 }} />
       {up ? "+" : ""}{v.toFixed(2)}%
     </span>
+  )
+}
+
+// ── Exchange Section (embedded in Coin Health) ───────────────────────────────
+type ExchangeStatus = "listed" | "in-progress" | "target" | "rejected"
+interface Exchange {
+  id:         string
+  name:       string
+  url?:       string
+  status:     ExchangeStatus
+  appliedAt?: string
+  listedAt?:  string
+  volume?:    string
+  note?:      string
+  tier:       1 | 2 | 3
+}
+const DEFAULT_EXCHANGES: Exchange[] = [
+  { id:"1",  name:"BingX",         status:"listed",      tier:2, listedAt:"2026-01-01", url:"https://bingx.com" },
+  { id:"2",  name:"MEXC",          status:"listed",      tier:1, listedAt:"2026-01-01", url:"https://mexc.com"  },
+  { id:"3",  name:"Gate.io Alpha", status:"listed",      tier:1, listedAt:"2026-01-01", url:"https://gate.io"   },
+  { id:"4",  name:"LBank",         status:"listed",      tier:2, listedAt:"2026-01-01", url:"https://lbank.com" },
+  { id:"5",  name:"Moonshot",      status:"listed",      tier:2, listedAt:"2026-01-01", url:"https://moonshot.money" },
+  { id:"6",  name:"BitMart",       status:"listed",      tier:2, listedAt:"2026-01-01", url:"https://bitmart.com" },
+  { id:"7",  name:"Bitrue Alpha",  status:"listed",      tier:2, listedAt:"2026-01-01", url:"https://bitrue.com" },
+  { id:"8",  name:"KCEX",          status:"listed",      tier:3, listedAt:"2026-01-01" },
+  { id:"9",  name:"BITKAN",        status:"listed",      tier:3, listedAt:"2026-01-01" },
+  { id:"10", name:"CEX.IO",        status:"listed",      tier:2, listedAt:"2026-01-01", url:"https://cex.io" },
+  { id:"11", name:"KuCoin Alpha",  status:"listed",      tier:1, listedAt:"2026-01-01", url:"https://kucoin.com" },
+  { id:"12", name:"WEEX",          status:"listed",      tier:2, listedAt:"2026-01-01", url:"https://weex.com" },
+  { id:"13", name:"CoinMarketCap", status:"listed",      tier:1, listedAt:"2026-01-01", url:"https://coinmarketcap.com" },
+  { id:"14", name:"CoinGecko",     status:"listed",      tier:1, listedAt:"2026-01-01", url:"https://coingecko.com" },
+  { id:"15", name:"Bybit",         status:"in-progress", tier:1, appliedAt:"2026-02-01", url:"https://bybit.com", note:"Application submitted" },
+  { id:"16", name:"OKX.US",        status:"target",      tier:1, url:"https://okx.com" },
+  { id:"17", name:"Bitget",        status:"target",      tier:1, url:"https://bitget.com" },
+  { id:"18", name:"Crypto.com",    status:"target",      tier:1, url:"https://crypto.com" },
+]
+const TIER_CONFIG = {
+  1: { label: "Tier 1", color: "#F5A623" },
+  2: { label: "Tier 2", color: "#2563EB" },
+  3: { label: "Tier 3", color: "#8E8E93" },
+}
+
+function ExchangeSection() {
+  const [exchanges, setExchanges] = React.useState<Exchange[]>(DEFAULT_EXCHANGES)
+  React.useEffect(() => {
+    const s = localStorage.getItem("67_exchanges")
+    if (s) setExchanges(JSON.parse(s))
+  }, [])
+  const listed   = exchanges.filter(e => e.status === "listed")
+  const progress = exchanges.filter(e => e.status === "in-progress")
+  return (
+    <div>
+      <p style={{ fontSize:"0.6875rem", fontWeight:800, color:"#8E8E93",
+        textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:10 }}>
+        Exchanges — {listed.length} listed · {progress.length} in progress
+      </p>
+      <div style={{ display:"flex", flexWrap:"wrap", gap:5, marginBottom:8 }}>
+        {listed.map(e => (
+          <span key={e.id} style={{ fontSize:"0.75rem", fontWeight:600, color:"#059669",
+            background:"rgba(5,150,105,0.08)", padding:"3px 10px", borderRadius:99 }}>
+            ✓ {e.name}
+          </span>
+        ))}
+      </div>
+      {progress.map(e => (
+        <div key={e.id} style={{ display:"flex", alignItems:"center", gap:8, padding:"6px 0",
+          borderTop:"1px solid rgba(0,0,0,0.05)" }}>
+          <span>⏳</span>
+          <span style={{ fontSize:"0.875rem", fontWeight:700, color:"#D97706" }}>{e.name}</span>
+          {e.note && <span style={{ fontSize:"0.75rem", color:"#8E8E93" }}>— {e.note}</span>}
+        </div>
+      ))}
+    </div>
   )
 }
 
@@ -269,6 +343,9 @@ export function TokenHealthCard() {
           <VolumeList items={dexVols} color="#8B5CF6" />
         </div>
       )}
+
+      {/* ── Exchange Listings ── */}
+      <ExchangeSection />
 
       {/* ── Links — premium with logos ── */}
       <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8 }}>
