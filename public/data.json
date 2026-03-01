@@ -1,34 +1,34 @@
 {
-  "last_updated": "2026-03-01T08:30:00.946784Z",
+  "last_updated": "2026-03-01T09:30:00.619802Z",
   "token_health": {
-    "price": 0.001531,
-    "price_change_m5": -1.15,
-    "price_change_1h": -1.03,
-    "price_change_6h": 5.85,
-    "price_change_24h": 12.13,
-    "market_cap": 1530757,
-    "liquidity": 229986.74,
-    "volume_m5": 0.23,
-    "volume_1h": 9759.01,
-    "volume_6h": 24418.17,
-    "volume_24h": 131321.96,
-    "volume_ratio_1h": 1.78,
+    "price": 0.00151,
+    "price_change_m5": 0.26,
+    "price_change_1h": -2.33,
+    "price_change_6h": 3.37,
+    "price_change_24h": 15.85,
+    "market_cap": 1510390,
+    "liquidity": 227079.95,
+    "volume_m5": 315.76,
+    "volume_1h": 2980.59,
+    "volume_6h": 23715.59,
+    "volume_24h": 130524.83,
+    "volume_ratio_1h": 0.55,
     "buys_24h": 722,
-    "sells_24h": 521,
-    "buys_1h": 26,
-    "sells_1h": 34,
-    "holders": 16820,
-    "holder_trend": -27,
+    "sells_24h": 513,
+    "buys_1h": 20,
+    "sells_1h": 18,
+    "holders": 16814,
+    "holder_trend": -33,
     "sentiment": "bull",
     "_source": "dexscreener",
-    "cmc_rank": 1744,
-    "total_volume_24h": 1062675.57953933,
-    "volume_change_pct": -3.47,
-    "volume_change_usd": -38237.94,
-    "mcap_change_pct": 28.64,
-    "mcap_change_usd": 340839,
-    "liquidity_change_pct": 18.97,
-    "liquidity_change_usd": 36676.45,
+    "cmc_rank": 1754,
+    "total_volume_24h": 1048202.07422018,
+    "volume_change_pct": -4.79,
+    "volume_change_usd": -52711.45,
+    "mcap_change_pct": 26.93,
+    "mcap_change_usd": 320472,
+    "liquidity_change_pct": 17.47,
+    "liquidity_change_usd": 33769.66,
     "biggest_trades": {
       "biggest_buy_usd": 3237.96,
       "biggest_buy_tx": "3DbCNYPk3AA3M61FBQPDR37HuedqUkiMFfKn5NwTbgeeEZgejr5tDdWdPWLRVDg8L4RFUGsXsdKPswgq175GB2V5",
@@ -45,7 +45,7 @@
     "twitter_followers": 1659,
     "follower_change_24h": 0,
     "posting_streak_days": 7,
-    "engagement_rate": 3.725,
+    "engagement_rate": 3.731,
     "_source": "nitter_rss+twitter_cdn",
     "best_tweet_week": {
       "tweet_id": "2027403892414398746",
@@ -67,9 +67,9 @@
       "date": "Feb 28",
       "embed_html": "<blockquote class=\"twitter-tweet\" align=\"center\" data-width=\"520\" data-dnt=\"true\" data-theme=\"dark\"><p lang=\"en\" dir=\"ltr\">2,125,161 people have already played <a href=\"https://t.co/CJIc5ceVMW\">https://t.co/CJIc5ceVMW</a><br><br>Only attempt if you are serious about 67.<br><br>PLEASE warm-up beforehand. <a href=\"https://t.co/1UGnNoNMft\">pic.twitter.com/1UGnNoNMft</a></p>&mdash; The Official 67 Coin (@67coinX) <a href=\"https://twitter.com/67coinX/status/2027556903048396960?ref_src=twsrc%5Etfw\">February 28, 2026</a></blockquote>\n\n"
     },
-    "avg_engagement": 61.8,
+    "avg_engagement": 61.9,
     "twitter_followers_updated_at": "2026-02-28T21:30:12.958372Z",
-    "total_engagement_7d": 556,
+    "total_engagement_7d": 557,
     "follower_history": [
       {
         "date": "2026-02-24",
@@ -100,8 +100,8 @@
     "content_type_stats": {
       "meme": {
         "count": 6,
-        "total_eng": 438,
-        "avg_eng": 73.0
+        "total_eng": 439,
+        "avg_eng": 73.2
       },
       "thesis": {
         "count": 1,
@@ -124,7 +124,7 @@
   "community": {
     "discord_members": 1450,
     "active_7d": 1870,
-    "new_joins_24h": 20,
+    "new_joins_24h": 21,
     "open_tickets": 3,
     "unanswered_posts": 7,
     "telegram_members": 2432,
@@ -175,7 +175,7 @@
     ],
     "sentiment_up_pct": 50.0,
     "sentiment_down_pct": 50.0,
-    "online_now": 80,
+    "online_now": 81,
     "discord_delta_24h": 1,
     "telegram_delta_24h": 0,
     "watchlist_delta_24h": 0,
@@ -185,7 +185,7 @@
         "user": "w3b8",
         "user_id": "908761821798871100",
         "avatar": "https://cdn.discordapp.com/avatars/908761821798871100/17ad82ac229b13afee48706e7fac2c34.webp?size=64",
-        "time_ago": "6h ago",
+        "time_ago": "7h ago",
         "detail": "Bot Action"
       },
       {
@@ -193,7 +193,7 @@
         "user": "dyllpyckle",
         "user_id": "943205628367761408",
         "avatar": "https://cdn.discordapp.com/avatars/943205628367761408/5161093a6e9af36e5e3849a13ab291bd.webp?size=64",
-        "time_ago": "7h ago",
+        "time_ago": "8h ago",
         "detail": "Bot Action"
       },
       {
@@ -201,7 +201,7 @@
         "user": "dimi_serb21",
         "user_id": "786965721614647326",
         "avatar": "https://cdn.discordapp.com/avatars/786965721614647326/3f8bb8124b5974e7f4427d7603f20226.webp?size=64",
-        "time_ago": "7h ago",
+        "time_ago": "8h ago",
         "detail": "Bot Action"
       },
       {
@@ -209,7 +209,7 @@
         "user": "dimi_serb21",
         "user_id": "786965721614647326",
         "avatar": "https://cdn.discordapp.com/avatars/786965721614647326/3f8bb8124b5974e7f4427d7603f20226.webp?size=64",
-        "time_ago": "7h ago",
+        "time_ago": "8h ago",
         "detail": "Introduced in Discord"
       },
       {
@@ -217,7 +217,7 @@
         "user": "dyllpyckle",
         "user_id": "943205628367761408",
         "avatar": "https://cdn.discordapp.com/avatars/943205628367761408/5161093a6e9af36e5e3849a13ab291bd.webp?size=64",
-        "time_ago": "7h ago",
+        "time_ago": "8h ago",
         "detail": "Introduced in Discord"
       },
       {
@@ -225,7 +225,7 @@
         "user": "w3b8",
         "user_id": "908761821798871100",
         "avatar": "https://cdn.discordapp.com/avatars/908761821798871100/17ad82ac229b13afee48706e7fac2c34.webp?size=64",
-        "time_ago": "22h ago",
+        "time_ago": "23h ago",
         "detail": "Introduced in Discord"
       },
       {
@@ -278,7 +278,7 @@
       }
     ],
     "telegram_mod_events": [],
-    "active_users_today": 16,
+    "active_users_today": 10,
     "top_channels": [
       {
         "channel_id": "1458846146415034460",
@@ -371,7 +371,7 @@
   "milestones": [
     {
       "label": "10K Holders",
-      "current": 16820,
+      "current": 16814,
       "target": 10000
     },
     {
@@ -386,7 +386,7 @@
     },
     {
       "label": "$6.7M Market Cap",
-      "current": 1530757,
+      "current": 1510390,
       "target": 6700000
     }
   ],
@@ -412,13 +412,13 @@
   "alerts": [
     {
       "type": "success",
-      "message": "\ud83d\udcc8 Price up 12.1% in 24h \u2014 $0.001531",
-      "timestamp": "2026-03-01T08:31:25.122546Z"
+      "message": "\ud83d\udcc8 Price up 15.8% in 24h \u2014 $0.001510",
+      "timestamp": "2026-03-01T09:31:33.565913Z"
     },
     {
       "type": "success",
-      "message": "\ud83d\udd25 Near ALL-TIME HIGH! Only 0.0% away \u2014 $0.001531",
-      "timestamp": "2026-03-01T08:31:25.122546Z"
+      "message": "\ud83d\udd25 Near ALL-TIME HIGH! Only 0.0% away \u2014 $0.001510",
+      "timestamp": "2026-03-01T09:31:33.565913Z"
     }
   ],
   "coingecko": {
@@ -480,15 +480,15 @@
     "_source": "coingecko"
   },
   "coinmarketcap": {
-    "cmc_rank": 1744,
+    "cmc_rank": 1754,
     "cmc_id": "38918",
-    "price": 0.0015386695843044437,
-    "volume_24h": 1062675.57953933,
-    "market_cap": 1538177.2100374664,
-    "change_1h": 4.16920543,
-    "change_24h": 11.85915372,
-    "change_7d": -45.3737596,
-    "change_30d": -73.05349092,
+    "price": 0.0015064388623049951,
+    "volume_24h": 1048202.07422018,
+    "market_cap": 1505956.8018690576,
+    "change_1h": -2.09471366,
+    "change_24h": 15.39713768,
+    "change_7d": -45.98942614,
+    "change_30d": -72.98638751,
     "market_pairs": 45,
     "_source": "coinmarketcap"
   },
@@ -514,7 +514,7 @@
     "965681608604647514": "offline",
     "201710326347988993": "offline"
   },
-  "presence_updated": "2026-03-01T08:25:07.315145Z",
+  "presence_updated": "2026-03-01T09:25:07.070612Z",
   "tiktok_spotlight": [
     {
       "video_url": "https://www.tiktok.com/@67coin/video/7565627410092199182",
