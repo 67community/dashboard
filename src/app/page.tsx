@@ -13,6 +13,7 @@ import { InstagramSpotlightCard }    from "@/components/cards/instagram-spotligh
 import { XLiveFeedCard }             from "@/components/cards/x-live-feed"
 import { NewsFeedCard }              from "@/components/cards/news-feed"
 import { AgentStatusCard }      from "@/components/cards/agent-status"
+import { EmailInboxCard }       from "@/components/cards/email-inbox"
 import { MilestonesCard }       from "@/components/cards/milestones"
 import { FeatureRequestCard }   from "@/components/cards/feature-request"
 import { OutreachCard }         from "@/components/cards/outreach"
@@ -135,6 +136,7 @@ export default function Dashboard() {
         <div className="enter-6" style={{ display:"flex", minWidth:0 }}><PostTimingCard /></div>
         <div className="enter-7" style={{ display:"flex", minWidth:0 }}><XLiveFeedCard /></div>
         <div className="enter-8" style={{ display:"flex", minWidth:0 }}><NewsFeedCard /></div>
+        <div className="enter-9" style={{ display:"flex", minWidth:0 }}><EmailInboxCard /></div>
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><InstagramSpotlightCard /></div>
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><FeatureRequestCard /></div>
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><OutreachCard /></div>
