@@ -8,7 +8,7 @@ const RPCS = [
 ]
 const MINT_67 = "9AvytnUKsLxPxFHFqS6VLxaxt5p6BhYNr53SD2Chpump"
 
-async function rpc(method: string, params: unknown[], revalidate = 60) {
+async function rpc(method: string, params: unknown[], revalidate = 600) {
   for (const RPC of RPCS) {
     try {
       const res = await fetch(RPC, {
