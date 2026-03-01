@@ -212,7 +212,14 @@ export async function POST(req: Request) {
     } catch {
       // Fall back to mock
       const mockMap  = MOCKS[platform] ?? MOCKS.x
-      const mockText = (mockMap[baseKey] ?? Object.values(mockMap)[0]).replace("{topic}", topic)
+      const baseMock = (mockMap[baseKey] ?? Object.values(mockMap)[0]).replace("{topic}", topic)
+      // 3 distinct mock variations
+      const mockVariants = [
+        baseMock,
+        `${topic} is changing the game. 16,800+ holders don't lie. $67coin launched fair - no VCs, no insiders, just the community. This is what crypto was supposed to be. #67coin #Solana`,
+        `Numbers for ${topic}: 16,800+ holders. 14 exchanges. Fair launch. 0 team tokens. $67coin is proof that communities build better than VCs ever will. #67coin`,
+      ]
+      const mockText = mockVariants[(variation - 1) % 3]
       return NextResponse.json({ draft: mockText, type: baseKey, topic, platform, region, id: Date.now() })
     }
   } catch (e) {
