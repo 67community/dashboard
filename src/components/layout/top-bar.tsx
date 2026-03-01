@@ -3,12 +3,13 @@
 import { useState, useRef, useEffect } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { RefreshCw, Bell, X, Check, Settings } from "lucide-react"
+import { RefreshCw, Bell, X, Check, Settings, Moon, Sun } from "lucide-react"
 import { TeamAvatarGroup } from "@/components/team/team-avatar"
 import { useAppData } from "@/lib/data-context"
 import { useNotifications, useDataNotifications } from "@/lib/use-notifications"
 import { SettingsModal } from "@/components/layout/settings-modal"
 import { loadAISettings } from "@/lib/ai-settings"
+import { useTheme } from "@/lib/use-theme"
 
 const LOGO = "https://raw.githubusercontent.com/67coin/67/main/logo.png"
 
@@ -47,6 +48,7 @@ export function TopBar() {
   const { notifs, unreadCount, markAllRead, clear } = useNotifications()
   const [bellOpen, setBellOpen] = useState(false)
   const [settingsOpen, setSettingsOpen] = useState(false)
+  const { dark, toggle: toggleTheme } = useTheme()
   const bellRef = useRef<HTMLDivElement>(null)
 
   // Show indicator dot if no API key set
@@ -172,6 +174,24 @@ export function TopBar() {
                 onMouseLeave={e => (e.currentTarget.style.color="rgba(255,255,255,0.28)")}>
                 <RefreshCw style={{ width:11, height:11 }} className={loading ? "animate-spin" : ""} />
                 {loading ? "Syncing…" : timeAgo(lastFetched)}
+              </button>
+
+              {/* Dark mode toggle */}
+              <button
+                onClick={toggleTheme}
+                title={dark ? "Light mode" : "Dark mode"}
+                style={{
+                  background:"none", border:"none", cursor:"pointer",
+                  padding:6, borderRadius:8,
+                  display:"flex", alignItems:"center", justifyContent:"center",
+                  transition:"background 0.15s",
+                }}
+                onMouseEnter={e => (e.currentTarget.style.background = "rgba(255,255,255,0.08)")}
+                onMouseLeave={e => (e.currentTarget.style.background = "transparent")}
+              >
+                {dark
+                  ? <Sun  style={{ width:16, height:16, color:"#F5A623" }} />
+                  : <Moon style={{ width:16, height:16, color:"rgba(255,255,255,0.5)" }} />}
               </button>
 
               {/* Settings */}
