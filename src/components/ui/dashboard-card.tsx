@@ -14,12 +14,13 @@ interface Props {
   className?: string
   liveTag?: boolean
   onOpen?: () => void
+  onClose?: () => void
   noAutoOpen?: boolean   // disable card-level click → only expand icon opens modal
   compact?: boolean      // smaller header + tighter padding
 }
 
 export function DashboardCard({
-  title, subtitle, icon, accentColor, collapsed, expanded, className = "", liveTag, onOpen, noAutoOpen, compact
+  title, subtitle, icon, accentColor, collapsed, expanded, className = "", liveTag, onOpen, onClose, noAutoOpen, compact
 }: Props) {
   const [open, setOpen]       = useState(false)
   const [mounted, setMounted] = useState(false)
@@ -109,7 +110,7 @@ export function DashboardCard({
             </div>
           </div>
           <button
-            onClick={() => setOpen(false)}
+            onClick={() => { setOpen(false); onClose?.() }}
             style={{
               width: 32, height: 32, borderRadius: "50%",
               background: "#F4F4F5", border: "none", cursor: "pointer",
