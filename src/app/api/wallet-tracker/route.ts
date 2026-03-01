@@ -1,17 +1,27 @@
 import { NextResponse } from "next/server"
 
-const RPC     = `https://mainnet.helius-rpc.com/?api-key=${process.env.HELIUS_API_KEY ?? "fee7e1b0-65ef-44ba-9f16-6fa53dbcf74b"}`
+// Multiple RPC fallbacks — public endpoints that support getTokenAccountsByOwner + getBalance
+const RPCS = [
+  "https://api.mainnet-beta.solana.com",
+  "https://rpc.ankr.com/solana",
+  "https://solana-mainnet.rpc.extrnode.com",
+]
 const MINT_67 = "9AvytnUKsLxPxFHFqS6VLxaxt5p6BhYNr53SD2Chpump"
 
 async function rpc(method: string, params: unknown[], revalidate = 60) {
-  const res = await fetch(RPC, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ jsonrpc: "2.0", id: 1, method, params }),
-    next: { revalidate },
-  })
-  const data = await res.json()
-  return data.result
+  for (const RPC of RPCS) {
+    try {
+      const res = await fetch(RPC, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ jsonrpc: "2.0", id: 1, method, params }),
+        next: { revalidate },
+      })
+      const data = await res.json()
+      if (!data.error) return data.result
+    } catch { continue }
+  }
+  return null
 }
 
 // ── Get token account address for $67 on this wallet ─────────────────────────
