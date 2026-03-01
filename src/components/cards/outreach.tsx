@@ -12,7 +12,7 @@ type Stage = "found" | "contacted" | "responded" | "connected" | "passed"
 interface OutreachTarget {
   id:           string
   name:         string
-  type:         "creator" | "merch" | "music" | "media" | "podcast" | "other"
+  type:         "creator" | "market" | "music" | "media" | "podcast" | "infrastructure" | "other"
   platform:     string
   link?:        string
   contact?:     string   // email address or DM link
@@ -34,7 +34,8 @@ const STAGE_CONFIG: Record<Stage, { label: string; color: string; bg: string }> 
 
 const TYPE_CONFIG: Record<string, { emoji: string; label: string }> = {
   creator: { emoji: "🎥", label: "Creator (TikTok/YT/IG)" },
-  merch:   { emoji: "👕", label: "Merch (Amazon/Etsy/Teespring)" },
+  market:          { emoji: "🛒", label: "Market (Amazon/Etsy/Teespring)" },
+  infrastructure:  { emoji: "🏗️", label: "Infrastructure" },
   music:   { emoji: "🎵", label: "Music (Spotify/SC/YT)" },
   media:   { emoji: "📰", label: "Media / Blog" },
   podcast: { emoji: "🎙️", label: "Podcast" },
@@ -710,7 +711,7 @@ export function OutreachCard() {
         {filtered.length === 0 ? (
           <p style={{ textAlign:"center", color:"#A1A1AA", fontSize:"0.875rem", padding:"20px 0" }}>
             {filterStage === "all"
-              ? "No targets yet. Add merch sellers, musicians, TikTok creators building around 67."
+              ? "No targets yet. Add market sellers, musicians, TikTok creators building around 67."
               : `No targets in "${STAGE_CONFIG[filterStage as Stage]?.label}" stage.`}
           </p>
         ) : filtered.map(t => (

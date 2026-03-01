@@ -305,7 +305,7 @@ export function TokenHealthCard() {
 
   return (
     <DashboardCard
-      title="Token Health"
+      title="Coin Health"
       subtitle="$67 on Solana"
       icon={<Coins style={{ width:16, height:16 }} />}
       accentColor="#F5A623"

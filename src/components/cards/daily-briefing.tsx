@@ -246,7 +246,7 @@ export function DailyBriefingCard() {
       </div>
 
       {/* TOKEN HEALTH grid */}
-      <SectionHead emoji="📈" label="Token Health" />
+      <SectionHead emoji="📈" label="Coin Health" />
       <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8 }}>
         <StatCell label="Market Cap" value={fmtUSD(mcap)} delta={th?.mcap_change_pct}
           deltaLabel={th?.mcap_change_pct !== undefined ? `${sign(th.mcap_change_pct)}${th.mcap_change_pct?.toFixed(1)}%` : undefined} />
