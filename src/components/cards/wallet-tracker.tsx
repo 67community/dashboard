@@ -108,12 +108,17 @@ function WalletRow({
         </div>
 
         {data ? (
-          <div style={{ textAlign:"right", flexShrink:0 }}>
-            <p style={{ fontSize:"0.875rem", fontWeight:700,
-              color: data.balance67 > 0 ? "#1D1D1F" : "#C7C7CC" }}>
-              {fmt(data.balance67)} <span style={{ fontSize:"0.6875rem", color:"#8E8E93" }}>$67</span>
-            </p>
-            <p style={{ fontSize:"0.6875rem", color:"#8E8E93" }}>{fmtUsd(data.valueUsd)}</p>
+          <div style={{ display:"flex", gap:6, alignItems:"center", flexShrink:0 }}>
+            <div style={{ textAlign:"right" }}>
+              <p style={{ fontSize:"0.875rem", fontWeight:800,
+                color: data.balance67 > 0 ? "#F5A623" : "#C7C7CC", lineHeight:1.1 }}>
+                {fmt(data.balance67)} <span style={{ fontSize:"0.6rem", color:"#8E8E93", fontWeight:600 }}>$67</span>
+              </p>
+              <div style={{ display:"flex", gap:6, justifyContent:"flex-end", alignItems:"center" }}>
+                <span style={{ fontSize:"0.6875rem", color:"#9945FF", fontWeight:700 }}>{data.balanceSol.toFixed(2)} SOL</span>
+                <span style={{ fontSize:"0.6875rem", color:"#059669", fontWeight:700 }}>{fmtUsd(data.valueUsd)}</span>
+              </div>
+            </div>
           </div>
         ) : (
           <span style={{ fontSize:"0.75rem", color:"#C7C7CC" }}>loading…</span>
