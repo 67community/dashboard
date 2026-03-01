@@ -196,7 +196,7 @@ export function DashboardCard({
           </div>
 
           {/* Collapsed body */}
-          <div className="flex-1">{collapsed}</div>
+          <div className="flex-1" style={compact ? { maxHeight: 80, overflow: "hidden" } : undefined}>{collapsed}</div>
         </div>
       </div>
 
