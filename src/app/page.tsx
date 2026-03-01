@@ -22,7 +22,6 @@ import { RaidCoordinatorCard }  from "@/components/cards/raid-coordinator"
 import { DailyBriefingCard }    from "@/components/cards/daily-briefing"
 import { CommunityEventsCard }  from "@/components/cards/events"
 import { TeamNotesCard }          from "@/components/cards/team-notes"
-import { ExchangeTrackerCard }    from "@/components/cards/exchange-tracker"
 import { AnnouncementsCard }      from "@/components/cards/announcements"
 import { CommunityLeaderboardCard } from "@/components/cards/leaderboard"
 import { WalletTrackerCard }       from "@/components/cards/wallet-tracker"
@@ -153,7 +152,6 @@ export default function Dashboard() {
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><FeatureRequestCard /></div>
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><SightingsCard /></div>
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><CommunityEventsCard /></div>
-        <div className="enter-9" style={{ display:"flex", minWidth:0 }}><ExchangeTrackerCard /></div>
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><CommunityLeaderboardCard /></div>
       </div>
 
