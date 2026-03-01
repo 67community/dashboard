@@ -847,16 +847,7 @@ export function WalletTrackerCard() {
         </button>
       </div>
 
-      {/* Alert banner */}
-      {alerts > 0 && (
-        <div style={{ background:"rgba(239,68,68,0.07)", borderRadius:10, padding:"9px 12px",
-          display:"flex", alignItems:"center", gap:8, border:"1px solid rgba(239,68,68,0.15)" }}>
-          <AlertTriangle style={{ width:14, height:14, color:"#EF4444", flexShrink:0 }} />
-          <p style={{ fontSize:"0.8125rem", color:"#EF4444", fontWeight:600 }}>
-            🚨 {alerts} wallet{alerts > 1 ? "s" : ""} with activity in the last hour
-          </p>
-        </div>
-      )}
+
 
       {/* Import top holders + manual add */}
       <ImportTopHolders existing={wallets.map(w => w.address)} onImport={addWallets} />
