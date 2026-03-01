@@ -116,9 +116,9 @@ export default function Dashboard() {
 
       {/* ══ Compact Tool Row ══════════════════════════════════ */}
       <div style={{ display:"grid", gridTemplateColumns:"repeat(3, 1fr)", gap:12, marginBottom:8 }}>
-        <div style={{ display:"flex", minWidth:0, transformOrigin:"top left", transform:"scale(0.84)", width:"119%", marginRight:"-19%" }}><ContentCreatorCard /></div>
-        <div style={{ display:"flex", minWidth:0, transformOrigin:"top left", transform:"scale(0.84)", width:"119%", marginRight:"-19%" }}><WalletTrackerCard /></div>
-        <div style={{ display:"flex", minWidth:0, transformOrigin:"top left", transform:"scale(0.84)", width:"119%", marginRight:"-19%" }}><TeamNotesCard /></div>
+        <div style={{ display:"flex", minWidth:0 }}><ContentCreatorCard /></div>
+        <div style={{ display:"flex", minWidth:0 }}><WalletTrackerCard /></div>
+        <div style={{ display:"flex", minWidth:0 }}><TeamNotesCard /></div>
       </div>
 
       {/* ══ Cards Grid ═════════════════════════════════════════ */}
