@@ -172,16 +172,51 @@ function WalletRow({
             </div>
           </div>
 
-          {/* Recent alert */}
-          {data.recentAlert && (
-            <div style={{ background:"rgba(239,68,68,0.07)", borderRadius:8, padding:"8px 10px",
-              display:"flex", alignItems:"center", gap:8, border:"1px solid rgba(239,68,68,0.15)" }}>
-              <AlertTriangle style={{ width:13, height:13, color:"#EF4444", flexShrink:0 }} />
-              <p style={{ fontSize:"0.8125rem", color:"#EF4444", fontWeight:600 }}>
-                Activity detected in the last hour
-              </p>
-            </div>
-          )}
+          {/* Recent alert — detailed */}
+          {data.recentAlert && (() => {
+            const t = data.trades?.[0]
+            const isBuy = t?.type === "buy"
+            const solscanUrl = `https://solscan.io/account/${wallet.address}`
+            return (
+              <div style={{
+                borderRadius:10, padding:"10px 12px",
+                background: isBuy ? "rgba(5,150,105,0.07)" : "rgba(239,68,68,0.07)",
+                border: `1px solid ${isBuy ? "rgba(5,150,105,0.2)" : "rgba(239,68,68,0.2)"}`,
+              }}>
+                <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:6 }}>
+                  <div style={{ display:"flex", alignItems:"center", gap:6 }}>
+                    <span style={{ fontSize:"1rem" }}>{isBuy ? "🟢" : "🔴"}</span>
+                    <span style={{ fontSize:"0.8125rem", fontWeight:800,
+                      color: isBuy ? "#059669" : "#EF4444" }}>
+                      {isBuy ? "BUY" : "SELL"} · {t ? fmt(t.amount67) + " $67" : "Large trade"}
+                    </span>
+                  </div>
+                  <a href={solscanUrl} target="_blank" rel="noreferrer"
+                    onClick={e => e.stopPropagation()}
+                    style={{ display:"flex", alignItems:"center", gap:4, padding:"3px 8px",
+                      borderRadius:6, background:"rgba(99,102,241,0.1)",
+                      border:"1px solid rgba(99,102,241,0.2)", textDecoration:"none",
+                      fontSize:"0.6875rem", fontWeight:700, color:"#6366F1" }}>
+                    <ExternalLink style={{ width:10, height:10 }} />
+                    Solscan
+                  </a>
+                </div>
+                {t && (
+                  <div style={{ display:"flex", gap:12 }}>
+                    <span style={{ fontSize:"0.75rem", color:"#6E6E73" }}>
+                      Amount: <strong style={{ color:"#F5A623" }}>{fmt(t.amount67)} $67</strong>
+                    </span>
+                    <span style={{ fontSize:"0.75rem", color:"#6E6E73" }}>
+                      Value: <strong style={{ color:"#059669" }}>{fmtUsd(t.amount67 * data.price67)}</strong>
+                    </span>
+                  </div>
+                )}
+                <p style={{ fontSize:"0.6875rem", color:"#8E8E93", marginTop:4 }}>
+                  Activity detected in the last hour
+                </p>
+              </div>
+            )
+          })()}
 
           {/* Last active */}
           <p style={{ fontSize:"0.75rem", color:"#8E8E93" }}>
