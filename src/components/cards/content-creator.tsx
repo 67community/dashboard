@@ -418,6 +418,7 @@ export function ContentCreatorCard() {
   return (
     <DashboardCard compact
       title="Content Creator"
+      onClose={() => setDrafts([])}
       subtitle="AI Draft Generator"
       icon={<PenLine style={{ width: 16, height: 16 }} />}
       accentColor="#F5A623"
