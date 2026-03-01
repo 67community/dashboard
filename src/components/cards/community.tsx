@@ -315,6 +315,46 @@ export function CommunityCard() {
         ))}
       </div>
 
+      {/* ── X / Twitter Section ── */}
+      <div style={{ borderRadius:16, overflow:"hidden", border:"1px solid rgba(0,0,0,0.08)" }}>
+        {/* Header */}
+        <div style={{ background:"#000", padding:"14px 18px", display:"flex", alignItems:"center", justifyContent:"space-between" }}>
+          <div style={{ display:"flex", alignItems:"center", gap:10 }}>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.739l7.73-8.835L1.254 2.25H8.08l4.258 5.63 5.906-5.63Z"/>
+            </svg>
+            <span style={{ fontSize:"0.9375rem", fontWeight:800, color:"#fff", letterSpacing:"-0.02em" }}>X (Twitter)</span>
+          </div>
+          <div style={{ display:"flex", gap:12 }}>
+            <div style={{ textAlign:"right" }}>
+              <p style={{ fontSize:"1.25rem", fontWeight:800, color:"#fff", lineHeight:1, margin:0 }}>{xFollowers > 0 ? xFollowers.toLocaleString() : "—"}</p>
+              <p style={{ fontSize:"0.625rem", color:"rgba(255,255,255,0.5)", fontWeight:600, textTransform:"uppercase", letterSpacing:"0.06em" }}>Followers</p>
+            </div>
+            {xCommunity > 0 && (
+              <div style={{ textAlign:"right" }}>
+                <p style={{ fontSize:"1.25rem", fontWeight:800, color:"#F5A623", lineHeight:1, margin:0 }}>{xCommunity.toLocaleString()}</p>
+                <p style={{ fontSize:"0.625rem", color:"rgba(255,255,255,0.5)", fontWeight:600, textTransform:"uppercase", letterSpacing:"0.06em" }}>Community</p>
+              </div>
+            )}
+          </div>
+        </div>
+        {/* Stats row */}
+        <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", background:"#F9F9F9", padding:"12px 16px", gap:12 }}>
+          <div style={{ textAlign:"center" }}>
+            <p style={{ fontSize:"1rem", fontWeight:800, color:"#1D1D1F", margin:0 }}>{xDelta >= 0 ? "+" : ""}{xDelta}</p>
+            <p style={{ fontSize:"0.625rem", color:"#8E8E93", fontWeight:600, textTransform:"uppercase", letterSpacing:"0.06em", marginTop:3 }}>Followers / 20h</p>
+          </div>
+          <div style={{ textAlign:"center" }}>
+            <p style={{ fontSize:"1rem", fontWeight:800, color:"#1D1D1F", margin:0 }}>{xEngagement > 0 ? xEngagement.toFixed(1) + "%" : "—"}</p>
+            <p style={{ fontSize:"0.625rem", color:"#8E8E93", fontWeight:600, textTransform:"uppercase", letterSpacing:"0.06em", marginTop:3 }}>Engagement</p>
+          </div>
+          <div style={{ textAlign:"center" }}>
+            <p style={{ fontSize:"1rem", fontWeight:800, color:"#059669", margin:0 }}>{xCommunity > 0 ? "+" + xCommunityDelta : "—"}</p>
+            <p style={{ fontSize:"0.625rem", color:"#8E8E93", fontWeight:600, textTransform:"uppercase", letterSpacing:"0.06em", marginTop:3 }}>Community / 20h</p>
+          </div>
+        </div>
+      </div>
+
       {/* ── Progress bar ── */}
       <div className="inset-cell">
         <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:8 }}>
