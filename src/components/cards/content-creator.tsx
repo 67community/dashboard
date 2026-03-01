@@ -143,11 +143,11 @@ export function ContentCreatorCard() {
     setLoading(true)
     try {
       // Generate 3 variations in parallel
-      const results = await Promise.all([0,1,2].map(() =>
+      const results = await Promise.all([1,2,3].map((variation) =>
         fetch("/api/draft", {
           method:  "POST",
           headers: { "content-type": "application/json", ...aiHeaders() },
-          body:    JSON.stringify({ topic, type, platform, region }),
+          body:    JSON.stringify({ topic, type, platform, region, variation }),
         }).then(r => r.json() as Promise<Draft & { error?: string }>)
       ))
       const valid = results.filter(j => !j.error)
@@ -320,11 +320,23 @@ export function ContentCreatorCard() {
         </div>
       ) : (
         <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-          {drafts.slice(0,3).length === 3 && (
-            <p style={{ fontSize:"0.6875rem", fontWeight:700, color:"#8E8E93",
-              textTransform:"uppercase", letterSpacing:"0.08em", marginBottom:2 }}>
-              ✨ 3 Options — pick one or regenerate
-            </p>
+          {drafts.slice(0,3).length >= 3 && (
+            <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:2 }}>
+              <p style={{ fontSize:"0.6875rem", fontWeight:700, color:"#8E8E93",
+                textTransform:"uppercase", letterSpacing:"0.08em" }}>
+                ✨ 3 Options — pick one or regenerate
+              </p>
+              <button
+                onClick={e => { e.stopPropagation(); setDrafts([]); generate() }}
+                disabled={loading}
+                style={{ display:"flex", alignItems:"center", gap:4, padding:"4px 10px",
+                  borderRadius:99, border:"1.5px solid rgba(0,0,0,0.1)", background:"none",
+                  cursor: loading ? "default" : "pointer",
+                  fontSize:"0.6875rem", fontWeight:700, color:"#6E6E73" }}>
+                <RefreshCw style={{ width:11, height:11 }} />
+                Regenerate
+              </button>
+            </div>
           )}
           {drafts.map((d, idx) => {
             const tc   = TYPE_PILL[d.type] ?? TYPE_PILL.tweet
