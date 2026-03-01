@@ -323,53 +323,27 @@ export function CommunityCard() {
       </div>
 
       {/* ── X / Twitter Section ── */}
-      <div style={{ borderRadius:16, overflow:"hidden", border:"1px solid rgba(0,0,0,0.08)" }}>
-        {/* Header */}
-        <div style={{ background:"#000", padding:"14px 18px", display:"flex", alignItems:"center", justifyContent:"space-between" }}>
-          <div style={{ display:"flex", alignItems:"center", gap:10 }}>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
-              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.739l7.73-8.835L1.254 2.25H8.08l4.258 5.63 5.906-5.63Z"/>
-            </svg>
-            <span style={{ fontSize:"0.9375rem", fontWeight:800, color:"#fff", letterSpacing:"-0.02em" }}>X (Twitter)</span>
-          </div>
-          <div style={{ display:"flex", gap:12 }}>
-            <div style={{ textAlign:"right" }}>
-              <p style={{ fontSize:"1.25rem", fontWeight:800, color:"#fff", lineHeight:1, margin:0 }}>{xFollowers > 0 ? xFollowers.toLocaleString() : "—"}</p>
-              <p style={{ fontSize:"0.625rem", color:"rgba(255,255,255,0.5)", fontWeight:600, textTransform:"uppercase", letterSpacing:"0.06em" }}>Followers</p>
-            </div>
-            {xCommunity > 0 && (
-              <div style={{ textAlign:"right" }}>
-                <div style={{ display:"flex", alignItems:"center", gap:6, justifyContent:"flex-end" }}>
-                  <p style={{ fontSize:"1.25rem", fontWeight:800, color:"#F5A623", lineHeight:1, margin:0 }}>{xCommunity.toLocaleString()}</p>
-                  {xCommunityDelta !== 0 && (
-                    <span style={{
-                      fontSize:"0.6875rem", fontWeight:800, padding:"2px 7px", borderRadius:99,
-                      background: xCommunityDelta > 0 ? "rgba(5,150,105,0.25)" : "rgba(239,68,68,0.25)",
-                      color: xCommunityDelta > 0 ? "#34D399" : "#F87171",
-                    }}>
-                      {xCommunityDelta > 0 ? "+" : ""}{xCommunityDelta}
-                    </span>
-                  )}
-                </div>
-                <p style={{ fontSize:"0.625rem", color:"rgba(255,255,255,0.5)", fontWeight:600, textTransform:"uppercase", letterSpacing:"0.06em" }}>Community</p>
-              </div>
-            )}
-          </div>
+      <div style={{ borderRadius:16, border:"1px solid rgba(0,0,0,0.08)", overflow:"hidden" }}>
+        {/* Clean header */}
+        <div style={{ background:"#F5F5F7", padding:"12px 16px", display:"flex", alignItems:"center", gap:8, borderBottom:"1px solid rgba(0,0,0,0.06)" }}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="#1D1D1F">
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.739l7.73-8.835L1.254 2.25H8.08l4.258 5.63 5.906-5.63Z"/>
+          </svg>
+          <span style={{ fontSize:"0.875rem", fontWeight:800, color:"#1D1D1F" }}>X (Twitter)</span>
         </div>
-        {/* Stats row */}
-        <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", background:"#F9F9F9", padding:"12px 16px", gap:12 }}>
-          <div style={{ textAlign:"center" }}>
-            <p style={{ fontSize:"1rem", fontWeight:800, color:"#1D1D1F", margin:0 }}>{xDelta >= 0 ? "+" : ""}{xDelta}</p>
-            <p style={{ fontSize:"0.625rem", color:"#8E8E93", fontWeight:600, textTransform:"uppercase", letterSpacing:"0.06em", marginTop:3 }}>Followers / 20h</p>
-          </div>
-          <div style={{ textAlign:"center" }}>
-            <p style={{ fontSize:"1rem", fontWeight:800, color:"#1D1D1F", margin:0 }}>{xEngagement > 0 ? xEngagement.toFixed(1) + "%" : "—"}</p>
-            <p style={{ fontSize:"0.625rem", color:"#8E8E93", fontWeight:600, textTransform:"uppercase", letterSpacing:"0.06em", marginTop:3 }}>Engagement</p>
-          </div>
-          <div style={{ textAlign:"center" }}>
-            <p style={{ fontSize:"1rem", fontWeight:800, color:"#059669", margin:0 }}>{xCommunity > 0 ? "+" + xCommunityDelta : "—"}</p>
-            <p style={{ fontSize:"0.625rem", color:"#8E8E93", fontWeight:600, textTransform:"uppercase", letterSpacing:"0.06em", marginTop:3 }}>Community / 20h</p>
-          </div>
+        {/* Stats grid */}
+        <div style={{ display:"grid", gridTemplateColumns:"repeat(4, 1fr)", gap:0 }}>
+          {[
+            { label:"Followers",       value: xFollowers > 0 ? xFollowers.toLocaleString() : "—", delta: xDelta, color:"#1D1D1F" },
+            { label:"Flwr / 20h",      value: xDelta >= 0 ? `+${xDelta}` : `${xDelta}`, color: xDelta >= 0 ? "#059669" : "#EF4444" },
+            { label:"Community",       value: xCommunity > 0 ? xCommunity.toLocaleString() : "—", delta: xCommunityDelta, color:"#F5A623" },
+            { label:"Community / 20h", value: xCommunityDelta >= 0 ? `+${xCommunityDelta}` : `${xCommunityDelta}`, color: xCommunityDelta >= 0 ? "#059669" : "#EF4444" },
+          ].map((s, i) => (
+            <div key={i} style={{ padding:"14px 16px", borderRight: i < 3 ? "1px solid rgba(0,0,0,0.06)" : "none", background:"#fff" }}>
+              <p style={{ fontSize:"1.375rem", fontWeight:800, color:s.color, lineHeight:1, margin:0 }}>{s.value}</p>
+              <p style={{ fontSize:"0.625rem", color:"#8E8E93", fontWeight:600, textTransform:"uppercase", letterSpacing:"0.06em", marginTop:5 }}>{s.label}</p>
+            </div>
+          ))}
         </div>
       </div>
 
@@ -380,36 +354,46 @@ export function CommunityCard() {
             textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:10 }}>
             Trending Posts
           </p>
-          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:12 }}>
-            {[
+          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:14 }}>
+            {([
               { label:"Best · 48h", tweet: bestTweet48h },
               { label:"Best · 7 days", tweet: bestTweetWeek },
-            ].map(({ label, tweet }) => tweet ? (
+            ] as { label: string; tweet: typeof bestTweet48h }[]).map(({ label, tweet }) => tweet ? (
               <a key={label} href={tweet.tweet_url} target="_blank" rel="noreferrer"
-                style={{ textDecoration:"none", display:"block",
-                  background:"#000", borderRadius:14, padding:"14px 16px",
-                  border:"1px solid rgba(255,255,255,0.08)" }}>
-                <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:8 }}>
-                  <span style={{ fontSize:"0.625rem", fontWeight:800, color:"rgba(255,255,255,0.4)",
-                    textTransform:"uppercase", letterSpacing:"0.08em" }}>{label}</span>
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="white" opacity="0.5">
-                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.739l7.73-8.835L1.254 2.25H8.08l4.258 5.63 5.906-5.63Z"/>
-                  </svg>
-                </div>
-                <p style={{ fontSize:"0.8125rem", color:"#fff", lineHeight:1.5, margin:"0 0 10px 0",
-                  display:"-webkit-box", WebkitLineClamp:3, WebkitBoxOrient:"vertical", overflow:"hidden" }}>
-                  {tweet.text}
-                </p>
-                <div style={{ display:"flex", gap:14 }}>
-                  <span style={{ fontSize:"0.75rem", color:"rgba(255,255,255,0.5)", fontWeight:600 }}>
-                    ❤️ {tweet.likes.toLocaleString()}
-                  </span>
-                  <span style={{ fontSize:"0.75rem", color:"rgba(255,255,255,0.5)", fontWeight:600 }}>
-                    💬 {tweet.replies.toLocaleString()}
-                  </span>
-                  <span style={{ fontSize:"0.75rem", color:"rgba(255,255,255,0.35)", marginLeft:"auto" }}>
-                    {new Date(tweet.date).toLocaleDateString()}
-                  </span>
+                style={{ textDecoration:"none", display:"flex", flexDirection:"column",
+                  background:"#fff", borderRadius:16, overflow:"hidden",
+                  border:"1px solid rgba(0,0,0,0.09)", boxShadow:"0 1px 4px rgba(0,0,0,0.06)" }}>
+                {/* Tweet image */}
+                {tweet.img_url && (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={tweet.img_url} alt="" style={{ width:"100%", height:180, objectFit:"cover" }} />
+                )}
+                <div style={{ padding:"14px 16px", flex:1, display:"flex", flexDirection:"column", gap:10 }}>
+                  {/* Label + X icon */}
+                  <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between" }}>
+                    <span style={{ fontSize:"0.625rem", fontWeight:800, color:"#8E8E93",
+                      textTransform:"uppercase", letterSpacing:"0.08em" }}>{label}</span>
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="#1D1D1F">
+                      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.739l7.73-8.835L1.254 2.25H8.08l4.258 5.63 5.906-5.63Z"/>
+                    </svg>
+                  </div>
+                  {/* Tweet text */}
+                  <p style={{ fontSize:"0.875rem", color:"#1D1D1F", lineHeight:1.55, margin:0, flex:1,
+                    display:"-webkit-box", WebkitLineClamp:4, WebkitBoxOrient:"vertical", overflow:"hidden" }}>
+                    {tweet.text}
+                  </p>
+                  {/* Stats */}
+                  <div style={{ display:"flex", gap:14, borderTop:"1px solid rgba(0,0,0,0.06)", paddingTop:10 }}>
+                    <span style={{ fontSize:"0.8125rem", color:"#EF4444", fontWeight:700 }}>
+                      ❤️ {tweet.likes.toLocaleString()}
+                    </span>
+                    <span style={{ fontSize:"0.8125rem", color:"#2563EB", fontWeight:700 }}>
+                      💬 {tweet.replies.toLocaleString()}
+                    </span>
+                    <span style={{ fontSize:"0.75rem", color:"#8E8E93", marginLeft:"auto" }}>
+                      {new Date(tweet.date).toLocaleDateString()}
+                    </span>
+                  </div>
                 </div>
               </a>
             ) : null)}
@@ -690,7 +674,7 @@ export function CommunityCard() {
 
   return (
     <DashboardCard
-      expandedMaxWidth={900}
+      expandedMaxWidth={1100}
       title="Community"
       subtitle="Discord · Telegram · X"
       icon={<Users style={{ width:16, height:16 }} />}
