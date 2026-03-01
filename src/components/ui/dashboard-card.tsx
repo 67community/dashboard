@@ -15,12 +15,13 @@ interface Props {
   liveTag?: boolean
   onOpen?: () => void
   onClose?: () => void
+  expandedMaxWidth?: number
   noAutoOpen?: boolean   // disable card-level click → only expand icon opens modal
   compact?: boolean      // smaller header + tighter padding
 }
 
 export function DashboardCard({
-  title, subtitle, icon, accentColor, collapsed, expanded, className = "", liveTag, onOpen, onClose, noAutoOpen, compact
+  title, subtitle, icon, accentColor, collapsed, expanded, className = "", liveTag, onOpen, onClose, noAutoOpen, compact, expandedMaxWidth
 }: Props) {
   const [open, setOpen]       = useState(false)
   const [mounted, setMounted] = useState(false)
@@ -74,7 +75,7 @@ export function DashboardCard({
         className="anim-slide-up mc-modal-sheet"
         style={{
           position: "relative",
-          width: "100%", maxWidth: 560,
+          width: "100%", maxWidth: expandedMaxWidth ?? 560,
           maxHeight: "88vh",
           display: "flex", flexDirection: "column",
           background: "#FFFFFF",
