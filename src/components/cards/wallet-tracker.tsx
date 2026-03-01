@@ -636,53 +636,93 @@ export function WalletTrackerCard() {
   const collapsed = (
     <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
 
-      {/* Alert banner */}
-      {alerts > 0 && (
-        <div style={{ background:"rgba(239,68,68,0.07)", borderRadius:10, padding:"8px 12px",
-          display:"flex", alignItems:"center", gap:8, border:"1px solid rgba(239,68,68,0.15)" }}>
-          <AlertTriangle style={{ width:14, height:14, color:"#EF4444", flexShrink:0 }} />
-          <p style={{ fontSize:"0.8125rem", color:"#EF4444", fontWeight:600 }}>
-            {alerts} wallet{alerts > 1 ? "s" : ""} active in the last hour
-          </p>
+      {/* 🐋 Whale Alert Feed */}
+      <div onClick={e => e.stopPropagation()}>
+        <div style={{ display:"flex", alignItems:"center", gap:6, marginBottom:6 }}>
+          <span style={{ fontSize:"0.6rem", fontWeight:800, color:"#D97706",
+            textTransform:"uppercase", letterSpacing:"0.08em" }}>🐋 Whale Alerts</span>
+          {alerts > 0 && (
+            <span style={{ background:"#EF4444", color:"#fff", fontSize:"0.6rem",
+              fontWeight:800, padding:"1px 6px", borderRadius:99 }}>{alerts} active</span>
+          )}
         </div>
-      )}
 
-      {/* Import + Add */}
-      <div onClick={e => e.stopPropagation()}
-        style={{ display:"flex", flexDirection:"column", gap:8 }}>
-        <ImportTopHolders existing={wallets.map(w => w.address)} onImport={addWallets} />
-        <AddWalletForm onAdd={addWallet} />
+        {wallets.filter(w => walletData[w.address]?.recentAlert && !w.muted).slice(0,3).map(w => {
+          const d = walletData[w.address]
+          const t = d?.trades?.[0]
+          return (
+            <div key={w.address} style={{
+              display:"flex", alignItems:"center", gap:8, padding:"7px 10px",
+              borderRadius:9, marginBottom:4,
+              background: t?.type === "buy" ? "rgba(5,150,105,0.07)" : "rgba(239,68,68,0.07)",
+              border: `1px solid ${t?.type === "buy" ? "rgba(5,150,105,0.2)" : "rgba(239,68,68,0.2)"}`,
+            }}>
+              <span style={{ fontSize:"1rem" }}>{t?.type === "buy" ? "🟢" : "🔴"}</span>
+              <div style={{ flex:1, minWidth:0 }}>
+                <p style={{ fontSize:"0.75rem", fontWeight:700,
+                  color: t?.type === "buy" ? "#059669" : "#EF4444",
+                  overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>
+                  {t?.type === "buy" ? "BUY" : "SELL"} · {w.label}
+                </p>
+                <p style={{ fontSize:"0.6875rem", color:"#6E6E73" }}>
+                  {t ? fmt(t.amount67) + " $67" : "Activity detected"}
+                </p>
+              </div>
+              <div style={{ textAlign:"right", flexShrink:0 }}>
+                <p style={{ fontSize:"0.75rem", fontWeight:800, color:"#F5A623" }}>
+                  {d ? fmtUsd(d.valueUsd) : "—"}
+                </p>
+                <p style={{ fontSize:"0.6rem", color:"#9945FF", fontWeight:600 }}>
+                  {d ? d.balanceSol.toFixed(2) + " SOL" : ""}
+                </p>
+              </div>
+            </div>
+          )
+        })}
+
+        {wallets.filter(w => walletData[w.address]?.recentAlert && !w.muted).length === 0 && (
+          <div style={{ padding:"6px 10px", borderRadius:9,
+            background:"rgba(0,0,0,0.03)", border:"1px solid rgba(0,0,0,0.06)",
+            display:"flex", alignItems:"center", gap:6 }}>
+            <span style={{ fontSize:"0.875rem" }}>😴</span>
+            <span style={{ fontSize:"0.75rem", color:"#8E8E93", fontWeight:500 }}>No whale activity right now</span>
+          </div>
+        )}
       </div>
 
-      {/* Quick list */}
+      {/* Wallet list */}
       {wallets.length > 0 && (
-        <div style={{ borderTop:"1px solid rgba(0,0,0,0.06)", paddingTop:12 }}
+        <div style={{ borderTop:"1px solid rgba(0,0,0,0.06)", paddingTop:8 }}
           onClick={e => e.stopPropagation()}>
-          <div style={{ display:"flex", flexDirection:"column", gap:5 }}>
-            {wallets.slice(0, 4).map(w => {
+          <p style={{ fontSize:"0.6rem", fontWeight:800, color:"#8E8E93",
+            textTransform:"uppercase", letterSpacing:"0.08em", marginBottom:6 }}>
+            Tracked Wallets
+          </p>
+          <div style={{ display:"flex", flexDirection:"column", gap:4 }}>
+            {wallets.slice(0, 5).map(w => {
               const d = walletData[w.address]
+              const isWhale = d?.isWhale
               return (
-                <div key={w.address} style={{ display:"flex", alignItems:"center", gap:8 }}>
-                  {d?.recentAlert && !w.muted
-                    ? <span style={{ width:7, height:7, borderRadius:"50%", background:"#EF4444", flexShrink:0 }} />
-                    : <span style={{ width:7, height:7, borderRadius:"50%",
-                        background: d ? "#059669" : "#E5E5EA", flexShrink:0 }} />}
-                  <span style={{ flex:1, fontSize:"0.8125rem", color:"#374151", fontWeight:500,
+                <div key={w.address} style={{
+                  display:"flex", alignItems:"center", gap:8,
+                  padding:"5px 8px", borderRadius:8,
+                  background: isWhale ? "rgba(217,119,6,0.06)" : "rgba(0,0,0,0.02)",
+                  border: `1px solid ${isWhale ? "rgba(217,119,6,0.15)" : "rgba(0,0,0,0.05)"}`,
+                }}>
+                  <span style={{ fontSize:"0.75rem" }}>{isWhale ? "🐋" : "👛"}</span>
+                  <span style={{ flex:1, fontSize:"0.75rem", color:"#374151", fontWeight:600,
                     overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{w.label}</span>
                   {d ? (
                     <div style={{ textAlign:"right" }}>
-                      <p style={{ fontSize:"0.75rem", color:"#F5A623", fontWeight:700, lineHeight:1.2 }}>
-                        {fmt(d.balance67)}
-                        <span style={{ fontSize:"0.6rem", color:"#A1A1AA", fontWeight:500 }}> $67</span>
+                      <p style={{ fontSize:"0.6875rem", fontWeight:800, color:"#F5A623", lineHeight:1.2 }}>
+                        {fmt(d.balance67)}<span style={{ fontSize:"0.55rem", color:"#A1A1AA" }}> $67</span>
                       </p>
-                      {d.valueUsd > 0 && (
-                        <p style={{ fontSize:"0.6875rem", color:"#059669", fontWeight:600, lineHeight:1.2 }}>
-                          {fmtUsd(d.valueUsd)}
-                        </p>
-                      )}
+                      <p style={{ fontSize:"0.6rem", color: d.valueUsd > 0 ? "#059669" : "#C7C7CC", fontWeight:600 }}>
+                        {d.valueUsd > 0 ? fmtUsd(d.valueUsd) : "—"} · <span style={{ color:"#9945FF" }}>{d.balanceSol.toFixed(2)} SOL</span>
+                      </p>
                     </div>
                   ) : (
-                    <span style={{ fontSize:"0.75rem", color:"#C7C7CC" }}>…</span>
+                    <span style={{ fontSize:"0.6875rem", color:"#C7C7CC" }}>loading…</span>
                   )}
                 </div>
               )
@@ -690,6 +730,12 @@ export function WalletTrackerCard() {
           </div>
         </div>
       )}
+
+      {/* Add wallet */}
+      <div onClick={e => e.stopPropagation()} style={{ display:"flex", flexDirection:"column", gap:6 }}>
+        <ImportTopHolders existing={wallets.map(w => w.address)} onImport={addWallets} />
+        <AddWalletForm onAdd={addWallet} />
+      </div>
     </div>
   )
 
