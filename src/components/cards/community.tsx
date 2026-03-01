@@ -105,6 +105,7 @@ function timeToEvent(iso: string): string {
 export function CommunityCard() {
   const { data } = useAppData()
   const c = data?.community
+  const sp = data?.social_pulse
 
   const members       = c?.discord_members   ?? 0
   const fmtM          = members.toLocaleString()
@@ -123,6 +124,12 @@ export function CommunityCard() {
   const modEvents     = (c?.mod_events       ?? []) as ModEvent[]
   const topContribs   = (c?.top_contributors ?? []) as TopContributor[]
   const legacyActivity= (c?.recent_discord_activity ?? []) as ActivityItem[]
+  // X / Twitter
+  const xFollowers    = sp?.twitter_followers    ?? 0
+  const xDelta        = sp?.follower_change_24h  ?? 0
+  const xCommunity    = sp?.x_community_members  ?? 0
+  const xCommunityDelta = sp?.x_community_delta_24h ?? 0
+  const xEngagement   = sp?.engagement_rate      ?? 0
 
   // ── Collapsed view ──────────────────────────────────────────────────────────
   const collapsed = (
@@ -158,20 +165,38 @@ export function CommunityCard() {
         </div>
       </div>
 
-      {/* Stats row */}
+      {/* Stats row — Discord + Telegram + X */}
       <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:8, borderTop:"1px solid rgba(0,0,0,0.06)", paddingTop:16 }}>
         {[
           { label:"New Joins 24h", value: discordDelta != null ? String(Math.max(0, discordDelta)) : String(c?.new_joins_24h ?? "—") },
-          { label:"Active Today",  value: activeToday > 0 ? String(activeToday) : "—" },
           { label:"Telegram",      value: (c?.telegram_members ?? 0).toLocaleString(), delta: telegramDelta },
+          { label:"X Followers",   value: xFollowers > 0 ? xFollowers.toLocaleString() : "—", delta: xDelta },
         ].map(s => (
           <div key={s.label} className="inset-cell" style={{ textAlign:"center" }}>
             <p style={{ fontSize:"1.25rem", fontWeight:700, letterSpacing:"-0.03em", color:"#1D1D1F", margin:0 }}>{s.value}</p>
-            {s.delta !== undefined && <DeltaBadge value={s.delta} />}
+            {s.delta !== undefined && s.delta !== 0 && <DeltaBadge value={s.delta} />}
             <p style={{ fontSize:"0.6875rem", fontWeight:500, color:"#8E8E93", marginTop:4 }}>{s.label}</p>
           </div>
         ))}
       </div>
+
+      {/* X Community row */}
+      {xCommunity > 0 && (
+        <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between",
+          padding:"10px 14px", borderRadius:12,
+          background:"rgba(0,0,0,0.03)", border:"1px solid rgba(0,0,0,0.06)" }}>
+          <div style={{ display:"flex", alignItems:"center", gap:8 }}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style={{ color:"#1D1D1F", flexShrink:0 }}>
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.739l7.73-8.835L1.254 2.25H8.08l4.258 5.63 5.906-5.63Z"/>
+            </svg>
+            <span style={{ fontSize:"0.875rem", fontWeight:700, color:"#1D1D1F" }}>X Community</span>
+          </div>
+          <div style={{ textAlign:"right" }}>
+            <span style={{ fontSize:"1rem", fontWeight:800, color:"#1D1D1F" }}>{xCommunity.toLocaleString()}</span>
+            <span style={{ fontSize:"0.6875rem", color:"#8E8E93", marginLeft:4 }}>members</span>
+          </div>
+        </div>
+      )}
 
       {/* Recent members mini-row */}
       {recentJoins.length > 0 && (
@@ -564,7 +589,7 @@ export function CommunityCard() {
   return (
     <DashboardCard
       title="Community"
-      subtitle="Discord · Telegram · Live"
+      subtitle="Discord · Telegram · X"
       icon={<Users style={{ width:16, height:16 }} />}
       accentColor="#F5A623"
       collapsed={collapsed}
