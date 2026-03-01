@@ -528,7 +528,7 @@ export function WalletTrackerCard() {
   // Auto-fetch on load + every 2 min
   useEffect(() => {
     if (wallets.length > 0) fetchData(wallets)
-    const id = setInterval(() => fetchData(wallets), 120_000)
+    const id = setInterval(() => fetchData(wallets), 600_000)
     return () => clearInterval(id)
   }, [wallets.length]) // eslint-disable-line
 
