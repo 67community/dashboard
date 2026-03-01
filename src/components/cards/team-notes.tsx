@@ -1,13 +1,15 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
-import { StickyNote, Plus, Trash2, Pin } from "lucide-react"
+import { StickyNote, Plus, Trash2, Pin, Mic } from "lucide-react"
 import { DashboardCard } from "@/components/ui/dashboard-card"
 import { addNotification } from "@/lib/notifications"
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
 type NoteColor = "yellow" | "blue" | "green" | "red" | "purple"
+
+type NoteKind = "note" | "session"
 
 interface TeamNote {
   id:        string
@@ -16,6 +18,10 @@ interface TeamNote {
   color:     NoteColor
   pinned:    boolean
   createdAt: string
+  kind?:     NoteKind       // "session" = Craig voice recording
+  sessionDate?: string      // ISO date of the meeting
+  duration?:    string      // e.g. "42 min"
+  attendees?:   string[]
 }
 
 const COLOR_CONFIG: Record<NoteColor, { bg: string; border: string; accent: string }> = {
@@ -81,6 +87,7 @@ function NoteCard({ n, onPin, onDelete }: {
 export function TeamNotesCard() {
   const [notes,    setNotes]   = useState<TeamNote[]>([])
   const [addOpen,  setAddOpen] = useState(false)
+  const [kind,      setKind]     = useState<NoteKind>("note")
   const [text,     setText]    = useState("")
   const [author,   setAuthor]  = useState("Oscar")
   const [color,    setColor]   = useState<NoteColor>("yellow")
@@ -101,8 +108,8 @@ export function TeamNotesCard() {
   function addNote() {
     if (!text.trim()) return
     save([{
-      id: Date.now().toString(), text: text.trim(), author, color,
-      pinned: false, createdAt: new Date().toISOString(),
+      id: Date.now().toString(), text: text.trim(), author, color: kind === "session" ? "purple" : color,
+      pinned: false, createdAt: new Date().toISOString(), kind: kind,
     }, ...notes])
     addNotification({
       type:      "info",
@@ -110,7 +117,7 @@ export function TeamNotesCard() {
       message:   `📝 New note from ${author}: "${text.trim().slice(0, 60)}${text.trim().length > 60 ? "…" : ""}"`,
       timestamp: new Date().toISOString(),
     })
-    setText(""); setAddOpen(false)
+    setText(""); setAddOpen(false); setKind("note")
   }
 
   function togglePin(id: string) {
@@ -135,12 +142,20 @@ export function TeamNotesCard() {
       {/* Quick add */}
       <div onClick={e => e.stopPropagation()}>
         {!addOpen ? (
-          <button onClick={() => { setAddOpen(true); setTimeout(() => textRef.current?.focus(), 50) }}
-            style={{ display:"flex", alignItems:"center", gap:6, padding:"8px 12px",
-              borderRadius:10, border:"1.5px dashed rgba(0,0,0,0.12)", background:"none",
-              cursor:"pointer", width:"100%", color:"#8E8E93", fontSize:"0.875rem", fontWeight:600 }}>
-            <Plus style={{ width:14, height:14 }} /> Add note
-          </button>
+          <div style={{ display:"flex", gap:6 }}>
+            <button onClick={() => { setAddOpen(true); setTimeout(() => textRef.current?.focus(), 50) }}
+              style={{ display:"flex", alignItems:"center", gap:6, padding:"8px 12px",
+                borderRadius:10, border:"1.5px dashed rgba(0,0,0,0.12)", background:"none",
+                cursor:"pointer", flex:1, color:"#8E8E93", fontSize:"0.875rem", fontWeight:600 }}>
+              <Plus style={{ width:14, height:14 }} /> Add note
+            </button>
+            <button onClick={() => { setAddOpen(true); setKind("session"); setTimeout(() => textRef.current?.focus(), 50) }}
+              style={{ display:"flex", alignItems:"center", gap:5, padding:"8px 10px",
+                borderRadius:10, border:"1.5px dashed rgba(124,58,237,0.3)", background:"rgba(124,58,237,0.05)",
+                cursor:"pointer", color:"#7C3AED", fontSize:"0.75rem", fontWeight:700, whiteSpace:"nowrap" }}>
+              <Mic style={{ width:13, height:13 }} /> Craig Session
+            </button>
+          </div>
         ) : (
           <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
             <textarea ref={textRef} value={text} onChange={e => setText(e.target.value)}
