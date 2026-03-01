@@ -134,8 +134,7 @@ export default function Dashboard() {
         <div className="enter-6" style={{ display:"flex", minWidth:0 }}><TikTokSpotlightCard /></div>
         <div className="enter-6" style={{ display:"flex", minWidth:0 }}><ContentPipelineCard /></div>
         <div className="enter-7" style={{ display:"flex", minWidth:0 }}><XLiveFeedCard /></div>
-        <div className="enter-8" style={{ display:"flex", minWidth:0 }}><MilestonesCard /></div>
-        <div className="enter-9" style={{ display:"flex", minWidth:0 }}><PostTimingCard /></div>
+        <div className="enter-8" style={{ display:"flex", minWidth:0 }}><PostTimingCard /></div>
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><InstagramSpotlightCard /></div>
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><NewsFeedCard /></div>
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><FeatureRequestCard /></div>
