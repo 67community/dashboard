@@ -890,7 +890,6 @@ export function WalletTrackerCard() {
       accentColor="#F5A623"
       collapsed={collapsed}
       expanded={expanded}
-      noAutoOpen
     />
   )
 }
