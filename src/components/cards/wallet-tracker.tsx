@@ -122,9 +122,19 @@ function WalletRow({
               </span>
             )}
           </div>
-          <span style={{ fontSize:"0.6875rem", color:"#8E8E93", fontFamily:"monospace" }}>
-            {shortAddr(wallet.address)}
-          </span>
+          <div style={{ display:"flex", alignItems:"center", gap:6 }}>
+            <span style={{ fontSize:"0.6875rem", color:"#8E8E93", fontFamily:"monospace" }}>
+              {shortAddr(wallet.address)}
+            </span>
+            <a href={`https://solscan.io/account/${wallet.address}`} target="_blank" rel="noreferrer"
+              onClick={e => e.stopPropagation()}
+              style={{ display:"flex", alignItems:"center", gap:3, padding:"1px 6px",
+                borderRadius:5, background:"rgba(99,102,241,0.08)",
+                border:"1px solid rgba(99,102,241,0.15)", textDecoration:"none",
+                fontSize:"0.6rem", fontWeight:700, color:"#6366F1" }}>
+              <ExternalLink style={{ width:9, height:9 }} /> Solscan
+            </a>
+          </div>
         </div>
 
         {data ? (
