@@ -155,7 +155,17 @@ export default function Dashboard() {
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><CommunityLeaderboardCard /></div>
       </div>
 
-      {/* ══ Season 2 Banner ════════════════════════════════════ */}
+      {/* ══ Top Section — Community | Coin | Announcements+Raid ══════ */}
+      <div style={{ display:"grid", gridTemplateColumns:"repeat(3, 1fr)", gap:20, marginBottom:0, alignItems:"start" }}>
+        <div style={{ display:"flex", minWidth:0 }}><CommunityCard /></div>
+        <div style={{ display:"flex", minWidth:0 }}><TokenHealthCard /></div>
+        <div style={{ display:"flex", flexDirection:"column", gap:20, minWidth:0 }}>
+          <AnnouncementsCard />
+          <RaidCoordinatorCard />
+        </div>
+      </div>
+
+            {/* ══ Season 2 Banner ════════════════════════════════════ */}
       <div className="enter-9" style={{
         marginTop:24, borderRadius:20,
         position:"relative", overflow:"hidden",
