@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server"
 
-const RPC     = "https://api.mainnet-beta.solana.com"
+const RPC     = `https://mainnet.helius-rpc.com/?api-key=${process.env.HELIUS_API_KEY ?? "fee7e1b0-65ef-44ba-9f16-6fa53dbcf74b"}`
 const MINT_67 = "9AvytnUKsLxPxFHFqS6VLxaxt5p6BhYNr53SD2Chpump"
 
 async function rpc(method: string, params: unknown[], revalidate = 60) {
