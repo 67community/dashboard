@@ -161,7 +161,7 @@ export function CommunityCard() {
       {/* Stats row */}
       <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:8, borderTop:"1px solid rgba(0,0,0,0.06)", paddingTop:16 }}>
         {[
-          { label:"New Joins 24h", value: discordDelta != null ? (discordDelta > 0 ? `+${discordDelta}` : String(discordDelta)) : String(c?.new_joins_24h ?? "—") },
+          { label:"New Joins 24h", value: discordDelta != null ? String(Math.max(0, discordDelta)) : String(c?.new_joins_24h ?? "—") },
           { label:"Active Today",  value: activeToday > 0 ? String(activeToday) : "—" },
           { label:"Telegram",      value: (c?.telegram_members ?? 0).toLocaleString(), delta: telegramDelta },
         ].map(s => (
@@ -247,7 +247,7 @@ export function CommunityCard() {
             fontSize:"0.75rem", fontWeight:600, color:"#fff",
           }}>
             👋 {discordDelta != null
-              ? (discordDelta > 0 ? `+${discordDelta}` : String(discordDelta)) + " joined today"
+              ? discordDelta > 0 ? `+${discordDelta} joined today` : "0 joined today"
               : `${c?.new_joins_24h ?? 0} joined today`}
           </span>
           <span style={{
@@ -273,7 +273,7 @@ export function CommunityCard() {
       {/* ── Membership + Telegram stats 2×2 ── */}
       <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8 }}>
         {[
-          { label:"New Joins 24h", value: discordDelta != null ? (discordDelta > 0 ? `+${discordDelta}` : String(discordDelta)) : String(c?.new_joins_24h ?? "—"), bg:"#EFF6FF", color:"#2563EB" },
+          { label:"New Joins 24h", value: discordDelta != null ? String(Math.max(0, discordDelta)) : String(c?.new_joins_24h ?? "—"), bg:"#EFF6FF", color:"#2563EB" },
           { label:"Active Today",  value: activeToday > 0 ? String(activeToday) : "—", bg:"#ECFDF5", color:"#059669" },
           { label:"Telegram",      value: (c?.telegram_members ?? 0).toLocaleString(), bg:"#F0F9FF", color:"#0284C7", delta: telegramDelta },
           { label:"Online Now",    value: onlineNow.toLocaleString(), bg:"#F0FDF4", color:"#16A34A" },
