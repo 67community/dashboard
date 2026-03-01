@@ -114,6 +114,13 @@ export default function Dashboard() {
         @media (max-width: 500px)  { .hero-stats-grid { grid-template-columns: 1fr !important; } }
       `}</style>
 
+      {/* ══ Compact Tool Row ══════════════════════════════════ */}
+      <div style={{ display:"grid", gridTemplateColumns:"repeat(3, 1fr)", gap:12, marginBottom:8 }}>
+        <div style={{ display:"flex", minWidth:0, transformOrigin:"top left", transform:"scale(0.84)", width:"119%", marginRight:"-19%" }}><ContentCreatorCard /></div>
+        <div style={{ display:"flex", minWidth:0, transformOrigin:"top left", transform:"scale(0.84)", width:"119%", marginRight:"-19%" }}><WalletTrackerCard /></div>
+        <div style={{ display:"flex", minWidth:0, transformOrigin:"top left", transform:"scale(0.84)", width:"119%", marginRight:"-19%" }}><TeamNotesCard /></div>
+      </div>
+
       {/* ══ Cards Grid ═════════════════════════════════════════ */}
       <div
         className="cards-grid"
@@ -126,20 +133,17 @@ export default function Dashboard() {
         <div className="enter-6" style={{ display:"flex", minWidth:0 }}><ContentPipelineCard /></div>
         <div className="enter-7" style={{ display:"flex", minWidth:0 }}><AgentStatusCard /></div>
         <div className="enter-8" style={{ display:"flex", minWidth:0 }}><MilestonesCard /></div>
-        <div className="enter-9" style={{ display:"flex", minWidth:0 }}><ContentCreatorCard /></div>
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><PostTimingCard /></div>
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><TikTokSpotlightCard /></div>
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><YouTubeSpotlightCard /></div>
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><InstagramSpotlightCard /></div>
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><XLiveFeedCard /></div>
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><NewsFeedCard /></div>
-        <div className="enter-9" style={{ display:"flex", minWidth:0 }}><WalletTrackerCard /></div>
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><FeatureRequestCard /></div>
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><OutreachCard /></div>
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><SightingsCard /></div>
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><RaidCoordinatorCard /></div>
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><CommunityEventsCard /></div>
-        <div className="enter-9" style={{ display:"flex", minWidth:0 }}><TeamNotesCard /></div>
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><ExchangeTrackerCard /></div>
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><AnnouncementsCard /></div>
         <div className="enter-9" style={{ display:"flex", minWidth:0 }}><CommunityLeaderboardCard /></div>
