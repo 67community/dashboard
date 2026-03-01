@@ -156,6 +156,7 @@ export async function POST(req: Request) {
       type:     string
       platform?: string
       region?:  string
+      variation?: number  // 1, 2, 3 — for distinct outputs
     }
 
     if (!topic?.trim()) {
@@ -182,7 +183,14 @@ export async function POST(req: Request) {
 - ~16,800+ holders, growing daily
 - Listed on 14+ exchanges including MEXC, Gate, BingX, BitMart
 - The number 67 = a universal hand gesture that unites people worldwide`
-    const fullPrompt = `${regionCtx}\n\n${facts67}\n\n---\n\n${basePrompt}`
+    const variationHints = [
+      "",
+      "Write in a BOLD, punchy, statement-driven style. Short sentences. High energy.",
+      "Write in a STORYTELLING style. Start with a relatable moment or observation. Build to the point.",
+      "Write in a DATA/FACTS style. Lead with a number or insight. Make people think.",
+    ]
+    const variationHint = variationHints[variation ?? 1] || ""
+    const fullPrompt = `${regionCtx}\n\n${facts67}\n\n---\n\n${basePrompt}${variationHint ? `\n\nSTYLE DIRECTION: ${variationHint}` : ""}`
 
     try {
       const result = await callAI({
