@@ -158,8 +158,21 @@ export function TeamNotesCard() {
           </div>
         ) : (
           <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
+            {kind === "session" && (
+              <div style={{ display:"flex", alignItems:"center", gap:6, padding:"6px 10px",
+                background:"rgba(124,58,237,0.08)", borderRadius:8, border:"1px solid rgba(124,58,237,0.2)",
+                marginBottom:4 }}>
+                <Mic style={{ width:13, height:13, color:"#7C3AED" }} />
+                <span style={{ fontSize:"0.8125rem", fontWeight:700, color:"#7C3AED" }}>
+                  Craig Session Note
+                </span>
+                <span style={{ fontSize:"0.75rem", color:"#8E8E93", marginLeft:"auto" }}>
+                  {new Date().toLocaleDateString()}
+                </span>
+              </div>
+            )}
             <textarea ref={textRef} value={text} onChange={e => setText(e.target.value)}
-              placeholder="Write a note for the team…"
+              placeholder={kind === "session" ? "Paste Craig transcript or meeting notes…" : "Write a note for the team…"}
               rows={3}
               style={{ width:"100%", padding:"8px 10px", borderRadius:10,
                 border:"1.5px solid rgba(0,0,0,0.1)", outline:"none",
