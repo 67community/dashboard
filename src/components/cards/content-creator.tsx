@@ -142,15 +142,19 @@ export function ContentCreatorCard() {
     if (!topic.trim() || loading) return
     setLoading(true)
     try {
-      const res  = await fetch("/api/draft", {
-        method:  "POST",
-        headers: { "content-type": "application/json", ...aiHeaders() },
-        body:    JSON.stringify({ topic, type, platform, region }),
-      })
-      const json = await res.json() as Draft & { error?: string }
-      if (json.error) throw new Error(json.error)
-      setDrafts(prev => [{ ...json, platform, region, approved: false }, ...prev])
-      setTopic("")
+      // Generate 3 variations in parallel
+      const results = await Promise.all([0,1,2].map(() =>
+        fetch("/api/draft", {
+          method:  "POST",
+          headers: { "content-type": "application/json", ...aiHeaders() },
+          body:    JSON.stringify({ topic, type, platform, region }),
+        }).then(r => r.json() as Promise<Draft & { error?: string }>)
+      ))
+      const valid = results.filter(j => !j.error)
+      if (valid.length > 0) {
+        setDrafts(prev => [...valid.map(j => ({ ...j, platform, region, approved: false })), ...prev])
+        setTopic("")
+      }
     } catch (e) { console.error(e) }
     finally     { setLoading(false) }
   }
@@ -316,7 +320,13 @@ export function ContentCreatorCard() {
         </div>
       ) : (
         <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-          {drafts.map(d => {
+          {drafts.slice(0,3).length === 3 && (
+            <p style={{ fontSize:"0.6875rem", fontWeight:700, color:"#8E8E93",
+              textTransform:"uppercase", letterSpacing:"0.08em", marginBottom:2 }}>
+              ✨ 3 Options — pick one or regenerate
+            </p>
+          )}
+          {drafts.map((d, idx) => {
             const tc   = TYPE_PILL[d.type] ?? TYPE_PILL.tweet
             const plat = PLATFORMS.find(p => p.id === d.platform)!
             return (
@@ -326,6 +336,13 @@ export function ContentCreatorCard() {
                 background: d.approved ? "#F0FDF4" : "#fff",
               }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 8 }}>
+                  {idx < 3 && (
+                    <span style={{ fontSize:"0.6rem", fontWeight:800, color:"#8E8E93",
+                      background:"#F4F4F5", padding:"2px 7px", borderRadius:99,
+                      letterSpacing:"0.04em" }}>
+                      #{idx + 1}
+                    </span>
+                  )}
                   <span style={{
                     fontSize: "0.6875rem", fontWeight: 700,
                     padding: "2px 7px", borderRadius: 99,
