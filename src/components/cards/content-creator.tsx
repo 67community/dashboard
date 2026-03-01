@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { CheckCircle2, Copy, PenLine, Sparkles, Trash2 } from "lucide-react"
+import { CheckCircle2, Copy, PenLine, RefreshCw, Sparkles, Trash2 } from "lucide-react"
 import { DashboardCard } from "@/components/ui/dashboard-card"
 import { aiHeaders } from "@/lib/ai-settings"
 
