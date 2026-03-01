@@ -268,6 +268,7 @@ export function TeamNotesCard() {
   return (
     <DashboardCard compact
       title="Team Notes"
+      noAutoOpen
       subtitle="Pin · Share · Remember"
       icon={<StickyNote style={{ width:16, height:16 }} />}
       accentColor="#F5A623"
