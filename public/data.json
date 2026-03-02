@@ -1,34 +1,34 @@
 {
-  "last_updated": "2026-03-02T05:30:00.532139Z",
+  "last_updated": "2026-03-02T06:30:00.495526Z",
   "token_health": {
-    "price": 0.001402,
-    "price_change_m5": -1.54,
-    "price_change_1h": -1.71,
-    "price_change_6h": 8.78,
-    "price_change_24h": -4.02,
-    "market_cap": 1402172,
-    "liquidity": 217183.89,
-    "volume_m5": 351.3,
-    "volume_1h": 887.17,
-    "volume_6h": 27736.98,
-    "volume_24h": 97595.2,
-    "volume_ratio_1h": 0.22,
-    "buys_24h": 368,
-    "sells_24h": 362,
-    "buys_1h": 5,
-    "sells_1h": 12,
-    "holders": 16798,
-    "holder_trend": -19,
+    "price": 0.001368,
+    "price_change_m5": -0.01,
+    "price_change_1h": -1.13,
+    "price_change_6h": 1.94,
+    "price_change_24h": -6.16,
+    "market_cap": 1368120,
+    "liquidity": 213360.82,
+    "volume_m5": 361,
+    "volume_1h": 1228.47,
+    "volume_6h": 21942.62,
+    "volume_24h": 98871.62,
+    "volume_ratio_1h": 0.3,
+    "buys_24h": 366,
+    "sells_24h": 359,
+    "buys_1h": 8,
+    "sells_1h": 7,
+    "holders": 16799,
+    "holder_trend": -18,
     "sentiment": "neutral",
     "_source": "dexscreener",
-    "cmc_rank": 1771,
-    "total_volume_24h": 946495.18558332,
-    "volume_change_pct": -8.45,
-    "volume_change_usd": -87326.22,
-    "mcap_change_pct": -9.18,
-    "mcap_change_usd": -141810,
-    "liquidity_change_pct": -5.24,
-    "liquidity_change_usd": -11998.43,
+    "cmc_rank": 1781,
+    "total_volume_24h": 952179.19008789,
+    "volume_change_pct": -7.9,
+    "volume_change_usd": -81642.22,
+    "mcap_change_pct": -11.39,
+    "mcap_change_usd": -175862,
+    "liquidity_change_pct": -6.9,
+    "liquidity_change_usd": -15821.5,
     "biggest_trades": {
       "biggest_buy_usd": 2975.55,
       "biggest_buy_tx": "3kunbhcRyggY6uBSLEPELomw7jL9VNuFPt3f1Q6itDNmcY1Kuist4Cem6kNz47wLgS3NY4mh6UEsCaKR8z94ZC7v",
@@ -332,7 +332,7 @@
     {
       "name": "X Raid Bot",
       "status": "green",
-      "last_run": "2026-03-02T05:31:19.983206Z",
+      "last_run": "2026-03-02T06:30:42.860025Z",
       "errors_24h": 0,
       "schedule": "Every 3 min"
     },
@@ -375,7 +375,7 @@
   "milestones": [
     {
       "label": "10K Holders",
-      "current": 16798,
+      "current": 16799,
       "target": 10000
     },
     {
@@ -390,7 +390,7 @@
     },
     {
       "label": "$6.7M Market Cap",
-      "current": 1402172,
+      "current": 1368120,
       "target": 6700000
     }
   ],
@@ -416,8 +416,8 @@
   "alerts": [
     {
       "type": "success",
-      "message": "\ud83d\udd25 Near ALL-TIME HIGH! Only 0.0% away \u2014 $0.001402",
-      "timestamp": "2026-03-02T05:31:20.210008Z"
+      "message": "\ud83d\udd25 Near ALL-TIME HIGH! Only 0.0% away \u2014 $0.001368",
+      "timestamp": "2026-03-02T06:30:43.022146Z"
     }
   ],
   "coingecko": {
@@ -479,15 +479,15 @@
     "_source": "coingecko"
   },
   "coinmarketcap": {
-    "cmc_rank": 1771,
+    "cmc_rank": 1781,
     "cmc_id": "38918",
-    "price": 0.0014114228291807573,
-    "volume_24h": 946495.18558332,
-    "market_cap": 1410971.1738754194,
-    "change_1h": -0.75596741,
-    "change_24h": -3.19663495,
-    "change_7d": -31.97213694,
-    "change_30d": -64.75598434,
+    "price": 0.001372223277435517,
+    "volume_24h": 952179.19008789,
+    "market_cap": 1371784.1659867375,
+    "change_1h": -2.77730748,
+    "change_24h": -5.15490907,
+    "change_7d": -36.65303509,
+    "change_30d": -67.35951177,
     "market_pairs": 45,
     "_source": "coinmarketcap"
   },
@@ -514,7 +514,7 @@
     "1440075589557158100": "offline",
     "682831521396031498": "offline"
   },
-  "presence_updated": "2026-03-02T05:25:06.792726Z",
+  "presence_updated": "2026-03-02T06:25:06.787694Z",
   "tiktok_spotlight": [
     {
       "video_url": "https://www.tiktok.com/@67coin/video/7565627410092199182",
@@ -631,6 +631,46 @@
   ],
   "instagram_spotlight": [],
   "raid_feed": [
+    {
+      "message_id": 6197,
+      "text": "Raid\n\nhttps://coinmarketcap.com/community/share/post/374187807",
+      "tweet_url": "",
+      "photo": "",
+      "date": "2026-03-02T06:19:19Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6194,
+      "text": "Good morning",
+      "tweet_url": "",
+      "photo": "",
+      "date": "2026-03-02T06:10:52Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6188,
+      "text": "GM",
+      "tweet_url": "",
+      "photo": "",
+      "date": "2026-03-02T05:32:08Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6187,
+      "text": "Raid \n\nhttps://x.com/i/status/2028342398762291373",
+      "tweet_url": "https://x.com/i/web/status/2028342398762291373",
+      "photo": "",
+      "date": "2026-03-02T05:32:06Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6186,
+      "text": "Raid \n\nhttps://x.com/i/status/2028341436572172326",
+      "tweet_url": "https://x.com/i/web/status/2028341436572172326",
+      "photo": "",
+      "date": "2026-03-02T05:32:02Z",
+      "chat_id": -1003708062172
+    },
     {
       "message_id": 6185,
       "text": "Raid \n\nhttps://x.com/i/status/2028339805772300332",
@@ -1389,46 +1429,6 @@
       "tweet_url": "https://x.com/i/web/status/2027877325900054840",
       "photo": "",
       "date": "2026-02-28T22:43:31Z",
-      "chat_id": -1003708062172
-    },
-    {
-      "message_id": 5772,
-      "text": "Raid\n\nhttps://x.com/davidmozsar/status/2027877173483258108?s=46",
-      "tweet_url": "https://x.com/i/web/status/2027877173483258108",
-      "photo": "",
-      "date": "2026-02-28T22:42:58Z",
-      "chat_id": -1003708062172
-    },
-    {
-      "message_id": 5770,
-      "text": "Raid\n\nhttps://x.com/dedenovitaj/status/2027876684968419797?s=46",
-      "tweet_url": "https://x.com/i/web/status/2027876684968419797",
-      "photo": "",
-      "date": "2026-02-28T22:40:59Z",
-      "chat_id": -1003708062172
-    },
-    {
-      "message_id": 5769,
-      "text": "Raid\n\nhttps://x.com/harrodfrances/status/2027876507318714769?s=46",
-      "tweet_url": "https://x.com/i/web/status/2027876507318714769",
-      "photo": "",
-      "date": "2026-02-28T22:40:25Z",
-      "chat_id": -1003708062172
-    },
-    {
-      "message_id": 5756,
-      "text": "Raid\n\nhttps://x.com/beraatkaratepe/status/2027863179200455134?s=46",
-      "tweet_url": "https://x.com/i/web/status/2027863179200455134",
-      "photo": "",
-      "date": "2026-02-28T21:47:19Z",
-      "chat_id": -1003708062172
-    },
-    {
-      "message_id": 5755,
-      "text": "Raid\n\nhttps://x.com/davidmozsar/status/2027863061630165123?s=46",
-      "tweet_url": "https://x.com/i/web/status/2027863061630165123",
-      "photo": "",
-      "date": "2026-02-28T21:46:54Z",
       "chat_id": -1003708062172
     }
   ]
