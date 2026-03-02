@@ -2,6 +2,7 @@
 import React from "react"
 
 import { TrendingUp, TrendingDown, Coins, ExternalLink } from "lucide-react"
+import { WhaleAlertBadge } from "@/components/cards/wallet-tracker"
 import { DashboardCard } from "@/components/ui/dashboard-card"
 import { PriceChart } from "@/components/ui/price-chart"
 import { useAppData } from "@/lib/data-context"
@@ -64,6 +65,36 @@ const TIER_CONFIG = {
   3: { label: "Tier 3", color: "#8E8E93" },
 }
 
+function getLogoUrl(name: string, url?: string): string {
+  const overrides: Record<string, string> = {
+    "bingx":"https://logo.clearbit.com/bingx.com","mexc":"https://logo.clearbit.com/mexc.com",
+    "gate.io":"https://logo.clearbit.com/gate.io","gate.io alpha":"https://logo.clearbit.com/gate.io",
+    "lbank":"https://logo.clearbit.com/lbank.com","moonshot":"https://logo.clearbit.com/moonshot.money",
+    "bitmart":"https://logo.clearbit.com/bitmart.com","bitrue":"https://logo.clearbit.com/bitrue.com",
+    "bitrue alpha":"https://logo.clearbit.com/bitrue.com","kcex":"https://logo.clearbit.com/kcex.com",
+    "bitkan":"https://logo.clearbit.com/bitkan.com","cex.io":"https://logo.clearbit.com/cex.io",
+    "kucoin":"https://logo.clearbit.com/kucoin.com","kucoin alpha":"https://logo.clearbit.com/kucoin.com",
+    "weex":"https://logo.clearbit.com/weex.com","coinmarketcap":"https://logo.clearbit.com/coinmarketcap.com",
+    "coingecko":"https://logo.clearbit.com/coingecko.com","bybit":"https://logo.clearbit.com/bybit.com",
+    "okx":"https://logo.clearbit.com/okx.com","okx.us":"https://logo.clearbit.com/okx.com",
+    "bitget":"https://logo.clearbit.com/bitget.com","crypto.com":"https://logo.clearbit.com/crypto.com",
+  }
+  const found = overrides[name.toLowerCase()]
+  if (found) return found
+  if (url) { try { return `https://logo.clearbit.com/${new URL(url).hostname.replace("www.","")}` } catch {} }
+  return ""
+}
+
+function ExLogo({ name, url }: { name: string; url?: string }) {
+  const [err, setErr] = React.useState(false)
+  const src = getLogoUrl(name, url)
+  if (!src || err) {
+    const hue = name.split("").reduce((a,c) => a + c.charCodeAt(0), 0) % 360
+    return <div style={{ width:34, height:34, borderRadius:9, background:`hsl(${hue},55%,92%)`, display:"flex", alignItems:"center", justifyContent:"center", fontSize:"0.625rem", fontWeight:800, color:`hsl(${hue},50%,35%)`, flexShrink:0 }}>{name.slice(0,2).toUpperCase()}</div>
+  }
+  return <img src={src} alt={name} width={34} height={34} style={{ borderRadius:9, objectFit:"contain", background:"#fff", flexShrink:0 }} onError={() => setErr(true)} />
+}
+
 function ExchangeSection() {
   const [exchanges, setExchanges] = React.useState<Exchange[]>(DEFAULT_EXCHANGES)
   React.useEffect(() => {
@@ -74,24 +105,30 @@ function ExchangeSection() {
   const progress = exchanges.filter(e => e.status === "in-progress")
   return (
     <div>
-      <p style={{ fontSize:"0.6875rem", fontWeight:800, color:"#8E8E93",
-        textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:10 }}>
+      <p style={{ fontSize:"0.6875rem", fontWeight:800, color:"#8E8E93", textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:10 }}>
         Exchanges — {listed.length} listed · {progress.length} in progress
       </p>
-      <div style={{ display:"flex", flexWrap:"wrap", gap:5, marginBottom:8 }}>
+      {/* Logo grid */}
+      <div style={{ display:"flex", flexWrap:"wrap", gap:8, marginBottom: progress.length > 0 ? 12 : 0 }}>
         {listed.map(e => (
-          <span key={e.id} style={{ fontSize:"0.75rem", fontWeight:600, color:"#059669",
-            background:"rgba(5,150,105,0.08)", padding:"3px 10px", borderRadius:99 }}>
-            ✓ {e.name}
-          </span>
+          <a key={e.id} href={e.url} target="_blank" rel="noopener noreferrer" title={e.name}
+            style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:4, textDecoration:"none" }}>
+            <div style={{ width:42, height:42, borderRadius:11, border:"1.5px solid rgba(0,0,0,0.07)", background:"#fff", display:"flex", alignItems:"center", justifyContent:"center", overflow:"hidden", boxShadow:"0 1px 3px rgba(0,0,0,0.06)" }}>
+              <ExLogo name={e.name} url={e.url} />
+            </div>
+            <span style={{ fontSize:"0.45rem", fontWeight:700, color:"#8E8E93", textAlign:"center", maxWidth:46, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{e.name}</span>
+          </a>
         ))}
       </div>
+      {/* In-progress */}
       {progress.map(e => (
-        <div key={e.id} style={{ display:"flex", alignItems:"center", gap:8, padding:"6px 0",
-          borderTop:"1px solid rgba(0,0,0,0.05)" }}>
-          <span>⏳</span>
-          <span style={{ fontSize:"0.875rem", fontWeight:700, color:"#D97706" }}>{e.name}</span>
-          {e.note && <span style={{ fontSize:"0.75rem", color:"#8E8E93" }}>— {e.note}</span>}
+        <div key={e.id} style={{ display:"flex", alignItems:"center", gap:8, padding:"8px 10px", borderRadius:10, background:"rgba(217,119,6,0.06)", border:"1px solid rgba(217,119,6,0.15)", marginBottom:6 }}>
+          <ExLogo name={e.name} url={e.url} />
+          <div style={{ flex:1 }}>
+            <span style={{ fontSize:"0.875rem", fontWeight:700, color:"#D97706" }}>{e.name}</span>
+            {e.note && <p style={{ fontSize:"0.75rem", color:"#8E8E93", margin:0 }}>{e.note}</p>}
+          </div>
+          <span style={{ fontSize:"0.625rem", fontWeight:800, color:"#D97706", background:"rgba(217,119,6,0.1)", padding:"2px 8px", borderRadius:99 }}>⏳ In Progress</span>
         </div>
       ))}
     </div>
@@ -108,13 +145,27 @@ export function TokenHealthCard() {
   const collapsed = (
     <div style={{ display:"flex", flexDirection:"column", gap:22 }}>
       {/* Hero price */}
-      <div>
-        <p className="hero-label" style={{ marginBottom:8 }}>$67 · Solana</p>
-        <p className="hero-number">{fmtPrice(price)}</p>
-        <div style={{ display:"flex", alignItems:"center", gap:8, marginTop:10 }}>
-          <Chg v={chg} />
-          <span style={{ fontSize:"0.75rem", color:"#8E8E93", fontWeight:500 }}>24h change</span>
+      <div style={{ display:"flex", alignItems:"center", gap:12,
+        padding:"12px 14px", borderRadius:14,
+        background: chg >= 0 ? "rgba(5,150,105,0.06)" : "rgba(239,68,68,0.06)",
+        border: `1.5px solid ${chg >= 0 ? "rgba(5,150,105,0.18)" : "rgba(239,68,68,0.18)"}` }}>
+        {chg >= 0
+          ? <TrendingUp  style={{ width:20, height:20, color:"#059669", flexShrink:0 }} />
+          : <TrendingDown style={{ width:20, height:20, color:"#EF4444", flexShrink:0 }} />}
+        <div>
+          <p style={{ fontSize:"0.6875rem", color:"#8E8E93", fontWeight:600, margin:0 }}>The Official 67 Coin</p>
+          <p style={{ fontSize:"1.125rem", fontWeight:800, margin:0,
+            color: chg >= 0 ? "#059669" : "#EF4444",
+            fontVariantNumeric:"tabular-nums", letterSpacing:"-0.02em" }}>
+            {fmtPrice(price)}
+            <span style={{ fontSize:"0.75rem", marginLeft:8, opacity:0.85 }}>
+              {chg >= 0 ? "+" : ""}{chg.toFixed(2)}%
+            </span>
+          </p>
         </div>
+      </div>
+      <div style={{ marginTop:6 }}>
+        <WhaleAlertBadge />
       </div>
 
       {/* Stats — inset-cell grey boxes */}
@@ -152,6 +203,38 @@ export function TokenHealthCard() {
             </div>
           )
         })}
+      </div>
+
+      {/* Top exchange volumes */}
+      {(t?.exchange_volumes?.length ?? 0) > 0 && (
+        <div style={{ borderTop:"1px solid rgba(0,0,0,0.06)", paddingTop:16 }}>
+          <p style={{ fontSize:"0.625rem", fontWeight:800, color:"#8E8E93", textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:10 }}>Exchange Volumes</p>
+          <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
+            {(t?.exchange_volumes ?? []).slice(0,5).map((ex, i) => {
+              const max = t?.exchange_volumes?.[0]?.volume_usd ?? 1
+              const pct = Math.max(4, (ex.volume_usd / max) * 100)
+              return (
+                <div key={i} style={{ display:"flex", alignItems:"center", gap:8 }}>
+                  {ex.logo ? (
+                    <img src={ex.logo} alt={ex.exchange} width={20} height={20} style={{ borderRadius:5, objectFit:"contain", background:"#fff", boxShadow:"0 0 0 1px rgba(0,0,0,0.07)", flexShrink:0 }} onError={e=>{(e.target as HTMLImageElement).style.display="none"}} />
+                  ) : (
+                    <div style={{ width:20, height:20, borderRadius:5, background:"#E8E8ED", flexShrink:0, display:"flex", alignItems:"center", justifyContent:"center", fontSize:"0.5rem", fontWeight:700, color:"#8E8E93" }}>{ex.exchange.charAt(0)}</div>
+                  )}
+                  <span style={{ fontSize:"0.75rem", fontWeight:600, color:"#1D1D1F", width:72, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap", flexShrink:0 }}>{ex.exchange}</span>
+                  <div style={{ flex:1, height:5, background:"rgba(0,0,0,0.06)", borderRadius:99, overflow:"hidden" }}>
+                    <div style={{ height:"100%", width:`${pct}%`, background: ex.is_dex ? "#7C3AED" : "#059669", borderRadius:99 }} />
+                  </div>
+                  <span style={{ fontSize:"0.6875rem", fontWeight:700, color:"#1D1D1F", width:42, textAlign:"right", flexShrink:0 }}>{ex.volume_usd >= 1000 ? `$${(ex.volume_usd/1000).toFixed(0)}K` : `$${ex.volume_usd.toFixed(0)}`}</span>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* Exchange Listings inline */}
+      <div style={{ borderTop:"1px solid rgba(0,0,0,0.06)", paddingTop:16 }}>
+        <ExchangeSection />
       </div>
     </div>
   )
@@ -383,7 +466,7 @@ export function TokenHealthCard() {
   return (
     <DashboardCard
       title="Coin Health"
-      subtitle="$67 on Solana"
+      subtitle="$67"
       icon={<Coins style={{ width:16, height:16 }} />}
       accentColor="#F5A623"
       collapsed={collapsed}

@@ -1,4 +1,6 @@
 "use client"
+import React from "react"
+import ReactDOM from "react-dom"
 
 
 import { TokenHealthCard }     from "@/components/cards/token-health"
@@ -15,7 +17,7 @@ import { NewsFeedCard }              from "@/components/cards/news-feed"
 import { AgentStatusCard }      from "@/components/cards/agent-status"
 import { EmailInboxCard }       from "@/components/cards/email-inbox"
 import { MilestonesCard }       from "@/components/cards/milestones"
-import { FeatureRequestCard }   from "@/components/cards/feature-request"
+import { FeatureRequestCard, FeatureRequestSection }   from "@/components/cards/feature-request"
 import { OutreachCard }         from "@/components/cards/outreach"
 import { SightingsCard }        from "@/components/cards/sightings"
 import { RaidCoordinatorCard }  from "@/components/cards/raid-coordinator"
@@ -24,10 +26,64 @@ import { CommunityEventsCard }  from "@/components/cards/events"
 import { TeamNotesCard }          from "@/components/cards/team-notes"
 import { AnnouncementsCard }      from "@/components/cards/announcements"
 import { CommunityLeaderboardCard } from "@/components/cards/leaderboard"
+import { XRaidCard } from "@/components/cards/x-raid"
 import { WalletTrackerCard }       from "@/components/cards/wallet-tracker"
 import { useAppData }          from "@/lib/data-context"
 import { AnimatedNumber }      from "@/components/ui/animated-number"
 import { McProgressBar }       from "@/components/mc-progress-bar"
+
+
+function FeatureRequestMini() {
+  const [open, setOpen] = React.useState(false)
+  const [what, setWhat] = React.useState("")
+  const [why,  setWhy]  = React.useState("")
+  const [sent, setSent] = React.useState(false)
+  const [mounted, setMounted] = React.useState(false)
+  React.useEffect(() => { setMounted(true) }, [])
+  async function submit(e: React.FormEvent) {
+    e.preventDefault()
+    if (!what.trim() || !why.trim()) return
+    setSent(true)
+    try { await fetch("/api/feature-request", { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({ what, why }) }) } catch {}
+    setTimeout(() => { setSent(false); setWhat(""); setWhy(""); setOpen(false) }, 1800)
+  }
+  const dropdown = (
+    <>
+      <div onClick={()=>setOpen(false)} style={{ position:"fixed", inset:0, zIndex:99998 }} />
+      <div onClick={e=>e.stopPropagation()}
+        style={{ position:"fixed", top:56, right:20, zIndex:99999,
+          background:"#fff", borderRadius:14, boxShadow:"0 8px 32px rgba(0,0,0,0.18)",
+          padding:16, width:280, display:"flex", flexDirection:"column", gap:10,
+          border:"1px solid rgba(0,0,0,0.08)" }}>
+        <p style={{ fontSize:"0.6875rem", fontWeight:800, color:"#1D1D1F", margin:0 }}>⚡ Feature Request</p>
+        <form onSubmit={submit} style={{ display:"flex", flexDirection:"column", gap:8 }}>
+          <input value={what} onChange={e=>setWhat(e.target.value)} placeholder="What to build?"
+            style={{ fontSize:"0.75rem", padding:"7px 10px", borderRadius:8, border:"1.5px solid #E5E7EB", fontFamily:"inherit", background:"#F9F9F9", outline:"none", width:"100%", boxSizing:"border-box" }}
+            onFocus={e=>e.currentTarget.style.borderColor="#F5A623"} onBlur={e=>e.currentTarget.style.borderColor="#E5E7EB"} />
+          <input value={why} onChange={e=>setWhy(e.target.value)} placeholder="Why? (value / problem)"
+            style={{ fontSize:"0.75rem", padding:"7px 10px", borderRadius:8, border:"1.5px solid #E5E7EB", fontFamily:"inherit", background:"#F9F9F9", outline:"none", width:"100%", boxSizing:"border-box" }}
+            onFocus={e=>e.currentTarget.style.borderColor="#F5A623"} onBlur={e=>e.currentTarget.style.borderColor="#E5E7EB"} />
+          <button type="submit" disabled={!what.trim()||!why.trim()||sent}
+            style={{ padding:"8px 12px", borderRadius:8, border:"none", cursor:"pointer", fontWeight:700, fontSize:"0.75rem",
+              background: sent ? "#059669" : (!what.trim()||!why.trim()) ? "#D1D5DB" : "#F5A623", color:"#fff" }}>
+            {sent ? "✓ Submitted!" : "Submit"}
+          </button>
+        </form>
+      </div>
+    </>
+  )
+  return (
+    <div style={{ position:"relative", flexShrink:0 }}>
+      <button onClick={e=>{ e.stopPropagation(); setOpen(o=>!o) }}
+        style={{ display:"inline-flex", alignItems:"center", gap:5, fontSize:"0.6875rem", fontWeight:700,
+          padding:"4px 10px", borderRadius:99, border:"1.5px solid rgba(245,166,35,0.3)",
+          background:"rgba(245,166,35,0.08)", color:"#D97706", cursor:"pointer", whiteSpace:"nowrap" }}>
+        ⚡ Feature Request
+      </button>
+      {open && mounted && ReactDOM.createPortal(dropdown, document.body)}
+    </div>
+  )
+}
 
 export default function Dashboard() {
   const { data, livePrice, liveChange24h, liveMcap } = useAppData()
@@ -78,35 +134,36 @@ export default function Dashboard() {
           </span>
         )}
 
-        {/* Market pills */}
-        {market.map((m, i) => {
-          const mUp = m.change_pct >= 0
-          return (
-            <span key={i} style={{
-              display:"inline-flex", alignItems:"center", gap:4,
-              fontSize:"0.6875rem", fontWeight:600,
-              color:"#374151",
-              background:"#FFF",
-              border:"1.5px solid rgba(0,0,0,0.07)",
-              padding:"3px 8px", borderRadius:99,
-              whiteSpace:"nowrap",
-            }}>
-              <span style={{ fontSize:"0.7rem" }}>{m.emoji}</span>
-              <span style={{ fontWeight:700, color:"#1D1D1F" }}>
-                {m.symbol.replace("-USD","").replace("=F","")}
-              </span>
-              <span style={{ fontVariantNumeric:"tabular-nums" }}>
-                ${fmtP(m.price, m.kind)}
-              </span>
-              <span style={{
-                fontSize:"0.625rem", fontWeight:700,
-                color: mUp ? "#059669" : "#DC2626",
+        {/* Market pills — compact */}
+        <div style={{ display:"flex", flexWrap:"nowrap", gap:4, flex:1, overflowX:"auto", scrollbarWidth:"none" }}>
+          {market.map((m, i) => {
+            const mUp = m.change_pct >= 0
+            return (
+              <span key={i} style={{
+                display:"inline-flex", alignItems:"center", gap:3,
+                fontSize:"0.5625rem", fontWeight:600,
+                background:"rgba(0,0,0,0.04)",
+                border:"1px solid rgba(0,0,0,0.06)",
+                padding:"2px 6px", borderRadius:99,
+                whiteSpace:"nowrap",
               }}>
-                {mUp ? "▲" : "▼"}{Math.abs(m.change_pct).toFixed(1)}%
+                <span style={{ fontSize:"0.6rem" }}>{m.emoji}</span>
+                <span style={{ fontWeight:800, color:"#1D1D1F" }}>
+                  {m.symbol.replace("-USD","").replace("=F","")}
+                </span>
+                <span style={{ color:"#374151", fontVariantNumeric:"tabular-nums" }}>
+                  ${fmtP(m.price, m.kind)}
+                </span>
+                <span style={{ fontWeight:700, color: mUp ? "#059669" : "#DC2626" }}>
+                  {mUp ? "▲" : "▼"}{Math.abs(m.change_pct).toFixed(1)}%
+                </span>
               </span>
-            </span>
-          )
-        })}
+            )
+          })}
+        </div>
+
+        {/* Feature Request mini form */}
+        <FeatureRequestMini />
       </div>
 
 
@@ -114,18 +171,31 @@ export default function Dashboard() {
         @media (max-width: 500px)  { .hero-stats-grid { grid-template-columns: 1fr !important; } }
       `}</style>
 
-      {/* ══ Top Section — Community | Coin | Announcements+Raid ══════ */}
-      <div style={{ display:"grid", gridTemplateColumns:"repeat(3, 1fr)", gap:20, alignItems:"start" }}>
-        <div style={{ display:"flex", minWidth:0 }}><CommunityCard /></div>
-        <div style={{ display:"flex", minWidth:0 }}><TokenHealthCard /></div>
-        <div style={{ display:"flex", flexDirection:"column", gap:20, minWidth:0 }}>
-          <AnnouncementsCard />
-          <RaidCoordinatorCard />
-        </div>
+      {/* ══ Top Section — Community | Coin Health | Team Notes ══════ */}
+      <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 0.6fr", gap:20, alignItems:"stretch" }}>
+        <div style={{ display:"flex", minWidth:0, height:580, overflow:"hidden" }}><CommunityCard /></div>
+        <div style={{ display:"flex", minWidth:0, height:580, overflow:"hidden" }}><TokenHealthCard /></div>
+        <div style={{ display:"flex", minWidth:0, minHeight:600 }}><TeamNotesCard /></div>
       </div>
 
-      {/* ══ Team Notes — full width row above banner ══ */}
-      <div style={{ display:"flex", minWidth:0 }}><TeamNotesCard /></div>
+      {/* ══ Cards Grid ═════════════════════════════════════════ */}
+      <div className="cards-grid" style={{ display:"grid", gridTemplateColumns:"repeat(3, 1fr)", gap:20 }}>
+        <div className="enter-2" style={{ display:"flex", minWidth:0 }}><XRaidCard /></div>
+        <div className="enter-2" style={{ display:"flex", minWidth:0 }}><XLiveFeedCard /></div>
+        <div className="enter-2" style={{ display:"flex", minWidth:0 }}><TikTokSpotlightCard /></div>
+        <div className="enter-2" style={{ display:"flex", minWidth:0 }}><YouTubeSpotlightCard /></div>
+        <div className="enter-3" style={{ display:"flex", minWidth:0, overflow:"hidden" }}><ContentCreatorCard /></div>
+        <div className="enter-3" style={{ display:"flex", minWidth:0 }}><NewsFeedCard /></div>
+        <div className="enter-3" style={{ display:"flex", minWidth:0 }}><WalletTrackerCard /></div>
+        <div className="enter-4" style={{ display:"flex", minWidth:0 }}><ContentPipelineCard /></div>
+        <div className="enter-4" style={{ display:"flex", minWidth:0 }}><AgentStatusCard /></div>
+        <div className="enter-4" style={{ display:"flex", minWidth:0 }}><SocialPulseCard /></div>
+        <div className="enter-5" style={{ display:"flex", minWidth:0 }}><DailyBriefingCard /></div>
+        <div className="enter-6" style={{ display:"flex", minWidth:0 }}><InstagramSpotlightCard /></div>
+        <div className="enter-6" style={{ display:"flex", minWidth:0 }}><SightingsCard /></div>
+        <div className="enter-7" style={{ display:"flex", minWidth:0 }}><CommunityEventsCard /></div>
+        <div className="enter-7" style={{ display:"flex", minWidth:0 }}><CommunityLeaderboardCard /></div>
+      </div>
 
       {/* ══ Season 2 Banner ════════════════════════════════════ */}
       <div style={{ marginTop:8, borderRadius:20, position:"relative", overflow:"hidden" }}>
@@ -145,27 +215,6 @@ export default function Dashboard() {
             <McProgressBar mcap={liveMcap ?? data?.token_health?.market_cap ?? null} />
           </div>
         </div>
-      </div>
-
-      {/* ══ Cards Grid ═════════════════════════════════════════ */}
-      <div className="cards-grid" style={{ display:"grid", gridTemplateColumns:"repeat(3, 1fr)", gap:20 }}>
-        <div className="enter-2" style={{ display:"flex", minWidth:0 }}><ContentPipelineCard /></div>
-        <div className="enter-2" style={{ display:"flex", minWidth:0 }}><AgentStatusCard /></div>
-        <div className="enter-2" style={{ display:"flex", minWidth:0 }}><SocialPulseCard /></div>
-        <div className="enter-3" style={{ display:"flex", minWidth:0 }}><TikTokSpotlightCard /></div>
-        <div className="enter-3" style={{ display:"flex", minWidth:0 }}><YouTubeSpotlightCard /></div>
-        <div className="enter-3" style={{ display:"flex", minWidth:0, maxHeight:280, overflow:"hidden" }}><ContentCreatorCard /></div>
-        <div className="enter-4" style={{ display:"flex", minWidth:0, maxHeight:280, overflow:"hidden" }}><WalletTrackerCard /></div>
-        <div className="enter-4" style={{ display:"flex", minWidth:0 }}><OutreachCard /></div>
-        <div className="enter-4" style={{ display:"flex", minWidth:0 }}><NewsFeedCard /></div>
-        <div className="enter-5" style={{ display:"flex", minWidth:0 }}><XLiveFeedCard /></div>
-        <div className="enter-5" style={{ display:"flex", minWidth:0 }}><PostTimingCard /></div>
-        <div className="enter-5" style={{ display:"flex", minWidth:0 }}><DailyBriefingCard /></div>
-        <div className="enter-6" style={{ display:"flex", minWidth:0 }}><InstagramSpotlightCard /></div>
-        <div className="enter-6" style={{ display:"flex", minWidth:0 }}><FeatureRequestCard /></div>
-        <div className="enter-6" style={{ display:"flex", minWidth:0 }}><SightingsCard /></div>
-        <div className="enter-7" style={{ display:"flex", minWidth:0 }}><CommunityEventsCard /></div>
-        <div className="enter-7" style={{ display:"flex", minWidth:0 }}><CommunityLeaderboardCard /></div>
       </div>
 
             {/* Responsive grid styles */}

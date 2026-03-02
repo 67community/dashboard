@@ -1090,26 +1090,36 @@ export async function GET() {
         return tgCur ? { telegram_members: tgCur, telegram_delta_24h: tgCur - tgSnap } : {}
       })()),
       // Live Discord activity: real joins feed + active users today + channel stats + enriched data
-      ...(discordActivity ? {
-        recent_joins:       discordActivity.recent_joins,
-        active_users_today: discordActivity.active_users_today,
-        top_channels:       discordActivity.top_channels,
-        voice_channels:     discordActivity.voice_channels,
-        scheduled_events:   discordActivity.scheduled_events,
-        boost_level:        discordActivity.boost_level,
-        boost_count:        discordActivity.boost_count,
-        mod_events:         discordActivity.mod_events,
-        top_contributors:   discordActivity.top_contributors,
-      } : {
-        recent_joins:       static_?.community?.recent_joins        ?? [],
+      ...(discordActivity ? (() => {
+        // If live Discord has no channel data, merge with static fallback
+        const staticActs = static_?.community?.recent_discord_activity ?? []
+        const liveJoins = discordActivity.recent_joins ?? []
+        const liveMod   = discordActivity.mod_events   ?? []
+        const liveContribs = discordActivity.top_contributors ?? []
+        const liveChs   = discordActivity.top_channels ?? []
+        return {
+          recent_joins:       liveJoins.length    > 0 ? liveJoins    : staticActs.filter((a: {type:string}) => a.type === "join").slice(0, 8),
+          active_users_today: discordActivity.active_users_today,
+          top_channels:       liveChs.length      > 0 ? liveChs      : (static_?.community?.top_channels ?? []),
+          voice_channels:     discordActivity.voice_channels,
+          scheduled_events:   discordActivity.scheduled_events,
+          boost_level:        discordActivity.boost_level,
+          boost_count:        discordActivity.boost_count,
+          mod_events:         liveMod.length      > 0 ? liveMod      : staticActs.filter((a: {type:string}) => a.type !== "join").slice(0, 8),
+          top_contributors:   liveContribs.length > 0 ? liveContribs : (static_?.community?.top_contributors ?? []),
+          recent_discord_activity: staticActs,
+        }
+      })() : {
+        recent_joins:       static_?.community?.recent_joins        ?? (static_?.community?.recent_discord_activity ?? []).filter((a: {type:string}) => a.type === "join").slice(0, 8),
         active_users_today: static_?.community?.active_users_today  ?? 0,
         top_channels:       static_?.community?.top_channels        ?? [],
         voice_channels:     static_?.community?.voice_channels      ?? [],
         scheduled_events:   static_?.community?.scheduled_events    ?? [],
         boost_level:        static_?.community?.boost_level         ?? 0,
         boost_count:        static_?.community?.boost_count         ?? 0,
-        mod_events:         static_?.community?.mod_events          ?? [],
+        mod_events:         static_?.community?.mod_events          ?? (static_?.community?.recent_discord_activity ?? []).filter((a: {type:string}) => a.type !== "join").slice(0, 8),
         top_contributors:   static_?.community?.top_contributors    ?? [],
+        recent_discord_activity: static_?.community?.recent_discord_activity ?? [],
       }),
     },
     content_pipeline:  static_?.content_pipeline  ?? [],

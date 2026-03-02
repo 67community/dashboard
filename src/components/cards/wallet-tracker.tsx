@@ -893,3 +893,55 @@ export function WalletTrackerCard() {
     />
   )
 }
+
+
+// ── WhaleAlertBadge — latest tx inline ───────────────────────────────────────
+export function WhaleAlertBadge() {
+  const [tx, setTx] = useState<{ type: string; usd: number } | null>(null)
+
+  useEffect(() => {
+    async function load() {
+      try {
+        const saved = localStorage.getItem("67_wallets")
+        if (!saved) return
+        const wallets: TrackedWallet[] = JSON.parse(saved)
+        if (!wallets.length) return
+        const res = await fetch("/api/wallet-tracker", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ wallets }),
+        })
+        const data = await res.json()
+        const active = (data.wallets ?? []).filter((d: WalletData) => d.recentAlert)
+        if (!active.length) { setTx(null); return }
+        const latest = active[0] as WalletData
+        const t = latest.trades?.[0]
+        setTx({ type: t?.type ?? "buy", usd: latest.valueUsd })
+      } catch {}
+    }
+    load()
+    const id = setInterval(load, 60000)
+    return () => clearInterval(id)
+  }, [])
+
+  if (!tx) return null
+
+  const isBuy = tx.type === "buy"
+  return (
+    <div style={{
+      display:"flex", alignItems:"center", gap:4,
+      background: isBuy ? "rgba(5,150,105,0.08)" : "rgba(239,68,68,0.08)",
+      border: `1px solid ${isBuy ? "rgba(5,150,105,0.2)" : "rgba(239,68,68,0.2)"}`,
+      borderRadius:99, padding:"3px 8px",
+    }}>
+      <span style={{ width:5, height:5, borderRadius:"50%", flexShrink:0,
+        background: isBuy ? "#059669" : "#EF4444",
+        boxShadow:`0 0 5px ${isBuy ? "rgba(5,150,105,0.8)" : "rgba(239,68,68,0.8)"}`,
+        display:"inline-block" }} />
+      <span style={{ fontSize:"0.5625rem", fontWeight:800, letterSpacing:"0.05em",
+        color: isBuy ? "#059669" : "#EF4444", textTransform:"uppercase" }}>
+        {isBuy ? "BUY" : "SELL"} ${tx.usd >= 1000 ? `${(tx.usd/1000).toFixed(1)}K` : tx.usd.toFixed(0)}
+      </span>
+    </div>
+  )
+}

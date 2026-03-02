@@ -323,3 +323,62 @@ export function PostTimingCard() {
     />
   )
 }
+
+// ── Embedded section for use in other cards ───────────────────────────────────
+export function PeakPostSection() {
+  const [selPlat,   setSelPlat]   = useState(0)
+  const [selRegion, setSelRegion] = useState(0)
+  const plat   = PLATFORMS[selPlat]
+  const region = plat.regions[selRegion]
+  return (
+    <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
+      <p style={{ fontSize:"0.625rem", fontWeight:800, color:"#8E8E93", textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:2 }}>
+        <Clock style={{ width:10, height:10, display:"inline", marginRight:4, verticalAlign:"middle" }} />
+        Peak Post Times
+      </p>
+      {/* Platform tabs */}
+      <div style={{ display:"flex", gap:4 }}>
+        {PLATFORMS.map((p, i) => {
+          const active = selPlat === i
+          return (
+            <button key={p.key} onClick={e => { e.stopPropagation(); setSelPlat(i); setSelRegion(0) }}
+              style={{ flex:1, padding:"6px 4px", borderRadius:9, border:"none", cursor:"pointer",
+                background: active ? p.color : "#F4F4F5",
+                display:"flex", flexDirection:"column", alignItems:"center", gap:2 }}>
+              {p.key === "x" ? <span style={{ fontSize:"0.9rem", fontWeight:900, color: active?"#fff":"#0A0A0A", lineHeight:1 }}>𝕏</span>
+                : p.key === "tiktok" ? <span style={{ fontSize:"0.9rem", color: active?"#fff":"#0A0A0A", lineHeight:1 }}>♪</span>
+                : <span style={{ display:"flex", opacity: active ? 1 : 0.75 }}><IgLogo size={15} /></span>}
+              <span style={{ fontSize:"0.5rem", fontWeight:700, color: active?"#fff":"#0A0A0A" }}>
+                {p.key === "x" ? "X" : p.key === "tiktok" ? "TikTok" : "IG"}
+              </span>
+            </button>
+          )
+        })}
+      </div>
+      {/* Region flags */}
+      <div style={{ display:"flex", gap:4 }}>
+        {plat.regions.map((r, i) => (
+          <button key={r.country} onClick={e => { e.stopPropagation(); setSelRegion(i) }}
+            style={{ flex:1, padding:"5px 2px", borderRadius:8, border:"none", cursor:"pointer",
+              background: selRegion===i ? `${r.accent}18` : "#F4F4F5",
+              outline: selRegion===i ? `1.5px solid ${r.accent}` : "1.5px solid transparent",
+              display:"flex", flexDirection:"column", alignItems:"center", gap:1 }}>
+            <span style={{ fontSize:"0.875rem" }}>{r.flag}</span>
+            <span style={{ fontSize:"0.45rem", fontWeight:700, color: selRegion===i ? r.accent : "#A1A1AA" }}>
+              {r.country === "United States" ? "US" : r.country === "Global" ? "World" : r.country}
+            </span>
+          </button>
+        ))}
+      </div>
+      {/* Times */}
+      <div style={{ display:"flex", flexDirection:"column", gap:5 }}>
+        {region.rows.map(r => (
+          <div key={r.t} style={{ display:"flex", justifyContent:"space-between", alignItems:"center" }}>
+            <span style={{ fontSize:"0.9375rem", fontWeight:800, color:"#1D1D1F", letterSpacing:"-0.025em" }}>{r.t}</span>
+            <span style={{ fontSize:"0.6875rem", color:"#A1A1AA" }}>{r.n}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
