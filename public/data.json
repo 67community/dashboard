@@ -1,34 +1,34 @@
 {
-  "last_updated": "2026-03-02T07:30:00.880326Z",
+  "last_updated": "2026-03-02T08:30:01.165599Z",
   "token_health": {
-    "price": 0.00136,
-    "price_change_m5": 1.28,
-    "price_change_1h": -0.56,
-    "price_change_6h": -1.59,
-    "price_change_24h": -13.0,
-    "market_cap": 1360468,
-    "liquidity": 212174.3,
-    "volume_m5": 4.77,
-    "volume_1h": 689.62,
-    "volume_6h": 13984.75,
-    "volume_24h": 94417.65,
-    "volume_ratio_1h": 0.18,
-    "buys_24h": 360,
-    "sells_24h": 358,
-    "buys_1h": 7,
-    "sells_1h": 10,
-    "holders": 16798,
-    "holder_trend": -19,
+    "price": 0.001372,
+    "price_change_m5": 0.21,
+    "price_change_1h": 0.87,
+    "price_change_6h": -2.0,
+    "price_change_24h": -11.27,
+    "market_cap": 1372298,
+    "liquidity": 212570.85,
+    "volume_m5": 296.81,
+    "volume_1h": 2097.42,
+    "volume_6h": 13434.18,
+    "volume_24h": 86713.31,
+    "volume_ratio_1h": 0.58,
+    "buys_24h": 346,
+    "sells_24h": 339,
+    "buys_1h": 13,
+    "sells_1h": 15,
+    "holders": 16799,
+    "holder_trend": 1,
     "sentiment": "neutral",
     "_source": "dexscreener",
-    "cmc_rank": 1784,
-    "total_volume_24h": 945579.82012982,
-    "volume_change_pct": 0.0,
-    "volume_change_usd": 0.0,
-    "mcap_change_pct": 0.0,
-    "mcap_change_usd": 0,
-    "liquidity_change_pct": 0.0,
-    "liquidity_change_usd": 0.0,
+    "cmc_rank": 1785,
+    "total_volume_24h": 937287.99041191,
+    "volume_change_pct": -0.88,
+    "volume_change_usd": -8291.83,
+    "mcap_change_pct": 0.87,
+    "mcap_change_usd": 11830,
+    "liquidity_change_pct": 0.19,
+    "liquidity_change_usd": 396.55,
     "biggest_trades": {
       "biggest_buy_usd": 2557.55,
       "biggest_buy_tx": "5Sp9Qdn92PgCuaTcQiRCA9CRzWufUdUdMoRC9dcfrSt5evJbVDdZ4sNH9ABv3569Z4mf7cfGthMzP1EqpGhwqzgG",
@@ -45,7 +45,7 @@
     "twitter_followers": 1659,
     "follower_change_24h": 0,
     "posting_streak_days": 8,
-    "engagement_rate": 4.521,
+    "engagement_rate": 4.533,
     "_source": "nitter_rss+twitter_cdn",
     "best_tweet_week": {
       "tweet_id": "2027403892414398746",
@@ -67,9 +67,9 @@
       "date": "Feb 28",
       "embed_html": "<blockquote class=\"twitter-tweet\" align=\"center\" data-width=\"520\" data-dnt=\"true\" data-theme=\"dark\"><p lang=\"en\" dir=\"ltr\">Italian singer and rapper <a href=\"https://twitter.com/jaxofficial?ref_src=twsrc%5Etfw\">@jaxofficial</a> just released his new track &quot;Italian Starter Pack&quot;, which talks about the contradictory melting pot that being an Italian is in 2026.<br><br>67 is deeply ingrained in culture... from the US, to Italy, to everywhere else.<a href=\"https://twitter.com/hashtag/67to67billion?src=hash&amp;ref_src=twsrc%5Etfw\">#67to67billion</a> <a href=\"https://t.co/5Ji69GOITY\">pic.twitter.com/5Ji69GOITY</a></p>&mdash; The Official 67 Coin (@67coinX) <a href=\"https://twitter.com/67coinX/status/2027874572532428827?ref_src=twsrc%5Etfw\">February 28, 2026</a></blockquote>\n\n"
     },
-    "avg_engagement": 75.0,
+    "avg_engagement": 75.2,
     "twitter_followers_updated_at": "2026-03-01T21:30:22.077518Z",
-    "total_engagement_7d": 675,
+    "total_engagement_7d": 677,
     "follower_history": [
       {
         "date": "2026-02-24",
@@ -104,8 +104,8 @@
     "content_type_stats": {
       "meme": {
         "count": 7,
-        "total_eng": 578,
-        "avg_eng": 82.6
+        "total_eng": 580,
+        "avg_eng": 82.9
       },
       "thesis": {
         "count": 1,
@@ -126,7 +126,7 @@
     "x_community_last_scrape": 1772393415.947463
   },
   "community": {
-    "discord_members": 1449,
+    "discord_members": 1450,
     "active_7d": 1870,
     "new_joins_24h": 10,
     "open_tickets": 3,
@@ -179,8 +179,8 @@
     ],
     "sentiment_up_pct": 50.0,
     "sentiment_down_pct": 50.0,
-    "online_now": 72,
-    "discord_delta_24h": 0,
+    "online_now": 80,
+    "discord_delta_24h": 1,
     "telegram_delta_24h": 0,
     "watchlist_delta_24h": 0,
     "recent_discord_activity": [
@@ -189,7 +189,7 @@
         "user": "casiopriv870",
         "user_id": "1226223232445583402",
         "avatar": "https://cdn.discordapp.com/avatars/1226223232445583402/52f5803c7c4bd976686b7920c42073c6.webp?size=64",
-        "time_ago": "8h ago",
+        "time_ago": "9h ago",
         "detail": "Introduced in Discord"
       },
       {
@@ -197,7 +197,7 @@
         "user": "marziechockymilk",
         "user_id": "1464960465703665917",
         "avatar": "https://cdn.discordapp.com/avatars/1464960465703665917/8854b0674e382b8ded4eb2369db33973.webp?size=64",
-        "time_ago": "8h ago",
+        "time_ago": "9h ago",
         "detail": "Introduced in Discord"
       },
       {
@@ -205,7 +205,7 @@
         "user": "w3b8",
         "user_id": "908761821798871100",
         "avatar": "https://cdn.discordapp.com/avatars/908761821798871100/17ad82ac229b13afee48706e7fac2c34.webp?size=64",
-        "time_ago": "11h ago",
+        "time_ago": "12h ago",
         "detail": "Introduced in Discord"
       },
       {
@@ -332,7 +332,7 @@
     {
       "name": "X Raid Bot",
       "status": "green",
-      "last_run": "2026-03-02T07:31:23.512940Z",
+      "last_run": "2026-03-02T08:31:27.609591Z",
       "errors_24h": 0,
       "schedule": "Every 3 min"
     },
@@ -375,7 +375,7 @@
   "milestones": [
     {
       "label": "10K Holders",
-      "current": 16798,
+      "current": 16799,
       "target": 10000
     },
     {
@@ -385,12 +385,12 @@
     },
     {
       "label": "5K Discord Members",
-      "current": 1449,
+      "current": 1450,
       "target": 5000
     },
     {
       "label": "$6.7M Market Cap",
-      "current": 1360468,
+      "current": 1372298,
       "target": 6700000
     }
   ],
@@ -416,13 +416,13 @@
   "alerts": [
     {
       "type": "danger",
-      "message": "\u26a0\ufe0f Price down -13.0% in 24h. Current: $0.001360",
-      "timestamp": "2026-03-02T07:31:23.726657Z"
+      "message": "\u26a0\ufe0f Price down -11.3% in 24h. Current: $0.001372",
+      "timestamp": "2026-03-02T08:31:27.896547Z"
     },
     {
       "type": "success",
-      "message": "\ud83d\udd25 Near ALL-TIME HIGH! Only 0.0% away \u2014 $0.001360",
-      "timestamp": "2026-03-02T07:31:23.726657Z"
+      "message": "\ud83d\udd25 Near ALL-TIME HIGH! Only 0.0% away \u2014 $0.001372",
+      "timestamp": "2026-03-02T08:31:27.896547Z"
     }
   ],
   "coingecko": {
@@ -484,15 +484,15 @@
     "_source": "coingecko"
   },
   "coinmarketcap": {
-    "cmc_rank": 1784,
+    "cmc_rank": 1785,
     "cmc_id": "38918",
-    "price": 0.001358066600502155,
-    "volume_24h": 945579.82012982,
-    "market_cap": 1357632.0191899943,
-    "change_1h": -1.03165987,
-    "change_24h": -8.05769465,
-    "change_7d": -37.76140969,
-    "change_30d": -66.86677076,
+    "price": 0.001369606101628511,
+    "volume_24h": 937287.99041191,
+    "market_cap": 1369167.8276759898,
+    "change_1h": 0.84970068,
+    "change_24h": -10.98764052,
+    "change_7d": -37.11817667,
+    "change_30d": -65.37097193,
     "market_pairs": 45,
     "_source": "coinmarketcap"
   },
@@ -511,15 +511,15 @@
     "exchange_volumes": []
   },
   "team_presence": {
-    "201710326347988993": "dnd",
     "767811814557089802": "idle",
     "965681608604647514": "dnd",
     "1444130836415905993": "offline",
     "1440075589557158100": "offline",
     "682831521396031498": "offline",
-    "788495124061487154": "offline"
+    "788495124061487154": "offline",
+    "201710326347988993": "offline"
   },
-  "presence_updated": "2026-03-02T07:25:07.183123Z",
+  "presence_updated": "2026-03-02T08:25:06.571649Z",
   "tiktok_spotlight": [
     {
       "video_url": "https://www.tiktok.com/@67coin/video/7565627410092199182",
@@ -636,6 +636,14 @@
   ],
   "instagram_spotlight": [],
   "raid_feed": [
+    {
+      "message_id": 6212,
+      "text": "Raid\n\nhttps://x.com/beraatkaratepe/status/2028376828902019450?s=46",
+      "tweet_url": "https://x.com/i/web/status/2028376828902019450",
+      "photo": "",
+      "date": "2026-03-02T07:48:27Z",
+      "chat_id": -1003708062172
+    },
     {
       "message_id": 6211,
       "text": "Raid\n\nhttps://x.com/dedenovitaj/status/2028370901545214405?s=46",
@@ -1426,14 +1434,6 @@
       "tweet_url": "https://x.com/i/web/status/2027978771798597938",
       "photo": "",
       "date": "2026-03-01T05:29:56Z",
-      "chat_id": -1003708062172
-    },
-    {
-      "message_id": 5859,
-      "text": "Raid \n\nhttps://x.com/i/status/2027979139890684103",
-      "tweet_url": "https://x.com/i/web/status/2027979139890684103",
-      "photo": "",
-      "date": "2026-03-01T05:29:52Z",
       "chat_id": -1003708062172
     }
   ]
