@@ -32,26 +32,26 @@ const TIER_CONFIG = {
 
 function getLogoUrl(name: string, url?: string): string {
   const overrides: Record<string, string> = {
-    "bingx":          "https://logo.clearbit.com/bingx.com",
-    "mexc":           "https://logo.clearbit.com/mexc.com",
-    "gate.io":        "https://logo.clearbit.com/gate.io",
-    "gate.io alpha":  "https://logo.clearbit.com/gate.io",
-    "lbank":          "https://logo.clearbit.com/lbank.com",
-    "moonshot":       "https://logo.clearbit.com/moonshot.money",
-    "bitmart":        "https://logo.clearbit.com/bitmart.com",
-    "bitrue":         "https://logo.clearbit.com/bitrue.com",
-    "bitrue alpha":   "https://logo.clearbit.com/bitrue.com",
-    "kcex":           "https://logo.clearbit.com/kcex.com",
-    "bitkan":         "https://logo.clearbit.com/bitkan.com",
-    "cex.io":         "https://logo.clearbit.com/cex.io",
-    "kucoin":         "https://logo.clearbit.com/kucoin.com",
-    "kucoin alpha":   "https://logo.clearbit.com/kucoin.com",
-    "weex":           "https://logo.clearbit.com/weex.com",
-    "coinmarketcap":  "https://logo.clearbit.com/coinmarketcap.com",
-    "coingecko":      "https://logo.clearbit.com/coingecko.com",
-    "bybit":          "https://logo.clearbit.com/bybit.com",
-    "okx":            "https://logo.clearbit.com/okx.com",
-    "okx.us":         "https://logo.clearbit.com/okx.com",
+    "bingx":          "/exchanges/bingx.jpg",
+    "mexc":           "/exchanges/mexc.png",
+    "gate.io":        "/exchanges/gate.png",
+    "gate.io alpha":  "/exchanges/gate.png",
+    "lbank":          "/exchanges/lbank.png",
+    "moonshot":       "/exchanges/moonshot.ico",
+    "bitmart":        "/exchanges/bitmart.png",
+    "bitrue":         "/exchanges/bitrue.png",
+    "bitrue alpha":   "/exchanges/bitrue.png",
+    "kcex":           "/exchanges/kcex.jpg",
+    "bitkan":         "/exchanges/bitkan.png",
+    "cex.io":         "/exchanges/cexio.png",
+    "kucoin":         "/exchanges/kucoin.png",
+    "kucoin alpha":   "/exchanges/kucoin.png",
+    "weex":           "/exchanges/weex.png",
+    "coinmarketcap":  "/exchanges/coinmarketcap.ico",
+    "coingecko":      "/exchanges/coingecko.png",
+    "bybit":          "/exchanges/bybit.png",
+    "okx":            "/exchanges/okx.ico",
+    "okx.us":         "/exchanges/okx.ico",
     "bitget":         "https://logo.clearbit.com/bitget.com",
     "crypto.com":     "https://logo.clearbit.com/crypto.com",
     "binance":        "https://logo.clearbit.com/binance.com",
@@ -177,7 +177,7 @@ export function ExchangeTrackerCard() {
               title={e.name}
               style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:5, textDecoration:"none" }}>
               <div style={{ width:48, height:48, borderRadius:13, border:"1.5px solid var(--separator)", background:"var(--card)", display:"flex", alignItems:"center", justifyContent:"center", overflow:"hidden", boxShadow:"0 1px 4px rgba(0,0,0,0.06)" }}>
-                <ExchangeLogo name={e.name} url={e.url} size={38} />
+                <ExchangeLogo key={e.name} name={e.name} url={e.url} size={38} />
               </div>
               <span style={{ fontSize:"0.5rem", fontWeight:700, color:"var(--tertiary)", textAlign:"center", maxWidth:52, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{e.name}</span>
             </a>
@@ -188,7 +188,7 @@ export function ExchangeTrackerCard() {
       {/* In-progress */}
       {progress.map(e => (
         <div key={e.id} style={{ display:"flex", alignItems:"center", gap:10, padding:"10px 12px", background:"rgba(217,119,6,0.06)", borderRadius:12, border:"1px solid rgba(217,119,6,0.18)" }}>
-          <ExchangeLogo name={e.name} url={e.url} size={32} />
+          <ExchangeLogo key={e.name} name={e.name} url={e.url} size={32} />
           <div style={{ flex:1 }}>
             <p style={{ fontSize:"0.875rem", fontWeight:700, color:"var(--foreground)", margin:0 }}>{e.name}</p>
             {e.note && <p style={{ fontSize:"0.75rem", color:"var(--tertiary)", margin:0 }}>{e.note}</p>}
@@ -280,7 +280,7 @@ export function ExchangeTrackerCard() {
           return (
             <div key={e.id} style={{ display:"flex", alignItems:"center", gap:12, padding:"12px 14px", borderRadius:14, background: sc.bg, border:`1px solid ${sc.color}22` }}>
               <div style={{ width:44, height:44, borderRadius:11, border:"1.5px solid var(--separator)", background:"var(--card)", display:"flex", alignItems:"center", justifyContent:"center", overflow:"hidden", flexShrink:0 }}>
-                <ExchangeLogo name={e.name} url={e.url} size={34} />
+                <ExchangeLogo key={e.name} name={e.name} url={e.url} size={34} />
               </div>
               <div style={{ flex:1, minWidth:0 }}>
                 <div style={{ display:"flex", alignItems:"center", gap:6, marginBottom:1 }}>

@@ -309,6 +309,9 @@ img, svg { min-width: 0; flex-shrink: 0; }
   .metric-xl   { font-size: 1.75rem !important; }
 }
 
+/* ── Desktop: 3-col grid ─────────────────────────────────── */
+.cards-grid { grid-template-columns: repeat(3, 1fr) !important; }
+
 /* ── Tablet: 2-col grid ──────────────────────────────────── */
 @media (max-width: 1100px) and (min-width: 641px) {
   .cards-grid { grid-template-columns: repeat(2, 1fr) !important; }
@@ -418,3 +421,16 @@ img, svg { min-width: 0; flex-shrink: 0; }
 
 /* ── Dark mode: scrollbar ───────────────────────────────────── */
 [data-theme="dark"] ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); }
+
+/* ── Mobile: top section reorder ─────────────────────────── */
+@media (max-width: 768px) {
+  .top-section {
+    grid-template-columns: 1fr !important;
+    height: auto !important;
+  }
+  .top-community   { order: 1; height: auto !important; }
+  .top-coinhealth  { order: 2; height: auto !important; }
+  .top-right       { order: 3; }
+  .top-xraid       { order: 1; }
+  .top-announcements { order: 2; }
+}
