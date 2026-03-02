@@ -1,4 +1,5 @@
 "use client"
+import { AreaChart, Area, ResponsiveContainer, Tooltip, XAxis } from "recharts"
 
 import { Users, Mic, Calendar, Zap, Trophy, Shield } from "lucide-react"
 import { DashboardCard } from "@/components/ui/dashboard-card"
@@ -339,24 +340,47 @@ export function CommunityCard() {
 
         {/* Follower Growth */}
         <div style={{ padding:"14px 16px", borderBottom:"1px solid rgba(0,0,0,0.06)" }}>
-          <p style={{ fontSize:"0.625rem", fontWeight:800, color:"#8E8E93", textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:10 }}>Follower Growth</p>
-          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:8 }}>
-            {[
-              { label:"20h", val: xDelta },
-              { label:"3 days", val: xDelta3d },
-              { label:"7 days", val: xDelta7d },
-            ].map(({ label, val }) => (
-              <div key={label} style={{ background: val > 0 ? "rgba(5,150,105,0.07)" : val < 0 ? "rgba(239,68,68,0.07)" : "#F5F5F7",
-                borderRadius:10, padding:"10px 12px", textAlign:"center",
-                border: `1px solid ${val > 0 ? "rgba(5,150,105,0.15)" : val < 0 ? "rgba(239,68,68,0.15)" : "rgba(0,0,0,0.06)"}` }}>
-                <p style={{ fontSize:"1.25rem", fontWeight:800, lineHeight:1, margin:0,
-                  color: val > 0 ? "#059669" : val < 0 ? "#EF4444" : "#8E8E93" }}>
-                  {val > 0 ? "+" : ""}{val}
-                </p>
-                <p style={{ fontSize:"0.625rem", color:"#8E8E93", fontWeight:600, textTransform:"uppercase", letterSpacing:"0.06em", marginTop:4 }}>{label}</p>
-              </div>
-            ))}
+          <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:12 }}>
+            <p style={{ fontSize:"0.625rem", fontWeight:800, color:"#8E8E93", textTransform:"uppercase", letterSpacing:"0.07em", margin:0 }}>Follower Growth</p>
+            <div style={{ display:"flex", gap:12 }}>
+              {[{ label:"20h", val:xDelta }, { label:"3d", val:xDelta3d }, { label:"7d", val:xDelta7d }].map(({ label, val }) => (
+                <span key={label} style={{ fontSize:"0.72rem", fontWeight:700, color: val >= 0 ? "#10B981" : "#EF4444" }}>
+                  {val >= 0 ? "+" : ""}{val} / {label}
+                </span>
+              ))}
+            </div>
           </div>
+          {sp?.follower_history && sp.follower_history.length > 1 ? (
+            <ResponsiveContainer width="100%" height={80}>
+              <AreaChart data={sp.follower_history.slice(-14)} margin={{ top:2, right:0, left:0, bottom:0 }}>
+                <defs>
+                  <linearGradient id="commFGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%"  stopColor="#F5A623" stopOpacity={0.3} />
+                    <stop offset="95%" stopColor="#F5A623" stopOpacity={0}   />
+                  </linearGradient>
+                </defs>
+                <XAxis dataKey="date" tick={{ fontSize:9, fill:"#C7C7CC" }} tickLine={false} axisLine={false}
+                  tickFormatter={(v: string) => v.slice(5)} interval="preserveStartEnd" />
+                <Tooltip
+                  contentStyle={{ background:"#fff", border:"1px solid #F0F0F2", borderRadius:8, fontSize:12, padding:"6px 10px" }}
+                  formatter={(v: number | undefined) => [(v ?? 0).toLocaleString(), "Followers"]}
+                />
+                <Area type="monotone" dataKey="count" stroke="#F5A623" strokeWidth={2} fill="url(#commFGrad)" dot={false} />
+              </AreaChart>
+            </ResponsiveContainer>
+          ) : (
+            <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:8 }}>
+              {[{ label:"20h", val:xDelta }, { label:"3 days", val:xDelta3d }, { label:"7 days", val:xDelta7d }].map(({ label, val }) => (
+                <div key={label} style={{ background: val > 0 ? "rgba(5,150,105,0.07)" : val < 0 ? "rgba(239,68,68,0.07)" : "#F5F5F7",
+                  borderRadius:10, padding:"10px 12px", textAlign:"center",
+                  border: `1px solid ${val > 0 ? "rgba(5,150,105,0.15)" : val < 0 ? "rgba(239,68,68,0.15)" : "rgba(0,0,0,0.06)"}` }}>
+                  <p style={{ fontSize:"1.25rem", fontWeight:800, lineHeight:1, margin:0,
+                    color: val > 0 ? "#059669" : val < 0 ? "#EF4444" : "#8E8E93" }}>{val > 0 ? "+" : ""}{val}</p>
+                  <p style={{ fontSize:"0.625rem", color:"#8E8E93", fontWeight:600, textTransform:"uppercase", letterSpacing:"0.06em", marginTop:4 }}>{label}</p>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Engagement Rate + Content Performance */}
