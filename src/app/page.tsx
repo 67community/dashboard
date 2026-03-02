@@ -4,7 +4,6 @@ import ReactDOM from "react-dom"
 
 
 import { TokenHealthCard }     from "@/components/cards/token-health"
-import { SocialPulseCard }     from "@/components/cards/social-pulse"
 import { CommunityCard }       from "@/components/cards/community"
 import { ContentPipelineCard } from "@/components/cards/content-pipeline"
 import { ContentCreatorCard }  from "@/components/cards/content-creator"
@@ -190,7 +189,7 @@ export default function Dashboard() {
         <div className="enter-3" style={{ display:"flex", minWidth:0 }}><WalletTrackerCard /></div>
         <div className="enter-4" style={{ display:"flex", minWidth:0 }}><ContentPipelineCard /></div>
         <div className="enter-4" style={{ display:"flex", minWidth:0 }}><AgentStatusCard /></div>
-        <div className="enter-4" style={{ display:"flex", minWidth:0 }}><SocialPulseCard /></div>
+        
         <div className="enter-6" style={{ display:"flex", minWidth:0 }}><InstagramSpotlightCard /></div>
         <div className="enter-6" style={{ display:"flex", minWidth:0 }}><SightingsCard /></div>
         <div className="enter-7" style={{ display:"flex", minWidth:0 }}><CommunityEventsCard /></div>
