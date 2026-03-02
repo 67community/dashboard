@@ -387,3 +387,34 @@ img, svg { min-width: 0; flex-shrink: 0; }
 [data-theme="dark"] p, [data-theme="dark"] span, [data-theme="dark"] div {
   border-color: rgba(255,255,255,0.08);
 }
+
+/* ── Dark mode: typography ──────────────────────────────────── */
+[data-theme="dark"] .hero-number  { color: #F5F5F7; }
+[data-theme="dark"] .hero-label   { color: #8E8E93; }
+[data-theme="dark"] .metric-xl    { color: #F5F5F7; }
+[data-theme="dark"] .metric-lg    { color: #F5F5F7; }
+[data-theme="dark"] .metric-md    { color: #F5F5F7; }
+[data-theme="dark"] .metric-label { color: #8E8E93; }
+[data-theme="dark"] .card-title   { color: #F5F5F7; }
+[data-theme="dark"] .card-subtitle{ color: #8E8E93; }
+
+/* ── Dark mode: badges ──────────────────────────────────────── */
+[data-theme="dark"] .badge-up   { background: rgba(52,199,89,0.15);  color: #34C759; }
+[data-theme="dark"] .badge-down { background: rgba(255,59,48,0.15);  color: #FF453A; }
+[data-theme="dark"] .badge-gold { background: rgba(245,166,35,0.15); color: #FFD060; }
+[data-theme="dark"] .badge-blue { background: rgba(10,132,255,0.15); color: #0A84FF; }
+
+/* ── Dark mode: progress track ──────────────────────────────── */
+[data-theme="dark"] .prog-track { background: rgba(255,255,255,0.10); }
+
+/* ── Dark mode: divider ─────────────────────────────────────── */
+[data-theme="dark"] .divider { background: rgba(255,255,255,0.07); }
+
+/* ── Dark mode: skeleton shimmer ────────────────────────────── */
+[data-theme="dark"] .skeleton {
+  background: linear-gradient(90deg, #2A2A2C 25%, #3A3A3C 50%, #2A2A2C 75%);
+  background-size: 200% 100%;
+}
+
+/* ── Dark mode: scrollbar ───────────────────────────────────── */
+[data-theme="dark"] ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); }

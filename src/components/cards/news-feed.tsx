@@ -52,7 +52,7 @@ function NewsRow({ item, compact = false }: { item: NewsItem; compact?: boolean 
       onClick={e => e.stopPropagation()}
       style={{ textDecoration: "none", display: "block" }}>
       <div
-        style={{ borderRadius: 10, border: "1.5px solid rgba(0,0,0,0.06)", background: "#fff", padding: compact ? "8px 10px" : "10px 12px", transition: "box-shadow 0.15s" }}
+        style={{ borderRadius: 10, border: "1.5px solid var(--separator)", background: "var(--card)", padding: compact ? "8px 10px" : "10px 12px", transition: "box-shadow 0.15s" }}
         onMouseEnter={e => (e.currentTarget.style.boxShadow = "0 2px 10px rgba(0,0,0,0.07)")}
         onMouseLeave={e => (e.currentTarget.style.boxShadow = "none")}
       >
@@ -66,7 +66,7 @@ function NewsRow({ item, compact = false }: { item: NewsItem; compact?: boolean 
           <div style={{ flex: 1, minWidth: 0 }}>
             <p style={{
               fontSize: compact ? "0.6875rem" : "0.8125rem",
-              fontWeight: 700, color: "#1D1D1F", margin: 0, lineHeight: 1.4,
+              fontWeight: 700, color: "var(--foreground)", margin: 0, lineHeight: 1.4,
               display: "-webkit-box", WebkitLineClamp: compact ? 2 : 3, WebkitBoxOrient: "vertical", overflow: "hidden",
               marginBottom: 5,
             }}>
@@ -76,9 +76,9 @@ function NewsRow({ item, compact = false }: { item: NewsItem; compact?: boolean 
               <span style={{ fontSize: "0.625rem", fontWeight: 600, color: isCP ? "#6366F1" : "#2563EB", background: isCP ? "rgba(99,102,241,0.08)" : "rgba(37,99,235,0.07)", borderRadius: 99, padding: "1px 6px" }}>
                 {item.source}
               </span>
-              <span style={{ fontSize: "0.625rem", color: "#C7C7CC" }}>{item.time_ago}</span>
+              <span style={{ fontSize: "0.625rem", color: "var(--tertiary)" }}>{item.time_ago}</span>
               <SentimentBadge s={item.sentiment} />
-              <ExternalLink style={{ width: 9, height: 9, color: "#D1D5DB", marginLeft: "auto" }} />
+              <ExternalLink style={{ width: 9, height: 9, color: "var(--tertiary)", marginLeft: "auto" }} />
             </div>
           </div>
         </div>
@@ -103,7 +103,7 @@ export function NewsFeedCard() {
       <div>
         <p className="hero-label" style={{ marginBottom: 8 }}>News Mentions</p>
         <p className="hero-number">{news.length > 0 ? news.length : "—"}</p>
-        <p style={{ fontSize: "0.875rem", color: "#8E8E93", marginTop: 6 }}>
+        <p style={{ fontSize: "0.875rem", color: "var(--tertiary)", marginTop: 6 }}>
           {news.length > 0 ? `${googleNews.length} Google · ${cpNews.length} CryptoPanic` : "Refreshes every 2h"}
         </p>
       </div>
@@ -113,9 +113,9 @@ export function NewsFeedCard() {
           {latest.map((item, i) => <NewsRow key={i} item={item} compact />)}
         </div>
       ) : (
-        <div style={{ display: "flex", alignItems: "center", gap: 10, borderTop: "1px solid rgba(0,0,0,0.06)", paddingTop: 14 }}>
-          <Newspaper style={{ width: 20, height: 20, color: "#A1A1AA" }} />
-          <p style={{ fontSize: "0.875rem", color: "#A1A1AA", fontWeight: 500 }}>No news found yet</p>
+        <div style={{ display: "flex", alignItems: "center", gap: 10, borderTop: "1px solid var(--separator)", paddingTop: 14 }}>
+          <Newspaper style={{ width: 20, height: 20, color: "var(--secondary)" }} />
+          <p style={{ fontSize: "0.875rem", color: "var(--secondary)", fontWeight: 500 }}>No news found yet</p>
         </div>
       )}
     </div>
@@ -128,8 +128,8 @@ export function NewsFeedCard() {
       {/* Header */}
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <div>
-          <p style={{ fontSize: "0.6875rem", fontWeight: 700, color: "#A1A1AA", letterSpacing: "0.06em", textTransform: "uppercase" }}>News Feed</p>
-          <p style={{ fontSize: "0.75rem", color: "#C7C7CC", marginTop: 2 }}>Google News · CoinDesk · CoinTelegraph · Decrypt + 5 more</p>
+          <p style={{ fontSize: "0.6875rem", fontWeight: 700, color: "var(--secondary)", letterSpacing: "0.06em", textTransform: "uppercase" }}>News Feed</p>
+          <p style={{ fontSize: "0.75rem", color: "var(--tertiary)", marginTop: 2 }}>Google News · CoinDesk · CoinTelegraph · Decrypt + 5 more</p>
         </div>
         <div style={{ display: "flex", gap: 6 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 4, background: "rgba(37,99,235,0.07)", borderRadius: 8, padding: "4px 10px" }}>
@@ -149,13 +149,13 @@ export function NewsFeedCard() {
       {news.length > 0 && (
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8 }}>
           {[
-            { label: "Total Articles", value: String(news.length),       color: "#1D1D1F" },
+            { label: "Total Articles", value: String(news.length),       color: "var(--foreground)" },
             { label: "Last 24h",       value: String(news.filter(n => { try { return Date.now() - new Date(n.published).getTime() < 86_400_000 } catch { return false } }).length), color: "#2563EB" },
             { label: "Bullish",        value: String(news.filter(n => n.sentiment === "positive").length || "—"), color: "#059669" },
           ].map(s => (
             <div key={s.label} className="inset-cell" style={{ textAlign: "center" }}>
               <p style={{ fontSize: "1.125rem", fontWeight: 800, color: s.color, margin: 0 }}>{s.value}</p>
-              <p style={{ fontSize: "0.5625rem", color: "#8E8E93", marginTop: 3, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.04em" }}>{s.label}</p>
+              <p style={{ fontSize: "0.5625rem", color: "var(--tertiary)", marginTop: 3, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.04em" }}>{s.label}</p>
             </div>
           ))}
         </div>
@@ -166,8 +166,8 @@ export function NewsFeedCard() {
         <div>
           <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 10 }}>
             <GoogleNewsIcon size={14} />
-            <span style={{ fontSize: "0.6875rem", fontWeight: 700, color: "#A1A1AA", letterSpacing: "0.05em", textTransform: "uppercase" }}>Google News</span>
-            <span style={{ fontSize: "0.625rem", color: "#C7C7CC", marginLeft: "auto" }}>{googleNews.length} articles</span>
+            <span style={{ fontSize: "0.6875rem", fontWeight: 700, color: "var(--secondary)", letterSpacing: "0.05em", textTransform: "uppercase" }}>Google News</span>
+            <span style={{ fontSize: "0.625rem", color: "var(--tertiary)", marginLeft: "auto" }}>{googleNews.length} articles</span>
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
             {googleNews.map((item, i) => <NewsRow key={i} item={item} />)}
@@ -180,8 +180,8 @@ export function NewsFeedCard() {
         <div>
           <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 10 }}>
             <RSSIcon size={14} />
-            <span style={{ fontSize: "0.6875rem", fontWeight: 700, color: "#A1A1AA", letterSpacing: "0.05em", textTransform: "uppercase" }}>Crypto News Sites</span>
-            <span style={{ fontSize: "0.625rem", color: "#C7C7CC", marginLeft: "auto" }}>{cpNews.length} articles</span>
+            <span style={{ fontSize: "0.6875rem", fontWeight: 700, color: "var(--secondary)", letterSpacing: "0.05em", textTransform: "uppercase" }}>Crypto News Sites</span>
+            <span style={{ fontSize: "0.625rem", color: "var(--tertiary)", marginLeft: "auto" }}>{cpNews.length} articles</span>
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
             {cpNews.map((item, i) => <NewsRow key={i} item={item} />)}
@@ -192,14 +192,14 @@ export function NewsFeedCard() {
       {/* Empty state */}
       {news.length === 0 && (
         <div className="inset-cell" style={{ textAlign: "center", padding: "32px 20px" }}>
-          <Newspaper style={{ width: 40, height: 40, color: "#D1D5DB", margin: "0 auto 12px" }} />
-          <p style={{ fontSize: "0.875rem", color: "#6B7280", fontWeight: 600 }}>No news yet</p>
-          <p style={{ fontSize: "0.75rem", color: "#A1A1AA", marginTop: 4 }}>Refreshes every 2 hours</p>
+          <Newspaper style={{ width: 40, height: 40, color: "var(--tertiary)", margin: "0 auto 12px" }} />
+          <p style={{ fontSize: "0.875rem", color: "var(--secondary)", fontWeight: 600 }}>No news yet</p>
+          <p style={{ fontSize: "0.75rem", color: "var(--secondary)", marginTop: 4 }}>Refreshes every 2 hours</p>
         </div>
       )}
 
       {/* Footer */}
-      <div style={{ display: "flex", alignItems: "center", gap: 6, color: "#A1A1AA", borderTop: "1px solid rgba(0,0,0,0.05)", paddingTop: 10 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 6, color: "var(--secondary)", borderTop: "1px solid var(--separator)", paddingTop: 10 }}>
         <RefreshCw style={{ width: 11, height: 11 }} />
         <span style={{ fontSize: "0.6875rem" }}>Google News + CoinDesk, CoinTelegraph, Decrypt & 5 more · 2h refresh</span>
       </div>

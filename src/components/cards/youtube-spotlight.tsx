@@ -19,8 +19,8 @@ function YTLogo({ size = 18 }: { size?: number }) {
 function SectionLabel({ icon, label }: { icon: React.ReactNode; label: string }) {
   return (
     <div style={{ display:"flex", alignItems:"center", gap:6, marginBottom:10 }}>
-      <span style={{ color:"#A1A1AA", display:"flex" }}>{icon}</span>
-      <p style={{ fontSize:"0.6875rem", fontWeight:700, color:"#A1A1AA", letterSpacing:"0.06em", textTransform:"uppercase", margin:0 }}>{label}</p>
+      <span style={{ color:"var(--secondary)", display:"flex" }}>{icon}</span>
+      <p style={{ fontSize:"0.6875rem", fontWeight:700, color:"var(--secondary)", letterSpacing:"0.06em", textTransform:"uppercase", margin:0 }}>{label}</p>
     </div>
   )
 }
@@ -53,7 +53,7 @@ function VideoTile({ v, large = false }: { v: YoutubeVideo; large?: boolean }) {
     <a href={v.video_url} target="_blank" rel="noopener noreferrer"
       onClick={e => e.stopPropagation()}
       style={{ textDecoration:"none", display:"block" }}>
-      <div style={{ borderRadius:12, overflow:"hidden", border:"1.5px solid rgba(0,0,0,0.07)", background:"#fff", transition:"transform 0.15s" }}
+      <div style={{ borderRadius:12, overflow:"hidden", border:"1.5px solid var(--separator)", background:"var(--card)", transition:"transform 0.15s" }}
         onMouseEnter={e => (e.currentTarget.style.transform="scale(1.02)")}
         onMouseLeave={e => (e.currentTarget.style.transform="scale(1)")}>
 
@@ -83,17 +83,17 @@ function VideoTile({ v, large = false }: { v: YoutubeVideo; large?: boolean }) {
         {/* Info */}
         <div style={{ padding:"8px 10px" }}>
           <p style={{ fontSize:"0.6875rem", fontWeight:700, color:"#09090B", marginBottom:2, lineHeight:1.35, display:"-webkit-box", WebkitLineClamp:large?2:1, WebkitBoxOrient:"vertical", overflow:"hidden" }}>{v.title}</p>
-          <p style={{ fontSize:"0.625rem", color:"#6B7280", marginBottom:4, overflow:"hidden", whiteSpace:"nowrap", textOverflow:"ellipsis" }}>
+          <p style={{ fontSize:"0.625rem", color:"var(--secondary)", marginBottom:4, overflow:"hidden", whiteSpace:"nowrap", textOverflow:"ellipsis" }}>
             {v.channel} {v.channel_subs_text && `· ${v.channel_subs_text} subs`}
           </p>
           <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", gap:4 }}>
-            <span style={{ display:"flex", alignItems:"center", gap:3, fontSize:"0.625rem", color:"#A1A1AA" }}>
+            <span style={{ display:"flex", alignItems:"center", gap:3, fontSize:"0.625rem", color:"var(--secondary)" }}>
               <Eye style={{ width:9, height:9 }} />{v.views_text}
             </span>
             {v.engagement_rate && (
               <span style={{ fontSize:"0.625rem", color:"#059669", fontWeight:600 }}>{v.engagement_rate}% eng</span>
             )}
-            <span style={{ fontSize:"0.625rem", color:"#C7C7CC" }}>{timeAgo(v.published_at)}</span>
+            <span style={{ fontSize:"0.625rem", color:"var(--tertiary)" }}>{timeAgo(v.published_at)}</span>
           </div>
         </div>
       </div>
@@ -122,7 +122,7 @@ function DailyViewsChart({ data }: { data: { date: string; views: number }[] }) 
         ))}
       </div>
       <div style={{ display:"flex", justifyContent:"space-between", marginTop:4 }}>
-        <span style={{ fontSize:"0.5625rem", color:"#C7C7CC" }}>
+        <span style={{ fontSize:"0.5625rem", color:"var(--tertiary)" }}>
           {last7[0]?.date ? new Date(last7[0].date).toLocaleDateString("en",{month:"short",day:"numeric"}) : ""}
         </span>
         <span style={{ fontSize:"0.5625rem", color:"#FF0000", fontWeight:700 }}>
@@ -140,7 +140,7 @@ function TrafficSources({ sources }: { sources: { source: string; views: number;
       {sources.slice(0,5).map((s, i) => (
         <div key={i}>
           <div style={{ display:"flex", justifyContent:"space-between", marginBottom:3 }}>
-            <span style={{ fontSize:"0.75rem", fontWeight:600, color:"#1D1D1F" }}>{s.source}</span>
+            <span style={{ fontSize:"0.75rem", fontWeight:600, color:"var(--foreground)" }}>{s.source}</span>
             <span style={{ fontSize:"0.75rem", fontWeight:700, color:"#FF0000" }}>{s.pct}%</span>
           </div>
           <div style={{ height:4, background:"#F3F4F6", borderRadius:99, overflow:"hidden" }}>
@@ -162,8 +162,8 @@ function TopCountries({ countries }: { countries: { country: string; code?: stri
         return (
           <div key={i} style={{ display:"flex", alignItems:"center", gap:8 }}>
             <span style={{ fontSize:"0.875rem", width:20, flexShrink:0 }}>{flag}</span>
-            <span style={{ fontSize:"0.75rem", fontWeight:600, color:"#1D1D1F", flex:1 }}>{c.country}</span>
-            <span style={{ fontSize:"0.6875rem", color:"#6B7280" }}>{c.views?.toLocaleString()}</span>
+            <span style={{ fontSize:"0.75rem", fontWeight:600, color:"var(--foreground)", flex:1 }}>{c.country}</span>
+            <span style={{ fontSize:"0.6875rem", color:"var(--secondary)" }}>{c.views?.toLocaleString()}</span>
             <span style={{ fontSize:"0.6875rem", fontWeight:700, color:"#FF0000", minWidth:32, textAlign:"right" }}>{c.pct}%</span>
           </div>
         )
@@ -200,7 +200,7 @@ function PublicAggregateStats({ videos }: { videos: YoutubeVideo[] }) {
         ].map(s => (
           <div key={s.label} className="inset-cell" style={{ textAlign:"center" }}>
             <p style={{ fontSize:"1.125rem", fontWeight:800, color:s.color, margin:0, letterSpacing:"-0.03em" }}>{s.value}</p>
-            <p style={{ fontSize:"0.5625rem", color:"#8E8E93", marginTop:3, fontWeight:600, textTransform:"uppercase", letterSpacing:"0.04em" }}>{s.label}</p>
+            <p style={{ fontSize:"0.5625rem", color:"var(--tertiary)", marginTop:3, fontWeight:600, textTransform:"uppercase", letterSpacing:"0.04em" }}>{s.label}</p>
           </div>
         ))}
       </div>
@@ -213,7 +213,7 @@ function PublicAggregateStats({ videos }: { videos: YoutubeVideo[] }) {
             <div key={v.video_id}>
               <div style={{ display:"flex", justifyContent:"space-between", marginBottom:3, alignItems:"center" }}>
                 <a href={v.video_url} target="_blank" rel="noopener noreferrer" onClick={e=>e.stopPropagation()}
-                  style={{ fontSize:"0.6875rem", fontWeight:600, color:"#1D1D1F", textDecoration:"none",
+                  style={{ fontSize:"0.6875rem", fontWeight:600, color:"var(--foreground)", textDecoration:"none",
                     overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap", maxWidth:"70%" }}>
                   {v.title}
                 </a>
@@ -239,12 +239,12 @@ function PublicAggregateStats({ videos }: { videos: YoutubeVideo[] }) {
           {channels.slice(0, 6).map((v) => (
             <div key={v.channel_id} style={{ display:"flex", alignItems:"center", justifyContent:"space-between" }}>
               <a href={v.channel_url} target="_blank" rel="noopener noreferrer" onClick={e=>e.stopPropagation()}
-                style={{ fontSize:"0.8125rem", fontWeight:600, color:"#1D1D1F", textDecoration:"none",
+                style={{ fontSize:"0.8125rem", fontWeight:600, color:"var(--foreground)", textDecoration:"none",
                   overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap", flex:1 }}>
                 📺 {v.channel}
               </a>
               {v.channel_subs_text && (
-                <span style={{ fontSize:"0.6875rem", color:"#6B7280", flexShrink:0, marginLeft:8 }}>
+                <span style={{ fontSize:"0.6875rem", color:"var(--secondary)", flexShrink:0, marginLeft:8 }}>
                   {v.channel_subs_text} subs
                 </span>
               )}
@@ -279,7 +279,7 @@ export function YouTubeSpotlightCard() {
             ? `${(totalViews/1_000_000).toFixed(1)}M`
             : totalViews >= 1_000 ? `${Math.round(totalViews/1_000)}K` : totalViews > 0 ? String(totalViews) : "—"}
         </p>
-        <p style={{ fontSize:"0.875rem", color:"#8E8E93", marginTop:6 }}>
+        <p style={{ fontSize:"0.875rem", color:"var(--tertiary)", marginTop:6 }}>
           {videos.length > 0 ? `${videos.length} videos · combined views` : "waiting for YOUTUBE_API_KEY"}
         </p>
       </div>
@@ -290,9 +290,9 @@ export function YouTubeSpotlightCard() {
           {popularVideos.slice(0,2).map((v,i) => <VideoTile key={i} v={v} />)}
         </div>
       ) : (
-        <div style={{ display:"flex", alignItems:"center", gap:10, borderTop:"1px solid rgba(0,0,0,0.06)", paddingTop:14 }}>
+        <div style={{ display:"flex", alignItems:"center", gap:10, borderTop:"1px solid var(--separator)", paddingTop:14 }}>
           <YTLogo size={20} />
-          <p style={{ fontSize:"0.875rem", color:"#A1A1AA", fontWeight:500 }}>$67coin on YouTube</p>
+          <p style={{ fontSize:"0.875rem", color:"var(--secondary)", fontWeight:500 }}>$67coin on YouTube</p>
         </div>
       )}
 
@@ -301,11 +301,11 @@ export function YouTubeSpotlightCard() {
         <div style={{ display:"flex", gap:8 }}>
           <div className="inset-cell" style={{ flex:1, textAlign:"center" }}>
             <p style={{ fontSize:"1rem", fontWeight:800, color:"#FF0000", margin:0 }}>{(analytics.total_views_30d??0).toLocaleString()}</p>
-            <p style={{ fontSize:"0.6875rem", color:"#8E8E93", marginTop:2 }}>Views 30d</p>
+            <p style={{ fontSize:"0.6875rem", color:"var(--tertiary)", marginTop:2 }}>Views 30d</p>
           </div>
           <div className="inset-cell" style={{ flex:1, textAlign:"center" }}>
-            <p style={{ fontSize:"1rem", fontWeight:800, color:"#1D1D1F", margin:0 }}>+{analytics.subscriber_gains_30d ?? 0}</p>
-            <p style={{ fontSize:"0.6875rem", color:"#8E8E93", marginTop:2 }}>New Subs</p>
+            <p style={{ fontSize:"1rem", fontWeight:800, color:"var(--foreground)", margin:0 }}>+{analytics.subscriber_gains_30d ?? 0}</p>
+            <p style={{ fontSize:"0.6875rem", color:"var(--tertiary)", marginTop:2 }}>New Subs</p>
           </div>
         </div>
       )}
@@ -319,13 +319,13 @@ export function YouTubeSpotlightCard() {
       {/* Header */}
       <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between" }}>
         <div>
-          <p style={{ fontSize:"0.6875rem", fontWeight:700, color:"#A1A1AA", letterSpacing:"0.06em", textTransform:"uppercase" }}>YouTube Spotlight</p>
-          <p style={{ fontSize:"0.75rem", color:"#C7C7CC", marginTop:2 }}>$67coin · 67 coin solana · maverick 67 coin</p>
+          <p style={{ fontSize:"0.6875rem", fontWeight:700, color:"var(--secondary)", letterSpacing:"0.06em", textTransform:"uppercase" }}>YouTube Spotlight</p>
+          <p style={{ fontSize:"0.75rem", color:"var(--tertiary)", marginTop:2 }}>$67coin · 67 coin solana · maverick 67 coin</p>
         </div>
         <div style={{ display:"flex", alignItems:"center", gap:6 }}>
           {hasAnalytics
             ? <span style={{ background:"#DCFCE7", color:"#16A34A", borderRadius:99, padding:"3px 8px", fontSize:"0.6875rem", fontWeight:700 }}>Channel Analytics ✓</span>
-            : <span style={{ background:"#F3F4F6", color:"#6B7280", borderRadius:99, padding:"3px 8px", fontSize:"0.6875rem", fontWeight:700 }}>Public Stats</span>
+            : <span style={{ background:"#F3F4F6", color:"var(--secondary)", borderRadius:99, padding:"3px 8px", fontSize:"0.6875rem", fontWeight:700 }}>Public Stats</span>
           }
           <div style={{ background:"#FFF0F0", borderRadius:8, padding:"4px 10px", fontSize:"0.75rem", fontWeight:600, color:"#FF0000", display:"flex", alignItems:"center", gap:4 }}>
             <YTLogo size={12} />{videos.length} videos
@@ -414,7 +414,7 @@ export function YouTubeSpotlightCard() {
             </a>
             {/* Stats */}
             <div style={{ flex:1, minWidth:0 }}>
-              <p style={{ fontSize:"0.8125rem", fontWeight:700, color:"#1D1D1F", margin:0, lineHeight:1.3, marginBottom:6,
+              <p style={{ fontSize:"0.8125rem", fontWeight:700, color:"var(--foreground)", margin:0, lineHeight:1.3, marginBottom:6,
                 overflow:"hidden", display:"-webkit-box", WebkitLineClamp:2, WebkitBoxOrient:"vertical" }}>{topVideo.title}</p>
               <div style={{ display:"flex", gap:12, flexWrap:"wrap" }}>
                 {[
@@ -424,10 +424,10 @@ export function YouTubeSpotlightCard() {
                   { icon:<Users style={{ width:10, height:10 }} />, val: topVideo.channel_subs_text ?? "—", label:"channel subs" },
                 ].map((s,i) => (
                   <div key={i} style={{ textAlign:"center" }}>
-                    <p style={{ fontSize:"0.875rem", fontWeight:800, color:"#1D1D1F", margin:0, display:"flex", alignItems:"center", gap:3 }}>
+                    <p style={{ fontSize:"0.875rem", fontWeight:800, color:"var(--foreground)", margin:0, display:"flex", alignItems:"center", gap:3 }}>
                       {s.icon}{s.val}
                     </p>
-                    <p style={{ fontSize:"0.5625rem", color:"#A1A1AA", margin:0 }}>{s.label}</p>
+                    <p style={{ fontSize:"0.5625rem", color:"var(--secondary)", margin:0 }}>{s.label}</p>
                   </div>
                 ))}
               </div>
@@ -449,7 +449,7 @@ export function YouTubeSpotlightCard() {
         <div>
           <div style={{ display:"flex", alignItems:"center", gap:5, marginBottom:10 }}>
             <span style={{ fontSize:"0.75rem" }}>🔥</span>
-            <span style={{ fontSize:"0.6875rem", fontWeight:700, color:"#A1A1AA", letterSpacing:"0.05em", textTransform:"uppercase" }}>Most Viewed</span>
+            <span style={{ fontSize:"0.6875rem", fontWeight:700, color:"var(--secondary)", letterSpacing:"0.05em", textTransform:"uppercase" }}>Most Viewed</span>
           </div>
           <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:10 }}>
             {popularVideos.map((v,i) => <VideoTile key={i} v={v} large />)}
@@ -461,7 +461,7 @@ export function YouTubeSpotlightCard() {
         <div>
           <div style={{ display:"flex", alignItems:"center", gap:5, marginBottom:10 }}>
             <span style={{ fontSize:"0.75rem" }}>🕐</span>
-            <span style={{ fontSize:"0.6875rem", fontWeight:700, color:"#A1A1AA", letterSpacing:"0.05em", textTransform:"uppercase" }}>Recently Uploaded</span>
+            <span style={{ fontSize:"0.6875rem", fontWeight:700, color:"var(--secondary)", letterSpacing:"0.05em", textTransform:"uppercase" }}>Recently Uploaded</span>
           </div>
           <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:10 }}>
             {recentVideos.map((v,i) => <VideoTile key={i} v={v} large />)}
@@ -475,14 +475,14 @@ export function YouTubeSpotlightCard() {
           <a key={q} href={`https://www.youtube.com/results?search_query=${encodeURIComponent(q)}`}
             target="_blank" rel="noopener noreferrer" onClick={e=>e.stopPropagation()}
             style={{ display:"inline-flex", alignItems:"center", gap:4, fontSize:"0.6875rem", fontWeight:600,
-              color:"#6B7280", background:"#F3F4F6", borderRadius:99, padding:"4px 10px", textDecoration:"none" }}>
+              color:"var(--secondary)", background:"#F3F4F6", borderRadius:99, padding:"4px 10px", textDecoration:"none" }}>
             <Clock style={{ width:10, height:10 }} />{q}<ExternalLink style={{ width:8, height:8, opacity:0.5 }} />
           </a>
         ))}
       </div>
 
       {/* Refresh note */}
-      <div style={{ display:"flex", alignItems:"center", gap:6, color:"#A1A1AA" }}>
+      <div style={{ display:"flex", alignItems:"center", gap:6, color:"var(--secondary)" }}>
         <RefreshCw style={{ width:11, height:11 }} />
         <span style={{ fontSize:"0.6875rem" }}>Data refreshes every hour via YouTube Data API v3</span>
       </div>

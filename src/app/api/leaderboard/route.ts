@@ -38,7 +38,7 @@ export async function GET() {
   const creators:     LiveEntry[] = []
   const holders:      LiveEntry[] = []
 
-  // ── 1. RAIDERS — from raid_feed ─────────────────────────────────────────
+  // ── 1. RAIDERS — from raid_feed + x_notif_feed ──────────────────────────
   try {
     const dataPath = path.join(process.cwd(), "public", "data.json")
     const raw  = await readFile(dataPath, "utf-8")
@@ -46,11 +46,15 @@ export async function GET() {
 
     // Count raids per Twitter username
     const raidCounts: Record<string, number> = {}
+
+    // From Telegram raid feed (data.json)
     for (const item of (data.raid_feed ?? [])) {
-      const tweetUrl: string = item.tweet_url ?? item.text ?? ""
+      const tweetUrl: string = item.text ?? item.tweet_url ?? ""
       const username = extractUsername(tweetUrl)
       if (username) raidCounts[username] = (raidCounts[username] ?? 0) + 1
     }
+
+
 
     const sorted = Object.entries(raidCounts)
       .sort((a, b) => b[1] - a[1])

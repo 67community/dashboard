@@ -100,13 +100,13 @@ function WalletRow({
                 onClick={e => e.stopPropagation()}
                 onBlur={e => { onRename(e.target.value.trim() || wallet.label); setEditingLabel(false) }}
                 onKeyDown={e => { e.stopPropagation(); if (e.key === "Enter") { onRename((e.target as HTMLInputElement).value.trim() || wallet.label); setEditingLabel(false) } if (e.key === "Escape") setEditingLabel(false) }}
-                style={{ fontSize:"0.875rem", fontWeight:700, color:"#1D1D1F", border:"1.5px solid #F5A623", borderRadius:6, padding:"1px 6px", width:"100%", background:"#FFFBEB", outline:"none" }}
+                style={{ fontSize:"0.875rem", fontWeight:700, color:"var(--foreground)", border:"1.5px solid #F5A623", borderRadius:6, padding:"1px 6px", width:"100%", background:"var(--fill-primary)", outline:"none" }}
               />
             ) : (
               <span
                 title="Click to rename"
                 onClick={e => { e.stopPropagation(); setEditingLabel(true) }}
-                style={{ fontSize:"0.875rem", fontWeight:700, color:"#1D1D1F",
+                style={{ fontSize:"0.875rem", fontWeight:700, color:"var(--foreground)",
                   overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap",
                   cursor:"text", borderBottom:"1px dashed transparent" }}
                 onMouseEnter={e => (e.currentTarget.style.borderBottomColor = "#D1D5DB")}
@@ -123,7 +123,7 @@ function WalletRow({
             )}
           </div>
           <div style={{ display:"flex", alignItems:"center", gap:6 }}>
-            <span style={{ fontSize:"0.6875rem", color:"#8E8E93", fontFamily:"monospace" }}>
+            <span style={{ fontSize:"0.6875rem", color:"var(--tertiary)", fontFamily:"monospace" }}>
               {shortAddr(wallet.address)}
             </span>
             <a href={`https://solscan.io/account/${wallet.address}`} target="_blank" rel="noreferrer"
@@ -141,7 +141,7 @@ function WalletRow({
           <div style={{ textAlign:"right", flexShrink:0 }}>
             <p style={{ fontSize:"0.875rem", fontWeight:800,
               color: data.balance67 > 0 ? "#F5A623" : "#C7C7CC", lineHeight:1.1 }}>
-              {fmt(data.balance67)} <span style={{ fontSize:"0.6rem", color:"#8E8E93", fontWeight:600 }}>$67</span>
+              {fmt(data.balance67)} <span style={{ fontSize:"0.6rem", color:"var(--tertiary)", fontWeight:600 }}>$67</span>
             </p>
             <div style={{ display:"flex", gap:5, justifyContent:"flex-end", flexWrap:"wrap" }}>
               <span style={{ fontSize:"0.6rem", color:"#9945FF", fontWeight:700 }}>{data.balanceSol.toFixed(2)} SOL</span>
@@ -151,33 +151,33 @@ function WalletRow({
             </div>
           </div>
         ) : (
-          <span style={{ fontSize:"0.75rem", color:"#C7C7CC" }}>loading…</span>
+          <span style={{ fontSize:"0.75rem", color:"var(--tertiary)" }}>loading…</span>
         )}
 
         {expanded
-          ? <ChevronUp  style={{ width:13, height:13, color:"#A1A1AA", flexShrink:0 }} />
-          : <ChevronDown style={{ width:13, height:13, color:"#A1A1AA", flexShrink:0 }} />}
+          ? <ChevronUp  style={{ width:13, height:13, color:"var(--secondary)", flexShrink:0 }} />
+          : <ChevronDown style={{ width:13, height:13, color:"var(--secondary)", flexShrink:0 }} />}
       </button>
 
       {expanded && data && (
-        <div style={{ marginTop:10, paddingTop:10, borderTop:"1px solid rgba(0,0,0,0.06)",
+        <div style={{ marginTop:10, paddingTop:10, borderTop:"1px solid var(--separator)",
           display:"flex", flexDirection:"column", gap:10 }}>
 
           {/* Balances */}
           <div style={{ display:"flex", gap:8 }}>
             <div style={{ flex:1, background:"#F9F9F9", borderRadius:8, padding:"8px 10px", textAlign:"center" }}>
               <p style={{ fontSize:"1rem", fontWeight:800, color:"#F5A623" }}>{fmt(data.balance67)}</p>
-              <p style={{ fontSize:"0.625rem", color:"#8E8E93", fontWeight:600,
+              <p style={{ fontSize:"0.625rem", color:"var(--tertiary)", fontWeight:600,
                 textTransform:"uppercase", letterSpacing:"0.06em" }}>$67 Tokens</p>
             </div>
             <div style={{ flex:1, background:"#F9F9F9", borderRadius:8, padding:"8px 10px", textAlign:"center" }}>
               <p style={{ fontSize:"1rem", fontWeight:800, color:"#9945FF" }}>{data.balanceSol.toFixed(3)}</p>
-              <p style={{ fontSize:"0.625rem", color:"#8E8E93", fontWeight:600,
+              <p style={{ fontSize:"0.625rem", color:"var(--tertiary)", fontWeight:600,
                 textTransform:"uppercase", letterSpacing:"0.06em" }}>SOL</p>
             </div>
             <div style={{ flex:1, background:"#F9F9F9", borderRadius:8, padding:"8px 10px", textAlign:"center" }}>
               <p style={{ fontSize:"1rem", fontWeight:800, color:"#059669" }}>{fmtUsd(data.valueUsd)}</p>
-              <p style={{ fontSize:"0.625rem", color:"#8E8E93", fontWeight:600,
+              <p style={{ fontSize:"0.625rem", color:"var(--tertiary)", fontWeight:600,
                 textTransform:"uppercase", letterSpacing:"0.06em" }}>USD Value</p>
             </div>
           </div>
@@ -213,15 +213,15 @@ function WalletRow({
                 </div>
                 {t && (
                   <div style={{ display:"flex", gap:12 }}>
-                    <span style={{ fontSize:"0.75rem", color:"#6E6E73" }}>
+                    <span style={{ fontSize:"0.75rem", color:"var(--secondary)" }}>
                       Amount: <strong style={{ color:"#F5A623" }}>{fmt(t.amount67)} $67</strong>
                     </span>
-                    <span style={{ fontSize:"0.75rem", color:"#6E6E73" }}>
+                    <span style={{ fontSize:"0.75rem", color:"var(--secondary)" }}>
                       Value: <strong style={{ color:"#059669" }}>{fmtUsd(t.amount67 * data.price67)}</strong>
                     </span>
                   </div>
                 )}
-                <p style={{ fontSize:"0.6875rem", color:"#8E8E93", marginTop:4 }}>
+                <p style={{ fontSize:"0.6875rem", color:"var(--tertiary)", marginTop:4 }}>
                   Activity detected in the last hour
                 </p>
               </div>
@@ -229,8 +229,8 @@ function WalletRow({
           })()}
 
           {/* Last active */}
-          <p style={{ fontSize:"0.75rem", color:"#8E8E93" }}>
-            Last active: <strong style={{ color:"#374151" }}>{timeAgo(data.lastActive)}</strong>
+          <p style={{ fontSize:"0.75rem", color:"var(--tertiary)" }}>
+            Last active: <strong style={{ color:"var(--foreground)" }}>{timeAgo(data.lastActive)}</strong>
           </p>
 
           {/* Trade history */}
@@ -256,7 +256,7 @@ function WalletRow({
                 </div>
               </div>
 
-              <p style={{ fontSize:"0.625rem", fontWeight:700, color:"#8E8E93",
+              <p style={{ fontSize:"0.625rem", fontWeight:700, color:"var(--tertiary)",
                 textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:6 }}>
                 Recent Trades
               </p>
@@ -270,11 +270,11 @@ function WalletRow({
                     </span>
                     <span style={{ fontSize:"0.75rem", fontWeight:700, color: tx.type === "buy" ? "#059669" : "#EF4444",
                       flexShrink:0, textTransform:"uppercase" }}>{tx.type}</span>
-                    <span style={{ flex:1, fontSize:"0.8125rem", fontWeight:600, color:"#1D1D1F",
+                    <span style={{ flex:1, fontSize:"0.8125rem", fontWeight:600, color:"var(--foreground)",
                       fontVariantNumeric:"tabular-nums" }}>
                       {fmt(tx.amount67)} $67
                     </span>
-                    <span style={{ fontSize:"0.6875rem", color:"#A1A1AA", flexShrink:0 }}>
+                    <span style={{ fontSize:"0.6875rem", color:"var(--secondary)", flexShrink:0 }}>
                       {timeAgo(new Date(tx.blockTime * 1000).toISOString())}
                     </span>
                     <a href={`https://solscan.io/tx/${tx.sig}`} target="_blank"
@@ -301,8 +301,8 @@ function WalletRow({
             </a>
             <button onClick={e => { e.stopPropagation(); onMute() }}
               style={{ flex:1, padding:"6px 0", borderRadius:8,
-                border:"1.5px solid rgba(0,0,0,0.1)", background:"none",
-                cursor:"pointer", fontSize:"0.75rem", color:"#8E8E93", fontWeight:600,
+                border:"1.5px solid var(--separator)", background:"none",
+                cursor:"pointer", fontSize:"0.75rem", color:"var(--tertiary)", fontWeight:600,
                 display:"flex", alignItems:"center", justifyContent:"center", gap:4 }}>
               {wallet.muted
                 ? <><Bell style={{ width:11, height:11 }} /> Unmute</>
@@ -348,7 +348,7 @@ function AddWalletForm({ onAdd }: { onAdd: (w: TrackedWallet) => void }) {
   }
 
   const inputStyle = {
-    padding:"8px 10px", borderRadius:8, border:"1.5px solid rgba(0,0,0,0.1)",
+    padding:"8px 10px", borderRadius:8, border:"1.5px solid var(--separator)",
     outline:"none", fontSize:"0.875rem", fontFamily:"inherit", background:"#FFF",
   }
 
@@ -356,7 +356,7 @@ function AddWalletForm({ onAdd }: { onAdd: (w: TrackedWallet) => void }) {
     <button onClick={e => { e.stopPropagation(); setOpen(true) }}
       style={{ display:"flex", alignItems:"center", gap:6, padding:"8px 12px",
         borderRadius:10, border:"1.5px dashed rgba(0,0,0,0.12)", background:"none",
-        cursor:"pointer", width:"100%", color:"#8E8E93", fontSize:"0.875rem", fontWeight:600 }}>
+        cursor:"pointer", width:"100%", color:"var(--tertiary)", fontSize:"0.875rem", fontWeight:600 }}>
       <Plus style={{ width:14, height:14 }} /> Track wallet
     </button>
   )
@@ -375,13 +375,13 @@ function AddWalletForm({ onAdd }: { onAdd: (w: TrackedWallet) => void }) {
         onFocus={e => e.target.style.borderColor="#F5A623"}
         onBlur={e  => e.target.style.borderColor="rgba(0,0,0,0.1)"} />
       <div style={{ display:"flex", gap:6, alignItems:"center" }}>
-        <span style={{ fontSize:"0.75rem", color:"#8E8E93", whiteSpace:"nowrap" }}>🐋 Alert if ≥</span>
+        <span style={{ fontSize:"0.75rem", color:"var(--tertiary)", whiteSpace:"nowrap" }}>🐋 Alert if ≥</span>
         <input value={threshold} onChange={e => setThreshold(e.target.value)}
           type="number" placeholder="1000000"
           style={{ ...inputStyle, flex:1 }}
           onFocus={e => e.target.style.borderColor="#F5A623"}
           onBlur={e  => e.target.style.borderColor="rgba(0,0,0,0.1)"} />
-        <span style={{ fontSize:"0.75rem", color:"#8E8E93" }}>$67</span>
+        <span style={{ fontSize:"0.75rem", color:"var(--tertiary)" }}>$67</span>
       </div>
       {error && <p style={{ fontSize:"0.75rem", color:"#EF4444" }}>{error}</p>}
       <div style={{ display:"flex", gap:6 }}>
@@ -395,8 +395,8 @@ function AddWalletForm({ onAdd }: { onAdd: (w: TrackedWallet) => void }) {
           Add Wallet
         </button>
         <button onClick={() => { setOpen(false); setError("") }}
-          style={{ padding:"8px 14px", borderRadius:8, border:"1.5px solid rgba(0,0,0,0.1)",
-            background:"none", cursor:"pointer", fontSize:"0.8125rem", color:"#8E8E93" }}>
+          style={{ padding:"8px 14px", borderRadius:8, border:"1.5px solid var(--separator)",
+            background:"none", cursor:"pointer", fontSize:"0.8125rem", color:"var(--tertiary)" }}>
           Cancel
         </button>
       </div>
@@ -480,10 +480,10 @@ function ImportTopHolders({ existing, onImport }: {
       {open && holders.length > 0 && (
         <div style={{ background:"#F9F9F9", borderRadius:12, padding:12,
           display:"flex", flexDirection:"column", gap:8,
-          border:"1.5px solid rgba(0,0,0,0.08)" }}>
+          border:"1.5px solid var(--separator)" }}>
 
           <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between" }}>
-            <p style={{ fontSize:"0.6875rem", fontWeight:700, color:"#8E8E93",
+            <p style={{ fontSize:"0.6875rem", fontWeight:700, color:"var(--tertiary)",
               textTransform:"uppercase", letterSpacing:"0.07em" }}>
               Top {holders.length} holders — select to import
             </p>
@@ -493,7 +493,7 @@ function ImportTopHolders({ existing, onImport }: {
                 All
               </button>
               <button onClick={e => { e.stopPropagation(); setSelected(new Set()) }}
-                style={{ fontSize:"0.6875rem", color:"#8E8E93", background:"none", border:"none", cursor:"pointer" }}>
+                style={{ fontSize:"0.6875rem", color:"var(--tertiary)", background:"none", border:"none", cursor:"pointer" }}>
                 None
               </button>
             </div>
@@ -513,10 +513,10 @@ function ImportTopHolders({ existing, onImport }: {
                   <span style={{ fontSize:"0.75rem", fontWeight:700, color:"#F5A623",
                     width:22, flexShrink:0, textAlign:"center" }}>#{h.rank}</span>
                   <span style={{ flex:1, fontSize:"0.75rem", fontFamily:"monospace",
-                    color:"#374151", overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>
+                    color:"var(--foreground)", overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>
                     {h.address.slice(0,6)}…{h.address.slice(-4)}
                   </span>
-                  <span style={{ fontSize:"0.75rem", fontWeight:700, color:"#1D1D1F", flexShrink:0 }}>
+                  <span style={{ fontSize:"0.75rem", fontWeight:700, color:"var(--foreground)", flexShrink:0 }}>
                     {h.pct}%
                   </span>
                   <span style={{ width:14, height:14, borderRadius:4, flexShrink:0,
@@ -709,7 +709,7 @@ export function WalletTrackerCard() {
                   overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>
                   {t?.type === "buy" ? "BUY" : "SELL"} · {w.label}
                 </p>
-                <p style={{ fontSize:"0.6875rem", color:"#6E6E73" }}>
+                <p style={{ fontSize:"0.6875rem", color:"var(--secondary)" }}>
                   {t ? fmt(t.amount67) + " $67" : "Activity detected"}
                 </p>
               </div>
@@ -730,16 +730,16 @@ export function WalletTrackerCard() {
             background:"rgba(0,0,0,0.03)", border:"1px solid rgba(0,0,0,0.06)",
             display:"flex", alignItems:"center", gap:6 }}>
             <span style={{ fontSize:"0.875rem" }}>😴</span>
-            <span style={{ fontSize:"0.75rem", color:"#8E8E93", fontWeight:500 }}>No whale activity right now</span>
+            <span style={{ fontSize:"0.75rem", color:"var(--tertiary)", fontWeight:500 }}>No whale activity right now</span>
           </div>
         )}
       </div>
 
       {/* Wallet list */}
       {wallets.length > 0 && (
-        <div style={{ borderTop:"1px solid rgba(0,0,0,0.06)", paddingTop:8 }}
+        <div style={{ borderTop:"1px solid var(--separator)", paddingTop:8 }}
           onClick={e => e.stopPropagation()}>
-          <p style={{ fontSize:"0.6rem", fontWeight:800, color:"#8E8E93",
+          <p style={{ fontSize:"0.6rem", fontWeight:800, color:"var(--tertiary)",
             textTransform:"uppercase", letterSpacing:"0.08em", marginBottom:6 }}>
             Tracked Wallets
           </p>
@@ -755,19 +755,19 @@ export function WalletTrackerCard() {
                   border: `1px solid ${isWhale ? "rgba(217,119,6,0.15)" : "rgba(0,0,0,0.05)"}`,
                 }}>
                   <span style={{ fontSize:"0.75rem" }}>{isWhale ? "🐋" : "👛"}</span>
-                  <span style={{ flex:1, fontSize:"0.75rem", color:"#374151", fontWeight:600,
+                  <span style={{ flex:1, fontSize:"0.75rem", color:"var(--foreground)", fontWeight:600,
                     overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{w.label}</span>
                   {d ? (
                     <div style={{ textAlign:"right" }}>
                       <p style={{ fontSize:"0.6875rem", fontWeight:800, color:"#F5A623", lineHeight:1.2 }}>
-                        {fmt(d.balance67)}<span style={{ fontSize:"0.55rem", color:"#A1A1AA" }}> $67</span>
+                        {fmt(d.balance67)}<span style={{ fontSize:"0.55rem", color:"var(--secondary)" }}> $67</span>
                       </p>
                       <p style={{ fontSize:"0.6rem", color: d.valueUsd > 0 ? "#059669" : "#C7C7CC", fontWeight:600 }}>
                         {d.valueUsd > 0 ? fmtUsd(d.valueUsd) : "—"} · <span style={{ color:"#9945FF" }}>{d.balanceSol.toFixed(2)} SOL</span>
                       </p>
                     </div>
                   ) : (
-                    <span style={{ fontSize:"0.6875rem", color:"#C7C7CC" }}>loading…</span>
+                    <span style={{ fontSize:"0.6875rem", color:"var(--tertiary)" }}>loading…</span>
                   )}
                 </div>
               )
@@ -816,7 +816,7 @@ export function WalletTrackerCard() {
                     color: isBuy ? "#059669" : "#EF4444" }}>
                     {isBuy ? "BUY" : "SELL"} · {w.label}
                   </p>
-                  <p style={{ fontSize:"0.75rem", color:"#6E6E73" }}>
+                  <p style={{ fontSize:"0.75rem", color:"var(--secondary)" }}>
                     {t ? `${fmt(t.amount67)} $67 · ${fmtUsd(t.amount67 * (d?.price67 ?? 0))}` : "Large activity detected"}
                   </p>
                 </div>
@@ -836,7 +836,7 @@ export function WalletTrackerCard() {
       {/* Header bar */}
       <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between" }}>
         <div style={{ display:"flex", gap:12 }}>
-          <span style={{ fontSize:"0.8125rem", color:"#8E8E93" }}>
+          <span style={{ fontSize:"0.8125rem", color:"var(--tertiary)" }}>
             {wallets.length} tracked · {whales} whale{whales !== 1 ? "s" : ""}
           </span>
           {totalValue > 0 && (
@@ -848,9 +848,9 @@ export function WalletTrackerCard() {
         <button onClick={e => { e.stopPropagation(); fetchData(wallets) }}
           disabled={loading || wallets.length === 0}
           style={{ display:"flex", alignItems:"center", gap:5, padding:"5px 10px",
-            borderRadius:8, border:"1.5px solid rgba(0,0,0,0.1)", background:"none",
+            borderRadius:8, border:"1.5px solid var(--separator)", background:"none",
             cursor: loading || wallets.length === 0 ? "not-allowed" : "pointer",
-            fontSize:"0.75rem", color:"#8E8E93", fontWeight:600 }}>
+            fontSize:"0.75rem", color:"var(--tertiary)", fontWeight:600 }}>
           <RefreshCw style={{ width:12, height:12,
             animation: loading ? "spin 1s linear infinite" : "none" }} />
           {loading ? "Fetching…" : lastFetch ? `Updated ${timeAgo(lastFetch)}` : "Refresh"}
@@ -866,7 +866,7 @@ export function WalletTrackerCard() {
       {/* Wallet list */}
       <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
         {wallets.length === 0 ? (
-          <p style={{ textAlign:"center", color:"#A1A1AA", fontSize:"0.875rem", padding:"20px 0" }}>
+          <p style={{ textAlign:"center", color:"var(--secondary)", fontSize:"0.875rem", padding:"20px 0" }}>
             No wallets tracked yet. Add a dev wallet or top holder above.
           </p>
         ) : wallets.map(w => (

@@ -34,7 +34,7 @@ const STATUS_CONFIG: Record<EventStatus, { label: string; color: string; bg: str
   upcoming:  { label: "Upcoming", color: "#2563EB", bg: "rgba(37,99,235,0.08)"  },
   live:      { label: "🔴 LIVE",  color: "#EF4444", bg: "rgba(239,68,68,0.1)"  },
   done:      { label: "Done ✓",   color: "#059669", bg: "rgba(5,150,105,0.08)" },
-  cancelled: { label: "Cancelled",color: "#A1A1AA", bg: "#F4F4F5"               },
+  cancelled: { label: "Cancelled",color: "var(--secondary)", bg: "#F4F4F5"               },
 }
 
 function formatEventDate(iso: string, time?: string) {
@@ -90,16 +90,16 @@ function EventRow({ e, onStatus, onDelete }: {
         <div style={{ flex:1, minWidth:0 }}>
           <div style={{ display:"flex", alignItems:"center", gap:6, marginBottom:3 }}>
             <span style={{ fontSize:"1rem" }}>{tc.emoji}</span>
-            <span style={{ fontSize:"0.875rem", fontWeight:700, color:"#1D1D1F",
+            <span style={{ fontSize:"0.875rem", fontWeight:700, color:"var(--foreground)",
               overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{e.title}</span>
           </div>
           <div style={{ display:"flex", gap:8, alignItems:"center", flexWrap:"wrap" }}>
-            <span style={{ fontSize:"0.6875rem", color:"#8E8E93", display:"flex",
+            <span style={{ fontSize:"0.6875rem", color:"var(--tertiary)", display:"flex",
               alignItems:"center", gap:3 }}>
               <Clock style={{ width:10, height:10 }} />
               {formatEventDate(e.date, e.time)}
             </span>
-            {e.platform && <span style={{ fontSize:"0.6875rem", color:"#8E8E93" }}>· {e.platform}</span>}
+            {e.platform && <span style={{ fontSize:"0.6875rem", color:"var(--tertiary)" }}>· {e.platform}</span>}
           </div>
         </div>
 
@@ -115,7 +115,7 @@ function EventRow({ e, onStatus, onDelete }: {
       </div>
 
       {e.description && (
-        <p style={{ fontSize:"0.8125rem", color:"#374151", paddingLeft:58 }}>{e.description}</p>
+        <p style={{ fontSize:"0.8125rem", color:"var(--foreground)", paddingLeft:58 }}>{e.description}</p>
       )}
 
       {/* Actions */}
@@ -136,8 +136,8 @@ function EventRow({ e, onStatus, onDelete }: {
         )}
         {e.status !== "done" && e.status !== "cancelled" && (
           <button onClick={ev => { ev.stopPropagation(); onStatus(e.id, "cancelled") }}
-            style={{ padding:"4px 10px", borderRadius:8, border:"1.5px solid rgba(0,0,0,0.1)",
-              background:"none", cursor:"pointer", fontSize:"0.6875rem", color:"#8E8E93" }}>
+            style={{ padding:"4px 10px", borderRadius:8, border:"1.5px solid var(--separator)",
+              background:"none", cursor:"pointer", fontSize:"0.6875rem", color:"var(--tertiary)" }}>
             Cancel
           </button>
         )}
@@ -206,19 +206,19 @@ export function CommunityEventsCard() {
           <p style={{ fontSize:"1.5rem", fontWeight:800, color: live.length > 0 ? "#EF4444" : "#F5A623", lineHeight:1 }}>
             {live.length > 0 ? live.length : upcoming.length}
           </p>
-          <p style={{ fontSize:"0.625rem", color:"#8E8E93", fontWeight:600,
+          <p style={{ fontSize:"0.625rem", color:"var(--tertiary)", fontWeight:600,
             textTransform:"uppercase", letterSpacing:"0.06em", marginTop:3 }}>
             {live.length > 0 ? "LIVE 🔴" : "Upcoming"}
           </p>
         </div>
         <div className="inset-cell" style={{ flex:1, textAlign:"center" }}>
           <p style={{ fontSize:"1.5rem", fontWeight:800, color:"#059669", lineHeight:1 }}>{past.length}</p>
-          <p style={{ fontSize:"0.625rem", color:"#8E8E93", fontWeight:600,
+          <p style={{ fontSize:"0.625rem", color:"var(--tertiary)", fontWeight:600,
             textTransform:"uppercase", letterSpacing:"0.06em", marginTop:3 }}>Done</p>
         </div>
         <div className="inset-cell" style={{ flex:1, textAlign:"center" }}>
-          <p style={{ fontSize:"1.5rem", fontWeight:800, color:"#1D1D1F", lineHeight:1 }}>{events.length}</p>
-          <p style={{ fontSize:"0.625rem", color:"#8E8E93", fontWeight:600,
+          <p style={{ fontSize:"1.5rem", fontWeight:800, color:"var(--foreground)", lineHeight:1 }}>{events.length}</p>
+          <p style={{ fontSize:"0.625rem", color:"var(--tertiary)", fontWeight:600,
             textTransform:"uppercase", letterSpacing:"0.06em", marginTop:3 }}>Total</p>
         </div>
       </div>
@@ -229,21 +229,21 @@ export function CommunityEventsCard() {
           <button onClick={() => setAddOpen(true)}
             style={{ display:"flex", alignItems:"center", gap:6, padding:"8px 12px",
               borderRadius:10, border:"1.5px dashed rgba(0,0,0,0.12)", background:"none",
-              cursor:"pointer", width:"100%", color:"#8E8E93", fontSize:"0.875rem", fontWeight:600 }}>
+              cursor:"pointer", width:"100%", color:"var(--tertiary)", fontSize:"0.875rem", fontWeight:600 }}>
             <Plus style={{ width:14, height:14 }} /> Schedule event
           </button>
         ) : (
           <div style={{ background:"#FAFAFA", borderRadius:12, padding:12,
             display:"flex", flexDirection:"column", gap:8 }}>
             <input value={title} onChange={e => setTitle(e.target.value)} placeholder="Event name"
-              style={{ padding:"8px 10px", borderRadius:8, border:"1.5px solid rgba(0,0,0,0.1)",
+              style={{ padding:"8px 10px", borderRadius:8, border:"1.5px solid var(--separator)",
                 outline:"none", fontSize:"0.875rem", fontFamily:"inherit", background:"#FFF" }}
               onFocus={e => e.target.style.borderColor="#F5A623"}
               onBlur={e  => e.target.style.borderColor="rgba(0,0,0,0.1)"} />
             <div style={{ display:"flex", gap:6 }}>
               <select value={type} onChange={e => setType(e.target.value as EventType)}
                 style={{ flex:1, padding:"8px 10px", borderRadius:8,
-                  border:"1.5px solid rgba(0,0,0,0.1)", outline:"none",
+                  border:"1.5px solid var(--separator)", outline:"none",
                   fontSize:"0.875rem", fontFamily:"inherit", background:"#FFF" }}>
                 {Object.entries(TYPE_CONFIG).map(([k,v]) => (
                   <option key={k} value={k}>{v.emoji} {v.label}</option>
@@ -252,13 +252,13 @@ export function CommunityEventsCard() {
               <input type="date" value={date} onChange={e => setDate(e.target.value)}
                 min={todayIso}
                 style={{ flex:1, padding:"8px 10px", borderRadius:8,
-                  border:"1.5px solid rgba(0,0,0,0.1)", outline:"none",
+                  border:"1.5px solid var(--separator)", outline:"none",
                   fontSize:"0.875rem", fontFamily:"inherit", background:"#FFF" }}
                 onFocus={e => e.target.style.borderColor="#F5A623"}
                 onBlur={e  => e.target.style.borderColor="rgba(0,0,0,0.1)"} />
               <input type="time" value={time} onChange={e => setTime(e.target.value)}
                 style={{ width:90, padding:"8px 10px", borderRadius:8,
-                  border:"1.5px solid rgba(0,0,0,0.1)", outline:"none",
+                  border:"1.5px solid var(--separator)", outline:"none",
                   fontSize:"0.875rem", fontFamily:"inherit", background:"#FFF" }}
                 onFocus={e => e.target.style.borderColor="#F5A623"}
                 onBlur={e  => e.target.style.borderColor="rgba(0,0,0,0.1)"} />
@@ -273,8 +273,8 @@ export function CommunityEventsCard() {
                 Schedule 📅
               </button>
               <button onClick={() => setAddOpen(false)}
-                style={{ padding:"8px 14px", borderRadius:8, border:"1.5px solid rgba(0,0,0,0.1)",
-                  background:"none", cursor:"pointer", fontSize:"0.8125rem", color:"#8E8E93" }}>
+                style={{ padding:"8px 14px", borderRadius:8, border:"1.5px solid var(--separator)",
+                  background:"none", cursor:"pointer", fontSize:"0.8125rem", color:"var(--tertiary)" }}>
                 Cancel
               </button>
             </div>
@@ -284,7 +284,7 @@ export function CommunityEventsCard() {
 
       {/* Upcoming events preview */}
       {upcoming.length > 0 && (
-        <div style={{ borderTop:"1px solid rgba(0,0,0,0.06)", paddingTop:12 }}
+        <div style={{ borderTop:"1px solid var(--separator)", paddingTop:12 }}
           onClick={e => e.stopPropagation()}>
           <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
             {upcoming.slice(0,3).map(e => (
@@ -295,7 +295,7 @@ export function CommunityEventsCard() {
       )}
 
       {events.length === 0 && (
-        <p style={{ fontSize:"0.8125rem", color:"#A1A1AA", textAlign:"center", fontStyle:"italic" }}>
+        <p style={{ fontSize:"0.8125rem", color:"var(--secondary)", textAlign:"center", fontStyle:"italic" }}>
           No events scheduled. Add the first one.
         </p>
       )}
@@ -309,7 +309,7 @@ export function CommunityEventsCard() {
         <button onClick={() => setAddOpen(true)}
           style={{ display:"flex", alignItems:"center", gap:6, padding:"8px 12px",
             borderRadius:10, border:"1.5px dashed rgba(0,0,0,0.12)", background:"none",
-            cursor:"pointer", width:"100%", color:"#8E8E93", fontSize:"0.875rem", fontWeight:600 }}>
+            cursor:"pointer", width:"100%", color:"var(--tertiary)", fontSize:"0.875rem", fontWeight:600 }}>
           <Plus style={{ width:14, height:14 }} /> Schedule event
         </button>
       ) : (
@@ -321,7 +321,7 @@ export function CommunityEventsCard() {
             { v: desc,  set: setDesc,  ph: "Description (optional)", t: "text" },
           ].map(({ v, set, ph, t }) => (
             <input key={ph} value={v} onChange={e => set(e.target.value)} placeholder={ph} type={t}
-              style={{ padding:"8px 10px", borderRadius:8, border:"1.5px solid rgba(0,0,0,0.1)",
+              style={{ padding:"8px 10px", borderRadius:8, border:"1.5px solid var(--separator)",
                 outline:"none", fontSize:"0.875rem", fontFamily:"inherit", background:"#FFF" }}
               onFocus={e => e.target.style.borderColor="#F5A623"}
               onBlur={e  => e.target.style.borderColor="rgba(0,0,0,0.1)"} />
@@ -329,7 +329,7 @@ export function CommunityEventsCard() {
           <div style={{ display:"flex", gap:6 }}>
             <select value={type} onChange={e => setType(e.target.value as EventType)}
               style={{ flex:1, padding:"8px 10px", borderRadius:8,
-                border:"1.5px solid rgba(0,0,0,0.1)", outline:"none",
+                border:"1.5px solid var(--separator)", outline:"none",
                 fontSize:"0.875rem", fontFamily:"inherit", background:"#FFF" }}>
               {Object.entries(TYPE_CONFIG).map(([k,v]) => (
                 <option key={k} value={k}>{v.emoji} {v.label}</option>
@@ -337,13 +337,13 @@ export function CommunityEventsCard() {
             </select>
             <input type="date" value={date} onChange={e => setDate(e.target.value)} min={todayIso}
               style={{ flex:1, padding:"8px 10px", borderRadius:8,
-                border:"1.5px solid rgba(0,0,0,0.1)", outline:"none",
+                border:"1.5px solid var(--separator)", outline:"none",
                 fontSize:"0.875rem", fontFamily:"inherit", background:"#FFF" }}
               onFocus={e => e.target.style.borderColor="#F5A623"}
               onBlur={e  => e.target.style.borderColor="rgba(0,0,0,0.1)"} />
             <input type="time" value={time} onChange={e => setTime(e.target.value)}
               style={{ width:90, padding:"8px 10px", borderRadius:8,
-                border:"1.5px solid rgba(0,0,0,0.1)", outline:"none",
+                border:"1.5px solid var(--separator)", outline:"none",
                 fontSize:"0.875rem", fontFamily:"inherit", background:"#FFF" }}
               onFocus={e => e.target.style.borderColor="#F5A623"}
               onBlur={e  => e.target.style.borderColor="rgba(0,0,0,0.1)"} />
@@ -356,8 +356,8 @@ export function CommunityEventsCard() {
                 color: !title.trim() || !date ? "#A1A1AA" : "#000",
                 fontSize:"0.8125rem", fontWeight:700 }}>Schedule 📅</button>
             <button onClick={() => setAddOpen(false)}
-              style={{ padding:"8px 14px", borderRadius:8, border:"1.5px solid rgba(0,0,0,0.1)",
-                background:"none", cursor:"pointer", fontSize:"0.8125rem", color:"#8E8E93" }}>Cancel</button>
+              style={{ padding:"8px 14px", borderRadius:8, border:"1.5px solid var(--separator)",
+                background:"none", cursor:"pointer", fontSize:"0.8125rem", color:"var(--tertiary)" }}>Cancel</button>
           </div>
         </div>
       )}
@@ -365,7 +365,7 @@ export function CommunityEventsCard() {
       {/* Upcoming */}
       {upcoming.length > 0 && (
         <>
-          <p style={{ fontSize:"0.6875rem", fontWeight:700, color:"#8E8E93",
+          <p style={{ fontSize:"0.6875rem", fontWeight:700, color:"var(--tertiary)",
             textTransform:"uppercase", letterSpacing:"0.07em" }}>Upcoming ({upcoming.length})</p>
           <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
             {upcoming.map(e => <EventRow key={e.id} e={e} onStatus={updateStatus} onDelete={deleteEvent} />)}
@@ -376,7 +376,7 @@ export function CommunityEventsCard() {
       {/* Past */}
       {past.length > 0 && (
         <>
-          <p style={{ fontSize:"0.6875rem", fontWeight:700, color:"#8E8E93",
+          <p style={{ fontSize:"0.6875rem", fontWeight:700, color:"var(--tertiary)",
             textTransform:"uppercase", letterSpacing:"0.07em", marginTop:8 }}>Past ({past.length})</p>
           <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
             {past.slice(0,5).map(e => <EventRow key={e.id} e={e} onStatus={updateStatus} onDelete={deleteEvent} />)}
@@ -385,7 +385,7 @@ export function CommunityEventsCard() {
       )}
 
       {events.length === 0 && (
-        <p style={{ textAlign:"center", color:"#A1A1AA", fontSize:"0.875rem", padding:"20px 0" }}>
+        <p style={{ textAlign:"center", color:"var(--secondary)", fontSize:"0.875rem", padding:"20px 0" }}>
           No events yet. Schedule the first one above.
         </p>
       )}

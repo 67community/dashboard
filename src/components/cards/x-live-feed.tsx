@@ -43,8 +43,8 @@ export function TweetRow({ item, compact = false }: { item: RaidFeedItem; compac
   return (
     <div style={{
       borderRadius: 10,
-      border: "1.5px solid rgba(0,0,0,0.06)",
-      background: "#fff",
+      border: "1.5px solid var(--separator)",
+      background: "var(--card)",
       padding: compact ? "8px 10px" : "10px 12px",
       display: "flex",
       flexDirection: "column",
@@ -66,11 +66,11 @@ export function TweetRow({ item, compact = false }: { item: RaidFeedItem; compac
             <XLogo size={11} />
           </div>
           {handle && (
-            <span style={{ fontSize: "0.6875rem", fontWeight: 700, color: "#1D1D1F" }}>{handle}</span>
+            <span style={{ fontSize: "0.6875rem", fontWeight: 700, color: "var(--foreground)" }}>{handle}</span>
           )}
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-          <span style={{ fontSize: "0.625rem", color: "#C7C7CC" }}>{timeAgo(item.date)}</span>
+          <span style={{ fontSize: "0.625rem", color: "var(--tertiary)" }}>{timeAgo(item.date)}</span>
           {hasLink && (
             <a href={item.tweet_url} target="_blank" rel="noopener noreferrer"
               onClick={e => e.stopPropagation()}
@@ -89,7 +89,7 @@ export function TweetRow({ item, compact = false }: { item: RaidFeedItem; compac
       {/* Tweet text */}
       <p style={{
         fontSize: compact ? "0.6875rem" : "0.75rem",
-        color: "#374151",
+        color: "var(--foreground)",
         lineHeight: 1.5,
         margin: 0,
         display: "-webkit-box",
@@ -128,11 +128,11 @@ export function XLiveFeedCard() {
         <div style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
           <p className="hero-number">{feed.length > 0 ? feed.length : "—"}</p>
           {feed.length > 0 && (
-            <span style={{ fontSize: "0.75rem", color: "#8E8E93" }}>tweets tracked</span>
+            <span style={{ fontSize: "0.75rem", color: "var(--tertiary)" }}>tweets tracked</span>
           )}
         </div>
         {latest[0] && (
-          <p style={{ fontSize: "0.75rem", color: "#8E8E93", marginTop: 4 }}>
+          <p style={{ fontSize: "0.75rem", color: "var(--tertiary)", marginTop: 4 }}>
             Last: {timeAgo(latest[0].date)}
           </p>
         )}
@@ -146,11 +146,11 @@ export function XLiveFeedCard() {
           ))}
         </div>
       ) : (
-        <div style={{ display: "flex", alignItems: "center", gap: 10, borderTop: "1px solid rgba(0,0,0,0.06)", paddingTop: 14 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 10, borderTop: "1px solid var(--separator)", paddingTop: 14 }}>
           <div style={{ width: 28, height: 28, borderRadius: "50%", background: "#0A0A0A", display: "flex", alignItems: "center", justifyContent: "center" }}>
             <XLogo size={14} />
           </div>
-          <p style={{ fontSize: "0.875rem", color: "#A1A1AA", fontWeight: 500 }}>
+          <p style={{ fontSize: "0.875rem", color: "var(--secondary)", fontWeight: 500 }}>
             Waiting for tweets…
           </p>
         </div>
@@ -165,10 +165,10 @@ export function XLiveFeedCard() {
       {/* Header */}
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <div>
-          <p style={{ fontSize: "0.6875rem", fontWeight: 700, color: "#A1A1AA", letterSpacing: "0.06em", textTransform: "uppercase" }}>
+          <p style={{ fontSize: "0.6875rem", fontWeight: 700, color: "var(--secondary)", letterSpacing: "0.06em", textTransform: "uppercase" }}>
             Telegram Raid Group
           </p>
-          <p style={{ fontSize: "0.75rem", color: "#C7C7CC", marginTop: 2 }}>Real-time $67coin tweets</p>
+          <p style={{ fontSize: "0.75rem", color: "var(--tertiary)", marginTop: 2 }}>Real-time $67coin tweets</p>
         </div>
         <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
           {/* Live pulse */}
@@ -192,7 +192,7 @@ export function XLiveFeedCard() {
           ].map(s => (
             <div key={s.label} className="inset-cell" style={{ textAlign: "center" }}>
               <p style={{ fontSize: "1.25rem", fontWeight: 800, color: s.color, margin: 0 }}>{s.value}</p>
-              <p style={{ fontSize: "0.5625rem", color: "#8E8E93", marginTop: 3, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.04em" }}>{s.label}</p>
+              <p style={{ fontSize: "0.5625rem", color: "var(--tertiary)", marginTop: 3, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.04em" }}>{s.label}</p>
             </div>
           ))}
         </div>
@@ -210,15 +210,15 @@ export function XLiveFeedCard() {
           <div style={{ width: 48, height: 48, borderRadius: "50%", background: "#0A0A0A", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 12px" }}>
             <XLogo size={22} />
           </div>
-          <p style={{ fontSize: "0.875rem", color: "#6B7280", fontWeight: 600 }}>No tweets yet</p>
-          <p style={{ fontSize: "0.75rem", color: "#A1A1AA", marginTop: 4 }}>
+          <p style={{ fontSize: "0.875rem", color: "var(--secondary)", fontWeight: 600 }}>No tweets yet</p>
+          <p style={{ fontSize: "0.75rem", color: "var(--secondary)", marginTop: 4 }}>
             Waiting for new $67coin tweets from Telegram feed
           </p>
         </div>
       )}
 
       {/* Footer */}
-      <div style={{ display: "flex", alignItems: "center", gap: 6, color: "#A1A1AA", borderTop: "1px solid rgba(0,0,0,0.05)", paddingTop: 10 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 6, color: "var(--secondary)", borderTop: "1px solid var(--separator)", paddingTop: 10 }}>
         <RefreshCw style={{ width: 11, height: 11 }} />
         <span style={{ fontSize: "0.6875rem" }}>
           Synced from Telegram channel · updates every cron run

@@ -78,7 +78,7 @@ export function TaskCard({ task, onOpen, onDelete, isDragOverlay = false }: Prop
           <button
             {...attributes} {...listeners}
             onClick={e => e.stopPropagation()}
-            style={{ marginTop:2, padding:2, background:"none", border:"none", cursor:"grab", flexShrink:0, opacity:0.3, color:"#A1A1AA" }}>
+            style={{ marginTop:2, padding:2, background:"none", border:"none", cursor:"grab", flexShrink:0, opacity:0.3, color:"var(--secondary)" }}>
             <GripVertical style={{ width:13, height:13 }} />
           </button>
           <p style={{ fontSize:"0.8125rem", fontWeight:600, color:"#09090B", lineHeight:1.5, flex:1, paddingRight: hovered && onDelete ? 20 : 0 }}>{task.title}</p>
@@ -98,12 +98,12 @@ export function TaskCard({ task, onOpen, onDelete, isDragOverlay = false }: Prop
         <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginTop:10, marginLeft:19 }}>
           <div style={{ display:"flex", alignItems:"center", gap:12 }}>
             {task.subtasks.length > 0 && (
-              <span style={{ fontSize:"0.6875rem", color:"#A1A1AA", fontWeight:500 }}>
+              <span style={{ fontSize:"0.6875rem", color:"var(--secondary)", fontWeight:500 }}>
                 ✓ {doneSubtasks}/{task.subtasks.length}
               </span>
             )}
             {task.dueDate && (
-              <div style={{ display:"flex", alignItems:"center", gap:4, fontSize:"0.6875rem", color:"#A1A1AA" }}>
+              <div style={{ display:"flex", alignItems:"center", gap:4, fontSize:"0.6875rem", color:"var(--secondary)" }}>
                 <Calendar style={{ width:11, height:11 }} />
                 {new Date(task.dueDate).toLocaleDateString("en-US", { month:"short", day:"numeric" })}
               </div>

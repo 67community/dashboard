@@ -25,17 +25,17 @@ function Pill({ item }: { item: MarketItem }) {
     <div style={{
       display: "inline-flex", alignItems: "center", gap: 6,
       background: "#FFF",
-      border: "1.5px solid rgba(0,0,0,0.07)",
+      border: "1.5px solid var(--separator)",
       borderRadius: 99,
       padding: "4px 10px 4px 8px",
       whiteSpace: "nowrap",
       flexShrink: 0,
     }}>
       <span style={{ fontSize: "0.75rem", lineHeight: 1 }}>{item.emoji}</span>
-      <span style={{ fontSize: "0.6875rem", fontWeight: 700, color: "#1D1D1F", letterSpacing: "-0.01em" }}>
+      <span style={{ fontSize: "0.6875rem", fontWeight: 700, color: "var(--foreground)", letterSpacing: "-0.01em" }}>
         {item.symbol.replace("-USD","").replace("=F","")}
       </span>
-      <span style={{ fontSize: "0.6875rem", fontWeight: 600, color: "#374151", letterSpacing: "-0.01em", fontVariantNumeric: "tabular-nums" }}>
+      <span style={{ fontSize: "0.6875rem", fontWeight: 600, color: "var(--foreground)", letterSpacing: "-0.01em", fontVariantNumeric: "tabular-nums" }}>
         ${fmtPrice(item.price, item.kind)}
       </span>
       <span style={{
@@ -52,7 +52,7 @@ function Pill({ item }: { item: MarketItem }) {
 
 function TickerStrip({ items }: { items: MarketItem[] }) {
   if (!items.length) return (
-    <p style={{ fontSize: "0.8125rem", color: "#C7C7CC" }}>Loading…</p>
+    <p style={{ fontSize: "0.8125rem", color: "var(--tertiary)" }}>Loading…</p>
   )
   return (
     <div style={{
@@ -86,7 +86,7 @@ export function MarketTickerCard() {
 
       {crypto.length > 0 && (
         <div>
-          <p style={{ fontSize: "0.625rem", fontWeight: 700, color: "#A1A1AA",
+          <p style={{ fontSize: "0.625rem", fontWeight: 700, color: "var(--secondary)",
             textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: 8 }}>
             🔐 Crypto
           </p>
@@ -96,7 +96,7 @@ export function MarketTickerCard() {
 
       {indices.length > 0 && (
         <div>
-          <p style={{ fontSize: "0.625rem", fontWeight: 700, color: "#A1A1AA",
+          <p style={{ fontSize: "0.625rem", fontWeight: 700, color: "var(--secondary)",
             textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: 8 }}>
             🏛️ Markets
           </p>
@@ -105,13 +105,13 @@ export function MarketTickerCard() {
       )}
 
       {market.length === 0 && (
-        <p style={{ textAlign: "center", color: "#A1A1AA", fontSize: "0.875rem", padding: "20px 0" }}>
+        <p style={{ textAlign: "center", color: "var(--secondary)", fontSize: "0.875rem", padding: "20px 0" }}>
           Loading market data…
         </p>
       )}
 
-      <div style={{ display: "flex", alignItems: "center", gap: 6, color: "#A1A1AA",
-        borderTop: "1px solid rgba(0,0,0,0.05)", paddingTop: 10 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 6, color: "var(--secondary)",
+        borderTop: "1px solid var(--separator)", paddingTop: 10 }}>
         <RefreshCw style={{ width: 11, height: 11 }} />
         <span style={{ fontSize: "0.6875rem" }}>Yahoo Finance · 5 min refresh</span>
       </div>

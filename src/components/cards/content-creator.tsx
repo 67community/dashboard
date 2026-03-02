@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { CheckCircle2, Copy, PenLine, RefreshCw, Sparkles, Trash2 } from "lucide-react"
 import { DashboardCard } from "@/components/ui/dashboard-card"
 import { aiHeaders } from "@/lib/ai-settings"
@@ -129,8 +129,17 @@ export function ContentCreatorCard() {
   const [drafts,   setDrafts]   = useState<Draft[]>([])
   const [copied,   setCopied]   = useState<number | null>(null)
 
+  const [latestNotif, setLatestNotif] = useState<{text:string; link:string; time:string} | null>(null)
+
   const activePlat  = PLATFORMS.find(p => p.id === platform)!
   const activeRegion = REGIONS.find(r => r.id === region)!
+
+  // Fetch latest X notification
+  useEffect(() => {
+    fetch("/api/raid-feed").then(r=>r.json()).then((d: {text:string;link:string;time:string}[]) => {
+      if (Array.isArray(d) && d.length > 0) setLatestNotif(d[0])
+    }).catch(()=>{})
+  }, [])
 
   // When switching platform, reset type to that platform's first type
   function switchPlatform(p: Platform) {
@@ -197,6 +206,53 @@ export function ContentCreatorCard() {
 
   const collapsed = (
     <div style={{ display: "flex", flexDirection: "column", gap: 14, overflow: "hidden" }}>
+
+      {/* Latest X Notification tweet — click to use as topic */}
+      {latestNotif && (
+        <div onClick={e => e.stopPropagation()}
+          style={{ borderRadius:12, border:"1.5px solid var(--separator)", overflow:"hidden" }}>
+          <div style={{ background:"#0A0A0A", padding:"6px 10px", display:"flex", alignItems:"center", gap:6 }}>
+            <span style={{ fontSize:"0.6875rem", fontWeight:900, color:"#fff" }}>𝕏</span>
+            <span style={{ fontSize:"0.5625rem", fontWeight:700, color:"rgba(255,255,255,0.6)", textTransform:"uppercase", letterSpacing:"0.06em" }}>Latest Notification</span>
+          </div>
+          <div style={{ background:"#F8F8FA", padding:"8px 10px" }}>
+            <p style={{ fontSize:"0.6875rem", color:"var(--foreground)", lineHeight:1.45, margin:"0 0 8px 0",
+              display:"-webkit-box", WebkitLineClamp:3, WebkitBoxOrient:"vertical", overflow:"hidden" }}>
+              {latestNotif.text}
+            </p>
+            <button
+              onClick={async () => {
+                // Extract core content (strip usernames/timestamps from end)
+                const cleaned = latestNotif.text.replace(/\d+\s*\d+\s*\d+\s*$/, "").trim()
+                const newTopic = cleaned.slice(0, 280)
+                setTopic(newTopic)
+                // Auto-generate 3 posts immediately
+                if (!loading) {
+                  setLoading(true)
+                  setDrafts([])
+                  try {
+                    const results = await Promise.all([1,2,3].map((variation) =>
+                      fetch("/api/draft", {
+                        method: "POST",
+                        headers: { "content-type": "application/json", ...aiHeaders() },
+                        body: JSON.stringify({ topic: newTopic, type, platform, region, variation }),
+                      }).then(r => r.json())
+                    ))
+                    setDrafts(results.filter(Boolean))
+                  } catch {}
+                  setLoading(false)
+                }
+              }}
+              disabled={loading}
+              style={{ fontSize:"0.625rem", fontWeight:700, color:"#fff",
+                background: loading ? "#E4E4E7" : "#F5A623",
+                border:"none", borderRadius:8, padding:"4px 10px", cursor: loading ? "not-allowed" : "pointer" }}>
+              {loading ? "⏳ Generating..." : "✨ Generate 3 posts from this tweet"}
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Topic input */}
       <div
         onClick={e => e.stopPropagation()}
@@ -211,7 +267,7 @@ export function ContentCreatorCard() {
           style={{
             width: "100%", resize: "none", boxSizing: "border-box",
             padding: "10px 12px", borderRadius: 10, fontSize: "0.8125rem",
-            fontFamily: "inherit", fontWeight: 500, color: "#1D1D1F",
+            fontFamily: "inherit", fontWeight: 500, color: "var(--foreground)",
             background: "#F4F4F5", border: "1.5px solid transparent",
             outline: "none", lineHeight: 1.5,
             transition: "border 0.15s",
@@ -247,11 +303,11 @@ export function ContentCreatorCard() {
         <div
           onClick={e => e.stopPropagation()}
           style={{ background: "#F8F8FA", borderRadius: 10, padding: "10px 12px", borderLeft: "3px solid #F5A623" }}>
-          <p style={{ fontSize: "0.6875rem", fontWeight: 700, color: "#8E8E93", marginBottom: 4, textTransform: "uppercase", letterSpacing: "0.05em" }}>
+          <p style={{ fontSize: "0.6875rem", fontWeight: 700, color: "var(--tertiary)", marginBottom: 4, textTransform: "uppercase", letterSpacing: "0.05em" }}>
             Last draft · {lastDraft.type}
           </p>
           <p style={{
-            fontSize: "0.8125rem", color: "#374151", lineHeight: 1.5, margin: 0,
+            fontSize: "0.8125rem", color: "var(--foreground)", lineHeight: 1.5, margin: 0,
             display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden",
           }}>
             {lastDraft.draft}
@@ -259,7 +315,7 @@ export function ContentCreatorCard() {
           <div style={{ display: "flex", gap: 6, marginTop: 8 }}>
             <button
               onClick={async e => { e.stopPropagation(); await navigator.clipboard.writeText(lastDraft.draft); setCopied(lastDraft.id); setTimeout(() => setCopied(null), 1500) }}
-              style={{ fontSize: "0.6875rem", fontWeight: 600, color: "#6E6E73", background: "#EDEDF0", border: "none", borderRadius: 6, padding: "3px 8px", cursor: "pointer" }}
+              style={{ fontSize: "0.6875rem", fontWeight: 600, color: "var(--secondary)", background: "#EDEDF0", border: "none", borderRadius: 6, padding: "3px 8px", cursor: "pointer" }}
             >
               {copied === lastDraft.id ? "Copied ✓" : "Copy"}
             </button>
@@ -281,7 +337,7 @@ export function ContentCreatorCard() {
 
       {/* Queue count hint */}
       {queue > 0 && (
-        <p style={{ fontSize: "0.75rem", color: "#8E8E93", fontWeight: 500, textAlign: "center" }}>
+        <p style={{ fontSize: "0.75rem", color: "var(--tertiary)", fontWeight: 500, textAlign: "center" }}>
           {queue} draft{queue > 1 ? "s" : ""} in queue · tap to view all
         </p>
       )}
@@ -295,6 +351,48 @@ export function ContentCreatorCard() {
   const expanded = (
     <div style={{ display: "grid", gridTemplateColumns: "1fr 0.55fr", gap: 20, alignItems: "start" }}>
     <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+
+      {/* Latest X Notification */}
+      {latestNotif && (
+        <div style={{ borderRadius:12, border:"1.5px solid var(--separator)", overflow:"hidden" }}>
+          <div style={{ background:"#0A0A0A", padding:"6px 12px", display:"flex", alignItems:"center", gap:6 }}>
+            <span style={{ fontSize:"0.75rem", fontWeight:900, color:"#fff" }}>𝕏</span>
+            <span style={{ fontSize:"0.5625rem", fontWeight:700, color:"rgba(255,255,255,0.6)", textTransform:"uppercase", letterSpacing:"0.06em" }}>Latest Notification</span>
+          </div>
+          <div style={{ background:"#F8F8FA", padding:"10px 12px" }}>
+            <p style={{ fontSize:"0.75rem", color:"var(--foreground)", lineHeight:1.5, margin:"0 0 10px 0" }}>
+              {latestNotif.text}
+            </p>
+            <button
+              onClick={async () => {
+                const cleaned = latestNotif.text.replace(/\d+\s*\d+\s*\d+\s*$/, "").trim()
+                const newTopic = cleaned.slice(0, 280)
+                setTopic(newTopic)
+                if (!loading) {
+                  setLoading(true)
+                  setDrafts([])
+                  try {
+                    const results = await Promise.all([1,2,3].map((variation) =>
+                      fetch("/api/draft", {
+                        method: "POST",
+                        headers: { "content-type": "application/json", ...aiHeaders() },
+                        body: JSON.stringify({ topic: newTopic, type, platform, region, variation }),
+                      }).then(r => r.json())
+                    ))
+                    setDrafts(results.filter(Boolean))
+                  } catch {}
+                  setLoading(false)
+                }
+              }}
+              disabled={loading}
+              style={{ fontSize:"0.6875rem", fontWeight:700, color:"#fff",
+                background: loading ? "#E4E4E7" : "#F5A623",
+                border:"none", borderRadius:8, padding:"6px 14px", cursor: loading ? "not-allowed" : "pointer" }}>
+              {loading ? "⏳ Generating..." : "✨ Generate 3 posts from this tweet"}
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* ── Generator Box ───────────────────────────────────── */}
       <div style={{
@@ -311,7 +409,7 @@ export function ContentCreatorCard() {
           style={{
             width: "100%", padding: "10px 14px", borderRadius: 10,
             border: "1px solid rgba(0,0,0,0.08)",
-            fontSize: "0.875rem", outline: "none", background: "#fff",
+            fontSize: "0.875rem", outline: "none", background: "var(--card)",
             boxSizing: "border-box",
           }}
         />
@@ -343,7 +441,7 @@ export function ContentCreatorCard() {
 
       {/* ── Draft List ──────────────────────────────────────── */}
       {drafts.length === 0 ? (
-        <div style={{ textAlign: "center", padding: "24px 0", color: "#C7C7CC" }}>
+        <div style={{ textAlign: "center", padding: "24px 0", color: "var(--tertiary)" }}>
           <Sparkles style={{ width: 22, height: 22, margin: "0 auto 8px" }} />
           <p style={{ fontSize: "0.875rem" }}>No drafts yet — generate your first one</p>
         </div>
@@ -351,7 +449,7 @@ export function ContentCreatorCard() {
         <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
           {drafts.slice(0,3).length >= 3 && (
             <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:2 }}>
-              <p style={{ fontSize:"0.6875rem", fontWeight:700, color:"#8E8E93",
+              <p style={{ fontSize:"0.6875rem", fontWeight:700, color:"var(--tertiary)",
                 textTransform:"uppercase", letterSpacing:"0.08em" }}>
                 ✨ 3 Options — pick one or regenerate
               </p>
@@ -359,9 +457,9 @@ export function ContentCreatorCard() {
                 onClick={async e => { e.stopPropagation(); await generateNew() }}
                 disabled={loading}
                 style={{ display:"flex", alignItems:"center", gap:4, padding:"4px 10px",
-                  borderRadius:99, border:"1.5px solid rgba(0,0,0,0.1)", background:"none",
+                  borderRadius:99, border:"1.5px solid var(--separator)", background:"none",
                   cursor: loading ? "default" : "pointer",
-                  fontSize:"0.6875rem", fontWeight:700, color:"#6E6E73" }}>
+                  fontSize:"0.6875rem", fontWeight:700, color:"var(--secondary)" }}>
                 <RefreshCw style={{ width:11, height:11 }} />
                 Regenerate
               </button>
@@ -378,7 +476,7 @@ export function ContentCreatorCard() {
               }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 8 }}>
                   {idx < 3 && (
-                    <span style={{ fontSize:"0.6rem", fontWeight:800, color:"#8E8E93",
+                    <span style={{ fontSize:"0.6rem", fontWeight:800, color:"var(--tertiary)",
                       background:"#F4F4F5", padding:"2px 7px", borderRadius:99,
                       letterSpacing:"0.04em" }}>
                       #{idx + 1}
@@ -391,7 +489,7 @@ export function ContentCreatorCard() {
                   }}>{d.type}</span>
                   <PlatformIcon id={plat.id} size={14} active />
                   <span style={{
-                    fontSize: "0.75rem", color: "#A1A1AA", flex: 1,
+                    fontSize: "0.75rem", color: "var(--secondary)", flex: 1,
                     overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis",
                   }}>{d.topic}</span>
                   {d.approved && (
@@ -403,7 +501,7 @@ export function ContentCreatorCard() {
                   )}
                 </div>
                 <p style={{
-                  fontSize: "0.875rem", color: "#1D1D1F",
+                  fontSize: "0.875rem", color: "var(--foreground)",
                   lineHeight: 1.6, whiteSpace: "pre-wrap", marginBottom: 10,
                 }}>{d.draft}</p>
                 <div style={{ display: "flex", gap: 7 }}>

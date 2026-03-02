@@ -71,7 +71,7 @@ function EmailRow({ email, onToggleStar, onMarkRead, onDelete }: {
 
         <div style={{ flex:1, minWidth:0 }}>
           <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", gap:8 }}>
-            <span style={{ fontSize:"0.8125rem", fontWeight: email.read ? 500 : 700, color:"#1D1D1F",
+            <span style={{ fontSize:"0.8125rem", fontWeight: email.read ? 500 : 700, color:"var(--foreground)",
               overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>
               {email.from}
             </span>
@@ -82,34 +82,34 @@ function EmailRow({ email, onToggleStar, onMarkRead, onDelete }: {
                   {tag.label}
                 </span>
               )}
-              <span style={{ fontSize:"0.6875rem", color:"#8E8E93" }}>{email.time}</span>
+              <span style={{ fontSize:"0.6875rem", color:"var(--tertiary)" }}>{email.time}</span>
             </div>
           </div>
-          <p style={{ fontSize:"0.8125rem", fontWeight: email.read ? 500 : 700, color:"#374151",
+          <p style={{ fontSize:"0.8125rem", fontWeight: email.read ? 500 : 700, color:"var(--foreground)",
             overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap", marginTop:1 }}>
             {email.subject}
           </p>
           {!expanded && (
-            <p style={{ fontSize:"0.75rem", color:"#8E8E93", overflow:"hidden",
+            <p style={{ fontSize:"0.75rem", color:"var(--tertiary)", overflow:"hidden",
               textOverflow:"ellipsis", whiteSpace:"nowrap", marginTop:2 }}>
               {email.preview}
             </p>
           )}
           {expanded && (
             <div onClick={e => e.stopPropagation()}>
-              <p style={{ fontSize:"0.8125rem", color:"#374151", lineHeight:1.6, marginTop:8,
-                paddingTop:8, borderTop:"1px solid rgba(0,0,0,0.06)" }}>
+              <p style={{ fontSize:"0.8125rem", color:"var(--foreground)", lineHeight:1.6, marginTop:8,
+                paddingTop:8, borderTop:"1px solid var(--separator)" }}>
                 {email.preview}
               </p>
               <div style={{ display:"flex", gap:6, marginTop:10 }}>
                 <button style={{ display:"flex", alignItems:"center", gap:4, padding:"5px 10px",
-                  borderRadius:8, border:"1.5px solid rgba(0,0,0,0.1)", background:"none",
-                  cursor:"pointer", fontSize:"0.75rem", fontWeight:600, color:"#374151" }}>
+                  borderRadius:8, border:"1.5px solid var(--separator)", background:"none",
+                  cursor:"pointer", fontSize:"0.75rem", fontWeight:600, color:"var(--foreground)" }}>
                   <Reply style={{ width:12, height:12 }} /> Reply
                 </button>
                 <button style={{ display:"flex", alignItems:"center", gap:4, padding:"5px 10px",
-                  borderRadius:8, border:"1.5px solid rgba(0,0,0,0.1)", background:"none",
-                  cursor:"pointer", fontSize:"0.75rem", fontWeight:600, color:"#374151" }}>
+                  borderRadius:8, border:"1.5px solid var(--separator)", background:"none",
+                  cursor:"pointer", fontSize:"0.75rem", fontWeight:600, color:"var(--foreground)" }}>
                   <ExternalLink style={{ width:12, height:12 }} /> Open
                 </button>
                 <button onClick={() => onDelete(email.id)}
@@ -165,11 +165,11 @@ export function EmailInboxCard() {
         {[
           { label:"Unread",  val: unread,  color:"#F5A623" },
           { label:"Starred", val: starred, color:"#6366F1" },
-          { label:"Total",   val: emails.length, color:"#1D1D1F" },
+          { label:"Total",   val: emails.length, color:"var(--foreground)" },
         ].map(s => (
           <div key={s.label} className="inset-cell" style={{ flex:1, textAlign:"center" }}>
             <p style={{ fontSize:"1.25rem", fontWeight:800, color:s.color, lineHeight:1 }}>{s.val}</p>
-            <p style={{ fontSize:"0.6rem", color:"#8E8E93", fontWeight:600,
+            <p style={{ fontSize:"0.6rem", color:"var(--tertiary)", fontWeight:600,
               textTransform:"uppercase", letterSpacing:"0.06em", marginTop:2 }}>{s.label}</p>
           </div>
         ))}
@@ -179,9 +179,9 @@ export function EmailInboxCard() {
       {emails.filter(e => !e.read).slice(0, 2).map(e => (
         <div key={e.id} style={{ padding:"8px 10px", borderRadius:8,
           background:"rgba(245,166,35,0.06)", border:"1px solid rgba(245,166,35,0.15)" }}>
-          <p style={{ fontSize:"0.75rem", fontWeight:700, color:"#1D1D1F",
+          <p style={{ fontSize:"0.75rem", fontWeight:700, color:"var(--foreground)",
             overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{e.from}</p>
-          <p style={{ fontSize:"0.6875rem", color:"#374151",
+          <p style={{ fontSize:"0.6875rem", color:"var(--foreground)",
             overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{e.subject}</p>
         </div>
       ))}
@@ -204,7 +204,7 @@ export function EmailInboxCard() {
         ))}
         <button style={{ marginLeft:"auto", display:"flex", alignItems:"center", gap:4,
           padding:"4px 10px", borderRadius:99, border:"none", cursor:"pointer",
-          fontSize:"0.75rem", fontWeight:600, background:"rgba(0,0,0,0.04)", color:"#6E6E73" }}>
+          fontSize:"0.75rem", fontWeight:600, background:"rgba(0,0,0,0.04)", color:"var(--secondary)" }}>
           <RefreshCw style={{ width:11, height:11 }} /> Refresh
         </button>
       </div>
@@ -212,7 +212,7 @@ export function EmailInboxCard() {
       {/* Email list */}
       <div style={{ display:"flex", flexDirection:"column", gap:6 }}>
         {filtered.length === 0 && (
-          <p style={{ textAlign:"center", color:"#8E8E93", fontSize:"0.875rem", padding:"20px 0" }}>
+          <p style={{ textAlign:"center", color:"var(--tertiary)", fontSize:"0.875rem", padding:"20px 0" }}>
             No emails here
           </p>
         )}

@@ -25,11 +25,11 @@ interface OutreachTarget {
 }
 
 const STAGE_CONFIG: Record<Stage, { label: string; color: string; bg: string }> = {
-  found:     { label: "Found",     color: "#8E8E93", bg: "#F4F4F5" },
+  found:     { label: "Found",     color: "var(--tertiary)", bg: "#F4F4F5" },
   contacted: { label: "Contacted", color: "#D97706", bg: "rgba(217,119,6,0.09)" },
   responded: { label: "Responded", color: "#2563EB", bg: "rgba(37,99,235,0.09)" },
   connected: { label: "Connected", color: "#059669", bg: "rgba(5,150,105,0.09)" },
-  passed:    { label: "Passed",    color: "#A1A1AA", bg: "#F4F4F5" },
+  passed:    { label: "Passed",    color: "var(--secondary)", bg: "#F4F4F5" },
 }
 
 const TYPE_CONFIG: Record<string, { emoji: string; label: string }> = {
@@ -122,13 +122,13 @@ function DiscoverPanel({ onAdd }: { onAdd: (t: OutreachTarget) => void }) {
       {open && (
         <div style={{ background:"#F9F9F9", borderRadius:12, padding:12,
           display:"flex", flexDirection:"column", gap:10,
-          border:"1.5px solid rgba(0,0,0,0.08)" }}>
+          border:"1.5px solid var(--separator)" }}>
 
           {loading && (
             <div style={{ display:"flex", alignItems:"center", gap:10, padding:"12px 0",
               justifyContent:"center" }}>
               <Loader2 style={{ width:16, height:16, color:"#F5A623", animation:"spin 1s linear infinite" }} />
-              <span style={{ fontSize:"0.875rem", color:"#8E8E93", fontWeight:500 }}>
+              <span style={{ fontSize:"0.875rem", color:"var(--tertiary)", fontWeight:500 }}>
                 Searching YouTube, Amazon, Etsy, web…
               </span>
             </div>
@@ -139,14 +139,14 @@ function DiscoverPanel({ onAdd }: { onAdd: (t: OutreachTarget) => void }) {
           )}
 
           {!loading && visible.length === 0 && !error && (
-            <p style={{ textAlign:"center", color:"#A1A1AA", fontSize:"0.875rem", padding:"8px 0" }}>
+            <p style={{ textAlign:"center", color:"var(--secondary)", fontSize:"0.875rem", padding:"8px 0" }}>
               No new targets found. Try again later.
             </p>
           )}
 
           {!loading && visible.length > 0 && (
             <>
-              <p style={{ fontSize:"0.6875rem", fontWeight:700, color:"#8E8E93",
+              <p style={{ fontSize:"0.6875rem", fontWeight:700, color:"var(--tertiary)",
                 textTransform:"uppercase", letterSpacing:"0.07em" }}>
                 {visible.length} targets found — review and add to pipeline
               </p>
@@ -155,7 +155,7 @@ function DiscoverPanel({ onAdd }: { onAdd: (t: OutreachTarget) => void }) {
                 return (
                   <div key={d.id}
                     style={{ background:"#FFF", borderRadius:10, padding:"10px 12px",
-                      border:"1.5px solid rgba(0,0,0,0.07)",
+                      border:"1.5px solid var(--separator)",
                       display:"flex", flexDirection:"column", gap:8,
                       opacity: isAdded ? 0.5 : 1 }}>
 
@@ -163,9 +163,9 @@ function DiscoverPanel({ onAdd }: { onAdd: (t: OutreachTarget) => void }) {
                     <div style={{ display:"flex", alignItems:"center", gap:8 }}>
                       <span style={{ fontSize:"1rem" }}>{TYPE_CONFIG[d.type]?.emoji ?? "⭐"}</span>
                       <div style={{ flex:1, minWidth:0 }}>
-                        <p style={{ fontSize:"0.875rem", fontWeight:600, color:"#1D1D1F",
+                        <p style={{ fontSize:"0.875rem", fontWeight:600, color:"var(--foreground)",
                           overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{d.name}</p>
-                        <p style={{ fontSize:"0.6875rem", color:"#8E8E93" }}>
+                        <p style={{ fontSize:"0.6875rem", color:"var(--tertiary)" }}>
                           {d.platform} · {TYPE_CONFIG[d.type]?.label ?? d.type} · via {d.source}
                         </p>
                       </div>
@@ -178,14 +178,14 @@ function DiscoverPanel({ onAdd }: { onAdd: (t: OutreachTarget) => void }) {
                       )}
                       <button onClick={e => { e.stopPropagation(); dismiss(d.id) }}
                         style={{ background:"none", border:"none", cursor:"pointer",
-                          color:"#C7C7CC", padding:2, flexShrink:0 }}>
+                          color:"var(--tertiary)", padding:2, flexShrink:0 }}>
                         <X style={{ width:13, height:13 }} />
                       </button>
                     </div>
 
                     {/* Note */}
                     {d.note && (
-                      <p style={{ fontSize:"0.75rem", color:"#6B7280", lineHeight:1.4,
+                      <p style={{ fontSize:"0.75rem", color:"var(--secondary)", lineHeight:1.4,
                         overflow:"hidden", display:"-webkit-box",
                         WebkitLineClamp:2, WebkitBoxOrient:"vertical" }}>
                         {d.note}
@@ -200,7 +200,7 @@ function DiscoverPanel({ onAdd }: { onAdd: (t: OutreachTarget) => void }) {
                           textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:4 }}>
                           Draft Email
                         </p>
-                        <p style={{ fontSize:"0.75rem", color:"#374151", lineHeight:1.5,
+                        <p style={{ fontSize:"0.75rem", color:"var(--foreground)", lineHeight:1.5,
                           overflow:"hidden", display:"-webkit-box",
                           WebkitLineClamp:3, WebkitBoxOrient:"vertical",
                           whiteSpace:"pre-wrap" }}>{d.emailDraft}</p>
@@ -221,8 +221,8 @@ function DiscoverPanel({ onAdd }: { onAdd: (t: OutreachTarget) => void }) {
                       </button>
                       <button onClick={e => { e.stopPropagation(); dismiss(d.id) }}
                         style={{ padding:"6px 12px", borderRadius:8,
-                          border:"1.5px solid rgba(0,0,0,0.1)", background:"none",
-                          cursor:"pointer", fontSize:"0.75rem", color:"#8E8E93" }}>
+                          border:"1.5px solid var(--separator)", background:"none",
+                          cursor:"pointer", fontSize:"0.75rem", color:"var(--tertiary)" }}>
                         Skip
                       </button>
                     </div>
@@ -233,7 +233,7 @@ function DiscoverPanel({ onAdd }: { onAdd: (t: OutreachTarget) => void }) {
               <button onClick={e => { e.stopPropagation(); discover() }}
                 disabled={loading}
                 style={{ padding:"7px 0", borderRadius:8, border:"1.5px dashed rgba(0,0,0,0.1)",
-                  background:"none", cursor:"pointer", fontSize:"0.75rem", color:"#8E8E93",
+                  background:"none", cursor:"pointer", fontSize:"0.75rem", color:"var(--tertiary)",
                   fontWeight:600 }}>
                 🔄 Search Again
               </button>
@@ -276,7 +276,7 @@ function CopyButton({ text }: { text: string }) {
   }
   return (
     <button onClick={e => { e.stopPropagation(); copy() }}
-      style={{ padding:"3px 8px", borderRadius:6, border:"1.5px solid rgba(0,0,0,0.1)",
+      style={{ padding:"3px 8px", borderRadius:6, border:"1.5px solid var(--separator)",
         background: copied ? "rgba(5,150,105,0.08)" : "#FFF", cursor:"pointer",
         display:"flex", alignItems:"center", gap:4, fontSize:"0.6875rem", fontWeight:600,
         color: copied ? "#059669" : "#8E8E93", transition:"all 0.15s" }}>
@@ -312,25 +312,25 @@ function TargetRow({ t, expanded, onToggle, onStageChange, onDelete, onHandoffNo
         style={{ display:"flex", alignItems:"center", gap:8, background:"none", border:"none",
           cursor:"pointer", width:"100%", textAlign:"left", padding:0 }}>
         <span style={{ fontSize:"1rem", flexShrink:0 }}>{TYPE_CONFIG[t.type]?.emoji ?? "⭐"}</span>
-        <span style={{ flex:1, fontSize:"0.875rem", fontWeight:600, color:"#1D1D1F",
+        <span style={{ flex:1, fontSize:"0.875rem", fontWeight:600, color:"var(--foreground)",
           overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{t.name}</span>
         <StageBadge stage={t.stage} />
         {expanded
-          ? <ChevronUp  style={{ width:14, height:14, color:"#A1A1AA", flexShrink:0, marginLeft:4 }} />
-          : <ChevronDown style={{ width:14, height:14, color:"#A1A1AA", flexShrink:0, marginLeft:4 }} />}
+          ? <ChevronUp  style={{ width:14, height:14, color:"var(--secondary)", flexShrink:0, marginLeft:4 }} />
+          : <ChevronDown style={{ width:14, height:14, color:"var(--secondary)", flexShrink:0, marginLeft:4 }} />}
       </button>
 
       {expanded && (
-        <div style={{ marginTop:10, paddingTop:10, borderTop:"1px solid rgba(0,0,0,0.06)",
+        <div style={{ marginTop:10, paddingTop:10, borderTop:"1px solid var(--separator)",
           display:"flex", flexDirection:"column", gap:10 }}>
 
           {/* Meta */}
           <div style={{ display:"flex", gap:8, flexWrap:"wrap", alignItems:"center" }}>
-            <span style={{ fontSize:"0.75rem", color:"#8E8E93",
+            <span style={{ fontSize:"0.75rem", color:"var(--tertiary)",
               background:"#F4F4F5", padding:"2px 8px", borderRadius:6 }}>
               {TYPE_CONFIG[t.type]?.label ?? t.type}
             </span>
-            <span style={{ fontSize:"0.75rem", color:"#8E8E93" }}>{t.platform}</span>
+            <span style={{ fontSize:"0.75rem", color:"var(--tertiary)" }}>{t.platform}</span>
             {t.link && (
               <a href={t.link} target="_blank" rel="noopener noreferrer"
                 onClick={e => e.stopPropagation()}
@@ -338,7 +338,7 @@ function TargetRow({ t, expanded, onToggle, onStageChange, onDelete, onHandoffNo
                 View <ExternalLink style={{ width:10, height:10 }} />
               </a>
             )}
-            <span style={{ fontSize:"0.6875rem", color:"#C7C7CC" }}>{timeAgo(t.updatedAt)}</span>
+            <span style={{ fontSize:"0.6875rem", color:"var(--tertiary)" }}>{timeAgo(t.updatedAt)}</span>
           </div>
 
           {/* Contact info */}
@@ -347,17 +347,17 @@ function TargetRow({ t, expanded, onToggle, onStageChange, onDelete, onHandoffNo
               background:"rgba(37,99,235,0.04)", borderRadius:8, padding:"7px 10px",
               border:"1px solid rgba(37,99,235,0.1)" }}>
               <Mail style={{ width:12, height:12, color:"#2563EB", flexShrink:0 }} />
-              <span style={{ flex:1, fontSize:"0.8125rem", color:"#374151",
+              <span style={{ flex:1, fontSize:"0.8125rem", color:"var(--foreground)",
                 overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{t.contact}</span>
               <CopyButton text={t.contact} />
             </div>
           )}
 
-          {t.note && <p style={{ fontSize:"0.8125rem", color:"#374151" }}>{t.note}</p>}
+          {t.note && <p style={{ fontSize:"0.8125rem", color:"var(--foreground)" }}>{t.note}</p>}
 
           {/* Stage selector */}
           <div>
-            <p style={{ fontSize:"0.625rem", fontWeight:700, color:"#8E8E93",
+            <p style={{ fontSize:"0.625rem", fontWeight:700, color:"var(--tertiary)",
               textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:6 }}>Move Stage</p>
             <div style={{ display:"flex", gap:4, flexWrap:"wrap" }}>
               {STAGES.map(s => (
@@ -386,7 +386,7 @@ function TargetRow({ t, expanded, onToggle, onStageChange, onDelete, onHandoffNo
                 </p>
                 <CopyButton text={t.emailDraft} />
               </div>
-              <p style={{ fontSize:"0.8125rem", color:"#374151", lineHeight:1.55,
+              <p style={{ fontSize:"0.8125rem", color:"var(--foreground)", lineHeight:1.55,
                 whiteSpace:"pre-wrap" }}>{t.emailDraft}</p>
             </div>
           )}
@@ -479,7 +479,7 @@ function AddForm({ onAdd }: { onAdd: (t: OutreachTarget) => void }) {
   }
 
   const inputStyle = {
-    padding:"8px 10px", borderRadius:8, border:"1.5px solid rgba(0,0,0,0.1)",
+    padding:"8px 10px", borderRadius:8, border:"1.5px solid var(--separator)",
     outline:"none", fontSize:"0.875rem", fontFamily:"inherit", background:"#FFF",
   }
 
@@ -487,7 +487,7 @@ function AddForm({ onAdd }: { onAdd: (t: OutreachTarget) => void }) {
     <button onClick={e => { e.stopPropagation(); setOpen(true) }}
       style={{ display:"flex", alignItems:"center", gap:6, padding:"8px 12px",
         borderRadius:10, border:"1.5px dashed rgba(0,0,0,0.12)", background:"none",
-        cursor:"pointer", width:"100%", color:"#8E8E93", fontSize:"0.875rem", fontWeight:600 }}>
+        cursor:"pointer", width:"100%", color:"var(--tertiary)", fontSize:"0.875rem", fontWeight:600 }}>
       <Plus style={{ width:14, height:14 }} /> Add target
     </button>
   )
@@ -545,8 +545,8 @@ function AddForm({ onAdd }: { onAdd: (t: OutreachTarget) => void }) {
           {genning ? "Drafting email…" : "Add + Draft Email"}
         </button>
         <button onClick={() => setOpen(false)}
-          style={{ padding:"8px 14px", borderRadius:8, border:"1.5px solid rgba(0,0,0,0.1)",
-            background:"none", cursor:"pointer", fontSize:"0.8125rem", color:"#8E8E93" }}>
+          style={{ padding:"8px 14px", borderRadius:8, border:"1.5px solid var(--separator)",
+            background:"none", cursor:"pointer", fontSize:"0.8125rem", color:"var(--tertiary)" }}>
           Cancel
         </button>
       </div>
@@ -609,18 +609,18 @@ export function OutreachCard() {
       {/* Stats row */}
       <div style={{ display:"flex", gap:8 }}>
         <div className="inset-cell" style={{ flex:1, textAlign:"center" }}>
-          <p style={{ fontSize:"1.5rem", fontWeight:800, color:"#1D1D1F", lineHeight:1 }}>{targets.length}</p>
-          <p style={{ fontSize:"0.625rem", color:"#8E8E93", fontWeight:600,
+          <p style={{ fontSize:"1.5rem", fontWeight:800, color:"var(--foreground)", lineHeight:1 }}>{targets.length}</p>
+          <p style={{ fontSize:"0.625rem", color:"var(--tertiary)", fontWeight:600,
             textTransform:"uppercase", letterSpacing:"0.06em", marginTop:3 }}>Targets</p>
         </div>
         <div className="inset-cell" style={{ flex:1, textAlign:"center" }}>
           <p style={{ fontSize:"1.5rem", fontWeight:800, color:"#D97706", lineHeight:1 }}>{active}</p>
-          <p style={{ fontSize:"0.625rem", color:"#8E8E93", fontWeight:600,
+          <p style={{ fontSize:"0.625rem", color:"var(--tertiary)", fontWeight:600,
             textTransform:"uppercase", letterSpacing:"0.06em", marginTop:3 }}>Active</p>
         </div>
         <div className="inset-cell" style={{ flex:1, textAlign:"center" }}>
           <p style={{ fontSize:"1.5rem", fontWeight:800, color:"#059669", lineHeight:1 }}>{connected}</p>
-          <p style={{ fontSize:"0.625rem", color:"#8E8E93", fontWeight:600,
+          <p style={{ fontSize:"0.625rem", color:"var(--tertiary)", fontWeight:600,
             textTransform:"uppercase", letterSpacing:"0.06em", marginTop:3 }}>Connected</p>
         </div>
       </div>
@@ -643,13 +643,13 @@ export function OutreachCard() {
 
       {/* Recent targets */}
       {targets.length > 0 && (
-        <div style={{ borderTop:"1px solid rgba(0,0,0,0.06)", paddingTop:12 }}
+        <div style={{ borderTop:"1px solid var(--separator)", paddingTop:12 }}
           onClick={e => e.stopPropagation()}>
           <div style={{ display:"flex", flexDirection:"column", gap:5 }}>
             {targets.slice(0,3).map(t => (
               <div key={t.id} style={{ display:"flex", alignItems:"center", gap:8 }}>
                 <span>{TYPE_CONFIG[t.type]?.emoji ?? "⭐"}</span>
-                <span style={{ flex:1, fontSize:"0.8125rem", color:"#374151", fontWeight:500,
+                <span style={{ flex:1, fontSize:"0.8125rem", color:"var(--foreground)", fontWeight:500,
                   overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{t.name}</span>
                 <StageBadge stage={t.stage} />
               </div>
@@ -709,7 +709,7 @@ export function OutreachCard() {
       {/* Filtered list */}
       <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
         {filtered.length === 0 ? (
-          <p style={{ textAlign:"center", color:"#A1A1AA", fontSize:"0.875rem", padding:"20px 0" }}>
+          <p style={{ textAlign:"center", color:"var(--secondary)", fontSize:"0.875rem", padding:"20px 0" }}>
             {filterStage === "all"
               ? "No targets yet. Add market sellers, musicians, TikTok creators building around 67."
               : `No targets in "${STAGE_CONFIG[filterStage as Stage]?.label}" stage.`}
