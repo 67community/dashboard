@@ -321,3 +321,72 @@ export function FeatureRequestCard() {
     />
   )
 }
+
+// ── Embedded section for use in other cards ──────────────────────────────────
+export function FeatureRequestSection() {
+  const [requests, setRequests] = useState<FeatureReq[]>([])
+  const [what,     setWhat]     = useState("")
+  const [why,      setWhy]      = useState("")
+  const [loading,  setLoading]  = useState(false)
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem("67_feature_requests")
+      if (saved) setRequests(JSON.parse(saved))
+    } catch {}
+  }, [])
+
+  function save(reqs: FeatureReq[]) {
+    setRequests(reqs)
+    localStorage.setItem("67_feature_requests", JSON.stringify(reqs))
+  }
+
+  async function submit(e: React.FormEvent) {
+    e.preventDefault()
+    if (!what.trim() || !why.trim() || loading) return
+    const id = Date.now().toString()
+    const newReq: FeatureReq = { id, what: what.trim(), why: why.trim(), submittedAt: new Date().toISOString(), status: "analyzing" }
+    const updated = [newReq, ...requests]
+    save(updated)
+    setWhat(""); setWhy(""); setLoading(true)
+    try {
+      const res  = await fetch("/api/feature-request", { method:"POST", headers:{"Content-Type":"application/json",...aiHeaders()}, body: JSON.stringify({ what: newReq.what, why: newReq.why }) })
+      const data = await res.json()
+      save(updated.map(r => r.id === id ? { ...r, plan: data.plan, priority: data.priority, effort: data.effort, tags: data.tags, status: "planned" as const } : r))
+    } catch {
+      save(updated.map(r => r.id === id ? { ...r, status: "planned" as const } : r))
+    } finally { setLoading(false) }
+  }
+
+  return (
+    <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
+      <p style={{ fontSize:"0.625rem", fontWeight:800, color:"#8E8E93", textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:2 }}>
+        <Zap style={{ width:10, height:10, display:"inline", marginRight:4, verticalAlign:"middle" }} />
+        Feature Requests
+      </p>
+      <form onSubmit={submit} onClick={e => e.stopPropagation()} style={{ display:"flex", flexDirection:"column", gap:6 }}>
+        <input value={what} onChange={e => setWhat(e.target.value)} placeholder="What to build?" required
+          style={{ width:"100%", boxSizing:"border-box", padding:"7px 10px", borderRadius:8, border:"1.5px solid #E5E7EB", fontSize:"0.75rem", fontFamily:"inherit", background:"#F9F9F9", outline:"none" }}
+          onFocus={e => e.currentTarget.style.borderColor="#F5A623"} onBlur={e => e.currentTarget.style.borderColor="#E5E7EB"} />
+        <input value={why} onChange={e => setWhy(e.target.value)} placeholder="Why? (value / problem)" required
+          style={{ width:"100%", boxSizing:"border-box", padding:"7px 10px", borderRadius:8, border:"1.5px solid #E5E7EB", fontSize:"0.75rem", fontFamily:"inherit", background:"#F9F9F9", outline:"none" }}
+          onFocus={e => e.currentTarget.style.borderColor="#F5A623"} onBlur={e => e.currentTarget.style.borderColor="#E5E7EB"} />
+        <button type="submit" disabled={loading || !what.trim() || !why.trim()}
+          style={{ padding:"7px 12px", borderRadius:8, border:"none", cursor:"pointer", background: loading ? "#D1D5DB" : "#F5A623", color:"#fff", fontWeight:700, fontSize:"0.75rem", display:"flex", alignItems:"center", justifyContent:"center", gap:5 }}>
+          <Zap style={{ width:11, height:11 }} />{loading ? "Analyzing…" : "Submit"}
+        </button>
+      </form>
+      {requests.length > 0 && (
+        <div style={{ display:"flex", flexDirection:"column", gap:5, maxHeight:120, overflowY:"auto" }}>
+          {requests.slice(0,3).map(r => (
+            <div key={r.id} style={{ display:"flex", alignItems:"center", gap:6, padding:"5px 8px", background:"#F4F4F5", borderRadius:7 }}>
+              <PriorityDot p={r.priority} />
+              <span style={{ flex:1, fontSize:"0.6875rem", fontWeight:600, color:"#1D1D1F", overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{r.what}</span>
+              <span style={{ fontSize:"0.5625rem", color:"#A1A1AA", whiteSpace:"nowrap" }}>{STATUS_LABEL[r.status]}</span>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}

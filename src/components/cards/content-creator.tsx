@@ -4,6 +4,7 @@ import { useState } from "react"
 import { CheckCircle2, Copy, PenLine, RefreshCw, Sparkles, Trash2 } from "lucide-react"
 import { DashboardCard } from "@/components/ui/dashboard-card"
 import { aiHeaders } from "@/lib/ai-settings"
+import { PeakPostSection } from "@/components/cards/post-timing"
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
 
@@ -195,8 +196,7 @@ export function ContentCreatorCard() {
   // ── Collapsed — fully interactive inline form ──
 
   const collapsed = (
-    <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-
+    <div style={{ display: "flex", flexDirection: "column", gap: 14, overflow: "hidden" }}>
       {/* Topic input */}
       <div
         onClick={e => e.stopPropagation()}
@@ -269,6 +269,12 @@ export function ContentCreatorCard() {
             >
               Approve ✓
             </button>
+            <button
+              onClick={e => { e.stopPropagation(); remove(lastDraft.id) }}
+              style={{ fontSize: "0.6875rem", fontWeight: 600, color: "#EF4444", background: "#FEE2E2", border: "none", borderRadius: 6, padding: "3px 8px", cursor: "pointer" }}
+            >
+              ✕
+            </button>
           </div>
         </div>
       )}
@@ -279,12 +285,15 @@ export function ContentCreatorCard() {
           {queue} draft{queue > 1 ? "s" : ""} in queue · tap to view all
         </p>
       )}
+      <div style={{ height:1, background:"rgba(0,0,0,0.07)", marginTop:4 }} />
+      <div onClick={e => e.stopPropagation()}><PeakPostSection /></div>
     </div>
   )
 
   // ── Expanded ──
 
   const expanded = (
+    <div style={{ display: "grid", gridTemplateColumns: "1fr 0.55fr", gap: 20, alignItems: "start" }}>
     <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
 
       {/* ── Generator Box ───────────────────────────────────── */}
@@ -432,11 +441,21 @@ export function ContentCreatorCard() {
           })}
         </div>
       )}
+    </div>{/* end left col */}
+    {/* Right — Peak Post Times */}
+    <div style={{ overflowY:"auto", maxHeight:"70vh", display:"flex", flexDirection:"column", gap:12 }}>
+      <div style={{ background:"#F8F9FF", borderRadius:14, padding:16, border:"1px solid rgba(0,0,0,0.07)" }}>
+        <div onClick={e => e.stopPropagation()}><PeakPostSection /></div>
+      </div>
+      <div style={{ background:"#F8F9FF", borderRadius:14, padding:16, border:"1px solid rgba(0,0,0,0.07)" }}>
+      </div>
+    </div>
     </div>
   )
 
   return (
     <DashboardCard compact
+      expandedMaxWidth={900}
       title="Content Creator"
       noAutoOpen
       onClose={() => setDrafts([])}

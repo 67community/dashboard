@@ -138,7 +138,7 @@ export function DashboardCard({
       <div
         onClick={noAutoOpen ? undefined : () => { setOpen(true); onOpen?.() }}
         className={`mc-card ${noAutoOpen ? "" : "mc-card-hover"} flex flex-col overflow-hidden ${noAutoOpen ? "" : "select-none"} ${className}`}
-        style={{ cursor: noAutoOpen ? "default" : "pointer", position: "relative" }}
+        style={{ cursor: noAutoOpen ? "default" : "pointer", position: "relative", height: "100%", width: "100%" }}
       >
         {/* Stripe-style ambient glow — unique per card */}
         <div style={{

@@ -36,7 +36,7 @@ function extractHandle(text: string): string {
 
 // ── Tweet row ─────────────────────────────────────────────────────────────────
 
-function TweetRow({ item, compact = false }: { item: RaidFeedItem; compact?: boolean }) {
+export function TweetRow({ item, compact = false }: { item: RaidFeedItem; compact?: boolean }) {
   const handle  = extractHandle(item.text)
   const hasLink = !!item.tweet_url
 
@@ -166,7 +166,7 @@ export function XLiveFeedCard() {
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <div>
           <p style={{ fontSize: "0.6875rem", fontWeight: 700, color: "#A1A1AA", letterSpacing: "0.06em", textTransform: "uppercase" }}>
-            X Live Feed
+            Telegram Raid Group
           </p>
           <p style={{ fontSize: "0.75rem", color: "#C7C7CC", marginTop: 2 }}>Real-time $67coin tweets</p>
         </div>
@@ -234,7 +234,7 @@ export function XLiveFeedCard() {
 
   return (
     <DashboardCard
-      title="X Live Feed"
+      title="Telegram Raid Group"
       subtitle="Real-time $67coin tweets · Live"
       icon={
         <span style={{ display: "flex", background: "#0A0A0A", borderRadius: 6, padding: 3 }}>
