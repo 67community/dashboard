@@ -1,34 +1,34 @@
 {
-  "last_updated": "2026-03-02T03:30:00.304599Z",
+  "last_updated": "2026-03-02T04:30:01.191285Z",
   "token_health": {
-    "price": 0.001436,
-    "price_change_m5": 1.16,
-    "price_change_1h": 2.56,
-    "price_change_6h": 6.77,
-    "price_change_24h": -0.66,
-    "market_cap": 1436095,
-    "liquidity": 220489.29,
-    "volume_m5": 200.57,
-    "volume_1h": 4258.27,
-    "volume_6h": 37200.9,
-    "volume_24h": 98272.4,
-    "volume_ratio_1h": 1.04,
-    "buys_24h": 377,
-    "sells_24h": 355,
-    "buys_1h": 8,
-    "sells_1h": 27,
-    "holders": 16800,
-    "holder_trend": -17,
+    "price": 0.001427,
+    "price_change_m5": 0.0,
+    "price_change_1h": -0.67,
+    "price_change_6h": 8.02,
+    "price_change_24h": -1.28,
+    "market_cap": 1426505,
+    "liquidity": 219355.7,
+    "volume_m5": 0,
+    "volume_1h": 3019.07,
+    "volume_6h": 38318.17,
+    "volume_24h": 97833.32,
+    "volume_ratio_1h": 0.74,
+    "buys_24h": 373,
+    "sells_24h": 359,
+    "buys_1h": 9,
+    "sells_1h": 15,
+    "holders": 16799,
+    "holder_trend": -18,
     "sentiment": "neutral",
     "_source": "dexscreener",
-    "cmc_rank": 1766,
-    "total_volume_24h": 951354.61603821,
-    "volume_change_pct": -7.98,
-    "volume_change_usd": -82466.79,
-    "mcap_change_pct": -6.99,
-    "mcap_change_usd": -107887,
-    "liquidity_change_pct": -3.79,
-    "liquidity_change_usd": -8693.03,
+    "cmc_rank": 1765,
+    "total_volume_24h": 954322.25429089,
+    "volume_change_pct": -7.69,
+    "volume_change_usd": -79499.15,
+    "mcap_change_pct": -7.61,
+    "mcap_change_usd": -117477,
+    "liquidity_change_pct": -4.29,
+    "liquidity_change_usd": -9826.62,
     "biggest_trades": {
       "biggest_buy_usd": 2975.55,
       "biggest_buy_tx": "3kunbhcRyggY6uBSLEPELomw7jL9VNuFPt3f1Q6itDNmcY1Kuist4Cem6kNz47wLgS3NY4mh6UEsCaKR8z94ZC7v",
@@ -126,9 +126,9 @@
     "x_community_last_scrape": 1772393415.947463
   },
   "community": {
-    "discord_members": 1449,
+    "discord_members": 1450,
     "active_7d": 1870,
-    "new_joins_24h": 10,
+    "new_joins_24h": 11,
     "open_tickets": 3,
     "unanswered_posts": 7,
     "telegram_members": 2432,
@@ -179,8 +179,8 @@
     ],
     "sentiment_up_pct": 50.0,
     "sentiment_down_pct": 50.0,
-    "online_now": 84,
-    "discord_delta_24h": -1,
+    "online_now": 86,
+    "discord_delta_24h": 0,
     "telegram_delta_24h": 0,
     "watchlist_delta_24h": 0,
     "recent_discord_activity": [
@@ -189,7 +189,7 @@
         "user": "casiopriv870",
         "user_id": "1226223232445583402",
         "avatar": "https://cdn.discordapp.com/avatars/1226223232445583402/52f5803c7c4bd976686b7920c42073c6.webp?size=64",
-        "time_ago": "4h ago",
+        "time_ago": "5h ago",
         "detail": "Introduced in Discord"
       },
       {
@@ -197,7 +197,7 @@
         "user": "marziechockymilk",
         "user_id": "1464960465703665917",
         "avatar": "https://cdn.discordapp.com/avatars/1464960465703665917/8854b0674e382b8ded4eb2369db33973.webp?size=64",
-        "time_ago": "4h ago",
+        "time_ago": "5h ago",
         "detail": "Introduced in Discord"
       },
       {
@@ -205,7 +205,7 @@
         "user": "w3b8",
         "user_id": "908761821798871100",
         "avatar": "https://cdn.discordapp.com/avatars/908761821798871100/17ad82ac229b13afee48706e7fac2c34.webp?size=64",
-        "time_ago": "7h ago",
+        "time_ago": "8h ago",
         "detail": "Introduced in Discord"
       },
       {
@@ -282,7 +282,7 @@
       }
     ],
     "telegram_mod_events": [],
-    "active_users_today": 13,
+    "active_users_today": 12,
     "top_channels": [
       {
         "channel_id": "1458846146415034460",
@@ -331,8 +331,8 @@
   "agents": [
     {
       "name": "X Raid Bot",
-      "status": "red",
-      "last_run": "unknown",
+      "status": "green",
+      "last_run": "2026-03-02T04:31:36.284988Z",
       "errors_24h": 0,
       "schedule": "Every 3 min"
     },
@@ -375,7 +375,7 @@
   "milestones": [
     {
       "label": "10K Holders",
-      "current": 16800,
+      "current": 16799,
       "target": 10000
     },
     {
@@ -385,12 +385,12 @@
     },
     {
       "label": "5K Discord Members",
-      "current": 1449,
+      "current": 1450,
       "target": 5000
     },
     {
       "label": "$6.7M Market Cap",
-      "current": 1436095,
+      "current": 1426505,
       "target": 6700000
     }
   ],
@@ -416,8 +416,8 @@
   "alerts": [
     {
       "type": "success",
-      "message": "\ud83d\udd25 Near ALL-TIME HIGH! Only 0.0% away \u2014 $0.001436",
-      "timestamp": "2026-03-02T03:31:37.068655Z"
+      "message": "\ud83d\udd25 Near ALL-TIME HIGH! Only 0.0% away \u2014 $0.001427",
+      "timestamp": "2026-03-02T04:31:36.545626Z"
     }
   ],
   "coingecko": {
@@ -479,15 +479,15 @@
     "_source": "coingecko"
   },
   "coinmarketcap": {
-    "cmc_rank": 1766,
+    "cmc_rank": 1765,
     "cmc_id": "38918",
-    "price": 0.0014348775434063306,
-    "volume_24h": 951354.61603821,
-    "market_cap": 1434418.3825924406,
-    "change_1h": 2.07552332,
-    "change_24h": -0.96745532,
-    "change_7d": -31.11259043,
-    "change_30d": -63.61458005,
+    "price": 0.0014221740011098078,
+    "volume_24h": 954322.25429089,
+    "market_cap": 1421718.9054294527,
+    "change_1h": -0.88533982,
+    "change_24h": -0.56927797,
+    "change_7d": -31.07881048,
+    "change_30d": -66.11110917,
     "market_pairs": 45,
     "_source": "coinmarketcap"
   },
@@ -507,14 +507,14 @@
   },
   "team_presence": {
     "201710326347988993": "dnd",
-    "767811814557089802": "online",
+    "767811814557089802": "idle",
     "965681608604647514": "dnd",
     "788495124061487154": "online",
     "1444130836415905993": "offline",
     "1440075589557158100": "offline",
     "682831521396031498": "offline"
   },
-  "presence_updated": "2026-03-02T03:25:06.807328Z",
+  "presence_updated": "2026-03-02T04:25:07.620134Z",
   "tiktok_spotlight": [
     {
       "video_url": "https://www.tiktok.com/@67coin/video/7565627410092199182",
@@ -631,6 +631,14 @@
   ],
   "instagram_spotlight": [],
   "raid_feed": [
+    {
+      "message_id": 6162,
+      "text": "https://x.com/i/status/2028137116018831717",
+      "tweet_url": "https://x.com/i/web/status/2028137116018831717",
+      "photo": "",
+      "date": "2026-03-02T03:37:05Z",
+      "chat_id": -1003708062172
+    },
     {
       "message_id": 6145,
       "text": "https://x.com/i/status/2028168133798961395",
@@ -1421,14 +1429,6 @@
       "tweet_url": "https://x.com/i/web/status/2027849133369770009",
       "photo": "",
       "date": "2026-02-28T20:51:36Z",
-      "chat_id": -1003708062172
-    },
-    {
-      "message_id": 5733,
-      "text": "Raid\n\nhttps://x.com/dedenovitaj/status/2027843558728773798?s=46",
-      "tweet_url": "https://x.com/i/web/status/2027843558728773798",
-      "photo": "",
-      "date": "2026-02-28T20:29:24Z",
       "chat_id": -1003708062172
     }
   ]
