@@ -16,7 +16,6 @@ const LOGO = "https://raw.githubusercontent.com/67coin/67/main/logo.png"
 const NAV = [
   { href: "/",             label: "Dashboard"       },
   { href: "/kanban",       label: "Tasks"           },
-  { href: "/feature-requests", label: "Roadmap"     },
 ]
 
 function timeAgo(d: Date | null) {
