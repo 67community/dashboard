@@ -8,7 +8,7 @@ import { useAppData } from "@/lib/data-context"
 
 declare global { interface Window { twttr?: { widgets?: { load: () => void } } } }
 
-const LOGO = "https://raw.githubusercontent.com/67coin/67/main/logo.png"
+const LOGO = "/67logo.png"
 
 function DeltaBadge({ value, inline }: { value?: number; inline?: boolean }) {
   if (value === undefined || value === null || value === 0) return null
@@ -69,13 +69,13 @@ export function SocialPulseCard() {
     return (
       <a href={tweet.tweet_url} target="_blank" rel="noopener noreferrer" onClick={e=>e.stopPropagation()}
         style={{ display:"block", textDecoration:"none" }}>
-        <div style={{ borderRadius:14, border:"1px solid rgba(0,0,0,0.07)", background:"#fff", overflow:"hidden", cursor:"pointer", boxShadow:"0 1px 4px rgba(0,0,0,0.06)" }}>
+        <div style={{ borderRadius:14, border:"1px solid rgba(0,0,0,0.07)", background:"var(--card)", overflow:"hidden", cursor:"pointer", boxShadow:"0 1px 4px rgba(0,0,0,0.06)" }}>
           <div style={{ display:"flex", alignItems:"center", gap:8, padding:"12px 14px 8px" }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={LOGO} alt="67" width={32} height={32} style={{ width:32, height:32, borderRadius:"50%", objectFit:"cover" }} />
             <div>
               <p style={{ fontSize:"0.8125rem", fontWeight:700, color:"#09090B", lineHeight:1.2 }}>The Official 67 Coin</p>
-              <p style={{ fontSize:"0.72rem", color:"#6B7280" }}>@67coinX · {tweet.date}</p>
+              <p style={{ fontSize:"0.72rem", color:"var(--secondary)" }}>@67coinX · {tweet.date}</p>
             </div>
             <svg style={{ marginLeft:"auto", width:18, height:18, color:"#000" }} viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.253 5.622L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"/></svg>
           </div>
@@ -83,9 +83,9 @@ export function SocialPulseCard() {
           {tweet.img_url && (
             // eslint-disable-next-line @next/next/no-img-element
             <img src={tweet.img_url} alt="tweet media"
-              style={{ width:"100%", maxHeight:220, objectFit:"cover", display:"block", borderTop:"1px solid rgba(0,0,0,0.06)" }} />
+              style={{ width:"100%", maxHeight:220, objectFit:"cover", display:"block", borderTop:"1px solid var(--separator)" }} />
           )}
-          <div style={{ display:"flex", alignItems:"center", gap:16, padding:"10px 14px", borderTop:"1px solid rgba(0,0,0,0.06)", background:"rgba(0,0,0,0.02)" }}>
+          <div style={{ display:"flex", alignItems:"center", gap:16, padding:"10px 14px", borderTop:"1px solid var(--separator)", background:"rgba(0,0,0,0.02)" }}>
             <span style={{ display:"flex", alignItems:"center", gap:4, fontSize:"0.75rem", fontWeight:600, color:"#EF4444" }}>
               <Heart style={{ width:13, height:13 }} />{tweet.likes}
             </span>
@@ -126,7 +126,7 @@ export function SocialPulseCard() {
           </p>
           <p className="hero-label">Engagement</p>
           {avgEng > 0 && (
-            <p style={{ fontSize:"0.72rem", color:"#8E8E93", marginTop:3 }}>{avgEng.toFixed(0)} avg/tweet</p>
+            <p style={{ fontSize:"0.72rem", color:"var(--tertiary)", marginTop:3 }}>{avgEng.toFixed(0)} avg/tweet</p>
           )}
         </div>
       </div>
@@ -134,7 +134,7 @@ export function SocialPulseCard() {
       {/* X Community row */}
       {communityM > 0 && (
         <div style={{ display:"flex", alignItems:"center", gap:10, background:"rgba(0,0,0,0.03)", borderRadius:12, padding:"10px 14px" }}>
-          <Users style={{ width:15, height:15, color:"#8E8E93" }} />
+          <Users style={{ width:15, height:15, color:"var(--tertiary)" }} />
           <span style={{ fontSize:"0.8125rem", fontWeight:700, color:"#09090B" }}>
             X Community: {fmtCM}
           </span>
@@ -144,7 +144,7 @@ export function SocialPulseCard() {
 
       {/* Streak */}
       {streak > 0 && (
-        <div style={{ display:"flex", alignItems:"center", gap:10, background:"#FFFBEB", borderRadius:12, padding:"10px 14px" }}>
+        <div style={{ display:"flex", alignItems:"center", gap:10, background:"var(--fill-primary)", borderRadius:12, padding:"10px 14px" }}>
           <Flame style={{ width:16, height:16, color:"#F59E0B" }} />
           <span style={{ fontSize:"0.8125rem", fontWeight:700, color:"#92400E" }}>{streak}-day posting streak</span>
           <span style={{ marginLeft:"auto" }}>🔥</span>
@@ -160,17 +160,17 @@ export function SocialPulseCard() {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={LOGO} alt="67" width={18} height={18} style={{ width:18, height:18, borderRadius:"50%", objectFit:"cover" }} />
               <span style={{ fontSize:"0.75rem", fontWeight:700, color:"#09090B" }}>The Official 67 Coin</span>
-              <span style={{ fontSize:"0.6875rem", color:"#A1A1AA" }}>@67coinX</span>
+              <span style={{ fontSize:"0.6875rem", color:"var(--secondary)" }}>@67coinX</span>
             </div>
             <p style={{ fontSize:"0.8125rem", color:"#09090B", lineHeight:1.55, marginBottom:10, display:"-webkit-box", WebkitLineClamp:2, WebkitBoxOrient:"vertical", overflow:"hidden" }}>
               {s.best_tweet_week.text}
             </p>
             <div style={{ display:"flex", alignItems:"center", gap:14 }}>
-              <span style={{ display:"flex", alignItems:"center", gap:4, fontSize:"0.6875rem", fontWeight:600, color:"#A1A1AA" }}>
+              <span style={{ display:"flex", alignItems:"center", gap:4, fontSize:"0.6875rem", fontWeight:600, color:"var(--secondary)" }}>
                 <Heart style={{ width:11, height:11, color:"#F43F5E" }} />{s.best_tweet_week.likes}
               </span>
-              <span style={{ display:"flex", alignItems:"center", gap:4, fontSize:"0.6875rem", fontWeight:600, color:"#A1A1AA" }}>
-                <MessageCircle style={{ width:11, height:11, color:"#8E8E93" }} />{s.best_tweet_week.replies}
+              <span style={{ display:"flex", alignItems:"center", gap:4, fontSize:"0.6875rem", fontWeight:600, color:"var(--secondary)" }}>
+                <MessageCircle style={{ width:11, height:11, color:"var(--tertiary)" }} />{s.best_tweet_week.replies}
               </span>
               <span style={{ marginLeft:"auto", fontSize:"0.6875rem", color:"#D4D4D8" }}>{s.best_tweet_week.date}</span>
             </div>
@@ -205,7 +205,7 @@ export function SocialPulseCard() {
           <p className="metric-xl" style={{ color:"#10B981" }}>{engagement.toFixed(1)}%</p>
           <p className="metric-label">Engagement Rate</p>
           {avgEng > 0 && (
-            <p style={{ fontSize:"0.75rem", fontWeight:600, color:"#6B7280", marginTop:4 }}>
+            <p style={{ fontSize:"0.75rem", fontWeight:600, color:"var(--secondary)", marginTop:4 }}>
               {avgEng.toFixed(1)} avg interactions/tweet
             </p>
           )}
@@ -219,7 +219,7 @@ export function SocialPulseCard() {
             <p className="metric-label">X Community</p>
           </div>
         )}
-        <div style={{ background:"#FFFBEB", borderRadius:12, padding:"14px 16px" }}>
+        <div style={{ background:"var(--fill-primary)", borderRadius:12, padding:"14px 16px" }}>
           <p className="metric-xl" style={{ color:"#D97706" }}>{streak}d</p>
           <p className="metric-label" style={{ color:"#92400E" }}>🔥 Posting Streak</p>
         </div>
@@ -254,7 +254,7 @@ export function SocialPulseCard() {
               <XAxis dataKey="date" tick={{ fontSize:9, fill:"#C7C7CC" }} tickLine={false} axisLine={false}
                 tickFormatter={(v: string) => v.slice(5)} interval="preserveStartEnd" />
               <Tooltip
-                contentStyle={{ background:"#fff", border:"1px solid #F0F0F2", borderRadius:8, fontSize:12, padding:"6px 10px" }}
+                contentStyle={{ background:"var(--card)", border:"1px solid #F0F0F2", borderRadius:8, fontSize:12, padding:"6px 10px" }}
                 formatter={(v: number | undefined) => [(v ?? 0).toLocaleString(), "Followers"]}
               />
               <Area type="monotone" dataKey="count" stroke="#F5A623" strokeWidth={2} fill="url(#fGrad)" dot={false} />
@@ -274,7 +274,7 @@ export function SocialPulseCard() {
                 <div className="inset-cell" style={{ cursor:"pointer" }}>
                   <div style={{ display:"flex", alignItems:"center", gap:6, marginBottom:6 }}>
                     <span style={{ fontSize:"0.75rem", fontWeight:700, color:"#09090B" }}>{m.author}</span>
-                    <span style={{ fontSize:"0.6875rem", color:"#A1A1AA" }}>@{m.author_handle}</span>
+                    <span style={{ fontSize:"0.6875rem", color:"var(--secondary)" }}>@{m.author_handle}</span>
                     <span style={{ marginLeft:"auto", fontSize:"0.6875rem", color:"#D4D4D8" }}>{m.date}</span>
                   </div>
                   <p style={{ fontSize:"0.8125rem", color:"#3F3F46", lineHeight:1.5, marginBottom:8,
@@ -282,11 +282,11 @@ export function SocialPulseCard() {
                     {m.text}
                   </p>
                   <div style={{ display:"flex", gap:12 }}>
-                    <span style={{ display:"flex", alignItems:"center", gap:3, fontSize:"0.6875rem", color:"#A1A1AA" }}>
+                    <span style={{ display:"flex", alignItems:"center", gap:3, fontSize:"0.6875rem", color:"var(--secondary)" }}>
                       <Heart style={{ width:11, height:11, color:"#F43F5E" }} />{m.likes}
                     </span>
-                    <span style={{ display:"flex", alignItems:"center", gap:3, fontSize:"0.6875rem", color:"#A1A1AA" }}>
-                      <MessageCircle style={{ width:11, height:11, color:"#8E8E93" }} />{m.replies}
+                    <span style={{ display:"flex", alignItems:"center", gap:3, fontSize:"0.6875rem", color:"var(--secondary)" }}>
+                      <MessageCircle style={{ width:11, height:11, color:"var(--tertiary)" }} />{m.replies}
                     </span>
                   </div>
                 </div>
@@ -309,7 +309,7 @@ export function SocialPulseCard() {
             {Object.entries(s.content_type_stats).map(([type, st]) => (
               <div key={type} style={{ display:"flex", alignItems:"center", gap:12 }}>
                 <span style={{ fontSize:"0.8125rem", fontWeight:600, color:"#3F3F46", width:100, textTransform:"capitalize" }}>{type.replace("_"," ")}</span>
-                <span style={{ fontSize:"0.75rem", color:"#A1A1AA", width:50 }}>{st.count} posts</span>
+                <span style={{ fontSize:"0.75rem", color:"var(--secondary)", width:50 }}>{st.count} posts</span>
                 <span style={{ fontSize:"0.8125rem", fontWeight:700, color:"#09090B", marginLeft:"auto" }}>{st.avg_eng.toFixed(0)} avg</span>
               </div>
             ))}

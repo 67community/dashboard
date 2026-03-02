@@ -96,8 +96,8 @@ function VoicePlayer({ audioB64, duration, accent }: { audioB64: string; duratio
           <div style={{ height:"100%", width:`${progress * 100}%`, background: accent, borderRadius:99, transition:"width 0.1s linear" }} />
         </div>
         <div style={{ display:"flex", justifyContent:"space-between", marginTop:3 }}>
-          <span style={{ fontSize:"0.5625rem", color:"#8E8E93", fontWeight:600 }}>{curStr}</span>
-          <span style={{ fontSize:"0.5625rem", color:"#8E8E93", fontWeight:600 }}>{totalStr}</span>
+          <span style={{ fontSize:"0.5625rem", color:"var(--tertiary)", fontWeight:600 }}>{curStr}</span>
+          <span style={{ fontSize:"0.5625rem", color:"var(--tertiary)", fontWeight:600 }}>{totalStr}</span>
         </div>
       </div>
     </div>
@@ -178,8 +178,8 @@ function VoiceRecorder({ author, onSave, onCancel }: {
             <Mic style={{ width:16, height:16 }} /> Start Recording
           </button>
           <button onClick={onCancel}
-            style={{ padding:"12px 14px", borderRadius:10, border:"1.5px solid rgba(0,0,0,0.1)",
-              background:"none", cursor:"pointer", fontSize:"0.875rem", color:"#8E8E93", fontWeight:600 }}>
+            style={{ padding:"12px 14px", borderRadius:10, border:"1.5px solid var(--separator)",
+              background:"none", cursor:"pointer", fontSize:"0.875rem", color:"var(--tertiary)", fontWeight:600 }}>
             ✕
           </button>
         </div>
@@ -217,13 +217,13 @@ function VoiceRecorder({ author, onSave, onCancel }: {
               ✓ Save
             </button>
             <button onClick={() => { setState("idle"); setAudioB64(""); setElapsed(0) }}
-              style={{ padding:"9px 14px", borderRadius:9, border:"1.5px solid rgba(0,0,0,0.1)",
-                background:"none", cursor:"pointer", fontSize:"0.875rem", color:"#8E8E93" }}>
+              style={{ padding:"9px 14px", borderRadius:9, border:"1.5px solid var(--separator)",
+                background:"none", cursor:"pointer", fontSize:"0.875rem", color:"var(--tertiary)" }}>
               Retry
             </button>
             <button onClick={onCancel}
-              style={{ padding:"9px 14px", borderRadius:9, border:"1.5px solid rgba(0,0,0,0.1)",
-                background:"none", cursor:"pointer", fontSize:"0.875rem", color:"#8E8E93" }}>
+              style={{ padding:"9px 14px", borderRadius:9, border:"1.5px solid var(--separator)",
+                background:"none", cursor:"pointer", fontSize:"0.875rem", color:"var(--tertiary)" }}>
               Cancel
             </button>
           </div>
@@ -254,13 +254,13 @@ function NoteCard({ n, onPin, onDelete }: { n: TeamNote; onPin: (id: string) => 
           <VoicePlayer audioB64={n.audioB64} duration={n.duration} accent={c.accent} />
         </div>
       ) : (
-        <p style={{ fontSize:"0.875rem", color:"#374151", lineHeight:1.55, whiteSpace:"pre-wrap", marginBottom:8 }}>{n.text}</p>
+        <p style={{ fontSize:"0.875rem", color:"var(--foreground)", lineHeight:1.55, whiteSpace:"pre-wrap", marginBottom:8 }}>{n.text}</p>
       )}
 
       <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between" }}>
         <div style={{ display:"flex", alignItems:"center", gap:6 }}>
           <span style={{ fontSize:"0.6875rem", fontWeight:700, color: c.accent }}>{n.author}</span>
-          <span style={{ fontSize:"0.6875rem", color:"#C7C7CC" }}>· {timeAgo(n.createdAt)}</span>
+          <span style={{ fontSize:"0.6875rem", color:"var(--tertiary)" }}>· {timeAgo(n.createdAt)}</span>
         </div>
         <div style={{ display:"flex", gap:4 }}>
           <button onClick={e => { e.stopPropagation(); onPin(n.id) }}
@@ -268,7 +268,7 @@ function NoteCard({ n, onPin, onDelete }: { n: TeamNote; onPin: (id: string) => 
             <Pin style={{ width:12, height:12 }} />
           </button>
           <button onClick={e => { e.stopPropagation(); onDelete(n.id) }}
-            style={{ background:"none", border:"none", cursor:"pointer", padding:2, color:"#A1A1AA" }}>
+            style={{ background:"none", border:"none", cursor:"pointer", padding:2, color:"var(--secondary)" }}>
             <Trash2 style={{ width:12, height:12 }} />
           </button>
         </div>
@@ -389,7 +389,7 @@ export function TeamNotesCard() {
         <div style={{ display:"flex", gap:6 }}>
           <button onClick={() => { setMode("text"); setTimeout(() => textRef.current?.focus(), 50) }}
             style={{ display:"flex", alignItems:"center", gap:6, padding:"8px 12px", borderRadius:10,
-              border:"1.5px dashed rgba(0,0,0,0.12)", background:"none", cursor:"pointer", flex:1, color:"#8E8E93", fontSize:"0.875rem", fontWeight:600 }}>
+              border:"1.5px dashed rgba(0,0,0,0.12)", background:"none", cursor:"pointer", flex:1, color:"var(--tertiary)", fontSize:"0.875rem", fontWeight:600 }}>
             <Plus style={{ width:14, height:14 }} /> Add Note
           </button>
           <button onClick={() => setMode("voice")}
@@ -405,7 +405,7 @@ export function TeamNotesCard() {
         <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
           <textarea ref={textRef} value={text} onChange={e => setText(e.target.value)}
             placeholder="Write a note for the team…" rows={3}
-            style={{ width:"100%", padding:"8px 10px", borderRadius:10, border:"1.5px solid rgba(0,0,0,0.1)", outline:"none", fontSize:"0.875rem", fontFamily:"inherit", background:"#FAFAFA", color:"#1D1D1F", resize:"none", boxSizing:"border-box" }}
+            style={{ width:"100%", padding:"8px 10px", borderRadius:10, border:"1.5px solid var(--separator)", outline:"none", fontSize:"0.875rem", fontFamily:"inherit", background:"#FAFAFA", color:"var(--foreground)", resize:"none", boxSizing:"border-box" }}
             onFocus={e => e.target.style.borderColor="#F5A623"} onBlur={e => e.target.style.borderColor="rgba(0,0,0,0.1)"} />
           <div style={{ display:"flex", gap:6, alignItems:"center" }}>
             <div style={{ display:"flex", gap:4 }}>
@@ -416,7 +416,7 @@ export function TeamNotesCard() {
               Post
             </button>
             <button onClick={() => { setMode("none"); setText("") }}
-              style={{ padding:"6px 10px", borderRadius:8, border:"1.5px solid rgba(0,0,0,0.1)", background:"none", cursor:"pointer", fontSize:"0.8125rem", color:"#8E8E93" }}>✕</button>
+              style={{ padding:"6px 10px", borderRadius:8, border:"1.5px solid var(--separator)", background:"none", cursor:"pointer", fontSize:"0.8125rem", color:"var(--tertiary)" }}>✕</button>
           </div>
         </div>
       )}
@@ -455,7 +455,7 @@ export function TeamNotesCard() {
           <div style={{ display:"flex", gap:6 }}>
             <button onClick={() => setMode("text")}
               style={{ display:"flex", alignItems:"center", gap:6, padding:"10px 14px", borderRadius:12,
-                border:"1.5px dashed rgba(0,0,0,0.12)", background:"none", cursor:"pointer", flex:1, color:"#8E8E93", fontSize:"0.875rem", fontWeight:600 }}>
+                border:"1.5px dashed rgba(0,0,0,0.12)", background:"none", cursor:"pointer", flex:1, color:"var(--tertiary)", fontSize:"0.875rem", fontWeight:600 }}>
               <Plus style={{ width:14, height:14 }} /> Add Note
             </button>
             <button onClick={() => setMode("voice")}
@@ -471,7 +471,7 @@ export function TeamNotesCard() {
           <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
             <textarea value={text} onChange={e => setText(e.target.value)}
               placeholder="Write a note for the team…" rows={4} autoFocus
-              style={{ width:"100%", padding:"10px 12px", borderRadius:10, border:"1.5px solid rgba(0,0,0,0.1)", outline:"none", fontSize:"0.875rem", fontFamily:"inherit", background:"#FAFAFA", color:"#1D1D1F", resize:"none", boxSizing:"border-box" }}
+              style={{ width:"100%", padding:"10px 12px", borderRadius:10, border:"1.5px solid var(--separator)", outline:"none", fontSize:"0.875rem", fontFamily:"inherit", background:"#FAFAFA", color:"var(--foreground)", resize:"none", boxSizing:"border-box" }}
               onFocus={e => e.target.style.borderColor="#F5A623"} onBlur={e => e.target.style.borderColor="rgba(0,0,0,0.1)"} />
             <div style={{ display:"flex", gap:6, alignItems:"center" }}>
               <div style={{ display:"flex", gap:4, flexWrap:"wrap" }}>
@@ -490,7 +490,7 @@ export function TeamNotesCard() {
                 Post
               </button>
               <button onClick={() => { setMode("none"); setText("") }}
-                style={{ padding:"8px 14px", borderRadius:9, border:"1.5px solid rgba(0,0,0,0.1)", background:"none", cursor:"pointer", fontSize:"0.875rem", color:"#8E8E93" }}>Cancel</button>
+                style={{ padding:"8px 14px", borderRadius:9, border:"1.5px solid var(--separator)", background:"none", cursor:"pointer", fontSize:"0.875rem", color:"var(--tertiary)" }}>Cancel</button>
             </div>
           </div>
         )}
@@ -503,7 +503,7 @@ export function TeamNotesCard() {
       {/* Pinned */}
       {pinned.length > 0 && (
         <>
-          <p style={{ fontSize:"0.625rem", fontWeight:700, color:"#8E8E93", textTransform:"uppercase", letterSpacing:"0.07em" }}>📌 Pinned</p>
+          <p style={{ fontSize:"0.625rem", fontWeight:700, color:"var(--tertiary)", textTransform:"uppercase", letterSpacing:"0.07em" }}>📌 Pinned</p>
           <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
             {pinned.map(n => <NoteCard key={n.id} n={n} onPin={togglePin} onDelete={deleteNote} />)}
           </div>
@@ -513,7 +513,7 @@ export function TeamNotesCard() {
       {/* All notes */}
       {unpinned.length > 0 && (
         <>
-          {pinned.length > 0 && <p style={{ fontSize:"0.625rem", fontWeight:700, color:"#8E8E93", textTransform:"uppercase", letterSpacing:"0.07em" }}>All Notes</p>}
+          {pinned.length > 0 && <p style={{ fontSize:"0.625rem", fontWeight:700, color:"var(--tertiary)", textTransform:"uppercase", letterSpacing:"0.07em" }}>All Notes</p>}
           <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
             {unpinned.map(n => <NoteCard key={n.id} n={n} onPin={togglePin} onDelete={deleteNote} />)}
           </div>
@@ -521,7 +521,7 @@ export function TeamNotesCard() {
       )}
 
       {notes.length === 0 && (
-        <p style={{ textAlign:"center", color:"#A1A1AA", fontSize:"0.875rem", padding:"24px 0" }}>
+        <p style={{ textAlign:"center", color:"var(--secondary)", fontSize:"0.875rem", padding:"24px 0" }}>
           No notes yet. Write something or send a voice note.
         </p>
       )}

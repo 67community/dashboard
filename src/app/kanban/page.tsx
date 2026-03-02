@@ -25,7 +25,7 @@ export default function KanbanPage() {
             <span style={{ fontWeight:700, color:"#09090B" }}>{total}</span> total
           </p>
         </div>
-        <div style={{ fontSize:"0.75rem", color:"#A1A1AA", background:"#F4F4F5", padding:"8px 14px", borderRadius:10, fontWeight:500, flexShrink:0 }}>
+        <div style={{ fontSize:"0.75rem", color:"var(--secondary)", background:"#F4F4F5", padding:"8px 14px", borderRadius:10, fontWeight:500, flexShrink:0 }}>
           Drag cards to update status
         </div>
       </div>

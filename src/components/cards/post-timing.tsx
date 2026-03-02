@@ -167,7 +167,7 @@ function RegionBox({ flag, country, tz, accent, tint, border, rows }: {
       }}>
         <span style={{ fontSize:"1.5rem", lineHeight:1 }}>{flag}</span>
         <div>
-          <p style={{ fontSize:"0.8125rem", fontWeight:700, color:"#374151", lineHeight:1, letterSpacing:"0.01em" }}>
+          <p style={{ fontSize:"0.8125rem", fontWeight:700, color:"var(--foreground)", lineHeight:1, letterSpacing:"0.01em" }}>
             {country}
           </p>
           <span style={{
@@ -181,7 +181,7 @@ function RegionBox({ flag, country, tz, accent, tint, border, rows }: {
       <div style={{ padding:"10px 14px", display:"flex", flexDirection:"column", gap:8 }}>
         {rows.map(r => (
           <div key={r.t} style={{ display:"flex", alignItems:"baseline", justifyContent:"space-between" }}>
-            <span style={{ fontSize:"0.9375rem", fontWeight:800, color:"#1D1D1F", letterSpacing:"-0.025em", lineHeight:1 }}>
+            <span style={{ fontSize:"0.9375rem", fontWeight:800, color:"var(--foreground)", letterSpacing:"-0.025em", lineHeight:1 }}>
               {r.t}
             </span>
             <span style={{ fontSize:"0.6875rem", fontWeight:500, color:"#B0B0BA", marginLeft:6 }}>
@@ -256,15 +256,15 @@ export function PostTimingCard() {
       </div>
 
       {/* Selected region's top windows */}
-      <div style={{ borderTop:"1px solid rgba(0,0,0,0.06)", paddingTop:12 }}>
+      <div style={{ borderTop:"1px solid var(--separator)", paddingTop:12 }}>
         <p style={{ fontSize:"0.625rem", fontWeight:700, letterSpacing:"0.08em",
           textTransform:"uppercase", marginBottom:10, color: region.accent }}>
           {plat.key === "x" ? "𝕏" : plat.key === "tiktok" ? "TikTok" : "Instagram"} · {region.flag} {region.country} · {region.tz}
         </p>
         {region.rows.map(r => (
           <div key={r.t} style={{ display:"flex", justifyContent:"space-between", alignItems:"baseline", marginBottom:7 }}>
-            <span style={{ fontSize:"1rem", fontWeight:800, color:"#1D1D1F", letterSpacing:"-0.025em" }}>{r.t}</span>
-            <span style={{ fontSize:"0.75rem", color:"#A1A1AA", fontWeight:500 }}>{r.n}</span>
+            <span style={{ fontSize:"1rem", fontWeight:800, color:"var(--foreground)", letterSpacing:"-0.025em" }}>{r.t}</span>
+            <span style={{ fontSize:"0.75rem", color:"var(--secondary)", fontWeight:500 }}>{r.n}</span>
           </div>
         ))}
       </div>
@@ -332,7 +332,7 @@ export function PeakPostSection() {
   const region = plat.regions[selRegion]
   return (
     <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
-      <p style={{ fontSize:"0.625rem", fontWeight:800, color:"#8E8E93", textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:2 }}>
+      <p style={{ fontSize:"0.625rem", fontWeight:800, color:"var(--tertiary)", textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:2 }}>
         <Clock style={{ width:10, height:10, display:"inline", marginRight:4, verticalAlign:"middle" }} />
         Peak Post Times
       </p>
@@ -374,8 +374,8 @@ export function PeakPostSection() {
       <div style={{ display:"flex", flexDirection:"column", gap:5 }}>
         {region.rows.map(r => (
           <div key={r.t} style={{ display:"flex", justifyContent:"space-between", alignItems:"center" }}>
-            <span style={{ fontSize:"0.9375rem", fontWeight:800, color:"#1D1D1F", letterSpacing:"-0.025em" }}>{r.t}</span>
-            <span style={{ fontSize:"0.6875rem", color:"#A1A1AA" }}>{r.n}</span>
+            <span style={{ fontSize:"0.9375rem", fontWeight:800, color:"var(--foreground)", letterSpacing:"-0.025em" }}>{r.t}</span>
+            <span style={{ fontSize:"0.6875rem", color:"var(--secondary)" }}>{r.n}</span>
           </div>
         ))}
       </div>

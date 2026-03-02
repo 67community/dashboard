@@ -85,7 +85,7 @@ function AddSlotInput({ onAdd }: { onAdd: (v: string) => void }) {
         style={{
           width: 100, padding: "3px 8px", borderRadius: 7,
           border: "1.5px solid rgba(245,166,35,0.5)",
-          fontSize: "0.75rem", outline: "none", background: "#fff",
+          fontSize: "0.75rem", outline: "none", background: "var(--card)",
         }}
       />
       <button onClick={commit} style={{ background: "#F5A623", border: "none", borderRadius: 6, cursor: "pointer", padding: "4px 7px" }}>
@@ -139,7 +139,7 @@ export function ContentPipelineCard() {
   }
 
   function addMixRow() {
-    const next = [...mix, { label: "New category", pct: 0, color: "#A1A1AA" }]
+    const next = [...mix, { label: "New category", pct: 0, color: "var(--secondary)" }]
     setMix(next); save("67-cal-mix", next)
   }
 
@@ -195,9 +195,9 @@ export function ContentPipelineCard() {
       </div>
 
       {/* Selected day's posts */}
-      <div style={{ borderTop: "1px solid rgba(0,0,0,0.06)", paddingTop: 12 }}>
+      <div style={{ borderTop: "1px solid var(--separator)", paddingTop: 12 }}>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
-          <p style={{ fontSize: "0.6875rem", fontWeight: 700, color: "#8E8E93",
+          <p style={{ fontSize: "0.6875rem", fontWeight: 700, color: "var(--tertiary)",
             textTransform: "uppercase", letterSpacing: "0.07em" }}>
             {isToday ? "Today" : activeRow?.day} · {activeRow?.day}
           </p>
@@ -207,7 +207,7 @@ export function ContentPipelineCard() {
         </div>
 
         {activeRow?.slots.length === 0 ? (
-          <p style={{ fontSize: "0.8125rem", color: "#A1A1AA", fontStyle: "italic" }}>
+          <p style={{ fontSize: "0.8125rem", color: "var(--secondary)", fontStyle: "italic" }}>
             Nothing scheduled — add below
           </p>
         ) : (
@@ -215,7 +215,7 @@ export function ContentPipelineCard() {
             {activeRow?.slots.map((slot, i) => (
               <div key={i} style={{ display: "flex", alignItems: "center", gap: 8 }}>
                 <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#F5A623", flexShrink: 0 }} />
-                <span style={{ fontSize: "0.8125rem", color: "#374151", fontWeight: 500 }}>{slot}</span>
+                <span style={{ fontSize: "0.8125rem", color: "var(--foreground)", fontWeight: 500 }}>{slot}</span>
               </div>
             ))}
           </div>
@@ -225,7 +225,7 @@ export function ContentPipelineCard() {
       {/* Quick-add for selected day */}
       <div onClick={e => e.stopPropagation()} style={{ display: "flex", alignItems: "center", gap: 8 }}>
         <AddSlotInput onAdd={v => addSlot(activeIdx, v)} />
-        <span style={{ fontSize: "0.75rem", color: "#A1A1AA" }}>
+        <span style={{ fontSize: "0.75rem", color: "var(--secondary)" }}>
           add to {isToday ? "today" : activeRow?.day}
         </span>
       </div>
@@ -240,7 +240,7 @@ export function ContentPipelineCard() {
       {/* Stats */}
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8 }}>
         {[
-          { icon: <Clock style={{ width: 14, height: 14 }} />,        label: "Days",       value: "7",              color: "#A1A1AA" },
+          { icon: <Clock style={{ width: 14, height: 14 }} />,        label: "Days",       value: "7",              color: "var(--secondary)" },
           { icon: <CheckCircle2 style={{ width: 14, height: 14 }} />, label: "Posts/wk",   value: String(totalPosts), color: "#10B981" },
           { icon: <Calendar style={{ width: 14, height: 14 }} />,     label: "Last Post",  value: lastPost,          color: "#3B82F6" },
         ].map(s => (
@@ -255,7 +255,7 @@ export function ContentPipelineCard() {
       {/* ── Weekly Calendar ───────────────────────────────────── */}
       <div>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10 }}>
-          <p style={{ fontSize: "0.6875rem", fontWeight: 700, color: "#A1A1AA", letterSpacing: "0.06em", textTransform: "uppercase" }}>
+          <p style={{ fontSize: "0.6875rem", fontWeight: 700, color: "var(--secondary)", letterSpacing: "0.06em", textTransform: "uppercase" }}>
             Weekly Calendar
           </p>
           <button
@@ -291,7 +291,7 @@ export function ContentPipelineCard() {
                     display: "inline-flex", alignItems: "center", gap: 4,
                     fontSize: "0.6875rem", fontWeight: 600,
                     padding: "3px 9px", borderRadius: 99,
-                    background: "#fff", border: "1px solid rgba(0,0,0,0.09)",
+                    background: "var(--card)", border: "1px solid rgba(0,0,0,0.09)",
                     color: "#3F3F46",
                   }}>
                     {slot}
@@ -323,7 +323,7 @@ export function ContentPipelineCard() {
       {/* ── Content Mix ──────────────────────────────────────── */}
       <div className="inset-cell">
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
-          <p style={{ fontSize: "0.6875rem", fontWeight: 700, color: "#A1A1AA", letterSpacing: "0.06em", textTransform: "uppercase" }}>
+          <p style={{ fontSize: "0.6875rem", fontWeight: 700, color: "var(--secondary)", letterSpacing: "0.06em", textTransform: "uppercase" }}>
             Content Mix
           </p>
           <button
@@ -362,10 +362,10 @@ export function ContentPipelineCard() {
                 {editMix ? (
                   <>
                     <button onClick={e => { e.stopPropagation(); updateMixPct(idx, m.pct - 5) }}
-                      style={{ width: 20, height: 20, borderRadius: 5, border: "1px solid rgba(0,0,0,0.1)", background: "#fff", cursor: "pointer", fontSize: "0.8rem", display: "flex", alignItems: "center", justifyContent: "center", color: "#6B7280" }}>−</button>
+                      style={{ width: 20, height: 20, borderRadius: 5, border: "1px solid rgba(0,0,0,0.1)", background: "var(--card)", cursor: "pointer", fontSize: "0.8rem", display: "flex", alignItems: "center", justifyContent: "center", color: "var(--secondary)" }}>−</button>
                     <span style={{ fontSize: "0.8125rem", fontWeight: 700, color: m.color, minWidth: 30, textAlign: "center" }}>{m.pct}%</span>
                     <button onClick={e => { e.stopPropagation(); updateMixPct(idx, m.pct + 5) }}
-                      style={{ width: 20, height: 20, borderRadius: 5, border: "1px solid rgba(0,0,0,0.1)", background: "#fff", cursor: "pointer", fontSize: "0.8rem", display: "flex", alignItems: "center", justifyContent: "center", color: "#6B7280" }}>+</button>
+                      style={{ width: 20, height: 20, borderRadius: 5, border: "1px solid rgba(0,0,0,0.1)", background: "var(--card)", cursor: "pointer", fontSize: "0.8rem", display: "flex", alignItems: "center", justifyContent: "center", color: "var(--secondary)" }}>+</button>
                     <button onClick={e => { e.stopPropagation(); removeMixRow(idx) }}
                       style={{ background: "none", border: "none", cursor: "pointer", padding: 0, color: "#EF4444", display: "flex", alignItems: "center" }}>
                       <X style={{ width: 12, height: 12 }} />

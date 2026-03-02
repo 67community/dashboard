@@ -60,7 +60,7 @@ function StatCell({ label, value, delta, deltaLabel, color, wide }: {
     }}>
       <span style={{ fontSize:"0.6875rem", color:"#9CA3AF", fontWeight:500 }}>{label}</span>
       <div style={{ display:"flex", alignItems:"flex-end", justifyContent:"space-between", gap:6 }}>
-        <span style={{ fontSize:"1.125rem", fontWeight:800, color: color ?? "#1D1D1F",
+        <span style={{ fontSize:"1.125rem", fontWeight:800, color: color ?? "var(--foreground)",
           fontVariantNumeric:"tabular-nums", letterSpacing:"-0.02em", lineHeight:1.1 }}>
           {value}
         </span>
@@ -75,7 +75,7 @@ function SectionHead({ emoji, label }: { emoji: string; label: string }) {
   return (
     <div style={{ display:"flex", alignItems:"center", gap:6, marginTop:8 }}>
       <span style={{ fontSize:"0.8125rem" }}>{emoji}</span>
-      <span style={{ fontSize:"0.6875rem", fontWeight:800, color:"#6B7280",
+      <span style={{ fontSize:"0.6875rem", fontWeight:800, color:"var(--secondary)",
         textTransform:"uppercase", letterSpacing:"0.09em" }}>{label}</span>
       <div style={{ flex:1, height:1, background:"rgba(0,0,0,0.07)" }} />
     </div>
@@ -101,7 +101,7 @@ function WhaleCard({ label, usd, tx, wallet, time, isUp }: {
       <div style={{ display:"flex", alignItems:"center", gap:8, marginTop:6 }}>
         {wallet && (
           <a href={`https://solscan.io/account/${wallet}`} target="_blank" rel="noopener noreferrer"
-            style={{ fontSize:"0.6875rem", color:"#6B7280", fontFamily:"monospace",
+            style={{ fontSize:"0.6875rem", color:"var(--secondary)", fontFamily:"monospace",
               textDecoration:"none", display:"flex", alignItems:"center", gap:3 }}>
             💳 {shortAddr(wallet)}<ExternalLink style={{ width:9, height:9, opacity:0.4 }} />
           </a>
@@ -114,7 +114,7 @@ function WhaleCard({ label, usd, tx, wallet, time, isUp }: {
             View TX <ExternalLink style={{ width:9, height:9 }} />
           </a>
         )}
-        <span style={{ fontSize:"0.6875rem", color:"#A1A1AA" }}>{timeAgo(time)}</span>
+        <span style={{ fontSize:"0.6875rem", color:"var(--secondary)" }}>{timeAgo(time)}</span>
       </div>
     </div>
   )
@@ -164,7 +164,7 @@ export function DailyBriefingCard() {
   // ── Collapsed ─────────────────────────────────────────────────────────────
   const collapsed = (
     <div style={{ display:"flex", flexDirection:"column", gap:0 }}>
-      <p style={{ fontSize:"0.6875rem", fontWeight:600, color:"#A1A1AA", marginBottom:12 }}>
+      <p style={{ fontSize:"0.6875rem", fontWeight:600, color:"var(--secondary)", marginBottom:12 }}>
         {today()}
       </p>
       {/* Price block */}
@@ -176,7 +176,7 @@ export function DailyBriefingCard() {
           ? <TrendingUp  style={{ width:20, height:20, color:"#059669", flexShrink:0 }} />
           : <TrendingDown style={{ width:20, height:20, color:"#EF4444", flexShrink:0 }} />}
         <div>
-          <p style={{ fontSize:"0.6875rem", color:"#8E8E93", fontWeight:600 }}>$67 Price</p>
+          <p style={{ fontSize:"0.6875rem", color:"var(--tertiary)", fontWeight:600 }}>$67 Price</p>
           <p style={{ fontSize:"1.0625rem", fontWeight:800, color: priceUp ? "#059669" : "#EF4444",
             fontVariantNumeric:"tabular-nums", letterSpacing:"-0.02em" }}>
             ${price.toFixed(6)}
@@ -186,9 +186,9 @@ export function DailyBriefingCard() {
           </p>
         </div>
         <div style={{ marginLeft:"auto", textAlign:"right" }}>
-          <p style={{ fontSize:"0.625rem", color:"#A1A1AA", fontWeight:600 }}>MCap</p>
-          <p style={{ fontSize:"0.875rem", fontWeight:800, color:"#1D1D1F" }}>{fmtUSD(mcap)}</p>
-          <p style={{ fontSize:"0.625rem", color:"#A1A1AA", marginTop:2 }}>Vol {fmtUSD(vol)}</p>
+          <p style={{ fontSize:"0.625rem", color:"var(--secondary)", fontWeight:600 }}>MCap</p>
+          <p style={{ fontSize:"0.875rem", fontWeight:800, color:"var(--foreground)" }}>{fmtUSD(mcap)}</p>
+          <p style={{ fontSize:"0.625rem", color:"var(--secondary)", marginTop:2 }}>Vol {fmtUSD(vol)}</p>
         </div>
       </div>
       {/* Quick stats grid */}
@@ -207,7 +207,7 @@ export function DailyBriefingCard() {
           borderRadius:10, borderLeft:"3px solid #2563EB" }}>
           <p style={{ fontSize:"0.625rem", fontWeight:800, color:"#2563EB",
             textTransform:"uppercase", letterSpacing:"0.08em", marginBottom:3 }}>Latest News</p>
-          <p style={{ fontSize:"0.75rem", color:"#374151", lineHeight:1.45 }}>{news[0].title}</p>
+          <p style={{ fontSize:"0.75rem", color:"var(--foreground)", lineHeight:1.45 }}>{news[0].title}</p>
         </div>
       )}
     </div>
@@ -216,7 +216,7 @@ export function DailyBriefingCard() {
   // ── Expanded ──────────────────────────────────────────────────────────────
   const expanded = (
     <div style={{ display:"flex", flexDirection:"column", gap:14 }}>
-      <p style={{ fontSize:"0.9375rem", fontWeight:800, color:"#1D1D1F", letterSpacing:"-0.02em" }}>
+      <p style={{ fontSize:"0.9375rem", fontWeight:800, color:"var(--foreground)", letterSpacing:"-0.02em" }}>
         {today()}
       </p>
 
@@ -229,7 +229,7 @@ export function DailyBriefingCard() {
           ? <TrendingUp  style={{ width:22, height:22, color:"#059669", flexShrink:0 }} />
           : <TrendingDown style={{ width:22, height:22, color:"#EF4444", flexShrink:0 }} />}
         <div>
-          <p style={{ fontSize:"0.6875rem", color:"#8E8E93", fontWeight:600 }}>$67 Price</p>
+          <p style={{ fontSize:"0.6875rem", color:"var(--tertiary)", fontWeight:600 }}>$67 Price</p>
           <p style={{ fontSize:"1.125rem", fontWeight:800, color: priceUp ? "#059669" : "#EF4444",
             fontVariantNumeric:"tabular-nums", letterSpacing:"-0.02em" }}>
             ${price.toFixed(6)}
@@ -239,9 +239,9 @@ export function DailyBriefingCard() {
           </p>
         </div>
         <div style={{ marginLeft:"auto", textAlign:"right" }}>
-          <p style={{ fontSize:"0.625rem", color:"#A1A1AA", fontWeight:600 }}>MCap</p>
-          <p style={{ fontSize:"0.9375rem", fontWeight:800, color:"#1D1D1F" }}>{fmtUSD(mcap)}</p>
-          <p style={{ fontSize:"0.625rem", color:"#A1A1AA", marginTop:2 }}>Vol {fmtUSD(vol)}</p>
+          <p style={{ fontSize:"0.625rem", color:"var(--secondary)", fontWeight:600 }}>MCap</p>
+          <p style={{ fontSize:"0.9375rem", fontWeight:800, color:"var(--foreground)" }}>{fmtUSD(mcap)}</p>
+          <p style={{ fontSize:"0.625rem", color:"var(--secondary)", marginTop:2 }}>Vol {fmtUSD(vol)}</p>
         </div>
       </div>
 
@@ -269,7 +269,7 @@ export function DailyBriefingCard() {
           wallet={whaleSellWallet} time={whaleSellTime} isUp={false} />
       )}
       {whaleBuy === 0 && whaleSell === 0 && (
-        <p style={{ fontSize:"0.8125rem", color:"#A1A1AA", padding:"4px 0" }}>No whale trades in 24h</p>
+        <p style={{ fontSize:"0.8125rem", color:"var(--secondary)", padding:"4px 0" }}>No whale trades in 24h</p>
       )}
 
       {/* COMMUNITY grid */}
@@ -299,12 +299,12 @@ export function DailyBriefingCard() {
                 style={{ padding:"9px 12px", background:"rgba(0,0,0,0.03)",
                   borderRadius:10, border:"1px solid rgba(0,0,0,0.05)",
                   display:"flex", flexDirection:"column", gap:3, textDecoration:"none" }}>
-                <p style={{ fontSize:"0.8125rem", fontWeight:600, color:"#1D1D1F", lineHeight:1.35 }}>
+                <p style={{ fontSize:"0.8125rem", fontWeight:600, color:"var(--foreground)", lineHeight:1.35 }}>
                   {n.title}
                 </p>
                 <div style={{ display:"flex", alignItems:"center", gap:4 }}>
-                  <p style={{ fontSize:"0.6875rem", color:"#A1A1AA" }}>{n.source}</p>
-                  <ExternalLink style={{ width:10, height:10, color:"#A1A1AA" }} />
+                  <p style={{ fontSize:"0.6875rem", color:"var(--secondary)" }}>{n.source}</p>
+                  <ExternalLink style={{ width:10, height:10, color:"var(--secondary)" }} />
                 </div>
               </a>
             ))}

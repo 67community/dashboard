@@ -106,8 +106,8 @@ export function DashboardCard({
               <span style={{ color: accentColor, display: "flex" }}>{icon}</span>
             </div>
             <div>
-              <p style={{ fontSize: "0.9375rem", fontWeight: 700, color: "#1D1D1F", lineHeight: 1, letterSpacing: "-0.01em" }}>{title}</p>
-              {subtitle && <p style={{ fontSize: "0.8125rem", color: "#8E8E93", marginTop: 3, fontWeight: 500 }}>{subtitle}</p>}
+              <p style={{ fontSize: "0.9375rem", fontWeight: 700, color: "var(--foreground)", lineHeight: 1, letterSpacing: "-0.01em" }}>{title}</p>
+              {subtitle && <p style={{ fontSize: "0.8125rem", color: "var(--tertiary)", marginTop: 3, fontWeight: 500 }}>{subtitle}</p>}
             </div>
           </div>
           <button
@@ -121,7 +121,7 @@ export function DashboardCard({
             onMouseEnter={e => (e.currentTarget.style.background = "#E8E8ED")}
             onMouseLeave={e => (e.currentTarget.style.background = "#F4F4F5")}
           >
-            <X style={{ width: 14, height: 14, color: "#6E6E73" }} />
+            <X style={{ width: 14, height: 14, color: "var(--secondary)" }} />
           </button>
         </div>
 
@@ -165,8 +165,8 @@ export function DashboardCard({
                 <span style={{ color: accentColor, display: "flex" }}>{icon}</span>
               </div>
               <div>
-                <p style={{ fontSize: compact ? "0.8125rem" : "0.9375rem", fontWeight: 700, color: "#1D1D1F", lineHeight: 1, letterSpacing: "-0.01em" }}>{title}</p>
-                {!compact && subtitle && <p style={{ fontSize: "0.8125rem", color: "#8E8E93", marginTop: 3, fontWeight: 500 }}>{subtitle}</p>}
+                <p style={{ fontSize: compact ? "0.8125rem" : "0.9375rem", fontWeight: 700, color: "var(--foreground)", lineHeight: 1, letterSpacing: "-0.01em" }}>{title}</p>
+                {!compact && subtitle && <p style={{ fontSize: "0.8125rem", color: "var(--tertiary)", marginTop: 3, fontWeight: 500 }}>{subtitle}</p>}
               </div>
             </div>
 
@@ -192,7 +192,7 @@ export function DashboardCard({
                 onMouseEnter={e => (e.currentTarget.style.background = "#E8E8ED")}
                 onMouseLeave={e => (e.currentTarget.style.background = "#F4F4F5")}
               >
-                <Maximize2 style={{ width: 12, height: 12, color: "#A1A1AA" }} />
+                <Maximize2 style={{ width: 12, height: 12, color: "var(--secondary)" }} />
               </button>
             </div>
           </div>

@@ -6,7 +6,7 @@ export const dynamic = "force-dynamic"
 
 export async function GET() {
   try {
-    const path = join(process.cwd(), "raid_feed.json")
+    const path = join(process.cwd(), "x_notif_feed.json")
     const raw  = readFileSync(path, "utf-8")
     const data = JSON.parse(raw)
     return NextResponse.json(data)

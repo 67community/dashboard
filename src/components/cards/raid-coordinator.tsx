@@ -71,7 +71,7 @@ function CopyBtn({ text }: { text: string }) {
   return (
     <button onClick={copy}
       style={{ display:"flex", alignItems:"center", gap:4, padding:"4px 10px",
-        borderRadius:8, border:"1.5px solid rgba(0,0,0,0.1)", background:"none",
+        borderRadius:8, border:"1.5px solid var(--separator)", background:"none",
         cursor:"pointer", fontSize:"0.6875rem", fontWeight:600,
         color: copied ? "#059669" : "#8E8E93", transition:"color 0.2s" }}>
       {copied ? <Check style={{ width:12, height:12 }} /> : <Copy style={{ width:12, height:12 }} />}
@@ -95,7 +95,7 @@ function RaidCard({ r, onStatus, onDelete }: {
       {/* Header */}
       <div style={{ display:"flex", alignItems:"center", gap:8 }}>
         <span style={{ fontSize:"1rem" }}>{cfg.emoji}</span>
-        <span style={{ flex:1, fontSize:"0.875rem", fontWeight:700, color:"#1D1D1F",
+        <span style={{ flex:1, fontSize:"0.875rem", fontWeight:700, color:"var(--foreground)",
           overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{r.target}</span>
         <span style={{ fontSize:"0.625rem", fontWeight:700, color: st.color,
           background: st.bg, padding:"2px 8px", borderRadius:99 }}>{st.label}</span>
@@ -104,7 +104,7 @@ function RaidCard({ r, onStatus, onDelete }: {
       {/* Type + time */}
       <div style={{ display:"flex", gap:8, alignItems:"center" }}>
         <span style={{ fontSize:"0.6875rem", fontWeight:600, color: cfg.color }}>{cfg.label}</span>
-        <span style={{ fontSize:"0.6875rem", color:"#C7C7CC" }}>{timeAgo(r.createdAt)}</span>
+        <span style={{ fontSize:"0.6875rem", color:"var(--tertiary)" }}>{timeAgo(r.createdAt)}</span>
         <a href={r.url} target="_blank" rel="noopener noreferrer"
           onClick={e => e.stopPropagation()}
           style={{ fontSize:"0.6875rem", color:"#2563EB", display:"flex", alignItems:"center", gap:3, marginLeft:"auto" }}>
@@ -117,7 +117,7 @@ function RaidCard({ r, onStatus, onDelete }: {
         <div style={{ background:"#F9F9F9", borderRadius:8, padding:"8px 10px",
           borderLeft:`3px solid ${cfg.color}` }}>
           <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", gap:8 }}>
-            <p style={{ fontSize:"0.8125rem", color:"#374151", flex:1, lineHeight:1.5 }}>{r.message}</p>
+            <p style={{ fontSize:"0.8125rem", color:"var(--foreground)", flex:1, lineHeight:1.5 }}>{r.message}</p>
             <CopyBtn text={r.message} />
           </div>
         </div>
@@ -234,7 +234,7 @@ export function RaidCoordinatorCard() {
         ].map(({ n, label, c }) => (
           <div key={label} className="inset-cell" style={{ flex:1, textAlign:"center" }}>
             <p style={{ fontSize:"1.5rem", fontWeight:800, color: c, lineHeight:1 }}>{n}</p>
-            <p style={{ fontSize:"0.625rem", color:"#8E8E93", fontWeight:600,
+            <p style={{ fontSize:"0.625rem", color:"var(--tertiary)", fontWeight:600,
               textTransform:"uppercase", letterSpacing:"0.06em", marginTop:3 }}>{label}</p>
           </div>
         ))}
@@ -246,7 +246,7 @@ export function RaidCoordinatorCard() {
           <button onClick={() => setAddOpen(true)}
             style={{ display:"flex", alignItems:"center", gap:6, padding:"8px 12px",
               borderRadius:10, border:"1.5px dashed rgba(0,0,0,0.12)", background:"none",
-              cursor:"pointer", width:"100%", color:"#8E8E93", fontSize:"0.875rem", fontWeight:600 }}>
+              cursor:"pointer", width:"100%", color:"var(--tertiary)", fontSize:"0.875rem", fontWeight:600 }}>
             <Plus style={{ width:14, height:14 }} /> New raid target
           </button>
         ) : (
@@ -254,14 +254,14 @@ export function RaidCoordinatorCard() {
             display:"flex", flexDirection:"column", gap:8 }}>
             <input value={url} onChange={e => setUrl(e.target.value)}
               placeholder="Tweet / post URL"
-              style={{ padding:"8px 10px", borderRadius:8, border:"1.5px solid rgba(0,0,0,0.1)",
+              style={{ padding:"8px 10px", borderRadius:8, border:"1.5px solid var(--separator)",
                 outline:"none", fontSize:"0.875rem", fontFamily:"inherit", background:"#FFF" }}
               onFocus={e => e.target.style.borderColor="#F5A623"}
               onBlur={e  => e.target.style.borderColor="rgba(0,0,0,0.1)"} />
             <div style={{ display:"flex", gap:6 }}>
               <select value={type} onChange={e => setType(e.target.value as RaidType)}
                 style={{ flex:1, padding:"8px 10px", borderRadius:8,
-                  border:"1.5px solid rgba(0,0,0,0.1)", outline:"none",
+                  border:"1.5px solid var(--separator)", outline:"none",
                   fontSize:"0.875rem", fontFamily:"inherit", background:"#FFF" }}>
                 {Object.entries(TYPE_CONFIG).map(([k,v]) => (
                   <option key={k} value={k}>{v.emoji} {v.label}</option>
@@ -270,7 +270,7 @@ export function RaidCoordinatorCard() {
               <input value={target} onChange={e => setTarget(e.target.value)}
                 placeholder="Target name"
                 style={{ flex:1, padding:"8px 10px", borderRadius:8,
-                  border:"1.5px solid rgba(0,0,0,0.1)", outline:"none",
+                  border:"1.5px solid var(--separator)", outline:"none",
                   fontSize:"0.875rem", fontFamily:"inherit", background:"#FFF" }}
                 onFocus={e => e.target.style.borderColor="#F5A623"}
                 onBlur={e  => e.target.style.borderColor="rgba(0,0,0,0.1)"} />
@@ -285,8 +285,8 @@ export function RaidCoordinatorCard() {
                 {genning ? "Preparing…" : "Add Raid ⚔️"}
               </button>
               <button onClick={() => setAddOpen(false)}
-                style={{ padding:"8px 14px", borderRadius:8, border:"1.5px solid rgba(0,0,0,0.1)",
-                  background:"none", cursor:"pointer", fontSize:"0.8125rem", color:"#8E8E93" }}>
+                style={{ padding:"8px 14px", borderRadius:8, border:"1.5px solid var(--separator)",
+                  background:"none", cursor:"pointer", fontSize:"0.8125rem", color:"var(--tertiary)" }}>
                 Cancel
               </button>
             </div>
@@ -296,7 +296,7 @@ export function RaidCoordinatorCard() {
 
       {/* Active raids first */}
       {raids.length > 0 && (
-        <div style={{ borderTop:"1px solid rgba(0,0,0,0.06)", paddingTop:12 }}
+        <div style={{ borderTop:"1px solid var(--separator)", paddingTop:12 }}
           onClick={e => e.stopPropagation()}>
           <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
             {[...raids.filter(r => r.status === "active"), ...raids.filter(r => r.status === "queued")]
@@ -316,24 +316,24 @@ export function RaidCoordinatorCard() {
         <button onClick={() => setAddOpen(true)}
           style={{ display:"flex", alignItems:"center", gap:6, padding:"8px 12px",
             borderRadius:10, border:"1.5px dashed rgba(0,0,0,0.12)", background:"none",
-            cursor:"pointer", width:"100%", color:"#8E8E93", fontSize:"0.875rem", fontWeight:600 }}>
+            cursor:"pointer", width:"100%", color:"var(--tertiary)", fontSize:"0.875rem", fontWeight:600 }}>
           <Plus style={{ width:14, height:14 }} /> New raid target
         </button>
       ) : (
         <div style={{ background:"#FAFAFA", borderRadius:12, padding:12,
           display:"flex", flexDirection:"column", gap:8 }}>
           <input value={url} onChange={e => setUrl(e.target.value)} placeholder="Tweet / post URL"
-            style={{ padding:"8px 10px", borderRadius:8, border:"1.5px solid rgba(0,0,0,0.1)",
+            style={{ padding:"8px 10px", borderRadius:8, border:"1.5px solid var(--separator)",
               outline:"none", fontSize:"0.875rem", fontFamily:"inherit", background:"#FFF" }}
             onFocus={e => e.target.style.borderColor="#F5A623"}
             onBlur={e  => e.target.style.borderColor="rgba(0,0,0,0.1)"} />
           <input value={target} onChange={e => setTarget(e.target.value)} placeholder="Target description"
-            style={{ padding:"8px 10px", borderRadius:8, border:"1.5px solid rgba(0,0,0,0.1)",
+            style={{ padding:"8px 10px", borderRadius:8, border:"1.5px solid var(--separator)",
               outline:"none", fontSize:"0.875rem", fontFamily:"inherit", background:"#FFF" }}
             onFocus={e => e.target.style.borderColor="#F5A623"}
             onBlur={e  => e.target.style.borderColor="rgba(0,0,0,0.1)"} />
           <select value={type} onChange={e => setType(e.target.value as RaidType)}
-            style={{ padding:"8px 10px", borderRadius:8, border:"1.5px solid rgba(0,0,0,0.1)",
+            style={{ padding:"8px 10px", borderRadius:8, border:"1.5px solid var(--separator)",
               outline:"none", fontSize:"0.875rem", fontFamily:"inherit", background:"#FFF" }}>
             {Object.entries(TYPE_CONFIG).map(([k,v]) => (
               <option key={k} value={k}>{v.emoji} {v.label}</option>
@@ -349,8 +349,8 @@ export function RaidCoordinatorCard() {
               {genning ? "Preparing…" : "Add Raid ⚔️"}
             </button>
             <button onClick={() => setAddOpen(false)}
-              style={{ padding:"8px 14px", borderRadius:8, border:"1.5px solid rgba(0,0,0,0.1)",
-                background:"none", cursor:"pointer", fontSize:"0.8125rem", color:"#8E8E93" }}>
+              style={{ padding:"8px 14px", borderRadius:8, border:"1.5px solid var(--separator)",
+                background:"none", cursor:"pointer", fontSize:"0.8125rem", color:"var(--tertiary)" }}>
               Cancel
             </button>
           </div>
@@ -358,7 +358,7 @@ export function RaidCoordinatorCard() {
       )}
 
       {raids.length === 0 ? (
-        <p style={{ textAlign:"center", color:"#A1A1AA", fontSize:"0.875rem", padding:"20px 0" }}>
+        <p style={{ textAlign:"center", color:"var(--secondary)", fontSize:"0.875rem", padding:"20px 0" }}>
           No raids yet. Add a target above.
         </p>
       ) : (
@@ -369,7 +369,7 @@ export function RaidCoordinatorCard() {
           ))}
           {done > 0 && (
             <>
-              <p style={{ fontSize:"0.6875rem", fontWeight:700, color:"#8E8E93",
+              <p style={{ fontSize:"0.6875rem", fontWeight:700, color:"var(--tertiary)",
                 textTransform:"uppercase", letterSpacing:"0.07em", marginTop:4 }}>Completed</p>
               {raids.filter(r => r.status === "done").map(r => (
                 <RaidCard key={r.id} r={r} onStatus={updateStatus} onDelete={deleteRaid} />

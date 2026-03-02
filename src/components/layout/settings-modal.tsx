@@ -55,7 +55,7 @@ function ProviderCard({
           }}>ACTIVE</span>
         )}
       </div>
-      <span style={{ fontSize: "0.75rem", color: "#6B7280", lineHeight: 1.4 }}>{desc}</span>
+      <span style={{ fontSize: "0.75rem", color: "var(--secondary)", lineHeight: 1.4 }}>{desc}</span>
     </button>
   )
 }
@@ -72,7 +72,7 @@ function KeyInput({
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-      <label style={{ fontSize: "0.75rem", fontWeight: 600, color: "#374151", letterSpacing: "0.02em" }}>
+      <label style={{ fontSize: "0.75rem", fontWeight: 600, color: "var(--foreground)", letterSpacing: "0.02em" }}>
         {label}
       </label>
       <div style={{ position: "relative" }}>
@@ -249,7 +249,7 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
             onMouseEnter={e => (e.currentTarget.style.background = "rgba(0,0,0,0.1)")}
             onMouseLeave={e => (e.currentTarget.style.background = "rgba(0,0,0,0.05)")}
           >
-            <X style={{ width: 15, height: 15, color: "#6B7280" }} />
+            <X style={{ width: 15, height: 15, color: "var(--secondary)" }} />
           </button>
         </div>
 
@@ -258,7 +258,7 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
 
           {/* Provider selection */}
           <div>
-            <p style={{ fontSize: "0.75rem", fontWeight: 700, color: "#374151",
+            <p style={{ fontSize: "0.75rem", fontWeight: 700, color: "var(--foreground)",
               textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 10 }}>
               AI Provider
             </p>
@@ -280,7 +280,7 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
 
           {/* API Keys */}
           <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-            <p style={{ fontSize: "0.75rem", fontWeight: 700, color: "#374151",
+            <p style={{ fontSize: "0.75rem", fontWeight: 700, color: "var(--foreground)",
               textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 0 }}>
               API Keys
             </p>
@@ -336,8 +336,8 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
               style={{
                 flex: 1, padding: "10px 0",
                 background: "rgba(0,0,0,0.05)",
-                border: "1.5px solid rgba(0,0,0,0.1)", borderRadius: 10,
-                fontSize: "0.8125rem", fontWeight: 600, color: "#374151",
+                border: "1.5px solid var(--separator)", borderRadius: 10,
+                fontSize: "0.8125rem", fontWeight: 600, color: "var(--foreground)",
                 cursor: testing ? "not-allowed" : "pointer",
                 opacity: testing ? 0.6 : 1, transition: "all 0.15s",
               }}

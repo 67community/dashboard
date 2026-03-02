@@ -28,8 +28,8 @@ function DeltaBadge({ value }: { value?: number }) {
 function SectionLabel({ icon, label }: { icon: React.ReactNode; label: string }) {
   return (
     <div style={{ display:"flex", alignItems:"center", gap:6, marginBottom:10 }}>
-      <span style={{ color:"#A1A1AA", display:"flex" }}>{icon}</span>
-      <p style={{ fontSize:"0.6875rem", fontWeight:700, color:"#A1A1AA", letterSpacing:"0.06em", textTransform:"uppercase", margin:0 }}>
+      <span style={{ color:"var(--secondary)", display:"flex" }}>{icon}</span>
+      <p style={{ fontSize:"0.6875rem", fontWeight:700, color:"var(--secondary)", letterSpacing:"0.06em", textTransform:"uppercase", margin:0 }}>
         {label}
       </p>
     </div>
@@ -71,7 +71,7 @@ function AvatarStack({ joins }: { joins: RecentJoin[] }) {
           marginLeft:-8, zIndex:0,
           background:"#E5E7EB",
           display:"flex", alignItems:"center", justifyContent:"center",
-          fontSize:"0.6rem", fontWeight:700, color:"#6B7280",
+          fontSize:"0.6rem", fontWeight:700, color:"var(--secondary)",
         }}>
           +{joins.length - 5}
         </div>
@@ -88,7 +88,7 @@ function typeConfig(type: string): { bg: string; color: string; label: string } 
     spam:  { bg:"#FCE7F3", color:"#BE185D", label:"Spam"    },
     warn:  { bg:"#FEF9C3", color:"#A16207", label:"Warned"  },
   }
-  return map[type] ?? { bg:"#F3F4F6", color:"#374151", label:"Event" }
+  return map[type] ?? { bg:"#F3F4F6", color:"var(--foreground)", label:"Event" }
 }
 
 function timeToEvent(iso: string): string {
@@ -172,16 +172,16 @@ export function CommunityCard() {
       </div>
 
       {/* Stats row — Discord + Telegram + X */}
-      <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:8, borderTop:"1px solid rgba(0,0,0,0.06)", paddingTop:16 }}>
+      <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:8, borderTop:"1px solid var(--separator)", paddingTop:16 }}>
         {[
           { label:"New Joins 24h", value: discordDelta != null ? String(Math.max(0, discordDelta)) : String(c?.new_joins_24h ?? "—") },
           { label:"Telegram",      value: (c?.telegram_members ?? 0).toLocaleString(), delta: telegramDelta },
           { label:"X Followers",   value: xFollowers > 0 ? xFollowers.toLocaleString() : "—", delta: xDelta },
         ].map(s => (
           <div key={s.label} className="inset-cell" style={{ textAlign:"center" }}>
-            <p style={{ fontSize:"0.9375rem", fontWeight:700, letterSpacing:"-0.03em", color:"#1D1D1F", margin:0 }}>{s.value}</p>
+            <p style={{ fontSize:"0.9375rem", fontWeight:700, letterSpacing:"-0.03em", color:"var(--foreground)", margin:0 }}>{s.value}</p>
             {s.delta !== undefined && s.delta !== 0 && <DeltaBadge value={s.delta} />}
-            <p style={{ fontSize:"0.6875rem", fontWeight:500, color:"#8E8E93", marginTop:4 }}>{s.label}</p>
+            <p style={{ fontSize:"0.6875rem", fontWeight:500, color:"var(--tertiary)", marginTop:4 }}>{s.label}</p>
           </div>
         ))}
       </div>
@@ -192,14 +192,14 @@ export function CommunityCard() {
           padding:"10px 14px", borderRadius:12,
           background:"rgba(0,0,0,0.03)", border:"1px solid rgba(0,0,0,0.06)" }}>
           <div style={{ display:"flex", alignItems:"center", gap:8 }}>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style={{ color:"#1D1D1F", flexShrink:0 }}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style={{ color:"var(--foreground)", flexShrink:0 }}>
               <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.739l7.73-8.835L1.254 2.25H8.08l4.258 5.63 5.906-5.63Z"/>
             </svg>
-            <span style={{ fontSize:"0.875rem", fontWeight:700, color:"#1D1D1F" }}>X Community</span>
+            <span style={{ fontSize:"0.875rem", fontWeight:700, color:"var(--foreground)" }}>X Community</span>
           </div>
           <div style={{ textAlign:"right" }}>
-            <span style={{ fontSize:"1rem", fontWeight:800, color:"#1D1D1F" }}>{xCommunity.toLocaleString()}</span>
-            <span style={{ fontSize:"0.6875rem", color:"#8E8E93", marginLeft:4 }}>members</span>
+            <span style={{ fontSize:"1rem", fontWeight:800, color:"var(--foreground)" }}>{xCommunity.toLocaleString()}</span>
+            <span style={{ fontSize:"0.6875rem", color:"var(--tertiary)", marginLeft:4 }}>members</span>
           </div>
         </div>
       )}
@@ -211,7 +211,7 @@ export function CommunityCard() {
         const tweets = [sp?.best_tweet_week ?? sp?.best_tweet_2d].filter(Boolean) as BestTweet[]
         if (!tweets.length) return null
         return (
-          <div style={{ borderTop:"1px solid rgba(0,0,0,0.06)", paddingTop:16, overflow:"hidden" }}>
+          <div style={{ borderTop:"1px solid var(--separator)", paddingTop:16, overflow:"hidden" }}>
             {(() => {
               const t = tweets[0]
               if (!t) return null
@@ -219,14 +219,14 @@ export function CommunityCard() {
                 <a href={t.tweet_url} target="_blank" rel="noopener noreferrer"
                   onClick={e => e.stopPropagation()}
                   style={{ textDecoration:"none", display:"block", borderRadius:12,
-                    border:"1px solid rgba(0,0,0,0.08)", background:"#fff", overflow:"hidden" }}>
+                    border:"1px solid rgba(0,0,0,0.08)", background:"var(--card)", overflow:"hidden" }}>
                   <div style={{ padding:"12px 14px" }}>
                     <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:8 }}>
                       <img src="https://pbs.twimg.com/profile_images/1858289585312854016/iiT8KYWN_normal.jpg"
                         width={24} height={24} style={{ borderRadius:"50%", objectFit:"cover", flexShrink:0 }} alt="67" />
                       <div>
-                        <p style={{ fontSize:"0.6875rem", fontWeight:700, color:"#1D1D1F", margin:0, lineHeight:1.2 }}>The Official 67 Coin</p>
-                        <p style={{ fontSize:"0.5625rem", color:"#8E8E93", margin:0 }}>@67coinX · {t.date}</p>
+                        <p style={{ fontSize:"0.6875rem", fontWeight:700, color:"var(--foreground)", margin:0, lineHeight:1.2 }}>The Official 67 Coin</p>
+                        <p style={{ fontSize:"0.5625rem", color:"var(--tertiary)", margin:0 }}>@67coinX · {t.date}</p>
                       </div>
                       <span style={{ marginLeft:"auto", fontSize:"0.875rem", fontWeight:900, color:"#0A0A0A" }}>𝕏</span>
                     </div>
@@ -236,7 +236,7 @@ export function CommunityCard() {
                     </p>
                     <div style={{ display:"flex", gap:14 }}>
                       <span style={{ fontSize:"0.75rem", color:"#F43F5E", fontWeight:600, display:"flex", alignItems:"center", gap:3 }}>♡ {t.likes}</span>
-                      <span style={{ fontSize:"0.75rem", color:"#6E6E73", fontWeight:600, display:"flex", alignItems:"center", gap:3 }}>💬 {t.replies}</span>
+                      <span style={{ fontSize:"0.75rem", color:"var(--secondary)", fontWeight:600, display:"flex", alignItems:"center", gap:3 }}>💬 {t.replies}</span>
                     </div>
                   </div>
                 </a>
@@ -250,11 +250,11 @@ export function CommunityCard() {
         <div style={{ display:"flex", alignItems:"center", gap:10, paddingTop:4 }}>
           <AvatarStack joins={recentJoins} />
           <div style={{ flex:1, minWidth:0 }}>
-            <p style={{ fontSize:"0.75rem", fontWeight:600, color:"#1D1D1F", margin:0 }}>
+            <p style={{ fontSize:"0.75rem", fontWeight:600, color:"var(--foreground)", margin:0 }}>
               {recentJoins[0]?.user}
               {recentJoins[1] ? ` & ${recentJoins.length - 1} others` : ""} recently said hi
             </p>
-            <p style={{ fontSize:"0.6875rem", color:"#8E8E93", margin:0, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>
+            <p style={{ fontSize:"0.6875rem", color:"var(--tertiary)", margin:0, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>
               {recentJoins[0]?.message || "Introduced themselves in #introductions"}
             </p>
           </div>
@@ -263,14 +263,14 @@ export function CommunityCard() {
 
       {/* Top Contributors preview */}
       {topContribs.length > 0 && (
-        <div style={{ borderTop:"1px solid rgba(0,0,0,0.06)", paddingTop:16 }}>
-          <p style={{ fontSize:"0.625rem", fontWeight:800, color:"#8E8E93", textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:10 }}>Most Active Today</p>
+        <div style={{ borderTop:"1px solid var(--separator)", paddingTop:16 }}>
+          <p style={{ fontSize:"0.625rem", fontWeight:800, color:"var(--tertiary)", textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:10 }}>Most Active Today</p>
           <div style={{ display:"flex", flexDirection:"column", gap:6 }}>
             {topContribs.slice(0,4).map((c, i) => (
               <div key={c.user_id} style={{ display:"flex", alignItems:"center", gap:8 }}>
                 <span style={{ fontSize:"0.6875rem", width:14, textAlign:"right", flexShrink:0 }}>{i===0?"🥇":i===1?"🥈":i===2?"🥉":`${i+1}`}</span>
                 <img src={c.avatar} alt={c.user} width={22} height={22} style={{ borderRadius:"50%", flexShrink:0, objectFit:"cover", background:"#E5E7EB" }} onError={e=>{(e.target as HTMLImageElement).src="https://cdn.discordapp.com/embed/avatars/0.png"}} />
-                <span style={{ fontSize:"0.8125rem", fontWeight:600, color:"#1D1D1F", flex:1, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{c.user}</span>
+                <span style={{ fontSize:"0.8125rem", fontWeight:600, color:"var(--foreground)", flex:1, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{c.user}</span>
                 <span style={{ fontSize:"0.6875rem", fontWeight:700, color:"#5865F2", background:"#EFF1FE", borderRadius:99, padding:"2px 7px", flexShrink:0 }}>{c.msg_count}</span>
               </div>
             ))}
@@ -280,8 +280,8 @@ export function CommunityCard() {
 
       {/* Recent Introductions preview */}
       {recentJoins.length > 0 && (
-        <div style={{ borderTop:"1px solid rgba(0,0,0,0.06)", paddingTop:16 }}>
-          <p style={{ fontSize:"0.625rem", fontWeight:800, color:"#8E8E93", textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:10 }}>Recent Introductions (24h)</p>
+        <div style={{ borderTop:"1px solid var(--separator)", paddingTop:16 }}>
+          <p style={{ fontSize:"0.625rem", fontWeight:800, color:"var(--tertiary)", textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:10 }}>Recent Introductions (24h)</p>
           <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
             {recentJoins.slice(0,4).map(j => (
               <div key={j.user_id} style={{ display:"flex", alignItems:"center", gap:10, padding:"8px 10px", background:"rgba(0,0,0,0.02)", borderRadius:10 }}>
@@ -289,10 +289,10 @@ export function CommunityCard() {
                   style={{ borderRadius:"50%", flexShrink:0, objectFit:"cover", background:"#E5E7EB" }}
                   onError={e=>{(e.target as HTMLImageElement).src=`https://cdn.discordapp.com/embed/avatars/${parseInt(j.user_id.slice(-1),16)%5}.png`}} />
                 <div style={{ flex:1, minWidth:0 }}>
-                  <p style={{ fontSize:"0.8125rem", fontWeight:700, color:"#1D1D1F", margin:0 }}>{j.user}</p>
-                  {j.message && <p style={{ fontSize:"0.6875rem", color:"#8E8E93", margin:0, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{j.message}</p>}
+                  <p style={{ fontSize:"0.8125rem", fontWeight:700, color:"var(--foreground)", margin:0 }}>{j.user}</p>
+                  {j.message && <p style={{ fontSize:"0.6875rem", color:"var(--tertiary)", margin:0, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{j.message}</p>}
                 </div>
-                <span style={{ fontSize:"0.6rem", color:"#C7C7CC", flexShrink:0, whiteSpace:"nowrap" }}>{j.time_ago}</span>
+                <span style={{ fontSize:"0.6rem", color:"var(--tertiary)", flexShrink:0, whiteSpace:"nowrap" }}>{j.time_ago}</span>
               </div>
             ))}
           </div>
@@ -359,7 +359,7 @@ export function CommunityCard() {
               { label:"Telegram",      value: (c?.telegram_members ?? 0).toLocaleString(), color:"#0284C7", delta: telegramDelta },
               { label:"Online Now",    value: onlineNow.toLocaleString(), color:"#16A34A" },
             ].map(s => (
-              <div key={s.label} style={{ background:"#fff", padding:"12px 14px" }}>
+              <div key={s.label} style={{ background:"var(--card)", padding:"12px 14px" }}>
                 <div style={{ display:"flex", alignItems:"center", gap:4, flexWrap:"wrap" }}>
                   <p style={{ fontSize:"1.375rem", fontWeight:800, letterSpacing:"-0.04em", color:s.color, lineHeight:1, margin:0 }}>{s.value}</p>
                   {(s as { delta?: number }).delta !== undefined && !!((s as { delta?: number }).delta) && <DeltaBadge value={(s as { delta?: number }).delta} />}
@@ -379,7 +379,7 @@ export function CommunityCard() {
           <div className="prog-track" style={{ height:8 }}>
             <div className="prog-fill" style={{ height:8, width:`${pct}%`, background:"linear-gradient(90deg,#5865F2,#7289DA)" }} />
           </div>
-          <p style={{ fontSize:"0.75rem", color:"#A1A1AA", marginTop:5 }}>{(goal - members).toLocaleString()} to go</p>
+          <p style={{ fontSize:"0.75rem", color:"var(--secondary)", marginTop:5 }}>{(goal - members).toLocaleString()} to go</p>
         </div>
 
         {/* Voice Channels */}
@@ -390,8 +390,8 @@ export function CommunityCard() {
               {voiceChs.map(vc => (
                 <div key={vc.name} style={{ display:"flex", alignItems:"center", justifyContent:"space-between", padding:"8px 12px", background:"rgba(88,101,242,0.05)", borderRadius:10, border:"1px solid rgba(88,101,242,0.12)" }}>
                   <div>
-                    <p style={{ fontSize:"0.8125rem", fontWeight:700, color:"#1D1D1F", margin:0 }}>🔊 {vc.name}</p>
-                    <p style={{ fontSize:"0.6875rem", color:"#8E8E93", margin:0 }}>{vc.members.slice(0, 4).map(m => `@${m}`).join(", ")}{vc.member_count > 4 ? ` +${vc.member_count - 4}` : ""}</p>
+                    <p style={{ fontSize:"0.8125rem", fontWeight:700, color:"var(--foreground)", margin:0 }}>🔊 {vc.name}</p>
+                    <p style={{ fontSize:"0.6875rem", color:"var(--tertiary)", margin:0 }}>{vc.members.slice(0, 4).map(m => `@${m}`).join(", ")}{vc.member_count > 4 ? ` +${vc.member_count - 4}` : ""}</p>
                   </div>
                   <span style={{ background:"#EFF1FE", color:"#5865F2", borderRadius:99, padding:"3px 9px", fontSize:"0.75rem", fontWeight:700 }}>{vc.member_count}</span>
                 </div>
@@ -410,8 +410,8 @@ export function CommunityCard() {
                 const barPct = Math.max(8, ((ch.msgs_24h ?? ch.msgs_1h) / max24h) * 100)
                 return (
                   <div key={ch.name} style={{ display:"flex", alignItems:"center", gap:8 }}>
-                    <span style={{ fontSize:"0.75rem", color:"#C7C7CC", fontWeight:700, width:14, textAlign:"right", flexShrink:0 }}>{i + 1}</span>
-                    <span style={{ fontSize:"0.8125rem", fontWeight:600, color:"#1D1D1F", width:80, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap", flexShrink:0 }}>#{ch.name.replace(/^[\p{Emoji}\s]+/u, "")}</span>
+                    <span style={{ fontSize:"0.75rem", color:"var(--tertiary)", fontWeight:700, width:14, textAlign:"right", flexShrink:0 }}>{i + 1}</span>
+                    <span style={{ fontSize:"0.8125rem", fontWeight:600, color:"var(--foreground)", width:80, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap", flexShrink:0 }}>#{ch.name.replace(/^[\p{Emoji}\s]+/u, "")}</span>
                     <div style={{ flex:1, minWidth:0, display:"flex", alignItems:"center", gap:6 }}>
                       <div style={{ flex:1, height:6, background:"rgba(0,0,0,0.06)", borderRadius:99, overflow:"hidden" }}>
                         <div style={{ height:"100%", width:`${barPct}%`, background:"#5865F2", borderRadius:99, opacity:0.7 }} />
@@ -432,9 +432,9 @@ export function CommunityCard() {
             <div style={{ display:"flex", flexDirection:"column", gap:6 }}>
               {topContribs.slice(0, 6).map((c, i) => (
                 <div key={c.user_id} style={{ display:"flex", alignItems:"center", gap:10 }}>
-                  <span style={{ fontSize:"0.6875rem", fontWeight:800, color:"#A1A1AA", width:16, textAlign:"right", flexShrink:0 }}>{i === 0 ? "🥇" : i === 1 ? "🥈" : i === 2 ? "🥉" : `${i+1}`}</span>
+                  <span style={{ fontSize:"0.6875rem", fontWeight:800, color:"var(--secondary)", width:16, textAlign:"right", flexShrink:0 }}>{i === 0 ? "🥇" : i === 1 ? "🥈" : i === 2 ? "🥉" : `${i+1}`}</span>
                   <img src={c.avatar} alt={c.user} width={24} height={24} style={{ borderRadius:"50%", flexShrink:0, objectFit:"cover", background:"#E5E7EB" }} onError={e => { (e.target as HTMLImageElement).src = "https://cdn.discordapp.com/embed/avatars/0.png" }} />
-                  <span style={{ fontSize:"0.8125rem", fontWeight:600, color:"#1D1D1F", flex:1, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{c.user}</span>
+                  <span style={{ fontSize:"0.8125rem", fontWeight:600, color:"var(--foreground)", flex:1, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{c.user}</span>
                   <span style={{ fontSize:"0.6875rem", fontWeight:700, color:"#5865F2", background:"#EFF1FE", borderRadius:99, padding:"2px 8px", flexShrink:0 }}>{c.msg_count} msgs</span>
                 </div>
               ))}
@@ -453,9 +453,9 @@ export function CommunityCard() {
                 return (
                   <div key={i} style={{ display:"flex", alignItems:"center", gap:10, padding:"8px 12px", background:"rgba(0,0,0,0.02)", borderRadius:10 }}>
                     <img src={ev.avatar || fallbackAv} alt={ev.user} width={28} height={28} style={{ borderRadius:"50%", flexShrink:0, objectFit:"cover" }} onError={e => { (e.target as HTMLImageElement).src = fallbackAv }} />
-                    <span style={{ fontSize:"0.8125rem", fontWeight:600, color:"#1D1D1F", flex:1, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{ev.user}</span>
+                    <span style={{ fontSize:"0.8125rem", fontWeight:600, color:"var(--foreground)", flex:1, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{ev.user}</span>
                     <span style={{ fontSize:"0.6875rem", fontWeight:700, color:cfg.color, background:cfg.bg, borderRadius:99, padding:"2px 8px", flexShrink:0 }}>{ev.detail}</span>
-                    <span style={{ fontSize:"0.72rem", color:"#C7C7CC", flexShrink:0 }}>{ev.time_ago}</span>
+                    <span style={{ fontSize:"0.72rem", color:"var(--tertiary)", flexShrink:0 }}>{ev.time_ago}</span>
                   </div>
                 )
               })}
@@ -470,9 +470,9 @@ export function CommunityCard() {
                     ) : (
                       <img src={item.avatar || fallbackAv} alt={item.user} width={28} height={28} style={{ borderRadius:"50%", flexShrink:0, objectFit:"cover" }} onError={e => { (e.target as HTMLImageElement).src = fallbackAv }} />
                     )}
-                    <span style={{ fontSize:"0.8125rem", fontWeight:600, color:"#1D1D1F", flex:1, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{item.user}</span>
+                    <span style={{ fontSize:"0.8125rem", fontWeight:600, color:"var(--foreground)", flex:1, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{item.user}</span>
                     <span style={{ fontSize:"0.6875rem", fontWeight:700, color:cfg.color, background:cfg.bg, borderRadius:99, padding:"2px 8px", flexShrink:0 }}>{label}</span>
-                    {item.time_ago && <span style={{ fontSize:"0.72rem", color:"#C7C7CC", flexShrink:0 }}>{item.time_ago}</span>}
+                    {item.time_ago && <span style={{ fontSize:"0.72rem", color:"var(--tertiary)", flexShrink:0 }}>{item.time_ago}</span>}
                   </div>
                 )
               })}
@@ -489,10 +489,10 @@ export function CommunityCard() {
                 <div key={j.user_id} style={{ display:"flex", alignItems:"center", gap:10, padding:"9px 12px", background:"rgba(0,0,0,0.02)", borderRadius:10 }}>
                   <img src={j.avatar} alt={j.user} width={32} height={32} style={{ borderRadius:"50%", flexShrink:0, objectFit:"cover", background:"#E5E7EB" }} onError={e => { (e.target as HTMLImageElement).src = `https://cdn.discordapp.com/embed/avatars/${parseInt(j.user_id.slice(-1),16)%5}.png` }} />
                   <div style={{ flex:1, minWidth:0 }}>
-                    <p style={{ fontSize:"0.8125rem", fontWeight:700, color:"#1D1D1F", margin:0 }}>{j.user}</p>
-                    {j.message && <p style={{ fontSize:"0.6875rem", color:"#8E8E93", margin:0, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{j.message}</p>}
+                    <p style={{ fontSize:"0.8125rem", fontWeight:700, color:"var(--foreground)", margin:0 }}>{j.user}</p>
+                    {j.message && <p style={{ fontSize:"0.6875rem", color:"var(--tertiary)", margin:0, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{j.message}</p>}
                   </div>
-                  <span style={{ fontSize:"0.7rem", color:"#C7C7CC", flexShrink:0, whiteSpace:"nowrap" }}>{j.time_ago}</span>
+                  <span style={{ fontSize:"0.7rem", color:"var(--tertiary)", flexShrink:0, whiteSpace:"nowrap" }}>{j.time_ago}</span>
                   <span style={{ fontSize:"0.6875rem", fontWeight:700, color:"#2563EB", background:"#DBEAFE", borderRadius:99, padding:"2px 8px", flexShrink:0 }}>Joined</span>
                 </div>
               ))}
@@ -508,12 +508,12 @@ export function CommunityCard() {
               {events.map((ev, i) => (
                 <div key={i} style={{ display:"flex", alignItems:"center", justifyContent:"space-between", padding:"9px 12px", background:"rgba(245,166,35,0.05)", borderRadius:10, border:"1px solid rgba(245,166,35,0.15)" }}>
                   <div style={{ flex:1, minWidth:0, marginRight:8 }}>
-                    <p style={{ fontSize:"0.8125rem", fontWeight:700, color:"#1D1D1F", margin:0, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{ev.name}</p>
-                    {ev.description && <p style={{ fontSize:"0.6875rem", color:"#8E8E93", margin:0, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{ev.description}</p>}
+                    <p style={{ fontSize:"0.8125rem", fontWeight:700, color:"var(--foreground)", margin:0, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{ev.name}</p>
+                    {ev.description && <p style={{ fontSize:"0.6875rem", color:"var(--tertiary)", margin:0, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{ev.description}</p>}
                   </div>
                   <div style={{ textAlign:"right", flexShrink:0 }}>
                     <p style={{ fontSize:"0.75rem", fontWeight:700, color:"#F5A623", margin:0 }}>{timeToEvent(ev.start)}</p>
-                    {(ev.user_count ?? 0) > 0 && <p style={{ fontSize:"0.6875rem", color:"#A1A1AA", margin:0 }}>{ev.user_count} interested</p>}
+                    {(ev.user_count ?? 0) > 0 && <p style={{ fontSize:"0.6875rem", color:"var(--secondary)", margin:0 }}>{ev.user_count} interested</p>}
                   </div>
                 </div>
               ))}
@@ -528,7 +528,7 @@ export function CommunityCard() {
 
         {/* X header */}
         <div style={{ borderRadius:16, border:"1px solid rgba(0,0,0,0.12)", overflow:"hidden" }}>
-          <div style={{ background:"#1D1D1F", padding:"20px 18px" }}>
+          <div style={{ background:"var(--foreground)", padding:"20px 18px" }}>
             <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:12 }}>
               <div style={{ display:"flex", alignItems:"center", gap:7 }}>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="white" opacity="0.7"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.739l7.73-8.835L1.254 2.25H8.08l4.258 5.63 5.906-5.63Z"/></svg>
@@ -557,7 +557,7 @@ export function CommunityCard() {
 
           {/* Follower Chart */}
           <div style={{ padding:"14px 16px", borderBottom:"1px solid rgba(0,0,0,0.06)" }}>
-            <p style={{ fontSize:"0.625rem", fontWeight:800, color:"#8E8E93", textTransform:"uppercase", letterSpacing:"0.07em", margin:"0 0 10px" }}>Follower History</p>
+            <p style={{ fontSize:"0.625rem", fontWeight:800, color:"var(--tertiary)", textTransform:"uppercase", letterSpacing:"0.07em", margin:"0 0 10px" }}>Follower History</p>
             {sp?.follower_history && sp.follower_history.length > 1 ? (
               <ResponsiveContainer width="100%" height={80}>
                 <AreaChart data={sp.follower_history.slice(-14)} margin={{ top:2, right:0, left:0, bottom:0 }}>
@@ -568,7 +568,7 @@ export function CommunityCard() {
                     </linearGradient>
                   </defs>
                   <XAxis dataKey="date" tick={{ fontSize:9, fill:"#C7C7CC" }} tickLine={false} axisLine={false} tickFormatter={(v: string) => v.slice(5)} interval="preserveStartEnd" />
-                  <Tooltip contentStyle={{ background:"#fff", border:"1px solid #F0F0F2", borderRadius:8, fontSize:12, padding:"6px 10px" }} formatter={(v: number | undefined) => [(v ?? 0).toLocaleString(), "Followers"]} />
+                  <Tooltip contentStyle={{ background:"var(--card)", border:"1px solid #F0F0F2", borderRadius:8, fontSize:12, padding:"6px 10px" }} formatter={(v: number | undefined) => [(v ?? 0).toLocaleString(), "Followers"]} />
                   <Area type="monotone" dataKey="count" stroke="#F5A623" strokeWidth={2} fill="url(#commFGrad2)" dot={false} />
                 </AreaChart>
               </ResponsiveContainer>
@@ -577,7 +577,7 @@ export function CommunityCard() {
                 {[{ label:"20h", val:xDelta }, { label:"3 days", val:xDelta3d }, { label:"7 days", val:xDelta7d }].map(({ label, val }) => (
                   <div key={label} style={{ background: val > 0 ? "rgba(5,150,105,0.07)" : val < 0 ? "rgba(239,68,68,0.07)" : "#F5F5F7", borderRadius:10, padding:"10px 12px", textAlign:"center", border:`1px solid ${val > 0 ? "rgba(5,150,105,0.15)" : val < 0 ? "rgba(239,68,68,0.15)" : "rgba(0,0,0,0.06)"}` }}>
                     <p style={{ fontSize:"1.25rem", fontWeight:800, lineHeight:1, margin:0, color: val > 0 ? "#059669" : val < 0 ? "#EF4444" : "#8E8E93" }}>{val > 0 ? "+" : ""}{val}</p>
-                    <p style={{ fontSize:"0.625rem", color:"#8E8E93", fontWeight:600, textTransform:"uppercase", letterSpacing:"0.06em", marginTop:4 }}>{label}</p>
+                    <p style={{ fontSize:"0.625rem", color:"var(--tertiary)", fontWeight:600, textTransform:"uppercase", letterSpacing:"0.06em", marginTop:4 }}>{label}</p>
                   </div>
                 ))}
               </div>
@@ -586,15 +586,15 @@ export function CommunityCard() {
 
           {/* X Community stat row */}
           {xCommunity > 0 && (
-            <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:1, background:"rgba(0,0,0,0.04)", borderTop:"1px solid rgba(0,0,0,0.06)", borderBottom:"1px solid rgba(0,0,0,0.06)" }}>
-              <div style={{ background:"#fff", padding:"12px 14px" }}>
+            <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:1, background:"rgba(0,0,0,0.04)", borderTop:"1px solid var(--separator)", borderBottom:"1px solid rgba(0,0,0,0.06)" }}>
+              <div style={{ background:"var(--card)", padding:"12px 14px" }}>
                 <div style={{ display:"flex", alignItems:"center", gap:4 }}>
                   <p style={{ fontSize:"1.375rem", fontWeight:800, letterSpacing:"-0.04em", color:"#F5A623", lineHeight:1, margin:0 }}>{xCommunity.toLocaleString()}</p>
                   {xCommunityDelta !== 0 && <DeltaBadge value={xCommunityDelta} />}
                 </div>
                 <p style={{ fontSize:"0.6875rem", fontWeight:600, color:"#F5A623", opacity:0.7, marginTop:3 }}>X Community</p>
               </div>
-              <div style={{ background:"#fff", padding:"12px 14px" }}>
+              <div style={{ background:"var(--card)", padding:"12px 14px" }}>
                 <p style={{ fontSize:"1.375rem", fontWeight:800, letterSpacing:"-0.04em", color:"#1D9BF0", lineHeight:1, margin:0 }}>{xEngagement > 0 ? `${xEngagement.toFixed(1)}%` : "—"}</p>
                 <p style={{ fontSize:"0.6875rem", fontWeight:600, color:"#1D9BF0", opacity:0.7, marginTop:3 }}>Engagement Rate</p>
               </div>
@@ -604,10 +604,10 @@ export function CommunityCard() {
           {/* Engagement Rate + Content Performance */}
           <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:0 }}>
             <div style={{ padding:"14px 16px", borderRight:"1px solid rgba(0,0,0,0.06)" }}>
-              <p style={{ fontSize:"0.625rem", fontWeight:800, color:"#8E8E93", textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:8 }}>Engagement Rate</p>
+              <p style={{ fontSize:"0.625rem", fontWeight:800, color:"var(--tertiary)", textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:8 }}>Engagement Rate</p>
               <div style={{ display:"flex", alignItems:"baseline", gap:4 }}>
                 <span style={{ fontSize:"2rem", fontWeight:900, color: xEngagement > 2 ? "#059669" : "#F5A623", lineHeight:1 }}>{xEngagement > 0 ? xEngagement.toFixed(1) : "—"}</span>
-                {xEngagement > 0 && <span style={{ fontSize:"1rem", fontWeight:700, color:"#8E8E93" }}>%</span>}
+                {xEngagement > 0 && <span style={{ fontSize:"1rem", fontWeight:700, color:"var(--tertiary)" }}>%</span>}
               </div>
               <div style={{ display:"flex", gap:10, marginTop:8, flexWrap:"wrap" }}>
                 {[
@@ -616,14 +616,14 @@ export function CommunityCard() {
                   { v: String(sp?.posting_streak_days ?? "—"), l: "Day Streak" },
                 ].map(({ v, l }) => (
                   <div key={l}>
-                    <p style={{ fontSize:"0.875rem", fontWeight:700, color:"#1D1D1F", margin:0 }}>{v}</p>
-                    <p style={{ fontSize:"0.6rem", color:"#8E8E93", fontWeight:600 }}>{l}</p>
+                    <p style={{ fontSize:"0.875rem", fontWeight:700, color:"var(--foreground)", margin:0 }}>{v}</p>
+                    <p style={{ fontSize:"0.6rem", color:"var(--tertiary)", fontWeight:600 }}>{l}</p>
                   </div>
                 ))}
               </div>
             </div>
             <div style={{ padding:"14px 16px" }}>
-              <p style={{ fontSize:"0.625rem", fontWeight:800, color:"#8E8E93", textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:8 }}>Content Performance</p>
+              <p style={{ fontSize:"0.625rem", fontWeight:800, color:"var(--tertiary)", textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:8 }}>Content Performance</p>
               {sp?.content_type_stats && Object.keys(sp.content_type_stats).length > 0 ? (
                 <div style={{ display:"flex", flexDirection:"column", gap:6 }}>
                   {Object.entries(sp.content_type_stats)
@@ -636,7 +636,7 @@ export function CommunityCard() {
                       return (
                         <div key={type}>
                           <div style={{ display:"flex", justifyContent:"space-between", marginBottom:2 }}>
-                            <span style={{ fontSize:"0.75rem", fontWeight:600, color:"#374151", textTransform:"capitalize" }}>{type}</span>
+                            <span style={{ fontSize:"0.75rem", fontWeight:600, color:"var(--foreground)", textTransform:"capitalize" }}>{type}</span>
                             <span style={{ fontSize:"0.75rem", fontWeight:700, color:"#F5A623" }}>{stat.avg_eng.toFixed(0)}</span>
                           </div>
                           <div style={{ height:4, borderRadius:99, background:"rgba(0,0,0,0.06)" }}>
@@ -646,7 +646,7 @@ export function CommunityCard() {
                       )
                     })}
                 </div>
-              ) : <p style={{ fontSize:"0.875rem", color:"#C7C7CC" }}>No data yet</p>}
+              ) : <p style={{ fontSize:"0.875rem", color:"var(--tertiary)" }}>No data yet</p>}
             </div>
           </div>
 
@@ -655,24 +655,24 @@ export function CommunityCard() {
         {/* Trending Posts */}
         {(bestTweet48h || bestTweetWeek) && (
           <div>
-            <p style={{ fontSize:"0.6875rem", fontWeight:800, color:"#8E8E93", textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:10 }}>Trending Posts</p>
+            <p style={{ fontSize:"0.6875rem", fontWeight:800, color:"var(--tertiary)", textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:10 }}>Trending Posts</p>
             <div style={{ display:"flex", flexDirection:"column", gap:14 }}>
               {([
                 { label:"Best · 48h", tweet: bestTweet48h },
                 { label:"Best · 7 days", tweet: bestTweetWeek },
               ] as { label: string; tweet: typeof bestTweet48h }[]).map(({ label, tweet }) => tweet ? (
-                <a key={label} href={tweet.tweet_url} target="_blank" rel="noreferrer" style={{ textDecoration:"none", display:"flex", flexDirection:"column", background:"#fff", borderRadius:16, overflow:"hidden", border:"1px solid rgba(0,0,0,0.09)", boxShadow:"0 1px 4px rgba(0,0,0,0.06)" }}>
+                <a key={label} href={tweet.tweet_url} target="_blank" rel="noreferrer" style={{ textDecoration:"none", display:"flex", flexDirection:"column", background:"var(--card)", borderRadius:16, overflow:"hidden", border:"1px solid rgba(0,0,0,0.09)", boxShadow:"0 1px 4px rgba(0,0,0,0.06)" }}>
                   {tweet.img_url && <img src={tweet.img_url} alt="" style={{ width:"100%", height:160, objectFit:"cover" }} />}
                   <div style={{ padding:"14px 16px", flex:1, display:"flex", flexDirection:"column", gap:8 }}>
                     <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between" }}>
-                      <span style={{ fontSize:"0.625rem", fontWeight:800, color:"#8E8E93", textTransform:"uppercase", letterSpacing:"0.08em" }}>{label}</span>
+                      <span style={{ fontSize:"0.625rem", fontWeight:800, color:"var(--tertiary)", textTransform:"uppercase", letterSpacing:"0.08em" }}>{label}</span>
                       <svg width="13" height="13" viewBox="0 0 24 24" fill="#1D1D1F"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.739l7.73-8.835L1.254 2.25H8.08l4.258 5.63 5.906-5.63Z"/></svg>
                     </div>
-                    <p style={{ fontSize:"0.875rem", color:"#1D1D1F", lineHeight:1.55, margin:0, flex:1, display:"-webkit-box", WebkitLineClamp:2, WebkitBoxOrient:"vertical", overflow:"hidden" }}>{tweet.text}</p>
-                    <div style={{ display:"flex", gap:14, borderTop:"1px solid rgba(0,0,0,0.06)", paddingTop:8 }}>
+                    <p style={{ fontSize:"0.875rem", color:"var(--foreground)", lineHeight:1.55, margin:0, flex:1, display:"-webkit-box", WebkitLineClamp:2, WebkitBoxOrient:"vertical", overflow:"hidden" }}>{tweet.text}</p>
+                    <div style={{ display:"flex", gap:14, borderTop:"1px solid var(--separator)", paddingTop:8 }}>
                       <span style={{ fontSize:"0.8125rem", color:"#EF4444", fontWeight:700 }}>❤️ {tweet.likes.toLocaleString()}</span>
                       <span style={{ fontSize:"0.8125rem", color:"#2563EB", fontWeight:700 }}>💬 {tweet.replies.toLocaleString()}</span>
-                      <span style={{ fontSize:"0.75rem", color:"#8E8E93", marginLeft:"auto" }}>{new Date(tweet.date).toLocaleDateString()}</span>
+                      <span style={{ fontSize:"0.75rem", color:"var(--tertiary)", marginLeft:"auto" }}>{new Date(tweet.date).toLocaleDateString()}</span>
                     </div>
                   </div>
                 </a>

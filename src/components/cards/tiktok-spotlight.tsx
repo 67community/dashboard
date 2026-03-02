@@ -45,7 +45,7 @@ function SubLabel({ icon, label }: { icon: string; label: string }) {
       <span style={{ fontSize: "0.75rem" }}>{icon}</span>
       <span style={{
         fontSize: "0.6875rem", fontWeight: 700, letterSpacing: "0.05em",
-        textTransform: "uppercase", color: "#A1A1AA",
+        textTransform: "uppercase", color: "var(--secondary)",
       }}>
         {label}
       </span>
@@ -71,7 +71,7 @@ function VideoTile({ v, large = false }: { v: TikTokVideo; large?: boolean }) {
         style={{
           borderRadius: 14,
           overflow: "hidden",
-          border: "1.5px solid rgba(0,0,0,0.07)",
+          border: "1.5px solid var(--separator)",
           background: "#0A0A0A",
           transition: "transform 0.15s",
           cursor: "pointer",
@@ -164,7 +164,7 @@ function VideoTile({ v, large = false }: { v: TikTokVideo; large?: boolean }) {
           )}
           {large && v.description && (
             <p style={{
-              fontSize: "0.75rem", color: "#6B7280", lineHeight: 1.45, marginBottom: 5,
+              fontSize: "0.75rem", color: "var(--secondary)", lineHeight: 1.45, marginBottom: 5,
               display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden",
             }}>
               {v.description}
@@ -172,11 +172,11 @@ function VideoTile({ v, large = false }: { v: TikTokVideo; large?: boolean }) {
           )}
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
             {v.views_text && (
-              <span style={{ display: "flex", alignItems: "center", gap: 4, fontSize: "0.6875rem", color: "#A1A1AA", fontWeight: 500 }}>
+              <span style={{ display: "flex", alignItems: "center", gap: 4, fontSize: "0.6875rem", color: "var(--secondary)", fontWeight: 500 }}>
                 <Eye style={{ width: 11, height: 11 }} />{v.views_text}
               </span>
             )}
-            <span style={{ fontSize: "0.6875rem", color: "#C7C7CC", marginLeft: "auto" }}>
+            <span style={{ fontSize: "0.6875rem", color: "var(--tertiary)", marginLeft: "auto" }}>
               {timeAgo(v.scraped_at)}
             </span>
           </div>
@@ -196,7 +196,7 @@ function SectionHeader({ tag, href }: { tag: string; href: string }) {
     }}>
       <span style={{
         fontSize: "0.6875rem", fontWeight: 700, letterSpacing: "0.07em",
-        textTransform: "uppercase", color: "#6B7280",
+        textTransform: "uppercase", color: "var(--secondary)",
         display: "flex", alignItems: "center", gap: 5,
       }}>
         <TikTokLogo size={11} />
@@ -223,14 +223,14 @@ function SectionHeader({ tag, href }: { tag: string; href: string }) {
 
 function EmptyState() {
   return (
-    <div style={{ textAlign: "center", padding: "32px 16px", color: "#C7C7CC" }}>
+    <div style={{ textAlign: "center", padding: "32px 16px", color: "var(--tertiary)" }}>
       <div style={{ marginBottom: 10, opacity: 0.5 }}>
         <TikTokLogo size={32} />
       </div>
-      <p style={{ fontSize: "0.875rem", fontWeight: 600, marginBottom: 4, color: "#A1A1AA" }}>
+      <p style={{ fontSize: "0.875rem", fontWeight: 600, marginBottom: 4, color: "var(--secondary)" }}>
         No videos yet
       </p>
-      <p style={{ fontSize: "0.8125rem", color: "#C7C7CC" }}>
+      <p style={{ fontSize: "0.8125rem", color: "var(--tertiary)" }}>
         Mac mini scrapes #67coin every hour
       </p>
     </div>
@@ -268,7 +268,7 @@ export function TikTokSpotlightCard() {
       <div>
         <p className="hero-label" style={{ marginBottom: 8 }}>TikTok Videos</p>
         <p className="hero-number">{totalCount > 0 ? totalCount : "—"}</p>
-        <p style={{ fontSize: "0.875rem", color: "#8E8E93", marginTop: 6 }}>
+        <p style={{ fontSize: "0.875rem", color: "var(--tertiary)", marginTop: 6 }}>
           {totalCount > 0 ? `#67coin + #67 · popular & recent` : "waiting for first scrape"}
         </p>
       </div>
@@ -281,9 +281,9 @@ export function TikTokSpotlightCard() {
           ))}
         </div>
       ) : (
-        <div style={{ display: "flex", alignItems: "center", gap: 10, borderTop: "1px solid rgba(0,0,0,0.06)", paddingTop: 14 }}>
-          <div style={{ color: "#A1A1AA" }}><TikTokLogo size={16} /></div>
-          <p style={{ fontSize: "0.875rem", color: "#A1A1AA", fontWeight: 500 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 10, borderTop: "1px solid var(--separator)", paddingTop: 14 }}>
+          <div style={{ color: "var(--secondary)" }}><TikTokLogo size={16} /></div>
+          <p style={{ fontSize: "0.875rem", color: "var(--secondary)", fontWeight: 500 }}>
             Scraping #67coin hourly
           </p>
         </div>
@@ -343,11 +343,11 @@ export function TikTokSpotlightCard() {
       {/* Header */}
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <div>
-          <p style={{ fontSize: "0.6875rem", fontWeight: 700, color: "#A1A1AA", letterSpacing: "0.06em", textTransform: "uppercase" }}>
+          <p style={{ fontSize: "0.6875rem", fontWeight: 700, color: "var(--secondary)", letterSpacing: "0.06em", textTransform: "uppercase" }}>
             TikTok Spotlight
           </p>
           {lastUpdated && (
-            <p style={{ fontSize: "0.75rem", color: "#C7C7CC", marginTop: 2, display: "flex", alignItems: "center", gap: 4 }}>
+            <p style={{ fontSize: "0.75rem", color: "var(--tertiary)", marginTop: 2, display: "flex", alignItems: "center", gap: 4 }}>
               <RefreshCw style={{ width: 10, height: 10 }} />
               Updated {timeAgo(lastUpdated)}
             </p>
@@ -355,7 +355,7 @@ export function TikTokSpotlightCard() {
         </div>
         <div style={{
           background: "#F9F9F9", borderRadius: 8, padding: "4px 10px",
-          fontSize: "0.75rem", fontWeight: 600, color: "#6B7280",
+          fontSize: "0.75rem", fontWeight: 600, color: "var(--secondary)",
         }}>
           {totalCount} videos
         </div>
@@ -388,12 +388,12 @@ export function TikTokSpotlightCard() {
         borderRadius: 12, padding: "12px 14px",
         display: "flex", alignItems: "flex-start", gap: 10,
       }}>
-        <RefreshCw style={{ width: 14, height: 14, color: "#A1A1AA", flexShrink: 0, marginTop: 1 }} />
+        <RefreshCw style={{ width: 14, height: 14, color: "var(--secondary)", flexShrink: 0, marginTop: 1 }} />
         <div>
           <p style={{ fontSize: "0.8125rem", fontWeight: 600, color: "#3F3F46", marginBottom: 2 }}>
             Auto-updated every 10 minutes
           </p>
-          <p style={{ fontSize: "0.75rem", color: "#A1A1AA", lineHeight: 1.5 }}>
+          <p style={{ fontSize: "0.75rem", color: "var(--secondary)", lineHeight: 1.5 }}>
             🔥 <strong style={{ color: "#09090B" }}>Popular</strong> = most views ·
             🕐 <strong style={{ color: "#09090B" }}>Recent</strong> = latest posts · 2 each per tag.
             Scraped via TikTokApi on Mac mini.

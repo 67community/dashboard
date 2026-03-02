@@ -37,12 +37,12 @@ export function AgentStatusCard() {
       </div>
 
       {/* Bot list — inset-cell rows */}
-      <div style={{ display:"flex", flexDirection:"column", gap:8, borderTop:"1px solid rgba(0,0,0,0.06)", paddingTop:16 }}>
+      <div style={{ display:"flex", flexDirection:"column", gap:8, borderTop:"1px solid var(--separator)", paddingTop:16 }}>
         {bots.slice(0, 5).map(b => (
           <div key={b.name} className="inset-cell" style={{ display:"flex", alignItems:"center", gap:10 }}>
             <span className={b.status === "green" ? "dot-on" : "dot-off"} />
-            <span style={{ fontSize:"0.9375rem", fontWeight:600, color:"#1D1D1F", flex:1 }}>{b.name}</span>
-            <span style={{ fontSize:"0.75rem", color:"#8E8E93" }}>{ago(b.last_run)} ago</span>
+            <span style={{ fontSize:"0.9375rem", fontWeight:600, color:"var(--foreground)", flex:1 }}>{b.name}</span>
+            <span style={{ fontSize:"0.75rem", color:"var(--tertiary)" }}>{ago(b.last_run)} ago</span>
           </div>
         ))}
       </div>
@@ -70,13 +70,13 @@ export function AgentStatusCard() {
             <span className={b.status === "green" ? "dot-on" : "dot-off"} style={{ width:10, height:10 }} />
             <div style={{ flex:1 }}>
               <p style={{ fontSize:"0.875rem", fontWeight:700, color:"#09090B" }}>{b.name}</p>
-              <p style={{ fontSize:"0.75rem", color:"#A1A1AA", marginTop:2 }}>{b.schedule}</p>
+              <p style={{ fontSize:"0.75rem", color:"var(--secondary)", marginTop:2 }}>{b.schedule}</p>
             </div>
             <div style={{ textAlign:"right" }}>
               <p style={{ fontSize:"0.75rem", fontWeight:700, color: b.status === "green" ? "#10B981" : "#EF4444" }}>
                 {b.status === "green" ? "Running" : "Offline"}
               </p>
-              <p style={{ fontSize:"0.6875rem", color:"#A1A1AA", marginTop:2 }}>{ago(b.last_run)} ago</p>
+              <p style={{ fontSize:"0.6875rem", color:"var(--secondary)", marginTop:2 }}>{ago(b.last_run)} ago</p>
             </div>
           </div>
         ))}

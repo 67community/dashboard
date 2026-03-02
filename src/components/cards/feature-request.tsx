@@ -56,29 +56,29 @@ function ReqRow({ r, expanded, onToggle }: { r: FeatureReq; expanded: boolean; o
         style={{ display:"flex", alignItems:"center", gap:8, background:"none", border:"none",
           cursor:"pointer", width:"100%", textAlign:"left", padding:0 }}>
         <PriorityDot p={r.priority} />
-        <span style={{ flex:1, fontSize:"0.875rem", fontWeight:600, color:"#1D1D1F",
+        <span style={{ flex:1, fontSize:"0.875rem", fontWeight:600, color:"var(--foreground)",
           overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{r.what}</span>
-        <span style={{ fontSize:"0.6875rem", color:"#A1A1AA", flexShrink:0, marginRight:4 }}>
+        <span style={{ fontSize:"0.6875rem", color:"var(--secondary)", flexShrink:0, marginRight:4 }}>
           {STATUS_LABEL[r.status]}
         </span>
         {expanded
-          ? <ChevronUp  style={{ width:14, height:14, color:"#A1A1AA", flexShrink:0 }} />
-          : <ChevronDown style={{ width:14, height:14, color:"#A1A1AA", flexShrink:0 }} />}
+          ? <ChevronUp  style={{ width:14, height:14, color:"var(--secondary)", flexShrink:0 }} />
+          : <ChevronDown style={{ width:14, height:14, color:"var(--secondary)", flexShrink:0 }} />}
       </button>
 
       {expanded && (
-        <div style={{ marginTop:10, paddingTop:10, borderTop:"1px solid rgba(0,0,0,0.06)",
+        <div style={{ marginTop:10, paddingTop:10, borderTop:"1px solid var(--separator)",
           display:"flex", flexDirection:"column", gap:8 }}>
           <div>
-            <p style={{ fontSize:"0.6875rem", fontWeight:700, color:"#8E8E93",
+            <p style={{ fontSize:"0.6875rem", fontWeight:700, color:"var(--tertiary)",
               textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:3 }}>Why</p>
-            <p style={{ fontSize:"0.8125rem", color:"#374151" }}>{r.why}</p>
+            <p style={{ fontSize:"0.8125rem", color:"var(--foreground)" }}>{r.why}</p>
           </div>
           {r.how && (
             <div>
-              <p style={{ fontSize:"0.6875rem", fontWeight:700, color:"#8E8E93",
+              <p style={{ fontSize:"0.6875rem", fontWeight:700, color:"var(--tertiary)",
                 textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:3 }}>How</p>
-              <p style={{ fontSize:"0.8125rem", color:"#374151" }}>{r.how}</p>
+              <p style={{ fontSize:"0.8125rem", color:"var(--foreground)" }}>{r.how}</p>
             </div>
           )}
           {r.plan && (
@@ -86,10 +86,10 @@ function ReqRow({ r, expanded, onToggle }: { r: FeatureReq; expanded: boolean; o
               borderLeft:`3px solid ${PRIORITY_COLOR[r.priority ?? "medium"]}` }}>
               <p style={{ fontSize:"0.6875rem", fontWeight:700, color:"#F5A623",
                 textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:6 }}>AI Analysis</p>
-              <p style={{ fontSize:"0.8125rem", color:"#374151", lineHeight:1.5 }}>{r.plan}</p>
+              <p style={{ fontSize:"0.8125rem", color:"var(--foreground)", lineHeight:1.5 }}>{r.plan}</p>
               <div style={{ display:"flex", gap:6, marginTop:8, flexWrap:"wrap" }}>
                 {r.effort && (
-                  <span style={{ fontSize:"0.625rem", fontWeight:700, color:"#8E8E93",
+                  <span style={{ fontSize:"0.625rem", fontWeight:700, color:"var(--tertiary)",
                     background:"#EFEFEF", padding:"2px 8px", borderRadius:99 }}>⏱ {r.effort}</span>
                 )}
                 {r.tags?.map(t => (
@@ -99,7 +99,7 @@ function ReqRow({ r, expanded, onToggle }: { r: FeatureReq; expanded: boolean; o
               </div>
             </div>
           )}
-          <p style={{ fontSize:"0.6875rem", color:"#C7C7CC", display:"flex", alignItems:"center", gap:4 }}>
+          <p style={{ fontSize:"0.6875rem", color:"var(--tertiary)", display:"flex", alignItems:"center", gap:4 }}>
             <Clock style={{ width:10, height:10 }} />{timeAgo(r.submittedAt)}
           </p>
         </div>
@@ -187,8 +187,8 @@ export function FeatureRequestCard() {
           placeholder="What do you need?"
           style={{
             width:"100%", padding:"9px 12px", borderRadius:10, fontSize:"0.875rem",
-            border:"1.5px solid rgba(0,0,0,0.1)", outline:"none", fontFamily:"inherit",
-            background:"#FAFAFA", color:"#1D1D1F", boxSizing:"border-box",
+            border:"1.5px solid var(--separator)", outline:"none", fontFamily:"inherit",
+            background:"#FAFAFA", color:"var(--foreground)", boxSizing:"border-box",
           }}
           onFocus={e => e.target.style.borderColor = "#F5A623"}
           onBlur={e  => e.target.style.borderColor = "rgba(0,0,0,0.1)"}
@@ -199,8 +199,8 @@ export function FeatureRequestCard() {
           placeholder="Why does it matter?"
           style={{
             width:"100%", padding:"9px 12px", borderRadius:10, fontSize:"0.875rem",
-            border:"1.5px solid rgba(0,0,0,0.1)", outline:"none", fontFamily:"inherit",
-            background:"#FAFAFA", color:"#1D1D1F", boxSizing:"border-box",
+            border:"1.5px solid var(--separator)", outline:"none", fontFamily:"inherit",
+            background:"#FAFAFA", color:"var(--foreground)", boxSizing:"border-box",
           }}
           onFocus={e => e.target.style.borderColor = "#F5A623"}
           onBlur={e  => e.target.style.borderColor = "rgba(0,0,0,0.1)"}
@@ -223,14 +223,14 @@ export function FeatureRequestCard() {
             borderRadius:10, padding:"10px 12px" }}>
           <p style={{ fontSize:"0.625rem", fontWeight:700, color:"#F5A623",
             textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:5 }}>⚡ AI Analysis</p>
-          <p style={{ fontSize:"0.8125rem", color:"#374151", lineHeight:1.5 }}>{quickPlan}</p>
+          <p style={{ fontSize:"0.8125rem", color:"var(--foreground)", lineHeight:1.5 }}>{quickPlan}</p>
         </div>
       )}
 
       {/* Recent requests mini-list */}
       {requests.length > 0 && (
-        <div style={{ borderTop:"1px solid rgba(0,0,0,0.06)", paddingTop:12 }}>
-          <p style={{ fontSize:"0.625rem", fontWeight:700, color:"#8E8E93",
+        <div style={{ borderTop:"1px solid var(--separator)", paddingTop:12 }}>
+          <p style={{ fontSize:"0.625rem", fontWeight:700, color:"var(--tertiary)",
             textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:8 }}>
             Recent · {requests.length} request{requests.length !== 1 ? "s" : ""}
           </p>
@@ -238,9 +238,9 @@ export function FeatureRequestCard() {
             {requests.slice(0,3).map(r => (
               <div key={r.id} style={{ display:"flex", alignItems:"center", gap:8, padding:"6px 0" }}>
                 <PriorityDot p={r.priority} />
-                <span style={{ flex:1, fontSize:"0.8125rem", color:"#374151", fontWeight:500,
+                <span style={{ flex:1, fontSize:"0.8125rem", color:"var(--foreground)", fontWeight:500,
                   overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{r.what}</span>
-                <span style={{ fontSize:"0.6875rem", color:"#A1A1AA", flexShrink:0 }}>
+                <span style={{ fontSize:"0.6875rem", color:"var(--secondary)", flexShrink:0 }}>
                   {STATUS_LABEL[r.status]}
                 </span>
               </div>
@@ -257,7 +257,7 @@ export function FeatureRequestCard() {
 
       {/* Full form */}
       <div style={{ background:"#FAFAFA", borderRadius:14, padding:16 }}>
-        <p style={{ fontSize:"0.6875rem", fontWeight:700, color:"#8E8E93",
+        <p style={{ fontSize:"0.6875rem", fontWeight:700, color:"var(--tertiary)",
           textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:12 }}>New Request</p>
         <form onSubmit={submit} style={{ display:"flex", flexDirection:"column", gap:8 }}>
           {[
@@ -267,8 +267,8 @@ export function FeatureRequestCard() {
           ].map(({ val, set, ph }) => (
             <input key={ph} value={val} onChange={e => set(e.target.value)} placeholder={ph}
               style={{ width:"100%", padding:"9px 12px", borderRadius:10, fontSize:"0.875rem",
-                border:"1.5px solid rgba(0,0,0,0.1)", outline:"none", fontFamily:"inherit",
-                background:"#FFF", color:"#1D1D1F", boxSizing:"border-box" }}
+                border:"1.5px solid var(--separator)", outline:"none", fontFamily:"inherit",
+                background:"#FFF", color:"var(--foreground)", boxSizing:"border-box" }}
               onFocus={e => e.target.style.borderColor = "#F5A623"}
               onBlur={e  => e.target.style.borderColor = "rgba(0,0,0,0.1)"} />
           ))}
@@ -286,7 +286,7 @@ export function FeatureRequestCard() {
       {/* All requests */}
       {requests.length > 0 && (
         <div>
-          <p style={{ fontSize:"0.6875rem", fontWeight:700, color:"#8E8E93",
+          <p style={{ fontSize:"0.6875rem", fontWeight:700, color:"var(--tertiary)",
             textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:10 }}>
             All Requests ({requests.length})
           </p>
@@ -301,7 +301,7 @@ export function FeatureRequestCard() {
       )}
 
       {requests.length === 0 && (
-        <div style={{ textAlign:"center", padding:"32px 0", color:"#A1A1AA" }}>
+        <div style={{ textAlign:"center", padding:"32px 0", color:"var(--secondary)" }}>
           <p style={{ fontSize:"2rem" }}>⚡</p>
           <p style={{ fontSize:"0.875rem", marginTop:8 }}>No requests yet. Be the first.</p>
         </div>
@@ -360,7 +360,7 @@ export function FeatureRequestSection() {
 
   return (
     <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
-      <p style={{ fontSize:"0.625rem", fontWeight:800, color:"#8E8E93", textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:2 }}>
+      <p style={{ fontSize:"0.625rem", fontWeight:800, color:"var(--tertiary)", textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:2 }}>
         <Zap style={{ width:10, height:10, display:"inline", marginRight:4, verticalAlign:"middle" }} />
         Feature Requests
       </p>
@@ -381,8 +381,8 @@ export function FeatureRequestSection() {
           {requests.slice(0,3).map(r => (
             <div key={r.id} style={{ display:"flex", alignItems:"center", gap:6, padding:"5px 8px", background:"#F4F4F5", borderRadius:7 }}>
               <PriorityDot p={r.priority} />
-              <span style={{ flex:1, fontSize:"0.6875rem", fontWeight:600, color:"#1D1D1F", overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{r.what}</span>
-              <span style={{ fontSize:"0.5625rem", color:"#A1A1AA", whiteSpace:"nowrap" }}>{STATUS_LABEL[r.status]}</span>
+              <span style={{ flex:1, fontSize:"0.6875rem", fontWeight:600, color:"var(--foreground)", overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{r.what}</span>
+              <span style={{ fontSize:"0.5625rem", color:"var(--secondary)", whiteSpace:"nowrap" }}>{STATUS_LABEL[r.status]}</span>
             </div>
           ))}
         </div>

@@ -36,7 +36,7 @@ const STATUS_CONFIG: Record<SightingStatus, { label: string; color: string; bg: 
   new:       { label: "New",       color: "#F5A623", bg: "rgba(245,166,35,0.1)" },
   reviewing: { label: "Reviewing", color: "#2563EB", bg: "rgba(37,99,235,0.08)" },
   shared:    { label: "Shared ✓",  color: "#059669", bg: "rgba(5,150,105,0.08)" },
-  archived:  { label: "Archived",  color: "#A1A1AA", bg: "#F4F4F5" },
+  archived:  { label: "Archived",  color: "var(--secondary)", bg: "#F4F4F5" },
 }
 
 function timeAgo(iso: string) {
@@ -93,19 +93,19 @@ function SightingRow({ s, expanded, onToggle, onStatus, onDelete }: {
         style={{ display:"flex", alignItems:"center", gap:8, background:"none", border:"none",
           cursor:"pointer", width:"100%", textAlign:"left", padding:0 }}>
         <span style={{ fontSize:"1rem", flexShrink:0 }}>{plat.emoji}</span>
-        <span style={{ flex:1, fontSize:"0.875rem", fontWeight:600, color:"#1D1D1F",
+        <span style={{ flex:1, fontSize:"0.875rem", fontWeight:600, color:"var(--foreground)",
           overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{s.title}</span>
         <span style={{ fontSize:"0.625rem", fontWeight:700, color: stat.color,
           background: stat.bg, padding:"2px 8px", borderRadius:99, flexShrink:0 }}>
           {stat.label}
         </span>
         {expanded
-          ? <ChevronUp  style={{ width:14, height:14, color:"#A1A1AA", flexShrink:0, marginLeft:4 }} />
-          : <ChevronDown style={{ width:14, height:14, color:"#A1A1AA", flexShrink:0, marginLeft:4 }} />}
+          ? <ChevronUp  style={{ width:14, height:14, color:"var(--secondary)", flexShrink:0, marginLeft:4 }} />
+          : <ChevronDown style={{ width:14, height:14, color:"var(--secondary)", flexShrink:0, marginLeft:4 }} />}
       </button>
 
       {expanded && (
-        <div style={{ marginTop:10, paddingTop:10, borderTop:"1px solid rgba(0,0,0,0.06)",
+        <div style={{ marginTop:10, paddingTop:10, borderTop:"1px solid var(--separator)",
           display:"flex", flexDirection:"column", gap:8 }}>
           <div style={{ display:"flex", gap:8, alignItems:"center", flexWrap:"wrap" }}>
             <span style={{ fontSize:"0.75rem", fontWeight:600, color: plat.color }}>{plat.label}</span>
@@ -116,9 +116,9 @@ function SightingRow({ s, expanded, onToggle, onStatus, onDelete }: {
                 Open link <ExternalLink style={{ width:10, height:10 }} />
               </a>
             )}
-            <span style={{ fontSize:"0.6875rem", color:"#C7C7CC" }}>{timeAgo(s.submittedAt)}</span>
+            <span style={{ fontSize:"0.6875rem", color:"var(--tertiary)" }}>{timeAgo(s.submittedAt)}</span>
           </div>
-          {s.note && <p style={{ fontSize:"0.8125rem", color:"#374151" }}>{s.note}</p>}
+          {s.note && <p style={{ fontSize:"0.8125rem", color:"var(--foreground)" }}>{s.note}</p>}
 
           {/* Status buttons */}
           <div style={{ display:"flex", gap:4, flexWrap:"wrap" }}>
@@ -211,17 +211,17 @@ export function SightingsCard() {
       <div style={{ display:"flex", gap:8 }}>
         <div className="inset-cell" style={{ flex:1, textAlign:"center" }}>
           <p style={{ fontSize:"1.5rem", fontWeight:800, color:"#F5A623", lineHeight:1 }}>{newCount}</p>
-          <p style={{ fontSize:"0.625rem", color:"#8E8E93", fontWeight:600,
+          <p style={{ fontSize:"0.625rem", color:"var(--tertiary)", fontWeight:600,
             textTransform:"uppercase", letterSpacing:"0.06em", marginTop:3 }}>New</p>
         </div>
         <div className="inset-cell" style={{ flex:1, textAlign:"center" }}>
           <p style={{ fontSize:"1.5rem", fontWeight:800, color:"#059669", lineHeight:1 }}>{sharedCount}</p>
-          <p style={{ fontSize:"0.625rem", color:"#8E8E93", fontWeight:600,
+          <p style={{ fontSize:"0.625rem", color:"var(--tertiary)", fontWeight:600,
             textTransform:"uppercase", letterSpacing:"0.06em", marginTop:3 }}>Shared</p>
         </div>
         <div className="inset-cell" style={{ flex:1, textAlign:"center" }}>
-          <p style={{ fontSize:"1.5rem", fontWeight:800, color:"#1D1D1F", lineHeight:1 }}>{sightings.length}</p>
-          <p style={{ fontSize:"0.625rem", color:"#8E8E93", fontWeight:600,
+          <p style={{ fontSize:"1.5rem", fontWeight:800, color:"var(--foreground)", lineHeight:1 }}>{sightings.length}</p>
+          <p style={{ fontSize:"0.625rem", color:"var(--tertiary)", fontWeight:600,
             textTransform:"uppercase", letterSpacing:"0.06em", marginTop:3 }}>Total</p>
         </div>
       </div>
@@ -232,7 +232,7 @@ export function SightingsCard() {
           <button onClick={() => setAddOpen(true)}
             style={{ display:"flex", alignItems:"center", gap:6, padding:"8px 12px",
               borderRadius:10, border:"1.5px dashed rgba(0,0,0,0.12)", background:"none",
-              cursor:"pointer", width:"100%", color:"#8E8E93", fontSize:"0.875rem", fontWeight:600 }}>
+              cursor:"pointer", width:"100%", color:"var(--tertiary)", fontSize:"0.875rem", fontWeight:600 }}>
             <Plus style={{ width:14, height:14 }} /> Log a sighting
           </button>
         ) : (
@@ -240,14 +240,14 @@ export function SightingsCard() {
             display:"flex", flexDirection:"column", gap:8 }}>
             <input value={title} onChange={e => setTitle(e.target.value)}
               placeholder="What did you see? (e.g. 67 on Billboard NYC)"
-              style={{ padding:"8px 10px", borderRadius:8, border:"1.5px solid rgba(0,0,0,0.1)",
+              style={{ padding:"8px 10px", borderRadius:8, border:"1.5px solid var(--separator)",
                 outline:"none", fontSize:"0.875rem", fontFamily:"inherit", background:"#FFF" }}
               onFocus={e => e.target.style.borderColor="#F5A623"}
               onBlur={e  => e.target.style.borderColor="rgba(0,0,0,0.1)"} />
             <div style={{ display:"flex", gap:6 }}>
               <select value={platform} onChange={e => setPlatform(e.target.value as SightingPlatform)}
                 style={{ flex:1, padding:"8px 10px", borderRadius:8,
-                  border:"1.5px solid rgba(0,0,0,0.1)", outline:"none",
+                  border:"1.5px solid var(--separator)", outline:"none",
                   fontSize:"0.875rem", fontFamily:"inherit", background:"#FFF" }}>
                 {(Object.entries(PLAT_CONFIG)).map(([k,v]) => (
                   <option key={k} value={k}>{v.emoji} {v.label}</option>
@@ -255,7 +255,7 @@ export function SightingsCard() {
               </select>
               <input value={url} onChange={e => setUrl(e.target.value)} placeholder="URL (optional)"
                 style={{ flex:1, padding:"8px 10px", borderRadius:8,
-                  border:"1.5px solid rgba(0,0,0,0.1)", outline:"none",
+                  border:"1.5px solid var(--separator)", outline:"none",
                   fontSize:"0.875rem", fontFamily:"inherit", background:"#FFF" }}
                 onFocus={e => e.target.style.borderColor="#F5A623"}
                 onBlur={e  => e.target.style.borderColor="rgba(0,0,0,0.1)"} />
@@ -270,8 +270,8 @@ export function SightingsCard() {
                 Log Sighting 👁️
               </button>
               <button onClick={() => setAddOpen(false)}
-                style={{ padding:"8px 14px", borderRadius:8, border:"1.5px solid rgba(0,0,0,0.1)",
-                  background:"none", cursor:"pointer", fontSize:"0.8125rem", color:"#8E8E93" }}>
+                style={{ padding:"8px 14px", borderRadius:8, border:"1.5px solid var(--separator)",
+                  background:"none", cursor:"pointer", fontSize:"0.8125rem", color:"var(--tertiary)" }}>
                 Cancel
               </button>
             </div>
@@ -281,12 +281,12 @@ export function SightingsCard() {
 
       {/* Recent */}
       {sightings.length > 0 && (
-        <div style={{ borderTop:"1px solid rgba(0,0,0,0.06)", paddingTop:12 }}
+        <div style={{ borderTop:"1px solid var(--separator)", paddingTop:12 }}
           onClick={e => e.stopPropagation()}>
           {sightings.slice(0,3).map(s => (
             <div key={s.id} style={{ display:"flex", alignItems:"center", gap:8, marginBottom:6 }}>
               <span>{PLAT_CONFIG[s.platform].emoji}</span>
-              <span style={{ flex:1, fontSize:"0.8125rem", color:"#374151", fontWeight:500,
+              <span style={{ flex:1, fontSize:"0.8125rem", color:"var(--foreground)", fontWeight:500,
                 overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{s.title}</span>
               <span style={{ fontSize:"0.625rem", fontWeight:700, color: STATUS_CONFIG[s.status].color,
                 background: STATUS_CONFIG[s.status].bg, padding:"2px 8px", borderRadius:99 }}>
@@ -330,7 +330,7 @@ export function SightingsCard() {
         <button onClick={() => setAddOpen(true)}
           style={{ display:"flex", alignItems:"center", gap:6, padding:"8px 12px",
             borderRadius:10, border:"1.5px dashed rgba(0,0,0,0.12)", background:"none",
-            cursor:"pointer", width:"100%", color:"#8E8E93", fontSize:"0.875rem", fontWeight:600 }}>
+            cursor:"pointer", width:"100%", color:"var(--tertiary)", fontSize:"0.875rem", fontWeight:600 }}>
           <Plus style={{ width:14, height:14 }} /> Log a sighting
         </button>
       ) : (
@@ -342,13 +342,13 @@ export function SightingsCard() {
             { v: note,  set: setNote,  ph: "Notes (optional)" },
           ].map(({ v, set, ph }) => (
             <input key={ph} value={v} onChange={e => set(e.target.value)} placeholder={ph}
-              style={{ padding:"8px 10px", borderRadius:8, border:"1.5px solid rgba(0,0,0,0.1)",
+              style={{ padding:"8px 10px", borderRadius:8, border:"1.5px solid var(--separator)",
                 outline:"none", fontSize:"0.875rem", fontFamily:"inherit", background:"#FFF" }}
               onFocus={e => e.target.style.borderColor="#F5A623"}
               onBlur={e  => e.target.style.borderColor="rgba(0,0,0,0.1)"} />
           ))}
           <select value={platform} onChange={e => setPlatform(e.target.value as SightingPlatform)}
-            style={{ padding:"8px 10px", borderRadius:8, border:"1.5px solid rgba(0,0,0,0.1)",
+            style={{ padding:"8px 10px", borderRadius:8, border:"1.5px solid var(--separator)",
               outline:"none", fontSize:"0.875rem", fontFamily:"inherit", background:"#FFF" }}>
             {Object.entries(PLAT_CONFIG).map(([k,v]) => (
               <option key={k} value={k}>{v.emoji} {v.label}</option>
@@ -362,8 +362,8 @@ export function SightingsCard() {
                 color: !title.trim() ? "#A1A1AA" : "#000",
                 fontSize:"0.8125rem", fontWeight:700 }}>Log Sighting 👁️</button>
             <button onClick={() => setAddOpen(false)}
-              style={{ padding:"8px 14px", borderRadius:8, border:"1.5px solid rgba(0,0,0,0.1)",
-                background:"none", cursor:"pointer", fontSize:"0.8125rem", color:"#8E8E93" }}>Cancel</button>
+              style={{ padding:"8px 14px", borderRadius:8, border:"1.5px solid var(--separator)",
+                background:"none", cursor:"pointer", fontSize:"0.8125rem", color:"var(--tertiary)" }}>Cancel</button>
           </div>
         </div>
       )}
@@ -371,7 +371,7 @@ export function SightingsCard() {
       {/* List */}
       <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
         {filtered.length === 0
-          ? <p style={{ textAlign:"center", color:"#A1A1AA", fontSize:"0.875rem", padding:"20px 0" }}>
+          ? <p style={{ textAlign:"center", color:"var(--secondary)", fontSize:"0.875rem", padding:"20px 0" }}>
               {filter === "all" ? "No sightings yet. Log the first one." : `No ${filter} sightings.`}
             </p>
           : filtered.map(s => (

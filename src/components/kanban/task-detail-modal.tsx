@@ -104,7 +104,7 @@ export function TaskDetailModal({ task, onClose, onUpdate }: Props) {
           <input
             style={{
               flex:1, fontSize:"1.1875rem", fontWeight:800,
-              letterSpacing:"-0.03em", color:"#1D1D1F",
+              letterSpacing:"-0.03em", color:"var(--foreground)",
               background:"transparent", border:"none", outline:"none",
               fontFamily:"inherit",
             }}
@@ -128,10 +128,10 @@ export function TaskDetailModal({ task, onClose, onUpdate }: Props) {
             {/* Column */}
             <div style={{ position:"relative", display:"inline-flex", alignItems:"center" }}>
               <select value={local.column} onChange={e => update({ column: e.target.value as KanbanColumn })}
-                style={{ ...sel, background:"#F0F0F2", padding:"6px 28px 6px 12px", borderRadius:99, color:"#1D1D1F" }}>
+                style={{ ...sel, background:"#F0F0F2", padding:"6px 28px 6px 12px", borderRadius:99, color:"var(--foreground)" }}>
                 {COLUMNS.map(c => <option key={c} value={c}>{c}</option>)}
               </select>
-              <ChevronDown style={{ position:"absolute", right:8, width:12, height:12, color:"#8E8E93", pointerEvents:"none" }} />
+              <ChevronDown style={{ position:"absolute", right:8, width:12, height:12, color:"var(--tertiary)", pointerEvents:"none" }} />
             </div>
 
             {/* Priority */}
@@ -146,10 +146,10 @@ export function TaskDetailModal({ task, onClose, onUpdate }: Props) {
             {/* Category */}
             <div style={{ position:"relative", display:"inline-flex", alignItems:"center" }}>
               <select value={local.category} onChange={e => update({ category: e.target.value as Category })}
-                style={{ ...sel, background:"#F0F0F2", color:"#1D1D1F", padding:"6px 28px 6px 12px", borderRadius:99 }}>
+                style={{ ...sel, background:"#F0F0F2", color:"var(--foreground)", padding:"6px 28px 6px 12px", borderRadius:99 }}>
                 {CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
               </select>
-              <ChevronDown style={{ position:"absolute", right:8, width:12, height:12, color:"#8E8E93", pointerEvents:"none" }} />
+              <ChevronDown style={{ position:"absolute", right:8, width:12, height:12, color:"var(--tertiary)", pointerEvents:"none" }} />
             </div>
           </div>
 
@@ -170,10 +170,10 @@ export function TaskDetailModal({ task, onClose, onUpdate }: Props) {
                 </div>
               )}
               <div style={{ flex:1, minWidth:0 }}>
-                <p style={{ fontSize:"0.6875rem", color:"#8E8E93", marginBottom:2 }}>Assignee</p>
+                <p style={{ fontSize:"0.6875rem", color:"var(--tertiary)", marginBottom:2 }}>Assignee</p>
                 <div style={{ position:"relative" }}>
                   <select value={local.assigneeId || ""} onChange={e => update({ assigneeId: e.target.value || undefined })}
-                    style={{ ...sel, fontSize:"0.8125rem", color:"#1D1D1F", width:"100%" }}>
+                    style={{ ...sel, fontSize:"0.8125rem", color:"var(--foreground)", width:"100%" }}>
                     <option value="">Unassigned</option>
                     {TEAM_MEMBERS.map(m => <option key={m.id} value={m.id}>{m.name}</option>)}
                   </select>
@@ -183,7 +183,7 @@ export function TaskDetailModal({ task, onClose, onUpdate }: Props) {
 
             {/* Due date */}
             <div className="inset-cell">
-              <p style={{ fontSize:"0.6875rem", color:"#8E8E93", marginBottom:6 }}>Due Date</p>
+              <p style={{ fontSize:"0.6875rem", color:"var(--tertiary)", marginBottom:6 }}>Due Date</p>
               <div style={{ display:"flex", alignItems:"center", gap:8 }}>
                 <Calendar style={{ width:14, height:14, color: isOverdue ? "#C0392B" : "#8E8E93", flexShrink:0 }} />
                 <input type="date" value={local.dueDate || ""}
@@ -196,10 +196,10 @@ export function TaskDetailModal({ task, onClose, onUpdate }: Props) {
 
           {/* Description */}
           <div className="inset-cell">
-            <p style={{ fontSize:"0.6875rem", fontWeight:700, letterSpacing:"0.06em", textTransform:"uppercase", color:"#8E8E93", marginBottom:10 }}>Description</p>
+            <p style={{ fontSize:"0.6875rem", fontWeight:700, letterSpacing:"0.06em", textTransform:"uppercase", color:"var(--tertiary)", marginBottom:10 }}>Description</p>
             <textarea
               style={{
-                width:"100%", minHeight:80, fontSize:"0.875rem", color:"#1D1D1F",
+                width:"100%", minHeight:80, fontSize:"0.875rem", color:"var(--foreground)",
                 background:"transparent", border:"none", outline:"none", resize:"none",
                 fontFamily:"inherit", lineHeight:1.6,
               }}
@@ -212,7 +212,7 @@ export function TaskDetailModal({ task, onClose, onUpdate }: Props) {
           {/* Subtasks */}
           <div className="inset-cell">
             <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:12 }}>
-              <p style={{ fontSize:"0.6875rem", fontWeight:700, letterSpacing:"0.06em", textTransform:"uppercase", color:"#8E8E93" }}>
+              <p style={{ fontSize:"0.6875rem", fontWeight:700, letterSpacing:"0.06em", textTransform:"uppercase", color:"var(--tertiary)" }}>
                 Subtasks
               </p>
               {local.subtasks.length > 0 && (
@@ -239,7 +239,7 @@ export function TaskDetailModal({ task, onClose, onUpdate }: Props) {
                 >
                   {st.done
                     ? <CheckSquare style={{ width:16, height:16, color:"#34C759", flexShrink:0 }} />
-                    : <Square     style={{ width:16, height:16, color:"#C7C7CC", flexShrink:0 }} />
+                    : <Square     style={{ width:16, height:16, color:"var(--tertiary)", flexShrink:0 }} />
                   }
                   <span style={{ fontSize:"0.875rem", color: st.done ? "#8E8E93" : "#1D1D1F",
                     textDecoration: st.done ? "line-through" : "none" }}>
@@ -255,7 +255,7 @@ export function TaskDetailModal({ task, onClose, onUpdate }: Props) {
                 style={{
                   flex:1, fontSize:"0.875rem", padding:"8px 12px", borderRadius:10,
                   border:"1px solid rgba(0,0,0,0.08)", outline:"none", fontFamily:"inherit",
-                  background:"#FAFAFA", color:"#1D1D1F",
+                  background:"#FAFAFA", color:"var(--foreground)",
                 }}
                 placeholder="Add subtask…"
                 value={newSub}
@@ -278,7 +278,7 @@ export function TaskDetailModal({ task, onClose, onUpdate }: Props) {
           {/* Activity */}
           {local.activity.length > 0 && (
             <div className="inset-cell">
-              <p style={{ fontSize:"0.6875rem", fontWeight:700, letterSpacing:"0.06em", textTransform:"uppercase", color:"#8E8E93", marginBottom:12 }}>Activity</p>
+              <p style={{ fontSize:"0.6875rem", fontWeight:700, letterSpacing:"0.06em", textTransform:"uppercase", color:"var(--tertiary)", marginBottom:12 }}>Activity</p>
               <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
                 {local.activity.map(a => {
                   const actor = TEAM_MEMBERS.find(m => m.id === a.actorId)
@@ -289,9 +289,9 @@ export function TaskDetailModal({ task, onClose, onUpdate }: Props) {
                         fontSize:"0.5625rem", fontWeight:800, color:"#fff", flexShrink:0 }}>
                         {actor?.initials?.charAt(0)}
                       </div>
-                      <span style={{ fontSize:"0.8125rem", fontWeight:600, color:"#1D1D1F" }}>{actor?.name || a.actorId}</span>
-                      <span style={{ fontSize:"0.8125rem", color:"#8E8E93" }}>{a.action}</span>
-                      <span style={{ marginLeft:"auto", fontSize:"0.6875rem", color:"#C7C7CC" }}>
+                      <span style={{ fontSize:"0.8125rem", fontWeight:600, color:"var(--foreground)" }}>{actor?.name || a.actorId}</span>
+                      <span style={{ fontSize:"0.8125rem", color:"var(--tertiary)" }}>{a.action}</span>
+                      <span style={{ marginLeft:"auto", fontSize:"0.6875rem", color:"var(--tertiary)" }}>
                         {new Date(a.timestamp).toLocaleDateString()}
                       </span>
                     </div>

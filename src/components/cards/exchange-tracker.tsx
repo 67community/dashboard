@@ -21,13 +21,13 @@ const STATUS_CONFIG: Record<ExchangeStatus, { label: string; emoji: string; colo
   "listed":      { label: "Listed",      emoji: "✅", color: "#059669", bg: "rgba(5,150,105,0.08)"  },
   "in-progress": { label: "In Progress", emoji: "⏳", color: "#D97706", bg: "rgba(217,119,6,0.08)"  },
   "target":      { label: "Target",      emoji: "🎯", color: "#2563EB", bg: "rgba(37,99,235,0.08)"  },
-  "rejected":    { label: "Passed",      emoji: "❌", color: "#A1A1AA", bg: "#F4F4F5"               },
+  "rejected":    { label: "Passed",      emoji: "❌", color: "var(--secondary)", bg: "#F4F4F5"               },
 }
 
 const TIER_CONFIG = {
   1: { label: "Tier 1", color: "#F5A623" },
   2: { label: "Tier 2", color: "#2563EB" },
-  3: { label: "Tier 3", color: "#8E8E93" },
+  3: { label: "Tier 3", color: "var(--tertiary)" },
 }
 
 function getLogoUrl(name: string, url?: string): string {
@@ -109,7 +109,7 @@ function ExchangeLogo({ name, url, size = 36 }: { name: string; url?: string; si
   }
   return (
     <img src={logoUrl} alt={name} width={size} height={size}
-      style={{ borderRadius: size * 0.28, objectFit: "contain", background: "#fff", flexShrink: 0 }}
+      style={{ borderRadius: size * 0.28, objectFit: "contain", background: "var(--card)", flexShrink: 0 }}
       onError={() => setErr(true)} />
   )
 }
@@ -168,7 +168,7 @@ export function ExchangeTrackerCard() {
 
       {/* Logo grid — listed */}
       <div>
-        <p style={{ fontSize:"0.625rem", fontWeight:800, color:"#8E8E93", textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:10 }}>
+        <p style={{ fontSize:"0.625rem", fontWeight:800, color:"var(--tertiary)", textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:10 }}>
           Listed on {listed.length} Exchanges
         </p>
         <div style={{ display:"flex", flexWrap:"wrap", gap:10 }}>
@@ -176,10 +176,10 @@ export function ExchangeTrackerCard() {
             <a key={e.id} href={e.url} target="_blank" rel="noopener noreferrer"
               title={e.name}
               style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:5, textDecoration:"none" }}>
-              <div style={{ width:48, height:48, borderRadius:13, border:"1.5px solid rgba(0,0,0,0.07)", background:"#fff", display:"flex", alignItems:"center", justifyContent:"center", overflow:"hidden", boxShadow:"0 1px 4px rgba(0,0,0,0.06)" }}>
+              <div style={{ width:48, height:48, borderRadius:13, border:"1.5px solid var(--separator)", background:"var(--card)", display:"flex", alignItems:"center", justifyContent:"center", overflow:"hidden", boxShadow:"0 1px 4px rgba(0,0,0,0.06)" }}>
                 <ExchangeLogo name={e.name} url={e.url} size={38} />
               </div>
-              <span style={{ fontSize:"0.5rem", fontWeight:700, color:"#8E8E93", textAlign:"center", maxWidth:52, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{e.name}</span>
+              <span style={{ fontSize:"0.5rem", fontWeight:700, color:"var(--tertiary)", textAlign:"center", maxWidth:52, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{e.name}</span>
             </a>
           ))}
         </div>
@@ -190,8 +190,8 @@ export function ExchangeTrackerCard() {
         <div key={e.id} style={{ display:"flex", alignItems:"center", gap:10, padding:"10px 12px", background:"rgba(217,119,6,0.06)", borderRadius:12, border:"1px solid rgba(217,119,6,0.18)" }}>
           <ExchangeLogo name={e.name} url={e.url} size={32} />
           <div style={{ flex:1 }}>
-            <p style={{ fontSize:"0.875rem", fontWeight:700, color:"#1D1D1F", margin:0 }}>{e.name}</p>
-            {e.note && <p style={{ fontSize:"0.75rem", color:"#8E8E93", margin:0 }}>{e.note}</p>}
+            <p style={{ fontSize:"0.875rem", fontWeight:700, color:"var(--foreground)", margin:0 }}>{e.name}</p>
+            {e.note && <p style={{ fontSize:"0.75rem", color:"var(--tertiary)", margin:0 }}>{e.note}</p>}
           </div>
           <span style={{ fontSize:"0.75rem", fontWeight:700, color:"#D97706", background:"rgba(217,119,6,0.1)", padding:"3px 9px", borderRadius:99 }}>⏳ In Progress</span>
         </div>
@@ -235,29 +235,29 @@ export function ExchangeTrackerCard() {
         <button onClick={() => setAddOpen(true)}
           style={{ display:"flex", alignItems:"center", gap:6, padding:"10px 14px", borderRadius:12,
             border:"1.5px dashed rgba(0,0,0,0.12)", background:"none", cursor:"pointer", width:"100%",
-            color:"#8E8E93", fontSize:"0.875rem", fontWeight:600 }}>
+            color:"var(--tertiary)", fontSize:"0.875rem", fontWeight:600 }}>
           <Plus style={{ width:14, height:14 }} /> Add exchange
         </button>
       ) : (
         <div style={{ background:"#FAFAFA", borderRadius:12, padding:14, display:"flex", flexDirection:"column", gap:8 }}>
           <div style={{ display:"flex", gap:6 }}>
             <input value={name} onChange={e => setName(e.target.value)} placeholder="Exchange name" autoFocus
-              style={{ flex:2, padding:"8px 10px", borderRadius:8, border:"1.5px solid rgba(0,0,0,0.1)", outline:"none", fontSize:"0.875rem", fontFamily:"inherit", background:"#fff" }} />
+              style={{ flex:2, padding:"8px 10px", borderRadius:8, border:"1.5px solid var(--separator)", outline:"none", fontSize:"0.875rem", fontFamily:"inherit", background:"var(--card)" }} />
             <input value={url} onChange={e => setUrl(e.target.value)} placeholder="https://..."
-              style={{ flex:2, padding:"8px 10px", borderRadius:8, border:"1.5px solid rgba(0,0,0,0.1)", outline:"none", fontSize:"0.875rem", fontFamily:"inherit", background:"#fff" }} />
+              style={{ flex:2, padding:"8px 10px", borderRadius:8, border:"1.5px solid var(--separator)", outline:"none", fontSize:"0.875rem", fontFamily:"inherit", background:"var(--card)" }} />
           </div>
           <div style={{ display:"flex", gap:6 }}>
             <select value={status} onChange={e => setStatus(e.target.value as ExchangeStatus)}
-              style={{ flex:2, padding:"8px 10px", borderRadius:8, border:"1.5px solid rgba(0,0,0,0.1)", outline:"none", fontSize:"0.875rem", fontFamily:"inherit", background:"#fff" }}>
+              style={{ flex:2, padding:"8px 10px", borderRadius:8, border:"1.5px solid var(--separator)", outline:"none", fontSize:"0.875rem", fontFamily:"inherit", background:"var(--card)" }}>
               {Object.entries(STATUS_CONFIG).map(([k,v]) => <option key={k} value={k}>{v.emoji} {v.label}</option>)}
             </select>
             <select value={tier} onChange={e => setTier(Number(e.target.value) as 1|2|3)}
-              style={{ flex:1, padding:"8px 10px", borderRadius:8, border:"1.5px solid rgba(0,0,0,0.1)", outline:"none", fontSize:"0.875rem", fontFamily:"inherit", background:"#fff" }}>
+              style={{ flex:1, padding:"8px 10px", borderRadius:8, border:"1.5px solid var(--separator)", outline:"none", fontSize:"0.875rem", fontFamily:"inherit", background:"var(--card)" }}>
               <option value={1}>Tier 1</option><option value={2}>Tier 2</option><option value={3}>Tier 3</option>
             </select>
           </div>
           <input value={note} onChange={e => setNote(e.target.value)} placeholder="Notes (optional)"
-            style={{ padding:"8px 10px", borderRadius:8, border:"1.5px solid rgba(0,0,0,0.1)", outline:"none", fontSize:"0.875rem", fontFamily:"inherit", background:"#fff" }} />
+            style={{ padding:"8px 10px", borderRadius:8, border:"1.5px solid var(--separator)", outline:"none", fontSize:"0.875rem", fontFamily:"inherit", background:"var(--card)" }} />
           <div style={{ display:"flex", gap:6 }}>
             <button onClick={addExchange} disabled={!name.trim()}
               style={{ flex:1, padding:"9px 0", borderRadius:8, border:"none", cursor: !name.trim() ? "not-allowed" : "pointer",
@@ -265,7 +265,7 @@ export function ExchangeTrackerCard() {
               Add Exchange
             </button>
             <button onClick={() => { setAddOpen(false); setName(""); setUrl(""); setNote("") }}
-              style={{ padding:"9px 16px", borderRadius:8, border:"1.5px solid rgba(0,0,0,0.1)", background:"none", cursor:"pointer", fontSize:"0.875rem", color:"#8E8E93" }}>
+              style={{ padding:"9px 16px", borderRadius:8, border:"1.5px solid var(--separator)", background:"none", cursor:"pointer", fontSize:"0.875rem", color:"var(--tertiary)" }}>
               Cancel
             </button>
           </div>
@@ -279,19 +279,19 @@ export function ExchangeTrackerCard() {
           const tc = TIER_CONFIG[e.tier]
           return (
             <div key={e.id} style={{ display:"flex", alignItems:"center", gap:12, padding:"12px 14px", borderRadius:14, background: sc.bg, border:`1px solid ${sc.color}22` }}>
-              <div style={{ width:44, height:44, borderRadius:11, border:"1.5px solid rgba(0,0,0,0.07)", background:"#fff", display:"flex", alignItems:"center", justifyContent:"center", overflow:"hidden", flexShrink:0 }}>
+              <div style={{ width:44, height:44, borderRadius:11, border:"1.5px solid var(--separator)", background:"var(--card)", display:"flex", alignItems:"center", justifyContent:"center", overflow:"hidden", flexShrink:0 }}>
                 <ExchangeLogo name={e.name} url={e.url} size={34} />
               </div>
               <div style={{ flex:1, minWidth:0 }}>
                 <div style={{ display:"flex", alignItems:"center", gap:6, marginBottom:1 }}>
-                  <p style={{ fontSize:"0.9375rem", fontWeight:700, color:"#1D1D1F", margin:0, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{e.name}</p>
+                  <p style={{ fontSize:"0.9375rem", fontWeight:700, color:"var(--foreground)", margin:0, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{e.name}</p>
                   <span style={{ fontSize:"0.5625rem", fontWeight:800, color: tc.color, background:"rgba(0,0,0,0.05)", padding:"2px 6px", borderRadius:99, flexShrink:0 }}>{tc.label}</span>
                 </div>
-                {e.note && <p style={{ fontSize:"0.75rem", color:"#8E8E93", margin:0 }}>{e.note}</p>}
+                {e.note && <p style={{ fontSize:"0.75rem", color:"var(--tertiary)", margin:0 }}>{e.note}</p>}
               </div>
               <div style={{ display:"flex", gap:6, alignItems:"center", flexShrink:0 }}>
                 {e.url && (
-                  <a href={e.url} target="_blank" rel="noopener noreferrer" style={{ color:"#A1A1AA", display:"flex" }}>
+                  <a href={e.url} target="_blank" rel="noopener noreferrer" style={{ color:"var(--secondary)", display:"flex" }}>
                     <ExternalLink style={{ width:14, height:14 }} />
                   </a>
                 )}

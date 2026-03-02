@@ -93,16 +93,16 @@ export function PriceMilestonesCard() {
       {/* Current price */}
       <div style={{ display:"flex", gap:8 }}>
         <div className="inset-cell" style={{ flex:1 }}>
-          <p style={{ fontSize:"0.625rem", fontWeight:700, color:"#8E8E93",
+          <p style={{ fontSize:"0.625rem", fontWeight:700, color:"var(--tertiary)",
             textTransform:"uppercase", letterSpacing:"0.06em", marginBottom:4 }}>Live Price</p>
-          <p style={{ fontSize:"1.125rem", fontWeight:800, color:"#1D1D1F",
+          <p style={{ fontSize:"1.125rem", fontWeight:800, color:"var(--foreground)",
             letterSpacing:"-0.03em" }}>{price > 0 ? fmt(price) : "—"}</p>
         </div>
         <div className="inset-cell" style={{ flex:1, textAlign:"center" }}>
           <p style={{ fontSize:"1.5rem", fontWeight:800, color:"#F5A623", lineHeight:1 }}>
             {hitCount}/{milestones.length}
           </p>
-          <p style={{ fontSize:"0.625rem", color:"#8E8E93", fontWeight:600,
+          <p style={{ fontSize:"0.625rem", color:"var(--tertiary)", fontWeight:600,
             textTransform:"uppercase", letterSpacing:"0.06em", marginTop:3 }}>Hit</p>
         </div>
       </div>
@@ -113,15 +113,15 @@ export function PriceMilestonesCard() {
           borderRadius:12, padding:"12px 14px" }}>
           <p style={{ fontSize:"0.625rem", fontWeight:700, color:"#F5A623",
             textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:6 }}>🎯 Next Target</p>
-          <p style={{ fontSize:"0.9375rem", fontWeight:800, color:"#1D1D1F" }}>{nextHit.label}</p>
-          <p style={{ fontSize:"0.75rem", color:"#8E8E93", marginTop:2 }}>{fmt(nextHit.targetPrice)}</p>
+          <p style={{ fontSize:"0.9375rem", fontWeight:800, color:"var(--foreground)" }}>{nextHit.label}</p>
+          <p style={{ fontSize:"0.75rem", color:"var(--tertiary)", marginTop:2 }}>{fmt(nextHit.targetPrice)}</p>
           {price > 0 && (
             <>
               <div className="prog-track" style={{ height:6, marginTop:8 }}>
                 <div className="prog-fill" style={{ height:6, width:`${pct(price, nextHit.targetPrice)}%`,
                   background:"#F5A623" }} />
               </div>
-              <p style={{ fontSize:"0.6875rem", color:"#8E8E93", marginTop:4 }}>
+              <p style={{ fontSize:"0.6875rem", color:"var(--tertiary)", marginTop:4 }}>
                 {pct(price, nextHit.targetPrice).toFixed(1)}% there · {fmt(nextHit.targetPrice - price)} away
               </p>
             </>
@@ -131,14 +131,14 @@ export function PriceMilestonesCard() {
 
       {/* Milestone list */}
       <div onClick={e => e.stopPropagation()}
-        style={{ display:"flex", flexDirection:"column", gap:6, borderTop:"1px solid rgba(0,0,0,0.06)", paddingTop:12 }}>
+        style={{ display:"flex", flexDirection:"column", gap:6, borderTop:"1px solid var(--separator)", paddingTop:12 }}>
         {sorted.slice(0,4).map(m => (
           <div key={m.id} style={{ display:"flex", alignItems:"center", gap:8 }}>
             <span style={{ fontSize:"0.875rem" }}>{m.hit ? "✅" : "⬜"}</span>
             <span style={{ flex:1, fontSize:"0.8125rem", fontWeight: m.hit ? 500 : 600,
-              color: m.hit ? "#A1A1AA" : "#1D1D1F",
+              color: m.hit ? "var(--tertiary)" : "var(--foreground)",
               textDecoration: m.hit ? "line-through" : "none" }}>{m.label}</span>
-            <span style={{ fontSize:"0.6875rem", color:"#8E8E93", fontFamily:"monospace" }}>
+            <span style={{ fontSize:"0.6875rem", color:"var(--tertiary)", fontFamily:"monospace" }}>
               {fmt(m.targetPrice)}
             </span>
           </div>
@@ -153,24 +153,24 @@ export function PriceMilestonesCard() {
         <button onClick={() => setAddOpen(true)}
           style={{ display:"flex", alignItems:"center", gap:6, padding:"8px 12px",
             borderRadius:10, border:"1.5px dashed rgba(0,0,0,0.12)", background:"none",
-            cursor:"pointer", width:"100%", color:"#8E8E93", fontSize:"0.875rem", fontWeight:600 }}>
+            cursor:"pointer", width:"100%", color:"var(--tertiary)", fontSize:"0.875rem", fontWeight:600 }}>
           <Plus style={{ width:14, height:14 }} /> Add milestone
         </button>
       ) : (
         <div style={{ background:"#FAFAFA", borderRadius:12, padding:12,
           display:"flex", flexDirection:"column", gap:8 }}>
           <input value={label} onChange={e => setLabel(e.target.value)} placeholder="Milestone name"
-            style={{ padding:"8px 10px", borderRadius:8, border:"1.5px solid rgba(0,0,0,0.1)",
+            style={{ padding:"8px 10px", borderRadius:8, border:"1.5px solid var(--separator)",
               outline:"none", fontSize:"0.875rem", fontFamily:"inherit", background:"#FFF" }}
             onFocus={e => e.target.style.borderColor="#F5A623"}
             onBlur={e  => e.target.style.borderColor="rgba(0,0,0,0.1)"} />
           <input value={target} onChange={e => setTarget(e.target.value)} placeholder="Target price (e.g. 0.00001)"
-            style={{ padding:"8px 10px", borderRadius:8, border:"1.5px solid rgba(0,0,0,0.1)",
+            style={{ padding:"8px 10px", borderRadius:8, border:"1.5px solid var(--separator)",
               outline:"none", fontSize:"0.875rem", fontFamily:"inherit", background:"#FFF" }}
             onFocus={e => e.target.style.borderColor="#F5A623"}
             onBlur={e  => e.target.style.borderColor="rgba(0,0,0,0.1)"} />
           <input value={note} onChange={e => setNote(e.target.value)} placeholder="Note (optional)"
-            style={{ padding:"8px 10px", borderRadius:8, border:"1.5px solid rgba(0,0,0,0.1)",
+            style={{ padding:"8px 10px", borderRadius:8, border:"1.5px solid var(--separator)",
               outline:"none", fontSize:"0.875rem", fontFamily:"inherit", background:"#FFF" }}
             onFocus={e => e.target.style.borderColor="#F5A623"}
             onBlur={e  => e.target.style.borderColor="rgba(0,0,0,0.1)"} />
@@ -182,8 +182,8 @@ export function PriceMilestonesCard() {
                 color: !label.trim()||!target ? "#A1A1AA" : "#000",
                 fontSize:"0.8125rem", fontWeight:700 }}>Add 🎯</button>
             <button onClick={() => setAddOpen(false)}
-              style={{ padding:"8px 14px", borderRadius:8, border:"1.5px solid rgba(0,0,0,0.1)",
-                background:"none", cursor:"pointer", fontSize:"0.8125rem", color:"#8E8E93" }}>Cancel</button>
+              style={{ padding:"8px 14px", borderRadius:8, border:"1.5px solid var(--separator)",
+                background:"none", cursor:"pointer", fontSize:"0.8125rem", color:"var(--tertiary)" }}>Cancel</button>
           </div>
         </div>
       )}
@@ -195,12 +195,12 @@ export function PriceMilestonesCard() {
             <div key={m.id} className="inset-cell">
               <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:8 }}>
                 <div>
-                  <p style={{ fontSize:"0.875rem", fontWeight:700, color: m.hit ? "#A1A1AA" : "#1D1D1F",
+                  <p style={{ fontSize:"0.875rem", fontWeight:700, color: m.hit ? "var(--tertiary)" : "var(--foreground)",
                     textDecoration: m.hit ? "line-through" : "none" }}>{m.label}</p>
-                  {m.note && <p style={{ fontSize:"0.75rem", color:"#A1A1AA" }}>{m.note}</p>}
+                  {m.note && <p style={{ fontSize:"0.75rem", color:"var(--secondary)" }}>{m.note}</p>}
                 </div>
                 <div style={{ display:"flex", alignItems:"center", gap:6 }}>
-                  <span style={{ fontSize:"0.75rem", fontWeight:700, color:"#8E8E93",
+                  <span style={{ fontSize:"0.75rem", fontWeight:700, color:"var(--tertiary)",
                     fontFamily:"monospace" }}>{fmt(m.targetPrice)}</span>
                   <span style={{ fontSize:"1rem" }}>{m.hit ? "✅" : "⬜"}</span>
                   <button onClick={() => save(milestones.filter(x => x.id !== m.id))}
@@ -215,7 +215,7 @@ export function PriceMilestonesCard() {
                   <div className="prog-track" style={{ height:6 }}>
                     <div className="prog-fill" style={{ height:6, width:`${p}%`, background:"#F5A623" }} />
                   </div>
-                  <p style={{ fontSize:"0.6875rem", color:"#8E8E93", marginTop:4 }}>
+                  <p style={{ fontSize:"0.6875rem", color:"var(--tertiary)", marginTop:4 }}>
                     {p.toFixed(1)}% · {fmt(m.targetPrice - price)} to go
                   </p>
                 </>

@@ -28,7 +28,7 @@ const CH_CONFIG: Record<AnnChannel, { emoji: string; label: string; color: strin
 }
 
 const TYPE_CONFIG: Record<AnnType, { label: string; color: string }> = {
-  general:   { label: "General",   color: "#8E8E93" },
+  general:   { label: "General",   color: "var(--tertiary)" },
   price:     { label: "Price 📈",  color: "#059669" },
   raid:      { label: "Raid ⚔️",   color: "#EF4444" },
   event:     { label: "Event 📅",  color: "#7C3AED" },
@@ -37,7 +37,7 @@ const TYPE_CONFIG: Record<AnnType, { label: string; color: string }> = {
 }
 
 const STATUS_CONFIG: Record<AnnStatus, { label: string; color: string; bg: string }> = {
-  draft:    { label: "Draft",     color: "#8E8E93", bg: "#F4F4F5"                },
+  draft:    { label: "Draft",     color: "var(--tertiary)", bg: "#F4F4F5"                },
   approved: { label: "Approved ✓",color: "#2563EB", bg: "rgba(37,99,235,0.08)"  },
   posted:   { label: "Posted ✅", color: "#059669", bg: "rgba(5,150,105,0.08)"  },
 }
@@ -47,7 +47,7 @@ function CopyBtn({ text, label = "Copy" }: { text: string; label?: string }) {
   return (
     <button onClick={e => { e.stopPropagation(); navigator.clipboard.writeText(text).catch(()=>{}); setDone(true); setTimeout(()=>setDone(false),1500) }}
       style={{ display:"flex", alignItems:"center", gap:4, padding:"5px 12px",
-        borderRadius:8, border:"1.5px solid rgba(0,0,0,0.1)", background:"none",
+        borderRadius:8, border:"1.5px solid var(--separator)", background:"none",
         cursor:"pointer", fontSize:"0.75rem", fontWeight:700,
         color: done ? "#059669" : "#374151", transition:"color 0.2s" }}>
       {done ? <Check style={{ width:13, height:13 }} /> : <Copy style={{ width:13, height:13 }} />}
@@ -66,12 +66,12 @@ function AnnRow({ a, onStatus, onDelete }: {
       <div style={{ display:"flex", alignItems:"flex-start", gap:8 }}>
         <span style={{ fontSize:"1rem", flexShrink:0 }}>{cc.emoji}</span>
         <div style={{ flex:1 }}>
-          <p style={{ fontSize:"0.875rem", fontWeight:700, color:"#1D1D1F" }}>{a.title}</p>
+          <p style={{ fontSize:"0.875rem", fontWeight:700, color:"var(--foreground)" }}>{a.title}</p>
           <div style={{ display:"flex", gap:6, marginTop:2, flexWrap:"wrap" }}>
             <span style={{ fontSize:"0.625rem", fontWeight:700, color: TYPE_CONFIG[a.type].color }}>
               {TYPE_CONFIG[a.type].label}
             </span>
-            <span style={{ fontSize:"0.625rem", color:"#A1A1AA" }}>·</span>
+            <span style={{ fontSize:"0.625rem", color:"var(--secondary)" }}>·</span>
             <span style={{ fontSize:"0.625rem", fontWeight:600, color: cc.color }}>{cc.label}</span>
           </div>
         </div>
@@ -79,7 +79,7 @@ function AnnRow({ a, onStatus, onDelete }: {
           background: sc.bg, padding:"2px 8px", borderRadius:99, flexShrink:0 }}>{sc.label}</span>
       </div>
 
-      <p style={{ fontSize:"0.8125rem", color:"#374151", lineHeight:1.55,
+      <p style={{ fontSize:"0.8125rem", color:"var(--foreground)", lineHeight:1.55,
         paddingLeft:28, whiteSpace:"pre-wrap" }}>{a.body}</p>
 
       <div style={{ display:"flex", gap:6, paddingLeft:28, flexWrap:"wrap" }}>
@@ -100,7 +100,7 @@ function AnnRow({ a, onStatus, onDelete }: {
         )}
         <button onClick={e => { e.stopPropagation(); onDelete(a.id) }}
           style={{ marginLeft:"auto", background:"none", border:"none", cursor:"pointer",
-            color:"#A1A1AA", display:"flex", alignItems:"center" }}>
+            color:"var(--secondary)", display:"flex", alignItems:"center" }}>
           <Trash2 style={{ width:14, height:14 }} />
         </button>
       </div>
@@ -169,7 +169,7 @@ export function AnnouncementsCard() {
         ].map(({ n,l,c }) => (
           <div key={l} className="inset-cell" style={{ flex:1, textAlign:"center" }}>
             <p style={{ fontSize:"1.5rem", fontWeight:800, color:c, lineHeight:1 }}>{n}</p>
-            <p style={{ fontSize:"0.625rem", color:"#8E8E93", fontWeight:600,
+            <p style={{ fontSize:"0.625rem", color:"var(--tertiary)", fontWeight:600,
               textTransform:"uppercase", letterSpacing:"0.06em", marginTop:3 }}>{l}</p>
           </div>
         ))}
@@ -180,25 +180,25 @@ export function AnnouncementsCard() {
           <button onClick={() => setAddOpen(true)}
             style={{ display:"flex", alignItems:"center", gap:6, padding:"8px 12px",
               borderRadius:10, border:"1.5px dashed rgba(0,0,0,0.12)", background:"none",
-              cursor:"pointer", width:"100%", color:"#8E8E93", fontSize:"0.875rem", fontWeight:600 }}>
+              cursor:"pointer", width:"100%", color:"var(--tertiary)", fontSize:"0.875rem", fontWeight:600 }}>
             <Plus style={{ width:14, height:14 }} /> Write announcement
           </button>
         ) : (
           <div style={{ background:"#FAFAFA", borderRadius:12, padding:12,
             display:"flex", flexDirection:"column", gap:8 }}>
             <input value={title} onChange={e => setTitle(e.target.value)} placeholder="Announcement title"
-              style={{ padding:"8px 10px", borderRadius:8, border:"1.5px solid rgba(0,0,0,0.1)",
+              style={{ padding:"8px 10px", borderRadius:8, border:"1.5px solid var(--separator)",
                 outline:"none", fontSize:"0.875rem", fontFamily:"inherit", background:"#FFF" }}
               onFocus={e => e.target.style.borderColor="#F5A623"}
               onBlur={e  => e.target.style.borderColor="rgba(0,0,0,0.1)"} />
             <div style={{ display:"flex", gap:6 }}>
               <select value={type} onChange={e => setType(e.target.value as AnnType)}
-                style={{ flex:1, padding:"7px 8px", borderRadius:8, border:"1.5px solid rgba(0,0,0,0.1)",
+                style={{ flex:1, padding:"7px 8px", borderRadius:8, border:"1.5px solid var(--separator)",
                   outline:"none", fontSize:"0.8125rem", fontFamily:"inherit", background:"#FFF" }}>
                 {Object.entries(TYPE_CONFIG).map(([k,v]) => <option key={k} value={k}>{v.label}</option>)}
               </select>
               <select value={channel} onChange={e => setChannel(e.target.value as AnnChannel)}
-                style={{ flex:1, padding:"7px 8px", borderRadius:8, border:"1.5px solid rgba(0,0,0,0.1)",
+                style={{ flex:1, padding:"7px 8px", borderRadius:8, border:"1.5px solid var(--separator)",
                   outline:"none", fontSize:"0.8125rem", fontFamily:"inherit", background:"#FFF" }}>
                 {Object.entries(CH_CONFIG).map(([k,v]) => <option key={k} value={k}>{v.emoji} {v.label}</option>)}
               </select>
@@ -206,7 +206,7 @@ export function AnnouncementsCard() {
             <div style={{ position:"relative" }}>
               <textarea value={body} onChange={e => setBody(e.target.value)}
                 placeholder="Announcement body…" rows={4}
-                style={{ width:"100%", padding:"8px 10px", borderRadius:8, border:"1.5px solid rgba(0,0,0,0.1)",
+                style={{ width:"100%", padding:"8px 10px", borderRadius:8, border:"1.5px solid var(--separator)",
                   outline:"none", fontSize:"0.875rem", fontFamily:"inherit",
                   background:"#FFF", resize:"none", boxSizing:"border-box" }}
                 onFocus={e => e.target.style.borderColor="#F5A623"}
@@ -230,8 +230,8 @@ export function AnnouncementsCard() {
                   color: !title.trim() || !body.trim() ? "#A1A1AA" : "#000",
                   fontSize:"0.8125rem", fontWeight:700 }}>Save as Draft 📢</button>
               <button onClick={() => setAddOpen(false)}
-                style={{ padding:"8px 14px", borderRadius:8, border:"1.5px solid rgba(0,0,0,0.1)",
-                  background:"none", cursor:"pointer", fontSize:"0.8125rem", color:"#8E8E93" }}>Cancel</button>
+                style={{ padding:"8px 14px", borderRadius:8, border:"1.5px solid var(--separator)",
+                  background:"none", cursor:"pointer", fontSize:"0.8125rem", color:"var(--tertiary)" }}>Cancel</button>
             </div>
           </div>
         )}
@@ -272,7 +272,7 @@ export function AnnouncementsCard() {
       <button onClick={() => setAddOpen(v => !v)}
         style={{ display:"flex", alignItems:"center", gap:6, padding:"8px 12px",
           borderRadius:10, border:"1.5px dashed rgba(0,0,0,0.12)", background:"none",
-          cursor:"pointer", width:"100%", color:"#8E8E93", fontSize:"0.875rem", fontWeight:600 }}>
+          cursor:"pointer", width:"100%", color:"var(--tertiary)", fontSize:"0.875rem", fontWeight:600 }}>
         <Plus style={{ width:14, height:14 }} /> Write announcement
       </button>
 
@@ -280,18 +280,18 @@ export function AnnouncementsCard() {
         <div style={{ background:"#FAFAFA", borderRadius:12, padding:12,
           display:"flex", flexDirection:"column", gap:8 }}>
           <input value={title} onChange={e => setTitle(e.target.value)} placeholder="Title"
-            style={{ padding:"8px 10px", borderRadius:8, border:"1.5px solid rgba(0,0,0,0.1)",
+            style={{ padding:"8px 10px", borderRadius:8, border:"1.5px solid var(--separator)",
               outline:"none", fontSize:"0.875rem", fontFamily:"inherit", background:"#FFF" }}
             onFocus={e => e.target.style.borderColor="#F5A623"}
             onBlur={e  => e.target.style.borderColor="rgba(0,0,0,0.1)"} />
           <div style={{ display:"flex", gap:6 }}>
             <select value={type} onChange={e => setType(e.target.value as AnnType)}
-              style={{ flex:1, padding:"7px 8px", borderRadius:8, border:"1.5px solid rgba(0,0,0,0.1)",
+              style={{ flex:1, padding:"7px 8px", borderRadius:8, border:"1.5px solid var(--separator)",
                 outline:"none", fontSize:"0.8125rem", fontFamily:"inherit", background:"#FFF" }}>
               {Object.entries(TYPE_CONFIG).map(([k,v]) => <option key={k} value={k}>{v.label}</option>)}
             </select>
             <select value={channel} onChange={e => setChannel(e.target.value as AnnChannel)}
-              style={{ flex:1, padding:"7px 8px", borderRadius:8, border:"1.5px solid rgba(0,0,0,0.1)",
+              style={{ flex:1, padding:"7px 8px", borderRadius:8, border:"1.5px solid var(--separator)",
                 outline:"none", fontSize:"0.8125rem", fontFamily:"inherit", background:"#FFF" }}>
               {Object.entries(CH_CONFIG).map(([k,v]) => <option key={k} value={k}>{v.emoji} {v.label}</option>)}
             </select>
@@ -300,7 +300,7 @@ export function AnnouncementsCard() {
             <textarea value={body} onChange={e => setBody(e.target.value)}
               placeholder="Write or AI draft below…" rows={5}
               style={{ width:"100%", padding:"8px 10px", paddingBottom:40, borderRadius:8,
-                border:"1.5px solid rgba(0,0,0,0.1)", outline:"none",
+                border:"1.5px solid var(--separator)", outline:"none",
                 fontSize:"0.875rem", fontFamily:"inherit", background:"#FFF",
                 resize:"none", boxSizing:"border-box" }}
               onFocus={e => e.target.style.borderColor="#F5A623"}
@@ -324,15 +324,15 @@ export function AnnouncementsCard() {
                 color: !title.trim()||!body.trim() ? "#A1A1AA" : "#000",
                 fontSize:"0.8125rem", fontWeight:700 }}>Save Draft 📢</button>
             <button onClick={() => setAddOpen(false)}
-              style={{ padding:"8px 14px", borderRadius:8, border:"1.5px solid rgba(0,0,0,0.1)",
-                background:"none", cursor:"pointer", fontSize:"0.8125rem", color:"#8E8E93" }}>Cancel</button>
+              style={{ padding:"8px 14px", borderRadius:8, border:"1.5px solid var(--separator)",
+                background:"none", cursor:"pointer", fontSize:"0.8125rem", color:"var(--tertiary)" }}>Cancel</button>
           </div>
         </div>
       )}
 
       <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
         {filtered.length === 0
-          ? <p style={{ textAlign:"center", color:"#A1A1AA", fontSize:"0.875rem", padding:"20px 0" }}>No announcements yet.</p>
+          ? <p style={{ textAlign:"center", color:"var(--secondary)", fontSize:"0.875rem", padding:"20px 0" }}>No announcements yet.</p>
           : filtered.map(a => <AnnRow key={a.id} a={a} onStatus={updateStatus} onDelete={deleteAnn} />)}
       </div>
     </div>

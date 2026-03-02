@@ -186,7 +186,7 @@ export function CommunityLeaderboardCard() {
   const liveIndicator = () => cfg.live && (
     <div style={{ display:"flex", alignItems:"center", gap:5, marginBottom:2 }}>
       <Wifi style={{ width:10, height:10, color: loading ? "#A1A1AA" : "#10B981" }} />
-      <span style={{ fontSize:"0.625rem", color:"#A1A1AA", fontWeight:500 }}>
+      <span style={{ fontSize:"0.625rem", color:"var(--secondary)", fontWeight:500 }}>
         {loading ? "Refreshing…" : lastFetch ? `Live · ${new Date(lastFetch).toLocaleTimeString([], { hour:"2-digit", minute:"2-digit" })}` : "Live data"}
       </span>
       <button onClick={fetchLive} disabled={loading}
@@ -203,15 +203,15 @@ export function CommunityLeaderboardCard() {
         {i < 3 ? RANK_EMOJI[i] : `${i+1}.`}
       </span>
       <div style={{ flex:1, minWidth:0 }}>
-        <p style={{ fontSize:"0.875rem", fontWeight:700, color:"#1D1D1F",
+        <p style={{ fontSize:"0.875rem", fontWeight:700, color:"var(--foreground)",
           overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>
           {e.address
             ? <a href={`https://solscan.io/account/${e.address}`} target="_blank" rel="noopener noreferrer"
-                style={{ color:"#1D1D1F", textDecoration:"none" }}>{e.handle}</a>
+                style={{ color:"var(--foreground)", textDecoration:"none" }}>{e.handle}</a>
             : e.handle}
         </p>
         {e.meta && (
-          <span style={{ fontSize:"0.5625rem", color:"#6B7280", fontWeight:500 }}>{e.meta}</span>
+          <span style={{ fontSize:"0.5625rem", color:"var(--secondary)", fontWeight:500 }}>{e.meta}</span>
         )}
         {!e.meta && e.badge && (
           <span style={{ fontSize:"0.5625rem", fontWeight:700, color: cfg.color,
@@ -228,7 +228,7 @@ export function CommunityLeaderboardCard() {
             <ChevronUp style={{ width:12, height:12 }} />
           </button>
         )}
-        <span style={{ fontSize:"0.875rem", fontWeight:800, color:"#1D1D1F",
+        <span style={{ fontSize:"0.875rem", fontWeight:800, color:"var(--foreground)",
           minWidth:32, textAlign:"right" }}>
           {fmtScore(e.score, e.category)}
         </span>
@@ -248,7 +248,7 @@ export function CommunityLeaderboardCard() {
         <button onClick={ev => { if (stopProp) ev.stopPropagation(); setAddOpen(true) }}
           style={{ display:"flex", alignItems:"center", gap:6, padding:"7px 12px",
             borderRadius:10, border:"1.5px dashed rgba(0,0,0,0.12)", background:"none",
-            cursor:"pointer", width:"100%", color:"#8E8E93", fontSize:"0.8125rem", fontWeight:600 }}>
+            cursor:"pointer", width:"100%", color:"var(--tertiary)", fontSize:"0.8125rem", fontWeight:600 }}>
           <Plus style={{ width:13, height:13 }} /> Add contributor
         </button>
       ) : (
@@ -256,19 +256,19 @@ export function CommunityLeaderboardCard() {
           display:"flex", flexDirection:"column", gap:7 }}>
           <div style={{ display:"flex", gap:6 }}>
             <input value={handle} onChange={e => setHandle(e.target.value)} placeholder="@handle"
-              style={{ flex:2, padding:"7px 10px", borderRadius:8, border:"1.5px solid rgba(0,0,0,0.1)",
+              style={{ flex:2, padding:"7px 10px", borderRadius:8, border:"1.5px solid var(--separator)",
                 outline:"none", fontSize:"0.875rem", fontFamily:"inherit", background:"#FFF" }}
               onFocus={e => e.target.style.borderColor="#F5A623"}
               onBlur={e  => e.target.style.borderColor="rgba(0,0,0,0.1)"} />
             <input value={score} onChange={e => setScore(e.target.value)} placeholder="Score"
               type="number" min="0"
-              style={{ width:80, padding:"7px 10px", borderRadius:8, border:"1.5px solid rgba(0,0,0,0.1)",
+              style={{ width:80, padding:"7px 10px", borderRadius:8, border:"1.5px solid var(--separator)",
                 outline:"none", fontSize:"0.875rem", fontFamily:"inherit", background:"#FFF" }}
               onFocus={e => e.target.style.borderColor="#F5A623"}
               onBlur={e  => e.target.style.borderColor="rgba(0,0,0,0.1)"} />
           </div>
           <input value={badge} onChange={e => setBadge(e.target.value)} placeholder="Badge (e.g. OG Raider)"
-            style={{ padding:"7px 10px", borderRadius:8, border:"1.5px solid rgba(0,0,0,0.1)",
+            style={{ padding:"7px 10px", borderRadius:8, border:"1.5px solid var(--separator)",
               outline:"none", fontSize:"0.875rem", fontFamily:"inherit", background:"#FFF" }}
             onFocus={e => e.target.style.borderColor="#F5A623"}
             onBlur={e  => e.target.style.borderColor="rgba(0,0,0,0.1)"} />
@@ -280,8 +280,8 @@ export function CommunityLeaderboardCard() {
                 color: !handle.trim() ? "#A1A1AA" : "#000",
                 fontSize:"0.8125rem", fontWeight:700 }}>Add</button>
             <button onClick={() => setAddOpen(false)}
-              style={{ padding:"7px 12px", borderRadius:8, border:"1.5px solid rgba(0,0,0,0.1)",
-                background:"none", cursor:"pointer", fontSize:"0.8125rem", color:"#8E8E93" }}>✕</button>
+              style={{ padding:"7px 12px", borderRadius:8, border:"1.5px solid var(--separator)",
+                background:"none", cursor:"pointer", fontSize:"0.8125rem", color:"var(--tertiary)" }}>✕</button>
           </div>
         </div>
       )}
@@ -295,7 +295,7 @@ export function CommunityLeaderboardCard() {
       <div style={{ display:"flex", flexDirection:"column", gap:7 }}
         onClick={e => e.stopPropagation()}>
         {catEntries.length === 0 ? (
-          <p style={{ fontSize:"0.8125rem", color:"#A1A1AA", textAlign:"center", fontStyle:"italic",
+          <p style={{ fontSize:"0.8125rem", color:"var(--secondary)", textAlign:"center", fontStyle:"italic",
             padding:"8px 0" }}>
             {loading ? "Loading live data…" : "No data yet."}
           </p>
@@ -324,7 +324,7 @@ export function CommunityLeaderboardCard() {
               <span style={{ fontSize:"0.6875rem", fontWeight:700, color: active ? v.color : "#374151" }}>
                 {v.label}
               </span>
-              <span style={{ fontSize:"0.5625rem", color:"#A1A1AA" }}>{cnt}</span>
+              <span style={{ fontSize:"0.5625rem", color:"var(--secondary)" }}>{cnt}</span>
             </button>
           )
         })}
@@ -337,7 +337,7 @@ export function CommunityLeaderboardCard() {
       {/* Full list */}
       <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
         {catEntries.length === 0 ? (
-          <p style={{ textAlign:"center", color:"#A1A1AA", fontSize:"0.875rem", padding:"20px 0" }}>
+          <p style={{ textAlign:"center", color:"var(--secondary)", fontSize:"0.875rem", padding:"20px 0" }}>
             {loading
               ? "Loading live data…"
               : category === "contributors"
@@ -351,14 +351,14 @@ export function CommunityLeaderboardCard() {
               {i < 3 ? RANK_EMOJI[i] : `${i+1}.`}
             </span>
             <div style={{ flex:1 }}>
-              <p style={{ fontSize:"0.875rem", fontWeight:700, color:"#1D1D1F" }}>
+              <p style={{ fontSize:"0.875rem", fontWeight:700, color:"var(--foreground)" }}>
                 {e.address
                   ? <a href={`https://solscan.io/account/${e.address}`} target="_blank" rel="noopener noreferrer"
-                      style={{ color:"#1D1D1F", textDecoration:"none" }}>{e.handle}</a>
+                      style={{ color:"var(--foreground)", textDecoration:"none" }}>{e.handle}</a>
                   : e.handle}
               </p>
               {e.meta && (
-                <span style={{ fontSize:"0.6875rem", color:"#6B7280" }}>{e.meta}</span>
+                <span style={{ fontSize:"0.6875rem", color:"var(--secondary)" }}>{e.meta}</span>
               )}
               {!e.meta && e.badge && (
                 <span style={{ fontSize:"0.625rem", fontWeight:700,
@@ -366,7 +366,7 @@ export function CommunityLeaderboardCard() {
                   {e.badge}
                 </span>
               )}
-              {e.note && <p style={{ fontSize:"0.75rem", color:"#A1A1AA", marginTop:2 }}>{e.note}</p>}
+              {e.note && <p style={{ fontSize:"0.75rem", color:"var(--secondary)", marginTop:2 }}>{e.note}</p>}
             </div>
             <div style={{ display:"flex", alignItems:"center", gap:6 }}>
               {category === "contributors" && (
@@ -378,10 +378,10 @@ export function CommunityLeaderboardCard() {
                   <button onClick={() => bumpManual(e.id, -10)}
                     style={{ background:"#F4F4F5", border:"none", borderRadius:6,
                       padding:"3px 8px", cursor:"pointer", fontSize:"0.625rem", fontWeight:700,
-                      color:"#A1A1AA" }}>-10</button>
+                      color:"var(--secondary)" }}>-10</button>
                 </div>
               )}
-              <span style={{ fontSize:"1.125rem", fontWeight:900, color:"#1D1D1F",
+              <span style={{ fontSize:"1.125rem", fontWeight:900, color:"var(--foreground)",
                 minWidth:40, textAlign:"right" }}>
                 {fmtScore(e.score, e.category)}
               </span>

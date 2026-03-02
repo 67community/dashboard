@@ -62,7 +62,7 @@ const DEFAULT_EXCHANGES: Exchange[] = [
 const TIER_CONFIG = {
   1: { label: "Tier 1", color: "#F5A623" },
   2: { label: "Tier 2", color: "#2563EB" },
-  3: { label: "Tier 3", color: "#8E8E93" },
+  3: { label: "Tier 3", color: "var(--tertiary)" },
 }
 
 function getLogoUrl(name: string, url?: string): string {
@@ -92,7 +92,7 @@ function ExLogo({ name, url }: { name: string; url?: string }) {
     const hue = name.split("").reduce((a,c) => a + c.charCodeAt(0), 0) % 360
     return <div style={{ width:34, height:34, borderRadius:9, background:`hsl(${hue},55%,92%)`, display:"flex", alignItems:"center", justifyContent:"center", fontSize:"0.625rem", fontWeight:800, color:`hsl(${hue},50%,35%)`, flexShrink:0 }}>{name.slice(0,2).toUpperCase()}</div>
   }
-  return <img src={src} alt={name} width={34} height={34} style={{ borderRadius:9, objectFit:"contain", background:"#fff", flexShrink:0 }} onError={() => setErr(true)} />
+  return <img src={src} alt={name} width={34} height={34} style={{ borderRadius:9, objectFit:"contain", background:"var(--card)", flexShrink:0 }} onError={() => setErr(true)} />
 }
 
 function ExchangeSection() {
@@ -105,7 +105,7 @@ function ExchangeSection() {
   const progress = exchanges.filter(e => e.status === "in-progress")
   return (
     <div>
-      <p style={{ fontSize:"0.6875rem", fontWeight:800, color:"#8E8E93", textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:10 }}>
+      <p style={{ fontSize:"0.6875rem", fontWeight:800, color:"var(--tertiary)", textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:10 }}>
         Exchanges — {listed.length} listed · {progress.length} in progress
       </p>
       {/* Logo grid */}
@@ -113,10 +113,10 @@ function ExchangeSection() {
         {listed.map(e => (
           <a key={e.id} href={e.url} target="_blank" rel="noopener noreferrer" title={e.name}
             style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:4, textDecoration:"none" }}>
-            <div style={{ width:42, height:42, borderRadius:11, border:"1.5px solid rgba(0,0,0,0.07)", background:"#fff", display:"flex", alignItems:"center", justifyContent:"center", overflow:"hidden", boxShadow:"0 1px 3px rgba(0,0,0,0.06)" }}>
+            <div style={{ width:42, height:42, borderRadius:11, border:"1.5px solid var(--separator)", background:"var(--card)", display:"flex", alignItems:"center", justifyContent:"center", overflow:"hidden", boxShadow:"0 1px 3px rgba(0,0,0,0.06)" }}>
               <ExLogo name={e.name} url={e.url} />
             </div>
-            <span style={{ fontSize:"0.45rem", fontWeight:700, color:"#8E8E93", textAlign:"center", maxWidth:46, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{e.name}</span>
+            <span style={{ fontSize:"0.45rem", fontWeight:700, color:"var(--tertiary)", textAlign:"center", maxWidth:46, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{e.name}</span>
           </a>
         ))}
       </div>
@@ -126,7 +126,7 @@ function ExchangeSection() {
           <ExLogo name={e.name} url={e.url} />
           <div style={{ flex:1 }}>
             <span style={{ fontSize:"0.875rem", fontWeight:700, color:"#D97706" }}>{e.name}</span>
-            {e.note && <p style={{ fontSize:"0.75rem", color:"#8E8E93", margin:0 }}>{e.note}</p>}
+            {e.note && <p style={{ fontSize:"0.75rem", color:"var(--tertiary)", margin:0 }}>{e.note}</p>}
           </div>
           <span style={{ fontSize:"0.625rem", fontWeight:800, color:"#D97706", background:"rgba(217,119,6,0.1)", padding:"2px 8px", borderRadius:99 }}>⏳ In Progress</span>
         </div>
@@ -143,33 +143,31 @@ export function TokenHealthCard() {
   const mcap  = liveMcap ?? t?.market_cap ?? 0
 
   const collapsed = (
-    <div style={{ display:"flex", flexDirection:"column", gap:22 }}>
-      {/* Hero price */}
-      <div style={{ display:"flex", alignItems:"center", gap:12,
-        padding:"12px 14px", borderRadius:14,
+    <div style={{ display:"flex", flexDirection:"column", gap:12 }}>
+      {/* Hero price — compact */}
+      <div style={{ display:"flex", alignItems:"center", gap:10,
+        padding:"8px 12px", borderRadius:12,
         background: chg >= 0 ? "rgba(5,150,105,0.06)" : "rgba(239,68,68,0.06)",
         border: `1.5px solid ${chg >= 0 ? "rgba(5,150,105,0.18)" : "rgba(239,68,68,0.18)"}` }}>
         {chg >= 0
-          ? <TrendingUp  style={{ width:20, height:20, color:"#059669", flexShrink:0 }} />
-          : <TrendingDown style={{ width:20, height:20, color:"#EF4444", flexShrink:0 }} />}
-        <div>
-          <p style={{ fontSize:"0.6875rem", color:"#8E8E93", fontWeight:600, margin:0 }}>The Official 67 Coin</p>
-          <p style={{ fontSize:"1.125rem", fontWeight:800, margin:0,
+          ? <TrendingUp  style={{ width:16, height:16, color:"#059669", flexShrink:0 }} />
+          : <TrendingDown style={{ width:16, height:16, color:"#EF4444", flexShrink:0 }} />}
+        <div style={{ flex:1 }}>
+          <p style={{ fontSize:"0.5625rem", color:"var(--tertiary)", fontWeight:600, margin:0 }}>The Official 67 Coin</p>
+          <p style={{ fontSize:"0.9375rem", fontWeight:800, margin:0,
             color: chg >= 0 ? "#059669" : "#EF4444",
             fontVariantNumeric:"tabular-nums", letterSpacing:"-0.02em" }}>
             {fmtPrice(price)}
-            <span style={{ fontSize:"0.75rem", marginLeft:8, opacity:0.85 }}>
+            <span style={{ fontSize:"0.6875rem", marginLeft:6, opacity:0.85 }}>
               {chg >= 0 ? "+" : ""}{chg.toFixed(2)}%
             </span>
           </p>
         </div>
-      </div>
-      <div style={{ marginTop:6 }}>
         <WhaleAlertBadge />
       </div>
 
-      {/* Stats — inset-cell grey boxes */}
-      <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8, paddingTop:16, borderTop:"1px solid rgba(0,0,0,0.06)" }}>
+      {/* Stats — compact 2x2 grid */}
+      <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:6, borderTop:"1px solid var(--separator)", paddingTop:10 }}>
         {[
           { label:"Market Cap",  value: fmt$(mcap),                         pct: t?.mcap_change_pct },
           { label:"Volume 24h",  value: fmt$(t?.total_volume_24h ?? 0),     pct: t?.volume_change_pct },
@@ -182,13 +180,13 @@ export function TokenHealthCard() {
           const showAbs  = !showPct && absDelta !== 0
           const positive = (showPct ? delta : absDelta) > 0
           return (
-            <div key={s.label} className="inset-cell">
-              <div style={{ display:"flex", alignItems:"center", gap:7, flexWrap:"wrap", marginBottom:4 }}>
-                <p style={{ fontSize:"1.25rem", fontWeight:700, letterSpacing:"-0.03em", color:"#1D1D1F", margin:0 }}>{s.value}</p>
+            <div key={s.label} style={{ background:"rgba(0,0,0,0.03)", borderRadius:10, padding:"8px 10px" }}>
+              <div style={{ display:"flex", alignItems:"center", gap:5, flexWrap:"wrap", marginBottom:2 }}>
+                <p style={{ fontSize:"0.9375rem", fontWeight:700, letterSpacing:"-0.03em", color:"var(--foreground)", margin:0 }}>{s.value}</p>
                 {(showPct || showAbs) && (
                   <span style={{
-                    fontSize:"0.6875rem", fontWeight:800, letterSpacing:"-0.01em",
-                    padding:"2px 6px", borderRadius:99,
+                    fontSize:"0.5625rem", fontWeight:800, letterSpacing:"-0.01em",
+                    padding:"1px 5px", borderRadius:99,
                     background: positive ? "#E8F8EE" : "#FEF0F0",
                     color:      positive ? "#1A8343" : "#C0392B",
                   }}>
@@ -199,7 +197,7 @@ export function TokenHealthCard() {
                   </span>
                 )}
               </div>
-              <p style={{ fontSize:"0.75rem", fontWeight:500, color:"#8E8E93", margin:0 }}>{s.label}</p>
+              <p style={{ fontSize:"0.625rem", fontWeight:500, color:"var(--tertiary)", margin:0 }}>{s.label}</p>
             </div>
           )
         })}
@@ -207,24 +205,24 @@ export function TokenHealthCard() {
 
       {/* Top exchange volumes */}
       {(t?.exchange_volumes?.length ?? 0) > 0 && (
-        <div style={{ borderTop:"1px solid rgba(0,0,0,0.06)", paddingTop:16 }}>
-          <p style={{ fontSize:"0.625rem", fontWeight:800, color:"#8E8E93", textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:10 }}>Exchange Volumes</p>
-          <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
+        <div style={{ borderTop:"1px solid var(--separator)", paddingTop:10 }}>
+          <p style={{ fontSize:"0.5625rem", fontWeight:800, color:"var(--tertiary)", textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:8 }}>Exchange Volumes</p>
+          <div style={{ display:"flex", flexDirection:"column", gap:6 }}>
             {(t?.exchange_volumes ?? []).slice(0,5).map((ex, i) => {
               const max = t?.exchange_volumes?.[0]?.volume_usd ?? 1
               const pct = Math.max(4, (ex.volume_usd / max) * 100)
               return (
                 <div key={i} style={{ display:"flex", alignItems:"center", gap:8 }}>
                   {ex.logo ? (
-                    <img src={ex.logo} alt={ex.exchange} width={20} height={20} style={{ borderRadius:5, objectFit:"contain", background:"#fff", boxShadow:"0 0 0 1px rgba(0,0,0,0.07)", flexShrink:0 }} onError={e=>{(e.target as HTMLImageElement).style.display="none"}} />
+                    <img src={ex.logo} alt={ex.exchange} width={20} height={20} style={{ borderRadius:5, objectFit:"contain", background:"var(--card)", boxShadow:"0 0 0 1px rgba(0,0,0,0.07)", flexShrink:0 }} onError={e=>{(e.target as HTMLImageElement).style.display="none"}} />
                   ) : (
-                    <div style={{ width:20, height:20, borderRadius:5, background:"#E8E8ED", flexShrink:0, display:"flex", alignItems:"center", justifyContent:"center", fontSize:"0.5rem", fontWeight:700, color:"#8E8E93" }}>{ex.exchange.charAt(0)}</div>
+                    <div style={{ width:20, height:20, borderRadius:5, background:"#E8E8ED", flexShrink:0, display:"flex", alignItems:"center", justifyContent:"center", fontSize:"0.5rem", fontWeight:700, color:"var(--tertiary)" }}>{ex.exchange.charAt(0)}</div>
                   )}
-                  <span style={{ fontSize:"0.75rem", fontWeight:600, color:"#1D1D1F", width:72, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap", flexShrink:0 }}>{ex.exchange}</span>
+                  <span style={{ fontSize:"0.6875rem", fontWeight:600, color:"var(--foreground)", width:72, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap", flexShrink:0 }}>{ex.exchange}</span>
                   <div style={{ flex:1, height:5, background:"rgba(0,0,0,0.06)", borderRadius:99, overflow:"hidden" }}>
                     <div style={{ height:"100%", width:`${pct}%`, background: ex.is_dex ? "#7C3AED" : "#059669", borderRadius:99 }} />
                   </div>
-                  <span style={{ fontSize:"0.6875rem", fontWeight:700, color:"#1D1D1F", width:42, textAlign:"right", flexShrink:0 }}>{ex.volume_usd >= 1000 ? `$${(ex.volume_usd/1000).toFixed(0)}K` : `$${ex.volume_usd.toFixed(0)}`}</span>
+                  <span style={{ fontSize:"0.6875rem", fontWeight:700, color:"var(--foreground)", width:42, textAlign:"right", flexShrink:0 }}>{ex.volume_usd >= 1000 ? `$${(ex.volume_usd/1000).toFixed(0)}K` : `$${ex.volume_usd.toFixed(0)}`}</span>
                 </div>
               )
             })}
@@ -232,10 +230,35 @@ export function TokenHealthCard() {
         </div>
       )}
 
-      {/* Exchange Listings inline */}
-      <div style={{ borderTop:"1px solid rgba(0,0,0,0.06)", paddingTop:16 }}>
-        <ExchangeSection />
-      </div>
+      {/* 24h Transactions */}
+      {(() => {
+        const totalTx = (t?.buys_24h ?? 0) + (t?.sells_24h ?? 0)
+        if (totalTx === 0) return null
+        const bullPct = Math.round((t?.buys_24h ?? 0) / totalTx * 100)
+        const sentiment = bullPct > 55 ? "Bullish" : bullPct < 45 ? "Bearish" : "Neutral"
+        const sentColor = sentiment === "Bullish" ? "#059669" : sentiment === "Bearish" ? "#EF4444" : "#F5A623"
+        return (
+          <div style={{ borderTop:"1px solid var(--separator)", paddingTop:10 }}>
+            <p style={{ fontSize:"0.5625rem", fontWeight:800, color:"var(--tertiary)", textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:8 }}>24h Transactions</p>
+            <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:6, marginBottom:8 }}>
+              <div style={{ background:"#E8F8EE", borderRadius:10, padding:"8px 10px" }}>
+                <p style={{ fontSize:"1rem", fontWeight:800, letterSpacing:"-0.03em", color:"#1A8343", margin:0 }}>{(t?.buys_24h ?? 0).toLocaleString()}</p>
+                <p style={{ fontSize:"0.5625rem", fontWeight:600, color:"#1A8343", margin:"2px 0 0" }}>Buys</p>
+              </div>
+              <div style={{ background:"#FEF0F0", borderRadius:10, padding:"8px 10px" }}>
+                <p style={{ fontSize:"1rem", fontWeight:800, letterSpacing:"-0.03em", color:"#C0392B", margin:0 }}>{(t?.sells_24h ?? 0).toLocaleString()}</p>
+                <p style={{ fontSize:"0.5625rem", fontWeight:600, color:"#C0392B", margin:"2px 0 0" }}>Sells</p>
+              </div>
+            </div>
+            <div style={{ display:"flex", alignItems:"center", gap:6 }}>
+              <div style={{ flex:1, height:5, background:"rgba(0,0,0,0.06)", borderRadius:99, overflow:"hidden" }}>
+                <div style={{ height:"100%", width:`${bullPct}%`, background:"#059669", borderRadius:99 }} />
+              </div>
+              <span style={{ fontSize:"0.625rem", fontWeight:800, color: sentColor, flexShrink:0 }}>{sentiment} {bullPct}%</span>
+            </div>
+          </div>
+        )
+      })()}
     </div>
   )
 
@@ -259,11 +282,11 @@ export function TokenHealthCard() {
               ) : (
                 <div style={{ width:22, height:22, borderRadius:6, background:"#E8E8ED", flexShrink:0,
                   display:"flex", alignItems:"center", justifyContent:"center",
-                  fontSize:"0.5625rem", fontWeight:700, color:"#8E8E93" }}>
+                  fontSize:"0.5625rem", fontWeight:700, color:"var(--tertiary)" }}>
                   {ex.exchange.charAt(0)}
                 </div>
               )}
-              <span style={{ fontSize:"0.8125rem", fontWeight:600, color:"#1D1D1F",
+              <span style={{ fontSize:"0.8125rem", fontWeight:600, color:"var(--foreground)",
                 width:90, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>
                 {ex.exchange}
               </span>
@@ -271,7 +294,7 @@ export function TokenHealthCard() {
                 <div className="prog-fill" style={{ height:5, width:`${pct}%`, background:color }} />
               </div>
               <div style={{ display:"flex", flexDirection:"column", alignItems:"flex-end", gap:2 }}>
-                <span style={{ fontSize:"0.8125rem", fontWeight:700, color:"#1D1D1F",
+                <span style={{ fontSize:"0.8125rem", fontWeight:700, color:"var(--foreground)",
                   fontVariantNumeric:"tabular-nums" }}>
                   {fmt$(ex.volume_usd)}
                 </span>
@@ -382,7 +405,7 @@ export function TokenHealthCard() {
                   {bullPct}%
                 </span>
               </div>
-              <span style={{ fontSize:"0.6875rem", color:"#8E8E93" }}>market sentiment</span>
+              <span style={{ fontSize:"0.6875rem", color:"var(--tertiary)" }}>market sentiment</span>
             </div>
           </div>
         )
@@ -406,7 +429,7 @@ export function TokenHealthCard() {
         <div className="inset-cell">
           <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:14 }}>
             <p className="hero-label">CEX Volume</p>
-            <span style={{ fontSize:"0.75rem", fontWeight:700, color:"#1D1D1F" }}>
+            <span style={{ fontSize:"0.75rem", fontWeight:700, color:"var(--foreground)" }}>
               {fmt$(cexVols.reduce((a,e) => a + e.volume_usd, 0))} total
             </span>
           </div>
@@ -419,7 +442,7 @@ export function TokenHealthCard() {
         <div className="inset-cell">
           <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:14 }}>
             <p className="hero-label">DEX Volume</p>
-            <span style={{ fontSize:"0.75rem", fontWeight:700, color:"#1D1D1F" }}>
+            <span style={{ fontSize:"0.75rem", fontWeight:700, color:"var(--foreground)" }}>
               {fmt$(dexVols.reduce((a,e) => a + e.volume_usd, 0))} total
             </span>
           </div>
@@ -454,9 +477,9 @@ export function TokenHealthCard() {
             <img src={favicon} alt="" width={18} height={18}
               style={{ width:18, height:18, borderRadius:4, objectFit:"contain", flexShrink:0 }}
               onError={e => { (e.target as HTMLImageElement).style.display="none" }} />
-            <span style={{ fontSize:"0.8125rem", fontWeight:600, color:"#1D1D1F", flex:1,
+            <span style={{ fontSize:"0.8125rem", fontWeight:600, color:"var(--foreground)", flex:1,
               letterSpacing:"-0.01em" }}>{label}</span>
-            <ExternalLink style={{ width:12, height:12, color:"#C7C7CC", flexShrink:0 }} />
+            <ExternalLink style={{ width:12, height:12, color:"var(--tertiary)", flexShrink:0 }} />
           </a>
         ))}
       </div>

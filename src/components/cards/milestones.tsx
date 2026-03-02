@@ -24,10 +24,10 @@ export function MilestonesCard() {
       <div>
         <p className="hero-label" style={{ marginBottom:8 }}>Goals Progress</p>
         <p className="hero-number">{ms.length === 0 ? "—" : `${ms.filter(m => pct(m.current, m.target) >= 100).length}/${ms.length}`}</p>
-        <p style={{ fontSize:"0.875rem", color:"#8E8E93", marginTop:6, fontWeight:500 }}>goals complete</p>
+        <p style={{ fontSize:"0.875rem", color:"var(--tertiary)", marginTop:6, fontWeight:500 }}>goals complete</p>
       </div>
 
-      <div style={{ display:"flex", flexDirection:"column", gap:8, borderTop:"1px solid rgba(0,0,0,0.06)", paddingTop:16 }}>
+      <div style={{ display:"flex", flexDirection:"column", gap:8, borderTop:"1px solid var(--separator)", paddingTop:16 }}>
         {ms.length === 0
           ? [1,2,3].map(i => <div key={i} className="skeleton" style={{ height:42 }} />)
           : ms.slice(0,3).map((m, i) => {
@@ -35,7 +35,7 @@ export function MilestonesCard() {
             return (
               <div key={m.label} className="inset-cell">
                 <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:8 }}>
-                  <span style={{ fontSize:"0.875rem", fontWeight:600, color:"#1D1D1F" }}>{m.label}</span>
+                  <span style={{ fontSize:"0.875rem", fontWeight:600, color:"var(--foreground)" }}>{m.label}</span>
                   <span style={{ fontSize:"0.875rem", fontWeight:700, color: COLORS[i] }}>{p.toFixed(0)}%</span>
                 </div>
                 <div className="prog-track" style={{ height:5 }}>
@@ -63,8 +63,8 @@ export function MilestonesCard() {
               <div className="prog-fill" style={{ height:8, width:`${p}%`, background:COLORS[i % COLORS.length] }} />
             </div>
             <div style={{ display:"flex", justifyContent:"space-between" }}>
-              <span style={{ fontSize:"0.75rem", color:"#A1A1AA", fontWeight:500 }}>{fmtV(m.label, m.current)} now</span>
-              <span style={{ fontSize:"0.75rem", color:"#A1A1AA", fontWeight:500 }}>{fmtV(m.label, m.target)} goal</span>
+              <span style={{ fontSize:"0.75rem", color:"var(--secondary)", fontWeight:500 }}>{fmtV(m.label, m.current)} now</span>
+              <span style={{ fontSize:"0.75rem", color:"var(--secondary)", fontWeight:500 }}>{fmtV(m.label, m.target)} goal</span>
             </div>
           </div>
         )

@@ -65,10 +65,10 @@ export function PriceChart({ currentPrice }: Props) {
       <div style={{ display:"flex", alignItems:"flex-start", justifyContent:"space-between", marginBottom:14 }}>
         <div>
           <p style={{ fontSize:"0.6875rem", fontWeight:600, letterSpacing:"0.06em",
-            textTransform:"uppercase", color:"#8E8E93", marginBottom:5 }}>Price Chart</p>
+            textTransform:"uppercase", color:"var(--tertiary)", marginBottom:5 }}>Price Chart</p>
           <div style={{ display:"flex", alignItems:"center", gap:8, flexWrap:"wrap" }}>
             <span style={{ fontSize:"1.5rem", fontWeight:800, letterSpacing:"-0.04em",
-              color:"#1D1D1F", fontVariantNumeric:"tabular-nums" }}>
+              color:"var(--foreground)", fontVariantNumeric:"tabular-nums" }}>
               {fmtPrice(last || currentPrice || 0)}
             </span>
             {prices.length > 0 && (

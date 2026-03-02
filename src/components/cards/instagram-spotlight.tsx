@@ -51,7 +51,7 @@ function PostTile({ p, large = false }: { p: InstagramPost; large?: boolean }) {
       onClick={e => e.stopPropagation()}
       style={{ textDecoration: "none", display: "block" }}>
       <div
-        style={{ borderRadius: 12, overflow: "hidden", border: "1.5px solid rgba(0,0,0,0.07)", background: "#fff", transition: "transform 0.15s" }}
+        style={{ borderRadius: 12, overflow: "hidden", border: "1.5px solid var(--separator)", background: "var(--card)", transition: "transform 0.15s" }}
         onMouseEnter={e => (e.currentTarget.style.transform = "scale(1.02)")}
         onMouseLeave={e => (e.currentTarget.style.transform = "scale(1)")}>
 
@@ -114,22 +114,22 @@ function PostTile({ p, large = false }: { p: InstagramPost; large?: boolean }) {
           }}>
             {p.caption || "(no caption)"}
           </p>
-          <p style={{ fontSize: "0.625rem", color: "#6B7280", marginBottom: 4 }}>
+          <p style={{ fontSize: "0.625rem", color: "var(--secondary)", marginBottom: 4 }}>
             @{p.creator}
           </p>
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
             <span style={{ display: "flex", alignItems: "center", gap: 3, fontSize: "0.625rem", color: "#E1306C", fontWeight: 600 }}>
               <Heart style={{ width: 9, height: 9, fill: "#E1306C" }} />{p.likes_text}
             </span>
-            <span style={{ display: "flex", alignItems: "center", gap: 3, fontSize: "0.625rem", color: "#A1A1AA" }}>
+            <span style={{ display: "flex", alignItems: "center", gap: 3, fontSize: "0.625rem", color: "var(--secondary)" }}>
               <MessageCircle style={{ width: 9, height: 9 }} />{p.comments}
             </span>
             {p.views_text && (
-              <span style={{ display: "flex", alignItems: "center", gap: 3, fontSize: "0.625rem", color: "#A1A1AA" }}>
+              <span style={{ display: "flex", alignItems: "center", gap: 3, fontSize: "0.625rem", color: "var(--secondary)" }}>
                 <Eye style={{ width: 9, height: 9 }} />{p.views_text}
               </span>
             )}
-            <span style={{ fontSize: "0.625rem", color: "#C7C7CC", marginLeft: "auto" }}>
+            <span style={{ fontSize: "0.625rem", color: "var(--tertiary)", marginLeft: "auto" }}>
               {p.created_at ? timeAgo(p.created_at) : ""}
             </span>
           </div>
@@ -159,7 +159,7 @@ export function InstagramSpotlightCard() {
             ? `${(totalLikes / 1_000_000).toFixed(1)}M`
             : totalLikes >= 1_000 ? `${Math.round(totalLikes / 1_000)}K` : totalLikes > 0 ? String(totalLikes) : "—"}
         </p>
-        <p style={{ fontSize: "0.875rem", color: "#8E8E93", marginTop: 6 }}>
+        <p style={{ fontSize: "0.875rem", color: "var(--tertiary)", marginTop: 6 }}>
           {posts.length > 0 ? `${posts.length} posts · combined likes` : "fetching #67coin posts…"}
         </p>
       </div>
@@ -170,9 +170,9 @@ export function InstagramSpotlightCard() {
           {popularPosts.slice(0, 2).map((p, i) => <PostTile key={i} p={p} />)}
         </div>
       ) : (
-        <div style={{ display: "flex", alignItems: "center", gap: 10, borderTop: "1px solid rgba(0,0,0,0.06)", paddingTop: 14 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 10, borderTop: "1px solid var(--separator)", paddingTop: 14 }}>
           <IGLogo size={20} />
-          <p style={{ fontSize: "0.875rem", color: "#A1A1AA", fontWeight: 500 }}>$67coin on Instagram</p>
+          <p style={{ fontSize: "0.875rem", color: "var(--secondary)", fontWeight: 500 }}>$67coin on Instagram</p>
         </div>
       )}
     </div>
@@ -185,10 +185,10 @@ export function InstagramSpotlightCard() {
       {/* Header */}
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <div>
-          <p style={{ fontSize: "0.6875rem", fontWeight: 700, color: "#A1A1AA", letterSpacing: "0.06em", textTransform: "uppercase" }}>
+          <p style={{ fontSize: "0.6875rem", fontWeight: 700, color: "var(--secondary)", letterSpacing: "0.06em", textTransform: "uppercase" }}>
             Instagram Spotlight
           </p>
-          <p style={{ fontSize: "0.75rem", color: "#C7C7CC", marginTop: 2 }}>#67coin · #67</p>
+          <p style={{ fontSize: "0.75rem", color: "var(--tertiary)", marginTop: 2 }}>#67coin · #67</p>
         </div>
         <div style={{
           background: "linear-gradient(135deg,#FFD600,#FF7A00,#FF0069)",
@@ -210,7 +210,7 @@ export function InstagramSpotlightCard() {
           ].map(s => (
             <div key={s.label} className="inset-cell" style={{ textAlign: "center" }}>
               <p style={{ fontSize: "1.25rem", fontWeight: 800, color: s.color, margin: 0, letterSpacing: "-0.03em" }}>{s.value}</p>
-              <p style={{ fontSize: "0.5625rem", color: "#8E8E93", marginTop: 3, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.04em" }}>{s.label}</p>
+              <p style={{ fontSize: "0.5625rem", color: "var(--tertiary)", marginTop: 3, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.04em" }}>{s.label}</p>
             </div>
           ))}
         </div>
@@ -221,7 +221,7 @@ export function InstagramSpotlightCard() {
         <div>
           <div style={{ display: "flex", alignItems: "center", gap: 5, marginBottom: 10 }}>
             <span style={{ fontSize: "0.75rem" }}>🔥</span>
-            <span style={{ fontSize: "0.6875rem", fontWeight: 700, color: "#A1A1AA", letterSpacing: "0.05em", textTransform: "uppercase" }}>Most Liked</span>
+            <span style={{ fontSize: "0.6875rem", fontWeight: 700, color: "var(--secondary)", letterSpacing: "0.05em", textTransform: "uppercase" }}>Most Liked</span>
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
             {popularPosts.map((p, i) => <PostTile key={i} p={p} large />)}
@@ -234,7 +234,7 @@ export function InstagramSpotlightCard() {
         <div>
           <div style={{ display: "flex", alignItems: "center", gap: 5, marginBottom: 10 }}>
             <span style={{ fontSize: "0.75rem" }}>🕐</span>
-            <span style={{ fontSize: "0.6875rem", fontWeight: 700, color: "#A1A1AA", letterSpacing: "0.05em", textTransform: "uppercase" }}>Recently Posted</span>
+            <span style={{ fontSize: "0.6875rem", fontWeight: 700, color: "var(--secondary)", letterSpacing: "0.05em", textTransform: "uppercase" }}>Recently Posted</span>
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
             {recentPosts.map((p, i) => <PostTile key={i} p={p} large />)}
@@ -246,10 +246,10 @@ export function InstagramSpotlightCard() {
       {posts.length === 0 && (
         <div className="inset-cell" style={{ textAlign: "center", padding: "32px 20px" }}>
           <IGLogo size={40} />
-          <p style={{ marginTop: 12, fontSize: "0.875rem", color: "#6B7280", fontWeight: 600 }}>
+          <p style={{ marginTop: 12, fontSize: "0.875rem", color: "var(--secondary)", fontWeight: 600 }}>
             No Instagram posts found yet
           </p>
-          <p style={{ fontSize: "0.75rem", color: "#A1A1AA", marginTop: 4 }}>
+          <p style={{ fontSize: "0.75rem", color: "var(--secondary)", marginTop: 4 }}>
             Mac mini scrapes #67coin every 6 hours via instaloader
           </p>
         </div>
@@ -262,7 +262,7 @@ export function InstagramSpotlightCard() {
             target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()}
             style={{
               display: "inline-flex", alignItems: "center", gap: 4,
-              fontSize: "0.6875rem", fontWeight: 600, color: "#6B7280",
+              fontSize: "0.6875rem", fontWeight: 600, color: "var(--secondary)",
               background: "#F3F4F6", borderRadius: 99, padding: "4px 10px", textDecoration: "none"
             }}>
             #{tag}<ExternalLink style={{ width: 8, height: 8, opacity: 0.5 }} />
@@ -271,7 +271,7 @@ export function InstagramSpotlightCard() {
       </div>
 
       {/* Refresh note */}
-      <div style={{ display: "flex", alignItems: "center", gap: 6, color: "#A1A1AA" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 6, color: "var(--secondary)" }}>
         <RefreshCw style={{ width: 11, height: 11 }} />
         <span style={{ fontSize: "0.6875rem" }}>Data refreshed every 6 hours via instaloader (Mac mini)</span>
       </div>
