@@ -1,43 +1,43 @@
 {
-  "last_updated": "2026-03-02T08:30:01.165599Z",
+  "last_updated": "2026-03-02T09:30:00.823729Z",
   "token_health": {
-    "price": 0.001372,
-    "price_change_m5": 0.21,
-    "price_change_1h": 0.87,
-    "price_change_6h": -2.0,
-    "price_change_24h": -11.27,
-    "market_cap": 1372298,
-    "liquidity": 212570.85,
-    "volume_m5": 296.81,
-    "volume_1h": 2097.42,
-    "volume_6h": 13434.18,
-    "volume_24h": 86713.31,
-    "volume_ratio_1h": 0.58,
-    "buys_24h": 346,
-    "sells_24h": 339,
-    "buys_1h": 13,
-    "sells_1h": 15,
-    "holders": 16799,
-    "holder_trend": 1,
+    "price": 0.001383,
+    "price_change_m5": -0.92,
+    "price_change_1h": 0.75,
+    "price_change_6h": -3.73,
+    "price_change_24h": -7.51,
+    "market_cap": 1382596,
+    "liquidity": 215290.03,
+    "volume_m5": 19.81,
+    "volume_1h": 535.35,
+    "volume_6h": 9711.26,
+    "volume_24h": 84268.07,
+    "volume_ratio_1h": 0.15,
+    "buys_24h": 351,
+    "sells_24h": 345,
+    "buys_1h": 25,
+    "sells_1h": 24,
+    "holders": 16798,
+    "holder_trend": 0,
     "sentiment": "neutral",
     "_source": "dexscreener",
-    "cmc_rank": 1785,
-    "total_volume_24h": 937287.99041191,
-    "volume_change_pct": -0.88,
-    "volume_change_usd": -8291.83,
-    "mcap_change_pct": 0.87,
-    "mcap_change_usd": 11830,
-    "liquidity_change_pct": 0.19,
-    "liquidity_change_usd": 396.55,
+    "cmc_rank": 1775,
+    "total_volume_24h": 935528.90827795,
+    "volume_change_pct": -1.06,
+    "volume_change_usd": -10050.91,
+    "mcap_change_pct": 1.63,
+    "mcap_change_usd": 22128,
+    "liquidity_change_pct": 1.47,
+    "liquidity_change_usd": 3115.73,
     "biggest_trades": {
       "biggest_buy_usd": 2557.55,
       "biggest_buy_tx": "5Sp9Qdn92PgCuaTcQiRCA9CRzWufUdUdMoRC9dcfrSt5evJbVDdZ4sNH9ABv3569Z4mf7cfGthMzP1EqpGhwqzgG",
       "biggest_buy_wallet": "",
       "biggest_buy_time": "2026-03-02T00:56:15Z",
-      "biggest_sell_usd": 5543.39,
-      "biggest_sell_tx": "2KA7Z3nXb32TEd36yvCEZp423C7ixcjTLnW7udAFxbQi6RCpFk6AAtYFkKZtAtLFMDWVyCA7whauwVYsTimqG4Vf",
+      "biggest_sell_usd": 1366.79,
+      "biggest_sell_tx": "2ouyoBbrW25kZun4LoUPt4WkaVxktpd273iPFJBK7RqPwvE93BqBQcXGQpyK8GhchpJyxZNmwb1fkdiXQCg4YpWx",
       "biggest_sell_wallet": "",
-      "biggest_sell_time": "2026-03-01T22:33:11Z",
+      "biggest_sell_time": "2026-03-02T03:57:46Z",
       "_trades_in_window": 300
     }
   },
@@ -126,7 +126,7 @@
     "x_community_last_scrape": 1772393415.947463
   },
   "community": {
-    "discord_members": 1450,
+    "discord_members": 1451,
     "active_7d": 1870,
     "new_joins_24h": 10,
     "open_tickets": 3,
@@ -179,8 +179,8 @@
     ],
     "sentiment_up_pct": 50.0,
     "sentiment_down_pct": 50.0,
-    "online_now": 80,
-    "discord_delta_24h": 1,
+    "online_now": 68,
+    "discord_delta_24h": 2,
     "telegram_delta_24h": 0,
     "watchlist_delta_24h": 0,
     "recent_discord_activity": [
@@ -189,7 +189,7 @@
         "user": "casiopriv870",
         "user_id": "1226223232445583402",
         "avatar": "https://cdn.discordapp.com/avatars/1226223232445583402/52f5803c7c4bd976686b7920c42073c6.webp?size=64",
-        "time_ago": "9h ago",
+        "time_ago": "10h ago",
         "detail": "Introduced in Discord"
       },
       {
@@ -197,7 +197,7 @@
         "user": "marziechockymilk",
         "user_id": "1464960465703665917",
         "avatar": "https://cdn.discordapp.com/avatars/1464960465703665917/8854b0674e382b8ded4eb2369db33973.webp?size=64",
-        "time_ago": "9h ago",
+        "time_ago": "10h ago",
         "detail": "Introduced in Discord"
       },
       {
@@ -205,7 +205,7 @@
         "user": "w3b8",
         "user_id": "908761821798871100",
         "avatar": "https://cdn.discordapp.com/avatars/908761821798871100/17ad82ac229b13afee48706e7fac2c34.webp?size=64",
-        "time_ago": "12h ago",
+        "time_ago": "13h ago",
         "detail": "Introduced in Discord"
       },
       {
@@ -277,7 +277,7 @@
         "user": "hypex90",
         "user_id": "800399454636212224",
         "avatar": "https://cdn.discordapp.com/avatars/800399454636212224/7870225de3304313c6e17ed6abf2b4e8.webp?size=64",
-        "time_ago": "16d ago",
+        "time_ago": "17d ago",
         "detail": "Introduced in Discord"
       }
     ],
@@ -332,7 +332,7 @@
     {
       "name": "X Raid Bot",
       "status": "green",
-      "last_run": "2026-03-02T08:31:27.609591Z",
+      "last_run": "2026-03-02T09:31:17.315083Z",
       "errors_24h": 0,
       "schedule": "Every 3 min"
     },
@@ -375,7 +375,7 @@
   "milestones": [
     {
       "label": "10K Holders",
-      "current": 16799,
+      "current": 16798,
       "target": 10000
     },
     {
@@ -385,12 +385,12 @@
     },
     {
       "label": "5K Discord Members",
-      "current": 1450,
+      "current": 1451,
       "target": 5000
     },
     {
       "label": "$6.7M Market Cap",
-      "current": 1372298,
+      "current": 1382596,
       "target": 6700000
     }
   ],
@@ -415,14 +415,9 @@
   "next_target": "10K Holders by March 15",
   "alerts": [
     {
-      "type": "danger",
-      "message": "\u26a0\ufe0f Price down -11.3% in 24h. Current: $0.001372",
-      "timestamp": "2026-03-02T08:31:27.896547Z"
-    },
-    {
       "type": "success",
-      "message": "\ud83d\udd25 Near ALL-TIME HIGH! Only 0.0% away \u2014 $0.001372",
-      "timestamp": "2026-03-02T08:31:27.896547Z"
+      "message": "\ud83d\udd25 Near ALL-TIME HIGH! Only 0.0% away \u2014 $0.001383",
+      "timestamp": "2026-03-02T09:31:17.486717Z"
     }
   ],
   "coingecko": {
@@ -484,15 +479,15 @@
     "_source": "coingecko"
   },
   "coinmarketcap": {
-    "cmc_rank": 1785,
+    "cmc_rank": 1775,
     "cmc_id": "38918",
-    "price": 0.001369606101628511,
-    "volume_24h": 937287.99041191,
-    "market_cap": 1369167.8276759898,
-    "change_1h": 0.84970068,
-    "change_24h": -10.98764052,
-    "change_7d": -37.11817667,
-    "change_30d": -65.37097193,
+    "price": 0.001391060624878002,
+    "volume_24h": 935528.90827795,
+    "market_cap": 1390615.485478041,
+    "change_1h": 1.56647398,
+    "change_24h": -7.65900564,
+    "change_7d": -36.39189647,
+    "change_30d": -64.14088828,
     "market_pairs": 45,
     "_source": "coinmarketcap"
   },
@@ -519,7 +514,7 @@
     "788495124061487154": "offline",
     "201710326347988993": "offline"
   },
-  "presence_updated": "2026-03-02T08:25:06.571649Z",
+  "presence_updated": "2026-03-02T09:25:07.101719Z",
   "tiktok_spotlight": [
     {
       "video_url": "https://www.tiktok.com/@67coin/video/7565627410092199182",
