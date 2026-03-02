@@ -67,21 +67,20 @@ const TIER_CONFIG = {
 
 function getLogoUrl(name: string, url?: string): string {
   const overrides: Record<string, string> = {
-    "bingx":"https://logo.clearbit.com/bingx.com","mexc":"https://logo.clearbit.com/mexc.com",
-    "gate.io":"https://logo.clearbit.com/gate.io","gate.io alpha":"https://logo.clearbit.com/gate.io",
-    "lbank":"https://logo.clearbit.com/lbank.com","moonshot":"https://logo.clearbit.com/moonshot.money",
-    "bitmart":"https://logo.clearbit.com/bitmart.com","bitrue":"https://logo.clearbit.com/bitrue.com",
-    "bitrue alpha":"https://logo.clearbit.com/bitrue.com","kcex":"https://logo.clearbit.com/kcex.com",
-    "bitkan":"https://logo.clearbit.com/bitkan.com","cex.io":"https://logo.clearbit.com/cex.io",
-    "kucoin":"https://logo.clearbit.com/kucoin.com","kucoin alpha":"https://logo.clearbit.com/kucoin.com",
-    "weex":"https://logo.clearbit.com/weex.com","coinmarketcap":"https://logo.clearbit.com/coinmarketcap.com",
-    "coingecko":"https://logo.clearbit.com/coingecko.com","bybit":"https://logo.clearbit.com/bybit.com",
-    "okx":"https://logo.clearbit.com/okx.com","okx.us":"https://logo.clearbit.com/okx.com",
+    "bingx":"/exchanges/bingx.jpg","mexc":"/exchanges/mexc.png",
+    "gate.io":"/exchanges/gate.png","gate.io alpha":"/exchanges/gate.png",
+    "lbank":"/exchanges/lbank.png","moonshot":"/exchanges/moonshot.ico",
+    "bitmart":"/exchanges/bitmart.png","bitrue":"/exchanges/bitrue.png",
+    "bitrue alpha":"/exchanges/bitrue.png","kcex":"/exchanges/kcex.jpg",
+    "bitkan":"/exchanges/bitkan.png","cex.io":"/exchanges/cexio.png",
+    "kucoin":"/exchanges/kucoin.png","kucoin alpha":"/exchanges/kucoin.png",
+    "weex":"/exchanges/weex.png","coinmarketcap":"/exchanges/coinmarketcap.ico",
+    "coingecko":"/exchanges/coingecko.svg","bybit":"/exchanges/bybit.png",
+    "okx":"/exchanges/okx.ico","okx.us":"/exchanges/okx.ico",
     "bitget":"https://logo.clearbit.com/bitget.com","crypto.com":"https://logo.clearbit.com/crypto.com",
   }
   const found = overrides[name.toLowerCase()]
   if (found) return found
-  if (url) { try { return `https://logo.clearbit.com/${new URL(url).hostname.replace("www.","")}` } catch {} }
   return ""
 }
 
@@ -133,6 +132,30 @@ function ExchangeSection() {
       ))}
     </div>
   )
+}
+
+
+function getLocalExchangeLogo(name: string, fallback?: string): string {
+  const key = name.toLowerCase().replace(/[^a-z0-9]/g, '')
+  const map: Record<string, string> = {
+    'xtcom': '/exchanges/xtcom.png',
+    'kcex': '/exchanges/kcex.jpg',
+    'pumpswap': '/exchanges/pumpswap.jpg',
+    'lbank': '/exchanges/lbank.png',
+    'mexc': '/exchanges/mexc.png',
+    'bilaxy': '/exchanges/bilaxy.png',
+    'cexio': '/exchanges/cexio.png',
+    'bingx': '/exchanges/bingx.jpg',
+    'bitmart': '/exchanges/bitmart.png',
+    'bitrue': '/exchanges/bitrue.png',
+    'bybit': '/exchanges/bybit.png',
+    'kucoin': '/exchanges/kucoin.png',
+    'weex': '/exchanges/weex.png',
+    'bitkan': '/exchanges/bitkan.png',
+    'meteora': '/exchanges/meteora.jpg',
+    'gate': '/exchanges/gate.png',
+  }
+  return map[key] || fallback || ''
 }
 
 export function TokenHealthCard() {
@@ -214,7 +237,7 @@ export function TokenHealthCard() {
               return (
                 <div key={i} style={{ display:"flex", alignItems:"center", gap:8 }}>
                   {ex.logo ? (
-                    <img src={ex.logo} alt={ex.exchange} width={20} height={20} style={{ borderRadius:5, objectFit:"contain", background:"var(--card)", boxShadow:"0 0 0 1px rgba(0,0,0,0.07)", flexShrink:0 }} onError={e=>{(e.target as HTMLImageElement).style.display="none"}} />
+                    <img src={getLocalExchangeLogo(ex.exchange, ex.logo)} alt={ex.exchange} width={20} height={20} style={{ borderRadius:5, objectFit:"contain", background:"var(--card)", boxShadow:"0 0 0 1px rgba(0,0,0,0.07)", flexShrink:0 }} onError={e=>{(e.target as HTMLImageElement).style.display="none"}} />
                   ) : (
                     <div style={{ width:20, height:20, borderRadius:5, background:"#E8E8ED", flexShrink:0, display:"flex", alignItems:"center", justifyContent:"center", fontSize:"0.5rem", fontWeight:700, color:"var(--tertiary)" }}>{ex.exchange.charAt(0)}</div>
                   )}
@@ -275,7 +298,7 @@ export function TokenHealthCard() {
             <div key={i} style={{ display:"flex", alignItems:"center", gap:10 }}>
               {ex.logo ? (
                 // eslint-disable-next-line @next/next/no-img-element
-                <img src={ex.logo} alt={ex.exchange}
+                <img src={getLocalExchangeLogo(ex.exchange, ex.logo)} alt={ex.exchange}
                   style={{ width:22, height:22, borderRadius:6, objectFit:"cover", flexShrink:0,
                     boxShadow:"0 0 0 1px rgba(0,0,0,0.07)" }}
                   onError={e => { (e.target as HTMLImageElement).style.display="none" }} />

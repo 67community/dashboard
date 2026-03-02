@@ -171,17 +171,17 @@ export default function Dashboard() {
       `}</style>
 
       {/* ══ Top Section — Community | Coin Health | Announcements+Raid ══ */}
-      <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 0.6fr", gap:20, alignItems:"stretch" }}>
-        <div style={{ display:"flex", minWidth:0, height:580, overflow:"hidden" }}><CommunityCard /></div>
-        <div style={{ display:"flex", minWidth:0, height:580, overflow:"hidden" }}><TokenHealthCard /></div>
-        <div style={{ display:"flex", flexDirection:"column", gap:20, minWidth:0 }}>
-          <div style={{ display:"flex", minWidth:0 }}><AnnouncementsCard /></div>
-          <div style={{ display:"flex", minWidth:0 }}><XRaidCard /></div>
+      <div className="top-section" style={{ display:"grid", gridTemplateColumns:"1fr 1fr 0.6fr", gap:20, alignItems:"stretch" }}>
+        <div className="top-community" style={{ display:"flex", minWidth:0, height:580, overflow:"hidden" }}><CommunityCard /></div>
+        <div className="top-coinhealth" style={{ display:"flex", minWidth:0, height:580, overflow:"hidden" }}><TokenHealthCard /></div>
+        <div className="top-right" style={{ display:"flex", flexDirection:"column", gap:20, minWidth:0 }}>
+          <div className="top-announcements" style={{ display:"flex", minWidth:0 }}><AnnouncementsCard /></div>
+          <div className="top-xraid" style={{ display:"flex", minWidth:0 }}><XRaidCard /></div>
         </div>
       </div>
 
       {/* ══ Cards Grid ═════════════════════════════════════════ */}
-      <div className="cards-grid" style={{ display:"grid", gridTemplateColumns:"repeat(3, 1fr)", gap:20 }}>
+      <div className="cards-grid" style={{ display:"grid", gap:20 }}>
         <div className="enter-2" style={{ display:"flex", minWidth:0 }}><TikTokSpotlightCard /></div>
         <div className="enter-2" style={{ display:"flex", minWidth:0 }}><YouTubeSpotlightCard /></div>
         <div className="enter-3" style={{ display:"flex", minWidth:0, overflow:"hidden" }}><ContentCreatorCard /></div>
