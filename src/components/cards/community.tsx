@@ -128,7 +128,9 @@ export function CommunityCard() {
   const xFollowers    = sp?.twitter_followers    ?? 0
   const bestTweet48h  = sp?.best_tweet_2d
   const bestTweetWeek = sp?.best_tweet_week
-  const xDelta        = sp?.follower_change_24h  ?? 0
+  const xDelta        = (sp as Record<string,unknown> & typeof sp)?.follower_change_20h as number ?? sp?.follower_change_24h ?? 0
+  const xDelta3d      = (sp as Record<string,unknown> & typeof sp)?.follower_change_3d as number ?? 0
+  const xDelta7d      = (sp as Record<string,unknown> & typeof sp)?.follower_change_7d as number ?? sp?.follower_growth_7d ?? 0
   const xCommunity    = sp?.x_community_members  ?? 0
   const xCommunityDelta = sp?.x_community_delta_24h ?? 0
   const xEngagement   = sp?.engagement_rate      ?? 0
@@ -324,27 +326,114 @@ export function CommunityCard() {
 
       {/* ── X / Twitter Section ── */}
       <div style={{ borderRadius:16, border:"1px solid rgba(0,0,0,0.08)", overflow:"hidden" }}>
-        {/* Clean header */}
-        <div style={{ background:"#F5F5F7", padding:"12px 16px", display:"flex", alignItems:"center", gap:8, borderBottom:"1px solid rgba(0,0,0,0.06)" }}>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="#1D1D1F">
-            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.739l7.73-8.835L1.254 2.25H8.08l4.258 5.63 5.906-5.63Z"/>
-          </svg>
-          <span style={{ fontSize:"0.875rem", fontWeight:800, color:"#1D1D1F" }}>X (Twitter)</span>
+        {/* Header */}
+        <div style={{ background:"#F5F5F7", padding:"12px 16px", display:"flex", alignItems:"center", justifyContent:"space-between", borderBottom:"1px solid rgba(0,0,0,0.06)" }}>
+          <div style={{ display:"flex", alignItems:"center", gap:8 }}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="#1D1D1F">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.739l7.73-8.835L1.254 2.25H8.08l4.258 5.63 5.906-5.63Z"/>
+            </svg>
+            <span style={{ fontSize:"0.875rem", fontWeight:800, color:"#1D1D1F" }}>X (Twitter)</span>
+          </div>
+          <span style={{ fontSize:"1.25rem", fontWeight:800, color:"#1D1D1F" }}>{xFollowers > 0 ? xFollowers.toLocaleString() : "—"} <span style={{ fontSize:"0.75rem", color:"#8E8E93", fontWeight:500 }}>followers</span></span>
         </div>
-        {/* Stats grid */}
-        <div style={{ display:"grid", gridTemplateColumns:"repeat(4, 1fr)", gap:0 }}>
-          {[
-            { label:"Followers",       value: xFollowers > 0 ? xFollowers.toLocaleString() : "—", delta: xDelta, color:"#1D1D1F" },
-            { label:"Flwr / 20h",      value: xDelta >= 0 ? `+${xDelta}` : `${xDelta}`, color: xDelta >= 0 ? "#059669" : "#EF4444" },
-            { label:"Community",       value: xCommunity > 0 ? xCommunity.toLocaleString() : "—", delta: xCommunityDelta, color:"#F5A623" },
-            { label:"Community / 20h", value: xCommunityDelta >= 0 ? `+${xCommunityDelta}` : `${xCommunityDelta}`, color: xCommunityDelta >= 0 ? "#059669" : "#EF4444" },
-          ].map((s, i) => (
-            <div key={i} style={{ padding:"14px 16px", borderRight: i < 3 ? "1px solid rgba(0,0,0,0.06)" : "none", background:"#fff" }}>
-              <p style={{ fontSize:"1.375rem", fontWeight:800, color:s.color, lineHeight:1, margin:0 }}>{s.value}</p>
-              <p style={{ fontSize:"0.625rem", color:"#8E8E93", fontWeight:600, textTransform:"uppercase", letterSpacing:"0.06em", marginTop:5 }}>{s.label}</p>
+
+        {/* Follower Growth */}
+        <div style={{ padding:"14px 16px", borderBottom:"1px solid rgba(0,0,0,0.06)" }}>
+          <p style={{ fontSize:"0.625rem", fontWeight:800, color:"#8E8E93", textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:10 }}>Follower Growth</p>
+          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:8 }}>
+            {[
+              { label:"20h", val: xDelta },
+              { label:"3 days", val: xDelta3d },
+              { label:"7 days", val: xDelta7d },
+            ].map(({ label, val }) => (
+              <div key={label} style={{ background: val > 0 ? "rgba(5,150,105,0.07)" : val < 0 ? "rgba(239,68,68,0.07)" : "#F5F5F7",
+                borderRadius:10, padding:"10px 12px", textAlign:"center",
+                border: `1px solid ${val > 0 ? "rgba(5,150,105,0.15)" : val < 0 ? "rgba(239,68,68,0.15)" : "rgba(0,0,0,0.06)"}` }}>
+                <p style={{ fontSize:"1.25rem", fontWeight:800, lineHeight:1, margin:0,
+                  color: val > 0 ? "#059669" : val < 0 ? "#EF4444" : "#8E8E93" }}>
+                  {val > 0 ? "+" : ""}{val}
+                </p>
+                <p style={{ fontSize:"0.625rem", color:"#8E8E93", fontWeight:600, textTransform:"uppercase", letterSpacing:"0.06em", marginTop:4 }}>{label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Engagement Rate + Content Performance */}
+        <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:0 }}>
+          {/* Engagement Rate */}
+          <div style={{ padding:"14px 16px", borderRight:"1px solid rgba(0,0,0,0.06)" }}>
+            <p style={{ fontSize:"0.625rem", fontWeight:800, color:"#8E8E93", textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:10 }}>Engagement Rate</p>
+            <div style={{ display:"flex", alignItems:"baseline", gap:6 }}>
+              <span style={{ fontSize:"2rem", fontWeight:900, color: xEngagement > 2 ? "#059669" : "#F5A623", lineHeight:1 }}>
+                {xEngagement > 0 ? xEngagement.toFixed(1) : "—"}
+              </span>
+              {xEngagement > 0 && <span style={{ fontSize:"1rem", fontWeight:700, color:"#8E8E93" }}>%</span>}
             </div>
-          ))}
+            <div style={{ display:"flex", gap:12, marginTop:8 }}>
+              <div>
+                <p style={{ fontSize:"0.875rem", fontWeight:700, color:"#1D1D1F", margin:0 }}>{sp?.avg_engagement?.toLocaleString() ?? "—"}</p>
+                <p style={{ fontSize:"0.6rem", color:"#8E8E93", fontWeight:600 }}>Avg / Tweet</p>
+              </div>
+              <div>
+                <p style={{ fontSize:"0.875rem", fontWeight:700, color:"#1D1D1F", margin:0 }}>{sp?.total_engagement_7d?.toLocaleString() ?? "—"}</p>
+                <p style={{ fontSize:"0.6rem", color:"#8E8E93", fontWeight:600 }}>Total 7d</p>
+              </div>
+              <div>
+                <p style={{ fontSize:"0.875rem", fontWeight:700, color:"#F5A623", margin:0 }}>{sp?.posting_streak_days ?? "—"}</p>
+                <p style={{ fontSize:"0.6rem", color:"#8E8E93", fontWeight:600 }}>Day Streak</p>
+              </div>
+            </div>
+          </div>
+          {/* Content Performance */}
+          <div style={{ padding:"14px 16px" }}>
+            <p style={{ fontSize:"0.625rem", fontWeight:800, color:"#8E8E93", textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:10 }}>Content Performance</p>
+            {sp?.content_type_stats && Object.keys(sp.content_type_stats).length > 0 ? (
+              <div style={{ display:"flex", flexDirection:"column", gap:6 }}>
+                {Object.entries(sp.content_type_stats)
+                  .sort(([,a],[,b]) => (b as {avg_eng:number}).avg_eng - (a as {avg_eng:number}).avg_eng)
+                  .slice(0, 4)
+                  .map(([type, s]) => {
+                    const stat = s as { count: number; avg_eng: number }
+                    const maxEng = Math.max(...Object.values(sp.content_type_stats).map((v) => (v as {avg_eng:number}).avg_eng))
+                    const pct = maxEng > 0 ? (stat.avg_eng / maxEng) * 100 : 0
+                    return (
+                      <div key={type}>
+                        <div style={{ display:"flex", justifyContent:"space-between", marginBottom:3 }}>
+                          <span style={{ fontSize:"0.75rem", fontWeight:600, color:"#374151", textTransform:"capitalize" }}>{type}</span>
+                          <span style={{ fontSize:"0.75rem", fontWeight:700, color:"#F5A623" }}>{stat.avg_eng.toFixed(0)} avg</span>
+                        </div>
+                        <div style={{ height:4, borderRadius:99, background:"rgba(0,0,0,0.06)" }}>
+                          <div style={{ height:"100%", borderRadius:99, background:"#F5A623", width:`${pct}%` }} />
+                        </div>
+                      </div>
+                    )
+                  })
+                }
+              </div>
+            ) : (
+              <p style={{ fontSize:"0.875rem", color:"#C7C7CC" }}>No data yet</p>
+            )}
+          </div>
         </div>
+
+        {/* X Community row */}
+        {xCommunity > 0 && (
+          <div style={{ padding:"12px 16px", borderTop:"1px solid rgba(0,0,0,0.06)", background:"#FAFAFA",
+            display:"flex", alignItems:"center", justifyContent:"space-between" }}>
+            <span style={{ fontSize:"0.8125rem", fontWeight:700, color:"#1D1D1F" }}>X Community Members</span>
+            <div style={{ display:"flex", alignItems:"center", gap:8 }}>
+              <span style={{ fontSize:"1.125rem", fontWeight:800, color:"#F5A623" }}>{xCommunity.toLocaleString()}</span>
+              {xCommunityDelta !== 0 && (
+                <span style={{ fontSize:"0.75rem", fontWeight:800, padding:"2px 8px", borderRadius:99,
+                  background: xCommunityDelta > 0 ? "rgba(5,150,105,0.1)" : "rgba(239,68,68,0.1)",
+                  color: xCommunityDelta > 0 ? "#059669" : "#EF4444" }}>
+                  {xCommunityDelta > 0 ? "+" : ""}{xCommunityDelta} / 20h
+                </span>
+              )}
+            </div>
+          </div>
+        )}
       </div>
 
       {/* ── Trending Posts ── */}
