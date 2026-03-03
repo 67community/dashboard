@@ -437,13 +437,15 @@ img, svg { min-width: 0; flex-shrink: 0; }
     min-width: 0 !important;
   }
 
-  /* Mobile order: Community → X Raid → Coin Health → rest */
-  .tg-community  { order: 1; }
-  .tg-xraid      { order: 2; }
-  .tg-coinhealth { order: 3; }
-  .tg-teamnotes  { order: 4; }
-  .tg-social     { order: 5; }
-  .tg-creator    { order: 6; }
+  /* Mobile order: Community → X Raid → Coin Health → Team Notes → Wallet → Social → Creator */
+  .tg-community    { order: 1; }
+  .tg-xraid        { order: 2; }
+  .tg-coinhealth   { order: 3; }
+  .tg-announcements{ order: 4; }
+  .tg-teamnotes    { order: 5; }
+  .tg-wallet       { order: 6; }
+  .tg-social       { order: 7; }
+  .tg-creator      { order: 8; }
   .tg-right {
     display: contents !important; /* flatten right column so children can be reordered */
   }
