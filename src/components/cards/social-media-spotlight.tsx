@@ -216,8 +216,8 @@ export function SocialMediaSpotlightCard() {
       icon={
         <div style={{ display:"flex", alignItems:"center", gap:4 }}>
           <TikTokIcon size={13} />
-          <YouTubeIcon size={13} />
           <InstaIcon size={13} />
+          <YouTubeIcon size={13} />
         </div>
       }
       collapsed={collapsed}
