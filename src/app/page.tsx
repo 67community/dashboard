@@ -9,6 +9,7 @@ import { ContentPipelineCard } from "@/components/cards/content-pipeline"
 import { ContentCreatorCard }  from "@/components/cards/content-creator"
 import { PostTimingCard }        from "@/components/cards/post-timing"
 import { TikTokSpotlightCard }       from "@/components/cards/tiktok-spotlight"
+import { SocialMediaSpotlightCard }  from "@/components/cards/social-media-spotlight"
 import { YouTubeSpotlightCard }      from "@/components/cards/youtube-spotlight"
 import { InstagramSpotlightCard }    from "@/components/cards/instagram-spotlight"
 import { XLiveFeedCard }             from "@/components/cards/x-live-feed"
@@ -180,17 +181,18 @@ export default function Dashboard() {
         </div>
       </div>
 
+      {/* ══ Row 2: Social Media | Content Creator | Wallet Tracker ══ */}
+      <div className="top-section row2-section" style={{ display:"grid", gridTemplateColumns:"1fr 1fr 0.6fr", gap:20, alignItems:"stretch" }}>
+        <div className="top-community row2-social" style={{ display:"flex", minWidth:0 }}><SocialMediaSpotlightCard /></div>
+        <div className="top-coinhealth row2-creator" style={{ display:"flex", minWidth:0, overflow:"hidden" }}><ContentCreatorCard /></div>
+        <div className="top-right row2-wallet" style={{ display:"flex", minWidth:0 }}><WalletTrackerCard /></div>
+      </div>
+
       {/* ══ Cards Grid ═════════════════════════════════════════ */}
       <div className="cards-grid" style={{ display:"grid", gap:20 }}>
-        <div className="enter-2" style={{ display:"flex", minWidth:0 }}><TikTokSpotlightCard /></div>
-        <div className="enter-2" style={{ display:"flex", minWidth:0 }}><YouTubeSpotlightCard /></div>
-        <div className="enter-3" style={{ display:"flex", minWidth:0, overflow:"hidden" }}><ContentCreatorCard /></div>
         <div className="enter-3" style={{ display:"flex", minWidth:0 }}><NewsFeedCard /></div>
-        <div className="enter-3" style={{ display:"flex", minWidth:0 }}><WalletTrackerCard /></div>
         <div className="enter-4" style={{ display:"flex", minWidth:0 }}><ContentPipelineCard /></div>
         <div className="enter-4" style={{ display:"flex", minWidth:0 }}><AgentStatusCard /></div>
-        
-        <div className="enter-6" style={{ display:"flex", minWidth:0 }}><InstagramSpotlightCard /></div>
         <div className="enter-6" style={{ display:"flex", minWidth:0 }}><SightingsCard /></div>
         <div className="enter-7" style={{ display:"flex", minWidth:0 }}><CommunityEventsCard /></div>
         <div className="enter-7" style={{ display:"flex", minWidth:0 }}><CommunityLeaderboardCard /></div>
