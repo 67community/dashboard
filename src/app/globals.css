@@ -424,31 +424,29 @@ img, svg { min-width: 0; flex-shrink: 0; }
 
 /* ── Mobile: all cards single column ─────────────────────── */
 @media (max-width: 768px) {
-  /* Top unified grid → single column */
-  .top-section,
-  [style*="gridTemplateColumns"] {
-    grid-template-columns: 1fr !important;
-    height: auto !important;
+  /* Unified top grid → single column */
+  .unified-top-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
   }
 
-  /* Reset all grid spans to full width */
-  [style*="gridColumn"],
-  [style*="grid-column"] {
-    grid-column: 1 / -1 !important;
+  /* All children full width, reset grid placement */
+  .unified-top-grid > * {
+    width: 100% !important;
+    min-width: 0 !important;
   }
 
-  /* Reset all grid rows */
-  [style*="gridRow"],
-  [style*="grid-row"] {
-    grid-row: auto !important;
+  /* Mobile order: Community → X Raid → Coin Health → rest */
+  .tg-community  { order: 1; }
+  .tg-xraid      { order: 2; }
+  .tg-coinhealth { order: 3; }
+  .tg-teamnotes  { order: 4; }
+  .tg-social     { order: 5; }
+  .tg-creator    { order: 6; }
+  .tg-right {
+    display: contents !important; /* flatten right column so children can be reordered */
   }
-
-  /* top section children */
-  .top-community   { order: 1; height: auto !important; }
-  .top-coinhealth  { order: 2; height: auto !important; }
-  .top-right       { order: 3; flex-direction: column; }
-  .top-xraid       { order: 1; }
-  .top-announcements { order: 2; }
 
   /* cards-grid */
   .cards-grid { grid-template-columns: 1fr !important; gap: 10px !important; }
