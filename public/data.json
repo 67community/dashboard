@@ -332,44 +332,44 @@
     {
       "name": "X Raid Bot",
       "status": "green",
-      "last_run": "2026-03-02T11:32:19.807440Z",
+      "last_run": "2026-03-03T00:02:19Z",
       "errors_24h": 0,
-      "schedule": "Every 3 min"
+      "schedule": "Auto (<10min tweets)"
     },
     {
       "name": "Price Alert",
-      "status": "red",
-      "last_run": "unknown",
+      "status": "green",
+      "last_run": "2026-03-03T00:00:00Z",
       "errors_24h": 0,
       "schedule": "Every 5 min"
     },
     {
       "name": "Whale Alert",
-      "status": "red",
-      "last_run": "unknown",
+      "status": "green",
+      "last_run": "2026-03-03T00:00:00Z",
       "errors_24h": 0,
       "schedule": "Every 10 min"
     },
     {
-      "name": "Welcome Bot",
-      "status": "red",
-      "last_run": "unknown",
-      "errors_24h": 0,
-      "schedule": "On event"
-    },
-    {
       "name": "Hype Messages",
-      "status": "red",
-      "last_run": "unknown",
+      "status": "green",
+      "last_run": "2026-03-02T20:00:00Z",
       "errors_24h": 0,
       "schedule": "Every 4h"
     },
     {
-      "name": "Weekly Report",
-      "status": "red",
-      "last_run": "unknown",
+      "name": "Data Updater",
+      "status": "green",
+      "last_run": "2026-03-03T00:28:41Z",
       "errors_24h": 0,
-      "schedule": "Weekly"
+      "schedule": "Every 30 min"
+    },
+    {
+      "name": "Presence Bot",
+      "status": "green",
+      "last_run": "2026-03-03T00:25:00Z",
+      "errors_24h": 0,
+      "schedule": "Every 5 min"
     }
   ],
   "milestones": [
