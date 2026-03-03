@@ -172,23 +172,23 @@ export default function Dashboard() {
       `}</style>
 
       {/* ══ Unified Top Grid ══ */}
-      <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 0.6fr", gap:20 }}>
+      <div className="unified-top-grid" style={{ display:"grid", gridTemplateColumns:"1fr 1fr 0.6fr", gap:20 }}>
 
         {/* Row 1: Community | CoinHealth | Announcements+Raid */}
-        <div className="top-community" style={{ display:"flex", minWidth:0, gridRow:"1 / 2" }}><CommunityCard /></div>
-        <div className="top-coinhealth" style={{ display:"flex", minWidth:0, gridRow:"1 / 2" }}><TokenHealthCard /></div>
-        <div className="top-right" style={{ display:"flex", flexDirection:"column", gap:20, minWidth:0, gridRow:"1 / 3" }}>
-          <div className="top-announcements" style={{ display:"flex", minWidth:0 }}><AnnouncementsCard /></div>
-          <div className="top-xraid" style={{ display:"flex", minWidth:0 }}><XRaidCard /></div>
+        <div className="tg-community" style={{ display:"flex", minWidth:0, gridRow:"1 / 2" }}><CommunityCard /></div>
+        <div className="tg-coinhealth" style={{ display:"flex", minWidth:0, gridRow:"1 / 2" }}><TokenHealthCard /></div>
+        <div className="tg-right" style={{ display:"flex", flexDirection:"column", gap:20, minWidth:0, gridRow:"1 / 3" }}>
+          <div style={{ display:"flex", minWidth:0 }}><AnnouncementsCard /></div>
+          <div className="tg-xraid" style={{ display:"flex", minWidth:0 }}><XRaidCard /></div>
           <div style={{ display:"flex", minWidth:0, flex:1 }}><WalletTrackerCard /></div>
         </div>
 
         {/* Row 2: Team Notes spanning col 1+2 */}
-        <div style={{ gridColumn:"1 / 3", gridRow:"2 / 3", display:"flex", minWidth:0 }}><TeamNotesCard /></div>
+        <div className="tg-teamnotes" style={{ gridColumn:"1 / 3", gridRow:"2 / 3", display:"flex", minWidth:0 }}><TeamNotesCard /></div>
 
         {/* Row 3: Social Media | Content Creator */}
-        <div className="top-community" style={{ display:"flex", minWidth:0, gridRow:"3 / 4" }}><SocialMediaSpotlightCard /></div>
-        <div className="top-coinhealth" style={{ display:"flex", minWidth:0, overflow:"hidden", gridRow:"3 / 4" }}><ContentCreatorCard /></div>
+        <div className="tg-social" style={{ display:"flex", minWidth:0, gridRow:"3 / 4" }}><SocialMediaSpotlightCard /></div>
+        <div className="tg-creator" style={{ display:"flex", minWidth:0, overflow:"hidden", gridRow:"3 / 4" }}><ContentCreatorCard /></div>
         <div style={{ gridRow:"3 / 4", minWidth:0 }} />
       </div>
 
