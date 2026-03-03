@@ -6,6 +6,7 @@ import { useDroppable } from "@dnd-kit/core"
 import { Plus } from "lucide-react"
 import { Task, KanbanColumn as KanbanColumnType } from "@/lib/types"
 import { TaskCard } from "./task-card"
+import { TEAM_MEMBERS } from "@/lib/mock-data"
 
 const COL: Record<KanbanColumnType, { dot: string; bg: string; text: string }> = {
   Backlog:      { dot:"#A1A1AA", bg:"#F4F4F5", text:"#71717A" },
@@ -19,20 +20,21 @@ interface Props {
   column: KanbanColumnType
   tasks: Task[]
   onOpenTask: (task: Task) => void
-  onAddTask: (column: KanbanColumnType, title: string) => void
+  onAddTask: (column: KanbanColumnType, title: string, assigneeId?: string) => void
   onDeleteTask?: (id: string) => void
 }
 
 export function KanbanColumnComponent({ column, tasks, onOpenTask, onAddTask, onDeleteTask }: Props) {
   const [adding, setAdding] = useState(false)
   const [newTitle, setNewTitle] = useState("")
+  const [assigneeId, setAssigneeId] = useState<string | undefined>(undefined)
   const { setNodeRef, isOver } = useDroppable({ id: column })
   const s = COL[column]
 
   const handleAdd = () => {
     if (newTitle.trim()) {
-      onAddTask(column, newTitle.trim())
-      setNewTitle(""); setAdding(false)
+      onAddTask(column, newTitle.trim(), assigneeId)
+      setNewTitle(""); setAssigneeId(undefined); setAdding(false)
     }
   }
 
@@ -77,12 +79,26 @@ export function KanbanColumnComponent({ column, tasks, onOpenTask, onAddTask, on
                 if (e.key === "Escape") { setAdding(false); setNewTitle("") }
               }}
             />
-            <div style={{ display:"flex", gap:8, marginTop:8 }}>
+            {/* Assignee picker */}
+            <div style={{ display:"flex", gap:5, marginBottom:8, flexWrap:"wrap" }}>
+              {TEAM_MEMBERS.map(m => (
+                <button key={m.id} onClick={() => setAssigneeId(assigneeId === m.id ? undefined : m.id)}
+                  title={m.name}
+                  style={{ padding:0, background:"none", border:"none", cursor:"pointer", borderRadius:"50%",
+                    outline: assigneeId === m.id ? `2px solid #F5A623` : "2px solid transparent",
+                    outlineOffset: 1, transition:"outline 0.15s" }}>
+                  <img src={m.avatar} alt={m.name}
+                    style={{ width:26, height:26, borderRadius:"50%", objectFit:"cover", display:"block",
+                      opacity: assigneeId && assigneeId !== m.id ? 0.35 : 1, transition:"opacity 0.15s" }} />
+                </button>
+              ))}
+            </div>
+            <div style={{ display:"flex", gap:8 }}>
               <button onClick={handleAdd}
                 style={{ padding:"6px 14px", background:"#F5A623", color:"#000", fontSize:"0.75rem", fontWeight:700, borderRadius:9, border:"none", cursor:"pointer" }}>
                 Add
               </button>
-              <button onClick={() => { setAdding(false); setNewTitle("") }}
+              <button onClick={() => { setAdding(false); setNewTitle(""); setAssigneeId(undefined) }}
                 style={{ padding:"6px 14px", background:"#F4F4F5", color:"#71717A", fontSize:"0.75rem", fontWeight:600, borderRadius:9, border:"none", cursor:"pointer" }}>
                 Cancel
               </button>

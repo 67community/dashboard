@@ -21,7 +21,6 @@ import { OutreachCard }         from "@/components/cards/outreach"
 import { SightingsCard }        from "@/components/cards/sightings"
 import { RaidCoordinatorCard }  from "@/components/cards/raid-coordinator"
 import { DailyBriefingCard }    from "@/components/cards/daily-briefing"
-import { CommunityEventsCard }  from "@/components/cards/events"
 import { TeamNotesCard }          from "@/components/cards/team-notes"
 import { AnnouncementsCard }      from "@/components/cards/announcements"
 import { CommunityLeaderboardCard } from "@/components/cards/leaderboard"
@@ -195,7 +194,7 @@ export default function Dashboard() {
           <div className="cards-grid" style={{ display:"grid", gap:20 }}>
             <div className="enter-4" style={{ display:"flex", minWidth:0 }}><ContentPipelineCard /></div>
             <div className="enter-6" style={{ display:"flex", minWidth:0 }}><SightingsCard /></div>
-            <div className="enter-7" style={{ display:"flex", minWidth:0 }}><CommunityEventsCard /></div>
+
           </div>
         </div>
 
