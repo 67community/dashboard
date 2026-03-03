@@ -431,6 +431,26 @@ export function TeamNotesCard() {
           {sorted.slice(0, 3).map(n => <NoteCard key={n.id} n={n} onPin={togglePin} onDelete={deleteNote} />)}
         </div>
       )}
+
+      {/* Meeting Recordings preview */}
+      <div style={{ borderTop:"1px solid var(--separator)", paddingTop:10 }}>
+        <p style={{ fontSize:"0.5625rem", fontWeight:800, color:"var(--secondary)", textTransform:"uppercase", letterSpacing:"0.08em", margin:"0 0 6px" }}>🎙️ Meeting Recordings</p>
+        <div style={{ background:"rgba(124,58,237,0.06)", border:"1px solid rgba(124,58,237,0.18)", borderRadius:10, padding:"8px 10px", display:"flex", alignItems:"center", justifyContent:"space-between", gap:10 }}>
+          <div>
+            <p style={{ margin:0, fontSize:"0.6875rem", fontWeight:700, color:"var(--foreground)" }}>Discord Voice — March 3, 2026</p>
+            <p style={{ margin:"2px 0 0", fontSize:"0.5rem", color:"var(--tertiary)" }}>52:31 min · 3 key takeaways</p>
+          </div>
+          <button onClick={(e) => { e.stopPropagation(); toggleMeeting("/meetings/meeting-2026-03-03.mp3") }}
+            style={{ width:30, height:30, borderRadius:99, border:"none", cursor:"pointer", background:"#7C3AED", color:"#fff", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0, fontSize:10 }}>
+            {meetingPlaying ? "⏸" : "▶"}
+          </button>
+        </div>
+        {meetingPlaying && (
+          <div style={{ height:3, background:"rgba(124,58,237,0.15)", borderRadius:99, marginTop:6 }}>
+            <div style={{ height:"100%", width:`${meetingProgress*100}%`, background:"#7C3AED", borderRadius:99, transition:"width 0.1s" }} />
+          </div>
+        )}
+      </div>
     </div>
   )
 
