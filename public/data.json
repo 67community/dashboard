@@ -119,7 +119,7 @@
       }
     },
     "best_content_type": "meme",
-    "x_community_members": 9700,
+    "x_community_members": 9800,
     "x_community_delta_24h": 0,
     "x_community_id": "1987949705322508569",
     "mentions": [],
@@ -295,7 +295,9 @@
         "msgs_1h": 1
       }
     ],
-    "top_channels_updated_at": 1772411491.747939
+    "top_channels_updated_at": 1772411491.747939,
+    "x_community_members": 9800,
+    "x_community_delta_24h": 100
   },
   "content_pipeline": {
     "scheduled_posts": [
