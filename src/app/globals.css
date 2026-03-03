@@ -422,15 +422,35 @@ img, svg { min-width: 0; flex-shrink: 0; }
 /* ── Dark mode: scrollbar ───────────────────────────────────── */
 [data-theme="dark"] ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); }
 
-/* ── Mobile: top section reorder ─────────────────────────── */
+/* ── Mobile: all cards single column ─────────────────────── */
 @media (max-width: 768px) {
-  .top-section {
+  /* Top unified grid → single column */
+  .top-section,
+  [style*="gridTemplateColumns"] {
     grid-template-columns: 1fr !important;
     height: auto !important;
   }
+
+  /* Reset all grid spans to full width */
+  [style*="gridColumn"],
+  [style*="grid-column"] {
+    grid-column: 1 / -1 !important;
+  }
+
+  /* Reset all grid rows */
+  [style*="gridRow"],
+  [style*="grid-row"] {
+    grid-row: auto !important;
+  }
+
+  /* top section children */
   .top-community   { order: 1; height: auto !important; }
   .top-coinhealth  { order: 2; height: auto !important; }
-  .top-right       { order: 3; }
+  .top-right       { order: 3; flex-direction: column; }
   .top-xraid       { order: 1; }
   .top-announcements { order: 2; }
+
+  /* cards-grid */
+  .cards-grid { grid-template-columns: 1fr !important; gap: 10px !important; }
+  .cards-grid > * { grid-column: 1 / -1 !important; }
 }
