@@ -369,6 +369,40 @@ export function TeamNotesCard() {
   const unpinned = sorted.filter(n => !n.pinned)
 
   // ── Collapsed ───────────────────────────────────────────────────────────────
+  // ── Meeting state ───────────────────────────────────────────────────────────
+  const MEETINGS = [
+    {
+      date: "2026-03-03",
+      label: "Discord Voice — March 3, 2026",
+      duration: "52:31",
+      audio: "/meetings/meeting-2026-03-03.mp3",
+      summary: [
+        "Dashboard cards presented to the team — Announcements, X Raid Panel, Team Notes, Kanban",
+        "Meaning of 67 Coin: Study Murad. Wednesday: everyone answers 'What does holding 67 mean?'",
+        "Switch to Claude: Cowork + Obsidian + Chrome Extension — your computer is the memory",
+      ]
+    }
+  ]
+
+  const [meetingAudio, setMeetingAudio] = useState<HTMLAudioElement | null>(null)
+  const [meetingPlaying, setMeetingPlaying] = useState(false)
+  const [meetingProgress, setMeetingProgress] = useState(0)
+  const [meetingTime, setMeetingTime] = useState(0)
+
+  function toggleMeeting(url: string) {
+    if (!meetingAudio) {
+      const a = new Audio(url)
+      a.ontimeupdate = () => { setMeetingTime(a.currentTime); setMeetingProgress(a.duration ? a.currentTime/a.duration : 0) }
+      a.onended = () => { setMeetingPlaying(false); setMeetingProgress(0); setMeetingTime(0) }
+      setMeetingAudio(a)
+      a.play()
+      setMeetingPlaying(true)
+    } else {
+      if (meetingPlaying) { meetingAudio.pause(); setMeetingPlaying(false) }
+      else { meetingAudio.play(); setMeetingPlaying(true) }
+    }
+  }
+
   const collapsed = (
     <div style={{ display:"flex", flexDirection:"column", gap:10 }} onClick={e => e.stopPropagation()}>
 
@@ -453,40 +487,6 @@ export function TeamNotesCard() {
       </div>
     </div>
   )
-
-  // ── Expanded ────────────────────────────────────────────────────────────────
-  const MEETINGS = [
-    {
-      date: "2026-03-03",
-      label: "Discord Voice — March 3, 2026",
-      duration: "52:31",
-      audio: "/meetings/meeting-2026-03-03.mp3",
-      summary: [
-        "Dashboard cards presented to the team — Announcements, X Raid Panel, Team Notes, Kanban",
-        "Meaning of 67 Coin: Study Murad. Wednesday: everyone answers 'What does holding 67 mean?'",
-        "Switch to Claude: Cowork + Obsidian + Chrome Extension — your computer is the memory",
-      ]
-    }
-  ]
-
-  const [meetingAudio, setMeetingAudio] = useState<HTMLAudioElement | null>(null)
-  const [meetingPlaying, setMeetingPlaying] = useState(false)
-  const [meetingProgress, setMeetingProgress] = useState(0)
-  const [meetingTime, setMeetingTime] = useState(0)
-
-  function toggleMeeting(url: string) {
-    if (!meetingAudio) {
-      const a = new Audio(url)
-      a.ontimeupdate = () => { setMeetingTime(a.currentTime); setMeetingProgress(a.duration ? a.currentTime/a.duration : 0) }
-      a.onended = () => { setMeetingPlaying(false); setMeetingProgress(0); setMeetingTime(0) }
-      setMeetingAudio(a)
-      a.play()
-      setMeetingPlaying(true)
-    } else {
-      if (meetingPlaying) { meetingAudio.pause(); setMeetingPlaying(false) }
-      else { meetingAudio.play(); setMeetingPlaying(true) }
-    }
-  }
 
   const expanded = (
     <div style={{ display:"flex", flexDirection:"column", gap:14 }}>
