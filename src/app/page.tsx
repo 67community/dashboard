@@ -171,27 +171,25 @@ export default function Dashboard() {
         @media (max-width: 500px)  { .hero-stats-grid { grid-template-columns: 1fr !important; } }
       `}</style>
 
-      {/* ══ Top Section — Community | Coin Health | Announcements+Raid ══ */}
-      <div className="top-section" style={{ display:"grid", gridTemplateColumns:"1fr 1fr 0.6fr", gap:20, alignItems:"stretch" }}>
-        <div className="top-community" style={{ display:"flex", minWidth:0, height:580, overflow:"hidden" }}><CommunityCard /></div>
-        <div className="top-coinhealth" style={{ display:"flex", minWidth:0, height:580, overflow:"hidden" }}><TokenHealthCard /></div>
-        <div className="top-right" style={{ display:"flex", flexDirection:"column", gap:20, minWidth:0 }}>
+      {/* ══ Unified Top Grid ══ */}
+      <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 0.6fr", gap:20 }}>
+
+        {/* Row 1: Community | CoinHealth | Announcements+Raid */}
+        <div className="top-community" style={{ display:"flex", minWidth:0, gridRow:"1 / 2" }}><CommunityCard /></div>
+        <div className="top-coinhealth" style={{ display:"flex", minWidth:0, gridRow:"1 / 2" }}><TokenHealthCard /></div>
+        <div className="top-right" style={{ display:"flex", flexDirection:"column", gap:20, minWidth:0, gridRow:"1 / 3" }}>
           <div className="top-announcements" style={{ display:"flex", minWidth:0 }}><AnnouncementsCard /></div>
           <div className="top-xraid" style={{ display:"flex", minWidth:0 }}><XRaidCard /></div>
+          <div style={{ display:"flex", minWidth:0, flex:1 }}><WalletTrackerCard /></div>
         </div>
-      </div>
 
-      {/* ══ Row 2: Team Notes (col 1+2) | Wallet Tracker (col 3) ══ */}
-      <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 0.6fr", gap:20, alignItems:"stretch" }}>
-        <div style={{ gridColumn:"1 / 3", display:"flex", minWidth:0 }}><TeamNotesCard /></div>
-        <div style={{ display:"flex", minWidth:0 }}><WalletTrackerCard /></div>
-      </div>
+        {/* Row 2: Team Notes spanning col 1+2 */}
+        <div style={{ gridColumn:"1 / 3", gridRow:"2 / 3", display:"flex", minWidth:0 }}><TeamNotesCard /></div>
 
-      {/* ══ Row 3: Social Media | Content Creator ══ */}
-      <div className="top-section row2-section" style={{ display:"grid", gridTemplateColumns:"1fr 1fr 0.6fr", gap:20, alignItems:"stretch" }}>
-        <div className="top-community row2-social" style={{ display:"flex", minWidth:0 }}><SocialMediaSpotlightCard /></div>
-        <div className="top-coinhealth row2-creator" style={{ display:"flex", minWidth:0, overflow:"hidden" }}><ContentCreatorCard /></div>
-        <div style={{ display:"flex", minWidth:0 }} />
+        {/* Row 3: Social Media | Content Creator */}
+        <div className="top-community" style={{ display:"flex", minWidth:0, gridRow:"3 / 4" }}><SocialMediaSpotlightCard /></div>
+        <div className="top-coinhealth" style={{ display:"flex", minWidth:0, overflow:"hidden", gridRow:"3 / 4" }}><ContentCreatorCard /></div>
+        <div style={{ gridRow:"3 / 4", minWidth:0 }} />
       </div>
 
       {/* ══ Cards Grid ═════════════════════════════════════════ */}
