@@ -214,10 +214,12 @@ export function SocialMediaSpotlightCard() {
       subtitle="TikTok · YouTube · Instagram"
       liveTag="Live"
       icon={
-        <div style={{ display:"flex", alignItems:"center", gap:4 }}>
-          <TikTokIcon size={13} />
-          <InstaIcon size={13} />
-          <YouTubeIcon size={13} />
+        <div style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:2 }}>
+          <div style={{ display:"flex", gap:4 }}>
+            <TikTokIcon size={12} />
+            <YouTubeIcon size={12} />
+          </div>
+          <InstaIcon size={12} />
         </div>
       }
       collapsed={collapsed}
