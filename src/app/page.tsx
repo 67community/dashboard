@@ -13,7 +13,6 @@ import { SocialMediaSpotlightCard }  from "@/components/cards/social-media-spotl
 import { YouTubeSpotlightCard }      from "@/components/cards/youtube-spotlight"
 import { InstagramSpotlightCard }    from "@/components/cards/instagram-spotlight"
 import { XLiveFeedCard }             from "@/components/cards/x-live-feed"
-import { NewsFeedCard }              from "@/components/cards/news-feed"
 import { AgentStatusCard }      from "@/components/cards/agent-status"
 import { EmailInboxCard }       from "@/components/cards/email-inbox"
 import { MilestonesCard }       from "@/components/cards/milestones"
@@ -171,35 +170,43 @@ export default function Dashboard() {
         @media (max-width: 500px)  { .hero-stats-grid { grid-template-columns: 1fr !important; } }
       `}</style>
 
-      {/* ══ Unified Top Grid ══ */}
-      <div className="unified-top-grid" style={{ display:"grid", gridTemplateColumns:"1fr 1fr 0.6fr", gap:20 }}>
+      {/* ══ Main Layout: Left + Right ══════════════════════════ */}
+      <div style={{ display:"flex", gap:20, alignItems:"flex-start" }}>
 
-        {/* Row 1: Community | CoinHealth | Announcements+Raid */}
-        <div className="tg-community" style={{ display:"flex", minWidth:0, gridRow:"1 / 2" }}><CommunityCard /></div>
-        <div className="tg-coinhealth" style={{ display:"flex", minWidth:0, gridRow:"1 / 2" }}><TokenHealthCard /></div>
-        <div className="tg-right" style={{ display:"flex", flexDirection:"column", gap:20, minWidth:0, gridRow:"1 / 3" }}>
-          <div className="tg-announcements" style={{ display:"flex", minWidth:0 }}><AnnouncementsCard /></div>
-          <div className="tg-xraid" style={{ display:"flex", minWidth:0 }}><XRaidCard /></div>
-          <div className="tg-wallet" style={{ display:"flex", minWidth:0, flex:1 }}><WalletTrackerCard /></div>
+        {/* ── Left Section (2 cols) ── */}
+        <div style={{ flex:1, minWidth:0, display:"flex", flexDirection:"column", gap:20 }}>
+
+          {/* Row 1: Community | CoinHealth */}
+          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:20 }}>
+            <div style={{ display:"flex", minWidth:0 }}><CommunityCard /></div>
+            <div style={{ display:"flex", minWidth:0 }}><TokenHealthCard /></div>
+          </div>
+
+          {/* Row 2: Team Notes */}
+          <div style={{ display:"flex", minWidth:0 }}><TeamNotesCard /></div>
+
+          {/* Row 3: Social Media | Content Creator */}
+          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:20 }}>
+            <div style={{ display:"flex", minWidth:0 }}><SocialMediaSpotlightCard /></div>
+            <div style={{ display:"flex", minWidth:0, overflow:"hidden" }}><ContentCreatorCard /></div>
+          </div>
+
+          {/* Row 4: Cards Grid */}
+          <div className="cards-grid" style={{ display:"grid", gap:20 }}>
+            <div className="enter-4" style={{ display:"flex", minWidth:0 }}><ContentPipelineCard /></div>
+            <div className="enter-6" style={{ display:"flex", minWidth:0 }}><SightingsCard /></div>
+            <div className="enter-7" style={{ display:"flex", minWidth:0 }}><CommunityEventsCard /></div>
+          </div>
         </div>
 
-        {/* Row 2: Team Notes spanning col 1+2 */}
-        <div className="tg-teamnotes" style={{ gridColumn:"1 / 3", gridRow:"2 / 3", display:"flex", minWidth:0 }}><TeamNotesCard /></div>
-
-        {/* Row 3: Social Media | Content Creator */}
-        <div className="tg-social" style={{ display:"flex", minWidth:0, gridRow:"3 / 4" }}><SocialMediaSpotlightCard /></div>
-        <div className="tg-creator" style={{ display:"flex", minWidth:0, overflow:"hidden", gridRow:"3 / 4" }}><ContentCreatorCard /></div>
-        <div style={{ gridRow:"3 / 4", minWidth:0 }} />
-      </div>
-
-      {/* ══ Cards Grid ═════════════════════════════════════════ */}
-      <div className="cards-grid" style={{ display:"grid", gap:20 }}>
-        <div className="enter-3" style={{ display:"flex", minWidth:0 }}><NewsFeedCard /></div>
-        <div className="enter-4" style={{ display:"flex", minWidth:0 }}><ContentPipelineCard /></div>
-        <div className="enter-4" style={{ display:"flex", minWidth:0 }}><AgentStatusCard /></div>
-        <div className="enter-6" style={{ display:"flex", minWidth:0 }}><SightingsCard /></div>
-        <div className="enter-7" style={{ display:"flex", minWidth:0 }}><CommunityEventsCard /></div>
-        <div className="enter-7" style={{ display:"flex", minWidth:0 }}><CommunityLeaderboardCard /></div>
+        {/* ── Right Section ── */}
+        <div style={{ width:320, flexShrink:0, display:"flex", flexDirection:"column", gap:20 }}>
+          <AnnouncementsCard />
+          <XRaidCard />
+          <WalletTrackerCard />
+          <AgentStatusCard />
+          <CommunityLeaderboardCard />
+        </div>
       </div>
 
       {/* ══ Season 2 Banner ════════════════════════════════════ */}
