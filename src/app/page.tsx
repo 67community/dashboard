@@ -178,9 +178,9 @@ export default function Dashboard() {
         <div className="tg-community" style={{ display:"flex", minWidth:0, gridRow:"1 / 2" }}><CommunityCard /></div>
         <div className="tg-coinhealth" style={{ display:"flex", minWidth:0, gridRow:"1 / 2" }}><TokenHealthCard /></div>
         <div className="tg-right" style={{ display:"flex", flexDirection:"column", gap:20, minWidth:0, gridRow:"1 / 3" }}>
-          <div style={{ display:"flex", minWidth:0 }}><AnnouncementsCard /></div>
+          <div className="tg-announcements" style={{ display:"flex", minWidth:0 }}><AnnouncementsCard /></div>
           <div className="tg-xraid" style={{ display:"flex", minWidth:0 }}><XRaidCard /></div>
-          <div style={{ display:"flex", minWidth:0, flex:1 }}><WalletTrackerCard /></div>
+          <div className="tg-wallet" style={{ display:"flex", minWidth:0, flex:1 }}><WalletTrackerCard /></div>
         </div>
 
         {/* Row 2: Team Notes spanning col 1+2 */}
