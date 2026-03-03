@@ -1,0 +1,53 @@
+name: Update Mission Control Data
+
+on:
+  schedule:
+    - cron: '0 */2 * * *'
+  workflow_dispatch:
+    inputs:
+      twitter_followers:
+        description: 'Twitter follower count (leave blank to keep existing)'
+        required: false
+        default: ''
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Playwright and Firefox
+        run: |
+          pip install playwright
+          playwright install firefox --with-deps
+
+      - name: Run update script
+        env:
+          CMC_API_KEY: ${{ secrets.CMC_API_KEY }}
+          PROXY_SERVER: ${{ secrets.PROXY_SERVER }}
+          PROXY_USER: ${{ secrets.PROXY_USER }}
+          PROXY_PASS: ${{ secrets.PROXY_PASS }}
+          TWITTER_SESSION_1: ${{ secrets.TWITTER_SESSION_1 }}
+          TWITTER_SESSION_2: ${{ secrets.TWITTER_SESSION_2 }}
+          TWITTER_SESSION_3: ${{ secrets.TWITTER_SESSION_3 }}
+          TWITTER_SESSION_4: ${{ secrets.TWITTER_SESSION_4 }}
+          TWITTER_SESSION_5: ${{ secrets.TWITTER_SESSION_5 }}
+          TWITTER_FOLLOWERS_OVERRIDE: ${{ github.event.inputs.twitter_followers }}
+        run: python3 update-data.py
+
+      - name: Commit and push data.json
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data.json
+          git diff --staged --quiet || git commit -m "chore: auto-update data.json [skip ci]"
+          git push

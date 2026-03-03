@@ -24,10 +24,29 @@ const CATEGORY: Record<Category, { bg:string; color:string }> = {
   Other:   { bg:"#F4F4F5", color:"#71717A" },
 }
 
+function getUrgency(task: Task): { borderColor: string; bg: string } | null {
+  const now = new Date()
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+
+  if (task.priority === "Urgent") return { borderColor: "#DC2626", bg: "rgba(220,38,38,0.04)" }
+
+  if (task.dueDate) {
+    const due = new Date(task.dueDate)
+    const dueDay = new Date(due.getFullYear(), due.getMonth(), due.getDate())
+    const diffDays = Math.floor((dueDay.getTime() - today.getTime()) / 86400000)
+
+    if (diffDays < 0)  return { borderColor: "#DC2626", bg: "rgba(220,38,38,0.05)" }   // overdue
+    if (diffDays === 0) return { borderColor: "#EA580C", bg: "rgba(234,88,12,0.05)" }   // today
+    if (diffDays <= 7)  return { borderColor: "#D97706", bg: "rgba(217,119,6,0.04)" }   // this week
+  }
+  return null
+}
+
 interface Props { task: Task; onOpen: (task: Task) => void; onDelete?: (id: string) => void; isDragOverlay?: boolean }
 
 export function TaskCard({ task, onOpen, onDelete, isDragOverlay = false }: Props) {
   const [hovered, setHovered] = useState(false)
+  const urgency = getUrgency(task)
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: task.id })
   const assignee = TEAM_MEMBERS.find(m => m.id === task.assigneeId)
   const doneSubtasks = task.subtasks.filter(s => s.done).length
@@ -42,9 +61,10 @@ export function TaskCard({ task, onOpen, onDelete, isDragOverlay = false }: Prop
     >
       <div style={{
         position:"relative",
-        background:"#FFFFFF",
+        background: urgency ? urgency.bg : "#FFFFFF",
         borderRadius:14,
-        border:"1px solid rgba(0,0,0,0.06)",
+        border: urgency ? `1px solid ${urgency.borderColor}40` : "1px solid rgba(0,0,0,0.06)",
+        borderLeft: urgency ? `3px solid ${urgency.borderColor}` : "1px solid rgba(0,0,0,0.06)",
         padding:"14px 14px",
         boxShadow:"0 1px 4px rgba(0,0,0,0.04)",
         cursor:"pointer",
