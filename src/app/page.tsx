@@ -181,11 +181,17 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* ══ Row 2: Social Media | Content Creator | Wallet Tracker ══ */}
+      {/* ══ Row 2: Team Notes (col 1+2) | Wallet Tracker (col 3) ══ */}
+      <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 0.6fr", gap:20, alignItems:"stretch" }}>
+        <div style={{ gridColumn:"1 / 3", display:"flex", minWidth:0 }}><TeamNotesCard /></div>
+        <div style={{ display:"flex", minWidth:0 }}><WalletTrackerCard /></div>
+      </div>
+
+      {/* ══ Row 3: Social Media | Content Creator ══ */}
       <div className="top-section row2-section" style={{ display:"grid", gridTemplateColumns:"1fr 1fr 0.6fr", gap:20, alignItems:"stretch" }}>
         <div className="top-community row2-social" style={{ display:"flex", minWidth:0 }}><SocialMediaSpotlightCard /></div>
         <div className="top-coinhealth row2-creator" style={{ display:"flex", minWidth:0, overflow:"hidden" }}><ContentCreatorCard /></div>
-        <div className="top-right row2-wallet" style={{ display:"flex", minWidth:0 }}><WalletTrackerCard /></div>
+        <div style={{ display:"flex", minWidth:0 }} />
       </div>
 
       {/* ══ Cards Grid ═════════════════════════════════════════ */}
@@ -196,7 +202,6 @@ export default function Dashboard() {
         <div className="enter-6" style={{ display:"flex", minWidth:0 }}><SightingsCard /></div>
         <div className="enter-7" style={{ display:"flex", minWidth:0 }}><CommunityEventsCard /></div>
         <div className="enter-7" style={{ display:"flex", minWidth:0 }}><CommunityLeaderboardCard /></div>
-        <div className="enter-7" style={{ display:"flex", minWidth:0, gridColumn:"1 / -1" }}><TeamNotesCard /></div>
       </div>
 
       {/* ══ Season 2 Banner ════════════════════════════════════ */}
