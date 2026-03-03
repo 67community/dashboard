@@ -396,7 +396,7 @@ export function TeamNotesCard() {
             style={{ display:"flex", alignItems:"center", gap:5, padding:"8px 12px",
               borderRadius:10, border:"1.5px dashed rgba(239,68,68,0.4)", background:"rgba(239,68,68,0.05)",
               cursor:"pointer", color:"#EF4444", fontSize:"0.75rem", fontWeight:700, whiteSpace:"nowrap" }}>
-            <Mic style={{ width:13, height:13 }} /> Ses Kaydı
+            <Mic style={{ width:13, height:13 }} /> Voice Note
           </button>
         </div>
       )}
@@ -538,7 +538,7 @@ export function TeamNotesCard() {
               style={{ display:"flex", alignItems:"center", gap:6, padding:"10px 16px",
                 borderRadius:12, border:"1.5px dashed rgba(239,68,68,0.4)", background:"rgba(239,68,68,0.05)",
                 cursor:"pointer", color:"#EF4444", fontSize:"0.875rem", fontWeight:700, whiteSpace:"nowrap" }}>
-              <Mic style={{ width:14, height:14 }} /> 🎙 Ses Kaydı
+              <Mic style={{ width:14, height:14 }} /> 🎙 Voice Note
             </button>
           </div>
         )}
