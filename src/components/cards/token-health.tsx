@@ -154,6 +154,9 @@ function getLocalExchangeLogo(name: string, fallback?: string): string {
     'bitkan': '/exchanges/bitkan.png',
     'meteora': '/exchanges/meteora.jpg',
     'gate': '/exchanges/gate.png',
+    'pumpfun': '/exchanges/pumpswap.jpg',
+    'pumpswapamm': '/exchanges/pumpswap.jpg',
+    'raydium': 'https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/4k3Dyjzvzp8eMZWUXbBCjEvwSkkk59S5iCNLY3QrkX6R/logo.png',
   }
   return map[key] || fallback || ''
 }
@@ -167,24 +170,19 @@ export function TokenHealthCard() {
 
   const collapsed = (
     <div style={{ display:"flex", flexDirection:"column", gap:12 }}>
-      {/* Hero price — compact */}
-      <div style={{ display:"flex", alignItems:"center", gap:10,
-        padding:"8px 12px", borderRadius:12,
-        background: chg >= 0 ? "rgba(5,150,105,0.06)" : "rgba(239,68,68,0.06)",
-        border: `1.5px solid ${chg >= 0 ? "rgba(5,150,105,0.18)" : "rgba(239,68,68,0.18)"}` }}>
-        {chg >= 0
-          ? <TrendingUp  style={{ width:16, height:16, color:"#059669", flexShrink:0 }} />
-          : <TrendingDown style={{ width:16, height:16, color:"#EF4444", flexShrink:0 }} />}
-        <div style={{ flex:1 }}>
+      {/* Title + price above chart */}
+      <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:-4 }}>
+        <div>
           <p style={{ fontSize:"0.5625rem", color:"var(--tertiary)", fontWeight:600, margin:0 }}>The Official 67 Coin</p>
-          <p style={{ fontSize:"0.9375rem", fontWeight:800, margin:0,
-            color: chg >= 0 ? "#059669" : "#EF4444",
-            fontVariantNumeric:"tabular-nums", letterSpacing:"-0.02em" }}>
-            {fmtPrice(price)}
-            <span style={{ fontSize:"0.6875rem", marginLeft:6, opacity:0.85 }}>
+          <div style={{ display:"flex", alignItems:"baseline", gap:6 }}>
+            <p style={{ fontSize:"1.0625rem", fontWeight:800, margin:0, color:"var(--foreground)", fontVariantNumeric:"tabular-nums", letterSpacing:"-0.02em" }}>
+              {fmtPrice(price)}
+            </p>
+            <span style={{ fontSize:"0.6875rem", fontWeight:700,
+              color: chg >= 0 ? "#059669" : "#EF4444" }}>
               {chg >= 0 ? "+" : ""}{chg.toFixed(2)}%
             </span>
-          </p>
+          </div>
         </div>
         <WhaleAlertBadge />
       </div>
@@ -285,6 +283,19 @@ export function TokenHealthCard() {
           </div>
         )
       })()}
+
+      {/* ATH — bottom */}
+      {t?.ath && (
+        <div style={{ borderTop:"1px solid var(--separator)", paddingTop:10, display:"flex", alignItems:"center", justifyContent:"space-between" }}>
+          <span style={{ fontSize:"0.5625rem", fontWeight:700, color:"var(--tertiary)", textTransform:"uppercase", letterSpacing:"0.07em" }}>All-Time High</span>
+          <div style={{ display:"flex", alignItems:"center", gap:6 }}>
+            <span style={{ fontSize:"0.875rem", fontWeight:800, color:"var(--foreground)", letterSpacing:"-0.02em" }}>{fmtPrice(t.ath)}</span>
+            <span style={{ fontSize:"0.5625rem", fontWeight:700, color:"#DC2626", background:"rgba(220,38,38,0.08)", padding:"1px 6px", borderRadius:99 }}>
+              -{Math.abs(t.ath_change_pct ?? 0).toFixed(1)}%
+            </span>
+          </div>
+        </div>
+      )}
     </div>
   )
 
