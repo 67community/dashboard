@@ -467,7 +467,7 @@ export function TeamNotesCard() {
       )}
 
       {/* Meeting Recordings preview */}
-      <div style={{ borderTop:"1px solid var(--separator)", paddingTop:10 }} onClick={e => e.stopPropagation()}>
+      <div style={{ borderTop:"1px solid var(--separator)", paddingTop:10, position:"relative", zIndex:10 }} onClick={e => e.stopPropagation()}>
         <p style={{ fontSize:"0.5625rem", fontWeight:800, color:"var(--secondary)", textTransform:"uppercase", letterSpacing:"0.08em", margin:"0 0 6px" }}>🎙️ Meeting Recordings</p>
         <div style={{ background:"rgba(124,58,237,0.06)", border:"1px solid rgba(124,58,237,0.18)", borderRadius:10, padding:"8px 10px" }}>
           <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", gap:10, marginBottom:8 }}>
@@ -477,8 +477,8 @@ export function TeamNotesCard() {
                 {Math.floor(meetingTime/60)}:{String(Math.floor(meetingTime%60)).padStart(2,"0")} / 52:31
               </p>
             </div>
-            <button onClick={() => toggleMeeting("/meetings/meeting-2026-03-03.mp3")}
-              style={{ width:32, height:32, borderRadius:99, border:"none", cursor:"pointer", background:"#7C3AED", color:"#fff", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0, fontSize:12 }}>
+            <button onClick={(e) => { e.stopPropagation(); e.preventDefault(); toggleMeeting("/meetings/meeting-2026-03-03.mp3") }}
+              style={{ width:40, height:40, borderRadius:99, border:"none", cursor:"pointer", background:"#7C3AED", color:"#fff", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0, fontSize:14, position:"relative", zIndex:20 }}>
               {meetingPlaying ? "⏸" : "▶"}
             </button>
           </div>
