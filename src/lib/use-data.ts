@@ -335,6 +335,8 @@ export interface DashboardData {
   youtube_analytics?:   YoutubeAnalytics
   instagram_spotlight?: InstagramPost[]
   raid_feed?:           RaidFeedItem[]
+  x_recent?:            any[]
+  x_popular?:           any[]
   news_feed?:           NewsItem[]
   market_data?:         MarketItem[]
 }
