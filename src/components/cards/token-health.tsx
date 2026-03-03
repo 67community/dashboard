@@ -189,13 +189,16 @@ export function TokenHealthCard() {
         <WhaleAlertBadge />
       </div>
 
+      {/* Price Chart */}
+      <PriceChart currentPrice={price} />
+
       {/* Stats — compact 2x2 grid */}
       <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:6, borderTop:"1px solid var(--separator)", paddingTop:10 }}>
         {[
           { label:"Market Cap",  value: fmt$(mcap),                         pct: t?.mcap_change_pct },
           { label:"Volume 24h",  value: fmt$(t?.total_volume_24h ?? 0),     pct: t?.volume_change_pct },
           { label:"Holders",     value: (t?.holders ?? 0).toLocaleString(), pct: null, abs: t?.holder_trend ?? 0 },
-          { label:"CMC Rank",    value: `#${t?.cmc_rank ?? "—"}`,           pct: null },
+          { label:"Liquidity",   value: fmt$(t?.liquidity ?? 0),            pct: t?.liquidity_change_pct },
         ].map(s => {
           const delta    = s.pct ?? 0
           const absDelta = s.abs ?? 0
@@ -511,7 +514,7 @@ export function TokenHealthCard() {
 
   return (
     <DashboardCard
-      title="Coin Health"
+      title="Coin"
       subtitle="$67"
       icon={<Coins style={{ width:16, height:16 }} />}
       accentColor="#F5A623"

@@ -400,7 +400,7 @@ export function CommunityLeaderboardCard() {
 
   return (
     <DashboardCard
-      title="Community Leaderboard"
+      title="Community"
       subtitle="Live Raiders · Creators · Holders"
       icon={<Trophy style={{ width:16, height:16 }} />}
       accentColor="#F5A623"

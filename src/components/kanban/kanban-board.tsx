@@ -160,8 +160,8 @@ export function KanbanBoard() {
   }
 
   // ── Task CRUD ─────────────────────────────────────────────────────────────
-  const handleAddTask = (column: KanbanColumn, title: string) => {
-    createTask({ title, column })
+  const handleAddTask = (column: KanbanColumn, title: string, assigneeId?: string) => {
+    createTask({ title, column, assigneeId })
   }
 
   const handleUpdateTask = async (updated: Task) => {
