@@ -332,42 +332,42 @@
     {
       "name": "X Raid Bot",
       "status": "green",
-      "last_run": "2026-03-03T00:02:19Z",
+      "last_run": "2026-03-03T00:17:05.811233Z",
       "errors_24h": 0,
       "schedule": "Auto (<10min tweets)"
     },
     {
       "name": "Price Alert",
-      "status": "green",
-      "last_run": "2026-03-03T00:00:00Z",
+      "status": "red",
+      "last_run": "unknown",
       "errors_24h": 0,
       "schedule": "Every 5 min"
     },
     {
       "name": "Whale Alert",
-      "status": "green",
-      "last_run": "2026-03-03T00:00:00Z",
+      "status": "red",
+      "last_run": "unknown",
       "errors_24h": 0,
       "schedule": "Every 10 min"
     },
     {
       "name": "Hype Messages",
-      "status": "green",
-      "last_run": "2026-03-02T20:00:00Z",
+      "status": "red",
+      "last_run": "unknown",
       "errors_24h": 0,
       "schedule": "Every 4h"
     },
     {
       "name": "Data Updater",
-      "status": "green",
-      "last_run": "2026-03-03T00:28:41Z",
+      "status": "red",
+      "last_run": "unknown",
       "errors_24h": 0,
       "schedule": "Every 30 min"
     },
     {
       "name": "Presence Bot",
-      "status": "green",
-      "last_run": "2026-03-03T00:25:00Z",
+      "status": "red",
+      "last_run": "unknown",
       "errors_24h": 0,
       "schedule": "Every 5 min"
     }
