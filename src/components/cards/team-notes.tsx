@@ -435,8 +435,84 @@ export function TeamNotesCard() {
   )
 
   // ── Expanded ────────────────────────────────────────────────────────────────
+  const MEETINGS = [
+    {
+      date: "2026-03-03",
+      label: "Discord Voice — 3 Mart 2026",
+      duration: "52:31",
+      audio: "/meetings/meeting-2026-03-03.mp3",
+      summary: [
+        "Dashboard kartları ekibe tanıtıldı — Announcements, X Raid Panel, Team Notes, Kanban",
+        "67 Coin anlamı: Murad incelenmeli. Çarşamba: 'Coin tutmak ne anlama gelir?' sorusu",
+        "Claude'a geçiş: Cowork + Obsidian + Chrome Extension — bilgisayar = bellek",
+      ]
+    }
+  ]
+
+  const [meetingAudio, setMeetingAudio] = useState<HTMLAudioElement | null>(null)
+  const [meetingPlaying, setMeetingPlaying] = useState(false)
+  const [meetingProgress, setMeetingProgress] = useState(0)
+  const [meetingTime, setMeetingTime] = useState(0)
+
+  function toggleMeeting(url: string) {
+    if (!meetingAudio) {
+      const a = new Audio(url)
+      a.ontimeupdate = () => { setMeetingTime(a.currentTime); setMeetingProgress(a.duration ? a.currentTime/a.duration : 0) }
+      a.onended = () => { setMeetingPlaying(false); setMeetingProgress(0); setMeetingTime(0) }
+      setMeetingAudio(a)
+      a.play()
+      setMeetingPlaying(true)
+    } else {
+      if (meetingPlaying) { meetingAudio.pause(); setMeetingPlaying(false) }
+      else { meetingAudio.play(); setMeetingPlaying(true) }
+    }
+  }
+
   const expanded = (
     <div style={{ display:"flex", flexDirection:"column", gap:14 }}>
+
+      {/* 🎙️ Meetings */}
+      <div>
+        <p style={{ fontSize:"0.625rem", fontWeight:800, color:"var(--secondary)", textTransform:"uppercase", letterSpacing:"0.08em", margin:"0 0 8px" }}>🎙️ Toplantı Kayıtları</p>
+        {MEETINGS.map((m, i) => (
+          <div key={i} style={{ background:"rgba(124,58,237,0.06)", border:"1px solid rgba(124,58,237,0.18)", borderRadius:12, padding:"10px 12px", marginBottom:8 }}>
+            <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:6 }}>
+              <div>
+                <p style={{ margin:0, fontSize:"0.75rem", fontWeight:700, color:"var(--foreground)" }}>{m.label}</p>
+                <p style={{ margin:"2px 0 0", fontSize:"0.5625rem", color:"var(--tertiary)" }}>{m.duration} dakika</p>
+              </div>
+              <button onClick={() => toggleMeeting(m.audio)} style={{
+                width:32, height:32, borderRadius:99, border:"none", cursor:"pointer",
+                background:"#7C3AED", color:"#fff", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0
+              }}>
+                {meetingPlaying ? <span style={{fontSize:10}}>⏸</span> : <span style={{fontSize:10}}>▶</span>}
+              </button>
+            </div>
+            {/* Progress bar */}
+            <div style={{ height:3, background:"rgba(124,58,237,0.15)", borderRadius:99, marginBottom:8, cursor:"pointer" }}
+              onClick={(e) => {
+                if (!meetingAudio) return
+                const rect = (e.target as HTMLDivElement).getBoundingClientRect()
+                const pct = (e.clientX - rect.left) / rect.width
+                meetingAudio.currentTime = pct * meetingAudio.duration
+              }}>
+              <div style={{ height:"100%", width:`${meetingProgress*100}%`, background:"#7C3AED", borderRadius:99, transition:"width 0.1s" }} />
+            </div>
+            <div style={{ fontSize:"0.5rem", color:"var(--tertiary)", marginBottom:8 }}>
+              {Math.floor(meetingTime/60)}:{String(Math.floor(meetingTime%60)).padStart(2,"0")} / {m.duration}
+            </div>
+            {/* Summary points */}
+            <div style={{ display:"flex", flexDirection:"column", gap:3 }}>
+              {m.summary.map((s, j) => (
+                <div key={j} style={{ display:"flex", gap:5, alignItems:"flex-start" }}>
+                  <span style={{ fontSize:"0.5rem", marginTop:2 }}>•</span>
+                  <p style={{ margin:0, fontSize:"0.5625rem", color:"var(--secondary)", lineHeight:1.5 }}>{s}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
 
       {/* Author + action buttons */}
       <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
