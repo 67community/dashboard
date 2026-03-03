@@ -3,7 +3,7 @@ import sys, json, random, re
 from pathlib import Path
 from playwright.sync_api import sync_playwright
 
-QUERY = "67coin OR \$67coin OR \"67 coin\" solana -is:retweet lang:en"
+QUERY = "67coin OR %2467coin OR %2267+coin%22 solana"
 SESSIONS_DIR = Path("/Users/oscarbrendon/.openclaw/workspace/skills/67coin/assets/sessions")
 mode = sys.argv[1] if len(sys.argv) > 1 else "recent"
 
@@ -23,11 +23,16 @@ with sync_playwright() as pw:
             ctx = browser.new_context(storage_state=storage, viewport={"width":1280,"height":900})
             page = ctx.new_page()
             url = f"https://x.com/search?q={QUERY.replace(' ','%20')}&src=typed_query&f={tab_param}"
-            page.goto(url, timeout=20000, wait_until="domcontentloaded")
-            page.wait_for_timeout(4000)
-            if "login" in page.url or "flow" in page.url:
+            page.goto(url, timeout=25000, wait_until="domcontentloaded")
+            if "login" in page.url or "flow" in page.url or "i/flow" in page.url:
                 ctx.close()
                 continue
+            # Wait for tweets to render
+            try:
+                page.wait_for_selector("article[data-testid='tweet']", timeout=12000)
+            except:
+                page.wait_for_timeout(8000)
+            page.evaluate("window.scrollBy(0, 400)")
             # Collect tweet articles
             articles = page.query_selector_all("article[data-testid='tweet']")
             if not articles:
