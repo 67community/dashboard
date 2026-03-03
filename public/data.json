@@ -332,23 +332,9 @@
     {
       "name": "X Raid Bot",
       "status": "green",
-      "last_run": "2026-03-03T00:18:38.590305Z",
+      "last_run": "2026-03-03T00:21:24.472824Z",
       "errors_24h": 0,
       "schedule": "Auto (<10min tweets)"
-    },
-    {
-      "name": "Price Alert",
-      "status": "red",
-      "last_run": "unknown",
-      "errors_24h": 0,
-      "schedule": "Every 5 min"
-    },
-    {
-      "name": "Hype Messages",
-      "status": "red",
-      "last_run": "unknown",
-      "errors_24h": 0,
-      "schedule": "Every 4h"
     },
     {
       "name": "Data Updater",
@@ -367,7 +353,7 @@
     {
       "name": "Wallet Tracker",
       "status": "green",
-      "last_run": "2026-03-03T00:18:38.590305Z",
+      "last_run": "2026-03-03T00:21:24.472824Z",
       "errors_24h": 0,
       "schedule": "On demand"
     }
