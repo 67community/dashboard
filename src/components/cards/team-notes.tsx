@@ -438,13 +438,13 @@ export function TeamNotesCard() {
   const MEETINGS = [
     {
       date: "2026-03-03",
-      label: "Discord Voice — 3 Mart 2026",
+      label: "Discord Voice — March 3, 2026",
       duration: "52:31",
       audio: "/meetings/meeting-2026-03-03.mp3",
       summary: [
-        "Dashboard kartları ekibe tanıtıldı — Announcements, X Raid Panel, Team Notes, Kanban",
-        "67 Coin anlamı: Murad incelenmeli. Çarşamba: 'Coin tutmak ne anlama gelir?' sorusu",
-        "Claude'a geçiş: Cowork + Obsidian + Chrome Extension — bilgisayar = bellek",
+        "Dashboard cards presented to the team — Announcements, X Raid Panel, Team Notes, Kanban",
+        "Meaning of 67 Coin: Study Murad. Wednesday: everyone answers 'What does holding 67 mean?'",
+        "Switch to Claude: Cowork + Obsidian + Chrome Extension — your computer is the memory",
       ]
     }
   ]
@@ -473,13 +473,13 @@ export function TeamNotesCard() {
 
       {/* 🎙️ Meetings */}
       <div>
-        <p style={{ fontSize:"0.625rem", fontWeight:800, color:"var(--secondary)", textTransform:"uppercase", letterSpacing:"0.08em", margin:"0 0 8px" }}>🎙️ Toplantı Kayıtları</p>
+        <p style={{ fontSize:"0.625rem", fontWeight:800, color:"var(--secondary)", textTransform:"uppercase", letterSpacing:"0.08em", margin:"0 0 8px" }}>🎙️ Meeting Recordings</p>
         {MEETINGS.map((m, i) => (
           <div key={i} style={{ background:"rgba(124,58,237,0.06)", border:"1px solid rgba(124,58,237,0.18)", borderRadius:12, padding:"10px 12px", marginBottom:8 }}>
             <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:6 }}>
               <div>
                 <p style={{ margin:0, fontSize:"0.75rem", fontWeight:700, color:"var(--foreground)" }}>{m.label}</p>
-                <p style={{ margin:"2px 0 0", fontSize:"0.5625rem", color:"var(--tertiary)" }}>{m.duration} dakika</p>
+                <p style={{ margin:"2px 0 0", fontSize:"0.5625rem", color:"var(--tertiary)" }}>{m.duration} min</p>
               </div>
               <button onClick={() => toggleMeeting(m.audio)} style={{
                 width:32, height:32, borderRadius:99, border:"none", cursor:"pointer",
