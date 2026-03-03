@@ -332,7 +332,7 @@
     {
       "name": "X Raid Bot",
       "status": "green",
-      "last_run": "2026-03-03T00:17:05.811233Z",
+      "last_run": "2026-03-03T00:18:38.590305Z",
       "errors_24h": 0,
       "schedule": "Auto (<10min tweets)"
     },
@@ -342,13 +342,6 @@
       "last_run": "unknown",
       "errors_24h": 0,
       "schedule": "Every 5 min"
-    },
-    {
-      "name": "Whale Alert",
-      "status": "red",
-      "last_run": "unknown",
-      "errors_24h": 0,
-      "schedule": "Every 10 min"
     },
     {
       "name": "Hype Messages",
@@ -370,6 +363,13 @@
       "last_run": "unknown",
       "errors_24h": 0,
       "schedule": "Every 5 min"
+    },
+    {
+      "name": "Wallet Tracker",
+      "status": "green",
+      "last_run": "2026-03-03T00:18:38.590305Z",
+      "errors_24h": 0,
+      "schedule": "On demand"
     }
   ],
   "milestones": [
