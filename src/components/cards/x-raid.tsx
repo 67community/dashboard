@@ -20,26 +20,12 @@ export function XRaidCard() {
   const [tab,      setTab]  = useState<"xrecent"|"xpop"|"notif"|"tg">("xrecent")
   const [items,    setItems] = useState<RaidNotif[]>([])
   const [newCount, setNew]   = useState(0)
-  const [xRecent,  setXRecent] = useState<any[]>([])
-  const [xPop,     setXPop]   = useState<any[]>([])
-  const [xLoading, setXLoading] = useState(false)
   const lastIds = useRef<Set<string>>(new Set())
   const { data } = useAppData()
   const feed: RaidFeedItem[] = (data?.raid_feed ?? []) as RaidFeedItem[]
-
-  useEffect(() => {
-    async function loadX(type: string, setter: (d: any[]) => void) {
-      setXLoading(true)
-      try {
-        const r = await fetch(`/api/x-search?type=${type}`)
-        const d = await r.json()
-        setter(Array.isArray(d) ? d : [])
-      } catch {}
-      setXLoading(false)
-    }
-    loadX("recent", setXRecent)
-    loadX("popular", setXPop)
-  }, [])
+  const xRecent: any[] = (data?.x_recent  ?? []) as any[]
+  const xPop:    any[] = (data?.x_popular ?? []) as any[]
+  const xLoading = false
 
   useEffect(() => {
     function load(initial = false) {

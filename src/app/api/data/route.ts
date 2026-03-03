@@ -1137,6 +1137,8 @@ export async function GET() {
     raid_feed:           (raidFeed as unknown[])?.length ? raidFeed : (static_?.raid_feed ?? []),
     news_feed:           (newsFeed as unknown[])?.length ? newsFeed : (static_?.news_feed ?? []),
     market_data:         (marketData as unknown[])?.length ? marketData : (static_?.market_data ?? []),
+    x_recent:            static_?.x_recent  ?? [],
+    x_popular:           static_?.x_popular ?? [],
   }
 
   return NextResponse.json(out, { headers: { "Cache-Control": "no-store, max-age=0" } })
