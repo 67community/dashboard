@@ -17,12 +17,29 @@ function timeAgo(utcStr: string) {
 }
 
 export function XRaidCard() {
-  const [tab,      setTab]  = useState<"notif"|"tg">("notif")
+  const [tab,      setTab]  = useState<"xrecent"|"xpop"|"notif"|"tg">("xrecent")
   const [items,    setItems] = useState<RaidNotif[]>([])
   const [newCount, setNew]   = useState(0)
+  const [xRecent,  setXRecent] = useState<any[]>([])
+  const [xPop,     setXPop]   = useState<any[]>([])
+  const [xLoading, setXLoading] = useState(false)
   const lastIds = useRef<Set<string>>(new Set())
   const { data } = useAppData()
   const feed: RaidFeedItem[] = (data?.raid_feed ?? []) as RaidFeedItem[]
+
+  useEffect(() => {
+    async function loadX(type: string, setter: (d: any[]) => void) {
+      setXLoading(true)
+      try {
+        const r = await fetch(`/api/x-search?type=${type}`)
+        const d = await r.json()
+        setter(Array.isArray(d) ? d : [])
+      } catch {}
+      setXLoading(false)
+    }
+    loadX("recent", setXRecent)
+    loadX("popular", setXPop)
+  }, [])
 
   useEffect(() => {
     function load(initial = false) {
@@ -44,14 +61,19 @@ export function XRaidCard() {
   const panel = (
     <div style={{ display:"flex", flexDirection:"column" }}>
       {/* Tab bar */}
-      <div style={{ display:"flex", gap:6, marginBottom:12 }}>
-        {(["notif","tg"] as const).map(key => (
-          <button key={key} onClick={() => setTab(key)}
-            style={{ flex:1, padding:"6px 8px", borderRadius:10, border:"none", cursor:"pointer",
+      <div style={{ display:"flex", gap:4, marginBottom:12, flexWrap:"wrap" }}>
+        {([
+          { key:"xrecent", label:"X News Last" },
+          { key:"xpop",    label:"X News Popular" },
+          { key:"notif",   label:"𝕏 Notifs" },
+          { key:"tg",      label:"TG Raid" },
+        ] as const).map(({ key, label }) => (
+          <button key={key} onClick={() => setTab(key as any)}
+            style={{ flex:1, padding:"6px 6px", borderRadius:10, border:"none", cursor:"pointer",
               background: tab===key ? "#0A0A0A" : "#F4F4F5",
               color: tab===key ? "#fff" : "#6E6E73",
-              fontSize:"0.6875rem", fontWeight:700, position:"relative" }}>
-            {key === "notif" ? "𝕏 Notifications" : "Telegram Raid"}
+              fontSize:"0.5625rem", fontWeight:700, position:"relative", whiteSpace:"nowrap" }}>
+            {label}
             {key==="notif" && newCount > 0 && (
               <span style={{ position:"absolute", top:-4, right:-4,
                 background:"#EF4444", color:"#fff", fontSize:"0.5rem",
@@ -60,6 +82,64 @@ export function XRaidCard() {
           </button>
         ))}
       </div>
+
+      {/* X News Recent */}
+      {tab === "xrecent" && (
+        <div style={{ maxHeight:300, overflowY:"auto", display:"flex", flexDirection:"column", gap:8 }}>
+          {xLoading && xRecent.length === 0
+            ? <div style={{ padding:20, textAlign:"center", color:"var(--secondary)", fontSize:"0.75rem" }}>🔄 Yükleniyor...</div>
+            : xRecent.length === 0
+            ? <div style={{ padding:20, textAlign:"center", color:"var(--secondary)", fontSize:"0.75rem" }}>😴 Sonuç bulunamadı</div>
+            : xRecent.map((item, i) => (
+              <a key={i} href={item.link} target="_blank" rel="noopener noreferrer"
+                style={{ textDecoration:"none", display:"block", padding:"8px 10px",
+                  borderRadius:10, background:"#F8F8FA", border:"1px solid rgba(0,0,0,0.06)" }}>
+                <div style={{ display:"flex", justifyContent:"space-between", marginBottom:4 }}>
+                  <span style={{ fontSize:"0.5625rem", fontWeight:800, color:"#0A0A0A" }}>{item.user}</span>
+                  <span style={{ fontSize:"0.5625rem", color:"var(--secondary)" }}>{item.time ? new Date(item.time).toLocaleDateString() : ""}</span>
+                </div>
+                <p style={{ fontSize:"0.6875rem", color:"var(--foreground)", lineHeight:1.4, margin:"0 0 6px",
+                  display:"-webkit-box", WebkitLineClamp:2, WebkitBoxOrient:"vertical" as any, overflow:"hidden" }}>
+                  {item.text}
+                </p>
+                <div style={{ display:"flex", gap:10 }}>
+                  <span style={{ fontSize:"0.5rem", color:"var(--tertiary)" }}>❤️ {item.likes||0}</span>
+                  <span style={{ fontSize:"0.5rem", color:"var(--tertiary)" }}>🔁 {item.reposts||0}</span>
+                  <span style={{ fontSize:"0.5rem", color:"var(--tertiary)" }}>💬 {item.replies||0}</span>
+                </div>
+              </a>
+            ))}
+        </div>
+      )}
+
+      {/* X News Popular */}
+      {tab === "xpop" && (
+        <div style={{ maxHeight:300, overflowY:"auto", display:"flex", flexDirection:"column", gap:8 }}>
+          {xLoading && xPop.length === 0
+            ? <div style={{ padding:20, textAlign:"center", color:"var(--secondary)", fontSize:"0.75rem" }}>🔄 Yükleniyor...</div>
+            : xPop.length === 0
+            ? <div style={{ padding:20, textAlign:"center", color:"var(--secondary)", fontSize:"0.75rem" }}>😴 Sonuç bulunamadı</div>
+            : xPop.map((item, i) => (
+              <a key={i} href={item.link} target="_blank" rel="noopener noreferrer"
+                style={{ textDecoration:"none", display:"block", padding:"8px 10px",
+                  borderRadius:10, background:"#F8F8FA", border:"1px solid rgba(0,0,0,0.06)" }}>
+                <div style={{ display:"flex", justifyContent:"space-between", marginBottom:4 }}>
+                  <span style={{ fontSize:"0.5625rem", fontWeight:800, color:"#0A0A0A" }}>{item.user}</span>
+                  <span style={{ fontSize:"0.5625rem", color:"var(--secondary)" }}>{item.time ? new Date(item.time).toLocaleDateString() : ""}</span>
+                </div>
+                <p style={{ fontSize:"0.6875rem", color:"var(--foreground)", lineHeight:1.4, margin:"0 0 6px",
+                  display:"-webkit-box", WebkitLineClamp:2, WebkitBoxOrient:"vertical" as any, overflow:"hidden" }}>
+                  {item.text}
+                </p>
+                <div style={{ display:"flex", gap:10 }}>
+                  <span style={{ fontSize:"0.5rem", color:"var(--tertiary)" }}>❤️ {item.likes||0}</span>
+                  <span style={{ fontSize:"0.5rem", color:"var(--tertiary)" }}>🔁 {item.reposts||0}</span>
+                  <span style={{ fontSize:"0.5rem", color:"var(--tertiary)" }}>💬 {item.replies||0}</span>
+                </div>
+              </a>
+            ))}
+        </div>
+      )}
 
       {/* X Notifications */}
       {tab === "notif" && (
