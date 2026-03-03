@@ -332,30 +332,37 @@
     {
       "name": "X Raid Bot",
       "status": "green",
-      "last_run": "2026-03-03T00:23:03.111639Z",
+      "last_run": "2026-03-03T00:25:52.119365Z",
       "errors_24h": 0,
       "schedule": "Auto (<10min tweets)"
     },
     {
       "name": "Data Updater",
       "status": "green",
-      "last_run": "2026-03-03T00:23:03.111639Z",
+      "last_run": "2026-03-03T00:25:52.119365Z",
       "errors_24h": 0,
       "schedule": "Every 30 min"
     },
     {
       "name": "Presence Bot",
       "status": "green",
-      "last_run": "2026-03-03T00:23:03.111639Z",
+      "last_run": "2026-03-03T00:25:52.119365Z",
       "errors_24h": 0,
       "schedule": "Every 5 min"
     },
     {
       "name": "Wallet Tracker",
       "status": "green",
-      "last_run": "2026-03-03T00:23:03.111639Z",
+      "last_run": "2026-03-03T00:25:52.119365Z",
       "errors_24h": 0,
       "schedule": "On demand"
+    },
+    {
+      "name": "TikTok Scraper",
+      "status": "red",
+      "last_run": "2026-02-28T23:27:42.342193Z",
+      "errors_24h": 0,
+      "schedule": "Every 30 min"
     }
   ],
   "milestones": [
