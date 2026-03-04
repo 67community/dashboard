@@ -301,8 +301,8 @@ export function TokenHealthCard() {
             <p style={{ fontSize:"0.5625rem", fontWeight:800, color:"var(--tertiary)", textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:8 }}>24h Transactions</p>
             <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:6, marginBottom:8 }}>
               <div style={{ background:"#E8F8EE", borderRadius:10, padding:"8px 10px" }}>
-                <p style={{ fontSize:"1rem", fontWeight:800, letterSpacing:"-0.03em", color:"#1A8343", margin:0 }}>{(t?.buys_24h ?? 0).toLocaleString()}</p>
-                <p style={{ fontSize:"0.5625rem", fontWeight:600, color:"#1A8343", margin:"2px 0 0" }}>Buys</p>
+                <p style={{ fontSize:"1rem", fontWeight:800, letterSpacing:"-0.03em", color:"#34D399", margin:0 }}>{(t?.buys_24h ?? 0).toLocaleString()}</p>
+                <p style={{ fontSize:"0.5625rem", fontWeight:600, color:"#34D399", margin:"2px 0 0" }}>Buys</p>
               </div>
               <div style={{ background:"#FEF0F0", borderRadius:10, padding:"8px 10px" }}>
                 <p style={{ fontSize:"1rem", fontWeight:800, letterSpacing:"-0.03em", color:"#C0392B", margin:0 }}>{(t?.sells_24h ?? 0).toLocaleString()}</p>
@@ -448,10 +448,10 @@ export function TokenHealthCard() {
             {/* Buy / Sell count cards */}
             <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8, marginBottom:14 }}>
               <div style={{ background:"#E8F8EE", borderRadius:10, padding:"12px 14px" }}>
-                <p style={{ fontSize:"1.5rem", fontWeight:800, letterSpacing:"-0.04em", color:"#1A8343" }}>
+                <p style={{ fontSize:"1.5rem", fontWeight:800, letterSpacing:"-0.04em", color:"#34D399" }}>
                   {(t?.buys_24h ?? 0).toLocaleString()}
                 </p>
-                <p style={{ fontSize:"0.75rem", fontWeight:600, color:"#1A8343", marginTop:3 }}>Buys</p>
+                <p style={{ fontSize:"0.75rem", fontWeight:600, color:"#34D399", marginTop:3 }}>Buys</p>
               </div>
               <div style={{ background:"#FEF0F0", borderRadius:10, padding:"12px 14px" }}>
                 <p style={{ fontSize:"1.5rem", fontWeight:800, letterSpacing:"-0.04em", color:"#C0392B" }}>
@@ -537,7 +537,7 @@ export function TokenHealthCard() {
             style={{
               display:"flex", alignItems:"center", gap:10,
               padding:"12px 14px", borderRadius:12,
-              background:"#F5F5F7",
+              background:"var(--fill-primary)",
               border:"1px solid rgba(0,0,0,0.06)",
               textDecoration:"none",
               transition:"background 0.15s",

@@ -184,22 +184,22 @@ export function AnnouncementsCard() {
             <Plus style={{ width:14, height:14 }} /> Write announcement
           </button>
         ) : (
-          <div style={{ background:"#FAFAFA", borderRadius:12, padding:12,
+          <div style={{ background:"var(--fill-primary)", borderRadius:12, padding:12,
             display:"flex", flexDirection:"column", gap:8 }}>
             <input value={title} onChange={e => setTitle(e.target.value)} placeholder="Announcement title"
               style={{ padding:"8px 10px", borderRadius:8, border:"1.5px solid var(--separator)",
-                outline:"none", fontSize:"0.875rem", fontFamily:"inherit", background:"#FFF" }}
+                outline:"none", fontSize:"0.875rem", fontFamily:"inherit", background:"var(--input-bg)" }}
               onFocus={e => e.target.style.borderColor="#F5A623"}
-              onBlur={e  => e.target.style.borderColor="rgba(0,0,0,0.1)"} />
+              onBlur={e  => e.target.style.borderColor="var(--separator)"} />
             <div style={{ display:"flex", gap:6 }}>
               <select value={type} onChange={e => setType(e.target.value as AnnType)}
                 style={{ flex:1, padding:"7px 8px", borderRadius:8, border:"1.5px solid var(--separator)",
-                  outline:"none", fontSize:"0.8125rem", fontFamily:"inherit", background:"#FFF" }}>
+                  outline:"none", fontSize:"0.8125rem", fontFamily:"inherit", background:"var(--input-bg)" }}>
                 {Object.entries(TYPE_CONFIG).map(([k,v]) => <option key={k} value={k}>{v.label}</option>)}
               </select>
               <select value={channel} onChange={e => setChannel(e.target.value as AnnChannel)}
                 style={{ flex:1, padding:"7px 8px", borderRadius:8, border:"1.5px solid var(--separator)",
-                  outline:"none", fontSize:"0.8125rem", fontFamily:"inherit", background:"#FFF" }}>
+                  outline:"none", fontSize:"0.8125rem", fontFamily:"inherit", background:"var(--input-bg)" }}>
                 {Object.entries(CH_CONFIG).map(([k,v]) => <option key={k} value={k}>{v.emoji} {v.label}</option>)}
               </select>
             </div>
@@ -208,9 +208,9 @@ export function AnnouncementsCard() {
                 placeholder="Announcement body…" rows={4}
                 style={{ width:"100%", padding:"8px 10px", borderRadius:8, border:"1.5px solid var(--separator)",
                   outline:"none", fontSize:"0.875rem", fontFamily:"inherit",
-                  background:"#FFF", resize:"none", boxSizing:"border-box" }}
+                  background:"var(--input-bg)", resize:"none", boxSizing:"border-box" }}
                 onFocus={e => e.target.style.borderColor="#F5A623"}
-                onBlur={e  => e.target.style.borderColor="rgba(0,0,0,0.1)"} />
+                onBlur={e  => e.target.style.borderColor="var(--separator)"} />
               <button onClick={aiDraft} disabled={!title.trim() || genning}
                 style={{ position:"absolute", bottom:8, right:8,
                   display:"flex", alignItems:"center", gap:4, padding:"4px 10px",
@@ -277,22 +277,22 @@ export function AnnouncementsCard() {
       </button>
 
       {addOpen && (
-        <div style={{ background:"#FAFAFA", borderRadius:12, padding:12,
+        <div style={{ background:"var(--fill-primary)", borderRadius:12, padding:12,
           display:"flex", flexDirection:"column", gap:8 }}>
           <input value={title} onChange={e => setTitle(e.target.value)} placeholder="Title"
             style={{ padding:"8px 10px", borderRadius:8, border:"1.5px solid var(--separator)",
-              outline:"none", fontSize:"0.875rem", fontFamily:"inherit", background:"#FFF" }}
+              outline:"none", fontSize:"0.875rem", fontFamily:"inherit", background:"var(--input-bg)" }}
             onFocus={e => e.target.style.borderColor="#F5A623"}
-            onBlur={e  => e.target.style.borderColor="rgba(0,0,0,0.1)"} />
+            onBlur={e  => e.target.style.borderColor="var(--separator)"} />
           <div style={{ display:"flex", gap:6 }}>
             <select value={type} onChange={e => setType(e.target.value as AnnType)}
               style={{ flex:1, padding:"7px 8px", borderRadius:8, border:"1.5px solid var(--separator)",
-                outline:"none", fontSize:"0.8125rem", fontFamily:"inherit", background:"#FFF" }}>
+                outline:"none", fontSize:"0.8125rem", fontFamily:"inherit", background:"var(--input-bg)" }}>
               {Object.entries(TYPE_CONFIG).map(([k,v]) => <option key={k} value={k}>{v.label}</option>)}
             </select>
             <select value={channel} onChange={e => setChannel(e.target.value as AnnChannel)}
               style={{ flex:1, padding:"7px 8px", borderRadius:8, border:"1.5px solid var(--separator)",
-                outline:"none", fontSize:"0.8125rem", fontFamily:"inherit", background:"#FFF" }}>
+                outline:"none", fontSize:"0.8125rem", fontFamily:"inherit", background:"var(--input-bg)" }}>
               {Object.entries(CH_CONFIG).map(([k,v]) => <option key={k} value={k}>{v.emoji} {v.label}</option>)}
             </select>
           </div>
@@ -301,10 +301,10 @@ export function AnnouncementsCard() {
               placeholder="Write or AI draft below…" rows={5}
               style={{ width:"100%", padding:"8px 10px", paddingBottom:40, borderRadius:8,
                 border:"1.5px solid var(--separator)", outline:"none",
-                fontSize:"0.875rem", fontFamily:"inherit", background:"#FFF",
+                fontSize:"0.875rem", fontFamily:"inherit", background:"var(--input-bg)",
                 resize:"none", boxSizing:"border-box" }}
               onFocus={e => e.target.style.borderColor="#F5A623"}
-              onBlur={e  => e.target.style.borderColor="rgba(0,0,0,0.1)"} />
+              onBlur={e  => e.target.style.borderColor="var(--separator)"} />
             <button onClick={aiDraft} disabled={!title.trim() || genning}
               style={{ position:"absolute", bottom:8, right:8,
                 display:"flex", alignItems:"center", gap:4, padding:"5px 12px",

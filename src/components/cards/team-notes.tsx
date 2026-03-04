@@ -447,7 +447,7 @@ export function TeamNotesCard() {
         <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
           <textarea ref={textRef} value={text} onChange={e => setText(e.target.value)}
             placeholder="Write a note for the team…" rows={3}
-            style={{ width:"100%", padding:"8px 10px", borderRadius:10, border:"1.5px solid var(--separator)", outline:"none", fontSize:"0.875rem", fontFamily:"inherit", background:"#FAFAFA", color:"var(--foreground)", resize:"none", boxSizing:"border-box" }}
+            style={{ width:"100%", padding:"8px 10px", borderRadius:10, border:"1.5px solid var(--separator)", outline:"none", fontSize:"0.875rem", fontFamily:"inherit", background:"var(--input-bg)", color:"var(--foreground)", resize:"none", boxSizing:"border-box" }}
             onFocus={e => e.target.style.borderColor="#F5A623"} onBlur={e => e.target.style.borderColor="rgba(0,0,0,0.1)"} />
           <div style={{ display:"flex", gap:6, alignItems:"center" }}>
             <div style={{ display:"flex", gap:4 }}>
@@ -592,7 +592,7 @@ export function TeamNotesCard() {
           <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
             <textarea value={text} onChange={e => setText(e.target.value)}
               placeholder="Write a note for the team…" rows={4} autoFocus
-              style={{ width:"100%", padding:"10px 12px", borderRadius:10, border:"1.5px solid var(--separator)", outline:"none", fontSize:"0.875rem", fontFamily:"inherit", background:"#FAFAFA", color:"var(--foreground)", resize:"none", boxSizing:"border-box" }}
+              style={{ width:"100%", padding:"10px 12px", borderRadius:10, border:"1.5px solid var(--separator)", outline:"none", fontSize:"0.875rem", fontFamily:"inherit", background:"var(--input-bg)", color:"var(--foreground)", resize:"none", boxSizing:"border-box" }}
               onFocus={e => e.target.style.borderColor="#F5A623"} onBlur={e => e.target.style.borderColor="rgba(0,0,0,0.1)"} />
             <div style={{ display:"flex", gap:6, alignItems:"center" }}>
               <div style={{ display:"flex", gap:4, flexWrap:"wrap" }}>
