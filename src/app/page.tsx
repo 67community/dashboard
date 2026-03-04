@@ -141,19 +141,20 @@ export default function Dashboard() {
               <span key={i} style={{
                 display:"inline-flex", alignItems:"center", gap:3,
                 fontSize:"0.5625rem", fontWeight:600,
-                background:"rgba(255,255,255,0.07)",
-                border:"1px solid rgba(255,255,255,0.10)",
+                background: mUp ? "rgba(5,150,105,0.15)" : "rgba(239,68,68,0.15)",
+                border: `1px solid ${mUp ? "rgba(5,150,105,0.3)" : "rgba(239,68,68,0.3)"}`,
+                color: mUp ? "#34D399" : "#F87171",
                 padding:"2px 6px", borderRadius:99,
                 whiteSpace:"nowrap",
               }}>
                 <span style={{ fontSize:"0.6rem" }}>{m.emoji}</span>
-                <span style={{ fontWeight:800, color:"rgba(255,255,255,0.9)" }}>
+                <span style={{ fontWeight:800 }}>
                   {m.symbol.replace("-USD","").replace("=F","")}
                 </span>
-                <span style={{ color:"rgba(255,255,255,0.7)", fontVariantNumeric:"tabular-nums" }}>
+                <span style={{ fontVariantNumeric:"tabular-nums", opacity:0.85 }}>
                   ${fmtP(m.price, m.kind)}
                 </span>
-                <span style={{ fontWeight:700, color: mUp ? "#059669" : "#DC2626" }}>
+                <span style={{ fontWeight:700 }}>
                   {mUp ? "▲" : "▼"}{Math.abs(m.change_pct).toFixed(1)}%
                 </span>
               </span>
