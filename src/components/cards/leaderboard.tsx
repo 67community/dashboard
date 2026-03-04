@@ -45,7 +45,11 @@ function fmtScore(n: number, cat: LeaderCategory): string {
   return n.toLocaleString()
 }
 
-export function CommunityLeaderboardCard() {
+export function LeaderboardPanel() {
+  return <LeaderboardCore />
+}
+
+function LeaderboardCore() {
   const [liveData,    setLiveData]    = useState<{ raiders: LeaderEntry[]; creators: LeaderEntry[]; holders: LeaderEntry[] } | null>(null)
   const [manualEntries, setManualEntries] = useState<LeaderEntry[]>([])
   const [category,    setCategory]    = useState<LeaderCategory>("raiders")
@@ -409,4 +413,8 @@ export function CommunityLeaderboardCard() {
       noAutoOpen
     />
   )
+}
+
+export function CommunityLeaderboardCard() {
+  return <LeaderboardCore />
 }

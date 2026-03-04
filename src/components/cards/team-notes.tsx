@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react"
 import { StickyNote, Plus, Trash2, Pin, Mic, Square, Play, Pause } from "lucide-react"
 import { DashboardCard } from "@/components/ui/dashboard-card"
 import { addNotification } from "@/lib/notifications"
+import { TEAM_MEMBERS } from "@/lib/mock-data"
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -31,7 +32,7 @@ const COLOR_CONFIG: Record<NoteColor, { bg: string; border: string; accent: stri
 }
 
 const COLORS: NoteColor[] = ["red", "yellow", "green", "blue", "purple"]
-const AUTHORS = ["Brandon", "Jamie", "Nick", "WJP", "Gen", "Oscar", "Crispy"]
+const AUTHORS = TEAM_MEMBERS.map(m => m.name.split(" ")[0])
 
 function timeAgo(iso: string) {
   const s = Math.floor((Date.now() - new Date(iso).getTime()) / 1000)
@@ -143,7 +144,7 @@ function VoiceRecorder({ author, onSave, onCancel }: {
       setElapsed(0)
       timerRef.current = setInterval(() => setElapsed(p => p + 1), 1000)
     } catch {
-      alert("Mikrofon erişimi reddedildi. Tarayıcı ayarlarından izin ver.")
+      alert("Microphone access denied. Please allow it in browser settings.")
     }
   }
 
@@ -407,15 +408,22 @@ export function TeamNotesCard() {
     <div style={{ display:"flex", flexDirection:"column", gap:10 }} onClick={e => e.stopPropagation()}>
 
       {/* Author selector */}
-      <div style={{ display:"flex", gap:4, flexWrap:"wrap" }}>
-        {AUTHORS.map(a => (
-          <button key={a} onClick={() => setAuthor(a)}
-            style={{ padding:"3px 10px", borderRadius:99, border:"none", cursor:"pointer", fontSize:"0.75rem", fontWeight:700,
-              background: author === a ? "#1D1D1F" : "#F4F4F5",
-              color:      author === a ? "#fff"    : "#8E8E93" }}>
-            {a}
-          </button>
-        ))}
+      <div style={{ display:"flex", gap:6, flexWrap:"wrap" }}>
+        {TEAM_MEMBERS.map(m => {
+          const firstName = m.name.split(" ")[0]
+          const active = author === firstName
+          return (
+            <button key={m.id} onClick={() => setAuthor(firstName)} title={m.name}
+              style={{ padding:0, background:"none", border:"none", cursor:"pointer", display:"flex", flexDirection:"column", alignItems:"center", gap:3 }}>
+              <div style={{ borderRadius:"50%", outline: active ? `2.5px solid ${m.color}` : "2px solid transparent", outlineOffset:1, transition:"outline 0.15s" }}>
+                <img src={m.avatar} alt={firstName}
+                  style={{ width:28, height:28, borderRadius:"50%", objectFit:"cover", display:"block",
+                    opacity: active ? 1 : 0.45, transition:"opacity 0.15s" }} />
+              </div>
+              <span style={{ fontSize:"0.5rem", fontWeight:700, color: active ? m.color : "var(--tertiary)", transition:"color 0.15s" }}>{firstName}</span>
+            </button>
+          )
+        })}
       </div>
 
       {/* Action buttons */}
@@ -546,15 +554,22 @@ export function TeamNotesCard() {
 
       {/* Author + action buttons */}
       <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
-        <div style={{ display:"flex", gap:4, flexWrap:"wrap" }}>
-          {AUTHORS.map(a => (
-            <button key={a} onClick={() => setAuthor(a)}
-              style={{ padding:"4px 12px", borderRadius:99, border:"none", cursor:"pointer", fontSize:"0.8125rem", fontWeight:700,
-                background: author === a ? "#1D1D1F" : "#F4F4F5",
-                color:      author === a ? "#fff"    : "#8E8E93" }}>
-              {a}
-            </button>
-          ))}
+        <div style={{ display:"flex", gap:6, flexWrap:"wrap" }}>
+          {TEAM_MEMBERS.map(m => {
+            const firstName = m.name.split(" ")[0]
+            const active = author === firstName
+            return (
+              <button key={m.id} onClick={() => setAuthor(firstName)} title={m.name}
+                style={{ padding:0, background:"none", border:"none", cursor:"pointer", display:"flex", flexDirection:"column", alignItems:"center", gap:3 }}>
+                <div style={{ borderRadius:"50%", outline: active ? `2.5px solid ${m.color}` : "2px solid transparent", outlineOffset:1, transition:"outline 0.15s" }}>
+                  <img src={m.avatar} alt={firstName}
+                    style={{ width:32, height:32, borderRadius:"50%", objectFit:"cover", display:"block",
+                      opacity: active ? 1 : 0.45, transition:"opacity 0.15s" }} />
+                </div>
+                <span style={{ fontSize:"0.5625rem", fontWeight:700, color: active ? m.color : "var(--tertiary)", transition:"color 0.15s" }}>{firstName}</span>
+              </button>
+            )
+          })}
         </div>
 
         {mode === "none" && (

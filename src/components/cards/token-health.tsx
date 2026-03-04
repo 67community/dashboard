@@ -562,7 +562,7 @@ export function TokenHealthCard() {
     <DashboardCard
       title="Coin"
       subtitle="$67"
-      icon={<Coins style={{ width:16, height:16 }} />}
+      icon={<img src="/67logo.png" alt="67" style={{ width:18, height:18, borderRadius:"50%", objectFit:"cover" }} />}
       accentColor="#F5A623"
       collapsed={collapsed}
       expanded={expanded}

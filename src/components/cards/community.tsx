@@ -1,10 +1,13 @@
 "use client"
+import { useState } from "react"
+import React from "react"
 import type { BestTweet } from "@/lib/use-data"
 import { AreaChart, Area, ResponsiveContainer, Tooltip, XAxis } from "recharts"
 
 import { Heart, MessageCircle, Users, Mic, Calendar, Zap, Trophy, Shield } from "lucide-react"
 import { DashboardCard } from "@/components/ui/dashboard-card"
 import { useAppData } from "@/lib/data-context"
+import { LeaderboardPanel } from "@/components/cards/leaderboard"
 import type { ActivityItem, RecentJoin, TopChannel, VoiceChannel, ScheduledEvent, ModEvent, TopContributor } from "@/lib/use-data"
 
 // ── helpers ───────────────────────────────────────────────────────────────────
@@ -106,6 +109,7 @@ function timeToEvent(iso: string): string {
 
 export function CommunityCard() {
   const { data } = useAppData()
+  const [section, setSection] = useState<"overview" | "leaderboard">("overview")
   const c = data?.community
   const sp = data?.social_pulse
 
@@ -144,7 +148,10 @@ export function CommunityCard() {
       {/* Hero */}
       <div style={{ display:"flex", alignItems:"flex-start", justifyContent:"space-between" }}>
         <div>
-          <p className="hero-label" style={{ marginBottom:8 }}>Discord Members</p>
+          <p className="hero-label" style={{ marginBottom:8, display:"flex", alignItems:"center", gap:6 }}>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#5865F2"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
+            Discord Members
+          </p>
           <div style={{ display:"flex", alignItems:"center" }}>
             <p className="hero-number" style={{ fontSize:"2rem" }}>{fmtM}</p>
             <DeltaBadge value={discordDelta} />
@@ -171,14 +178,14 @@ export function CommunityCard() {
         </div>
       </div>
 
-      {/* Stats row — Discord + Telegram + X */}
+      {/* Discord stats row */}
       <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:8, borderTop:"1px solid var(--separator)", paddingTop:16 }}>
         {[
-          { label:"New Joins 24h", value: discordDelta != null ? String(Math.max(0, discordDelta)) : String(c?.new_joins_24h ?? "—") },
-          { label:"Telegram",      value: (c?.telegram_members ?? 0).toLocaleString(), delta: telegramDelta },
-          { label:"X Followers",   value: xFollowers > 0 ? xFollowers.toLocaleString() : "—", delta: xDelta },
+          { key:"joins",    label:"New Joins 24h", value: discordDelta != null ? String(Math.max(0, discordDelta)) : String(c?.new_joins_24h ?? "—") },
+          { key:"telegram", label:<span style={{display:"flex",alignItems:"center",gap:4,justifyContent:"center"}}><svg width="12" height="12" viewBox="0 0 24 24" fill="#0088cc"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L7.26 14.4l-2.965-.924c-.644-.204-.657-.644.136-.953l11.57-4.461c.537-.194 1.006.131.893.16z"/></svg>Telegram</span>, value: (c?.telegram_members ?? 0).toLocaleString(), delta: telegramDelta },
+          { key:"active",   label:"Active Today",  value: activeToday > 0 ? String(activeToday) : "—" },
         ].map(s => (
-          <div key={s.label} className="inset-cell" style={{ textAlign:"center" }}>
+          <div key={s.key} className="inset-cell" style={{ textAlign:"center" }}>
             <p style={{ fontSize:"0.9375rem", fontWeight:700, letterSpacing:"-0.03em", color:"var(--foreground)", margin:0 }}>{s.value}</p>
             {s.delta !== undefined && s.delta !== 0 && <DeltaBadge value={s.delta} />}
             <p style={{ fontSize:"0.6875rem", fontWeight:500, color:"var(--tertiary)", marginTop:4 }}>{s.label}</p>
@@ -186,66 +193,50 @@ export function CommunityCard() {
         ))}
       </div>
 
-      {/* X Community row */}
-      {xCommunity > 0 && (
-        <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between",
-          padding:"10px 14px", borderRadius:12,
-          background:"rgba(0,0,0,0.03)", border:"1px solid rgba(0,0,0,0.06)" }}>
-          <div style={{ display:"flex", alignItems:"center", gap:8 }}>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style={{ color:"var(--foreground)", flexShrink:0 }}>
-              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.739l7.73-8.835L1.254 2.25H8.08l4.258 5.63 5.906-5.63Z"/>
-            </svg>
-            <span style={{ fontSize:"0.875rem", fontWeight:700, color:"var(--foreground)" }}>X Community</span>
+      {/* X section */}
+      <div style={{ borderTop:"1px solid var(--separator)", paddingTop:16, display:"flex", flexDirection:"column", gap:8 }}>
+        {/* X Followers + Community */}
+        <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8 }}>
+          <div className="inset-cell" style={{ textAlign:"center" }}>
+            <p style={{ fontSize:"0.9375rem", fontWeight:700, letterSpacing:"-0.03em", color:"var(--foreground)", margin:0 }}>{xFollowers > 0 ? xFollowers.toLocaleString() : "—"}</p>
+            {xDelta !== 0 && <DeltaBadge value={xDelta} />}
+            <p style={{ fontSize:"0.6875rem", fontWeight:500, color:"var(--tertiary)", marginTop:4 }}>X Followers</p>
           </div>
-          <div style={{ display:"flex", alignItems:"center", gap:6 }}>
-            <span style={{ fontSize:"1rem", fontWeight:800, color:"var(--foreground)" }}>{xCommunity.toLocaleString()}</span>
-            <span style={{ fontSize:"0.6875rem", color:"var(--tertiary)" }}>members</span>
-            {xCommunityDelta !== 0 && <DeltaBadge value={xCommunityDelta} />}
-          </div>
+          {xCommunity > 0 && (
+            <div className="inset-cell" style={{ textAlign:"center" }}>
+              <p style={{ fontSize:"0.9375rem", fontWeight:700, letterSpacing:"-0.03em", color:"var(--foreground)", margin:0 }}>{xCommunity.toLocaleString()}</p>
+              {xCommunityDelta !== 0 && <DeltaBadge value={xCommunityDelta} />}
+              <p style={{ fontSize:"0.6875rem", fontWeight:500, color:"var(--tertiary)", marginTop:4 }}>X Community</p>
+            </div>
+          )}
         </div>
-      )}
 
-      {/* Recent members mini-row */}
-
-      {(() => {
-        const sp = data?.social_pulse
-        const tweets = [sp?.best_tweet_week ?? sp?.best_tweet_2d].filter(Boolean) as BestTweet[]
-        if (!tweets.length) return null
-        return (
-          <div style={{ borderTop:"1px solid var(--separator)", paddingTop:16, overflow:"hidden" }}>
-            {(() => {
-              const t = tweets[0]
-              if (!t) return null
-              return (
-                <a href={t.tweet_url} target="_blank" rel="noopener noreferrer"
-                  onClick={e => e.stopPropagation()}
-                  style={{ textDecoration:"none", display:"block", borderRadius:12,
-                    border:"1px solid rgba(0,0,0,0.08)", background:"var(--card)", overflow:"hidden" }}>
-                  <div style={{ padding:"12px 14px" }}>
-                    <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:8 }}>
-                      <img src="https://pbs.twimg.com/profile_images/1858289585312854016/iiT8KYWN_normal.jpg"
-                        width={24} height={24} style={{ borderRadius:"50%", objectFit:"cover", flexShrink:0 }} alt="67" />
-                      <div>
-                        <p style={{ fontSize:"0.6875rem", fontWeight:700, color:"var(--foreground)", margin:0, lineHeight:1.2 }}>The Official 67 Coin</p>
-                        <p style={{ fontSize:"0.5625rem", color:"var(--tertiary)", margin:0 }}>@67coinX · {t.date}</p>
-                      </div>
-                      <span style={{ marginLeft:"auto", fontSize:"0.875rem", fontWeight:900, color:"#0A0A0A" }}>𝕏</span>
-                    </div>
-                    <p style={{ fontSize:"0.8125rem", color:"#09090B", lineHeight:1.6, margin:"0 0 10px 0",
-                      display:"-webkit-box", WebkitLineClamp:2, WebkitBoxOrient:"vertical", overflow:"hidden" }}>
-                      {t.text}
-                    </p>
-                    <div style={{ display:"flex", gap:14 }}>
-                      <span style={{ fontSize:"0.75rem", color:"#F43F5E", fontWeight:600, display:"flex", alignItems:"center", gap:3 }}>♡ {t.likes}</span>
-                      <span style={{ fontSize:"0.75rem", color:"var(--secondary)", fontWeight:600, display:"flex", alignItems:"center", gap:3 }}>💬 {t.replies}</span>
-                    </div>
-                  </div>
-                </a>
-              )
-            })()}
-          </div>
-        )
-      })()}
+        {/* Tweets */}
+        {[sp?.best_tweet_2d, sp?.best_tweet_week].filter(Boolean).slice(0,2).map((t, i) => (
+          <a key={i} href={(t as BestTweet).tweet_url} target="_blank" rel="noopener noreferrer"
+            onClick={e => e.stopPropagation()}
+            style={{ textDecoration:"none", display:"block", borderRadius:12,
+              border:"1px solid rgba(0,0,0,0.08)", background:"var(--card)", overflow:"hidden" }}>
+            <div style={{ padding:"12px 14px" }}>
+              <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:6 }}>
+                <div>
+                  <p style={{ fontSize:"0.6875rem", fontWeight:700, color:"var(--foreground)", margin:0, lineHeight:1.2 }}>The Official 67 Coin</p>
+                  <p style={{ fontSize:"0.5625rem", color:"var(--tertiary)", margin:0 }}>@67coinX · {(t as BestTweet).date}</p>
+                </div>
+                <span style={{ marginLeft:"auto", fontSize:"0.875rem", fontWeight:900, color:"#0A0A0A" }}>𝕏</span>
+              </div>
+              <p style={{ fontSize:"0.8125rem", color:"#09090B", lineHeight:1.5, margin:"0 0 8px 0",
+                display:"-webkit-box", WebkitLineClamp:2, WebkitBoxOrient:"vertical", overflow:"hidden" }}>
+                {(t as BestTweet).text}
+              </p>
+              <div style={{ display:"flex", gap:14 }}>
+                <span style={{ fontSize:"0.75rem", color:"#F43F5E", fontWeight:600 }}>♡ {(t as BestTweet).likes}</span>
+                <span style={{ fontSize:"0.75rem", color:"var(--secondary)", fontWeight:600 }}>💬 {(t as BestTweet).replies}</span>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
 
       {recentJoins.length > 0 && (
         <div style={{ display:"flex", alignItems:"center", gap:10, paddingTop:4 }}>
@@ -304,7 +295,27 @@ export function CommunityCard() {
 
   // ── Expanded view ──────────────────────────────────────────────────────────
   const expanded = (
-    <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:16, alignItems:"start" }}>
+    <div style={{ display:"flex", flexDirection:"column", gap:16 }}>
+
+      {/* Tab bar */}
+      <div style={{ display:"flex", gap:6, borderBottom:"1px solid var(--separator)", paddingBottom:12 }}>
+        {([
+          { id:"overview",     label:"Overview",     icon:<img src="/67logo.png" alt="67" style={{ width:14, height:14, borderRadius:"50%", objectFit:"cover" }} /> },
+          { id:"leaderboard",  label:"Leaderboard",  icon:"⚔️" },
+        ] as { id: "overview" | "leaderboard"; label: string; icon: React.ReactNode }[]).map(t => (
+          <button key={t.id} onClick={() => setSection(t.id)}
+            style={{ display:"flex", alignItems:"center", gap:6, padding:"6px 14px", borderRadius:99, border:"none", cursor:"pointer", fontSize:"0.75rem", fontWeight:700, transition:"all 0.15s",
+              background: section === t.id ? "#09090B" : "transparent",
+              color: section === t.id ? "#fff" : "var(--secondary)",
+            }}>
+            <span>{t.icon}</span>{t.label}
+          </button>
+        ))}
+      </div>
+
+      {section === "leaderboard" && <LeaderboardPanel />}
+
+      {section === "overview" && <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:16, alignItems:"start" }}>
 
       {/* ══════════════ LEFT — DISCORD ══════════════ */}
       <div style={{ display:"flex", flexDirection:"column", gap:14 }}>
@@ -683,6 +694,8 @@ export function CommunityCard() {
         )}
 
       </div>{/* end RIGHT col */}
+
+      </div>}{/* end overview section */}
 
     </div>
   )

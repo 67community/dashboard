@@ -937,7 +937,7 @@ async function fetchDiscordActivity(): Promise<{
 
 // ── static fallback ───────────────────────────────────────────────────────────
 function readStaticJson() {
-  const LOCAL   = "/Users/oscarbrendon/.openclaw/workspace/mission-control/data.json"
+  const LOCAL   = path.join(process.cwd(), "public", "data.json")
   const BUNDLED = path.join(process.cwd(), "public", "data.json")
   for (const p of [LOCAL, BUNDLED]) {
     try { if (fs.existsSync(p)) return JSON.parse(fs.readFileSync(p, "utf-8")) } catch {}
@@ -1139,6 +1139,7 @@ export async function GET() {
     market_data:         (marketData as unknown[])?.length ? marketData : (static_?.market_data ?? []),
     x_recent:            static_?.x_recent  ?? [],
     x_popular:           static_?.x_popular ?? [],
+    map_features:        static_?.map_features ?? { type:"FeatureCollection", features:[] },
   }
 
   return NextResponse.json(out, { headers: { "Cache-Control": "no-store, max-age=0" } })

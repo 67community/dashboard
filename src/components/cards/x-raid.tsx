@@ -73,9 +73,9 @@ export function XRaidCard() {
       {tab === "xrecent" && (
         <div style={{ maxHeight:300, overflowY:"auto", display:"flex", flexDirection:"column", gap:8 }}>
           {xLoading && xRecent.length === 0
-            ? <div style={{ padding:20, textAlign:"center", color:"var(--secondary)", fontSize:"0.75rem" }}>🔄 Yükleniyor...</div>
+            ? <div style={{ padding:20, textAlign:"center", color:"var(--secondary)", fontSize:"0.75rem" }}>🔄 Loading...</div>
             : xRecent.length === 0
-            ? <div style={{ padding:20, textAlign:"center", color:"var(--secondary)", fontSize:"0.75rem" }}>😴 Sonuç bulunamadı</div>
+            ? <div style={{ padding:20, textAlign:"center", color:"var(--secondary)", fontSize:"0.75rem" }}>😴 No results found</div>
             : xRecent.map((item, i) => (
               <a key={i} href={item.link} target="_blank" rel="noopener noreferrer"
                 style={{ textDecoration:"none", display:"block", padding:"8px 10px",
@@ -104,9 +104,9 @@ export function XRaidCard() {
       {tab === "xpop" && (
         <div style={{ maxHeight:300, overflowY:"auto", display:"flex", flexDirection:"column", gap:8 }}>
           {xLoading && xPop.length === 0
-            ? <div style={{ padding:20, textAlign:"center", color:"var(--secondary)", fontSize:"0.75rem" }}>🔄 Yükleniyor...</div>
+            ? <div style={{ padding:20, textAlign:"center", color:"var(--secondary)", fontSize:"0.75rem" }}>🔄 Loading...</div>
             : xPop.length === 0
-            ? <div style={{ padding:20, textAlign:"center", color:"var(--secondary)", fontSize:"0.75rem" }}>😴 Sonuç bulunamadı</div>
+            ? <div style={{ padding:20, textAlign:"center", color:"var(--secondary)", fontSize:"0.75rem" }}>😴 No results found</div>
             : xPop.map((item, i) => (
               <a key={i} href={item.link} target="_blank" rel="noopener noreferrer"
                 style={{ textDecoration:"none", display:"block", padding:"8px 10px",
@@ -135,7 +135,7 @@ export function XRaidCard() {
       {tab === "notif" && (
         <div style={{ maxHeight:300, overflowY:"auto", display:"flex", flexDirection:"column", gap:8 }}>
           {items.length === 0
-            ? <div style={{ padding:20, textAlign:"center", color:"var(--secondary)", fontSize:"0.75rem" }}>😴 Henüz bildirim yok</div>
+            ? <div style={{ padding:20, textAlign:"center", color:"var(--secondary)", fontSize:"0.75rem" }}>😴 No notifications yet</div>
             : items.map(item => (
                 <a key={item.id} href={item.link} target="_blank" rel="noopener noreferrer"
                   style={{ textDecoration:"none", display:"block", padding:"8px 10px",
@@ -157,7 +157,7 @@ export function XRaidCard() {
       {tab === "tg" && (
         <div style={{ maxHeight:300, overflowY:"auto", display:"flex", flexDirection:"column", gap:8 }}>
           {feed.length === 0
-            ? <div style={{ padding:20, textAlign:"center", color:"var(--secondary)", fontSize:"0.75rem" }}>😴 Henüz raid yok</div>
+            ? <div style={{ padding:20, textAlign:"center", color:"var(--secondary)", fontSize:"0.75rem" }}>😴 No raids yet</div>
             : feed.map((item, i) => <TweetRow key={i} item={item} compact />)}
         </div>
       )}
@@ -166,7 +166,7 @@ export function XRaidCard() {
 
   return (
     <DashboardCard
-      title="X Raid Panel"
+      title="Raid"
       subtitle="Notifications · Telegram Raid"
       icon={<span style={{ fontSize:"0.875rem", fontWeight:900 }}>𝕏</span>}
       accentColor="#0A0A0A"
