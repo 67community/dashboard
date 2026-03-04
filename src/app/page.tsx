@@ -194,11 +194,11 @@ export default function Dashboard() {
 
         {/* ── Right Section ── */}
         <div className="right-section" style={{ width:320, flexShrink:0, display:"flex", flexDirection:"column", gap:20 }}>
+          <div className="mob-order-0"><AnnouncementsCard /></div>
           <div className="mob-order-3"><XRaidCard /></div>
           <div className="mob-order-7"><WalletTrackerCard /></div>
           <div className="mob-order-8"><ContentPipelineCard /></div>
           <div className="mob-order-9"><AgentStatusCard /></div>
-          <AnnouncementsCard />
         </div>
       </div>
 
@@ -233,14 +233,19 @@ export default function Dashboard() {
         @media (max-width: 640px)  { .hidden-mobile { display: none !important; } }
 
         @media (max-width: 768px) {
+          /* Flatten main layout to single column */
           .main-layout { flex-direction: column !important; }
-          .left-section { width: 100% !important; }
-          .right-section { width: 100% !important; flex-shrink: unset !important; }
+          .left-section { width: 100% !important; display: contents !important; }
+          .right-section { width: 100% !important; flex-shrink: unset !important; display: contents !important; }
 
-          /* Flatten all grid rows inside left-section to single column */
-          .left-section > div[style*="grid"] { grid-template-columns: 1fr !important; }
+          /* Flatten all inner grids to single column */
+          .main-layout div[style*="grid-template-columns"] { display: flex !important; flex-direction: column !important; }
 
-          /* Mobile ordering — all direct children of left+right become ordered */
+          /* All cards full width on mobile */
+          .main-layout div[style*="minWidth"] { width: 100% !important; min-width: 0 !important; }
+
+          /* Mobile ordering */
+          .main-layout .mob-order-0  { order: 0; }
           .main-layout .mob-order-1  { order: 1; }
           .main-layout .mob-order-2  { order: 2; }
           .main-layout .mob-order-3  { order: 3; }
@@ -250,10 +255,6 @@ export default function Dashboard() {
           .main-layout .mob-order-7  { order: 7; }
           .main-layout .mob-order-8  { order: 8; }
           .main-layout .mob-order-9  { order: 9; }
-
-          /* Left section flex wraps with right section content via parent reorder */
-          .left-section { display: contents !important; }
-          .right-section { display: contents !important; }
         }
       `}</style>
     </div>

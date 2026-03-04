@@ -216,16 +216,18 @@ export function CommunityCard() {
           <a key={i} href={(t as BestTweet).tweet_url} target="_blank" rel="noopener noreferrer"
             onClick={e => e.stopPropagation()}
             style={{ textDecoration:"none", display:"block", borderRadius:12,
-              border:"1px solid rgba(0,0,0,0.08)", background:"var(--card)", overflow:"hidden" }}>
+              border:"1px solid var(--separator)", background:"var(--fill-primary)", overflow:"hidden" }}>
             <div style={{ padding:"12px 14px" }}>
               <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:6 }}>
+                <img src="https://unavatar.io/twitter/67coinX" width={22} height={22}
+                  style={{ borderRadius:"50%", objectFit:"cover", flexShrink:0 }} alt="67" />
                 <div>
                   <p style={{ fontSize:"0.6875rem", fontWeight:700, color:"var(--foreground)", margin:0, lineHeight:1.2 }}>The Official 67 Coin</p>
                   <p style={{ fontSize:"0.5625rem", color:"var(--tertiary)", margin:0 }}>@67coinX · {(t as BestTweet).date}</p>
                 </div>
-                <span style={{ marginLeft:"auto", fontSize:"0.875rem", fontWeight:900, color:"#0A0A0A" }}>𝕏</span>
+                <span style={{ marginLeft:"auto", fontSize:"0.875rem", fontWeight:900, color:"var(--foreground)" }}>𝕏</span>
               </div>
-              <p style={{ fontSize:"0.8125rem", color:"#09090B", lineHeight:1.5, margin:"0 0 8px 0",
+              <p style={{ fontSize:"0.8125rem", color:"var(--foreground)", lineHeight:1.5, margin:"0 0 8px 0",
                 display:"-webkit-box", WebkitLineClamp:2, WebkitBoxOrient:"vertical", overflow:"hidden" }}>
                 {(t as BestTweet).text}
               </p>

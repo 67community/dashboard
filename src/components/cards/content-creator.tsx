@@ -215,7 +215,7 @@ export function ContentCreatorCard() {
             <span style={{ fontSize:"0.6875rem", fontWeight:900, color:"#fff" }}>𝕏</span>
             <span style={{ fontSize:"0.5625rem", fontWeight:700, color:"rgba(255,255,255,0.6)", textTransform:"uppercase", letterSpacing:"0.06em" }}>Latest Notification</span>
           </div>
-          <div style={{ background:"#F8F8FA", padding:"8px 10px" }}>
+          <div style={{ background:"var(--fill-primary)", padding:"8px 10px" }}>
             <p style={{ fontSize:"0.6875rem", color:"var(--foreground)", lineHeight:1.45, margin:"0 0 8px 0",
               display:"-webkit-box", WebkitLineClamp:3, WebkitBoxOrient:"vertical", overflow:"hidden" }}>
               {latestNotif.text}
@@ -268,12 +268,12 @@ export function ContentCreatorCard() {
             width: "100%", resize: "none", boxSizing: "border-box",
             padding: "10px 12px", borderRadius: 10, fontSize: "0.8125rem",
             fontFamily: "inherit", fontWeight: 500, color: "var(--foreground)",
-            background: "#F4F4F5", border: "1.5px solid transparent",
+            background: "var(--input-bg, #F4F4F5)", border: "1.5px solid transparent",
             outline: "none", lineHeight: 1.5,
             transition: "border 0.15s",
           }}
-          onFocus={e => { e.currentTarget.style.border = "1.5px solid #F5A623"; e.currentTarget.style.background = "#fff" }}
-          onBlur={e => { e.currentTarget.style.border = "1.5px solid transparent"; e.currentTarget.style.background = "#F4F4F5" }}
+          onFocus={e => { e.currentTarget.style.border = "1.5px solid #F5A623"; e.currentTarget.style.background = "var(--card)" }}
+          onBlur={e => { e.currentTarget.style.border = "1.5px solid transparent"; e.currentTarget.style.background = "var(--fill-primary)" }}
         />
       </div>
 
@@ -302,7 +302,7 @@ export function ContentCreatorCard() {
       {lastDraft && (
         <div
           onClick={e => e.stopPropagation()}
-          style={{ background: "#F8F8FA", borderRadius: 10, padding: "10px 12px", borderLeft: "3px solid #F5A623" }}>
+          style={{ background: "var(--fill-primary)", borderRadius: 10, padding: "10px 12px", borderLeft: "3px solid #F5A623" }}>
           <p style={{ fontSize: "0.6875rem", fontWeight: 700, color: "var(--tertiary)", marginBottom: 4, textTransform: "uppercase", letterSpacing: "0.05em" }}>
             Last draft · {lastDraft.type}
           </p>
@@ -359,7 +359,7 @@ export function ContentCreatorCard() {
             <span style={{ fontSize:"0.75rem", fontWeight:900, color:"#fff" }}>𝕏</span>
             <span style={{ fontSize:"0.5625rem", fontWeight:700, color:"rgba(255,255,255,0.6)", textTransform:"uppercase", letterSpacing:"0.06em" }}>Latest Notification</span>
           </div>
-          <div style={{ background:"#F8F8FA", padding:"10px 12px" }}>
+          <div style={{ background:"var(--fill-primary)", padding:"10px 12px" }}>
             <p style={{ fontSize:"0.75rem", color:"var(--foreground)", lineHeight:1.5, margin:"0 0 10px 0" }}>
               {latestNotif.text}
             </p>

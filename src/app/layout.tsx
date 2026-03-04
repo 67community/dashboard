@@ -25,7 +25,7 @@ return t;}(document,"script","twitter-wjs"));
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en" className={inter.variable} data-theme="dark">
       <head>
         <script dangerouslySetInnerHTML={{ __html: TWITTER_SCRIPT }} />
       </head>

@@ -136,9 +136,6 @@ const MARKET_SYMBOLS = [
   { symbol: "BTC-USD",  name: "Bitcoin",  kind: "crypto", emoji: "₿"  },
   { symbol: "ETH-USD",  name: "Ethereum", kind: "crypto", emoji: "Ξ"  },
   { symbol: "SOL-USD",  name: "Solana",   kind: "crypto", emoji: "◎"  },
-  { symbol: "^IXIC",    name: "NASDAQ",   kind: "index",  emoji: "📈" },
-  { symbol: "^GSPC",    name: "S&P 500",  kind: "index",  emoji: "🇺🇸" },
-  { symbol: "^DJI",     name: "Dow Jones",kind: "index",  emoji: "🏦" },
 ]
 
 async function fetchMarketData() {
