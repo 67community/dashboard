@@ -13,7 +13,7 @@ import { SocialMediaSpotlightCard }  from "@/components/cards/social-media-spotl
 import { YouTubeSpotlightCard }      from "@/components/cards/youtube-spotlight"
 import { InstagramSpotlightCard }    from "@/components/cards/instagram-spotlight"
 import { XLiveFeedCard }             from "@/components/cards/x-live-feed"
-import { AgentStatusCard }      from "@/components/cards/agent-status"
+// AgentStatusCard removed
 import { EmailInboxCard }       from "@/components/cards/email-inbox"
 import { MilestonesCard }       from "@/components/cards/milestones"
 import { FeatureRequestCard, FeatureRequestSection }   from "@/components/cards/feature-request"
@@ -184,7 +184,7 @@ export default function Dashboard() {
 
           {/* Row 2: Team Notes */}
           <div className="mob-order-4" style={{ display:"flex", minWidth:0 }}><TeamNotesCard /></div>
-          <div className="mob-order-4b" style={{ display:"flex", minWidth:0 }}><EventsCard /></div>
+
 
           {/* Row 3: Social Media | Content Creator */}
           <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:20 }}>
@@ -200,7 +200,8 @@ export default function Dashboard() {
           <div className="mob-order-3"><XRaidCard /></div>
           <div className="mob-order-7"><WalletTrackerCard /></div>
           <div className="mob-order-8"><ContentPipelineCard /></div>
-          <div className="mob-order-9"><AgentStatusCard /></div>
+          <div className="mob-order-9"><EventsCard /></div>
+
         </div>
       </div>
 
