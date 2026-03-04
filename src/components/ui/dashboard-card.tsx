@@ -98,13 +98,6 @@ export function DashboardCard({
           flexShrink: 0,
         }}>
           <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-            <div style={{
-              width: 36, height: 36, borderRadius: 11,
-              background: `${accentColor}18`,
-              display: "flex", alignItems: "center", justifyContent: "center",
-            }}>
-              <span style={{ color: accentColor, display: "flex" }}>{icon}</span>
-            </div>
             <div>
               <p style={{ fontSize: "0.9375rem", fontWeight: 700, color: "var(--foreground)", lineHeight: 1, letterSpacing: "-0.01em" }}>{title}</p>
               {subtitle && <p style={{ fontSize: "0.8125rem", color: "var(--tertiary)", marginTop: 3, fontWeight: 500 }}>{subtitle}</p>}
@@ -158,12 +151,6 @@ export function DashboardCard({
           {/* Header */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
-              <div
-                className={compact ? "w-6 h-6 rounded-[8px] flex items-center justify-center flex-shrink-0" : "w-8 h-8 rounded-[10px] flex items-center justify-center flex-shrink-0"}
-                style={{ background: `${accentColor}14` }}
-              >
-                <span style={{ color: accentColor, display: "flex" }}>{icon}</span>
-              </div>
               <div>
                 <p style={{ fontSize: compact ? "0.8125rem" : "0.9375rem", fontWeight: 700, color: "var(--foreground)", lineHeight: 1, letterSpacing: "-0.01em" }}>{title}</p>
                 {!compact && subtitle && <p style={{ fontSize: "0.8125rem", color: "var(--tertiary)", marginTop: 3, fontWeight: 500 }}>{subtitle}</p>}
