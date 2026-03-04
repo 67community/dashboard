@@ -178,10 +178,8 @@ export default function Dashboard() {
             <div className="mob-order-2" style={{ display:"flex", minWidth:0 }}><TokenHealthCard /></div>
           </div>
 
-          {/* Row 2: Social — full width, 2 cols × 2 rows tall */}
-          <div className="mob-order-5" style={{ display:"flex", minWidth:0 }}>
-            <div style={{ width:"100%", minHeight:420 }}><SocialMediaSpotlightCard /></div>
-          </div>
+          {/* Row 2: Social — full width */}
+          <div className="mob-order-5" style={{ display:"flex", minWidth:0, minHeight:420 }}><SocialMediaSpotlightCard /></div>
 
           {/* Row 3: Team Notes */}
           <div className="mob-order-4" style={{ display:"flex", minWidth:0 }}><TeamNotesCard /></div>
@@ -193,8 +191,7 @@ export default function Dashboard() {
           <div className="mob-order-0"><AnnouncementsCard /></div>
           <div className="mob-order-3"><XRaidCard /></div>
           <div className="mob-order-7"><WalletTrackerCard /></div>
-
-
+          <div style={{ borderRadius:18, overflow:"hidden", flex:1, minHeight:280 }}><MapWidgetCard /></div>
         </div>
       </div>
 
