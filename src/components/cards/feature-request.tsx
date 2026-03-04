@@ -82,7 +82,7 @@ function ReqRow({ r, expanded, onToggle }: { r: FeatureReq; expanded: boolean; o
             </div>
           )}
           {r.plan && (
-            <div style={{ background:"#F9F9F9", borderRadius:8, padding:"10px 12px",
+            <div style={{ background:"var(--fill-primary)", borderRadius:8, padding:"10px 12px",
               borderLeft:`3px solid ${PRIORITY_COLOR[r.priority ?? "medium"]}` }}>
               <p style={{ fontSize:"0.6875rem", fontWeight:700, color:"#F5A623",
                 textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:6 }}>AI Analysis</p>
@@ -256,7 +256,7 @@ export function FeatureRequestCard() {
     <div style={{ display:"flex", flexDirection:"column", gap:20 }}>
 
       {/* Full form */}
-      <div style={{ background:"#FAFAFA", borderRadius:14, padding:16 }}>
+      <div style={{ background:"var(--fill-primary)", borderRadius:14, padding:16 }}>
         <p style={{ fontSize:"0.6875rem", fontWeight:700, color:"var(--tertiary)",
           textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:12 }}>New Request</p>
         <form onSubmit={submit} style={{ display:"flex", flexDirection:"column", gap:8 }}>
@@ -268,15 +268,15 @@ export function FeatureRequestCard() {
             <input key={ph} value={val} onChange={e => set(e.target.value)} placeholder={ph}
               style={{ width:"100%", padding:"9px 12px", borderRadius:10, fontSize:"0.875rem",
                 border:"1.5px solid var(--separator)", outline:"none", fontFamily:"inherit",
-                background:"#FFF", color:"var(--foreground)", boxSizing:"border-box" }}
+                background:"var(--input-bg)", color:"var(--foreground)", boxSizing:"border-box" }}
               onFocus={e => e.target.style.borderColor = "#F5A623"}
               onBlur={e  => e.target.style.borderColor = "rgba(0,0,0,0.1)"} />
           ))}
           <button type="submit" disabled={!what.trim() || !why.trim() || loading}
             style={{ padding:"10px 0", borderRadius:10, border:"none",
               cursor: (!what.trim() || !why.trim() || loading) ? "not-allowed" : "pointer",
-              background: (!what.trim() || !why.trim() || loading) ? "#E5E5EA" : "#F5A623",
-              color: (!what.trim() || !why.trim() || loading) ? "#A1A1AA" : "#000",
+              background: (!what.trim() || !why.trim() || loading) ? "var(--input-bg)" : "#F5A623",
+              color: (!what.trim() || !why.trim() || loading) ? "var(--secondary)" : "#000",
               fontSize:"0.875rem", fontWeight:700, transition:"all 0.15s" }}>
             {loading ? "Analyzing…" : "Submit ⚡"}
           </button>
@@ -378,7 +378,7 @@ export function FeatureRequestSection() {
       {requests.length > 0 && (
         <div style={{ display:"flex", flexDirection:"column", gap:5, maxHeight:120, overflowY:"auto" }}>
           {requests.slice(0,3).map(r => (
-            <div key={r.id} style={{ display:"flex", alignItems:"center", gap:6, padding:"5px 8px", background:"#F4F4F5", borderRadius:7 }}>
+            <div key={r.id} style={{ display:"flex", alignItems:"center", gap:6, padding:"5px 8px", background:"var(--fill-primary)", borderRadius:7 }}>
               <PriorityDot p={r.priority} />
               <span style={{ flex:1, fontSize:"0.6875rem", fontWeight:600, color:"var(--foreground)", overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{r.what}</span>
               <span style={{ fontSize:"0.5625rem", color:"var(--secondary)", whiteSpace:"nowrap" }}>{STATUS_LABEL[r.status]}</span>
