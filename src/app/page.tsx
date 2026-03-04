@@ -133,8 +133,8 @@ export default function Dashboard() {
           </span>
         )}
 
-        {/* Market pills — compact */}
-        <div style={{ display:"flex", flexWrap:"nowrap", gap:4, flex:1, overflowX:"auto", scrollbarWidth:"none" }}>
+        {/* Market pills — compact, hidden on mobile */}
+        <div className="market-pills" style={{ display:"flex", flexWrap:"nowrap", gap:4, flex:1, overflowX:"auto", scrollbarWidth:"none" }}>
           {market.map((m, i) => {
             const mUp = m.change_pct >= 0
             return (
@@ -168,6 +168,7 @@ export default function Dashboard() {
 
       <style>{`
         @media (max-width: 500px)  { .hero-stats-grid { grid-template-columns: 1fr !important; } }
+        @media (max-width: 640px)  { .market-pills { display: none !important; } }
       `}</style>
 
       {/* ══ Main Layout: Left + Right ══════════════════════════ */}
