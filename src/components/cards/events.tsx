@@ -34,7 +34,7 @@ const STATUS_CONFIG: Record<EventStatus, { label: string; color: string; bg: str
   upcoming:  { label: "Upcoming", color: "#2563EB", bg: "rgba(37,99,235,0.08)"  },
   live:      { label: "🔴 LIVE",  color: "#EF4444", bg: "rgba(239,68,68,0.1)"  },
   done:      { label: "Done ✓",   color: "#059669", bg: "rgba(5,150,105,0.08)" },
-  cancelled: { label: "Cancelled",color: "var(--secondary)", bg: "#F4F4F5"               },
+  cancelled: { label: "Cancelled",color: "var(--secondary)", bg: "var(--fill-primary)"               },
 }
 
 function formatEventDate(iso: string, time?: string) {
@@ -233,7 +233,7 @@ export function CommunityEventsCard() {
             <Plus style={{ width:14, height:14 }} /> Schedule event
           </button>
         ) : (
-          <div style={{ background:"#FAFAFA", borderRadius:12, padding:12,
+          <div style={{ background:"var(--fill-primary)", borderRadius:12, padding:12,
             display:"flex", flexDirection:"column", gap:8 }}>
             <input value={title} onChange={e => setTitle(e.target.value)} placeholder="Event name"
               style={{ padding:"8px 10px", borderRadius:8, border:"1.5px solid var(--separator)",
@@ -267,7 +267,7 @@ export function CommunityEventsCard() {
               <button onClick={addEvent} disabled={!title.trim() || !date}
                 style={{ flex:1, padding:"8px 0", borderRadius:8, border:"none",
                   cursor: !title.trim() || !date ? "not-allowed" : "pointer",
-                  background: !title.trim() || !date ? "#E5E5EA" : "#F5A623",
+                  background: !title.trim() || !date ? "var(--input-bg)" : "#F5A623",
                   color: !title.trim() || !date ? "#A1A1AA" : "#000",
                   fontSize:"0.8125rem", fontWeight:700 }}>
                 Schedule 📅
@@ -313,7 +313,7 @@ export function CommunityEventsCard() {
           <Plus style={{ width:14, height:14 }} /> Schedule event
         </button>
       ) : (
-        <div style={{ background:"#FAFAFA", borderRadius:12, padding:12,
+        <div style={{ background:"var(--fill-primary)", borderRadius:12, padding:12,
           display:"flex", flexDirection:"column", gap:8 }}>
           {[
             { v: title, set: setTitle, ph: "Event name", t: "text"  },
@@ -352,7 +352,7 @@ export function CommunityEventsCard() {
             <button onClick={addEvent} disabled={!title.trim() || !date}
               style={{ flex:1, padding:"8px 0", borderRadius:8, border:"none",
                 cursor: !title.trim() || !date ? "not-allowed" : "pointer",
-                background: !title.trim() || !date ? "#E5E5EA" : "#F5A623",
+                background: !title.trim() || !date ? "var(--input-bg)" : "#F5A623",
                 color: !title.trim() || !date ? "#A1A1AA" : "#000",
                 fontSize:"0.8125rem", fontWeight:700 }}>Schedule 📅</button>
             <button onClick={() => setAddOpen(false)}
