@@ -141,16 +141,16 @@ export default function Dashboard() {
               <span key={i} style={{
                 display:"inline-flex", alignItems:"center", gap:3,
                 fontSize:"0.5625rem", fontWeight:600,
-                background:"rgba(0,0,0,0.04)",
-                border:"1px solid rgba(0,0,0,0.06)",
+                background:"rgba(255,255,255,0.07)",
+                border:"1px solid rgba(255,255,255,0.10)",
                 padding:"2px 6px", borderRadius:99,
                 whiteSpace:"nowrap",
               }}>
                 <span style={{ fontSize:"0.6rem" }}>{m.emoji}</span>
-                <span style={{ fontWeight:800, color:"var(--foreground)" }}>
+                <span style={{ fontWeight:800, color:"rgba(255,255,255,0.9)" }}>
                   {m.symbol.replace("-USD","").replace("=F","")}
                 </span>
-                <span style={{ color:"var(--foreground)", fontVariantNumeric:"tabular-nums" }}>
+                <span style={{ color:"rgba(255,255,255,0.7)", fontVariantNumeric:"tabular-nums" }}>
                   ${fmtP(m.price, m.kind)}
                 </span>
                 <span style={{ fontWeight:700, color: mUp ? "#059669" : "#DC2626" }}>
@@ -168,7 +168,11 @@ export default function Dashboard() {
 
       <style>{`
         @media (max-width: 500px)  { .hero-stats-grid { grid-template-columns: 1fr !important; } }
-        @media (max-width: 640px)  { .market-pills { display: none !important; } }
+        @media (max-width: 640px)  {
+          .market-pills { flex: 1; min-width: 0; overflow-x: auto; scrollbar-width: none; }
+          .market-pills::-webkit-scrollbar { display: none; }
+          .market-pills span { font-size: 0.5rem !important; padding: 2px 5px !important; }
+        }
       `}</style>
 
       {/* ══ Main Layout: Left + Right ══════════════════════════ */}
