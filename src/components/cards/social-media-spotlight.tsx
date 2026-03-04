@@ -199,7 +199,7 @@ export function SocialMediaSpotlightCard() {
           <a href={(youtubes[0] as any).url||"#"} target="_blank" rel="noopener noreferrer"
             style={{ textDecoration:"none", gridColumn:"2 / 4", gridRow:"2 / 3" }}>
             <div style={{ position:"relative", borderRadius:10, overflow:"hidden", height:76, background:"#111" }}>
-              {(youtubes[0] as any).thumbnail_url ?? (youtubes[0] as any).thumbnail && <img src={(youtubes[0] as any).thumbnail_url ?? (youtubes[0] as any).thumbnail} alt="" style={{ width:"100%", height:"100%", objectFit:"cover", display:"block" }} />}
+              {((youtubes[0] as any).thumbnail_url || (youtubes[0] as any).thumbnail) && <img src={(youtubes[0] as any).thumbnail_url || (youtubes[0] as any).thumbnail} alt="" style={{ width:"100%", height:"100%", objectFit:"cover", display:"block" }} />}
               <div style={{ position:"absolute", inset:0, background:"rgba(0,0,0,0.3)", display:"flex", alignItems:"center", justifyContent:"center" }}>
                 <div style={{ width:20, height:20, background:"rgba(255,0,0,0.85)", borderRadius:5, display:"flex", alignItems:"center", justifyContent:"center" }}>
                   <Play size={8} color="white" fill="white" />
@@ -316,7 +316,7 @@ export function SocialMediaSpotlightCard() {
           {youtubes.map((v: any, i) => (
             <a key={i} href={v.url||"#"} target="_blank" rel="noopener noreferrer" style={{ textDecoration:"none", display:"flex", gap:12, alignItems:"flex-start" }}>
               <div style={{ position:"relative", borderRadius:8, overflow:"hidden", width:140, flexShrink:0, aspectRatio:"16/9", background:"#000" }}>
-                {v.thumbnail_url ?? v.thumbnail ? <img src={v.thumbnail_url ?? v.thumbnail} alt="" style={{ width:"100%", height:"100%", objectFit:"cover" }} />}
+                {(v.thumbnail_url || v.thumbnail) && <img src={v.thumbnail_url || v.thumbnail} alt="" style={{ width:"100%", height:"100%", objectFit:"cover" }} />}
                 <div style={{ position:"absolute", inset:0, display:"flex", alignItems:"center", justifyContent:"center" }}>
                   <div style={{ width:28, height:28, background:"rgba(255,0,0,0.85)", borderRadius:6, display:"flex", alignItems:"center", justifyContent:"center" }}>
                     <Play size={12} color="white" fill="white" />
