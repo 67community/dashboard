@@ -56,7 +56,7 @@ export function XRaidCard() {
         ] as const).map(({ key, label }) => (
           <button key={key} onClick={() => setTab(key as any)}
             style={{ flex:1, padding:"6px 6px", borderRadius:10, border:"none", cursor:"pointer",
-              background: tab===key ? "#0A0A0A" : "#F4F4F5",
+              background: tab===key ? "var(--foreground)" : "var(--fill-primary)",
               color: tab===key ? "#fff" : "#6E6E73",
               fontSize:"0.5625rem", fontWeight:700, position:"relative", whiteSpace:"nowrap" }}>
             {label}
@@ -79,9 +79,9 @@ export function XRaidCard() {
             : xRecent.map((item, i) => (
               <a key={i} href={item.link} target="_blank" rel="noopener noreferrer"
                 style={{ textDecoration:"none", display:"block", padding:"8px 10px",
-                  borderRadius:10, background:"#F8F8FA", border:"1px solid rgba(0,0,0,0.06)" }}>
+                  borderRadius:10, background:"var(--fill-primary)", border:"1px solid var(--separator)" }}>
                 <div style={{ display:"flex", justifyContent:"space-between", marginBottom:4 }}>
-                  <span style={{ fontSize:"0.5625rem", fontWeight:800, color:"#0A0A0A" }}>{item.user}</span>
+                  <span style={{ fontSize:"0.5625rem", fontWeight:800, color:"var(--foreground)" }}>{item.user}</span>
                   <span style={{ fontSize:"0.5625rem", color:"var(--secondary)" }}>
                     {item.time ? new Date(item.time).toLocaleString("en-GB", { day:"2-digit", month:"2-digit", year:"numeric", hour:"2-digit", minute:"2-digit" }) : ""}
                   </span>
@@ -110,9 +110,9 @@ export function XRaidCard() {
             : xPop.map((item, i) => (
               <a key={i} href={item.link} target="_blank" rel="noopener noreferrer"
                 style={{ textDecoration:"none", display:"block", padding:"8px 10px",
-                  borderRadius:10, background:"#F8F8FA", border:"1px solid rgba(0,0,0,0.06)" }}>
+                  borderRadius:10, background:"var(--fill-primary)", border:"1px solid var(--separator)" }}>
                 <div style={{ display:"flex", justifyContent:"space-between", marginBottom:4 }}>
-                  <span style={{ fontSize:"0.5625rem", fontWeight:800, color:"#0A0A0A" }}>{item.user}</span>
+                  <span style={{ fontSize:"0.5625rem", fontWeight:800, color:"var(--foreground)" }}>{item.user}</span>
                   <span style={{ fontSize:"0.5625rem", color:"var(--secondary)" }}>
                     {item.time ? new Date(item.time).toLocaleString("en-GB", { day:"2-digit", month:"2-digit", year:"numeric", hour:"2-digit", minute:"2-digit" }) : ""}
                   </span>
@@ -139,9 +139,9 @@ export function XRaidCard() {
             : items.map(item => (
                 <a key={item.id} href={item.link} target="_blank" rel="noopener noreferrer"
                   style={{ textDecoration:"none", display:"block", padding:"8px 10px",
-                    borderRadius:10, background:"#F8F8FA", border:"1px solid rgba(0,0,0,0.06)" }}>
+                    borderRadius:10, background:"var(--fill-primary)", border:"1px solid var(--separator)" }}>
                   <div style={{ display:"flex", justifyContent:"space-between", marginBottom:4 }}>
-                    <span style={{ fontSize:"0.5625rem", fontWeight:800, color:"#0A0A0A" }}>𝕏 NOTIFICATION</span>
+                    <span style={{ fontSize:"0.5625rem", fontWeight:800, color:"var(--foreground)" }}>𝕏 NOTIFICATION</span>
                     <span style={{ fontSize:"0.5625rem", color:"var(--secondary)" }}>{timeAgo(item.time)}</span>
                   </div>
                   <p style={{ fontSize:"0.6875rem", color:"var(--foreground)", lineHeight:1.4, margin:0,

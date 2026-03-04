@@ -71,7 +71,6 @@ export function MarketTickerCard() {
   const market: MarketItem[] = (data?.market_data ?? []) as MarketItem[]
 
   const crypto  = market.filter(m => m.kind === "crypto")
-  const indices = market.filter(m => m.kind === "index")
 
   // ── Collapsed — all pills in one horizontal strip ─────────────────────────
   const collapsed = (
@@ -94,16 +93,6 @@ export function MarketTickerCard() {
         </div>
       )}
 
-      {indices.length > 0 && (
-        <div>
-          <p style={{ fontSize: "0.625rem", fontWeight: 700, color: "var(--secondary)",
-            textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: 8 }}>
-            🏛️ Markets
-          </p>
-          <TickerStrip items={indices} />
-        </div>
-      )}
-
       {market.length === 0 && (
         <p style={{ textAlign: "center", color: "var(--secondary)", fontSize: "0.875rem", padding: "20px 0" }}>
           Loading market data…
@@ -121,7 +110,7 @@ export function MarketTickerCard() {
   return (
     <DashboardCard
       title="Market Ticker"
-      subtitle="BTC · ETH · SOL · NASDAQ · S&P 500"
+      subtitle="BTC · ETH · SOL · $67"
       icon={<TrendingUp style={{ width: 16, height: 16, color: "#059669" }} />}
       accentColor="#059669"
       collapsed={collapsed}
