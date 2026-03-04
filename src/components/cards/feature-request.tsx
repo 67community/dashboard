@@ -303,7 +303,7 @@ export function FeatureRequestCard() {
       {requests.length === 0 && (
         <div style={{ textAlign:"center", padding:"32px 0", color:"var(--secondary)" }}>
           <p style={{ fontSize:"2rem" }}>⚡</p>
-          <p style={{ fontSize:"0.875rem", marginTop:8 }}>No requests yet. Be the first.</p>
+          <p style={{ fontSize:"0.875rem", marginTop:8, color:"var(--secondary)" }}>No requests yet. Be the first.</p>
         </div>
       )}
     </div>
