@@ -165,8 +165,8 @@ export function SocialMediaSpotlightCard() {
         {tiktoks[0] && (
           <a href={tiktoks[0].video_url} target="_blank" rel="noopener noreferrer"
             style={{ textDecoration:"none", gridRow:"1 / 3", gridColumn:"1 / 2" }}>
-            <div style={{ position:"relative", borderRadius:10, overflow:"hidden", height:"100%", minHeight:160, background:"#111" }}>
-              {tiktoks[0].thumbnail_url && <img src={proxyThumb(tiktoks[0].thumbnail_url)} alt="" style={{ width:"100%", height:"100%", objectFit:"cover", display:"block" }} />}
+            <div style={{ position:"relative", borderRadius:10, overflow:"hidden", height:"100%", minHeight:160, background:"linear-gradient(135deg, #010101 0%, #69C9D0 50%, #EE1D52 100%)" }}>
+              {tiktoks[0].thumbnail_url && <img src={tiktoks[0].thumbnail_url} onError={e=>{(e.target as HTMLImageElement).style.display="none"}} alt="" style={{ width:"100%", height:"100%", objectFit:"cover", display:"block" }} />}
               <div style={{ position:"absolute", inset:0, background:"linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 45%)" }} />
               <div style={{ position:"absolute", top:6, left:6 }}><TikTokIcon size={11} /></div>
               <div style={{ position:"absolute", bottom:6, left:6, right:6 }}>
@@ -183,8 +183,8 @@ export function SocialMediaSpotlightCard() {
         {tiktoks[1] && (
           <a href={tiktoks[1].video_url} target="_blank" rel="noopener noreferrer"
             style={{ textDecoration:"none", gridColumn:"2 / 3", gridRow:"1 / 2" }}>
-            <div style={{ position:"relative", borderRadius:10, overflow:"hidden", height:76, background:"#111" }}>
-              {tiktoks[1].thumbnail_url && <img src={proxyThumb(tiktoks[1].thumbnail_url)} alt="" style={{ width:"100%", height:"100%", objectFit:"cover", display:"block" }} />}
+            <div style={{ position:"relative", borderRadius:10, overflow:"hidden", height:76, background:"linear-gradient(135deg, #010101 0%, #69C9D0 50%, #EE1D52 100%)" }}>
+              {tiktoks[1].thumbnail_url && <img src={tiktoks[1].thumbnail_url} onError={e=>{(e.target as HTMLImageElement).style.display="none"}} alt="" style={{ width:"100%", height:"100%", objectFit:"cover", display:"block" }} />}
               <div style={{ position:"absolute", inset:0, background:"linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 50%)" }} />
               <div style={{ position:"absolute", top:5, left:5 }}><TikTokIcon size={9} /></div>
               <div style={{ position:"absolute", bottom:4, left:5 }}>
@@ -198,7 +198,7 @@ export function SocialMediaSpotlightCard() {
         {youtubes[0] && (
           <a href={(youtubes[0] as any).url||"#"} target="_blank" rel="noopener noreferrer"
             style={{ textDecoration:"none", gridColumn:"2 / 4", gridRow:"2 / 3" }}>
-            <div style={{ position:"relative", borderRadius:10, overflow:"hidden", height:76, background:"#111" }}>
+            <div style={{ position:"relative", borderRadius:10, overflow:"hidden", height:76, background:"linear-gradient(135deg, #010101 0%, #69C9D0 50%, #EE1D52 100%)" }}>
               {((youtubes[0] as any).thumbnail_url || (youtubes[0] as any).thumbnail) && <img src={(youtubes[0] as any).thumbnail_url || (youtubes[0] as any).thumbnail} alt="" style={{ width:"100%", height:"100%", objectFit:"cover", display:"block" }} />}
               <div style={{ position:"absolute", inset:0, background:"rgba(0,0,0,0.3)", display:"flex", alignItems:"center", justifyContent:"center" }}>
                 <div style={{ width:20, height:20, background:"rgba(255,0,0,0.85)", borderRadius:5, display:"flex", alignItems:"center", justifyContent:"center" }}>
@@ -216,8 +216,8 @@ export function SocialMediaSpotlightCard() {
         {tiktoks[2] && (
           <a href={tiktoks[2].video_url} target="_blank" rel="noopener noreferrer"
             style={{ textDecoration:"none", gridColumn:"4 / 5", gridRow:"1 / 2" }}>
-            <div style={{ position:"relative", borderRadius:10, overflow:"hidden", height:76, background:"#111" }}>
-              {tiktoks[2].thumbnail_url && <img src={proxyThumb(tiktoks[2].thumbnail_url)} alt="" style={{ width:"100%", height:"100%", objectFit:"cover", display:"block" }} />}
+            <div style={{ position:"relative", borderRadius:10, overflow:"hidden", height:76, background:"linear-gradient(135deg, #010101 0%, #69C9D0 50%, #EE1D52 100%)" }}>
+              {tiktoks[2].thumbnail_url && <img src={tiktoks[2].thumbnail_url} onError={e=>{(e.target as HTMLImageElement).style.display="none"}} alt="" style={{ width:"100%", height:"100%", objectFit:"cover", display:"block" }} />}
               <div style={{ position:"absolute", inset:0, background:"linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 50%)" }} />
               <div style={{ position:"absolute", top:5, left:5 }}><TikTokIcon size={9} /></div>
               <div style={{ position:"absolute", bottom:4, left:5 }}>
@@ -232,11 +232,11 @@ export function SocialMediaSpotlightCard() {
           const v = instas[0] || tiktoks[3]
           const isInsta = !!instas[0]
           const href = isInsta ? (v.url||v.post_url||"#") : v.video_url
-          const thumb = isInsta ? (v.image_url||v.thumbnail) : proxyThumb(v.thumbnail_url)
+          const thumb = isInsta ? (v.image_url||v.thumbnail) : v.thumbnail_url
           return (
             <a href={href} target="_blank" rel="noopener noreferrer"
               style={{ textDecoration:"none", gridColumn:"4 / 5", gridRow:"2 / 3" }}>
-              <div style={{ position:"relative", borderRadius:10, overflow:"hidden", height:76, background:"#111" }}>
+              <div style={{ position:"relative", borderRadius:10, overflow:"hidden", height:76, background:"linear-gradient(135deg, #010101 0%, #69C9D0 50%, #EE1D52 100%)" }}>
                 {thumb && <img src={thumb} alt="" style={{ width:"100%", height:"100%", objectFit:"cover", display:"block" }} />}
                 <div style={{ position:"absolute", inset:0, background:"linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 50%)" }} />
                 <div style={{ position:"absolute", top:5, left:5 }}>{isInsta ? <InstaIcon size={9} /> : <TikTokIcon size={9} />}</div>
@@ -296,7 +296,7 @@ export function SocialMediaSpotlightCard() {
           {tiktoks.map((v, i) => (
             <a key={i} href={v.video_url} target="_blank" rel="noopener noreferrer" style={{ textDecoration:"none" }}>
               <div style={{ position:"relative", borderRadius:10, overflow:"hidden", aspectRatio:"9/16", background:"#000" }}>
-                {v.thumbnail_url && <img src={proxyThumb(v.thumbnail_url)} alt="" style={{ width:"100%", height:"100%", objectFit:"cover" }} />}
+                {v.thumbnail_url && <img src={v.thumbnail_url} onError={e=>{(e.target as HTMLImageElement).style.display="none"}} alt="" style={{ width:"100%", height:"100%", objectFit:"cover" }} />}
                 <div style={{ position:"absolute", inset:0, background:"linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 55%)" }} />
                 <div style={{ position:"absolute", bottom:8, left:8, right:8 }}>
                   <div style={{ display:"flex", alignItems:"center", gap:5, marginBottom:2 }}>
