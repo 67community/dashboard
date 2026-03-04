@@ -280,6 +280,15 @@ html, body {
 
 /* Restore min-width on interactive / structural elements */
 button, input, select, textarea { min-width: revert; word-break: normal; }
+
+input, textarea, select {
+  color: var(--foreground) !important;
+  background: var(--input-bg) !important;
+}
+input::placeholder, textarea::placeholder {
+  color: var(--tertiary) !important;
+  opacity: 1;
+}
 img, svg { min-width: 0; flex-shrink: 0; }
 
 .page-main {
