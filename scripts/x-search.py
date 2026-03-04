@@ -3,7 +3,7 @@ import sys, json, random, re
 from pathlib import Path
 from playwright.sync_api import sync_playwright
 
-QUERY = "67coin OR %2467coin OR %2267+coin%22 solana"
+QUERY = "67"
 SESSIONS_DIR = Path("/Users/oscarbrendon/.openclaw/workspace/skills/67coin/assets/sessions")
 mode = sys.argv[1] if len(sys.argv) > 1 else "recent"
 
