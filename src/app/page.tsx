@@ -5,7 +5,7 @@ import ReactDOM from "react-dom"
 
 import { TokenHealthCard }     from "@/components/cards/token-health"
 import { CommunityCard }       from "@/components/cards/community"
-import { ContentPipelineCard } from "@/components/cards/content-pipeline"
+// ContentPipelineCard → Calendar page
 // ContentCreatorCard removed (saved at workspace/CONTENT_CREATOR_BACKUP.tsx)
 import { PostTimingCard }        from "@/components/cards/post-timing"
 import { TikTokSpotlightCard }       from "@/components/cards/tiktok-spotlight"
@@ -22,7 +22,7 @@ import { MapWidgetCard }        from "@/components/cards/map-widget"
 import { RaidCoordinatorCard }  from "@/components/cards/raid-coordinator"
 import { DailyBriefingCard }    from "@/components/cards/daily-briefing"
 import { TeamNotesCard }          from "@/components/cards/team-notes"
-import { CommunityEventsCard as EventsCard } from "@/components/cards/events"
+// CommunityEventsCard → Calendar page
 import { AnnouncementsCard }      from "@/components/cards/announcements"
 
 import { XRaidCard } from "@/components/cards/x-raid"
@@ -103,29 +103,19 @@ export default function Dashboard() {
         marginBottom:20, paddingBottom:14,
         borderBottom:"1px solid rgba(0,0,0,0.07)",
       }}>
-        {/* Logo + title */}
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="https://raw.githubusercontent.com/67coin/67/main/logo.png" alt="67"
-          style={{ width:26, height:26, borderRadius:"50%", objectFit:"cover", flexShrink:0 }} />
-        <span style={{ fontSize:"0.8125rem", fontWeight:800, color:"#0A0A0A",
-          letterSpacing:"-0.02em", marginRight:4 }}>
-          Mission Control
-        </span>
-
-        {/* Divider */}
-        <span style={{ width:1, height:14, background:"rgba(0,0,0,0.12)", flexShrink:0 }} />
-
-        {/* $67 live price pill */}
+        {/* $67 live price pill with logo */}
         {(livePrice ?? 0) > 0 && (
           <span style={{
-            display:"inline-flex", alignItems:"center", gap:5,
+            display:"inline-flex", alignItems:"center", gap:6,
             fontSize:"0.6875rem", fontWeight:700,
             color: up ? "#059669" : "#EF4444",
             background: up ? "rgba(5,150,105,0.09)" : "rgba(239,68,68,0.09)",
             border: `1.5px solid ${up ? "rgba(5,150,105,0.15)" : "rgba(239,68,68,0.15)"}`,
-            padding:"3px 9px", borderRadius:99,
+            padding:"3px 9px 3px 5px", borderRadius:99,
           }}>
-            <span style={{ fontWeight:800 }}>$67</span>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="https://raw.githubusercontent.com/67coin/67/main/logo.png" alt="67"
+              style={{ width:18, height:18, borderRadius:"50%", objectFit:"cover", flexShrink:0 }} />
             ${(livePrice ?? 0).toFixed(6)}
             <span style={{ opacity:0.85 }}>
               {up ? "▲" : "▼"}{Math.abs(liveChange24h ?? 0).toFixed(1)}%
@@ -188,15 +178,13 @@ export default function Dashboard() {
             <div className="mob-order-2" style={{ display:"flex", minWidth:0 }}><TokenHealthCard /></div>
           </div>
 
-          {/* Row 2: Team Notes */}
-          <div className="mob-order-4" style={{ display:"flex", minWidth:0 }}><TeamNotesCard /></div>
-
-
-          {/* Row 3: Social Media | Content Creator */}
-          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:20 }}>
-            <div className="mob-order-5" style={{ display:"flex", minWidth:0 }}><SocialMediaSpotlightCard /></div>
-
+          {/* Row 2: Social — full width, 2 cols × 2 rows tall */}
+          <div className="mob-order-5" style={{ display:"flex", minWidth:0 }}>
+            <div style={{ width:"100%", minHeight:420 }}><SocialMediaSpotlightCard /></div>
           </div>
+
+          {/* Row 3: Team Notes */}
+          <div className="mob-order-4" style={{ display:"flex", minWidth:0 }}><TeamNotesCard /></div>
 
         </div>
 
@@ -205,8 +193,7 @@ export default function Dashboard() {
           <div className="mob-order-0"><AnnouncementsCard /></div>
           <div className="mob-order-3"><XRaidCard /></div>
           <div className="mob-order-7"><WalletTrackerCard /></div>
-          <div className="mob-order-8"><ContentPipelineCard /></div>
-          <div className="mob-order-9"><EventsCard /></div>
+
 
         </div>
       </div>
