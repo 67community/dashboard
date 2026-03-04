@@ -188,7 +188,7 @@ export function FeatureRequestCard() {
           style={{
             width:"100%", padding:"9px 12px", borderRadius:10, fontSize:"0.875rem",
             border:"1.5px solid var(--separator)", outline:"none", fontFamily:"inherit",
-            background:"var(--input-bg, #FAFAFA)", color:"var(--foreground)", boxSizing:"border-box",
+            background:"var(--input-bg)", color:"var(--foreground)", boxSizing:"border-box",
           }}
           onFocus={e => e.target.style.borderColor = "#F5A623"}
           onBlur={e  => e.target.style.borderColor = "var(--separator)"}
@@ -200,7 +200,7 @@ export function FeatureRequestCard() {
           style={{
             width:"100%", padding:"9px 12px", borderRadius:10, fontSize:"0.875rem",
             border:"1.5px solid var(--separator)", outline:"none", fontFamily:"inherit",
-            background:"var(--input-bg, #FAFAFA)", color:"var(--foreground)", boxSizing:"border-box",
+            background:"var(--input-bg)", color:"var(--foreground)", boxSizing:"border-box",
           }}
           onFocus={e => e.target.style.borderColor = "#F5A623"}
           onBlur={e  => e.target.style.borderColor = "var(--separator)"}
@@ -208,7 +208,7 @@ export function FeatureRequestCard() {
         <button type="submit" disabled={!what.trim() || !why.trim() || loading}
           style={{
             padding:"9px 0", borderRadius:10, border:"none", cursor: loading ? "wait" : "pointer",
-            background: (!what.trim() || !why.trim() || loading) ? "var(--input-bg, #E5E5EA)" : "#F5A623",
+            background: (!what.trim() || !why.trim() || loading) ? "var(--input-bg)" : "#F5A623",
             color: (!what.trim() || !why.trim() || loading) ? "var(--tertiary)" : "#000",
             fontSize:"0.875rem", fontWeight:700, transition:"all 0.15s",
           }}>
