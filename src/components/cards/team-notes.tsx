@@ -407,25 +407,6 @@ export function TeamNotesCard() {
   const collapsed = (
     <div style={{ display:"flex", flexDirection:"column", gap:10 }} onClick={e => e.stopPropagation()}>
 
-      {/* Author selector */}
-      <div style={{ display:"flex", gap:6, flexWrap:"wrap" }}>
-        {TEAM_MEMBERS.map(m => {
-          const firstName = m.name.split(" ")[0]
-          const active = author === firstName
-          return (
-            <button key={m.id} onClick={() => setAuthor(firstName)} title={m.name}
-              style={{ padding:0, background:"none", border:"none", cursor:"pointer", display:"flex", flexDirection:"column", alignItems:"center", gap:3 }}>
-              <div style={{ borderRadius:"50%", outline: active ? `2.5px solid ${m.color}` : "2px solid transparent", outlineOffset:1, transition:"outline 0.15s" }}>
-                <img src={m.avatar} alt={firstName}
-                  style={{ width:28, height:28, borderRadius:"50%", objectFit:"cover", display:"block",
-                    opacity: active ? 1 : 0.45, transition:"opacity 0.15s" }} />
-              </div>
-              <span style={{ fontSize:"0.5rem", fontWeight:700, color: active ? m.color : "var(--tertiary)", transition:"color 0.15s" }}>{firstName}</span>
-            </button>
-          )
-        })}
-      </div>
-
       {/* Action buttons */}
       {mode === "none" && (
         <div style={{ display:"flex", gap:6 }}>
@@ -554,24 +535,6 @@ export function TeamNotesCard() {
 
       {/* Author + action buttons */}
       <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
-        <div style={{ display:"flex", gap:6, flexWrap:"wrap" }}>
-          {TEAM_MEMBERS.map(m => {
-            const firstName = m.name.split(" ")[0]
-            const active = author === firstName
-            return (
-              <button key={m.id} onClick={() => setAuthor(firstName)} title={m.name}
-                style={{ padding:0, background:"none", border:"none", cursor:"pointer", display:"flex", flexDirection:"column", alignItems:"center", gap:3 }}>
-                <div style={{ borderRadius:"50%", outline: active ? `2.5px solid ${m.color}` : "2px solid transparent", outlineOffset:1, transition:"outline 0.15s" }}>
-                  <img src={m.avatar} alt={firstName}
-                    style={{ width:32, height:32, borderRadius:"50%", objectFit:"cover", display:"block",
-                      opacity: active ? 1 : 0.45, transition:"opacity 0.15s" }} />
-                </div>
-                <span style={{ fontSize:"0.5625rem", fontWeight:700, color: active ? m.color : "var(--tertiary)", transition:"color 0.15s" }}>{firstName}</span>
-              </button>
-            )
-          })}
-        </div>
-
         {mode === "none" && (
           <div style={{ display:"flex", gap:6 }}>
             <button onClick={() => setMode("text")}
