@@ -78,7 +78,7 @@ export function DashboardCard({
           width: "100%", maxWidth: expandedMaxWidth ?? 560,
           maxHeight: "88vh",
           display: "flex", flexDirection: "column",
-          background: "#FFFFFF",
+          background: "var(--card)",
           borderRadius: 24,
           boxShadow:
             "0 0 0 0.5px rgba(0,0,0,0.08), " +
@@ -107,12 +107,12 @@ export function DashboardCard({
             onClick={() => { setOpen(false); onClose?.() }}
             style={{
               width: 32, height: 32, borderRadius: "50%",
-              background: "#F4F4F5", border: "none", cursor: "pointer",
+              background: "var(--fill-primary)", border: "none", cursor: "pointer",
               display: "flex", alignItems: "center", justifyContent: "center",
               transition: "background 0.15s",
             }}
-            onMouseEnter={e => (e.currentTarget.style.background = "#E8E8ED")}
-            onMouseLeave={e => (e.currentTarget.style.background = "#F4F4F5")}
+            onMouseEnter={e => (e.currentTarget.style.background = "var(--input-bg)")}
+            onMouseLeave={e => (e.currentTarget.style.background = "var(--fill-primary)")}
           >
             <X style={{ width: 14, height: 14, color: "var(--secondary)" }} />
           </button>
@@ -172,12 +172,12 @@ export function DashboardCard({
                 onClick={e => { e.stopPropagation(); setOpen(true); onOpen?.() }}
                 style={{
                   width: 28, height: 28, borderRadius: "50%",
-                  background: "#F4F4F5", border: "none", cursor: "pointer",
+                  background: "var(--fill-primary)", border: "none", cursor: "pointer",
                   display: "flex", alignItems: "center", justifyContent: "center",
                   transition: "background 0.15s",
                 }}
-                onMouseEnter={e => (e.currentTarget.style.background = "#E8E8ED")}
-                onMouseLeave={e => (e.currentTarget.style.background = "#F4F4F5")}
+                onMouseEnter={e => (e.currentTarget.style.background = "var(--input-bg)")}
+                onMouseLeave={e => (e.currentTarget.style.background = "var(--fill-primary)")}
               >
                 <Maximize2 style={{ width: 12, height: 12, color: "var(--secondary)" }} />
               </button>
