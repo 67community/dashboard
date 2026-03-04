@@ -141,24 +141,6 @@ export function SocialMediaSpotlightCard() {
   const collapsed = (
     <div style={{ display:"flex", flexDirection:"column", gap:12 }}>
 
-      {/* ── Stats row ── */}
-      <div style={{ display:"flex", gap:8 }}>
-        {[
-          { icon: <TikTokIcon size={11} />, label:"TikTok", val: fmt(ttViews), sub:"views", bg:"rgba(0,0,0,0.05)" },
-          { icon: <YouTubeIcon size={11} />, label:"YouTube", val: fmt(ytViews), sub:"views", bg:"rgba(255,0,0,0.05)" },
-          { icon: <InstaIcon size={11} />, label:"Instagram", val: igLikes > 0 ? fmt(igLikes) : "—", sub:"likes", bg:"rgba(225,48,108,0.05)" },
-        ].map((s, i) => (
-          <div key={i} style={{ flex:1, background:s.bg, borderRadius:10, padding:"8px 10px" }}>
-            <div style={{ display:"flex", alignItems:"center", gap:4, marginBottom:3 }}>
-              {s.icon}
-              <span style={{ fontSize:"0.5rem", fontWeight:700, color:"var(--secondary)", textTransform:"uppercase", letterSpacing:"0.07em" }}>{s.label}</span>
-            </div>
-            <p style={{ fontSize:"1.1rem", fontWeight:800, color:"var(--foreground)", letterSpacing:"-0.03em", margin:0, lineHeight:1 }}>{s.val}</p>
-            <p style={{ fontSize:"0.5rem", color:"var(--tertiary)", margin:"2px 0 0" }}>{s.sub}</p>
-          </div>
-        ))}
-      </div>
-
       {/* ── Media grid ── */}
       <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr 1fr", gap:6 }}>
         {/* TikTok — tall portrait, spans 2 rows */}
@@ -244,6 +226,24 @@ export function SocialMediaSpotlightCard() {
             </a>
           )
         })()}
+      </div>
+
+      {/* ── Stats row ── */}
+      <div style={{ display:"flex", gap:8 }}>
+        {[
+          { icon: <TikTokIcon size={11} />, label:"TikTok", val: fmt(ttViews), sub:"views", bg:"rgba(0,0,0,0.05)" },
+          { icon: <YouTubeIcon size={11} />, label:"YouTube", val: fmt(ytViews), sub:"views", bg:"rgba(255,0,0,0.05)" },
+          { icon: <InstaIcon size={11} />, label:"Instagram", val: igLikes > 0 ? fmt(igLikes) : "—", sub:"likes", bg:"rgba(225,48,108,0.05)" },
+        ].map((s, i) => (
+          <div key={i} style={{ flex:1, background:s.bg, borderRadius:10, padding:"8px 10px" }}>
+            <div style={{ display:"flex", alignItems:"center", gap:4, marginBottom:3 }}>
+              {s.icon}
+              <span style={{ fontSize:"0.5rem", fontWeight:700, color:"var(--secondary)", textTransform:"uppercase", letterSpacing:"0.07em" }}>{s.label}</span>
+            </div>
+            <p style={{ fontSize:"1.1rem", fontWeight:800, color:"var(--foreground)", letterSpacing:"-0.03em", margin:0, lineHeight:1 }}>{s.val}</p>
+            <p style={{ fontSize:"0.5rem", color:"var(--tertiary)", margin:"2px 0 0" }}>{s.sub}</p>
+          </div>
+        ))}
       </div>
 
       {/* ── News strip ── */}
