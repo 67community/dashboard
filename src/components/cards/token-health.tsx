@@ -244,7 +244,7 @@ export function TokenHealthCard() {
                 <div key={i} style={{ display:"flex", alignItems:"center", gap:8 }}>
                   {ex.logo
                     ? <img src={getLocalExchangeLogo(ex.exchange, ex.logo)} alt={ex.exchange} width={22} height={22} style={{ borderRadius:6, objectFit:"cover", flexShrink:0, boxShadow:"0 0 0 1px rgba(0,0,0,0.07)" }} onError={e=>{(e.target as HTMLImageElement).style.display="none"}} />
-                    : <div style={{ width:22, height:22, borderRadius:6, background:"#E8E8ED", flexShrink:0, display:"flex", alignItems:"center", justifyContent:"center", fontSize:"0.5625rem", fontWeight:700, color:"var(--tertiary)" }}>{ex.exchange.charAt(0)}</div>
+                    : <div style={{ width:22, height:22, borderRadius:6, background:"var(--fill-primary)", flexShrink:0, display:"flex", alignItems:"center", justifyContent:"center", fontSize:"0.5625rem", fontWeight:700, color:"var(--tertiary)" }}>{ex.exchange.charAt(0)}</div>
                   }
                   <span style={{ fontSize:"0.75rem", fontWeight:600, color:"var(--foreground)", width:80, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap", flexShrink:0 }}>{ex.exchange}</span>
                   <div style={{ flex:1, height:5, background:"rgba(0,0,0,0.06)", borderRadius:99, overflow:"hidden" }}>
@@ -275,7 +275,7 @@ export function TokenHealthCard() {
                 <div key={i} style={{ display:"flex", alignItems:"center", gap:8 }}>
                   {ex.logo
                     ? <img src={getLocalExchangeLogo(ex.exchange, ex.logo)} alt={ex.exchange} width={22} height={22} style={{ borderRadius:6, objectFit:"cover", flexShrink:0, boxShadow:"0 0 0 1px rgba(0,0,0,0.07)" }} onError={e=>{(e.target as HTMLImageElement).style.display="none"}} />
-                    : <div style={{ width:22, height:22, borderRadius:6, background:"#E8E8ED", flexShrink:0, display:"flex", alignItems:"center", justifyContent:"center", fontSize:"0.5625rem", fontWeight:700, color:"var(--tertiary)" }}>{ex.exchange.charAt(0)}</div>
+                    : <div style={{ width:22, height:22, borderRadius:6, background:"var(--fill-primary)", flexShrink:0, display:"flex", alignItems:"center", justifyContent:"center", fontSize:"0.5625rem", fontWeight:700, color:"var(--tertiary)" }}>{ex.exchange.charAt(0)}</div>
                   }
                   <span style={{ fontSize:"0.75rem", fontWeight:600, color:"var(--foreground)", width:80, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap", flexShrink:0 }}>{ex.exchange}</span>
                   <div style={{ flex:1, height:5, background:"rgba(0,0,0,0.06)", borderRadius:99, overflow:"hidden" }}>
@@ -300,11 +300,11 @@ export function TokenHealthCard() {
           <div style={{ borderTop:"1px solid var(--separator)", paddingTop:10 }}>
             <p style={{ fontSize:"0.5625rem", fontWeight:800, color:"var(--tertiary)", textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:8 }}>24h Transactions</p>
             <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:6, marginBottom:8 }}>
-              <div style={{ background:"#E8F8EE", borderRadius:10, padding:"8px 10px" }}>
+              <div style={{ background:"rgba(52,211,153,0.12)", borderRadius:10, padding:"8px 10px" }}>
                 <p style={{ fontSize:"1rem", fontWeight:800, letterSpacing:"-0.03em", color:"#34D399", margin:0 }}>{(t?.buys_24h ?? 0).toLocaleString()}</p>
                 <p style={{ fontSize:"0.5625rem", fontWeight:600, color:"#34D399", margin:"2px 0 0" }}>Buys</p>
               </div>
-              <div style={{ background:"#FEF0F0", borderRadius:10, padding:"8px 10px" }}>
+              <div style={{ background:"rgba(248,113,113,0.12)", borderRadius:10, padding:"8px 10px" }}>
                 <p style={{ fontSize:"1rem", fontWeight:800, letterSpacing:"-0.03em", color:"#C0392B", margin:0 }}>{(t?.sells_24h ?? 0).toLocaleString()}</p>
                 <p style={{ fontSize:"0.5625rem", fontWeight:600, color:"#C0392B", margin:"2px 0 0" }}>Sells</p>
               </div>
@@ -352,7 +352,7 @@ export function TokenHealthCard() {
                     boxShadow:"0 0 0 1px rgba(0,0,0,0.07)" }}
                   onError={e => { (e.target as HTMLImageElement).style.display="none" }} />
               ) : (
-                <div style={{ width:22, height:22, borderRadius:6, background:"#E8E8ED", flexShrink:0,
+                <div style={{ width:22, height:22, borderRadius:6, background:"var(--fill-primary)", flexShrink:0,
                   display:"flex", alignItems:"center", justifyContent:"center",
                   fontSize:"0.5625rem", fontWeight:700, color:"var(--tertiary)" }}>
                   {ex.exchange.charAt(0)}
@@ -447,13 +447,13 @@ export function TokenHealthCard() {
 
             {/* Buy / Sell count cards */}
             <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8, marginBottom:14 }}>
-              <div style={{ background:"#E8F8EE", borderRadius:10, padding:"12px 14px" }}>
+              <div style={{ background:"rgba(52,211,153,0.12)", borderRadius:10, padding:"12px 14px" }}>
                 <p style={{ fontSize:"1.5rem", fontWeight:800, letterSpacing:"-0.04em", color:"#34D399" }}>
                   {(t?.buys_24h ?? 0).toLocaleString()}
                 </p>
                 <p style={{ fontSize:"0.75rem", fontWeight:600, color:"#34D399", marginTop:3 }}>Buys</p>
               </div>
-              <div style={{ background:"#FEF0F0", borderRadius:10, padding:"12px 14px" }}>
+              <div style={{ background:"rgba(248,113,113,0.12)", borderRadius:10, padding:"12px 14px" }}>
                 <p style={{ fontSize:"1.5rem", fontWeight:800, letterSpacing:"-0.04em", color:"#C0392B" }}>
                   {(t?.sells_24h ?? 0).toLocaleString()}
                 </p>
