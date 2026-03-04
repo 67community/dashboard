@@ -194,30 +194,6 @@ export function TopBar() {
                   : <Moon style={{ width:16, height:16, color:"rgba(255,255,255,0.5)" }} />}
               </button>
 
-              {/* Settings */}
-              <div style={{ position: "relative" }}>
-                <button
-                  onClick={() => setSettingsOpen(true)}
-                  title="AI Settings"
-                  style={{
-                    position: "relative", background: "none", border: "none", cursor: "pointer",
-                    padding: 6, borderRadius: 8, display: "flex", alignItems: "center",
-                    justifyContent: "center", transition: "background 0.15s",
-                  }}
-                  onMouseEnter={e => (e.currentTarget.style.background = "rgba(255,255,255,0.08)")}
-                  onMouseLeave={e => (e.currentTarget.style.background = "transparent")}
-                >
-                  <Settings style={{ width: 17, height: 17, color: "rgba(255,255,255,0.45)" }} />
-                  {!hasKey && (
-                    <span style={{
-                      position: "absolute", top: 3, right: 3,
-                      width: 7, height: 7, borderRadius: "50%",
-                      background: "#F59E0B", border: "1.5px solid #0A0A0A",
-                    }} />
-                  )}
-                </button>
-              </div>
-
               {/* Bell */}
               <div ref={bellRef} style={{ position:"relative" }}>
                 <button onClick={handleBellOpen} className={totalUnread > 0 ? "bell-shake" : ""}

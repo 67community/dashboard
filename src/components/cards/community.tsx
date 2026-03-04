@@ -163,7 +163,7 @@ export function CommunityCard() {
             background:"#E8F8EE", padding:"6px 12px", borderRadius:99,
           }}>
             <span className="dot-on" style={{ width:7, height:7 }} />
-            <span style={{ fontSize:"0.75rem", fontWeight:700, color:"#1A8343" }}>{onlineNow} online</span>
+            <span style={{ fontSize:"0.75rem", fontWeight:700, color:"#34D399" }}>{onlineNow} online</span>
           </span>
           {voiceChs.length > 0 && (
             <span style={{
@@ -407,7 +407,7 @@ export function CommunityCard() {
                     <p style={{ fontSize:"0.8125rem", fontWeight:700, color:"var(--foreground)", margin:0 }}>🔊 {vc.name}</p>
                     <p style={{ fontSize:"0.6875rem", color:"var(--tertiary)", margin:0 }}>{vc.members.slice(0, 4).map(m => `@${m}`).join(", ")}{vc.member_count > 4 ? ` +${vc.member_count - 4}` : ""}</p>
                   </div>
-                  <span style={{ background:"#EFF1FE", color:"#5865F2", borderRadius:99, padding:"3px 9px", fontSize:"0.75rem", fontWeight:700 }}>{vc.member_count}</span>
+                  <span style={{ background:"rgba(88,101,242,0.15)", color:"#818CF8", borderRadius:99, padding:"3px 9px", fontSize:"0.75rem", fontWeight:700 }}>{vc.member_count}</span>
                 </div>
               ))}
             </div>
@@ -685,7 +685,7 @@ export function CommunityCard() {
                     <p style={{ fontSize:"0.875rem", color:"var(--foreground)", lineHeight:1.55, margin:0, flex:1, display:"-webkit-box", WebkitLineClamp:2, WebkitBoxOrient:"vertical", overflow:"hidden" }}>{tweet.text}</p>
                     <div style={{ display:"flex", gap:14, borderTop:"1px solid var(--separator)", paddingTop:8 }}>
                       <span style={{ fontSize:"0.8125rem", color:"#EF4444", fontWeight:700 }}>❤️ {tweet.likes.toLocaleString()}</span>
-                      <span style={{ fontSize:"0.8125rem", color:"#2563EB", fontWeight:700 }}>💬 {tweet.replies.toLocaleString()}</span>
+                      <span style={{ fontSize:"0.8125rem", color:"#60A5FA", fontWeight:700 }}>💬 {tweet.replies.toLocaleString()}</span>
                       <span style={{ fontSize:"0.75rem", color:"var(--tertiary)", marginLeft:"auto" }}>{new Date(tweet.date).toLocaleDateString()}</span>
                     </div>
                   </div>

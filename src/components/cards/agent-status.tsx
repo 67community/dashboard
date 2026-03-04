@@ -69,7 +69,7 @@ export function AgentStatusCard() {
           <div key={b.name} className="inset-cell" style={{ display:"flex", alignItems:"center", gap:14 }}>
             <span className={b.status === "green" ? "dot-on" : "dot-off"} style={{ width:10, height:10 }} />
             <div style={{ flex:1 }}>
-              <p style={{ fontSize:"0.875rem", fontWeight:700, color:"#09090B" }}>{b.name}</p>
+              <p style={{ fontSize:"0.875rem", fontWeight:700, color:"var(--foreground)" }}>{b.name}</p>
               <p style={{ fontSize:"0.75rem", color:"var(--secondary)", marginTop:2 }}>{b.schedule}</p>
             </div>
             <div style={{ textAlign:"right" }}>

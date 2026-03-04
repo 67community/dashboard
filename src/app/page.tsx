@@ -6,7 +6,7 @@ import ReactDOM from "react-dom"
 import { TokenHealthCard }     from "@/components/cards/token-health"
 import { CommunityCard }       from "@/components/cards/community"
 import { ContentPipelineCard } from "@/components/cards/content-pipeline"
-import { ContentCreatorCard }  from "@/components/cards/content-creator"
+// ContentCreatorCard removed (saved at workspace/CONTENT_CREATOR_BACKUP.tsx)
 import { PostTimingCard }        from "@/components/cards/post-timing"
 import { TikTokSpotlightCard }       from "@/components/cards/tiktok-spotlight"
 import { SocialMediaSpotlightCard }  from "@/components/cards/social-media-spotlight"
@@ -187,7 +187,7 @@ export default function Dashboard() {
           {/* Row 3: Social Media | Content Creator */}
           <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:20 }}>
             <div className="mob-order-5" style={{ display:"flex", minWidth:0 }}><SocialMediaSpotlightCard /></div>
-            <div className="mob-order-6" style={{ display:"flex", minWidth:0, overflow:"hidden" }}><ContentCreatorCard /></div>
+
           </div>
 
         </div>

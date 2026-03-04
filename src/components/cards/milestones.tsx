@@ -56,7 +56,7 @@ export function MilestonesCard() {
         return (
           <div key={m.label} className="inset-cell">
             <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:10 }}>
-              <p style={{ fontSize:"0.875rem", fontWeight:700, color:"#09090B" }}>{m.label}</p>
+              <p style={{ fontSize:"0.875rem", fontWeight:700, color:"var(--foreground)" }}>{m.label}</p>
               <span style={{ fontSize:"1.125rem", fontWeight:800, color:COLORS[i % COLORS.length] }}>{p.toFixed(0)}%</span>
             </div>
             <div className="prog-track" style={{ height:8, marginBottom:8 }}>

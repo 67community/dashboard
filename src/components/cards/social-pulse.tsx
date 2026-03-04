@@ -74,12 +74,12 @@ export function SocialPulseCard() {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={LOGO} alt="67" width={32} height={32} style={{ width:32, height:32, borderRadius:"50%", objectFit:"cover" }} />
             <div>
-              <p style={{ fontSize:"0.8125rem", fontWeight:700, color:"#09090B", lineHeight:1.2 }}>The Official 67 Coin</p>
+              <p style={{ fontSize:"0.8125rem", fontWeight:700, color:"var(--foreground)", lineHeight:1.2 }}>The Official 67 Coin</p>
               <p style={{ fontSize:"0.72rem", color:"var(--secondary)" }}>@67coinX · {tweet.date}</p>
             </div>
-            <svg style={{ marginLeft:"auto", width:18, height:18, color:"#000" }} viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.253 5.622L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"/></svg>
+            <svg style={{ marginLeft:"auto", width:18, height:18, color:"var(--foreground)" }} viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.253 5.622L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"/></svg>
           </div>
-          <p style={{ fontSize:"0.875rem", color:"#09090B", lineHeight:1.6, padding:"0 14px 10px", margin:0 }}>{tweet.text}</p>
+          <p style={{ fontSize:"0.875rem", color:"var(--foreground)", lineHeight:1.6, padding:"0 14px 10px", margin:0 }}>{tweet.text}</p>
           {tweet.img_url && (
             // eslint-disable-next-line @next/next/no-img-element
             <img src={tweet.img_url} alt="tweet media"
@@ -135,7 +135,7 @@ export function SocialPulseCard() {
       {communityM > 0 && (
         <div style={{ display:"flex", alignItems:"center", gap:10, background:"rgba(0,0,0,0.03)", borderRadius:12, padding:"10px 14px" }}>
           <Users style={{ width:15, height:15, color:"var(--tertiary)" }} />
-          <span style={{ fontSize:"0.8125rem", fontWeight:700, color:"#09090B" }}>
+          <span style={{ fontSize:"0.8125rem", fontWeight:700, color:"var(--foreground)" }}>
             X Community: {fmtCM}
           </span>
           <DeltaBadge value={communityDelta} />
@@ -159,10 +159,10 @@ export function SocialPulseCard() {
             <div style={{ display:"flex", alignItems:"center", gap:6, marginBottom:7 }}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={LOGO} alt="67" width={18} height={18} style={{ width:18, height:18, borderRadius:"50%", objectFit:"cover" }} />
-              <span style={{ fontSize:"0.75rem", fontWeight:700, color:"#09090B" }}>The Official 67 Coin</span>
+              <span style={{ fontSize:"0.75rem", fontWeight:700, color:"var(--foreground)" }}>The Official 67 Coin</span>
               <span style={{ fontSize:"0.6875rem", color:"var(--secondary)" }}>@67coinX</span>
             </div>
-            <p style={{ fontSize:"0.8125rem", color:"#09090B", lineHeight:1.55, marginBottom:10, display:"-webkit-box", WebkitLineClamp:2, WebkitBoxOrient:"vertical", overflow:"hidden" }}>
+            <p style={{ fontSize:"0.8125rem", color:"var(--foreground)", lineHeight:1.55, marginBottom:10, display:"-webkit-box", WebkitLineClamp:2, WebkitBoxOrient:"vertical", overflow:"hidden" }}>
               {s.best_tweet_week.text}
             </p>
             <div style={{ display:"flex", alignItems:"center", gap:14 }}>
@@ -273,11 +273,11 @@ export function SocialPulseCard() {
                 onClick={e=>e.stopPropagation()} style={{ textDecoration:"none" }}>
                 <div className="inset-cell" style={{ cursor:"pointer" }}>
                   <div style={{ display:"flex", alignItems:"center", gap:6, marginBottom:6 }}>
-                    <span style={{ fontSize:"0.75rem", fontWeight:700, color:"#09090B" }}>{m.author}</span>
+                    <span style={{ fontSize:"0.75rem", fontWeight:700, color:"var(--foreground)" }}>{m.author}</span>
                     <span style={{ fontSize:"0.6875rem", color:"var(--secondary)" }}>@{m.author_handle}</span>
                     <span style={{ marginLeft:"auto", fontSize:"0.6875rem", color:"#D4D4D8" }}>{m.date}</span>
                   </div>
-                  <p style={{ fontSize:"0.8125rem", color:"#3F3F46", lineHeight:1.5, marginBottom:8,
+                  <p style={{ fontSize:"0.8125rem", color:"var(--secondary)", lineHeight:1.5, marginBottom:8,
                     display:"-webkit-box", WebkitLineClamp:2, WebkitBoxOrient:"vertical", overflow:"hidden" }}>
                     {m.text}
                   </p>
@@ -308,9 +308,9 @@ export function SocialPulseCard() {
           <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
             {Object.entries(s.content_type_stats).map(([type, st]) => (
               <div key={type} style={{ display:"flex", alignItems:"center", gap:12 }}>
-                <span style={{ fontSize:"0.8125rem", fontWeight:600, color:"#3F3F46", width:100, textTransform:"capitalize" }}>{type.replace("_"," ")}</span>
+                <span style={{ fontSize:"0.8125rem", fontWeight:600, color:"var(--secondary)", width:100, textTransform:"capitalize" }}>{type.replace("_"," ")}</span>
                 <span style={{ fontSize:"0.75rem", color:"var(--secondary)", width:50 }}>{st.count} posts</span>
-                <span style={{ fontSize:"0.8125rem", fontWeight:700, color:"#09090B", marginLeft:"auto" }}>{st.avg_eng.toFixed(0)} avg</span>
+                <span style={{ fontSize:"0.8125rem", fontWeight:700, color:"var(--foreground)", marginLeft:"auto" }}>{st.avg_eng.toFixed(0)} avg</span>
               </div>
             ))}
           </div>
