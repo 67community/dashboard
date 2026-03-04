@@ -9,11 +9,11 @@ import { TaskCard } from "./task-card"
 import { TEAM_MEMBERS } from "@/lib/mock-data"
 
 const COL: Record<KanbanColumnType, { dot: string; bg: string; text: string }> = {
-  Backlog:      { dot:"#A1A1AA", bg:"#F4F4F5", text:"#71717A" },
-  Todo:         { dot:"#3B82F6", bg:"#EFF6FF", text:"#2563EB" },
-  "In Progress":{ dot:"#F59E0B", bg:"#FFFBEB", text:"#D97706" },
-  Review:       { dot:"#8B5CF6", bg:"#F5F3FF", text:"#7C3AED" },
-  Done:         { dot:"#10B981", bg:"#ECFDF5", text:"#059669" },
+  Backlog:      { dot:"#A1A1AA", bg:"rgba(161,161,170,0.15)", text:"#A1A1AA" },
+  Todo:         { dot:"#60A5FA", bg:"rgba(96,165,250,0.15)",  text:"#60A5FA" },
+  "In Progress":{ dot:"#FCD34D", bg:"rgba(252,211,77,0.15)",  text:"#FCD34D" },
+  Review:       { dot:"#A78BFA", bg:"rgba(167,139,250,0.15)", text:"#A78BFA" },
+  Done:         { dot:"#34D399", bg:"rgba(52,211,153,0.15)",  text:"#34D399" },
 }
 
 interface Props {
@@ -44,14 +44,14 @@ export function KanbanColumnComponent({ column, tasks, onOpenTask, onAddTask, on
       <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", padding:"0 4px" }}>
         <div style={{ display:"flex", alignItems:"center", gap:8 }}>
           <span style={{ width:8, height:8, borderRadius:"50%", background:s.dot, display:"inline-block", flexShrink:0 }} />
-          <span style={{ fontSize:"0.8125rem", fontWeight:700, color:"#09090B" }}>{column}</span>
+          <span style={{ fontSize:"0.8125rem", fontWeight:700, color:"var(--foreground)" }}>{column}</span>
           <span style={{ fontSize:"0.6875rem", fontWeight:700, padding:"2px 7px", borderRadius:99, background:s.bg, color:s.text }}>
             {tasks.length}
           </span>
         </div>
         <button onClick={() => setAdding(true)}
-          style={{ width:26, height:26, borderRadius:8, background:"#F4F4F5", border:"none", cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center" }}>
-          <Plus style={{ width:14, height:14, color:"#71717A" }} />
+          style={{ width:26, height:26, borderRadius:8, background:"var(--fill-primary)", border:"none", cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center" }}>
+          <Plus style={{ width:14, height:14, color:"var(--secondary)" }} />
         </button>
       </div>
 
@@ -60,7 +60,7 @@ export function KanbanColumnComponent({ column, tasks, onOpenTask, onAddTask, on
         style={{
           display:"flex", flexDirection:"column", gap:8,
           minHeight:120, padding:8, borderRadius:16, transition:"all 0.15s",
-          background: isOver ? "#FFFBEB" : "rgba(244,244,245,0.5)",
+          background: isOver ? "rgba(245,166,35,0.08)" : "rgba(255,255,255,0.03)",
           border: isOver ? "2px dashed rgba(245,166,35,0.45)" : "2px solid transparent",
         }}>
         <SortableContext items={tasks.map(t => t.id)} strategy={verticalListSortingStrategy}>
@@ -68,9 +68,9 @@ export function KanbanColumnComponent({ column, tasks, onOpenTask, onAddTask, on
         </SortableContext>
 
         {adding && (
-          <div style={{ background:"#FFFFFF", borderRadius:14, border:"1px solid rgba(0,0,0,0.07)", padding:14, boxShadow:"0 2px 8px rgba(0,0,0,0.06)" }}>
+          <div style={{ background:"var(--card)", borderRadius:14, border:"1px solid var(--separator)", padding:14, boxShadow:"0 2px 8px rgba(0,0,0,0.12)" }}>
             <textarea autoFocus
-              style={{ width:"100%", fontSize:"0.875rem", color:"#09090B", background:"transparent", border:"none", outline:"none", resize:"none", minHeight:60 }}
+              style={{ width:"100%", fontSize:"0.875rem", color:"var(--foreground)", background:"transparent", border:"none", outline:"none", resize:"none", minHeight:60 }}
               placeholder="Task title…"
               value={newTitle}
               onChange={e => setNewTitle(e.target.value)}
@@ -99,7 +99,7 @@ export function KanbanColumnComponent({ column, tasks, onOpenTask, onAddTask, on
                 Add
               </button>
               <button onClick={() => { setAdding(false); setNewTitle(""); setAssigneeId(undefined) }}
-                style={{ padding:"6px 14px", background:"#F4F4F5", color:"#71717A", fontSize:"0.75rem", fontWeight:600, borderRadius:9, border:"none", cursor:"pointer" }}>
+                style={{ padding:"6px 14px", background:"var(--fill-primary)", color:"var(--secondary)", fontSize:"0.75rem", fontWeight:600, borderRadius:9, border:"none", cursor:"pointer" }}>
                 Cancel
               </button>
             </div>

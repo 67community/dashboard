@@ -9,35 +9,35 @@ import { TEAM_MEMBERS } from "@/lib/mock-data"
 import { TeamAvatar } from "@/components/team/team-avatar"
 
 const PRIORITY: Record<Priority, { bg:string; color:string }> = {
-  Low:    { bg:"#F4F4F5", color:"#71717A" },
-  Medium: { bg:"#EFF6FF", color:"#2563EB" },
-  High:   { bg:"#FFF7ED", color:"#C2410C" },
-  Urgent: { bg:"#FEF2F2", color:"#DC2626" },
+  Low:    { bg:"rgba(113,113,122,0.12)", color:"#A1A1AA" },
+  Medium: { bg:"rgba(37,99,235,0.12)",  color:"#60A5FA" },
+  High:   { bg:"rgba(194,65,12,0.12)",  color:"#FB923C" },
+  Urgent: { bg:"rgba(220,38,38,0.12)",  color:"#F87171" },
 }
 const CATEGORY: Record<Category, { bg:string; color:string }> = {
-  Website: { bg:"#F5F3FF", color:"#7C3AED" },
-  Discord: { bg:"#EEF2FF", color:"#4338CA" },
-  Content: { bg:"#FDF2F8", color:"#BE185D" },
-  Token:   { bg:"#FFFBEB", color:"#D97706" },
-  Merch:   { bg:"#F0FDFA", color:"#0F766E" },
-  Design:  { bg:"#FFF1F2", color:"#BE123C" },
-  Other:   { bg:"#F4F4F5", color:"#71717A" },
+  Website: { bg:"rgba(124,58,237,0.12)", color:"#A78BFA" },
+  Discord: { bg:"rgba(67,56,202,0.12)",  color:"#818CF8" },
+  Content: { bg:"rgba(190,24,93,0.12)",  color:"#F472B6" },
+  Token:   { bg:"rgba(217,119,6,0.12)",  color:"#FCD34D" },
+  Merch:   { bg:"rgba(15,118,110,0.12)", color:"#34D399" },
+  Design:  { bg:"rgba(190,18,60,0.12)",  color:"#FB7185" },
+  Other:   { bg:"rgba(113,113,122,0.12)",color:"#A1A1AA" },
 }
 
 function getUrgency(task: Task): { borderColor: string; bg: string } | null {
   const now = new Date()
   const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
 
-  if (task.priority === "Urgent") return { borderColor: "#DC2626", bg: "rgba(220,38,38,0.04)" }
+  if (task.priority === "Urgent") return { borderColor: "#DC2626", bg: "rgba(220,38,38,0.07)" }
 
   if (task.dueDate) {
     const due = new Date(task.dueDate)
     const dueDay = new Date(due.getFullYear(), due.getMonth(), due.getDate())
     const diffDays = Math.floor((dueDay.getTime() - today.getTime()) / 86400000)
 
-    if (diffDays < 0)  return { borderColor: "#DC2626", bg: "rgba(220,38,38,0.05)" }   // overdue
-    if (diffDays === 0) return { borderColor: "#EA580C", bg: "rgba(234,88,12,0.05)" }   // today
-    if (diffDays <= 7)  return { borderColor: "#D97706", bg: "rgba(217,119,6,0.04)" }   // this week
+    if (diffDays < 0)   return { borderColor: "#DC2626", bg: "rgba(220,38,38,0.07)" }
+    if (diffDays === 0) return { borderColor: "#EA580C", bg: "rgba(234,88,12,0.07)" }
+    if (diffDays <= 7)  return { borderColor: "#D97706", bg: "rgba(217,119,6,0.06)" }
   }
   return null
 }
@@ -61,35 +61,35 @@ export function TaskCard({ task, onOpen, onDelete, isDragOverlay = false }: Prop
     >
       <div style={{
         position:"relative",
-        background: urgency ? urgency.bg : "#FFFFFF",
+        background: urgency ? urgency.bg : "var(--fill-primary)",
         borderRadius:14,
-        border: urgency ? `1px solid ${urgency.borderColor}40` : "1px solid rgba(0,0,0,0.06)",
-        borderLeft: urgency ? `3px solid ${urgency.borderColor}` : "1px solid rgba(0,0,0,0.06)",
+        border: urgency ? `1px solid ${urgency.borderColor}40` : "1px solid var(--separator)",
+        borderLeft: urgency ? `3px solid ${urgency.borderColor}` : "1px solid var(--separator)",
         padding:"14px 14px",
-        boxShadow:"0 1px 4px rgba(0,0,0,0.04)",
+        boxShadow:"0 1px 4px rgba(0,0,0,0.08)",
         cursor:"pointer",
         opacity: isDragging ? 0.4 : 1,
         transition:"box-shadow 0.15s, border-color 0.15s",
-        ...(isDragOverlay ? { boxShadow:"0 16px 40px rgba(0,0,0,0.14)", transform:"rotate(1.5deg) scale(1.03)" } : {}),
+        ...(isDragOverlay ? { boxShadow:"0 16px 40px rgba(0,0,0,0.20)", transform:"rotate(1.5deg) scale(1.03)" } : {}),
       }}
-        onMouseEnter={e => { setHovered(true); if (!isDragging) { (e.currentTarget as HTMLDivElement).style.boxShadow="0 4px 16px rgba(0,0,0,0.08)"; (e.currentTarget as HTMLDivElement).style.borderColor="rgba(0,0,0,0.10)" }}}
-        onMouseLeave={e => { setHovered(false); (e.currentTarget as HTMLDivElement).style.boxShadow="0 1px 4px rgba(0,0,0,0.04)"; (e.currentTarget as HTMLDivElement).style.borderColor="rgba(0,0,0,0.06)"}}
+        onMouseEnter={e => { setHovered(true); if (!isDragging) { (e.currentTarget as HTMLDivElement).style.boxShadow="0 4px 16px rgba(0,0,0,0.14)" }}}
+        onMouseLeave={e => { setHovered(false); (e.currentTarget as HTMLDivElement).style.boxShadow="0 1px 4px rgba(0,0,0,0.08)" }}
       >
-        {/* Delete button — appears on hover */}
+        {/* Delete button */}
         {onDelete && hovered && !isDragOverlay && (
           <button
             onClick={e => { e.stopPropagation(); onDelete(task.id) }}
             style={{
               position:"absolute", top:8, right:8,
               width:24, height:24, borderRadius:7,
-              background:"#FEF2F2", border:"none", cursor:"pointer",
+              background:"rgba(220,38,38,0.12)", border:"none", cursor:"pointer",
               display:"flex", alignItems:"center", justifyContent:"center",
               transition:"all 0.15s", zIndex:2,
             }}
-            onMouseEnter={e => (e.currentTarget.style.background="#FECACA")}
-            onMouseLeave={e => (e.currentTarget.style.background="#FEF2F2")}
+            onMouseEnter={e => (e.currentTarget.style.background="rgba(220,38,38,0.22)")}
+            onMouseLeave={e => (e.currentTarget.style.background="rgba(220,38,38,0.12)")}
           >
-            <Trash2 style={{ width:11, height:11, color:"#DC2626" }} />
+            <Trash2 style={{ width:11, height:11, color:"#F87171" }} />
           </button>
         )}
 
@@ -101,7 +101,7 @@ export function TaskCard({ task, onOpen, onDelete, isDragOverlay = false }: Prop
             style={{ marginTop:2, padding:2, background:"none", border:"none", cursor:"grab", flexShrink:0, opacity:0.3, color:"var(--secondary)" }}>
             <GripVertical style={{ width:13, height:13 }} />
           </button>
-          <p style={{ fontSize:"0.8125rem", fontWeight:600, color:"#09090B", lineHeight:1.5, flex:1, paddingRight: hovered && onDelete ? 20 : 0 }}>{task.title}</p>
+          <p style={{ fontSize:"0.8125rem", fontWeight:600, color:"var(--foreground)", lineHeight:1.5, flex:1, paddingRight: hovered && onDelete ? 20 : 0 }}>{task.title}</p>
         </div>
 
         {/* Tags */}
