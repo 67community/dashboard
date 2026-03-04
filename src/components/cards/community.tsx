@@ -52,7 +52,7 @@ function AvatarStack({ joins }: { joins: RecentJoin[] }) {
           zIndex: 10 - i,
           position:"relative",
           overflow:"hidden",
-          background:"#E5E7EB",
+          background:"var(--fill-primary)",
           flexShrink:0,
         }}>
           <img
@@ -72,7 +72,7 @@ function AvatarStack({ joins }: { joins: RecentJoin[] }) {
           width:28, height:28, borderRadius:"50%",
           border:"2px solid #fff",
           marginLeft:-8, zIndex:0,
-          background:"#E5E7EB",
+          background:"var(--fill-primary)",
           display:"flex", alignItems:"center", justifyContent:"center",
           fontSize:"0.6rem", fontWeight:700, color:"var(--secondary)",
         }}>
@@ -85,11 +85,11 @@ function AvatarStack({ joins }: { joins: RecentJoin[] }) {
 
 function typeConfig(type: string): { bg: string; color: string; label: string } {
   const map: Record<string, { bg: string; color: string; label: string }> = {
-    join:  { bg:"#DBEAFE", color:"#1D4ED8", label:"Joined"  },
-    ban:   { bg:"#FEE2E2", color:"#B91C1C", label:"Banned"  },
-    kick:  { bg:"#FEF3C7", color:"#B45309", label:"Kicked"  },
-    spam:  { bg:"#FCE7F3", color:"#BE185D", label:"Spam"    },
-    warn:  { bg:"#FEF9C3", color:"#A16207", label:"Warned"  },
+    join:  { bg:"rgba(96,165,250,0.15)",  color:"#60A5FA", label:"Joined"  },
+    ban:   { bg:"rgba(248,113,113,0.15)", color:"#F87171", label:"Banned"  },
+    kick:  { bg:"rgba(251,146,60,0.15)",  color:"#FB923C", label:"Kicked"  },
+    spam:  { bg:"rgba(244,114,182,0.15)", color:"#F472B6", label:"Spam"    },
+    warn:  { bg:"rgba(252,211,77,0.15)",  color:"#FCD34D", label:"Warned"  },
   }
   return map[type] ?? { bg:"#F3F4F6", color:"var(--foreground)", label:"Event" }
 }
@@ -160,7 +160,7 @@ export function CommunityCard() {
         <div style={{ display:"flex", flexDirection:"column", alignItems:"flex-end", gap:6 }}>
           <span style={{
             display:"inline-flex", alignItems:"center", gap:6,
-            background:"#E8F8EE", padding:"6px 12px", borderRadius:99,
+            background:"rgba(52,211,153,0.12)", padding:"6px 12px", borderRadius:99,
           }}>
             <span className="dot-on" style={{ width:7, height:7 }} />
             <span style={{ fontSize:"0.75rem", fontWeight:700, color:"#34D399" }}>{onlineNow} online</span>
@@ -168,7 +168,7 @@ export function CommunityCard() {
           {voiceChs.length > 0 && (
             <span style={{
               display:"inline-flex", alignItems:"center", gap:5,
-              background:"#F0F4FF", padding:"4px 10px", borderRadius:99,
+              background:"rgba(88,101,242,0.12)", padding:"4px 10px", borderRadius:99,
               fontSize:"0.75rem", fontWeight:600, color:"#5865F2",
             }}>
               <Mic style={{ width:11, height:11 }} />
@@ -263,9 +263,9 @@ export function CommunityCard() {
             {topContribs.slice(0,4).map((c, i) => (
               <div key={c.user_id} style={{ display:"flex", alignItems:"center", gap:8 }}>
                 <span style={{ fontSize:"0.6875rem", width:14, textAlign:"right", flexShrink:0 }}>{i===0?"🥇":i===1?"🥈":i===2?"🥉":`${i+1}`}</span>
-                <img src={c.avatar} alt={c.user} width={22} height={22} style={{ borderRadius:"50%", flexShrink:0, objectFit:"cover", background:"#E5E7EB" }} onError={e=>{(e.target as HTMLImageElement).src="https://cdn.discordapp.com/embed/avatars/0.png"}} />
+                <img src={c.avatar} alt={c.user} width={22} height={22} style={{ borderRadius:"50%", flexShrink:0, objectFit:"cover", background:"var(--fill-primary)" }} onError={e=>{(e.target as HTMLImageElement).src="https://cdn.discordapp.com/embed/avatars/0.png"}} />
                 <span style={{ fontSize:"0.8125rem", fontWeight:600, color:"var(--foreground)", flex:1, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{c.user}</span>
-                <span style={{ fontSize:"0.6875rem", fontWeight:700, color:"#5865F2", background:"#EFF1FE", borderRadius:99, padding:"2px 7px", flexShrink:0 }}>{c.msg_count}</span>
+                <span style={{ fontSize:"0.6875rem", fontWeight:700, color:"#818CF8", background:"rgba(88,101,242,0.15)", borderRadius:99, padding:"2px 7px", flexShrink:0 }}>{c.msg_count}</span>
               </div>
             ))}
           </div>
@@ -280,7 +280,7 @@ export function CommunityCard() {
             {recentJoins.slice(0,4).map(j => (
               <div key={j.user_id} style={{ display:"flex", alignItems:"center", gap:10, padding:"8px 10px", background:"rgba(0,0,0,0.02)", borderRadius:10 }}>
                 <img src={j.avatar} alt={j.user} width={30} height={30}
-                  style={{ borderRadius:"50%", flexShrink:0, objectFit:"cover", background:"#E5E7EB" }}
+                  style={{ borderRadius:"50%", flexShrink:0, objectFit:"cover", background:"var(--fill-primary)" }}
                   onError={e=>{(e.target as HTMLImageElement).src=`https://cdn.discordapp.com/embed/avatars/${parseInt(j.user_id.slice(-1),16)%5}.png`}} />
                 <div style={{ flex:1, minWidth:0 }}>
                   <p style={{ fontSize:"0.8125rem", fontWeight:700, color:"var(--foreground)", margin:0 }}>{j.user}</p>
@@ -447,9 +447,9 @@ export function CommunityCard() {
               {topContribs.slice(0, 6).map((c, i) => (
                 <div key={c.user_id} style={{ display:"flex", alignItems:"center", gap:10 }}>
                   <span style={{ fontSize:"0.6875rem", fontWeight:800, color:"var(--secondary)", width:16, textAlign:"right", flexShrink:0 }}>{i === 0 ? "🥇" : i === 1 ? "🥈" : i === 2 ? "🥉" : `${i+1}`}</span>
-                  <img src={c.avatar} alt={c.user} width={24} height={24} style={{ borderRadius:"50%", flexShrink:0, objectFit:"cover", background:"#E5E7EB" }} onError={e => { (e.target as HTMLImageElement).src = "https://cdn.discordapp.com/embed/avatars/0.png" }} />
+                  <img src={c.avatar} alt={c.user} width={24} height={24} style={{ borderRadius:"50%", flexShrink:0, objectFit:"cover", background:"var(--fill-primary)" }} onError={e => { (e.target as HTMLImageElement).src = "https://cdn.discordapp.com/embed/avatars/0.png" }} />
                   <span style={{ fontSize:"0.8125rem", fontWeight:600, color:"var(--foreground)", flex:1, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{c.user}</span>
-                  <span style={{ fontSize:"0.6875rem", fontWeight:700, color:"#5865F2", background:"#EFF1FE", borderRadius:99, padding:"2px 8px", flexShrink:0 }}>{c.msg_count} msgs</span>
+                  <span style={{ fontSize:"0.6875rem", fontWeight:700, color:"#818CF8", background:"rgba(88,101,242,0.15)", borderRadius:99, padding:"2px 8px", flexShrink:0 }}>{c.msg_count} msgs</span>
                 </div>
               ))}
             </div>
@@ -501,13 +501,13 @@ export function CommunityCard() {
             <div style={{ display:"flex", flexDirection:"column", gap:6 }}>
               {recentJoins.map(j => (
                 <div key={j.user_id} style={{ display:"flex", alignItems:"center", gap:10, padding:"9px 12px", background:"rgba(0,0,0,0.02)", borderRadius:10 }}>
-                  <img src={j.avatar} alt={j.user} width={32} height={32} style={{ borderRadius:"50%", flexShrink:0, objectFit:"cover", background:"#E5E7EB" }} onError={e => { (e.target as HTMLImageElement).src = `https://cdn.discordapp.com/embed/avatars/${parseInt(j.user_id.slice(-1),16)%5}.png` }} />
+                  <img src={j.avatar} alt={j.user} width={32} height={32} style={{ borderRadius:"50%", flexShrink:0, objectFit:"cover", background:"var(--fill-primary)" }} onError={e => { (e.target as HTMLImageElement).src = `https://cdn.discordapp.com/embed/avatars/${parseInt(j.user_id.slice(-1),16)%5}.png` }} />
                   <div style={{ flex:1, minWidth:0 }}>
                     <p style={{ fontSize:"0.8125rem", fontWeight:700, color:"var(--foreground)", margin:0 }}>{j.user}</p>
                     {j.message && <p style={{ fontSize:"0.6875rem", color:"var(--tertiary)", margin:0, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{j.message}</p>}
                   </div>
                   <span style={{ fontSize:"0.7rem", color:"var(--tertiary)", flexShrink:0, whiteSpace:"nowrap" }}>{j.time_ago}</span>
-                  <span style={{ fontSize:"0.6875rem", fontWeight:700, color:"#2563EB", background:"#DBEAFE", borderRadius:99, padding:"2px 8px", flexShrink:0 }}>Joined</span>
+                  <span style={{ fontSize:"0.6875rem", fontWeight:700, color:"#60A5FA", background:"rgba(96,165,250,0.15)", borderRadius:99, padding:"2px 8px", flexShrink:0 }}>Joined</span>
                 </div>
               ))}
             </div>

@@ -165,17 +165,17 @@ function WalletRow({
 
           {/* Balances */}
           <div style={{ display:"flex", gap:8 }}>
-            <div style={{ flex:1, background:"#F9F9F9", borderRadius:8, padding:"8px 10px", textAlign:"center" }}>
+            <div style={{ flex:1, background:"var(--fill-primary)", borderRadius:8, padding:"8px 10px", textAlign:"center" }}>
               <p style={{ fontSize:"1rem", fontWeight:800, color:"#F5A623" }}>{fmt(data.balance67)}</p>
               <p style={{ fontSize:"0.625rem", color:"var(--tertiary)", fontWeight:600,
                 textTransform:"uppercase", letterSpacing:"0.06em" }}>$67 Tokens</p>
             </div>
-            <div style={{ flex:1, background:"#F9F9F9", borderRadius:8, padding:"8px 10px", textAlign:"center" }}>
+            <div style={{ flex:1, background:"var(--fill-primary)", borderRadius:8, padding:"8px 10px", textAlign:"center" }}>
               <p style={{ fontSize:"1rem", fontWeight:800, color:"#9945FF" }}>{data.balanceSol.toFixed(3)}</p>
               <p style={{ fontSize:"0.625rem", color:"var(--tertiary)", fontWeight:600,
                 textTransform:"uppercase", letterSpacing:"0.06em" }}>SOL</p>
             </div>
-            <div style={{ flex:1, background:"#F9F9F9", borderRadius:8, padding:"8px 10px", textAlign:"center" }}>
+            <div style={{ flex:1, background:"var(--fill-primary)", borderRadius:8, padding:"8px 10px", textAlign:"center" }}>
               <p style={{ fontSize:"1rem", fontWeight:800, color:"#059669" }}>{fmtUsd(data.valueUsd)}</p>
               <p style={{ fontSize:"0.625rem", color:"var(--tertiary)", fontWeight:600,
                 textTransform:"uppercase", letterSpacing:"0.06em" }}>USD Value</p>
@@ -362,7 +362,7 @@ function AddWalletForm({ onAdd }: { onAdd: (w: TrackedWallet) => void }) {
   )
 
   return (
-    <div style={{ background:"#FAFAFA", borderRadius:12, padding:12,
+    <div style={{ background:"var(--fill-primary)", borderRadius:12, padding:12,
       display:"flex", flexDirection:"column", gap:8 }} onClick={e => e.stopPropagation()}>
       <input value={label} onChange={e => setLabel(e.target.value)}
         placeholder='Label (e.g. "Dev Wallet", "Top Holder 1")'
@@ -478,7 +478,7 @@ function ImportTopHolders({ existing, onImport }: {
       </button>
 
       {open && holders.length > 0 && (
-        <div style={{ background:"#F9F9F9", borderRadius:12, padding:12,
+        <div style={{ background:"var(--fill-primary)", borderRadius:12, padding:12,
           display:"flex", flexDirection:"column", gap:8,
           border:"1.5px solid var(--separator)" }}>
 
