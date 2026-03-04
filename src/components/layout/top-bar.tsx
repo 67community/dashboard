@@ -176,6 +176,24 @@ export function TopBar() {
                 {loading ? "Syncing…" : timeAgo(lastFetched)}
               </button>
 
+              {/* Dark mode toggle */}
+              <button
+                onClick={toggleTheme}
+                title={dark ? "Light mode" : "Dark mode"}
+                style={{
+                  background:"none", border:"none", cursor:"pointer",
+                  padding:6, borderRadius:8,
+                  display:"flex", alignItems:"center", justifyContent:"center",
+                  transition:"background 0.15s",
+                }}
+                onMouseEnter={e => (e.currentTarget.style.background = "rgba(255,255,255,0.08)")}
+                onMouseLeave={e => (e.currentTarget.style.background = "transparent")}
+              >
+                {dark
+                  ? <Sun  style={{ width:16, height:16, color:"#F5A623" }} />
+                  : <Moon style={{ width:16, height:16, color:"rgba(255,255,255,0.5)" }} />}
+              </button>
+
               {/* Bell */}
               <div ref={bellRef} style={{ position:"relative" }}>
                 <button onClick={handleBellOpen} className={totalUnread > 0 ? "bell-shake" : ""}
