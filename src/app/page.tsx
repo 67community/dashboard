@@ -138,7 +138,7 @@ export default function Dashboard() {
           {market.map((m, i) => {
             const mUp = m.change_pct >= 0
             return (
-              <span key={i} style={{
+              <span key={i} className="market-pill" style={{
                 display:"inline-flex", alignItems:"center", gap:3,
                 fontSize:"0.5625rem", fontWeight:600,
                 background: mUp ? "rgba(5,150,105,0.15)" : "rgba(239,68,68,0.15)",
@@ -151,7 +151,7 @@ export default function Dashboard() {
                 <span style={{ fontWeight:800 }}>
                   {m.symbol.replace("-USD","").replace("=F","")}
                 </span>
-                <span style={{ fontVariantNumeric:"tabular-nums", opacity:0.85 }}>
+                <span className="market-pill-price" style={{ fontVariantNumeric:"tabular-nums", opacity:0.85 }}>
                   ${fmtP(m.price, m.kind)}
                 </span>
                 <span style={{ fontWeight:700 }}>
@@ -170,9 +170,9 @@ export default function Dashboard() {
       <style>{`
         @media (max-width: 500px)  { .hero-stats-grid { grid-template-columns: 1fr !important; } }
         @media (max-width: 640px)  {
-          .market-pills { flex: 1; min-width: 0; overflow-x: auto; scrollbar-width: none; }
-          .market-pills::-webkit-scrollbar { display: none; }
-          .market-pills span { font-size: 0.5rem !important; padding: 2px 5px !important; }
+          .market-pills { flex: unset; min-width: 0; gap: 3px !important; }
+          .market-pill { font-size: 0.5rem !important; padding: 2px 5px !important; gap: 2px !important; }
+          .market-pill-price { display: none !important; }
         }
       `}</style>
 
