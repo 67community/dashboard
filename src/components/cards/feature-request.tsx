@@ -188,10 +188,10 @@ export function FeatureRequestCard() {
           style={{
             width:"100%", padding:"9px 12px", borderRadius:10, fontSize:"0.875rem",
             border:"1.5px solid var(--separator)", outline:"none", fontFamily:"inherit",
-            background:"#FAFAFA", color:"var(--foreground)", boxSizing:"border-box",
+            background:"var(--input-bg, #FAFAFA)", color:"var(--foreground)", boxSizing:"border-box",
           }}
           onFocus={e => e.target.style.borderColor = "#F5A623"}
-          onBlur={e  => e.target.style.borderColor = "rgba(0,0,0,0.1)"}
+          onBlur={e  => e.target.style.borderColor = "var(--separator)"}
         />
         <input
           value={why}
@@ -200,16 +200,16 @@ export function FeatureRequestCard() {
           style={{
             width:"100%", padding:"9px 12px", borderRadius:10, fontSize:"0.875rem",
             border:"1.5px solid var(--separator)", outline:"none", fontFamily:"inherit",
-            background:"#FAFAFA", color:"var(--foreground)", boxSizing:"border-box",
+            background:"var(--input-bg, #FAFAFA)", color:"var(--foreground)", boxSizing:"border-box",
           }}
           onFocus={e => e.target.style.borderColor = "#F5A623"}
-          onBlur={e  => e.target.style.borderColor = "rgba(0,0,0,0.1)"}
+          onBlur={e  => e.target.style.borderColor = "var(--separator)"}
         />
         <button type="submit" disabled={!what.trim() || !why.trim() || loading}
           style={{
             padding:"9px 0", borderRadius:10, border:"none", cursor: loading ? "wait" : "pointer",
-            background: (!what.trim() || !why.trim() || loading) ? "#E5E5EA" : "#F5A623",
-            color: (!what.trim() || !why.trim() || loading) ? "#A1A1AA" : "#000",
+            background: (!what.trim() || !why.trim() || loading) ? "var(--input-bg, #E5E5EA)" : "#F5A623",
+            color: (!what.trim() || !why.trim() || loading) ? "var(--tertiary)" : "#000",
             fontSize:"0.875rem", fontWeight:700, transition:"all 0.15s",
           }}>
           {loading ? "Analyzing…" : "Submit ⚡"}
@@ -361,19 +361,18 @@ export function FeatureRequestSection() {
   return (
     <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
       <p style={{ fontSize:"0.625rem", fontWeight:800, color:"var(--tertiary)", textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:2 }}>
-        <Zap style={{ width:10, height:10, display:"inline", marginRight:4, verticalAlign:"middle" }} />
         Feature Requests
       </p>
       <form onSubmit={submit} onClick={e => e.stopPropagation()} style={{ display:"flex", flexDirection:"column", gap:6 }}>
         <input value={what} onChange={e => setWhat(e.target.value)} placeholder="What to build?" required
-          style={{ width:"100%", boxSizing:"border-box", padding:"7px 10px", borderRadius:8, border:"1.5px solid #E5E7EB", fontSize:"0.75rem", fontFamily:"inherit", background:"#F9F9F9", outline:"none" }}
-          onFocus={e => e.currentTarget.style.borderColor="#F5A623"} onBlur={e => e.currentTarget.style.borderColor="#E5E7EB"} />
+          style={{ width:"100%", boxSizing:"border-box", padding:"7px 10px", borderRadius:8, border:"1.5px solid var(--separator)", fontSize:"0.75rem", fontFamily:"inherit", background:"var(--input-bg)", color:"var(--foreground)", outline:"none" }}
+          onFocus={e => e.currentTarget.style.borderColor="#F5A623"} onBlur={e => e.currentTarget.style.borderColor="var(--separator)"} />
         <input value={why} onChange={e => setWhy(e.target.value)} placeholder="Why? (value / problem)" required
-          style={{ width:"100%", boxSizing:"border-box", padding:"7px 10px", borderRadius:8, border:"1.5px solid #E5E7EB", fontSize:"0.75rem", fontFamily:"inherit", background:"#F9F9F9", outline:"none" }}
-          onFocus={e => e.currentTarget.style.borderColor="#F5A623"} onBlur={e => e.currentTarget.style.borderColor="#E5E7EB"} />
+          style={{ width:"100%", boxSizing:"border-box", padding:"7px 10px", borderRadius:8, border:"1.5px solid var(--separator)", fontSize:"0.75rem", fontFamily:"inherit", background:"var(--input-bg)", color:"var(--foreground)", outline:"none" }}
+          onFocus={e => e.currentTarget.style.borderColor="#F5A623"} onBlur={e => e.currentTarget.style.borderColor="var(--separator)"} />
         <button type="submit" disabled={loading || !what.trim() || !why.trim()}
-          style={{ padding:"7px 12px", borderRadius:8, border:"none", cursor:"pointer", background: loading ? "#D1D5DB" : "#F5A623", color:"#fff", fontWeight:700, fontSize:"0.75rem", display:"flex", alignItems:"center", justifyContent:"center", gap:5 }}>
-          <Zap style={{ width:11, height:11 }} />{loading ? "Analyzing…" : "Submit"}
+          style={{ padding:"7px 12px", borderRadius:8, border:"none", cursor:"pointer", background: (loading || !what.trim() || !why.trim()) ? "var(--input-bg)" : "#F5A623", color:(loading || !what.trim() || !why.trim()) ? "var(--secondary)" : "#fff", fontWeight:700, fontSize:"0.75rem", display:"flex", alignItems:"center", justifyContent:"center", gap:5 }}>
+          {loading ? "Analyzing…" : "Submit"}
         </button>
       </form>
       {requests.length > 0 && (
