@@ -42,8 +42,8 @@
     }
   },
   "social_pulse": {
-    "twitter_followers": 1659,
-    "follower_change_24h": 0,
+    "twitter_followers": 1670,
+    "follower_change_24h": 11,
     "posting_streak_days": 8,
     "engagement_rate": 4.207,
     "_source": "nitter_rss+twitter_cdn",
