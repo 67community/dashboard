@@ -92,7 +92,7 @@ export function MapWidgetCard() {
   useEffect(() => () => { if (rafRef.current) cancelAnimationFrame(rafRef.current) }, [])
 
   return (
-    <div style={{ borderRadius: 0, overflow: "hidden", width: "100%", height: "100%", minHeight: 200, position: "relative" }}>
+    <div style={{ borderRadius: 0, overflow: "hidden", width: "100%", height: "100%", minHeight: 600, position: "relative" }}>
       {/* Hide Mapbox logo + attribution */}
       <style>{`.mapboxgl-ctrl-logo,.mapboxgl-ctrl-attrib{display:none!important}`}</style>
       <Map

@@ -32,6 +32,8 @@ import { AnimatedNumber }      from "@/components/ui/animated-number"
 import { McProgressBar }       from "@/components/mc-progress-bar"
 
 
+
+
 function FeatureRequestMini() {
   const [open, setOpen] = React.useState(false)
   const [what, setWhat] = React.useState("")
@@ -191,12 +193,12 @@ export default function Dashboard() {
           <div className="mob-order-0"><AnnouncementsCard /></div>
           <div className="mob-order-3"><XRaidCard /></div>
           <div className="mob-order-7"><WalletTrackerCard /></div>
-          <div style={{ borderRadius:18, overflow:"hidden", flex:1, minHeight:280 }}><MapWidgetCard /></div>
+          <div style={{ borderRadius:18, overflow:"hidden", height:840 }}><MapWidgetCard /></div>
         </div>
       </div>
 
       {/* ══ Season 2 Banner ════════════════════════════════════ */}
-      <div style={{ marginTop:8, borderRadius:20, position:"relative", overflow:"hidden" }}>
+      <div style={{ marginTop:0, borderRadius:20, position:"relative", overflow:"hidden" }}>
         {/* Map as background */}
         <div style={{ position:"absolute", inset:0, zIndex:0 }}>
           <MapWidgetCard />
