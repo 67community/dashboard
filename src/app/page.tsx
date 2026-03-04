@@ -22,7 +22,7 @@ import { MapWidgetCard }        from "@/components/cards/map-widget"
 import { RaidCoordinatorCard }  from "@/components/cards/raid-coordinator"
 import { DailyBriefingCard }    from "@/components/cards/daily-briefing"
 import { TeamNotesCard }          from "@/components/cards/team-notes"
-import { EventsCard }             from "@/components/cards/events"
+import { CommunityEventsCard as EventsCard } from "@/components/cards/events"
 import { AnnouncementsCard }      from "@/components/cards/announcements"
 
 import { XRaidCard } from "@/components/cards/x-raid"
