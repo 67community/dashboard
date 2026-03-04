@@ -18,12 +18,12 @@ import { EmailInboxCard }       from "@/components/cards/email-inbox"
 import { MilestonesCard }       from "@/components/cards/milestones"
 import { FeatureRequestCard, FeatureRequestSection }   from "@/components/cards/feature-request"
 import { OutreachCard }         from "@/components/cards/outreach"
-import { SightingsCard }        from "@/components/cards/sightings"
+import { MapWidgetCard }        from "@/components/cards/map-widget"
 import { RaidCoordinatorCard }  from "@/components/cards/raid-coordinator"
 import { DailyBriefingCard }    from "@/components/cards/daily-briefing"
 import { TeamNotesCard }          from "@/components/cards/team-notes"
 import { AnnouncementsCard }      from "@/components/cards/announcements"
-import { CommunityLeaderboardCard } from "@/components/cards/leaderboard"
+
 import { XRaidCard } from "@/components/cards/x-raid"
 import { WalletTrackerCard }       from "@/components/cards/wallet-tracker"
 import { useAppData }          from "@/lib/data-context"
@@ -170,52 +170,50 @@ export default function Dashboard() {
       `}</style>
 
       {/* ══ Main Layout: Left + Right ══════════════════════════ */}
-      <div style={{ display:"flex", gap:20, alignItems:"flex-start" }}>
+      <div className="main-layout" style={{ display:"flex", gap:20, alignItems:"flex-start" }}>
 
         {/* ── Left Section (2 cols) ── */}
-        <div style={{ flex:1, minWidth:0, display:"flex", flexDirection:"column", gap:20 }}>
+        <div className="left-section" style={{ flex:1, minWidth:0, display:"flex", flexDirection:"column", gap:20 }}>
 
           {/* Row 1: Community | CoinHealth */}
           <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:20 }}>
-            <div style={{ display:"flex", minWidth:0 }}><CommunityCard /></div>
-            <div style={{ display:"flex", minWidth:0 }}><TokenHealthCard /></div>
+            <div className="mob-order-1" style={{ display:"flex", minWidth:0 }}><CommunityCard /></div>
+            <div className="mob-order-2" style={{ display:"flex", minWidth:0 }}><TokenHealthCard /></div>
           </div>
 
           {/* Row 2: Team Notes */}
-          <div style={{ display:"flex", minWidth:0 }}><TeamNotesCard /></div>
+          <div className="mob-order-4" style={{ display:"flex", minWidth:0 }}><TeamNotesCard /></div>
 
           {/* Row 3: Social Media | Content Creator */}
           <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:20 }}>
-            <div style={{ display:"flex", minWidth:0 }}><SocialMediaSpotlightCard /></div>
-            <div style={{ display:"flex", minWidth:0, overflow:"hidden" }}><ContentCreatorCard /></div>
+            <div className="mob-order-5" style={{ display:"flex", minWidth:0 }}><SocialMediaSpotlightCard /></div>
+            <div className="mob-order-6" style={{ display:"flex", minWidth:0, overflow:"hidden" }}><ContentCreatorCard /></div>
           </div>
 
-          {/* Row 4: Cards Grid */}
-          <div className="cards-grid" style={{ display:"grid", gap:20 }}>
-            <div className="enter-4" style={{ display:"flex", minWidth:0 }}><ContentPipelineCard /></div>
-            <div className="enter-6" style={{ display:"flex", minWidth:0 }}><SightingsCard /></div>
-
-          </div>
         </div>
 
         {/* ── Right Section ── */}
-        <div style={{ width:320, flexShrink:0, display:"flex", flexDirection:"column", gap:20 }}>
+        <div className="right-section" style={{ width:320, flexShrink:0, display:"flex", flexDirection:"column", gap:20 }}>
+          <div className="mob-order-3"><XRaidCard /></div>
+          <div className="mob-order-7"><WalletTrackerCard /></div>
+          <div className="mob-order-8"><ContentPipelineCard /></div>
+          <div className="mob-order-9"><AgentStatusCard /></div>
           <AnnouncementsCard />
-          <XRaidCard />
-          <WalletTrackerCard />
-          <AgentStatusCard />
-          <CommunityLeaderboardCard />
         </div>
       </div>
 
       {/* ══ Season 2 Banner ════════════════════════════════════ */}
       <div style={{ marginTop:8, borderRadius:20, position:"relative", overflow:"hidden" }}>
-        <div style={{ position:"absolute", inset:0, background:"linear-gradient(115deg, #0A0A0A 0%, #111108 40%, #2A1A00 70%, #7A4500 90%, #C8820A 100%)" }} />
-        <div style={{ position:"absolute", inset:0, background:"radial-gradient(ellipse at 5% 50%, rgba(245,166,35,0.18) 0%, transparent 40%)" }} />
-        <div style={{ position:"absolute", inset:0, background:"radial-gradient(ellipse at 95% 50%, rgba(245,166,35,0.75) 0%, transparent 48%)" }} />
-        <div style={{ position:"absolute", inset:0, backgroundImage:`repeating-linear-gradient(112deg, transparent, transparent 28px, rgba(255,255,255,0.022) 28px, rgba(255,255,255,0.022) 29px)` }} />
-        <div style={{ position:"absolute", top:0, left:0, right:0, height:1, background:"linear-gradient(90deg, transparent 0%, rgba(245,166,35,0.4) 50%, transparent 100%)" }} />
-        <div className="season-banner-inner" style={{ position:"relative", zIndex:1, display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", textAlign:"center", padding:"28px 48px 32px" }}>
+        {/* Map as background */}
+        <div style={{ position:"absolute", inset:0, zIndex:0 }}>
+          <MapWidgetCard />
+        </div>
+        {/* Gradient overlays on top of map */}
+        <div style={{ position:"absolute", inset:0, zIndex:1, background:"linear-gradient(115deg, rgba(10,10,10,0.75) 0%, rgba(17,17,8,0.6) 40%, rgba(42,26,0,0.45) 70%, rgba(122,69,0,0.3) 90%, rgba(200,130,10,0.2) 100%)" }} />
+        <div style={{ position:"absolute", inset:0, zIndex:1, background:"radial-gradient(ellipse at 5% 50%, rgba(245,166,35,0.18) 0%, transparent 40%)" }} />
+        <div style={{ position:"absolute", inset:0, zIndex:1, backgroundImage:`repeating-linear-gradient(112deg, transparent, transparent 28px, rgba(255,255,255,0.022) 28px, rgba(255,255,255,0.022) 29px)` }} />
+        <div style={{ position:"absolute", top:0, left:0, right:0, height:1, zIndex:2, background:"linear-gradient(90deg, transparent 0%, rgba(245,166,35,0.4) 50%, transparent 100%)" }} />
+        <div className="season-banner-inner" style={{ position:"relative", zIndex:2, display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", textAlign:"center", padding:"28px 48px 32px" }}>
           <div style={{ display:"inline-flex", alignItems:"center", gap:5, background:"rgba(245,166,35,0.12)", border:"1px solid rgba(245,166,35,0.28)", borderRadius:99, padding:"4px 11px", marginBottom:12 }}>
             <span style={{ width:5, height:5, borderRadius:"50%", background:"#F5A623", boxShadow:"0 0 6px rgba(245,166,35,0.9)", display:"inline-block" }} />
             <span style={{ fontSize:"0.625rem", fontWeight:700, letterSpacing:"0.1em", textTransform:"uppercase", color:"#F5A623" }}>Coming Soon</span>
@@ -233,6 +231,30 @@ export default function Dashboard() {
         @media (max-width: 1024px) { .cards-grid { grid-template-columns: repeat(2, 1fr) !important; } }
         @media (max-width: 640px)  { .cards-grid { grid-template-columns: 1fr !important; } }
         @media (max-width: 640px)  { .hidden-mobile { display: none !important; } }
+
+        @media (max-width: 768px) {
+          .main-layout { flex-direction: column !important; }
+          .left-section { width: 100% !important; }
+          .right-section { width: 100% !important; flex-shrink: unset !important; }
+
+          /* Flatten all grid rows inside left-section to single column */
+          .left-section > div[style*="grid"] { grid-template-columns: 1fr !important; }
+
+          /* Mobile ordering — all direct children of left+right become ordered */
+          .main-layout .mob-order-1  { order: 1; }
+          .main-layout .mob-order-2  { order: 2; }
+          .main-layout .mob-order-3  { order: 3; }
+          .main-layout .mob-order-4  { order: 4; }
+          .main-layout .mob-order-5  { order: 5; }
+          .main-layout .mob-order-6  { order: 6; }
+          .main-layout .mob-order-7  { order: 7; }
+          .main-layout .mob-order-8  { order: 8; }
+          .main-layout .mob-order-9  { order: 9; }
+
+          /* Left section flex wraps with right section content via parent reorder */
+          .left-section { display: contents !important; }
+          .right-section { display: contents !important; }
+        }
       `}</style>
     </div>
   )
