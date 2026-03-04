@@ -14,7 +14,7 @@ fi
 python3 - <<PYEOF
 import json, os
 
-DATA_FILE = "/Users/oscarbrendon/.openclaw/workspace/mission-control/data.json"
+DATA_FILE = "/Users/oscarbrendon/.openclaw/workspace/mission-control/public/data.json"
 
 recent  = $RECENT
 popular = $POPULAR
