@@ -227,32 +227,67 @@ export function TokenHealthCard() {
         })}
       </div>
 
-      {/* Top exchange volumes */}
-      {(t?.exchange_volumes?.length ?? 0) > 0 && (
-        <div style={{ borderTop:"1px solid var(--separator)", paddingTop:10 }}>
-          <p style={{ fontSize:"0.5625rem", fontWeight:800, color:"var(--tertiary)", textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:8 }}>Exchange Volumes</p>
-          <div style={{ display:"flex", flexDirection:"column", gap:6 }}>
-            {(t?.exchange_volumes ?? []).slice(0,5).map((ex, i) => {
-              const max = t?.exchange_volumes?.[0]?.volume_usd ?? 1
-              const pct = Math.max(4, (ex.volume_usd / max) * 100)
-              return (
+      {/* CEX Volume */}
+      {(() => {
+        const cex = (t?.exchange_volumes ?? []).filter(e => !e.is_dex && e.volume_usd >= 1300)
+        if (cex.length === 0) return null
+        const max = cex[0]?.volume_usd ?? 1
+        const total = cex.reduce((s, e) => s + e.volume_usd, 0)
+        return (
+          <div style={{ borderTop:"1px solid var(--separator)", paddingTop:10 }}>
+            <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:8 }}>
+              <p style={{ fontSize:"0.5625rem", fontWeight:800, color:"var(--tertiary)", textTransform:"uppercase", letterSpacing:"0.07em", margin:0 }}>CEX Volume</p>
+              <span style={{ fontSize:"0.5625rem", fontWeight:700, color:"var(--tertiary)" }}>{fmt$(total)} total</span>
+            </div>
+            <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
+              {cex.map((ex, i) => (
                 <div key={i} style={{ display:"flex", alignItems:"center", gap:8 }}>
-                  {ex.logo ? (
-                    <img src={getLocalExchangeLogo(ex.exchange, ex.logo)} alt={ex.exchange} width={20} height={20} style={{ borderRadius:5, objectFit:"contain", background:"var(--card)", boxShadow:"0 0 0 1px rgba(0,0,0,0.07)", flexShrink:0 }} onError={e=>{(e.target as HTMLImageElement).style.display="none"}} />
-                  ) : (
-                    <div style={{ width:20, height:20, borderRadius:5, background:"#E8E8ED", flexShrink:0, display:"flex", alignItems:"center", justifyContent:"center", fontSize:"0.5rem", fontWeight:700, color:"var(--tertiary)" }}>{ex.exchange.charAt(0)}</div>
-                  )}
-                  <span style={{ fontSize:"0.6875rem", fontWeight:600, color:"var(--foreground)", width:72, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap", flexShrink:0 }}>{ex.exchange}</span>
+                  {ex.logo
+                    ? <img src={getLocalExchangeLogo(ex.exchange, ex.logo)} alt={ex.exchange} width={22} height={22} style={{ borderRadius:6, objectFit:"cover", flexShrink:0, boxShadow:"0 0 0 1px rgba(0,0,0,0.07)" }} onError={e=>{(e.target as HTMLImageElement).style.display="none"}} />
+                    : <div style={{ width:22, height:22, borderRadius:6, background:"#E8E8ED", flexShrink:0, display:"flex", alignItems:"center", justifyContent:"center", fontSize:"0.5625rem", fontWeight:700, color:"var(--tertiary)" }}>{ex.exchange.charAt(0)}</div>
+                  }
+                  <span style={{ fontSize:"0.75rem", fontWeight:600, color:"var(--foreground)", width:80, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap", flexShrink:0 }}>{ex.exchange}</span>
                   <div style={{ flex:1, height:5, background:"rgba(0,0,0,0.06)", borderRadius:99, overflow:"hidden" }}>
-                    <div style={{ height:"100%", width:`${pct}%`, background: ex.is_dex ? "#7C3AED" : "#059669", borderRadius:99 }} />
+                    <div style={{ height:"100%", width:`${Math.max(4,(ex.volume_usd/max)*100)}%`, background:"#F5A623", borderRadius:99 }} />
                   </div>
-                  <span style={{ fontSize:"0.6875rem", fontWeight:700, color:"var(--foreground)", width:42, textAlign:"right", flexShrink:0 }}>{ex.volume_usd >= 1000 ? `$${(ex.volume_usd/1000).toFixed(0)}K` : `$${ex.volume_usd.toFixed(0)}`}</span>
+                  <span style={{ fontSize:"0.75rem", fontWeight:700, color:"var(--foreground)", width:48, textAlign:"right", flexShrink:0 }}>{fmt$(ex.volume_usd)}</span>
                 </div>
-              )
-            })}
+              ))}
+            </div>
           </div>
-        </div>
-      )}
+        )
+      })()}
+
+      {/* DEX Volume — PumpSwap + Meteora ilk 2 */}
+      {(() => {
+        const dex = (t?.exchange_volumes ?? []).filter(e => e.is_dex).slice(0,2)
+        if (dex.length === 0) return null
+        const max = dex[0]?.volume_usd ?? 1
+        const total = dex.reduce((s, e) => s + e.volume_usd, 0)
+        return (
+          <div style={{ borderTop:"1px solid var(--separator)", paddingTop:10 }}>
+            <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:8 }}>
+              <p style={{ fontSize:"0.5625rem", fontWeight:800, color:"var(--tertiary)", textTransform:"uppercase", letterSpacing:"0.07em", margin:0 }}>DEX Volume</p>
+              <span style={{ fontSize:"0.5625rem", fontWeight:700, color:"var(--tertiary)" }}>{fmt$(total)} total</span>
+            </div>
+            <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
+              {dex.map((ex, i) => (
+                <div key={i} style={{ display:"flex", alignItems:"center", gap:8 }}>
+                  {ex.logo
+                    ? <img src={getLocalExchangeLogo(ex.exchange, ex.logo)} alt={ex.exchange} width={22} height={22} style={{ borderRadius:6, objectFit:"cover", flexShrink:0, boxShadow:"0 0 0 1px rgba(0,0,0,0.07)" }} onError={e=>{(e.target as HTMLImageElement).style.display="none"}} />
+                    : <div style={{ width:22, height:22, borderRadius:6, background:"#E8E8ED", flexShrink:0, display:"flex", alignItems:"center", justifyContent:"center", fontSize:"0.5625rem", fontWeight:700, color:"var(--tertiary)" }}>{ex.exchange.charAt(0)}</div>
+                  }
+                  <span style={{ fontSize:"0.75rem", fontWeight:600, color:"var(--foreground)", width:80, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap", flexShrink:0 }}>{ex.exchange}</span>
+                  <div style={{ flex:1, height:5, background:"rgba(0,0,0,0.06)", borderRadius:99, overflow:"hidden" }}>
+                    <div style={{ height:"100%", width:`${Math.max(4,(ex.volume_usd/max)*100)}%`, background:"#7C3AED", borderRadius:99 }} />
+                  </div>
+                  <span style={{ fontSize:"0.75rem", fontWeight:700, color:"var(--foreground)", width:48, textAlign:"right", flexShrink:0 }}>{fmt$(ex.volume_usd)}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )
+      })()}
 
       {/* 24h Transactions */}
       {(() => {
@@ -284,16 +319,16 @@ export function TokenHealthCard() {
         )
       })()}
 
-      {/* ATH — bottom */}
+      {/* ATH — siyah kutu */}
       {t?.ath && (
-        <div style={{ borderTop:"1px solid var(--separator)", paddingTop:10, display:"flex", alignItems:"center", justifyContent:"space-between" }}>
-          <span style={{ fontSize:"0.5625rem", fontWeight:700, color:"var(--tertiary)", textTransform:"uppercase", letterSpacing:"0.07em" }}>All-Time High</span>
-          <div style={{ display:"flex", alignItems:"center", gap:6 }}>
-            <span style={{ fontSize:"0.875rem", fontWeight:800, color:"var(--foreground)", letterSpacing:"-0.02em" }}>{fmtPrice(t.ath)}</span>
-            <span style={{ fontSize:"0.5625rem", fontWeight:700, color:"#DC2626", background:"rgba(220,38,38,0.08)", padding:"1px 6px", borderRadius:99 }}>
-              -{Math.abs(t.ath_change_pct ?? 0).toFixed(1)}%
-            </span>
-          </div>
+        <div className="inset-cell-dark">
+          <p className="hero-label" style={{ color:"rgba(255,255,255,0.35)", marginBottom:8 }}>All-Time High</p>
+          <p style={{ fontSize:"1.75rem", fontWeight:800, color:"#fff", letterSpacing:"-0.04em", lineHeight:1 }}>
+            {fmtPrice(t.ath)}
+          </p>
+          <p style={{ fontSize:"0.75rem", color:"rgba(255,255,255,0.35)", marginTop:6 }}>
+            {Math.abs(t.ath_change_pct ?? 0).toFixed(1)}% below ATH · {t.ath_date}
+          </p>
         </div>
       )}
     </div>
