@@ -197,9 +197,10 @@ export function CommunityCard() {
             </svg>
             <span style={{ fontSize:"0.875rem", fontWeight:700, color:"var(--foreground)" }}>X Community</span>
           </div>
-          <div style={{ textAlign:"right" }}>
+          <div style={{ display:"flex", alignItems:"center", gap:6 }}>
             <span style={{ fontSize:"1rem", fontWeight:800, color:"var(--foreground)" }}>{xCommunity.toLocaleString()}</span>
-            <span style={{ fontSize:"0.6875rem", color:"var(--tertiary)", marginLeft:4 }}>members</span>
+            <span style={{ fontSize:"0.6875rem", color:"var(--tertiary)" }}>members</span>
+            {xCommunityDelta !== 0 && <DeltaBadge value={xCommunityDelta} />}
           </div>
         </div>
       )}
