@@ -281,6 +281,11 @@ html, body {
 /* Restore min-width on interactive / structural elements */
 button, input, select, textarea { min-width: revert; word-break: normal; }
 
+/* Ensure all text inherits theme color — prevents browser default black on dark bg */
+p, span, h1, h2, h3, h4, h5, h6, label, li, td, th, div {
+  color: inherit;
+}
+
 input, textarea, select {
   color: var(--foreground) !important;
   background: var(--input-bg) !important;
