@@ -340,7 +340,7 @@ export function AnnouncementsCard() {
 
   return (
     <DashboardCard
-      title="Announcements"
+      title="Announce"
       subtitle="Draft · Approve · Post"
       icon={<Megaphone style={{ width:16, height:16 }} />}
       accentColor="#F5A623"
