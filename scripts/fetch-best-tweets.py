@@ -29,10 +29,10 @@ with sync_playwright() as pw:
     page = ctx.new_page()
     # image blocking yok — metrics doğru yüklensin
 
-    page.goto("https://x.com/67coinX", timeout=30000, wait_until="domcontentloaded")
+    # Search from:67coinX (profil yerine search — daha güvenilir)
+    page.goto("https://x.com/search?q=from%3A67coinX&src=typed_query&f=live", timeout=30000, wait_until="domcontentloaded")
     page.wait_for_timeout(4000)
 
-    # Scroll to load more tweets
     for _ in range(8):
         page.keyboard.press("End")
         page.wait_for_timeout(1000)
@@ -88,8 +88,17 @@ cutoff_7d  = now - timedelta(days=7)
 tweets_48h = [t for t in tweets if t["dt"] >= cutoff_48h] or tweets  # fallback: en yeni
 tweets_7d  = [t for t in tweets if t["dt"] >= cutoff_7d]  or tweets  # fallback: hepsi
 
-best_48h = max(tweets_48h, key=lambda t: t["engagement"]) if tweets_48h else None
-best_7d  = max(tweets_7d,  key=lambda t: t["engagement"]) if tweets_7d  else None
+sorted_48h = sorted(tweets_48h, key=lambda t: t["engagement"], reverse=True)
+sorted_7d  = sorted(tweets_7d,  key=lambda t: t["engagement"], reverse=True)
+best_48h = sorted_48h[0] if sorted_48h else None
+# 7d: farklı tweet seç (48h'deki ile aynıysa 2. sıradakini al)
+best_7d = None
+for t in sorted_7d:
+    if not best_48h or t["id"] != best_48h["id"]:
+        best_7d = t
+        break
+if not best_7d and sorted_7d:
+    best_7d = sorted_7d[0]
 
 if best_48h: print(f"Best 48h: {best_48h['likes']}❤️  {best_48h['text'][:60]}")
 if best_7d:  print(f"Best 7d:  {best_7d['likes']}❤️  {best_7d['text'][:60]}")
