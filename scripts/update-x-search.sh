@@ -29,8 +29,8 @@ except:
 data["x_recent"]  = recent
 data["x_popular"] = popular
 
-with open(DATA_FILE, "w") as f:
-    json.dump(data, f, ensure_ascii=False)
+with open(DATA_FILE, "w", encoding="utf-8") as f:
+    json.dump(data, f, ensure_ascii=True)
 
 print(f"Updated data.json: {len(recent)} recent, {len(popular)} popular")
 PYEOF
