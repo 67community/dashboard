@@ -1,73 +1,110 @@
 #!/usr/bin/env python3
-import sys, json, random, re
-from pathlib import Path
+"""X Search via Playwright (no login needed - X shows public results)"""
+import sys, json, re
 from playwright.sync_api import sync_playwright
 
-QUERY = "67"
-SESSIONS_DIR = Path("/Users/oscarbrendon/.openclaw/workspace/skills/67coin/assets/sessions")
-mode = sys.argv[1] if len(sys.argv) > 1 else "recent"
+PROXY = {"server":"http://gw.dataimpulse.com:823","username":"***REMOVED_PROXY_USER***","password":"***REMOVED_PROXY_PASS***"}
+mode  = sys.argv[1] if len(sys.argv) > 1 else "recent"
+tab   = "live" if mode == "recent" else "top"
+MAX   = 50
 
-# recent = Latest tab, popular = Top tab
-tab_param = "live" if mode == "recent" else "top"
-
-sessions = list(SESSIONS_DIR.glob("session.*.json"))
-random.shuffle(sessions)
+def parse_num(s):
+    s = str(s).strip().replace(",","")
+    if s.endswith("K"): return int(float(s[:-1])*1000)
+    if s.endswith("M"): return int(float(s[:-1])*1000000)
+    try: return int(s)
+    except: return 0
 
 results = []
+seen    = set()
 
 with sync_playwright() as pw:
     browser = pw.chromium.launch(headless=True)
-    for sf in sessions[:15]:
-        try:
-            storage = json.loads(sf.read_text())
-            ctx = browser.new_context(storage_state=storage, viewport={"width":1280,"height":900})
-            page = ctx.new_page()
-            url = f"https://x.com/search?q={QUERY.replace(' ','%20')}&src=typed_query&f={tab_param}"
-            page.goto(url, timeout=25000, wait_until="domcontentloaded")
-            if "login" in page.url or "flow" in page.url or "i/flow" in page.url:
+    ctx = browser.new_context(proxy=PROXY, viewport={"width":1280,"height":900},
+        user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        locale="en-US")
+    page = ctx.new_page()
+
+    # Load accounts and set cookies
+    import re as _re
+    from pathlib import Path
+    accs_file = Path("/Users/oscarbrendon/.openclaw/workspace/skills/67coin/x-profile-changer/accounts.txt")
+    auth_tokens = [p for line in accs_file.read_text().splitlines() for p in line.split(":") if _re.match(r'^[a-f0-9]{40}$', p.strip())]
+    import random
+    auth = random.choice(auth_tokens) if auth_tokens else None
+
+    logged_in = False
+    if auth_tokens:
+        for auth in auth_tokens[:10]:
+            ctx2 = browser.new_context(proxy=PROXY, viewport={"width":1280,"height":900},
+                user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+                locale="en-US")
+            ctx2.add_cookies([
+                {"name":"auth_token","value":auth,"domain":".x.com","path":"/"},
+            ])
+            p2 = ctx2.new_page()
+            p2.goto("https://x.com/home", timeout=20000, wait_until="domcontentloaded")
+            p2.wait_for_timeout(2000)
+            if "login" not in p2.url and "flow" not in p2.url:
+                # Good session — use this context
                 ctx.close()
-                continue
-            # Wait for tweets to render
-            try:
-                page.wait_for_selector("article[data-testid='tweet']", timeout=12000)
-            except:
-                page.wait_for_timeout(8000)
-            page.evaluate("window.scrollBy(0, 400)")
-            # Collect tweet articles
-            articles = page.query_selector_all("article[data-testid='tweet']")
-            if not articles:
-                ctx.close()
-                continue
-            for art in articles[:10]:
-                try:
-                    text_el = art.query_selector("[data-testid='tweetText']")
-                    text = text_el.inner_text() if text_el else ""
-                    time_el = art.query_selector("time")
-                    time_str = time_el.get_attribute("datetime") if time_el else ""
-                    link_el = art.query_selector("a[href*='/status/']")
-                    link = "https://x.com" + link_el.get_attribute("href") if link_el else ""
-                    user_el = art.query_selector("[data-testid='User-Name']")
-                    user = user_el.inner_text().split("\n")[0] if user_el else "Unknown"
-                    # Metrics
-                    likes = 0; replies = 0; reposts = 0
-                    for btn in art.query_selector_all("[data-testid$='-count']"):
-                        try:
-                            val_el = btn.query_selector("span")
-                            val = int(val_el.inner_text().replace(",","").replace("K","000").replace("M","000000")) if val_el and val_el.inner_text().strip().isdigit() else 0
-                            tid = btn.get_attribute("data-testid") or ""
-                            if "like" in tid: likes = val
-                            elif "reply" in tid: replies = val
-                            elif "retweet" in tid: reposts = val
-                        except: pass
-                    if text:
-                        results.append({"text":text,"user":user,"time":time_str,"link":link,"likes":likes,"replies":replies,"reposts":reposts})
-                except: pass
-            ctx.close()
-            if results:
+                ctx = ctx2
+                page = p2
+                logged_in = True
                 break
-        except Exception as e:
-            try: ctx.close()
+            ctx2.close()
+    if not logged_in:
+        ctx.close(); browser.close(); print("[]"); sys.exit(0)
+
+    # Block images/media to speed up
+    page.route("**/*.{png,jpg,jpeg,gif,webp,mp4,svg}", lambda r: r.abort())
+
+    url = f"https://x.com/search?q=67&src=typed_query&f={tab}"
+    page.goto(url, timeout=30000, wait_until="domcontentloaded")
+    page.wait_for_timeout(4000)
+
+    # Scroll to load more tweets
+    for _ in range(8):
+        page.keyboard.press("End")
+        page.wait_for_timeout(1200)
+
+    articles = page.query_selector_all("article[data-testid='tweet']")
+
+    for art in articles:
+        if len(results) >= MAX: break
+        try:
+            link_el = art.query_selector("a[href*='/status/']")
+            link = "https://x.com" + link_el.get_attribute("href") if link_el else ""
+            if not link or link in seen: continue
+            seen.add(link)
+
+            text_el  = art.query_selector("[data-testid='tweetText']")
+            time_el  = art.query_selector("time")
+            user_el  = art.query_selector("[data-testid='User-Name']")
+
+            text = text_el.inner_text() if text_el else ""
+            time_str = time_el.get_attribute("datetime") if time_el else ""
+            user_lines = user_el.inner_text().split("\n") if user_el else ["",""]
+            user   = user_lines[0] if user_lines else ""
+            handle = user_lines[1].lstrip("@") if len(user_lines) > 1 else ""
+
+            likes = reposts = replies = 0
+            try:
+                for btn in art.query_selector_all("button[aria-label]"):
+                    lbl = (btn.get_attribute("aria-label") or "").lower()
+                    m = re.match(r'^([\d,]+(?:\.\d+)?[km]?)\s', lbl)
+                    val = parse_num(m.group(1)) if m else 0
+                    if "like" in lbl: likes = val
+                    elif "repost" in lbl: reposts = val
+                    elif "repl" in lbl: replies = val
             except: pass
+
+            if text:
+                results.append({"text":text,"user":user,"handle":handle,"time":time_str,"link":link,
+                                 "likes":likes,"reposts":reposts,"replies":replies})
+        except: pass
+
+    ctx.close()
     browser.close()
 
-print(json.dumps(results[:10]))
+print(json.dumps(results))

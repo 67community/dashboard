@@ -76,7 +76,7 @@ export function XRaidCard() {
             ? <div style={{ padding:20, textAlign:"center", color:"var(--secondary)", fontSize:"0.75rem" }}>🔄 Loading...</div>
             : xRecent.length === 0
             ? <div style={{ padding:20, textAlign:"center", color:"var(--secondary)", fontSize:"0.75rem" }}>😴 No results found</div>
-            : xRecent.map((item, i) => (
+            : xRecent.slice(0,15).map((item, i) => (
               <a key={i} href={item.link} target="_blank" rel="noopener noreferrer"
                 style={{ textDecoration:"none", display:"block", padding:"8px 10px",
                   borderRadius:10, background:"var(--fill-primary)", border:"1px solid var(--separator)" }}>
@@ -107,7 +107,7 @@ export function XRaidCard() {
             ? <div style={{ padding:20, textAlign:"center", color:"var(--secondary)", fontSize:"0.75rem" }}>🔄 Loading...</div>
             : xPop.length === 0
             ? <div style={{ padding:20, textAlign:"center", color:"var(--secondary)", fontSize:"0.75rem" }}>😴 No results found</div>
-            : xPop.map((item, i) => (
+            : xPop.slice(0,10).map((item, i) => (
               <a key={i} href={item.link} target="_blank" rel="noopener noreferrer"
                 style={{ textDecoration:"none", display:"block", padding:"8px 10px",
                   borderRadius:10, background:"var(--fill-primary)", border:"1px solid var(--separator)" }}>
