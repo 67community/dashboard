@@ -57,7 +57,7 @@ export function XRaidCard() {
           <button key={key} onClick={() => setTab(key as any)}
             style={{ flex:1, padding:"6px 6px", borderRadius:10, border:"none", cursor:"pointer",
               background: tab===key ? "var(--foreground)" : "var(--fill-primary)",
-              color: tab===key ? "#fff" : "#6E6E73",
+              color: tab===key ? "var(--card)" : "var(--secondary)",
               fontSize:"0.5625rem", fontWeight:700, position:"relative", whiteSpace:"nowrap" }}>
             {label}
             {key==="notif" && newCount > 0 && (
