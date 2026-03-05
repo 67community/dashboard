@@ -64,9 +64,9 @@ with sync_playwright() as pw:
     page.wait_for_timeout(4000)
 
     # Scroll to load more tweets
-    for _ in range(8):
+    for _ in range(15):
         page.keyboard.press("End")
-        page.wait_for_timeout(1200)
+        page.wait_for_timeout(1000)
 
     articles = page.query_selector_all("article[data-testid='tweet']")
 
