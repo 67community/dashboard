@@ -21,28 +21,36 @@ async def run():
         )
         page = await ctx.new_page()
 
-        print("Loading TikTok profile...")
-        await page.goto("https://www.tiktok.com/@67coin", wait_until="networkidle", timeout=30000)
-        await page.wait_for_timeout(3000)
+        async def scrape_videos(url, selector):
+            print(f"Loading {url}...")
+            await page.goto(url, wait_until="networkidle", timeout=30000)
+            await page.wait_for_timeout(3000)
+            for _ in range(3):
+                await page.evaluate("window.scrollBy(0, 800)")
+                await page.wait_for_timeout(1000)
+            return await page.evaluate(f"""() => {{
+                const cards = document.querySelectorAll('{selector}')
+                return Array.from(cards).slice(0, 12).map(card => {{
+                    const link = card.querySelector('a')
+                    const img = card.querySelector('img')
+                    const url = link?.href || ''
+                    const thumb = img?.src || img?.getAttribute('src') || ''
+                    const id = url.match(/video\\/([0-9]+)/)?.[1] || ''
+                    return {{ id, url, thumb }}
+                }})
+            }}""")
 
-        # Scroll to load more
-        for _ in range(3):
-            await page.evaluate("window.scrollBy(0, 800)")
-            await page.wait_for_timeout(1000)
+        # @67coin profili + #67 tag sayfası
+        profile_videos = await scrape_videos("https://www.tiktok.com/@67coin", '[data-e2e="user-post-item"]')
+        tag_videos     = await scrape_videos("https://www.tiktok.com/tag/67",   '[data-e2e="challenge-item"]')
 
-        # Extract video cards
-        videos = await page.evaluate("""() => {
-            const cards = document.querySelectorAll('[data-e2e="user-post-item"]')
-            return Array.from(cards).slice(0, 12).map(card => {
-                const link = card.querySelector('a')
-                const img = card.querySelector('img')
-                const url = link?.href || ''
-                const thumb = img?.src || img?.getAttribute('src') || ''
-                // get video id from URL
-                const id = url.match(/video\\/([0-9]+)/)?.[1] || ''
-                return { id, url, thumb }
-            })
-        }""")
+        # Birleştir, deduplicate
+        seen_ids = set()
+        videos = []
+        for v in profile_videos + tag_videos:
+            if v["id"] and v["id"] not in seen_ids:
+                seen_ids.add(v["id"])
+                videos.append(v)
 
         print(f"Found {len(videos)} videos")
 
