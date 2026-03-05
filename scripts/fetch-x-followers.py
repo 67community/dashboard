@@ -85,7 +85,22 @@ async def main():
                 data = json.load(f)
             sp = data.get("social_pulse", {})
             old = sp.get("twitter_followers", 0)
+            from datetime import datetime, timezone
+            today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+            history = sp.get("follower_history", [])
+            # Add today's entry
+            if not history or history[-1].get("date") != today:
+                history.append({"date": today, "count": result})
+            else:
+                history[-1]["count"] = result
+            sp["follower_history"] = history[-30:]  # keep 30 days
+
+            # Deltas
             sp["follower_change_24h"] = result - old
+            if len(history) >= 3:
+                sp["follower_change_3d"] = result - history[-3]["count"]
+            if len(history) >= 7:
+                sp["follower_change_7d"] = result - history[-7]["count"]
             sp["twitter_followers"] = result
             data["social_pulse"] = sp
             with open(DATA_JSON, "w") as f:
