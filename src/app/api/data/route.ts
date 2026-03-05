@@ -301,7 +301,7 @@ async function fetchYouTube() {
   if (!YT_API_KEY) return []
   try {
     // Search popular + recent for each query
-    const QUERIES = ['"67 coin" solana memecoin', '"$67" solana token', '"official 67 coin"']
+    const QUERIES = ['"The official 67 coin"', '67']
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     async function ytSearch(q: string, order: "viewCount" | "date", n = 5): Promise<any[]> {
@@ -319,7 +319,7 @@ async function fetchYouTube() {
     ])
 
     // Relevance filter — title MUST contain a specific $67coin keyword
-    const TITLE_KW = ["67coin", "67 coin", "$67coin", "$67 coin", "official 67", "mav67", "maverick 67"]
+    const TITLE_KW = ["67coin", "67 coin", "$67coin", "$67 coin", "official 67", "mav67", "maverick 67", "the official 67"]
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     function isRelevant(v: any): boolean {
       const title = (v?.snippet?.title ?? "").toLowerCase()
