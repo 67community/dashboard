@@ -41,3 +41,6 @@ yarn-error.log*
 next-env.d.ts
 .presence_token
 .github/workflows/
+.tiktok_browser_profile/
+__pycache__/
+data.json
