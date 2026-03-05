@@ -1,4 +1,0 @@
-webcast.tiktok.com^partitionKey=%28http%2Ctiktok.com%29:HSTS	0	20516	1804119317713,1,1
-www.tiktok.com^partitionKey=%28http%2Ctiktok.com%29:HSTS	0	20516	1804119236920,1,1
-contile.services.mozilla.com:HSTS	0	20516	1804119236235,1,0
-location.services.mozilla.com:HSTS	0	20516	1804119236035,1,0
