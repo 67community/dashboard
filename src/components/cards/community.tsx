@@ -542,7 +542,7 @@ export function CommunityCard() {
 
         {/* X header */}
         <div style={{ borderRadius:16, border:"1px solid rgba(0,0,0,0.12)", overflow:"hidden" }}>
-          <div style={{ background:"var(--foreground)", padding:"20px 18px" }}>
+          <div style={{ background:"#F5A623", padding:"20px 18px" }}>
             <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:12 }}>
               <div style={{ display:"flex", alignItems:"center", gap:7 }}>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="white" opacity="0.7"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.739l7.73-8.835L1.254 2.25H8.08l4.258 5.63 5.906-5.63Z"/></svg>
