@@ -102,8 +102,8 @@ export default function Dashboard() {
     <div>
       {/* ══ Slim identity strip ═════════════════════════════════ */}
       <div className="enter-1" style={{
-        display:"flex", alignItems:"center", gap:8, flexWrap:"wrap",
-        marginBottom:20, paddingBottom:14,
+        display:"flex", alignItems:"center", gap:8,
+        marginBottom:20, paddingBottom:14, overflow:"hidden",
         borderBottom:"1px solid rgba(0,0,0,0.07)",
       }}>
         {/* $67 live price pill with logo */}
@@ -165,7 +165,6 @@ export default function Dashboard() {
         @media (max-width: 640px)  {
           .market-pills { flex: unset; min-width: 0; gap: 3px !important; }
           .market-pill { font-size: 0.5rem !important; padding: 2px 5px !important; gap: 2px !important; }
-          .market-pill-price { display: none !important; }
         }
       `}</style>
 
