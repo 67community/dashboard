@@ -152,10 +152,10 @@ export function TopBar() {
             }}>
               {NAV.map(({ href, label }) => (
                 <Link key={href} href={href} style={{
-                  padding:"5px 16px", borderRadius:6,
-                  fontSize:"0.8125rem", fontWeight:600,
+                  padding:"5px 10px", borderRadius:6,
+                  fontSize:"0.75rem", fontWeight:600,
                   textDecoration:"none", transition:"all 0.12s",
-                  letterSpacing:"-0.01em",
+                  letterSpacing:"-0.01em", whiteSpace:"nowrap",
                   ...(path === href
                     ? { background:"#F5A623", color:"#000", boxShadow:"0 1px 3px rgba(0,0,0,0.2)" }
                     : { color:"rgba(255,255,255,0.38)" }),
