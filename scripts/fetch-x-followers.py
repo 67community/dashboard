@@ -1,113 +1,69 @@
 #!/usr/bin/env python3
-"""Scrape @67coinX follower count from Twitter using a session file."""
-import json, asyncio, os, sys
+"""Fetch @67coinX follower count via Twitter241 RapidAPI — no Playwright, no proxy."""
+import json, urllib.request
 from pathlib import Path
-from glob import glob
+from datetime import datetime, timezone
 
-SESSIONS_DIR = Path("/Users/oscarbrendon/.openclaw/workspace/skills/67coin/assets/sessions")
-DATA_JSON    = Path(__file__).parent.parent / "public/data.json"
+RAPIDAPI_KEY = "4b393aa0cemsh6895fd899d6eedcp1a441djsnfe89097510cd"
 TARGET       = "67coinX"
-PROXY        = "http://gw.dataimpulse.com:823"
-PROXY_USER   = "7e379971cf932ac8eb64"
-PROXY_PASS   = "dbdbbaad5bc9f565"
+DATA_JSON    = Path(__file__).parent.parent / "public/data.json"
 
-def get_sessions():
-    return sorted(glob(str(SESSIONS_DIR / "session.*.json")))
+def fetch_followers() -> int | None:
+    url = f"https://twitter241.p.rapidapi.com/user?username={TARGET}"
+    req = urllib.request.Request(url, headers={
+        "x-rapidapi-host": "twitter241.p.rapidapi.com",
+        "x-rapidapi-key":  RAPIDAPI_KEY,
+    })
+    with urllib.request.urlopen(req, timeout=15) as r:
+        data = json.load(r)
 
-async def try_scrape(session_file: str) -> int | None:
-    from playwright.async_api import async_playwright
-    session = json.load(open(session_file))
+    legacy = (data.get("result", {})
+                  .get("data", {})
+                  .get("user", {})
+                  .get("result", {})
+                  .get("legacy", {}))
+    count = legacy.get("followers_count")
+    return int(count) if count is not None else None
 
-    async with async_playwright() as p:
-        browser = await p.firefox.launch(
-            headless=True,
-            proxy={"server": PROXY, "username": PROXY_USER, "password": PROXY_PASS},
-        )
-        ctx = await browser.new_context(
-            user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0",
-        )
-        await ctx.add_cookies(session.get("cookies", []))
+def main():
+    print(f"Fetching @{TARGET} followers via API...")
+    try:
+        result = fetch_followers()
+    except Exception as e:
+        print(f"❌ API error: {e}")
+        return
 
-        for origin in session.get("origins", []):
-            if origin.get("origin","").startswith("https://x.com") or origin.get("origin","").startswith("https://twitter.com"):
-                try:
-                    await ctx.add_init_script(f"""
-                        Object.entries({json.dumps({i['name']: i['value'] for i in origin.get('localStorage', [])})}).forEach(([k,v])=>localStorage.setItem(k,v))
-                    """)
-                except: pass
+    if not result:
+        print("❌ No follower count returned")
+        return
 
-        page = await ctx.new_page()
-        try:
-            await page.goto(f"https://x.com/{TARGET}", wait_until="domcontentloaded", timeout=20000)
-            await page.wait_for_timeout(3000)
+    print(f"✅ Followers: {result:,}")
 
-            followers = await page.evaluate("""() => {
-                const text = document.body.innerText
-                const lines = text.split('\\n')
-                for (const line of lines) {
-                    if (line.toLowerCase().includes('follower')) {
-                        const m = line.match(/([\\d,\\.]+[KkMm]?)\\s*Follower/)
-                        if (m) return m[1]
-                    }
-                }
-                return null
-            }""")
+    with open(DATA_JSON) as f:
+        data = json.load(f)
 
-            if followers:
-                print(f"✅ Session {Path(session_file).stem}: followers = {followers}")
-                await ctx.close()
-                await browser.close()
-                # parse "1.6K" → 1600 etc
-                f = followers.strip().upper().replace(",","")
-                if "K" in f: return int(float(f.replace("K","")) * 1000)
-                if "M" in f: return int(float(f.replace("M","")) * 1_000_000)
-                return int(f)
+    sp   = data.get("social_pulse", {})
+    old  = sp.get("twitter_followers", 0)
+    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
 
-            title = await page.title()
-            print(f"⚠️  Session {Path(session_file).stem}: no followers found (title: {title[:50]})")
-        except Exception as e:
-            print(f"❌ Session {Path(session_file).stem}: {e}")
-        finally:
-            await ctx.close()
-            await browser.close()
-    return None
+    history = sp.get("follower_history", [])
+    if not history or history[-1].get("date") != today:
+        history.append({"date": today, "count": result})
+    else:
+        history[-1]["count"] = result
+    sp["follower_history"] = history[-30:]
 
-async def main():
-    sessions = get_sessions()
-    print(f"Trying sessions to scrape @{TARGET} followers...")
-    
-    for sf in sessions[:10]:  # try first 10 sessions
-        result = await try_scrape(sf)
-        if result and result > 100:
-            print(f"\n✅ Followers: {result:,}")
-            # Update data.json
-            with open(DATA_JSON) as f:
-                data = json.load(f)
-            sp = data.get("social_pulse", {})
-            old = sp.get("twitter_followers", 0)
-            from datetime import datetime, timezone
-            today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
-            history = sp.get("follower_history", [])
-            # Add today's entry
-            if not history or history[-1].get("date") != today:
-                history.append({"date": today, "count": result})
-            else:
-                history[-1]["count"] = result
-            sp["follower_history"] = history[-30:]  # keep 30 days
+    sp["follower_change_24h"] = result - old
+    if len(history) >= 3:
+        sp["follower_change_3d"] = result - history[-3]["count"]
+    if len(history) >= 7:
+        sp["follower_change_7d"] = result - history[-7]["count"]
+    sp["twitter_followers"] = result
+    data["social_pulse"] = sp
 
-            # Deltas
-            sp["follower_change_24h"] = result - old
-            if len(history) >= 3:
-                sp["follower_change_3d"] = result - history[-3]["count"]
-            if len(history) >= 7:
-                sp["follower_change_7d"] = result - history[-7]["count"]
-            sp["twitter_followers"] = result
-            data["social_pulse"] = sp
-            with open(DATA_JSON, "w") as f:
-                json.dump(data, f, indent=2)
-            print(f"✅ data.json updated: {old} → {result}")
-            return
-    
-    print("❌ All sessions failed")
+    with open(DATA_JSON, "w") as f:
+        json.dump(data, f, indent=2)
 
-asyncio.run(main())
+    print(f"✅ data.json updated: {old:,} → {result:,}")
+
+main()

@@ -1,128 +1,117 @@
 #!/usr/bin/env python3
 """
-@67coinX'in son tweetlerini çek, 48h ve 7 günlük en etkileşimlisini seç
+@67coinX best tweets via Twitter241 RapidAPI — no Playwright, no proxy.
+Finds best tweet in last 48h and last 7 days by likes.
 """
-import json, re
-from datetime import datetime, timezone, timedelta
+import json, urllib.request, urllib.parse
 from pathlib import Path
-from playwright.sync_api import sync_playwright
+from datetime import datetime, timezone, timedelta
 
-SESSION   = Path(__file__).parent / "67coinx_session.json"
-DATA_JSON = Path(__file__).parent.parent / "public" / "data.json"
+RAPIDAPI_KEY = "4b393aa0cemsh6895fd899d6eedcp1a441djsnfe89097510cd"
+DATA_JSON    = Path(__file__).parent.parent / "public/data.json"
+QUERIES      = ["from:67coinX", "67coin", "#67coin"]
 
-storage = json.loads(SESSION.read_text())
 now = datetime.now(timezone.utc)
 
-def parse_num(s):
-    s = str(s).strip().replace(",","")
-    if s.upper().endswith("K"): return int(float(s[:-1])*1000)
-    if s.upper().endswith("M"): return int(float(s[:-1])*1000000)
-    try: return int(s)
-    except: return 0
+def api_get(endpoint, params):
+    url = f"https://twitter241.p.rapidapi.com/{endpoint}?{urllib.parse.urlencode(params)}"
+    req = urllib.request.Request(url, headers={
+        "x-rapidapi-host": "twitter241.p.rapidapi.com",
+        "x-rapidapi-key":  RAPIDAPI_KEY,
+    })
+    with urllib.request.urlopen(req, timeout=15) as r:
+        return json.load(r)
 
-tweets = []
-
-with sync_playwright() as pw:
-    browser = pw.chromium.launch(headless=True)
-    ctx = browser.new_context(storage_state=storage, viewport={"width":1280,"height":900},
-        user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36")
-    page = ctx.new_page()
-    # image blocking yok — metrics doğru yüklensin
-
-    # Search from:67coinX (profil yerine search — daha güvenilir)
-    page.goto("https://x.com/search?q=from%3A67coinX&src=typed_query&f=live", timeout=30000, wait_until="domcontentloaded")
-    page.wait_for_timeout(4000)
-
-    for _ in range(8):
-        page.keyboard.press("End")
-        page.wait_for_timeout(1000)
-
-    for art in page.query_selector_all("article[data-testid='tweet']"):
-        try:
-            time_el = art.query_selector("time")
-            if not time_el: continue
-            dt_str = time_el.get_attribute("datetime")
-            dt = datetime.fromisoformat(dt_str.replace("Z","+00:00"))
-
-            # Only last 30 days
-            if (now - dt).days > 30: continue
-
-            text_el = art.query_selector("[data-testid='tweetText']")
-            text = text_el.inner_text() if text_el else ""
-            if not text: continue
-
-            link_el = art.query_selector("a[href*='/status/']")
-            href = link_el.get_attribute("href") if link_el else ""
-            link = "https://x.com" + href if href else ""
-            m = re.search(r"/status/(\d+)", link)
-            tid = m.group(1) if m else ""
-
-            likes = reposts = replies = 0
-            for btn in art.query_selector_all("button[aria-label]"):
-                lbl = (btn.get_attribute("aria-label") or "").lower()
-                match = re.match(r'^([\d,]+(?:\.\d+)?[km]?)\s', lbl)
-                val = parse_num(match.group(1)) if match else 0
-                if "like" in lbl or "beğeni" in lbl: likes = val
-                elif "repost" in lbl or "yeniden gönderi" in lbl: reposts = val
-                elif "repl" in lbl or "yanıt" in lbl: replies = val
-
-            engagement = likes + reposts * 2 + replies
+def parse_tweets(data):
+    tweets = []
+    for inst in data.get("result", {}).get("timeline", {}).get("instructions", []):
+        for entry in inst.get("entries", []):
+            tw = (entry.get("content", {})
+                       .get("itemContent", {})
+                       .get("tweet_results", {})
+                       .get("result", {}))
+            leg = tw.get("legacy", {})
+            text = leg.get("full_text", "")
+            if not text or text.startswith("RT "):
+                continue
+            date_str = leg.get("created_at", "")
+            try:
+                dt = datetime.strptime(date_str, "%a %b %d %H:%M:%S +0000 %Y").replace(tzinfo=timezone.utc)
+            except:
+                continue
             tweets.append({
-                "id": tid, "text": text, "link": link,
-                "dt": dt, "likes": likes, "reposts": reposts,
-                "replies": replies, "engagement": engagement,
-                "date": dt.strftime("%b %d"),
-                "tweet_id": tid,
-                "tweet_url": link,
-                "img_url": None,
+                "tweet_id":  leg.get("id_str", ""),
+                "tweet_url": f"https://x.com/67coinX/status/{leg.get('id_str','')}",
+                "text":      text[:280],
+                "likes":     int(leg.get("favorite_count", 0)),
+                "replies":   int(leg.get("reply_count", 0)),
+                "retweets":  int(leg.get("retweet_count", 0)),
+                "date":      dt.strftime("%Y-%m-%d"),
+                "dt":        dt,
             })
-        except: pass
+    return tweets
 
-    ctx.close()
-    browser.close()
+def main():
+    print("Fetching @67coinX tweets via API...")
+    all_tweets = []
 
-print(f"Toplam {len(tweets)} tweet bulundu (son 7 gün)")
+    for q in QUERIES:
+        try:
+            data = api_get("search", {"query": q, "type": "Latest", "count": 20})
+            tweets = parse_tweets(data)
+            # Only @67coinX tweets for best-tweet logic
+            if "from:67coinX" in q:
+                all_tweets.extend(tweets)
+            else:
+                # community tweets — include all
+                all_tweets.extend(tweets)
+            print(f"  ✅ '{q}' → {len(tweets)} tweets")
+        except Exception as e:
+            print(f"  ❌ '{q}' error: {e}")
 
-cutoff_48h = now - timedelta(hours=48)
-cutoff_7d  = now - timedelta(days=7)
-tweets_48h = [t for t in tweets if t["dt"] >= cutoff_48h] or tweets  # fallback: en yeni
-tweets_7d  = [t for t in tweets if t["dt"] >= cutoff_7d]  or tweets  # fallback: hepsi
+    # Deduplicate by tweet_id
+    seen = set()
+    unique = []
+    for t in all_tweets:
+        if t["tweet_id"] not in seen:
+            seen.add(t["tweet_id"])
+            unique.append(t)
 
-sorted_48h = sorted(tweets_48h, key=lambda t: t["engagement"], reverse=True)
-sorted_7d  = sorted(tweets_7d,  key=lambda t: t["engagement"], reverse=True)
-best_48h = sorted_48h[0] if sorted_48h else None
-# 7d: farklı tweet seç (48h'deki ile aynıysa 2. sıradakini al)
-best_7d = None
-for t in sorted_7d:
-    if not best_48h or t["id"] != best_48h["id"]:
-        best_7d = t
-        break
-if not best_7d and sorted_7d:
-    best_7d = sorted_7d[0]
+    # Filter by time
+    cutoff_48h  = now - timedelta(hours=48)
+    cutoff_7d   = now - timedelta(days=7)
 
-if best_48h: print(f"Best 48h: {best_48h['likes']}❤️  {best_48h['text'][:60]}")
-if best_7d:  print(f"Best 7d:  {best_7d['likes']}❤️  {best_7d['text'][:60]}")
+    tweets_48h = [t for t in unique if t["dt"] >= cutoff_48h]
+    tweets_7d  = [t for t in unique if t["dt"] >= cutoff_7d]
 
-# Update data.json
-data = json.loads(DATA_JSON.read_text())
-sp = data.get("social_pulse", {})
+    best_48h = max(tweets_48h, key=lambda t: t["likes"], default=None)
+    best_7d  = max(tweets_7d,  key=lambda t: t["likes"], default=None)
 
-def to_entry(t):
-    if not t: return None
-    return {
-        "tweet_id":  t["tweet_id"],
-        "tweet_url": t["tweet_url"],
-        "text":      t["text"][:280],
-        "likes":     t["likes"],
-        "replies":   t["replies"],
-        "date":      t["date"],
-        "img_url":   None,
-        "embed_html": ""
-    }
+    print(f"\n📊 Total unique: {len(unique)} | 48h: {len(tweets_48h)} | 7d: {len(tweets_7d)}")
+    if best_48h:
+        print(f"⭐ Best 48h: {best_48h['likes']} likes — {best_48h['text'][:60]}")
+    if best_7d:
+        print(f"⭐ Best 7d:  {best_7d['likes']} likes — {best_7d['text'][:60]}")
 
-if best_48h: sp["best_tweet_2d"]   = to_entry(best_48h)
-if best_7d:  sp["best_tweet_week"] = to_entry(best_7d)
+    # Update data.json
+    with open(DATA_JSON) as f:
+        data = json.load(f)
 
-data["social_pulse"] = sp
-DATA_JSON.write_text(json.dumps(data, ensure_ascii=True))
-print("✅ data.json güncellendi")
+    sp = data.get("social_pulse", {})
+
+    def clean(t):
+        if not t: return None
+        return {k: v for k, v in t.items() if k != "dt"}
+
+    if best_48h:
+        sp["best_tweet_2d"] = clean(best_48h)
+    if best_7d:
+        sp["best_tweet_week"] = clean(best_7d)
+
+    data["social_pulse"] = sp
+    with open(DATA_JSON, "w") as f:
+        json.dump(data, f, indent=2)
+
+    print("\n✅ data.json updated")
+
+main()
