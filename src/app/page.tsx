@@ -171,7 +171,6 @@ export default function Dashboard() {
         @media (max-width: 640px)  {
           .market-pills { flex: unset; min-width: 0; gap: 3px !important; }
           .market-pill { font-size: 0.5rem !important; padding: 2px 5px !important; gap: 2px !important; }
-          .market-pill-price { display: none !important; }
         }
       `}</style>
 
