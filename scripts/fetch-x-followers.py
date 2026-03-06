@@ -53,7 +53,10 @@ def main():
         history[-1]["count"] = result
     sp["follower_history"] = history[-30:]
 
-    sp["follower_change_24h"] = result - old
+    # Delta — snapshot'tan hesapla (daha doğru 24h fark)
+    snap = data.get("_snapshot_24h", {})
+    snap_followers = snap.get("twitter_followers", old)
+    sp["follower_change_24h"] = result - snap_followers
     if len(history) >= 3:
         sp["follower_change_3d"] = result - history[-3]["count"]
     if len(history) >= 7:

@@ -43,7 +43,7 @@
   },
   "social_pulse": {
     "twitter_followers": 1670,
-    "follower_change_24h": 0,
+    "follower_change_24h": 11,
     "posting_streak_days": 8,
     "engagement_rate": 4.207,
     "_source": "nitter_rss+twitter_cdn",
@@ -121,11 +121,11 @@
       }
     },
     "best_content_type": "meme",
-    "x_community_members": 9917,
-    "x_community_delta_24h": 17,
+    "x_community_members": 9918,
+    "x_community_delta_24h": 218,
     "x_community_id": "1987949705322508569",
     "mentions": [],
-    "x_community_last_scrape": 1772840753.863097,
+    "x_community_last_scrape": 1772841077.196574,
     "follower_change_3d": 11,
     "follower_change_7d": 42
   },

@@ -42,7 +42,10 @@ def main():
     old = sp.get("x_community_members", 0)
 
     sp["x_community_members"]   = count
-    sp["x_community_delta_24h"] = count - old
+    # Delta — snapshot'tan hesapla
+    snap = data.get("_snapshot_24h", {})
+    snap_community = snap.get("x_community_members", old)
+    sp["x_community_delta_24h"] = count - snap_community
     sp["x_community_last_scrape"] = datetime.now(timezone.utc).timestamp()
     data["social_pulse"] = sp
 
