@@ -27,15 +27,6 @@ const CH_CONFIG: Record<AnnChannel, { emoji: string; label: string; color: strin
   all:      { emoji: "📣",  label: "All",      color: "#F5A623" },
 }
 
-
-// Send targets
-type SendTarget = "discord" | "telegram" | "raid"
-const SEND_TARGETS: Record<SendTarget, { emoji: string; label: string }> = {
-  discord:  { emoji: "", label: "Discord"  },
-  telegram: { emoji: "", label: "Telegram" },
-  raid:     { emoji: "", label: "Raid"     },
-}
-
 const TYPE_CONFIG: Record<AnnType, { label: string; color: string }> = {
   general:   { label: "General",   color: "var(--tertiary)" },
   price:     { label: "Price 📈",  color: "#059669" },
@@ -65,10 +56,8 @@ function CopyBtn({ text, label = "Copy" }: { text: string; label?: string }) {
   )
 }
 
-function AnnRow({ a, onStatus, onDelete, onSend, sending, sendRes, sendTarget, onTargetChange }: {
+function AnnRow({ a, onStatus, onDelete }: {
   a: Announcement; onStatus:(id:string,s:AnnStatus)=>void; onDelete:(id:string)=>void
-  onSend:(a:Announcement)=>void; sending:boolean; sendRes:string
-  sendTarget:SendTarget; onTargetChange:(t:SendTarget)=>void
 }) {
   const cc = CH_CONFIG[a.channel]
   const sc = STATUS_CONFIG[a.status]
@@ -109,27 +98,12 @@ function AnnRow({ a, onStatus, onDelete, onSend, sending, sendRes, sendTarget, o
             Mark Posted ✅
           </button>
         )}
-        {/* Send */}
-        <div style={{ display:"flex", gap:6, alignItems:"center", marginLeft:"auto" }}>
-          <select value={sendTarget} onChange={e=>{e.stopPropagation();onTargetChange(e.target.value as SendTarget)}}
-            style={{padding:"4px 8px",borderRadius:8,border:"1.5px solid var(--separator)",
-              fontSize:"0.75rem",fontFamily:"inherit",background:"var(--input-bg)",cursor:"pointer"}}>
-            {Object.entries(SEND_TARGETS).map(([k,v])=>(
-              <option key={k} value={k}>{v.label}</option>
-            ))}
-          </select>
-          <button onClick={e=>{e.stopPropagation();onSend(a)}} disabled={sending}
-            style={{padding:"5px 12px",borderRadius:8,border:"none",cursor:sending?"wait":"pointer",
-              background:sending?"#9CA3AF":"#F5A623",color:sending?"#fff":"#000",fontSize:"0.75rem",fontWeight:700}}>
-            {sending?"Gönderiliyor…":"Gönder →"}
-          </button>
-          <button onClick={e=>{e.stopPropagation();onDelete(a.id)}}
-            style={{background:"none",border:"none",cursor:"pointer",color:"var(--secondary)",display:"flex",alignItems:"center"}}>
-            <Trash2 style={{width:14,height:14}}/>
-          </button>
-        </div>
+        <button onClick={e => { e.stopPropagation(); onDelete(a.id) }}
+          style={{ marginLeft:"auto", background:"none", border:"none", cursor:"pointer",
+            color:"var(--secondary)", display:"flex", alignItems:"center" }}>
+          <Trash2 style={{ width:14, height:14 }} />
+        </button>
       </div>
-      {sendRes&&<p style={{fontSize:"0.75rem",fontWeight:600,color:sendRes.startsWith("✅")?"#059669":"#EF4444",paddingLeft:28}}>{sendRes}</p>}
     </div>
   )
 }
@@ -143,9 +117,6 @@ export function AnnouncementsCard() {
   const [type,    setType]    = useState<AnnType>("general")
   const [filter,  setFilter]  = useState<AnnStatus | "all">("all")
   const [genning, setGenning] = useState(false)
-  const [sending, setSending] = useState<Record<string, boolean>>({})
-  const [sendRes, setSendRes] = useState<Record<string, string>>({})
-  const [sendTarget, setSendTarget] = useState<SendTarget>("telegram")
 
   useEffect(() => {
     try {
@@ -178,23 +149,6 @@ export function AnnouncementsCard() {
       if (data.body) setBody(data.body)
     } catch {}
     setGenning(false)
-  }
-
-
-  async function sendAnn(a: Announcement) {
-    if (sendTarget === "discord") { setSendRes(r => ({...r, [a.id]: "❌ Discord henüz aktif değil"})); return }
-    setSending(s => ({...s, [a.id]: true}))
-    setSendRes(r => ({...r, [a.id]: ""}))
-    try {
-      const res = await fetch("/api/send-announcement", {
-        method: "POST", headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({ channel: sendTarget, body: a.body }),
-      })
-      const data = await res.json()
-      if (data.ok) { setSendRes(r => ({...r, [a.id]: "✅ Gönderildi!"})); updateStatus(a.id, "posted") }
-      else setSendRes(r => ({...r, [a.id]: "❌ " + (data.error ?? "Hata")}))
-    } catch { setSendRes(r => ({...r, [a.id]: "❌ Bağlantı hatası"})) }
-    setSending(s => ({...s, [a.id]: false}))
   }
 
   function updateStatus(id: string, status: AnnStatus) {
@@ -246,7 +200,7 @@ export function AnnouncementsCard() {
               <select value={channel} onChange={e => setChannel(e.target.value as AnnChannel)}
                 style={{ flex:1, padding:"7px 8px", borderRadius:8, border:"1.5px solid var(--separator)",
                   outline:"none", fontSize:"0.8125rem", fontFamily:"inherit", background:"var(--input-bg)" }}>
-                {Object.entries(CH_CONFIG).map(([k,v]) => <option key={k} value={k}>{v.label}</option>)}
+                {Object.entries(CH_CONFIG).map(([k,v]) => <option key={k} value={k}>{v.emoji} {v.label}</option>)}
               </select>
             </div>
             <div style={{ position:"relative" }}>
@@ -285,7 +239,7 @@ export function AnnouncementsCard() {
 
       {anns.filter(a=>a.status!=="posted").slice(0,2).map(a => (
         <div key={a.id} onClick={e => e.stopPropagation()}>
-          <AnnRow a={a} onStatus={updateStatus} onDelete={deleteAnn} onSend={sendAnn} sending={!!sending[a.id]} sendRes={sendRes[a.id]??""} sendTarget={sendTarget} onTargetChange={setSendTarget} />
+          <AnnRow a={a} onStatus={updateStatus} onDelete={deleteAnn} />
         </div>
       ))}
     </div>
@@ -339,7 +293,7 @@ export function AnnouncementsCard() {
             <select value={channel} onChange={e => setChannel(e.target.value as AnnChannel)}
               style={{ flex:1, padding:"7px 8px", borderRadius:8, border:"1.5px solid var(--separator)",
                 outline:"none", fontSize:"0.8125rem", fontFamily:"inherit", background:"var(--input-bg)" }}>
-              {Object.entries(CH_CONFIG).map(([k,v]) => <option key={k} value={k}>{v.label}</option>)}
+              {Object.entries(CH_CONFIG).map(([k,v]) => <option key={k} value={k}>{v.emoji} {v.label}</option>)}
             </select>
           </div>
           <div style={{ position:"relative" }}>
@@ -379,7 +333,7 @@ export function AnnouncementsCard() {
       <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
         {filtered.length === 0
           ? <p style={{ textAlign:"center", color:"var(--secondary)", fontSize:"0.875rem", padding:"20px 0" }}>No announcements yet.</p>
-          : filtered.map(a => <AnnRow key={a.id} a={a} onStatus={updateStatus} onDelete={deleteAnn} onSend={sendAnn} sending={!!sending[a.id]} sendRes={sendRes[a.id]??""} sendTarget={sendTarget} onTargetChange={setSendTarget} />)}
+          : filtered.map(a => <AnnRow key={a.id} a={a} onStatus={updateStatus} onDelete={deleteAnn} />)}
       </div>
     </div>
   )
