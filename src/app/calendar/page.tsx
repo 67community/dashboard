@@ -88,7 +88,17 @@ export default function CalendarPage() {
 
   return (
     <div style={{ minHeight:"100vh", background:"var(--background)" }}>
-      <div style={{ maxWidth:1100, margin:"0 auto", padding:"28px 24px" }}>
+      <style>{`
+        @media (max-width: 640px) {
+          .cal-layout { flex-direction: column !important; }
+          .cal-sidebar { width: 100% !important; }
+          .cal-day { min-height: 60px !important; padding: 4px !important; }
+          .cal-day-num { width: 20px !important; height: 20px !important; font-size: 0.75rem !important; }
+          .cal-event-pill { display: none !important; }
+          .cal-header { flex-wrap: wrap; gap: 8px !important; }
+        }
+      `}</style>
+      <div style={{ maxWidth:1100, margin:"0 auto", padding:"16px 12px" }}>
 
         {/* Header */}
         <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:24 }}>
@@ -109,13 +119,13 @@ export default function CalendarPage() {
           </button>
         </div>
 
-        <div style={{ display:"flex", gap:20, alignItems:"flex-start" }}>
+        <div className="cal-layout" style={{ display:"flex", gap:20, alignItems:"flex-start" }}>
           {/* Calendar grid */}
           <div style={{ flex:1, background:"var(--card)", borderRadius:18, border:"1px solid var(--separator)", overflow:"hidden" }}>
             {/* Day headers */}
             <div style={{ display:"grid", gridTemplateColumns:"repeat(7,1fr)", borderBottom:"1px solid var(--separator)" }}>
               {DAYS.map(d => (
-                <div key={d} style={{ padding:"10px 0", textAlign:"center", fontSize:"0.6875rem", fontWeight:700, color:"var(--tertiary)", textTransform:"uppercase", letterSpacing:"0.06em" }}>{d}</div>
+                <div key={d} style={{ padding:"10px 0", textAlign:"center", fontSize:"0.6875rem", fontWeight:700, color:"var(--tertiary)", textTransform:"uppercase", letterSpacing:"0.06em" }}>{d[0]}</div>
               ))}
             </div>
 
@@ -142,7 +152,7 @@ export default function CalendarPage() {
                     onMouseLeave={e => { if (!isSel) (e.currentTarget as HTMLElement).style.background = "transparent" }}
                   >
                     <div style={{
-                      width:24, height:24, borderRadius:"50%", display:"flex", alignItems:"center", justifyContent:"center",
+                      width:24, height:24, borderRadius:"50%", display:"flex", alignItems:"center", justifyContent:"center", // cal-day-num
                       background: isToday ? "#F5A623" : "transparent",
                       fontSize:"0.75rem", fontWeight: isToday ? 800 : 500,
                       color: isToday ? "#000" : "var(--foreground)", marginBottom:4,
@@ -167,7 +177,7 @@ export default function CalendarPage() {
           </div>
 
           {/* Side panel */}
-          <div style={{ width:260, flexShrink:0, display:"flex", flexDirection:"column", gap:12 }}>
+          <div className="cal-sidebar" style={{ width:260, flexShrink:0, display:"flex", flexDirection:"column", gap:12 }}>
             {selected && (
               <div style={{ background:"var(--card)", borderRadius:14, border:"1px solid var(--separator)", padding:16 }}>
                 <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:12 }}>
