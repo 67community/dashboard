@@ -128,7 +128,6 @@ export default function Dashboard() {
         )}
 
         {/* Market pills — logo + price on desktop, logo + % only on mobile */}
-        <style>{`@media(max-width:640px){.market-pill-price{display:none!important;}}`}</style>
         <div style={{ display:"flex", flexWrap:"nowrap", gap:4, flex:1, overflowX:"auto", scrollbarWidth:"none", WebkitOverflowScrolling:"touch" } as React.CSSProperties}>
           {market.map((m, i) => {
             const mUp = m.change_pct >= 0
@@ -138,7 +137,7 @@ export default function Dashboard() {
               : sym === "ETH"
               ? <svg width="13" height="13" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#627EEA"/><path d="M16.5 4v8.87l7.5 3.35L16.5 4z" fill="white" fillOpacity=".6"/><path d="M16.5 4L9 16.22l7.5-3.35V4z" fill="white"/><path d="M16.5 21.97v6.03L24 17.62 16.5 21.97z" fill="white" fillOpacity=".6"/><path d="M16.5 28v-6.03L9 17.62 16.5 28z" fill="white"/></svg>
               : sym === "SOL"
-              ? <svg width="13" height="13" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#9945FF"/><path d="M9 21h14l-2.5 3H6.5L9 21zm0-6h14l-2.5 3H6.5L9 15zm2.5-6h14l-2.5 3H9l2.5-3z" fill="white"/></svg>
+              ? <svg width="13" height="13" viewBox="0 0 32 32"><defs><linearGradient id="solG" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stopColor="#9945FF"/><stop offset="50%" stopColor="#8752F3"/><stop offset="100%" stopColor="#00FFA3"/></linearGradient></defs><circle cx="16" cy="16" r="16" fill="#000"/><path d="M8 21.5h13.5l-2.5 2.5H5.5L8 21.5zm0-6h13.5l-2.5 2.5H5.5L8 15.5zm2.5-6h13.5l-2.5 2.5H8L10.5 9.5z" fill="url(#solG)"/></svg>
               : <span style={{ fontSize:"0.65rem" }}>{m.emoji}</span>
             return (
               <span key={i} style={{
