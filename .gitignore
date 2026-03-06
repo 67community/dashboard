@@ -44,3 +44,9 @@ next-env.d.ts
 .tiktok_browser_profile/
 __pycache__/
 data.json
+
+# Meme library (too large for git)
+public/library/
+
+# Meme library (too large for git)
+public/library/
