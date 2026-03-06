@@ -102,9 +102,10 @@ export default function Dashboard() {
     <div>
       {/* ══ Slim identity strip ═════════════════════════════════ */}
       <div className="enter-1" style={{
-        display:"flex", alignItems:"center", gap:8, flexWrap:"wrap",
+        display:"flex", alignItems:"center", gap:8,
         marginBottom:20, paddingBottom:14,
         borderBottom:"1px solid rgba(0,0,0,0.07)",
+        overflow:"hidden",
       }}>
         {/* $67 live price pill with logo */}
         {(livePrice ?? 0) > 0 && (
@@ -128,7 +129,7 @@ export default function Dashboard() {
 
         {/* Market pills — logo + price on desktop, logo + % only on mobile */}
         <style>{`@media(max-width:640px){.market-pill-price{display:none!important;}}`}</style>
-        <div style={{ display:"flex", flexWrap:"nowrap", gap:4, flex:1, overflowX:"auto", scrollbarWidth:"none" }}>
+        <div style={{ display:"flex", flexWrap:"nowrap", gap:4, flex:1, overflowX:"auto", scrollbarWidth:"none", WebkitOverflowScrolling:"touch" } as React.CSSProperties}>
           {market.map((m, i) => {
             const mUp = m.change_pct >= 0
             const sym = m.symbol.replace("-USD","").replace("=F","").toUpperCase()
