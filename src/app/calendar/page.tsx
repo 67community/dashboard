@@ -2,11 +2,8 @@
 
 import { useState } from "react"
 import { ChevronLeft, ChevronRight, Plus, Trash2 } from "lucide-react"
-import { TopBar } from "@/components/layout/top-bar"
-import { ContentPipelineCard } from "@/components/cards/content-pipeline"
-import { CommunityEventsCard } from "@/components/cards/events"
 
-type EventKind = "game-night" | "ama" | "spaces" | "raid" | "announcement" | "other"
+type EventKind = "game-night" | "ama" | "spaces" | "raid" | "announcement" | "other" | "tweet" | "thread" | "meme" | "tiktok" | "reel"
 
 interface CalEvent {
   id: string
@@ -24,6 +21,11 @@ const KIND: Record<EventKind, { emoji: string; color: string; bg: string }> = {
   "raid":         { emoji: "⚔️", color: "#F87171", bg: "rgba(248,113,113,0.15)" },
   "announcement": { emoji: "📢", color: "#F5A623", bg: "rgba(245,166,35,0.15)"  },
   "other":        { emoji: "⭐", color: "#34D399", bg: "rgba(52,211,153,0.15)"  },
+  "tweet":        { emoji: "🐦", color: "#1D9BF0", bg: "rgba(29,155,240,0.15)"  },
+  "thread":       { emoji: "📝", color: "#10B981", bg: "rgba(16,185,129,0.15)"  },
+  "meme":         { emoji: "🎭", color: "#F59E0B", bg: "rgba(245,158,11,0.15)"  },
+  "tiktok":       { emoji: "🎵", color: "#EE1D52", bg: "rgba(238,29,82,0.15)"   },
+  "reel":         { emoji: "🎬", color: "#C026D3", bg: "rgba(192,38,211,0.15)"  },
 }
 
 const DAYS = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]
@@ -86,7 +88,6 @@ export default function CalendarPage() {
 
   return (
     <div style={{ minHeight:"100vh", background:"var(--background)" }}>
-      <TopBar />
       <div style={{ maxWidth:1100, margin:"0 auto", padding:"28px 24px" }}>
 
         {/* Header */}
@@ -246,11 +247,7 @@ export default function CalendarPage() {
           </div>
         </div>
 
-        {/* Content Pipeline + Community Events */}
-        <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:20, marginTop:24 }}>
-          <ContentPipelineCard />
-          <CommunityEventsCard />
-        </div>
+
       </div>
     </div>
   )

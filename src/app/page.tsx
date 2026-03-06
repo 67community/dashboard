@@ -19,6 +19,7 @@ import { MilestonesCard }       from "@/components/cards/milestones"
 import { FeatureRequestCard, FeatureRequestSection }   from "@/components/cards/feature-request"
 import { OutreachCard }         from "@/components/cards/outreach"
 import { MapWidgetCard }        from "@/components/cards/map-widget"
+import { MapBackground }        from "@/components/cards/map-background"
 import { RaidCoordinatorCard }  from "@/components/cards/raid-coordinator"
 import { DailyBriefingCard }    from "@/components/cards/daily-briefing"
 import { TeamNotesCard }          from "@/components/cards/team-notes"
@@ -193,7 +194,7 @@ export default function Dashboard() {
           <div className="mob-order-0"><AnnouncementsCard /></div>
           <div className="mob-order-3"><XRaidCard /></div>
           <div className="mob-order-7"><WalletTrackerCard /></div>
-          <div style={{ borderRadius:18, overflow:"hidden", height:840 }}><MapWidgetCard /></div>
+          <div style={{ borderRadius:18, overflow:"hidden", height:840, background:"#111" }}><MapWidgetCard /></div>
         </div>
       </div>
 
@@ -201,7 +202,7 @@ export default function Dashboard() {
       <div style={{ marginTop:0, borderRadius:20, position:"relative", overflow:"hidden" }}>
         {/* Map as background */}
         <div style={{ position:"absolute", inset:0, zIndex:0 }}>
-          <MapWidgetCard />
+          <MapBackground />
         </div>
         {/* Gradient overlays on top of map */}
         <div style={{ position:"absolute", inset:0, zIndex:1, background:"linear-gradient(115deg, rgba(10,10,10,0.75) 0%, rgba(17,17,8,0.6) 40%, rgba(42,26,0,0.45) 70%, rgba(122,69,0,0.3) 90%, rgba(200,130,10,0.2) 100%)" }} />
