@@ -128,7 +128,7 @@ export default function Dashboard() {
         )}
 
         {/* Market pills — logo + price on desktop, logo + % only on mobile */}
-        <div style={{ display:"flex", flexWrap:"nowrap", gap:4, flex:1, overflowX:"auto", scrollbarWidth:"none", WebkitOverflowScrolling:"touch" } as React.CSSProperties}>
+        <div style={{ display:"flex", flexWrap:"nowrap", gap:4, flex:1, overflowX:"auto", scrollbarWidth:"none" }}>
           {market.map((m, i) => {
             const mUp = m.change_pct >= 0
             const sym = m.symbol.replace("-USD","").replace("=F","").toUpperCase()
