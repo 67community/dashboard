@@ -374,9 +374,9 @@ export function TeamNotesCard() {
   const MEETINGS = [
     {
       date: "2026-03-03",
-      label: "Discord Voice — March 3, 2026",
+      label: "Discord Voice — March 7, 2026",
       duration: "52:31",
-      audio: "/meetings/meeting-2026-03-03.mp3",
+      audio: "/meetings/meeting-2026-03-07.mp3",
       summary: [
         "Dashboard cards presented to the team — Announcements, X Raid Panel, Team Notes, Kanban",
         "Meaning of 67 Coin: Study Murad. Wednesday: everyone answers 'What does holding 67 mean?'",
@@ -461,12 +461,12 @@ export function TeamNotesCard() {
         <div style={{ background:"rgba(124,58,237,0.06)", border:"1px solid rgba(124,58,237,0.18)", borderRadius:10, padding:"8px 10px" }}>
           <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", gap:10, marginBottom:8 }}>
             <div>
-              <p style={{ margin:0, fontSize:"0.6875rem", fontWeight:700, color:"var(--foreground)" }}>Discord Voice — March 3, 2026</p>
+              <p style={{ margin:0, fontSize:"0.6875rem", fontWeight:700, color:"var(--foreground)" }}>Discord Voice — March 7, 2026</p>
               <p style={{ margin:"2px 0 0", fontSize:"0.5rem", color:"var(--tertiary)" }}>
                 {Math.floor(meetingTime/60)}:{String(Math.floor(meetingTime%60)).padStart(2,"0")} / 52:31
               </p>
             </div>
-            <button onClick={(e) => { e.stopPropagation(); e.preventDefault(); toggleMeeting("/meetings/meeting-2026-03-03.mp3") }}
+            <button onClick={(e) => { e.stopPropagation(); e.preventDefault(); toggleMeeting("/meetings/meeting-2026-03-07.mp3") }}
               style={{ width:40, height:40, borderRadius:99, border:"none", cursor:"pointer", background:"#7C3AED", color:"#fff", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0, fontSize:14, position:"relative", zIndex:20 }}>
               {meetingPlaying ? "⏸" : "▶"}
             </button>
