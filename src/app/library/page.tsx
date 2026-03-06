@@ -3,7 +3,7 @@
 import { useState, useMemo } from "react"
 
 const BASE = "https://raw.githubusercontent.com/67coin/Library/main"
-const FILES = [
+const FILES: string[] = [
   "1-67ski-edited.mp4",
   "10-67b.mp4",
   "11-queen.mp4",
@@ -453,7 +453,7 @@ const FILES = [
 ]
 
 const IMAGES = FILES.filter(f => /\.(jpg|jpeg|png|gif|webp)$/i.test(f))
-const VIDEOS = FILES.filter(f => /\.(mp4|mov|avi|mkv|webm)$/i.test(f))
+const VIDEOS = FILES.filter(f => /\.(mp4|mov|avi|mkv|webm|sticker\.webm)$/i.test(f))
 type Tab = "all" | "images" | "videos"
 
 export default function LibraryPage() {
@@ -467,13 +467,11 @@ export default function LibraryPage() {
     return base
   }, [tab, search])
 
+  const url = (f: string) => `${BASE}/${encodeURIComponent(f)}`
+  const isVideo = (f: string) => /\.(mp4|mov|avi|mkv|webm)$/i.test(f)
+
   return (
     <div style={{ minHeight: "100vh", background: "var(--background)", padding: "24px" }}>
-      <style>{`
-        .lib-item:hover { transform: scale(1.02); }
-        .lib-item:hover .lib-overlay { opacity: 1 !important; }
-        .lib-item { transition: transform 0.15s; cursor: pointer; }
-      `}</style>
       <div style={{ marginBottom: 24 }}>
         <h1 style={{ fontSize: "1.5rem", fontWeight: 900, color: "var(--foreground)", margin: "0 0 4px", letterSpacing: "-0.04em" }}>
           Meme Library
@@ -500,36 +498,25 @@ export default function LibraryPage() {
             background: "var(--fill-primary)", color: "var(--foreground)", fontSize: 13 }} />
       </div>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))", gap: 10 }}>
-        {list.map(file => {
-          const isVideo = /\.(mp4|mov|avi|mkv|webm)$/i.test(file)
-          const url = `${BASE}/${encodeURIComponent(file)}`
-          return (
-            <div key={file} className="lib-item" onClick={() => setSelected(file)} style={{
-              borderRadius: 12, overflow: "hidden", background: "var(--card)",
-              border: "1px solid var(--separator)", aspectRatio: "1", position: "relative",
-            }}>
-              {isVideo ? (
-                <video src={url} muted playsInline preload="metadata"
-                  onLoadedMetadata={e => { (e.target as HTMLVideoElement).currentTime = 1 }}
-                  style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", pointerEvents: "none" }} />
-              ) : (
-                <img src={url} alt={file} loading="lazy"
-                  style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-              )}
-              {isVideo && <div style={{ position: "absolute", top: 6, right: 6, background: "rgba(0,0,0,0.65)",
-                borderRadius: 4, padding: "2px 6px", fontSize: 9, color: "#fff", fontWeight: 700 }}>VIDEO</div>}
-              <div className="lib-overlay" style={{ position: "absolute", inset: 0,
-                background: "rgba(0,0,0,0.4)", display: "flex", alignItems: "flex-end", justifyContent: "center",
-                opacity: 0, transition: "opacity 0.15s", paddingBottom: 10 }}>
-                <a href={url} download={file} onClick={e => e.stopPropagation()}
-                  style={{ padding: "6px 14px", borderRadius: 8, background: "#F5A623", color: "#000",
-                    fontWeight: 700, fontSize: 12, textDecoration: "none" }}>
-                  Download
-                </a>
-              </div>
-            </div>
-          )
-        })}
+        {list.map(file => (
+          <div key={file} onClick={() => setSelected(file)} style={{
+            borderRadius: 12, overflow: "hidden", background: "var(--card)",
+            border: "1px solid var(--separator)", cursor: "pointer", aspectRatio: "1", position: "relative",
+          }}>
+            {isVideo(file) ? (
+              <video src={url(file)} muted playsInline preload="metadata"
+                onLoadedMetadata={e => { (e.target as HTMLVideoElement).currentTime = 1 }}
+                style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+            ) : (
+              <img src={url(file)} alt={file} loading="lazy"
+                style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+            )}
+            {isVideo(file) && (
+              <div style={{ position: "absolute", top: 6, right: 6, background: "rgba(0,0,0,0.65)",
+                borderRadius: 4, padding: "2px 6px", fontSize: 9, color: "#fff", fontWeight: 700 }}>VIDEO</div>
+            )}
+          </div>
+        ))}
       </div>
       {list.length === 0 && (
         <div style={{ textAlign: "center", padding: "60px 0", color: "var(--secondary)", fontSize: 14 }}>No files found</div>
@@ -541,20 +528,21 @@ export default function LibraryPage() {
         }}>
           <button onClick={() => setSelected(null)} style={{ position: "absolute", top: 20, right: 20,
             background: "rgba(255,255,255,0.1)", border: "none", color: "#fff", fontSize: 20,
-            borderRadius: "50%", width: 36, height: 36, cursor: "pointer" }}>✕</button>
-          {/\.(mp4|mov|avi|mkv|webm)$/i.test(selected) ? (
-            <video src={`${BASE}/${encodeURIComponent(selected)}`} controls autoPlay
+            borderRadius: "50%", width: 36, height: 36, cursor: "pointer" }}>x</button>
+          {isVideo(selected) ? (
+            <video src={url(selected)} controls autoPlay
               style={{ maxWidth: "90vw", maxHeight: "85vh", borderRadius: 12 }}
               onClick={e => e.stopPropagation()} />
           ) : (
-            <img src={`${BASE}/${encodeURIComponent(selected)}`} alt={selected}
+            <img src={url(selected)} alt={selected}
               style={{ maxWidth: "90vw", maxHeight: "85vh", borderRadius: 12, objectFit: "contain" }}
               onClick={e => e.stopPropagation()} />
           )}
           <div style={{ position: "absolute", bottom: 20, display: "flex", gap: 12, alignItems: "center" }}>
-            <p style={{ color: "rgba(255,255,255,0.5)", fontSize: 12, margin: 0 }}>{selected}</p>
-            <a href={`${BASE}/${encodeURIComponent(selected)}`} download={selected} onClick={e => e.stopPropagation()}
-              style={{ padding: "6px 14px", borderRadius: 8, background: "#F5A623", color: "#000",
+            <span style={{ color: "rgba(255,255,255,0.5)", fontSize: 12 }}>{selected}</span>
+            <a href={url(selected)} download={selected} target="_blank" rel="noreferrer"
+              onClick={e => e.stopPropagation()}
+              style={{ padding: "6px 16px", borderRadius: 8, background: "#F5A623", color: "#000",
                 fontWeight: 700, fontSize: 12, textDecoration: "none" }}>Download</a>
           </div>
         </div>
