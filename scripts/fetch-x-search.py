@@ -1,8 +1,5 @@
 #!/usr/bin/env python3
-"""
-X search via Twitter241 RapidAPI — targeted $67 coin queries.
-Writes x_recent (latest) and x_popular (top 20) to public/data.json
-"""
+"""X search via Twitter241 RapidAPI — $67 coin targeted, spam filtered."""
 import json, urllib.request, urllib.parse, time
 from pathlib import Path
 from datetime import datetime, timezone
@@ -10,7 +7,6 @@ from datetime import datetime, timezone
 RAPIDAPI_KEY = "4b393aa0cemsh6895fd899d6eedcp1a441djsnfe89097510cd"
 DATA_JSON    = Path(__file__).parent.parent / "public/data.json"
 
-# Specific queries — $67 coin focused
 QUERIES = [
     "#67coin",
     "#67to67billion",
@@ -20,11 +16,20 @@ QUERIES = [
     "#67meme",
 ]
 
-# Terms that MUST appear for a tweet to be relevant
 RELEVANT_TERMS = [
-    "67coin", "#67", "$67", "67 coin", "six seven", "six&seven",
+    "67coin", "#67", "$67", "67 coin", "six seven",
     "maverick 67", "67kid", "67to67", "67meme", "67 solana",
-    "9avytnuksLxpxfhfqs6vlxaxt5p6bhy",  # CA (lowercase)
+]
+
+# Spam / irrelevant keyword blacklist
+SPAM_KEYWORDS = [
+    "casino", "poker", "betting", "gambl", "slot", "jackpot", "desk when",
+    "vault that", "upfront cash", "tables from", "your phone", "breakthrough",
+    "super:https", "clicking here", "earn from", "passive income", "click below",
+    "make money", "onlinepokies", "ultrafirtina", "smartsampiyon", "mkingbet",
+    "crypto signal", "airdrop to 500", "join now", "dm me", "t.me/",
+    "hitting the table", "biggest breakthrough", "zero upfront",
+    "everything you are looking for", "why stay stuck",
 ]
 
 def api_search(query: str, mode: str = "Latest", count: int = 40) -> dict:
@@ -84,7 +89,43 @@ def parse_tweets(data: dict) -> list:
 
 def is_relevant(text: str) -> bool:
     low = text.lower()
-    return any(term.lower() in low for term in RELEVANT_TERMS)
+    return any(t.lower() in low for t in RELEVANT_TERMS)
+
+def is_spam(text: str) -> bool:
+    low = text.lower()
+    return any(kw in low for kw in SPAM_KEYWORDS)
+
+def is_valid(t: dict) -> bool:
+    text = t["text"]
+    low  = text.lower()
+
+    # Must be relevant
+    if not is_relevant(text):
+        return False
+    # Must not be spam
+    if is_spam(text):
+        return False
+
+    # Zero-engagement + URL = likely spam bot
+    total_eng = t["likes"] + t["reposts"] + t["replies"]
+    if total_eng == 0 and "http" in low and len(text) > 100:
+        return False
+
+    # If tweet mentions another coin as its main subject, skip
+    # (spam bots add #67coin to unrelated posts)
+    other_coins = ["$aura", "$aicoin", "$pippin", "$pepe", "$doge",
+                   "#solana at $", "exit #solana", "dex paid", "dexscreener"]
+    if any(c in low for c in other_coins):
+        return False
+
+    # Tweet should have 67-related content in first 120 chars OR have engagement
+    first = low[:120]
+    core_terms = ["67coin", "#67", "$67", "67 coin", "maverick 67", "67meme", "67to67"]
+    in_first = any(t in first for t in core_terms)
+    if not in_first and total_eng == 0:
+        return False  # Hashtag stuffing with no engagement
+
+    return True
 
 def main():
     print("Fetching X search data via API...")
@@ -96,25 +137,17 @@ def main():
 
     for query in QUERIES:
         print(f"  🔍 '{query}'")
-        # Recent
-        tweets = parse_tweets(api_search(query, "Latest", 40))
-        for t in tweets:
-            if not is_relevant(t["text"]): continue
-            k = t["link"] or t["text"][:50]
-            if k not in seen_recent:
-                seen_recent.add(k)
-                recent_all.append(t)
-        time.sleep(0.3)
-
-        # Popular
-        tweets = parse_tweets(api_search(query, "Top", 40))
-        for t in tweets:
-            if not is_relevant(t["text"]): continue
-            k = t["link"] or t["text"][:50]
-            if k not in seen_popular:
-                seen_popular.add(k)
-                popular_all.append(t)
-        time.sleep(0.3)
+        for mode, bucket, seen in [("Latest", recent_all, seen_recent),
+                                    ("Top",    popular_all, seen_popular)]:
+            tweets = parse_tweets(api_search(query, mode, 40))
+            for t in tweets:
+                if not is_valid(t):
+                    continue
+                k = t["link"] or t["text"][:50]
+                if k not in seen:
+                    seen.add(k)
+                    bucket.append(t)
+            time.sleep(0.3)
 
     recent_all.sort(key=lambda t: t["time"], reverse=True)
     popular_all.sort(key=lambda t: t["likes"] + t["reposts"] * 2, reverse=True)
@@ -123,7 +156,7 @@ def main():
     popular_final = popular_all[:20]
 
     print(f"\n📊 Recent: {len(recent_final)} | Popular: {len(popular_final)}")
-    for t in recent_final[:3]:
+    for t in recent_final[:5]:
         print(f"  @{t['handle']}: {t['text'][:70]}")
 
     with open(DATA_JSON) as f:
