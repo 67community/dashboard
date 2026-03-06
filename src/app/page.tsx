@@ -103,7 +103,7 @@ export default function Dashboard() {
       {/* ══ Slim identity strip ═════════════════════════════════ */}
       <div className="enter-1" style={{
         display:"flex", alignItems:"center", gap:8,
-        marginBottom:20, paddingBottom:14, overflow:"hidden",
+        marginBottom:20, paddingBottom:14,
         borderBottom:"1px solid rgba(0,0,0,0.07)",
       }}>
         {/* $67 live price pill with logo */}
