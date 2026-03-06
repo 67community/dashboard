@@ -31,9 +31,9 @@ const CH_CONFIG: Record<AnnChannel, { emoji: string; label: string; color: strin
 // Send targets
 type SendTarget = "discord" | "telegram" | "raid"
 const SEND_TARGETS: Record<SendTarget, { emoji: string; label: string }> = {
-  discord:  { emoji: "💬", label: "Discord"  },
-  telegram: { emoji: "✈️",  label: "Telegram" },
-  raid:     { emoji: "⚔️",  label: "Raid"     },
+  discord:  { emoji: "", label: "Discord"  },
+  telegram: { emoji: "", label: "Telegram" },
+  raid:     { emoji: "", label: "Raid"     },
 }
 
 const TYPE_CONFIG: Record<AnnType, { label: string; color: string }> = {
@@ -115,7 +115,7 @@ function AnnRow({ a, onStatus, onDelete, onSend, sending, sendRes, sendTarget, o
             style={{padding:"4px 8px",borderRadius:8,border:"1.5px solid var(--separator)",
               fontSize:"0.75rem",fontFamily:"inherit",background:"var(--input-bg)",cursor:"pointer"}}>
             {Object.entries(SEND_TARGETS).map(([k,v])=>(
-              <option key={k} value={k}>{v.emoji} {v.label}</option>
+              <option key={k} value={k}>{v.label}</option>
             ))}
           </select>
           <button onClick={e=>{e.stopPropagation();onSend(a)}} disabled={sending}
@@ -246,7 +246,7 @@ export function AnnouncementsCard() {
               <select value={channel} onChange={e => setChannel(e.target.value as AnnChannel)}
                 style={{ flex:1, padding:"7px 8px", borderRadius:8, border:"1.5px solid var(--separator)",
                   outline:"none", fontSize:"0.8125rem", fontFamily:"inherit", background:"var(--input-bg)" }}>
-                {Object.entries(CH_CONFIG).map(([k,v]) => <option key={k} value={k}>{v.emoji} {v.label}</option>)}
+                {Object.entries(CH_CONFIG).map(([k,v]) => <option key={k} value={k}>{v.label}</option>)}
               </select>
             </div>
             <div style={{ position:"relative" }}>
@@ -339,7 +339,7 @@ export function AnnouncementsCard() {
             <select value={channel} onChange={e => setChannel(e.target.value as AnnChannel)}
               style={{ flex:1, padding:"7px 8px", borderRadius:8, border:"1.5px solid var(--separator)",
                 outline:"none", fontSize:"0.8125rem", fontFamily:"inherit", background:"var(--input-bg)" }}>
-              {Object.entries(CH_CONFIG).map(([k,v]) => <option key={k} value={k}>{v.emoji} {v.label}</option>)}
+              {Object.entries(CH_CONFIG).map(([k,v]) => <option key={k} value={k}>{v.label}</option>)}
             </select>
           </div>
           <div style={{ position:"relative" }}>
