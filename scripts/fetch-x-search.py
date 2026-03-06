@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-X search via Twitter241 RapidAPI — no Playwright, no proxy.
-Fetches x_recent (latest) and x_popular (top 20) for 67-related queries.
+X search via Twitter241 RapidAPI — targeted $67 coin queries.
+Writes x_recent (latest) and x_popular (top 20) to public/data.json
 """
 import json, urllib.request, urllib.parse, time
 from pathlib import Path
@@ -10,7 +10,22 @@ from datetime import datetime, timezone
 RAPIDAPI_KEY = "4b393aa0cemsh6895fd899d6eedcp1a441djsnfe89097510cd"
 DATA_JSON    = Path(__file__).parent.parent / "public/data.json"
 
-QUERIES = ["67coin", "67 coin", "Six Seven crypto", "6-7 coin", "maverick 67"]
+# Specific queries — $67 coin focused
+QUERIES = [
+    "#67coin",
+    "#67to67billion",
+    "$67 solana",
+    "67coin solana",
+    "maverick 67 coin",
+    "#67meme",
+]
+
+# Terms that MUST appear for a tweet to be relevant
+RELEVANT_TERMS = [
+    "67coin", "#67", "$67", "67 coin", "six seven", "six&seven",
+    "maverick 67", "67kid", "67to67", "67meme", "67 solana",
+    "9avytnuksLxpxfhfqs6vlxaxt5p6bhy",  # CA (lowercase)
+]
 
 def api_search(query: str, mode: str = "Latest", count: int = 40) -> dict:
     params = urllib.parse.urlencode({"query": query, "type": mode, "count": count})
@@ -39,7 +54,6 @@ def parse_tweets(data: dict) -> list:
             if not text or text.startswith("RT "):
                 continue
 
-            # Author — name/screen_name are in core, not legacy
             ucore  = (tw.get("core", {})
                         .get("user_results", {})
                         .get("result", {})
@@ -68,6 +82,10 @@ def parse_tweets(data: dict) -> list:
             })
     return tweets
 
+def is_relevant(text: str) -> bool:
+    low = text.lower()
+    return any(term.lower() in low for term in RELEVANT_TERMS)
+
 def main():
     print("Fetching X search data via API...")
 
@@ -77,25 +95,27 @@ def main():
     seen_popular = set()
 
     for query in QUERIES:
-        print(f"  🔍 Recent: '{query}'")
+        print(f"  🔍 '{query}'")
+        # Recent
         tweets = parse_tweets(api_search(query, "Latest", 40))
         for t in tweets:
+            if not is_relevant(t["text"]): continue
             k = t["link"] or t["text"][:50]
             if k not in seen_recent:
                 seen_recent.add(k)
                 recent_all.append(t)
         time.sleep(0.3)
 
-        print(f"  🔍 Popular: '{query}'")
+        # Popular
         tweets = parse_tweets(api_search(query, "Top", 40))
         for t in tweets:
+            if not is_relevant(t["text"]): continue
             k = t["link"] or t["text"][:50]
             if k not in seen_popular:
                 seen_popular.add(k)
                 popular_all.append(t)
         time.sleep(0.3)
 
-    # Sort
     recent_all.sort(key=lambda t: t["time"], reverse=True)
     popular_all.sort(key=lambda t: t["likes"] + t["reposts"] * 2, reverse=True)
 
@@ -103,10 +123,8 @@ def main():
     popular_final = popular_all[:20]
 
     print(f"\n📊 Recent: {len(recent_final)} | Popular: {len(popular_final)}")
-    if recent_final:
-        print(f"  Latest: @{recent_final[0]['handle']} — {recent_final[0]['text'][:60]}")
-    if popular_final:
-        print(f"  Top: @{popular_final[0]['handle']} — {popular_final[0]['likes']} likes — {popular_final[0]['text'][:60]}")
+    for t in recent_final[:3]:
+        print(f"  @{t['handle']}: {t['text'][:70]}")
 
     with open(DATA_JSON) as f:
         data = json.load(f)
@@ -114,7 +132,6 @@ def main():
     data["x_popular"] = popular_final
     with open(DATA_JSON, "w") as f:
         json.dump(data, f, indent=2)
-
     print("✅ data.json updated")
 
 main()
