@@ -126,25 +126,30 @@ export default function Dashboard() {
           </span>
         )}
 
-        {/* Market pills — compact, hidden on mobile */}
-        <div className="market-pills" style={{ display:"flex", flexWrap:"nowrap", gap:4, flex:1, overflowX:"auto", scrollbarWidth:"none" }}>
+        {/* Market pills — logo + price, scrollable */}
+        <div style={{ display:"flex", flexWrap:"nowrap", gap:4, flex:1, overflowX:"auto", scrollbarWidth:"none" }}>
           {market.map((m, i) => {
             const mUp = m.change_pct >= 0
+            const sym = m.symbol.replace("-USD","").replace("=F","").toUpperCase()
+            const logo = sym === "BTC"
+              ? <svg width="13" height="13" viewBox="0 0 32 32" style={{flexShrink:0}}><circle cx="16" cy="16" r="16" fill="#F7931A"/><path d="M22.5 14.2c.3-2.1-1.3-3.2-3.5-4l.7-2.8-1.7-.4-.7 2.7-1.3-.3.7-2.7-1.7-.4-.7 2.8-1.1-.3-2.4-.6-.4 1.8s1.3.3 1.2.3c.7.2.8.6.8 1l-2 7.9c-.1.2-.4.5-.9.4 0 .1-1.3-.3-1.3-.3l-.9 1.9 2.2.6 1.2.3-.7 2.8 1.7.4.7-2.8 1.3.3-.7 2.8 1.7.4.7-2.8c2.9.5 5.1.3 6-2.3.7-2-.1-3.2-1.5-3.9 1-.3 1.8-1.1 2-2.7zm-3.6 5c-.5 2-3.9.9-5 .7l.9-3.5c1.1.3 4.7.8 4.1 2.8zm.5-5c-.5 1.8-3.3.9-4.3.7l.8-3.2c1 .2 4.1.7 3.5 2.5z" fill="white"/></svg>
+              : sym === "ETH"
+              ? <svg width="13" height="13" viewBox="0 0 32 32" style={{flexShrink:0}}><circle cx="16" cy="16" r="16" fill="#627EEA"/><path d="M16.5 4v8.87l7.5 3.35L16.5 4z" fill="white" fillOpacity=".6"/><path d="M16.5 4L9 16.22l7.5-3.35V4z" fill="white"/><path d="M16.5 21.97v6.03L24 17.62 16.5 21.97z" fill="white" fillOpacity=".6"/><path d="M16.5 28v-6.03L9 17.62 16.5 28z" fill="white"/></svg>
+              : sym === "SOL"
+              ? <svg width="13" height="13" viewBox="0 0 32 32" style={{flexShrink:0}}><defs><linearGradient id="solG2" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stopColor="#9945FF"/><stop offset="100%" stopColor="#00FFA3"/></linearGradient></defs><circle cx="16" cy="16" r="16" fill="#000"/><path d="M8 21.5h13.5l-2.5 2.5H5.5L8 21.5zm0-6h13.5l-2.5 2.5H5.5L8 15.5zm2.5-6h13.5l-2.5 2.5H8L10.5 9.5z" fill="url(#solG2)"/></svg>
+              : <span style={{fontSize:"0.65rem"}}>{m.emoji}</span>
             return (
-              <span key={i} className="market-pill" style={{
+              <span key={i} style={{
                 display:"inline-flex", alignItems:"center", gap:3,
                 fontSize:"0.5625rem", fontWeight:600,
                 background: mUp ? "rgba(5,150,105,0.15)" : "rgba(239,68,68,0.15)",
                 border: `1px solid ${mUp ? "rgba(5,150,105,0.3)" : "rgba(239,68,68,0.3)"}`,
                 color: mUp ? "#34D399" : "#F87171",
                 padding:"2px 6px", borderRadius:99,
-                whiteSpace:"nowrap",
+                whiteSpace:"nowrap", flexShrink:0,
               }}>
-                <span style={{ fontSize:"0.6rem" }}>{m.emoji}</span>
-                <span style={{ fontWeight:800 }}>
-                  {m.symbol.replace("-USD","").replace("=F","")}
-                </span>
-                <span className="market-pill-price" style={{ fontVariantNumeric:"tabular-nums", opacity:0.85 }}>
+                {logo}
+                <span style={{ fontVariantNumeric:"tabular-nums" }}>
                   ${fmtP(m.price, m.kind)}
                 </span>
                 <span style={{ fontWeight:700 }}>
