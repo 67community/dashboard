@@ -17,6 +17,7 @@ const NAV = [
   { href: "/",             label: "Dashboard"       },
   { href: "/kanban",       label: "Tasks"           },
   { href: "/calendar",     label: "Calendar"        },
+  { href: "/library",      label: "Library"         },
 ]
 
 function timeAgo(d: Date | null) {
