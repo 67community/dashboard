@@ -198,7 +198,7 @@ export default function Dashboard() {
           <div className="mob-order-0"><AnnouncementsCard /></div>
           <div className="mob-order-3"><XRaidCard /></div>
           <div className="mob-order-7"><WalletTrackerCard /></div>
-          <div style={{ borderRadius:18, overflow:"hidden", background:"#111" }}><MapWidgetCard /></div>
+          <div style={{ borderRadius:18, overflow:"hidden", background:"#111", minHeight:320 }}><MapWidgetCard /></div>
         </div>
       </div>
 
