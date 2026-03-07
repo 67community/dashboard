@@ -254,12 +254,17 @@ export function AnnouncementsCard() {
                       fontSize:"0.7rem", color:"var(--secondary)" }}>✕</button>
                 )}
               </div>
-              <select value={type} onChange={e => setType(e.target.value as AnnType)}
-                style={{ width:"100%", padding:"7px 8px", borderRadius:8, border:"1.5px solid var(--separator)",
-                  outline:"none", fontSize:"0.8125rem", fontFamily:"inherit", background:"var(--input-bg)" }}>
-                <option value="general">TG Main</option>
-                <option value="raid">TG Raid</option>
-              </select>
+              <div style={{ display:"flex", gap:6 }}>
+                {([["general","TG Main","#2AABEE"],["raid","TG Raid","#EF4444"]] as const).map(([v,label,color]) => (
+                  <button key={v} onClick={()=>setType(v)}
+                    style={{ flex:1, padding:"7px 0", borderRadius:8, fontSize:"0.8125rem", fontWeight:700,
+                      border:`1.5px solid ${type===v ? color : "var(--separator)"}`,
+                      background: type===v ? `${color}18` : "transparent",
+                      color: type===v ? color : "var(--secondary)", cursor:"pointer" }}>
+                    {label}
+                  </button>
+                ))}
+              </div>
               {formRes && <p style={{ fontSize:"0.75rem", fontWeight:600,
                 color: formRes.startsWith("✅") ? "#059669" : "#EF4444" }}>{formRes}</p>}
               <div style={{ display:"flex", gap:6 }}>
@@ -333,12 +338,17 @@ export function AnnouncementsCard() {
                   fontSize:"0.7rem", color:"var(--secondary)" }}>✕</button>
             )}
           </div>
-          <select value={type} onChange={e => setType(e.target.value as AnnType)}
-            style={{ width:"100%", padding:"7px 8px", borderRadius:8, border:"1.5px solid var(--separator)",
-              outline:"none", fontSize:"0.8125rem", fontFamily:"inherit", background:"var(--input-bg)" }}>
-            <option value="general">TG Main</option>
-            <option value="raid">TG Raid</option>
-          </select>
+          <div style={{ display:"flex", gap:6 }}>
+            {([["general","TG Main","#2AABEE"],["raid","TG Raid","#EF4444"]] as const).map(([v,label,color]) => (
+              <button key={v} onClick={()=>setType(v)}
+                style={{ flex:1, padding:"7px 0", borderRadius:8, fontSize:"0.8125rem", fontWeight:700,
+                  border:`1.5px solid ${type===v ? color : "var(--separator)"}`,
+                  background: type===v ? `${color}18` : "transparent",
+                  color: type===v ? color : "var(--secondary)", cursor:"pointer" }}>
+                {label}
+              </button>
+            ))}
+          </div>
           {formRes && <p style={{ fontSize:"0.75rem", fontWeight:600,
             color: formRes.startsWith("✅") ? "#059669" : "#EF4444" }}>{formRes}</p>}
           <div style={{ display:"flex", gap:6 }}>
