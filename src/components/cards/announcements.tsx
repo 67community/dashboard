@@ -254,18 +254,12 @@ export function AnnouncementsCard() {
                       fontSize:"0.7rem", color:"var(--secondary)" }}>✕</button>
                 )}
               </div>
-              <div style={{ display:"flex", gap:6 }}>
-                <select value={type} onChange={e => setType(e.target.value as AnnType)}
-                  style={{ flex:1, padding:"7px 8px", borderRadius:8, border:"1.5px solid var(--separator)",
-                    outline:"none", fontSize:"0.8125rem", fontFamily:"inherit", background:"var(--input-bg)" }}>
-                  {Object.entries(TYPE_CONFIG).map(([k,v]) => <option key={k} value={k}>{v.label}</option>)}
-                </select>
-                <select value={channel} onChange={e => setChannel(e.target.value as AnnChannel)}
-                  style={{ flex:1, padding:"7px 8px", borderRadius:8, border:"1.5px solid var(--separator)",
-                    outline:"none", fontSize:"0.8125rem", fontFamily:"inherit", background:"var(--input-bg)" }}>
-                  {Object.entries(CH_CONFIG).map(([k,v]) => <option key={k} value={k}>{v.label}</option>)}
-                </select>
-              </div>
+              <select value={type} onChange={e => setType(e.target.value as AnnType)}
+                style={{ width:"100%", padding:"7px 8px", borderRadius:8, border:"1.5px solid var(--separator)",
+                  outline:"none", fontSize:"0.8125rem", fontFamily:"inherit", background:"var(--input-bg)" }}>
+                <option value="general">TG Main</option>
+                <option value="raid">TG Raid</option>
+              </select>
               {formRes && <p style={{ fontSize:"0.75rem", fontWeight:600,
                 color: formRes.startsWith("✅") ? "#059669" : "#EF4444" }}>{formRes}</p>}
               <div style={{ display:"flex", gap:6 }}>
@@ -339,18 +333,12 @@ export function AnnouncementsCard() {
                   fontSize:"0.7rem", color:"var(--secondary)" }}>✕</button>
             )}
           </div>
-          <div style={{ display:"flex", gap:6 }}>
-            <select value={type} onChange={e => setType(e.target.value as AnnType)}
-              style={{ flex:1, padding:"7px 8px", borderRadius:8, border:"1.5px solid var(--separator)",
-                outline:"none", fontSize:"0.8125rem", fontFamily:"inherit", background:"var(--input-bg)" }}>
-              {Object.entries(TYPE_CONFIG).map(([k,v]) => <option key={k} value={k}>{v.label}</option>)}
-            </select>
-            <select value={channel} onChange={e => setChannel(e.target.value as AnnChannel)}
-              style={{ flex:1, padding:"7px 8px", borderRadius:8, border:"1.5px solid var(--separator)",
-                outline:"none", fontSize:"0.8125rem", fontFamily:"inherit", background:"var(--input-bg)" }}>
-              {Object.entries(CH_CONFIG).map(([k,v]) => <option key={k} value={k}>{v.label}</option>)}
-            </select>
-          </div>
+          <select value={type} onChange={e => setType(e.target.value as AnnType)}
+            style={{ width:"100%", padding:"7px 8px", borderRadius:8, border:"1.5px solid var(--separator)",
+              outline:"none", fontSize:"0.8125rem", fontFamily:"inherit", background:"var(--input-bg)" }}>
+            <option value="general">TG Main</option>
+            <option value="raid">TG Raid</option>
+          </select>
           {formRes && <p style={{ fontSize:"0.75rem", fontWeight:600,
             color: formRes.startsWith("✅") ? "#059669" : "#EF4444" }}>{formRes}</p>}
           <div style={{ display:"flex", gap:6 }}>
