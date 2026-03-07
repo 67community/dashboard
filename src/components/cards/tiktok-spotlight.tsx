@@ -276,7 +276,7 @@ export function TikTokSpotlightCard() {
       {/* Collapsed preview — top 2 popular from #67coin */}
       {totalCount > 0 ? (
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
-          {(coinPop.length > 0 ? coinPop : coinAll).slice(0, 2).map((v, i) => (
+          {(coinPop.length > 0 ? coinPop : coinAll).slice(0, 4).map((v, i) => (
             <VideoTile key={i} v={v} />
           ))}
         </div>
@@ -331,7 +331,7 @@ export function TikTokSpotlightCard() {
         {/* Fallback: old data without video_type */}
         {!hasPop && !hasRec && hasFallback && (
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
-            {fallbackVideos!.slice(0, 4).map((v, i) => <VideoTile key={i} v={v} large />)}
+            {fallbackVideos!.slice(0, 8).map((v, i) => <VideoTile key={i} v={v} large />)}
           </div>
         )}
       </div>
