@@ -1155,7 +1155,7 @@ export async function GET() {
     youtube_analytics:   youtubeAnalytics ?? static_?.youtube_analytics ?? null,
     instagram_spotlight: static_?.instagram_spotlight ?? [],
     raid_feed:           (raidFeed as unknown[])?.length ? raidFeed : (static_?.raid_feed ?? []),
-    news_feed:           (sbNews as unknown[])?.length ? sbNews : ((newsFeed as unknown[])?.length ? newsFeed : (static_?.news_feed ?? [])),
+    news_feed:           (sbNews as unknown[]) ?? [],
     market_data:         (sbMarketData as unknown[]) ?? (marketData as unknown[])?.length ? marketData : (static_?.market_data ?? []),
     x_recent:            (sbXRecent as unknown[]) ?? static_?.x_recent  ?? [],
     x_popular:           (sbXPopular as unknown[]) ?? static_?.x_popular ?? [],
