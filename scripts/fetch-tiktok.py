@@ -82,9 +82,9 @@ async def run():
             try:
                 await page.goto(url, wait_until="networkidle", timeout=30000)
                 await page.wait_for_timeout(3000)
-                for _ in range(3):
-                    await page.evaluate("window.scrollBy(0, 800)")
-                    await page.wait_for_timeout(800)
+                for _ in range(8):
+                    await page.evaluate("window.scrollBy(0, 1200)")
+                    await page.wait_for_timeout(600)
                 return await page.evaluate(f"""() => {{
                     const cards = document.querySelectorAll('{selector}')
                     return Array.from(cards).slice(0, 30).map(card => {{
