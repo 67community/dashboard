@@ -18,7 +18,7 @@ RSS_FEEDS = [
     "https://bitcoinmagazine.com/.rss/full/",
 ]
 
-KEYWORDS = ["67coin", "67 coin", "$67", "official 67", "maverick 67", "mav67", "67kids", "trevillian", "67 solana", "67 crypto", "67 token", "67 memecoin"]
+KEYWORDS = ["67"]
 
 def fetch_rss(url):
     try:
