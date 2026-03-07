@@ -22,7 +22,7 @@ interface Announcement {
 
 const CH_CONFIG: Record<AnnChannel, { emoji: string; label: string; color: string }> = {
   discord:  { emoji: "💬", label: "Discord",  color: "#5865F2" },
-  telegram: { emoji: "✈️",  label: "Telegram", color: "#2AABEE" },
+  telegram: { emoji: "💬",  label: "Telegram", color: "#2AABEE" },
   x:        { emoji: "𝕏",  label: "X/Twitter",color: "#0A0A0A" },
   all:      { emoji: "📣",  label: "All",      color: "#F5A623" },
 }
