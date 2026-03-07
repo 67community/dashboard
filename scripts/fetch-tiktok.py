@@ -59,6 +59,25 @@ async def run():
         )
         page = await ctx.new_page()
 
+        # Capture video stats from API responses
+        video_stats: dict = {}
+        async def handle_response(response):
+            if "api/challenge/item_list" in response.url or "api/post/item_list" in response.url:
+                try:
+                    data = await response.json()
+                    for item in data.get("itemList", []):
+                        vid_id = item.get("id","")
+                        stats  = item.get("stats", {})
+                        if vid_id:
+                            video_stats[vid_id] = {
+                                "plays":    stats.get("playCount", 0),
+                                "likes":    stats.get("diggCount", 0),
+                                "comments": stats.get("commentCount", 0),
+                                "description": item.get("desc",""),
+                            }
+                except: pass
+        page.on("response", handle_response)
+
         async def scrape(url, selector):
             try:
                 await page.goto(url, wait_until="networkidle", timeout=30000)
@@ -114,15 +133,15 @@ async def run():
             elif filepath.exists():
                 local_thumb = f"{STORAGE_BASE}/{uid}.jpg"
 
-            old = old_map.get(uid, {})
+            stats = video_stats.get(uid, old_map.get(uid, {}))
             result.append({
                 "id":            uid,
                 "video_url":     v["url"],
-                "thumbnail_url": local_thumb or v["thumb"] or old.get("thumbnail_url",""),
-                "plays":         old.get("plays", 0),
-                "likes":         old.get("likes", 0),
-                "comments":      old.get("comments", 0),
-                "description":   old.get("description",""),
+                "thumbnail_url": local_thumb or v["thumb"] or stats.get("thumbnail_url",""),
+                "plays":         stats.get("plays", 0),
+                "likes":         stats.get("likes", 0),
+                "comments":      stats.get("comments", 0),
+                "description":   stats.get("description",""),
             })
 
         await ctx.close()
