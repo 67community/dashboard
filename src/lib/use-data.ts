@@ -100,6 +100,8 @@ export interface SocialPulseData {
   x_community_delta_24h?: number
   mentions?: Mention[]
   community_tweets?: BestTweet[]
+  total_views_recent?: number
+  total_likes_recent?: number
 }
 
 export interface ActivityItem {

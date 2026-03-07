@@ -140,7 +140,9 @@ export function CommunityCard() {
   const xCommunity    = sp?.x_community_members  ?? 0
   const xCommunityDelta = sp?.x_community_delta_24h ?? 0
   const xEngagement   = sp?.engagement_rate      ?? 0
-  const communityTweets = sp?.community_tweets   ?? []
+  const communityTweets  = sp?.community_tweets   ?? []
+  const totalViews       = sp?.total_views_recent ?? 0
+  const totalLikes       = sp?.total_likes_recent ?? 0
 
   // ── Collapsed view ──────────────────────────────────────────────────────────
   const collapsed = (
@@ -568,6 +570,17 @@ export function CommunityCard() {
               ))}
 
             </div>
+            {/* Views + Likes totals */}
+            {(totalViews > 0 || totalLikes > 0) && (
+              <div style={{ display:"flex", gap:6, flexWrap:"wrap", marginTop:8 }}>
+                <span style={{ display:"inline-flex", alignItems:"center", gap:5, background:"rgba(255,255,255,0.1)", borderRadius:99, padding:"4px 10px", fontSize:"0.75rem", fontWeight:700, color:"rgba(255,255,255,0.9)" }}>
+                  👁 {totalViews.toLocaleString()} views
+                </span>
+                <span style={{ display:"inline-flex", alignItems:"center", gap:5, background:"rgba(255,255,255,0.1)", borderRadius:99, padding:"4px 10px", fontSize:"0.75rem", fontWeight:700, color:"rgba(255,255,255,0.9)" }}>
+                  ❤️ {totalLikes.toLocaleString()} likes
+                </span>
+              </div>
+            )}
           </div>
 
           {/* Follower Chart */}

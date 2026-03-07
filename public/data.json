@@ -45,7 +45,7 @@
     "twitter_followers": 1670,
     "follower_change_24h": 11,
     "posting_streak_days": 0,
-    "engagement_rate": 4.865,
+    "engagement_rate": 4.862,
     "_source": "nitter_rss+twitter_cdn",
     "best_tweet_week": {
       "tweet_id": "2028828113384169826",
@@ -169,7 +169,9 @@
         "retweets": 3,
         "date": "2026-03-04"
       }
-    ]
+    ],
+    "total_views_recent": 30682,
+    "total_likes_recent": 886
   },
   "community": {
     "discord_members": 1449,
@@ -2056,48 +2058,37 @@
   ],
   "x_popular": [
     {
-      "text": "i don't really care about other coins, but $sachi is backed by a decent community, and #67coin is backed by solana and most of the biggest names in crypto space.\n\nit's the only 2 solana plays you should have on your radar atm. dyor.",
-      "user": "\ud83d\udd75\ufe0fGEM DETECTER\ud83d\udd75\ufe0f",
-      "handle": "gem_detecter",
-      "time": "2025-12-10T14:27:54+00:00",
-      "link": "https://x.com/gem_detecter/status/1998761596789878909",
-      "tweet_url": "https://x.com/gem_detecter/status/1998761596789878909",
-      "likes": 419,
-      "reposts": 223,
-      "replies": 71
+      "text": "All time high in 2025\n\nBitcoin: $126,210\nEthereum: $4,946\nSolana: $294\n\nToday\u2019s price\n\nBitcoin: $67,000\nEthereum: $1,900\nSolana: $84\n\nWhat\u2019s the lesson here?",
+      "user": "Crypto Fergani",
+      "handle": "cryptofergani",
+      "time": "2026-02-22T22:17:39+00:00",
+      "link": "https://x.com/cryptofergani/status/2025696514455048618",
+      "tweet_url": "https://x.com/cryptofergani/status/2025696514455048618",
+      "likes": 775,
+      "reposts": 50,
+      "replies": 189
     },
     {
-      "text": "Solana Memecoins with Highest Growth in the Last 7 Days \ud83c\udf1f \n\n\ud83d\udd38RALPH | $RALPH\n\ud83d\udd38SOLTOMATO | $SOLTOMATO\n\ud83d\udd38Groyper| @GroyperSol\n\ud83d\udd3867 | #67coin\n\ud83d\udd38HEGE | @HegeCoin\n\ud83d\udd38retire | @thelastplaysol\n\ud83d\udd38LOOK | @lookdotfun\n\ud83d\udd38ANONCOIN | @anoncoinit\n\ud83d\udd38MIM  | @mimcoinbtc\n\ud83d\udd38Clash | @GeorgePlayClash https://t.",
-      "user": "Solana Daily",
-      "handle": "solana_daily",
-      "time": "2026-01-16T11:03:57+00:00",
-      "link": "https://x.com/solana_daily/status/2012118622702125490",
-      "tweet_url": "https://x.com/solana_daily/status/2012118622702125490",
-      "likes": 243,
-      "reposts": 162,
-      "replies": 169
+      "text": "0.5 $SOL Giveaway ( $67 ) \n\n\u2022 Follow @octovpnsolana with \ud83d\udd14\n\u2022 Drop your $SOL wallet\n\u2022 Retweet &amp; Like \n\n120 mins watch \u23f0",
+      "user": "doji",
+      "handle": "dojixsol",
+      "time": "2026-01-05T16:04:52+00:00",
+      "link": "https://x.com/dojixsol/status/2008208082917278101",
+      "tweet_url": "https://x.com/dojixsol/status/2008208082917278101",
+      "likes": 292,
+      "reposts": 236,
+      "replies": 305
     },
     {
-      "text": "Think something absolutely crazy will happen as we saw it on #67coin as well.\n\n$FKH is going nuts on PumpFun.\n\nBacked by the Flying Ketamine Horse creator which is also receiving the fees finally.\n\nEs4f2qodnhBAkPgDNp8F7emQLhZKe5fEiSghNXSDpump https://t.co/A6ibDvrQ8p",
-      "user": "mrpatrickschmitt",
-      "handle": "mr_pschmitt",
-      "time": "2026-01-08T04:46:10+00:00",
-      "link": "https://x.com/mr_pschmitt/status/2009124446829719564",
-      "tweet_url": "https://x.com/mr_pschmitt/status/2009124446829719564",
-      "likes": 105,
-      "reposts": 27,
-      "replies": 28
-    },
-    {
-      "text": "Solana and BNB trending coins right now:\n\n$Trollboy\n$67coin\n$Sachi\n$67\n$Hachi\n$Capitalism\n$Nothing\n$Bullish\n$Validate\n$Clout\n\n\ud83e\udd16:https://t.co/WZaQSTMN5a https://t.co/C1rzOL815M",
-      "user": "Kakashi",
-      "handle": "kkashi_yt",
-      "time": "2025-11-23T03:11:48+00:00",
-      "link": "https://x.com/kkashi_yt/status/1992430855076061680",
-      "tweet_url": "https://x.com/kkashi_yt/status/1992430855076061680",
-      "likes": 97,
-      "reposts": 23,
-      "replies": 36
+      "text": "The Official 67 Coin ($67) is now verified on Moonshot. https://t.co/dhpDRxAUoq",
+      "user": "Moonshot",
+      "handle": "moonshot",
+      "time": "2025-11-19T02:32:44+00:00",
+      "link": "https://x.com/moonshot/status/1990971475751285126",
+      "tweet_url": "https://x.com/moonshot/status/1990971475751285126",
+      "likes": 416,
+      "reposts": 78,
+      "replies": 140
     },
     {
       "text": "$67 - $22.12M MCap\n\nCA: 9AvytnUKsLxPxFHFqS6VLxaxt5p6BhYNr53SD2Chpump\n\nIt went viral from a clip of a kid excitedly repeating \u2018six seven\u2019 while reading the Bible at church. The clip was later reshared by JD Vance in a widely circulated post.\n\nIt's pumping so strong\n\n#DYOR https://",
@@ -2111,61 +2102,6 @@
       "replies": 11
     },
     {
-      "text": "Trending Tokens on Solana in the Last 24H \ud83d\udd25\n\n\ud83d\udd38CARDS \u21e8 @Collector_Crypt\n\ud83d\udd38XVM\u21e8 @VoltRWA\n\ud83d\udd38SM \u21e8 @SkinMachineSol \n\ud83d\udd38BETLY \u21e8 @BetlyTrade\n\ud83d\udd38GOAT \u21e8 @GOATofSolana_\n\ud83d\udd38STREAMER\u21e8 @StreamerSolana\n\ud83d\udd3867COIN \u21e8 @67coinsol\n\ud83d\udd38PUMP\u21e8 @pumpdotfun\n\ud83d\udd38 $MEMELESS\n\ud83d\udd38MIR\u21e8 @chain_mirror https://t.co/YLpsYydZCh",
-      "user": "Solana Daily",
-      "handle": "solana_daily",
-      "time": "2025-09-06T16:50:00+00:00",
-      "link": "https://x.com/solana_daily/status/1964370510520713537",
-      "tweet_url": "https://x.com/solana_daily/status/1964370510520713537",
-      "likes": 51,
-      "reposts": 10,
-      "replies": 18
-    },
-    {
-      "text": "Been tracking $67coin  for a bit \u2014 and the flow keeps tightening.\n\nWallet movement looks deliberate, not random.\nIf you want the source, here\u2019s where it starts:\n\ud83d\udd17 https://t.co/dMpzqkm5nD\n\n #67coin #Solana https://t.co/ZTJOms4Swa",
-      "user": "Good Boy",
-      "handle": "GutisBTC",
-      "time": "2025-12-19T15:59:36+00:00",
-      "link": "https://x.com/GutisBTC/status/2002046163298800111",
-      "tweet_url": "https://x.com/GutisBTC/status/2002046163298800111",
-      "likes": 43,
-      "reposts": 12,
-      "replies": 7
-    },
-    {
-      "text": "Gm 67whale CT \n\n#67Whale : $9.6 k MC and #67coin : $30 m MC\n\nWhen the CTO movement will start on 67Whale nothing should stop us.\n\nThe best projects come from CTOs\n\nCA :\n\n2TSC2PaXZDCkrBoxcNBiQyWh61dC9bRGqL8nKwfbpump\n\nBe ready to invade the internet 67 Whale Supporter. https://t.co",
-      "user": "CyrDoge",
-      "handle": "cyrdoge",
-      "time": "2026-01-15T08:51:03+00:00",
-      "link": "https://x.com/cyrdoge/status/2011722788755652728",
-      "tweet_url": "https://x.com/cyrdoge/status/2011722788755652728",
-      "likes": 24,
-      "reposts": 15,
-      "replies": 9
-    },
-    {
-      "text": "67 is full speed building and prepping for what's to come. Season 2 is in the making while things are quiet.\n\ud83e\udef4\n    \ud83e\udef4\n\n#67to67Billion https://t.co/gdbBA7bR6M",
-      "user": "WJP",
-      "handle": "wjponchain",
-      "time": "2026-02-27T20:47:52+00:00",
-      "link": "https://x.com/wjponchain/status/2027485858799227085",
-      "tweet_url": "https://x.com/wjponchain/status/2027485858799227085",
-      "likes": 30,
-      "reposts": 11,
-      "replies": 14
-    },
-    {
-      "text": "Going through hell and back with the same amount of holders.\n\nBelievers. \n\n#67to67billion $sixseven https://t.co/842U3H6st6",
-      "user": "no0blette",
-      "handle": "no0blette",
-      "time": "2026-02-02T16:27:52+00:00",
-      "link": "https://x.com/no0blette/status/2018360733759647867",
-      "tweet_url": "https://x.com/no0blette/status/2018360733759647867",
-      "likes": 36,
-      "reposts": 8,
-      "replies": 7
-    },
-    {
       "text": "Global movement, embedded deep in culture.\n\n$sixseven #67to67billion https://t.co/B6wV7ij28y",
       "user": "no0blette",
       "handle": "no0blette",
@@ -2177,17 +2113,6 @@
       "replies": 17
     },
     {
-      "text": "If you are paying attention to 67, something is starting to happen right in front you.\ud83e\udd5a\n\ud83e\udef4\n    \ud83e\udef4\n\n#67to67Billion https://t.co/3bWrLn7nqi",
-      "user": "WJP",
-      "handle": "wjponchain",
-      "time": "2026-01-25T00:08:11+00:00",
-      "link": "https://x.com/wjponchain/status/2015215084986114313",
-      "tweet_url": "https://x.com/wjponchain/status/2015215084986114313",
-      "likes": 32,
-      "reposts": 8,
-      "replies": 4
-    },
-    {
       "text": "\ud83d\udd25 World Premiere #listing\n\n\ud83c\udf20 $67 (67COIN) will be listed on LBank! @67coinsol\n\n67COIN (abbreviated as 67) is a meme token running on the Solana blockchain with a total supply of 1 billion.\n\n\u2764\ufe0f Details: https://t.co/lAIkyqrKyp https://t.co/s4FfZ0CUub",
       "user": "LBank.com",
       "handle": "LBank_Exchange",
@@ -2197,17 +2122,6 @@
       "likes": 29,
       "reposts": 9,
       "replies": 20
-    },
-    {
-      "text": "Honest question and no shill so what is $SPEED ?\n\nI see posts saying IshowSpeed will be bigger than #67coin \n\nSo what is it and is it BS or I am missing out on something?\n\nTalking about this CA:\n\nCMX58KkLxQjguRtzEFjqBqNkrKTspLMN5hApwikZpump",
-      "user": "mrpatrickschmitt",
-      "handle": "mr_pschmitt",
-      "time": "2025-12-25T05:01:51+00:00",
-      "link": "https://x.com/mr_pschmitt/status/2004054964843540934",
-      "tweet_url": "https://x.com/mr_pschmitt/status/2004054964843540934",
-      "likes": 36,
-      "reposts": 5,
-      "replies": 17
     },
     {
       "text": "Solana found its bottom at $67.671 on some exchanges and INSTANTLY bounced back hard to $77.\n\nsix. seven. SIX. SEVEN.\n\n$67 is LITERALLY coded in this world.\n\nNothing can stop it once it breaks out, and it will.\n\nSEND. IT.\n\n9AvytnUKsLxPxFHFqS6VLxaxt5p6BhYNr53SD2Chpump\n\n$67 https:/",
@@ -2254,17 +2168,6 @@
       "replies": 3
     },
     {
-      "text": "Welcome new $67 holders! \n\n#67to67Billion https://t.co/lUopTP00sM",
-      "user": "Cheese_Wiz",
-      "handle": "Che_ese_Wiz",
-      "time": "2026-01-06T03:13:20+00:00",
-      "link": "https://x.com/Che_ese_Wiz/status/2008376308384805039",
-      "tweet_url": "https://x.com/Che_ese_Wiz/status/2008376308384805039",
-      "likes": 33,
-      "reposts": 4,
-      "replies": 3
-    },
-    {
       "text": "Imagine a world where Mav67kid became so famous because his viral video doing Six Seven \ud83e\udef4\ud83c\udffc\ud83e\udef4\ud83c\udffc and proceeded to make a coin called $67 and it mooned to $40m! \n\nAfter missing out almost crying about it you find out that the same exact day he made a second coin with the same wallet h",
       "user": "67 Kid Coin (Parody)",
       "handle": "67KidCoinOG",
@@ -2274,6 +2177,105 @@
       "likes": 30,
       "reposts": 5,
       "replies": 3
+    },
+    {
+      "text": "I can not even count how many coins I traded today and 95% ended up at zero by now. \n\nThats why I like $Youngho\n\nAround for 5 days, no PnD, no Kols or Influencers. \n\nThe #youngho trend will explode like #67coin imo\n\nBmsRvPgXrgXXEn67RBBoAu3NCjDFE72Zb1nkMf7kpump https://t.co/e175G2",
+      "user": "mrpatrickschmitt",
+      "handle": "mr_pschmitt",
+      "time": "2026-02-04T01:38:03+00:00",
+      "link": "https://x.com/mr_pschmitt/status/2018861579119599733",
+      "tweet_url": "https://x.com/mr_pschmitt/status/2018861579119599733",
+      "likes": 25,
+      "reposts": 5,
+      "replies": 9
+    },
+    {
+      "text": "You have memecoins that make the claim they need to be studied. And then you have memes that are actually being studied. @67coinX \n\n#67onchain #67coin #67meme #67to67Billion #67memecoin https://t.co/NfAVoKuQlJ",
+      "user": "Jp-B\ud83d\ude8059",
+      "handle": "Unc_Jazr",
+      "time": "2026-01-20T20:26:32+00:00",
+      "link": "https://x.com/Unc_Jazr/status/2013709751033463142",
+      "tweet_url": "https://x.com/Unc_Jazr/status/2013709751033463142",
+      "likes": 20,
+      "reposts": 6,
+      "replies": 2
+    },
+    {
+      "text": "The world never had more fun with a meme than they did with 67. Never. \n\nYou expected it to have gone away. And you might think it has. Buts here, 67 is forever now. An eternal meme. \n\nFresh post from Sonic on official Sega TikTok #67coin #67meme https://t.co/64jYuN9TKh",
+      "user": "Jp-B\ud83d\ude8059",
+      "handle": "Unc_Jazr",
+      "time": "2026-01-29T17:11:21+00:00",
+      "link": "https://x.com/Unc_Jazr/status/2016922124322017349",
+      "tweet_url": "https://x.com/Unc_Jazr/status/2016922124322017349",
+      "likes": 22,
+      "reposts": 4,
+      "replies": 1
+    },
+    {
+      "text": "Murad ran $SPX6900 from $17m to $2B\n\nYou really think Gen-Z isn\u2019t gonna ratio him?\n\n#67coin https://t.co/QFcFC3WoMN",
+      "user": "#BTCPuppet\ud83c\udde8\ud83c\uddf3",
+      "handle": "BtcPuppet",
+      "time": "2025-12-18T22:08:06+00:00",
+      "link": "https://x.com/BtcPuppet/status/2001776512580874741",
+      "tweet_url": "https://x.com/BtcPuppet/status/2001776512580874741",
+      "likes": 29,
+      "reposts": 0,
+      "replies": 3
+    },
+    {
+      "text": "\u662f\u65f6\u5019\u7a81\u7834\u538b\u529b\u4f4d\u4e86 #67COIN \n\n9AvytnUKsLxPxFHFqS6VLxaxt5p6BhYNr53SD2Chpump https://t.co/fiRbNbDqO1",
+      "user": "\u6797\u8fc5",
+      "handle": "0xLINX349",
+      "time": "2026-01-10T22:58:09+00:00",
+      "link": "https://x.com/0xLINX349/status/2010124028653224272",
+      "tweet_url": "https://x.com/0xLINX349/status/2010124028653224272",
+      "likes": 16,
+      "reposts": 6,
+      "replies": 3
+    },
+    {
+      "text": "Buy more \n\n$67mas\n\n#67coin #solana #wojak https://t.co/9esn2xLYBA",
+      "user": "Nami",
+      "handle": "thewhalenami7",
+      "time": "2025-12-14T14:30:03+00:00",
+      "link": "https://x.com/thewhalenami7/status/2000211689178877980",
+      "tweet_url": "https://x.com/thewhalenami7/status/2000211689178877980",
+      "likes": 15,
+      "reposts": 6,
+      "replies": 9
+    },
+    {
+      "text": "\ud83d\ude80 The viral legend Maverick Trevillian has officially arrived on BSC https://t.co/d3ZgKc5llb!  \ud83e\udd196\ufe0f\u20e37\ufe0f\u20e3\n\ud83d\udc8e TOKEN: $67KID \u26d3\ufe0f NETWORK: BSC \ud83d\udcdd : https://t.co/fHovcVvhIf\n\n#fourmeme #memecoin #67meme #sixseven #sixtyseven #67kid",
+      "user": "67KID meme coin",
+      "handle": "67kidmeme",
+      "time": "2025-12-19T12:25:43+00:00",
+      "link": "https://x.com/67kidmeme/status/2001992338332361024",
+      "tweet_url": "https://x.com/67kidmeme/status/2001992338332361024",
+      "likes": 27,
+      "reposts": 0,
+      "replies": 48
+    },
+    {
+      "text": "Say less. Just buy 67...... 4hr  old tik tok post. \n\nCould sit here and just post 20 fresh 67 tiks daily by the hour. But hopefully you get the point. #67coin #67meme https://t.co/yUP3JtyPCT",
+      "user": "Jp-B\ud83d\ude8059",
+      "handle": "Unc_Jazr",
+      "time": "2026-02-01T01:57:44+00:00",
+      "link": "https://x.com/Unc_Jazr/status/2017779368060149904",
+      "tweet_url": "https://x.com/Unc_Jazr/status/2017779368060149904",
+      "likes": 22,
+      "reposts": 2,
+      "replies": 0
+    },
+    {
+      "text": "SOL\u94fe\uff0c\u76ee\u524d\u6700\u770b\u597d\u7684\u4e09\u4e2amemecoin\u3002\n\n#1Coin \uff0c\u4e0d\u8dcc\u78342000\u4e07\u7684\u60c5\u51b5\u4e0b\uff0c\u8ba4\u4e3a\u53ef\u4ee5\u6301\u7eed\u4e0a\u653b\u30023000\u4e07\u4e00\u65e6\u7a81\u7834\u6d77\u9614\u51ed\u9c7c\u8dc3\uff0c\u5929\u9ad8\u4efb\u9e1f\u98de\u3002\nCA\uff1aGMvCfcZg8YvkkQmwDaAzCtHDrrEtgE74nQpQ7xNabonk\n\n#67Coin https://t.co/nlXMjtiEkk",
+      "user": "\u6797\u8fc5",
+      "handle": "0xLINX349",
+      "time": "2026-01-06T22:08:29+00:00",
+      "link": "https://x.com/0xLINX349/status/2008661979037397217",
+      "tweet_url": "https://x.com/0xLINX349/status/2008661979037397217",
+      "likes": 22,
+      "reposts": 2,
+      "replies": 6
     }
   ],
   "x_notifications": [
