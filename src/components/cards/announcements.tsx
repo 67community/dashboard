@@ -195,12 +195,6 @@ export function AnnouncementsCard() {
 
   const collapsed = (
     <div style={{ display:"flex", flexDirection:"column", gap:14 }}>
-      <div className="inset-cell" style={{ textAlign:"center" }}>
-        <p style={{ fontSize:"1.5rem", fontWeight:800, color:"#059669", lineHeight:1 }}>{anns.length}</p>
-        <p style={{ fontSize:"0.625rem", color:"var(--tertiary)", fontWeight:600,
-          textTransform:"uppercase", letterSpacing:"0.06em", marginTop:3 }}>Sent</p>
-      </div>
-
       <div onClick={e => e.stopPropagation()}>
         {!addOpen ? (
           <button onClick={() => setAddOpen(true)}
