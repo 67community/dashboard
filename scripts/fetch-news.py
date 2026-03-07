@@ -8,16 +8,17 @@ SB_URL = "https://oqqwwccercxiwtyedwqm.supabase.co"
 SB_KEY = "***REMOVED_SERVICE_KEY***"
 
 RSS_FEEDS = [
-    "https://news.google.com/rss/search?q=67coin+solana&hl=en-US&gl=US&ceid=US:en",
-    "https://news.google.com/rss/search?q=%2267+coin%22+crypto&hl=en-US&gl=US&ceid=US:en",
-    "https://news.google.com/rss/search?q=maverick+67+coin&hl=en-US&gl=US&ceid=US:en",
+    "https://news.google.com/rss/search?q=67&hl=en-US&gl=US&ceid=US:en",
+    "https://news.google.com/rss/search?q=67coin&hl=en-US&gl=US&ceid=US:en",
+    "https://news.google.com/rss/search?q=%2267+coin%22&hl=en-US&gl=US&ceid=US:en",
     "https://feeds.feedburner.com/CoinDesk",
     "https://cointelegraph.com/rss",
     "https://decrypt.co/feed",
     "https://cryptonews.com/news/feed/",
+    "https://bitcoinmagazine.com/.rss/full/",
 ]
 
-KEYWORDS = ["67coin","67 coin","$67","official 67","maverick 67","mav67","67kids","trevillian","67 solana","pump.fun 67"]
+KEYWORDS = ["67coin", "67 coin", "$67", "official 67", "maverick 67", "mav67", "67kids", "trevillian", "67 solana", "67 crypto", "67 token", "67 memecoin"]
 
 def fetch_rss(url):
     try:
