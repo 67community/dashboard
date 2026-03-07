@@ -960,7 +960,7 @@ async function sbGet(key: string): Promise<unknown | null> {
 
 // ── main ──────────────────────────────────────────────────────────────────────
 export async function GET() {
-  const [pair, cg, cgTickers, cmc, holders, discord, tgMembers, discordActivity, youtubeVideos, youtubeAnalytics, newsFeed, marketData, raidFeed, liveTrades, sbXRecent, sbXPopular, sbTokenHealth, sbHolders, sbSocialCounts, sbMarketData, sbYouTube, sbTikTok] = await Promise.all([
+  const [pair, cg, cgTickers, cmc, holders, discord, tgMembers, discordActivity, youtubeVideos, youtubeAnalytics, newsFeed, marketData, raidFeed, liveTrades, sbXRecent, sbXPopular, sbTokenHealth, sbHolders, sbSocialCounts, sbMarketData, sbYouTube, sbTikTok, sbNews] = await Promise.all([
     safe(fetchDex),
     safe(fetchCG),
     safe(fetchCGTickers),
@@ -983,6 +983,7 @@ export async function GET() {
     sbGet("market_data"),
     sbGet("youtube_videos"),
     sbGet("tiktok_spotlight"),
+    sbGet("news_feed"),
   ])
 
   if (!pair && !cg) {
@@ -1154,7 +1155,7 @@ export async function GET() {
     youtube_analytics:   youtubeAnalytics ?? static_?.youtube_analytics ?? null,
     instagram_spotlight: static_?.instagram_spotlight ?? [],
     raid_feed:           (raidFeed as unknown[])?.length ? raidFeed : (static_?.raid_feed ?? []),
-    news_feed:           (newsFeed as unknown[])?.length ? newsFeed : (static_?.news_feed ?? []),
+    news_feed:           (sbNews as unknown[])?.length ? sbNews : ((newsFeed as unknown[])?.length ? newsFeed : (static_?.news_feed ?? [])),
     market_data:         (sbMarketData as unknown[]) ?? (marketData as unknown[])?.length ? marketData : (static_?.market_data ?? []),
     x_recent:            (sbXRecent as unknown[]) ?? static_?.x_recent  ?? [],
     x_popular:           (sbXPopular as unknown[]) ?? static_?.x_popular ?? [],
