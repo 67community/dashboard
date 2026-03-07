@@ -43,7 +43,9 @@ def is_relevant(title):
     return any(kw in t for kw in TITLE_KW)
 
 def yt_search(q, order, n=30):
-    params = urllib.parse.urlencode({"part":"snippet","q":q,"type":"video","order":order,"maxResults":n,"key":YT_KEY})
+    from datetime import datetime, timezone, timedelta
+    published_after = (datetime.now(timezone.utc) - timedelta(hours=24)).strftime("%Y-%m-%dT%H:%M:%SZ")
+    params = urllib.parse.urlencode({"part":"snippet","q":q,"type":"video","order":order,"maxResults":n,"publishedAfter":published_after,"key":YT_KEY})
     return fetch(f"{YT_BASE}/search?{params}").get("items", [])
 
 def main():
