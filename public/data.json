@@ -44,8 +44,8 @@
   "social_pulse": {
     "twitter_followers": 1670,
     "follower_change_24h": 11,
-    "posting_streak_days": 8,
-    "engagement_rate": 4.207,
+    "posting_streak_days": 0,
+    "engagement_rate": 4.865,
     "_source": "nitter_rss+twitter_cdn",
     "best_tweet_week": {
       "tweet_id": "2028828113384169826",
@@ -71,9 +71,9 @@
       "retweets": 17,
       "date": "2026-03-05"
     },
-    "avg_engagement": 69.8,
+    "avg_engagement": 83.2,
     "twitter_followers_updated_at": "2026-03-01T21:30:22.077518Z",
-    "total_engagement_7d": 698,
+    "total_engagement_7d": 1082,
     "follower_history": [
       {
         "date": "2026-02-24",
@@ -110,20 +110,30 @@
     ],
     "follower_growth_7d": 31,
     "content_type_stats": {
-      "meme": {
-        "count": 7,
-        "total_eng": 580,
-        "avg_eng": 82.9
-      },
       "thesis": {
+        "count": 2,
+        "total_eng": 178,
+        "avg_eng": 89.0
+      },
+      "other": {
+        "count": 7,
+        "total_eng": 553,
+        "avg_eng": 79.0
+      },
+      "meme": {
+        "count": 2,
+        "total_eng": 154,
+        "avg_eng": 77.0
+      },
+      "community": {
         "count": 1,
-        "total_eng": 72,
-        "avg_eng": 72.0
+        "total_eng": 122,
+        "avg_eng": 122.0
       },
       "announcement": {
-        "count": 2,
-        "total_eng": 46,
-        "avg_eng": 23.0
+        "count": 1,
+        "total_eng": 75,
+        "avg_eng": 75.0
       }
     },
     "best_content_type": "meme",
@@ -2046,26 +2056,15 @@
   ],
   "x_popular": [
     {
-      "text": "0.5 $SOL Giveaway ( $67 ) \n\n\u2022 Follow @octovpnsolana with \ud83d\udd14\n\u2022 Drop your $SOL wallet\n\u2022 Retweet &amp; Like \n\n120 mins watch \u23f0",
-      "user": "doji",
-      "handle": "dojixsol",
-      "time": "2026-01-05T16:04:52+00:00",
-      "link": "https://x.com/dojixsol/status/2008208082917278101",
-      "tweet_url": "https://x.com/dojixsol/status/2008208082917278101",
-      "likes": 292,
-      "reposts": 236,
-      "replies": 305
-    },
-    {
-      "text": "The Official 67 Coin ($67) is now verified on Moonshot. https://t.co/dhpDRxAUoq",
-      "user": "Moonshot",
-      "handle": "moonshot",
-      "time": "2025-11-19T02:32:44+00:00",
-      "link": "https://x.com/moonshot/status/1990971475751285126",
-      "tweet_url": "https://x.com/moonshot/status/1990971475751285126",
-      "likes": 416,
-      "reposts": 78,
-      "replies": 140
+      "text": "i don't really care about other coins, but $sachi is backed by a decent community, and #67coin is backed by solana and most of the biggest names in crypto space.\n\nit's the only 2 solana plays you should have on your radar atm. dyor.",
+      "user": "\ud83d\udd75\ufe0fGEM DETECTER\ud83d\udd75\ufe0f",
+      "handle": "gem_detecter",
+      "time": "2025-12-10T14:27:54+00:00",
+      "link": "https://x.com/gem_detecter/status/1998761596789878909",
+      "tweet_url": "https://x.com/gem_detecter/status/1998761596789878909",
+      "likes": 419,
+      "reposts": 223,
+      "replies": 71
     },
     {
       "text": "Solana Memecoins with Highest Growth in the Last 7 Days \ud83c\udf1f \n\n\ud83d\udd38RALPH | $RALPH\n\ud83d\udd38SOLTOMATO | $SOLTOMATO\n\ud83d\udd38Groyper| @GroyperSol\n\ud83d\udd3867 | #67coin\n\ud83d\udd38HEGE | @HegeCoin\n\ud83d\udd38retire | @thelastplaysol\n\ud83d\udd38LOOK | @lookdotfun\n\ud83d\udd38ANONCOIN | @anoncoinit\n\ud83d\udd38MIM  | @mimcoinbtc\n\ud83d\udd38Clash | @GeorgePlayClash https://t.",
@@ -2090,6 +2089,17 @@
       "replies": 28
     },
     {
+      "text": "Solana and BNB trending coins right now:\n\n$Trollboy\n$67coin\n$Sachi\n$67\n$Hachi\n$Capitalism\n$Nothing\n$Bullish\n$Validate\n$Clout\n\n\ud83e\udd16:https://t.co/WZaQSTMN5a https://t.co/C1rzOL815M",
+      "user": "Kakashi",
+      "handle": "kkashi_yt",
+      "time": "2025-11-23T03:11:48+00:00",
+      "link": "https://x.com/kkashi_yt/status/1992430855076061680",
+      "tweet_url": "https://x.com/kkashi_yt/status/1992430855076061680",
+      "likes": 97,
+      "reposts": 23,
+      "replies": 36
+    },
+    {
       "text": "$67 - $22.12M MCap\n\nCA: 9AvytnUKsLxPxFHFqS6VLxaxt5p6BhYNr53SD2Chpump\n\nIt went viral from a clip of a kid excitedly repeating \u2018six seven\u2019 while reading the Bible at church. The clip was later reshared by JD Vance in a widely circulated post.\n\nIt's pumping so strong\n\n#DYOR https://",
       "user": "Solana Daily",
       "handle": "solana_daily",
@@ -2101,59 +2111,48 @@
       "replies": 11
     },
     {
-      "text": "Why I'm bought and holding $Ryan \n\nCould this be an offer? There are many interesting points here, especially coming from a young boy\n\nSurely everyone has heard of #67coin and how widespread it is, but why is the narrative of $Ryan \u2018Stop saying 67\u2019?\n\n1. Narrative to kick off a ht",
-      "user": "Rey",
-      "handle": "Babiboiz14",
-      "time": "2025-12-24T17:06:36+00:00",
-      "link": "https://x.com/Babiboiz14/status/2003874965419180270",
-      "tweet_url": "https://x.com/Babiboiz14/status/2003874965419180270",
-      "likes": 39,
-      "reposts": 13,
-      "replies": 12
+      "text": "Trending Tokens on Solana in the Last 24H \ud83d\udd25\n\n\ud83d\udd38CARDS \u21e8 @Collector_Crypt\n\ud83d\udd38XVM\u21e8 @VoltRWA\n\ud83d\udd38SM \u21e8 @SkinMachineSol \n\ud83d\udd38BETLY \u21e8 @BetlyTrade\n\ud83d\udd38GOAT \u21e8 @GOATofSolana_\n\ud83d\udd38STREAMER\u21e8 @StreamerSolana\n\ud83d\udd3867COIN \u21e8 @67coinsol\n\ud83d\udd38PUMP\u21e8 @pumpdotfun\n\ud83d\udd38 $MEMELESS\n\ud83d\udd38MIR\u21e8 @chain_mirror https://t.co/YLpsYydZCh",
+      "user": "Solana Daily",
+      "handle": "solana_daily",
+      "time": "2025-09-06T16:50:00+00:00",
+      "link": "https://x.com/solana_daily/status/1964370510520713537",
+      "tweet_url": "https://x.com/solana_daily/status/1964370510520713537",
+      "likes": 51,
+      "reposts": 10,
+      "replies": 18
     },
     {
-      "text": "Still holding my $Youngho and maybe it might take weeks as #67coin and $Whitewhale did to take of.\n\nDoubt it will die since the trend on tiktok is growing.\n\nMoon or dust.\n\nBmsRvPgXrgXXEn67RBBoAu3NCjDFE72Zb1nkMf7kpump",
-      "user": "mrpatrickschmitt",
-      "handle": "mr_pschmitt",
-      "time": "2026-02-01T04:37:12+00:00",
-      "link": "https://x.com/mr_pschmitt/status/2017819497134985518",
-      "tweet_url": "https://x.com/mr_pschmitt/status/2017819497134985518",
-      "likes": 33,
+      "text": "Been tracking $67coin  for a bit \u2014 and the flow keeps tightening.\n\nWallet movement looks deliberate, not random.\nIf you want the source, here\u2019s where it starts:\n\ud83d\udd17 https://t.co/dMpzqkm5nD\n\n #67coin #Solana https://t.co/ZTJOms4Swa",
+      "user": "Good Boy",
+      "handle": "GutisBTC",
+      "time": "2025-12-19T15:59:36+00:00",
+      "link": "https://x.com/GutisBTC/status/2002046163298800111",
+      "tweet_url": "https://x.com/GutisBTC/status/2002046163298800111",
+      "likes": 43,
       "reposts": 12,
       "replies": 7
     },
     {
-      "text": "Thanks for this candle, CZ.\n\n#67coin is not just a 2025 trending, you mean right? https://t.co/A9fK1HoOw1",
-      "user": "\ud83d\udd75\ufe0fGEM DETECTER\ud83d\udd75\ufe0f",
-      "handle": "gem_detecter",
-      "time": "2026-01-15T16:50:56+00:00",
-      "link": "https://x.com/gem_detecter/status/2011843554294059466",
-      "tweet_url": "https://x.com/gem_detecter/status/2011843554294059466",
-      "likes": 43,
-      "reposts": 6,
-      "replies": 39
+      "text": "Gm 67whale CT \n\n#67Whale : $9.6 k MC and #67coin : $30 m MC\n\nWhen the CTO movement will start on 67Whale nothing should stop us.\n\nThe best projects come from CTOs\n\nCA :\n\n2TSC2PaXZDCkrBoxcNBiQyWh61dC9bRGqL8nKwfbpump\n\nBe ready to invade the internet 67 Whale Supporter. https://t.co",
+      "user": "CyrDoge",
+      "handle": "cyrdoge",
+      "time": "2026-01-15T08:51:03+00:00",
+      "link": "https://x.com/cyrdoge/status/2011722788755652728",
+      "tweet_url": "https://x.com/cyrdoge/status/2011722788755652728",
+      "likes": 24,
+      "reposts": 15,
+      "replies": 9
     },
     {
-      "text": "Gm Young Ho's\n\nJob is not done yet. First target, $Youngho flipping #67coin",
-      "user": "Youngho",
-      "handle": "younghoSOL",
-      "time": "2026-02-04T15:45:59+00:00",
-      "link": "https://x.com/younghoSOL/status/2019074967174865184",
-      "tweet_url": "https://x.com/younghoSOL/status/2019074967174865184",
-      "likes": 38,
-      "reposts": 8,
-      "replies": 36
-    },
-    {
-      "text": "Sixty-seven arc.\n\nThe relative memes trending of the year. Gen Z is taking control. \n\nSay it less, but bold: #67coin will hit $100M before the end of Jan. https://t.co/b5WxfcgIzH",
-      "user": "\ud83d\udd75\ufe0fGEM DETECTER\ud83d\udd75\ufe0f",
-      "handle": "gem_detecter",
-      "time": "2026-01-15T02:13:27+00:00",
-      "link": "https://x.com/gem_detecter/status/2011622730010148951",
-      "tweet_url": "https://x.com/gem_detecter/status/2011622730010148951",
-      "likes": 48,
-      "reposts": 2,
-      "replies": 41
+      "text": "67 is full speed building and prepping for what's to come. Season 2 is in the making while things are quiet.\n\ud83e\udef4\n    \ud83e\udef4\n\n#67to67Billion https://t.co/gdbBA7bR6M",
+      "user": "WJP",
+      "handle": "wjponchain",
+      "time": "2026-02-27T20:47:52+00:00",
+      "link": "https://x.com/wjponchain/status/2027485858799227085",
+      "tweet_url": "https://x.com/wjponchain/status/2027485858799227085",
+      "likes": 30,
+      "reposts": 11,
+      "replies": 14
     },
     {
       "text": "Going through hell and back with the same amount of holders.\n\nBelievers. \n\n#67to67billion $sixseven https://t.co/842U3H6st6",
@@ -2167,26 +2166,26 @@
       "replies": 7
     },
     {
-      "text": "Season 2...\n\ud83e\udef4\n    \ud83e\udef4\n\n#67to67Billion",
-      "user": "WJP",
-      "handle": "wjponchain",
-      "time": "2026-02-25T19:11:09+00:00",
-      "link": "https://x.com/wjponchain/status/2026736742800507360",
-      "tweet_url": "https://x.com/wjponchain/status/2026736742800507360",
-      "likes": 38,
-      "reposts": 6,
-      "replies": 11
+      "text": "Global movement, embedded deep in culture.\n\n$sixseven #67to67billion https://t.co/B6wV7ij28y",
+      "user": "no0blette",
+      "handle": "no0blette",
+      "time": "2026-02-23T12:54:03+00:00",
+      "link": "https://x.com/no0blette/status/2025917067786879455",
+      "tweet_url": "https://x.com/no0blette/status/2025917067786879455",
+      "likes": 36,
+      "reposts": 7,
+      "replies": 17
     },
     {
-      "text": "Every #67coin deriv has sent so hard except for their family dog that they have had fees for this whole time\n\nThey just didn\u2019t know it because of a pumpfun bug\n\nNow they do\n\n@jaime67mom @Brando67Dad \n\n$winnie is yours https://t.co/Bxa8ZaeCxA",
-      "user": "Bullie",
-      "handle": "Bullieonchain",
-      "time": "2025-12-11T01:51:35+00:00",
-      "link": "https://x.com/Bullieonchain/status/1998933650423808043",
-      "tweet_url": "https://x.com/Bullieonchain/status/1998933650423808043",
-      "likes": 22,
-      "reposts": 13,
-      "replies": 9
+      "text": "If you are paying attention to 67, something is starting to happen right in front you.\ud83e\udd5a\n\ud83e\udef4\n    \ud83e\udef4\n\n#67to67Billion https://t.co/3bWrLn7nqi",
+      "user": "WJP",
+      "handle": "wjponchain",
+      "time": "2026-01-25T00:08:11+00:00",
+      "link": "https://x.com/wjponchain/status/2015215084986114313",
+      "tweet_url": "https://x.com/wjponchain/status/2015215084986114313",
+      "likes": 32,
+      "reposts": 8,
+      "replies": 4
     },
     {
       "text": "\ud83d\udd25 World Premiere #listing\n\n\ud83c\udf20 $67 (67COIN) will be listed on LBank! @67coinsol\n\n67COIN (abbreviated as 67) is a meme token running on the Solana blockchain with a total supply of 1 billion.\n\n\u2764\ufe0f Details: https://t.co/lAIkyqrKyp https://t.co/s4FfZ0CUub",
@@ -2233,6 +2232,28 @@
       "replies": 34
     },
     {
+      "text": "Always on your mind. \ud83d\ude0f\n\n#67to67billion $sixseven https://t.co/fkXhkZedji",
+      "user": "no0blette",
+      "handle": "no0blette",
+      "time": "2026-02-17T11:41:59+00:00",
+      "link": "https://x.com/no0blette/status/2023724605320401176",
+      "tweet_url": "https://x.com/no0blette/status/2023724605320401176",
+      "likes": 27,
+      "reposts": 8,
+      "replies": 7
+    },
+    {
+      "text": "I see green.\n\n#67to67billion https://t.co/PnUWoS2aYJ",
+      "user": "no0blette",
+      "handle": "no0blette",
+      "time": "2026-02-01T01:27:04+00:00",
+      "link": "https://x.com/no0blette/status/2017771651979440476",
+      "tweet_url": "https://x.com/no0blette/status/2017771651979440476",
+      "likes": 29,
+      "reposts": 6,
+      "replies": 3
+    },
+    {
       "text": "Welcome new $67 holders! \n\n#67to67Billion https://t.co/lUopTP00sM",
       "user": "Cheese_Wiz",
       "handle": "Che_ese_Wiz",
@@ -2253,17 +2274,6 @@
       "likes": 30,
       "reposts": 5,
       "replies": 3
-    },
-    {
-      "text": "Many only post on green and not on the retrace. \n\nI called an almost 80X on $Youngho at ATH and now there is a deep retrace. \n\nAre they gonna make it long term, we will see but I keep my moonbag. \n\nIt took #67coin and $Whitewhale weeks to take off so patience might be key. https:",
-      "user": "mrpatrickschmitt",
-      "handle": "mr_pschmitt",
-      "time": "2026-01-31T03:43:23+00:00",
-      "link": "https://x.com/mr_pschmitt/status/2017443569443725540",
-      "tweet_url": "https://x.com/mr_pschmitt/status/2017443569443725540",
-      "likes": 27,
-      "reposts": 6,
-      "replies": 8
     }
   ],
   "x_notifications": [
