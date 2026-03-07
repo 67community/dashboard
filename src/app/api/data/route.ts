@@ -942,9 +942,25 @@ function readStaticJson() {
   return null
 }
 
+// ── Supabase KV reader ───────────────────────────────────────────────────────
+const SB_URL = "https://oqqwwccercxiwtyedwqm.supabase.co"
+const SB_KEY = "***REMOVED_SERVICE_KEY***"
+
+async function sbGet(key: string): Promise<unknown | null> {
+  try {
+    const res = await fetch(
+      `${SB_URL}/rest/v1/kv_store?key=eq.${key}&select=value`,
+      { headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` }, cache: "no-store" }
+    )
+    if (!res.ok) return null
+    const rows = await res.json()
+    return rows?.[0]?.value ?? null
+  } catch { return null }
+}
+
 // ── main ──────────────────────────────────────────────────────────────────────
 export async function GET() {
-  const [pair, cg, cgTickers, cmc, holders, discord, tgMembers, discordActivity, youtubeVideos, youtubeAnalytics, newsFeed, marketData, raidFeed, liveTrades] = await Promise.all([
+  const [pair, cg, cgTickers, cmc, holders, discord, tgMembers, discordActivity, youtubeVideos, youtubeAnalytics, newsFeed, marketData, raidFeed, liveTrades, sbXRecent, sbXPopular] = await Promise.all([
     safe(fetchDex),
     safe(fetchCG),
     safe(fetchCGTickers),
@@ -959,6 +975,8 @@ export async function GET() {
     safe(fetchMarketData),
     safe(fetchRaidFeed),
     safe(fetchBiggestTradesLive),
+    sbGet("x_recent"),
+    sbGet("x_popular"),
   ])
 
   if (!pair && !cg) {
@@ -1134,8 +1152,8 @@ export async function GET() {
     raid_feed:           (raidFeed as unknown[])?.length ? raidFeed : (static_?.raid_feed ?? []),
     news_feed:           (newsFeed as unknown[])?.length ? newsFeed : (static_?.news_feed ?? []),
     market_data:         (marketData as unknown[])?.length ? marketData : (static_?.market_data ?? []),
-    x_recent:            static_?.x_recent  ?? [],
-    x_popular:           static_?.x_popular ?? [],
+    x_recent:            (sbXRecent as unknown[]) ?? static_?.x_recent  ?? [],
+    x_popular:           (sbXPopular as unknown[]) ?? static_?.x_popular ?? [],
     map_features:        static_?.map_features ?? { type:"FeatureCollection", features:[] },
   }
 

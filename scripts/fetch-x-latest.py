@@ -6,6 +6,23 @@ from datetime import datetime, timezone
 
 RAPIDAPI_KEY = "4b393aa0cemsh6895fd899d6eedcp1a441djsnfe89097510cd"
 DATA_JSON    = Path(__file__).parent.parent / "public/data.json"
+
+# ── Supabase sync ──────────────────────────────────────────────
+import urllib.request as _ur
+_SB_URL = "https://oqqwwccercxiwtyedwqm.supabase.co"
+_SB_KEY = "***REMOVED_SERVICE_KEY***"
+def sb_upsert(key, value):
+    body = json.dumps({"key": key, "value": value}).encode()
+    req = _ur.Request(f"{_SB_URL}/rest/v1/kv_store", data=body, headers={
+        "apikey": _SB_KEY, "Authorization": f"Bearer {_SB_KEY}",
+        "Content-Type": "application/json", "Prefer": "resolution=merge-duplicates"
+    }, method="POST")
+    try:
+        with _ur.urlopen(req, timeout=10): pass
+        print("  ✅ Supabase synced")
+    except Exception as e:
+        print(f"  ⚠️ Supabase error: {e}")
+
 TAGS = ["67","Six Seven","Six and Seven","6/7","$67","67to67billion"]
 CUTOFF = 86400  # 24h
 
@@ -55,6 +72,7 @@ def main():
     results.sort(key=ts, reverse=True)
     print(f"✅ Latest: {len(results)} tweets (last 24h)")
 
+    sb_upsert("x_recent", results)
     with open(DATA_JSON) as f: d = json.load(f)
     d["x_recent"] = results
     d["x_latest_updated"] = datetime.now(timezone.utc).isoformat()
