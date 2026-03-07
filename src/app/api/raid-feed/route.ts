@@ -1,15 +1,18 @@
 import { NextResponse } from "next/server"
-import { readFileSync } from "fs"
-import { join } from "path"
 
 export const dynamic = "force-dynamic"
 
+const SB_URL = "https://oqqwwccercxiwtyedwqm.supabase.co"
+const SB_KEY = "***REMOVED_SERVICE_KEY***"
+
 export async function GET() {
   try {
-    const path = join(process.cwd(), "public", "data.json")
-    const raw  = readFileSync(path, "utf-8")
-    const data = JSON.parse(raw)
-    return NextResponse.json(data.x_notifications ?? [])
+    const res = await fetch(
+      `${SB_URL}/rest/v1/kv_store?key=eq.x_raid_feed&select=value`,
+      { headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` }, cache: "no-store" }
+    )
+    const rows = await res.json()
+    return NextResponse.json(rows?.[0]?.value ?? [])
   } catch {
     return NextResponse.json([])
   }
