@@ -1,13 +1,14 @@
 import { NextRequest, NextResponse } from "next/server"
 
-const TG_TOKEN = "***REMOVED_TG_TOKEN***:AAGlhdjo0JRJVC66rH-MDUvWfSTiu86gj9I"
+const TG_ANNOUNCE_TOKEN = "***REMOVED_TG_TOKEN***:AAGlhdjo0JRJVC66rH-MDUvWfSTiu86gj9I"
+const TG_RAID_TOKEN     = "***REMOVED_TG_TOKEN***:AAEgGRJaT1uwvSCA0GF6I88vwKGTkPNinM4"
 const TARGETS = {
   telegram_main: { id: "-1003158749697", label: "Main Group"  },
   telegram_raid: { id: "-1003708062172", label: "Raid Group"  },
 }
 
-async function sendTelegram(chatId: string, text: string) {
-  const url = `https://api.telegram.org/bot${TG_TOKEN}/sendMessage`
+async function sendTelegram(chatId: string, text: string, token: string) {
+  const url = `https://api.telegram.org/bot${token}/sendMessage`
   const res = await fetch(url, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -19,7 +20,8 @@ async function sendTelegram(chatId: string, text: string) {
 }
 
 export async function POST(req: NextRequest) {
-  const { body, targets } = await req.json()
+  const { body, targets, type } = await req.json()
+  const isRaid = type === "raid"
   // targets: string[] — e.g. ["telegram_main", "telegram_raid"]
 
   if (!body?.trim()) {
@@ -33,7 +35,8 @@ export async function POST(req: NextRequest) {
     const t = TARGETS[key as keyof typeof TARGETS]
     if (!t) continue
     try {
-      await sendTelegram(t.id, body.trim())
+      const token = isRaid ? TG_RAID_TOKEN : TG_ANNOUNCE_TOKEN
+      await sendTelegram(t.id, body.trim(), token)
       results[key] = "✅ Gönderildi"
     } catch (e: unknown) {
       results[key] = `❌ ${e instanceof Error ? e.message : "Hata"}`
