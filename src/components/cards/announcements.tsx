@@ -345,11 +345,7 @@ export function AnnouncementsCard() {
         </div>
       )}
 
-      <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
-        {filtered.length === 0
-          ? <p style={{ textAlign:"center", color:"var(--secondary)", fontSize:"0.875rem", padding:"20px 0" }}>No announcements yet.</p>
-          : filtered.map(a => <AnnRow key={a.id} a={a} onDelete={deleteAnn} onSend={sendAnn} sending={!!sending[a.id]} sendRes={sendRes[a.id]??""} />)}
-      </div>
+
     </div>
   )
 
