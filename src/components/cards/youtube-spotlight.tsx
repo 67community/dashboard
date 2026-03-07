@@ -53,7 +53,7 @@ function VideoTile({ v, large = false }: { v: YoutubeVideo; large?: boolean }) {
     <a href={v.video_url} target="_blank" rel="noopener noreferrer"
       onClick={e => e.stopPropagation()}
       style={{ textDecoration:"none", display:"block" }}>
-      <div style={{ borderRadius:12, overflow:"hidden", border:"1.5px solid var(--separator)", background:"var(--card)", transition:"transform 0.15s" }}
+      <div style={{ borderRadius:12, overflow:"hidden", border:"1.5px solid var(--separator)", minWidth:200, flexShrink:0, background:"var(--card)", transition:"transform 0.15s" }}
         onMouseEnter={e => (e.currentTarget.style.transform="scale(1.02)")}
         onMouseLeave={e => (e.currentTarget.style.transform="scale(1)")}>
 
