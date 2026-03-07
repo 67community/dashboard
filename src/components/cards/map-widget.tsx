@@ -93,30 +93,7 @@ export function MapWidgetCard() {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", width: "100%", height: "100%", background: "#111" }}>
-      {/* Map */}
-      <div style={{ position: "relative", overflow: "hidden", height: 520 }}>
-      {/* Hide Mapbox logo + attribution */}
-      <style>{`.mapboxgl-ctrl-logo,.mapboxgl-ctrl-attrib{display:none!important}`}</style>
-      <Map
-        ref={mapRef}
-        mapboxAccessToken={TOKEN}
-        initialViewState={{ longitude: -96.9658554808913, latitude: 32.565216899136544, zoom: 2 }}
-        style={{ width: "100%", height: "100%" }}
-        mapStyle="mapbox://styles/mapbox/dark-v11"
-        projection={{ name: "globe" } as any}
-        attributionControl={false}
-        logoPosition="bottom-right"
-        onLoad={onMapLoad}
-      >
-        <Source id="chonkys" type="geojson" data={features} cluster clusterMaxZoom={14} clusterRadius={50}>
-          <Layer {...clusterLayer} />
-          <Layer {...clusterCountLayer} />
-          <Layer {...unclusteredLayer} />
-        </Source>
-      </Map>
-      </div>
-
-      {/* Pin Admin */}
+      {/* Pin Admin only */}
       <MapAdminPanel />
     </div>
   )
