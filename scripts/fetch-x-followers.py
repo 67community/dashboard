@@ -47,11 +47,11 @@ def main():
     today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     now_ts = datetime.now(timezone.utc).timestamp()
 
-    # 3-day snapshot rotation
-    snap3d = data.get("_snapshot_3d", {})
+    # 7-day snapshot rotation
+    snap7d = data.get("_snapshot_7d", {})
     last_snap = snap3d.get("timestamp", 0)
-    if now_ts - last_snap >= 3 * 86400:  # 3 gün geçtiyse yeni snapshot
-        data["_snapshot_3d"] = {
+    if now_ts - last_snap >= 7 * 86400:  # 7 gün geçtiyse yeni snapshot
+        data["_snapshot_7d"] = {
             "twitter_followers":   result,
             "x_community_members": sp.get("x_community_members", 0),
             "total_views_recent":  sp.get("total_views_recent", 0),
@@ -60,7 +60,7 @@ def main():
             "timestamp":           now_ts,
             "date":                today,
         }
-        print(f"  📸 3-day snapshot saved")
+        print(f"  📸 7-day snapshot saved")
 
     history = sp.get("follower_history", [])
     if not history or history[-1].get("date") != today:
@@ -70,8 +70,8 @@ def main():
     sp["follower_history"] = history[-30:]
 
     # 3d deltas
-    snap3d_data = data.get("_snapshot_3d", {})
-    sp["follower_change_3d_snap"] = result - snap3d_data.get("twitter_followers", result)
+    snap7d_data = data.get("_snapshot_7d", {})
+    sp["follower_change_3d_snap"] = result - snap7d_data.get("twitter_followers", result)
 
     # Delta — snapshot'tan hesapla (daha doğru 24h fark)
     snap = data.get("_snapshot_24h", {})
