@@ -14,12 +14,11 @@ SB_KEY = "***REMOVED_SERVICE_KEY***"
 
 # Profile + hashtag pages to scrape
 SOURCES = [
-    ("profile", "https://www.tiktok.com/@67coin",               '[data-e2e="user-post-item"]'),
-    ("tag",     "https://www.tiktok.com/tag/67",                 '[data-e2e="challenge-item"]'),
-    ("tag",     "https://www.tiktok.com/tag/67coin",             '[data-e2e="challenge-item"]'),
-    ("tag",     "https://www.tiktok.com/tag/maverick67kids",     '[data-e2e="challenge-item"]'),
-    ("tag",     "https://www.tiktok.com/tag/trevillian",         '[data-e2e="challenge-item"]'),
-    ("tag",     "https://www.tiktok.com/tag/theofficialsixtysevencoin", '[data-e2e="challenge-item"]'),
+    ("tag", "https://www.tiktok.com/tag/67",                      '[data-e2e="challenge-item"]'),
+    ("tag", "https://www.tiktok.com/tag/67coin",                  '[data-e2e="challenge-item"]'),
+    ("tag", "https://www.tiktok.com/tag/maverick67kids",          '[data-e2e="challenge-item"]'),
+    ("tag", "https://www.tiktok.com/tag/trevillian",              '[data-e2e="challenge-item"]'),
+    ("tag", "https://www.tiktok.com/tag/theofficialsixtysevencoin",'[data-e2e="challenge-item"]'),
 ]
 
 def sb_upsert(key, value):
