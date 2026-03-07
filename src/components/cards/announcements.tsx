@@ -132,7 +132,7 @@ export function AnnouncementsCard() {
   const [addOpen, setAddOpen] = useState(false)
   const [title,   setTitle]   = useState("")
   const [body,    setBody]    = useState("")
-  const [channel, setChannel] = useState<AnnChannel>("discord")
+  const [channel, setChannel] = useState<AnnChannel>("telegram")
   const [type,    setType]    = useState<AnnType>("raid")
   const [filter,  setFilter]  = useState<AnnStatus | "all">("all")
   const [genning, setGenning] = useState(false)
@@ -182,7 +182,7 @@ export function AnnouncementsCard() {
     try {
       const res = await fetch("/api/send-announcement", {
         method: "POST", headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({ body: a.body, targets }),
+        body: JSON.stringify({ body: a.type === "raid" ? `Raid ${a.body}` : a.body, targets, type: a.type }),
       })
       const data = await res.json()
       const msgs = Object.values(data.results ?? {}) as string[]
@@ -216,56 +216,48 @@ export function AnnouncementsCard() {
             <Plus style={{ width:14, height:14 }} /> Write announcement
           </button>
         ) : (
-          <div style={{ background:"var(--fill-primary)", borderRadius:12, padding:12,
-            display:"flex", flexDirection:"column", gap:8 }}>
-            <input value={title} onChange={e => setTitle(e.target.value)} placeholder="Announcement title"
-              style={{ padding:"8px 10px", borderRadius:8, border:"1.5px solid var(--separator)",
-                outline:"none", fontSize:"0.875rem", fontFamily:"inherit", background:"var(--input-bg)" }}
-              onFocus={e => e.target.style.borderColor="#F5A623"}
-              onBlur={e  => e.target.style.borderColor="var(--separator)"} />
-            <div style={{ display:"flex", gap:6 }}>
-              <select value={type} onChange={e => setType(e.target.value as AnnType)}
-                style={{ flex:1, padding:"7px 8px", borderRadius:8, border:"1.5px solid var(--separator)",
-                  outline:"none", fontSize:"0.8125rem", fontFamily:"inherit", background:"var(--input-bg)" }}>
-                {Object.entries(TYPE_CONFIG).map(([k,v]) => <option key={k} value={k}>{v.label}</option>)}
-              </select>
-              <select value={channel} onChange={e => setChannel(e.target.value as AnnChannel)}
-                style={{ flex:1, padding:"7px 8px", borderRadius:8, border:"1.5px solid var(--separator)",
-                  outline:"none", fontSize:"0.8125rem", fontFamily:"inherit", background:"var(--input-bg)" }}>
-                {Object.entries(CH_CONFIG).map(([k,v]) => <option key={k} value={k}>{v.label}</option>)}
-              </select>
+            <div style={{ background:"var(--fill-primary)", borderRadius:12, padding:12,
+              display:"flex", flexDirection:"column", gap:8 }}>
+              <div style={{ position:"relative" }}>
+                <textarea value={body} onChange={e => setBody(e.target.value)}
+                  placeholder="Write your announcement…" rows={4}
+                  style={{ width:"100%", padding:"10px 12px", borderRadius:8, border:"1.5px solid var(--separator)",
+                    outline:"none", fontSize:"0.875rem", fontFamily:"inherit",
+                    background:"var(--input-bg)", resize:"none", color:"var(--foreground)", boxSizing:"border-box" }}
+                  onFocus={e => e.target.style.borderColor="#F5A623"}
+                  onBlur={e  => e.target.style.borderColor="var(--separator)"} />
+                {body && (
+                  <button onClick={() => setBody("")}
+                    style={{ position:"absolute", top:8, right:8, background:"rgba(0,0,0,0.08)",
+                      border:"none", borderRadius:"50%", width:20, height:20, cursor:"pointer",
+                      display:"flex", alignItems:"center", justifyContent:"center",
+                      fontSize:"0.7rem", color:"var(--secondary)" }}>✕</button>
+                )}
+              </div>
+              <div style={{ display:"flex", gap:6 }}>
+                <select value={type} onChange={e => setType(e.target.value as AnnType)}
+                  style={{ flex:1, padding:"7px 8px", borderRadius:8, border:"1.5px solid var(--separator)",
+                    outline:"none", fontSize:"0.8125rem", fontFamily:"inherit", background:"var(--input-bg)" }}>
+                  {Object.entries(TYPE_CONFIG).map(([k,v]) => <option key={k} value={k}>{v.label}</option>)}
+                </select>
+                <select value={channel} onChange={e => setChannel(e.target.value as AnnChannel)}
+                  style={{ flex:1, padding:"7px 8px", borderRadius:8, border:"1.5px solid var(--separator)",
+                    outline:"none", fontSize:"0.8125rem", fontFamily:"inherit", background:"var(--input-bg)" }}>
+                  {Object.entries(CH_CONFIG).map(([k,v]) => <option key={k} value={k}>{v.label}</option>)}
+                </select>
+              </div>
+              <div style={{ display:"flex", gap:6 }}>
+                <button onClick={add} disabled={!body.trim()}
+                  style={{ flex:1, padding:"8px 0", borderRadius:8, border:"none",
+                    cursor: !body.trim() ? "not-allowed" : "pointer",
+                    background: !body.trim() ? "#E5E5EA" : "#F5A623",
+                    color: !body.trim() ? "#A1A1AA" : "#000",
+                    fontSize:"0.8125rem", fontWeight:700 }}>Send</button>
+                <button onClick={() => setAddOpen(false)}
+                  style={{ padding:"8px 14px", borderRadius:8, border:"1.5px solid var(--separator)",
+                    background:"none", cursor:"pointer", fontSize:"0.8125rem", color:"var(--tertiary)" }}>Cancel</button>
+              </div>
             </div>
-            <div style={{ position:"relative" }}>
-              <textarea value={body} onChange={e => setBody(e.target.value)}
-                placeholder="Announcement body…" rows={4}
-                style={{ width:"100%", padding:"8px 10px", borderRadius:8, border:"1.5px solid var(--separator)",
-                  outline:"none", fontSize:"0.875rem", fontFamily:"inherit",
-                  background:"var(--input-bg)", resize:"none", boxSizing:"border-box" }}
-                onFocus={e => e.target.style.borderColor="#F5A623"}
-                onBlur={e  => e.target.style.borderColor="var(--separator)"} />
-              <button onClick={aiDraft} disabled={!title.trim() || genning}
-                style={{ position:"absolute", bottom:8, right:8,
-                  display:"flex", alignItems:"center", gap:4, padding:"4px 10px",
-                  borderRadius:7, border:"none", cursor: !title.trim() ? "not-allowed" : "pointer",
-                  background: !title.trim() ? "#E5E5EA" : "#F5A623",
-                  color: !title.trim() ? "#A1A1AA" : "#000",
-                  fontSize:"0.6875rem", fontWeight:700 }}>
-                
-                {genning ? "Writing…" : "AI Draft"}
-              </button>
-            </div>
-            <div style={{ display:"flex", gap:6 }}>
-              <button onClick={add} disabled={!title.trim() || !body.trim()}
-                style={{ flex:1, padding:"8px 0", borderRadius:8, border:"none",
-                  cursor: !title.trim() || !body.trim() ? "not-allowed" : "pointer",
-                  background: !title.trim() || !body.trim() ? "#E5E5EA" : "#F5A623",
-                  color: !title.trim() || !body.trim() ? "#A1A1AA" : "#000",
-                  fontSize:"0.8125rem", fontWeight:700 }}>Save as Draft 📢</button>
-              <button onClick={() => setAddOpen(false)}
-                style={{ padding:"8px 14px", borderRadius:8, border:"1.5px solid var(--separator)",
-                  background:"none", cursor:"pointer", fontSize:"0.8125rem", color:"var(--tertiary)" }}>Cancel</button>
-            </div>
-          </div>
         )}
       </div>
 
@@ -307,11 +299,22 @@ export function AnnouncementsCard() {
       {addOpen && (
         <div style={{ background:"var(--fill-primary)", borderRadius:12, padding:12,
           display:"flex", flexDirection:"column", gap:8 }}>
-          <input value={title} onChange={e => setTitle(e.target.value)} placeholder="Title"
-            style={{ padding:"8px 10px", borderRadius:8, border:"1.5px solid var(--separator)",
-              outline:"none", fontSize:"0.875rem", fontFamily:"inherit", background:"var(--input-bg)" }}
-            onFocus={e => e.target.style.borderColor="#F5A623"}
-            onBlur={e  => e.target.style.borderColor="var(--separator)"} />
+          <div style={{ position:"relative" }}>
+            <textarea value={body} onChange={e => setBody(e.target.value)}
+              placeholder="Write your announcement…" rows={4}
+              style={{ width:"100%", padding:"10px 12px", borderRadius:8, border:"1.5px solid var(--separator)",
+                outline:"none", fontSize:"0.875rem", fontFamily:"inherit",
+                background:"var(--input-bg)", resize:"none", color:"var(--foreground)", boxSizing:"border-box" }}
+              onFocus={e => e.target.style.borderColor="#F5A623"}
+              onBlur={e  => e.target.style.borderColor="var(--separator)"} />
+            {body && (
+              <button onClick={() => setBody("")}
+                style={{ position:"absolute", top:8, right:8, background:"rgba(0,0,0,0.08)",
+                  border:"none", borderRadius:"50%", width:20, height:20, cursor:"pointer",
+                  display:"flex", alignItems:"center", justifyContent:"center",
+                  fontSize:"0.7rem", color:"var(--secondary)" }}>✕</button>
+            )}
+          </div>
           <div style={{ display:"flex", gap:6 }}>
             <select value={type} onChange={e => setType(e.target.value as AnnType)}
               style={{ flex:1, padding:"7px 8px", borderRadius:8, border:"1.5px solid var(--separator)",
@@ -324,33 +327,13 @@ export function AnnouncementsCard() {
               {Object.entries(CH_CONFIG).map(([k,v]) => <option key={k} value={k}>{v.label}</option>)}
             </select>
           </div>
-          <div style={{ position:"relative" }}>
-            <textarea value={body} onChange={e => setBody(e.target.value)}
-              placeholder="Write or AI draft below…" rows={5}
-              style={{ width:"100%", padding:"8px 10px", paddingBottom:40, borderRadius:8,
-                border:"1.5px solid var(--separator)", outline:"none",
-                fontSize:"0.875rem", fontFamily:"inherit", background:"var(--input-bg)",
-                resize:"none", boxSizing:"border-box" }}
-              onFocus={e => e.target.style.borderColor="#F5A623"}
-              onBlur={e  => e.target.style.borderColor="var(--separator)"} />
-            <button onClick={aiDraft} disabled={!title.trim() || genning}
-              style={{ position:"absolute", bottom:8, right:8,
-                display:"flex", alignItems:"center", gap:4, padding:"5px 12px",
-                borderRadius:7, border:"none", cursor: !title.trim() ? "not-allowed" : "pointer",
-                background: !title.trim() ? "#E5E5EA" : "#F5A623",
-                color: !title.trim() ? "#A1A1AA" : "#000",
-                fontSize:"0.75rem", fontWeight:700 }}>
-              
-              {genning ? "Writing…" : "AI Draft"}
-            </button>
-          </div>
           <div style={{ display:"flex", gap:6 }}>
-            <button onClick={add} disabled={!title.trim()||!body.trim()}
+            <button onClick={add} disabled={!body.trim()}
               style={{ flex:1, padding:"8px 0", borderRadius:8, border:"none",
-                cursor: !title.trim()||!body.trim() ? "not-allowed" : "pointer",
-                background: !title.trim()||!body.trim() ? "#E5E5EA" : "#F5A623",
-                color: !title.trim()||!body.trim() ? "#A1A1AA" : "#000",
-                fontSize:"0.8125rem", fontWeight:700 }}>Save Draft 📢</button>
+                cursor: !body.trim() ? "not-allowed" : "pointer",
+                background: !body.trim() ? "#E5E5EA" : "#F5A623",
+                color: !body.trim() ? "#A1A1AA" : "#000",
+                fontSize:"0.8125rem", fontWeight:700 }}>Send</button>
             <button onClick={() => setAddOpen(false)}
               style={{ padding:"8px 14px", borderRadius:8, border:"1.5px solid var(--separator)",
                 background:"none", cursor:"pointer", fontSize:"0.8125rem", color:"var(--tertiary)" }}>Cancel</button>
