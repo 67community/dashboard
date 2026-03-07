@@ -10,7 +10,8 @@ const CHATS = {
 }
 const DISCORD_BOT_TOKEN = "MTQ3OTI0NDQ5NjM2MDMwODczNg.GCHgwk.UcGR9RqolR86JMfCDbqbR-CndwNHQn4uhi9Y8A"
 const DISCORD_CHANNELS: Record<string, string> = {
-  d_coin_announce: "1458850588271050857",
+  d_coin_announce:      "1458850588271050857",
+  d_community_announce: "1458844490239578265",
 }
 
 async function sendDiscord(channelId: string, text: string) {
