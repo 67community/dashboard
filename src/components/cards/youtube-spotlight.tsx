@@ -185,7 +185,7 @@ function PublicAggregateStats({ videos }: { videos: YoutubeVideo[] }) {
   const channels = [...new Map(videos.map(v => [v.channel_id, v])).values()]
 
   // Sort videos by views for bar chart
-  const sorted = [...videos].sort((a,b) => (b.views??0) - (a.views??0)).slice(0, 6)
+  const sorted = [...videos].sort((a,b) => (b.views??0) - (a.views??0)).slice(0, 10)
   const maxViews = sorted[0]?.views ?? 1
 
   return (
@@ -236,7 +236,7 @@ function PublicAggregateStats({ videos }: { videos: YoutubeVideo[] }) {
       <div className="inset-cell">
         <SectionLabel icon={<Users style={{ width:12, height:12 }} />} label={`Channels Covering $67coin (${channels.length})`} />
         <div style={{ display:"flex", flexDirection:"column", gap:6 }}>
-          {channels.slice(0, 6).map((v) => (
+          {channels.slice(0, 10).map((v) => (
             <div key={v.channel_id} style={{ display:"flex", alignItems:"center", justifyContent:"space-between" }}>
               <a href={v.channel_url} target="_blank" rel="noopener noreferrer" onClick={e=>e.stopPropagation()}
                 style={{ fontSize:"0.8125rem", fontWeight:600, color:"var(--foreground)", textDecoration:"none",
@@ -287,7 +287,7 @@ export function YouTubeSpotlightCard() {
       {/* Preview grid */}
       {popularVideos.length > 0 ? (
         <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8 }}>
-          {popularVideos.slice(0,2).map((v,i) => <VideoTile key={i} v={v} />)}
+          {popularVideos.slice(0,4).map((v,i) => <VideoTile key={i} v={v} />)}
         </div>
       ) : (
         <div style={{ display:"flex", alignItems:"center", gap:10, borderTop:"1px solid var(--separator)", paddingTop:14 }}>
