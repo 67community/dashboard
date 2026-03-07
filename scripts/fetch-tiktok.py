@@ -68,7 +68,7 @@ async def run():
                     await page.wait_for_timeout(800)
                 return await page.evaluate(f"""() => {{
                     const cards = document.querySelectorAll('{selector}')
-                    return Array.from(cards).slice(0, 10).map(card => {{
+                    return Array.from(cards).slice(0, 30).map(card => {{
                         const link = card.querySelector('a')
                         const img  = card.querySelector('img')
                         const url  = link?.href || ''

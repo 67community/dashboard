@@ -8,13 +8,7 @@ SB_KEY  = "***REMOVED_SERVICE_KEY***"
 YT_KEY  = "***REMOVED_YT_KEY***"
 YT_BASE = "https://www.googleapis.com/youtube/v3"
 
-QUERIES = [
-    "The official 67 coin",
-    "67",
-    "67coin",
-    "Maverick 67kids",
-    "mav trevillian",
-]
+QUERIES = ["67"]
 
 TITLE_KW = ["67coin","67 coin","$67","official 67","mav67","maverick 67","the official 67","67kids","trevillian"]
 
@@ -48,7 +42,7 @@ def is_relevant(title):
     t = title.lower()
     return any(kw in t for kw in TITLE_KW)
 
-def yt_search(q, order, n=5):
+def yt_search(q, order, n=30):
     params = urllib.parse.urlencode({"part":"snippet","q":q,"type":"video","order":order,"maxResults":n,"key":YT_KEY})
     return fetch(f"{YT_BASE}/search?{params}").get("items", [])
 
@@ -60,17 +54,24 @@ def main():
         try:
             for v in yt_search(q, "viewCount", 4):
                 vid = v.get("id",{}).get("videoId","")
-                if vid and vid not in seen_pop and is_relevant(v.get("snippet",{}).get("title","")):
+                if vid and vid not in seen_pop :
                     seen_pop.add(vid); pop_items.append({**v,"_type":"popular"})
             for v in yt_search(q, "date", 3):
                 vid = v.get("id",{}).get("videoId","")
-                if vid and vid not in seen_rec and is_relevant(v.get("snippet",{}).get("title","")):
+                if vid and vid not in seen_rec :
                     seen_rec.add(vid); rec_items.append({**v,"_type":"recent"})
             print(f"  ✅ '{q}'")
         except Exception as e:
             print(f"  ❌ '{q}': {e}")
 
-    all_items = pop_items[:4] + rec_items[:4]
+    from datetime import datetime, timezone, timedelta
+    cutoff = datetime.now(timezone.utc) - timedelta(hours=24)
+    def is_recent(v):
+        pub = v.get("snippet",{}).get("publishedAt","")
+        try: return datetime.fromisoformat(pub.replace("Z","+00:00")) >= cutoff
+        except: return True
+    rec_items = [v for v in rec_items if is_recent(v)]
+    all_items = (rec_items + pop_items)[:30]
     if not all_items:
         print("⚠️ No results"); return
 
