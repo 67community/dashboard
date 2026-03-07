@@ -75,6 +75,8 @@ function VideoTile({ v, large = false }: { v: TikTokVideo; large?: boolean }) {
           background: "#0A0A0A",
           transition: "transform 0.15s",
           cursor: "pointer",
+          minWidth: large ? 180 : 140,
+          width: large ? 180 : 140,
         }}
         onMouseEnter={e => (e.currentTarget.style.transform = "scale(1.02)")}
         onMouseLeave={e => (e.currentTarget.style.transform = "scale(1)")}
@@ -275,7 +277,7 @@ export function TikTokSpotlightCard() {
 
       {/* Collapsed preview — top 2 popular from #67coin */}
       {totalCount > 0 ? (
-        <div style={{ display: "flex", flexDirection: "row", gap: 8, overflowX: "auto", paddingBottom: 8 }}>
+        <div style={{ display: "flex", flexDirection: "row", gap: 8, overflowX: "auto", paddingBottom: 8, paddingTop: 4 }}>
           {(coinPop.length > 0 ? coinPop : coinAll).slice(0, 30).map((v, i) => (
             <VideoTile key={i} v={v} />
           ))}
@@ -312,7 +314,7 @@ export function TikTokSpotlightCard() {
         {hasPop && (
           <div style={{ marginBottom: hasRec ? 14 : 0 }}>
             <SubLabel icon="🔥" label="Popular" />
-            <div style={{ display: "flex", flexDirection: "row", gap: 10, overflowX: "auto", paddingBottom: 8 }}>
+            <div style={{ display: "flex", flexDirection: "row", gap: 10, overflowX: "auto", paddingBottom: 8, paddingTop: 4 }}>
               {popVideos.map((v, i) => <VideoTile key={i} v={v} large />)}
             </div>
           </div>
@@ -322,7 +324,7 @@ export function TikTokSpotlightCard() {
         {hasRec && (
           <div>
             <SubLabel icon="🕐" label="Recent" />
-            <div style={{ display: "flex", flexDirection: "row", gap: 10, overflowX: "auto", paddingBottom: 8 }}>
+            <div style={{ display: "flex", flexDirection: "row", gap: 10, overflowX: "auto", paddingBottom: 8, paddingTop: 4 }}>
               {recVideos.map((v, i) => <VideoTile key={i} v={v} large />)}
             </div>
           </div>
@@ -330,7 +332,7 @@ export function TikTokSpotlightCard() {
 
         {/* Fallback: old data without video_type */}
         {!hasPop && !hasRec && hasFallback && (
-          <div style={{ display: "flex", flexDirection: "row", gap: 10, overflowX: "auto", paddingBottom: 8 }}>
+          <div style={{ display: "flex", flexDirection: "row", gap: 10, overflowX: "auto", paddingBottom: 8, paddingTop: 4 }}>
             {fallbackVideos!.slice(0, 30).map((v, i) => <VideoTile key={i} v={v} large />)}
           </div>
         )}
