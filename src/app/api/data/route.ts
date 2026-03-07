@@ -960,7 +960,7 @@ async function sbGet(key: string): Promise<unknown | null> {
 
 // ── main ──────────────────────────────────────────────────────────────────────
 export async function GET() {
-  const [pair, cg, cgTickers, cmc, holders, discord, tgMembers, discordActivity, youtubeVideos, youtubeAnalytics, newsFeed, marketData, raidFeed, liveTrades, sbXRecent, sbXPopular, sbTokenHealth, sbHolders, sbSocialCounts, sbMarketData, sbYouTube, sbTikTok, sbNews] = await Promise.all([
+  const [pair, cg, cgTickers, cmc, holders, discord, tgMembers, discordActivity, youtubeVideos, youtubeAnalytics, newsFeed, marketData, raidFeed, liveTrades, sbXRecent, sbXPopular, sbTokenHealth, sbHolders, sbSocialCounts, sbMarketData, sbYouTube, sbTikTok, sbNews, sbInstagram] = await Promise.all([
     safe(fetchDex),
     safe(fetchCG),
     safe(fetchCGTickers),
@@ -984,6 +984,7 @@ export async function GET() {
     sbGet("youtube_videos"),
     sbGet("tiktok_spotlight"),
     sbGet("news_feed"),
+    sbGet("instagram_posts"),
   ])
 
   if (!pair && !cg) {
@@ -1153,7 +1154,7 @@ export async function GET() {
     tiktok_spotlight:  (sbTikTok as unknown[]) ?? static_?.tiktok_spotlight ?? [],
     youtube_spotlight: (sbYouTube as unknown[]) ?? (youtubeVideos && (youtubeVideos as unknown[]).length > 0 ? youtubeVideos : (static_?.youtube_spotlight ?? [])),
     youtube_analytics:   youtubeAnalytics ?? static_?.youtube_analytics ?? null,
-    instagram_spotlight: static_?.instagram_spotlight ?? [],
+    instagram_spotlight: (sbInstagram as unknown[])?.length ? sbInstagram : (static_?.instagram_spotlight ?? []),
     raid_feed:           (raidFeed as unknown[])?.length ? raidFeed : (static_?.raid_feed ?? []),
     news_feed:           (sbNews as unknown[]) ?? [],
     market_data:         (sbMarketData as unknown[]) ?? (marketData as unknown[])?.length ? marketData : (static_?.market_data ?? []),
