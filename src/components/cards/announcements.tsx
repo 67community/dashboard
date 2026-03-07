@@ -240,8 +240,8 @@ export function AnnouncementsCard() {
                     </button>
                   ))}
                 </div>
-                <div style={{ display:"flex", gap:6 }}>
-                  {([["tg_main","TG Main","#2AABEE"],["tg_raid","TG Raid","#EF4444"]] as const).map(([v,label,color]) => (
+                <div style={{ display:"flex", gap:6, flexWrap:"wrap" }}>
+                  {([["tg_main","TG Main","#2AABEE"],["tg_raid","TG Raid","#EF4444"],["d_coin_announce","D Coin Announce","#5865F2"]] as const).map(([v,label,color]) => (
                     <button key={v} onClick={()=>setSelectedChannels(prev=>{const n=new Set(prev);n.has(v)?n.delete(v):n.add(v);return n})}
                       style={{ flex:1, padding:"6px 0", borderRadius:8, fontSize:"0.75rem", fontWeight:700,
                         border:`1.5px solid ${selectedChannels.has(v) ? color : "var(--separator)"}`,
@@ -337,8 +337,8 @@ export function AnnouncementsCard() {
                 </button>
               ))}
             </div>
-            <div style={{ display:"flex", gap:6 }}>
-              {([["tg_main","TG Main","#2AABEE"],["tg_raid","TG Raid","#EF4444"]] as const).map(([v,label,color]) => (
+            <div style={{ display:"flex", gap:6, flexWrap:"wrap" }}>
+              {([["tg_main","TG Main","#2AABEE"],["tg_raid","TG Raid","#EF4444"],["d_coin_announce","D Coin Announce","#5865F2"]] as const).map(([v,label,color]) => (
                 <button key={v} onClick={()=>setSelectedChannels(prev=>{const n=new Set(prev);n.has(v)?n.delete(v):n.add(v);return n})}
                   style={{ flex:1, padding:"6px 0", borderRadius:8, fontSize:"0.75rem", fontWeight:700,
                     border:`1.5px solid ${selectedChannels.has(v) ? color : "var(--separator)"}`,
