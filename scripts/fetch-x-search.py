@@ -117,7 +117,9 @@ def is_valid(t: dict) -> bool:
     # If tweet mentions another coin as its main subject, skip
     # (spam bots add #67coin to unrelated posts)
     other_coins = ["$aura", "$aicoin", "$pippin", "$pepe", "$doge",
-                   "#solana at $", "exit #solana", "dex paid", "dexscreener"]
+                   "$lockin", "$trump", "$bonk", "$wif", "$popcat",
+                   "#solana at $", "exit #solana", "dex paid", "dexscreener",
+                   "traded sideways", "same with $"]
     if any(c in low for c in other_coins):
         return False
 
@@ -161,6 +163,7 @@ def main():
             time.sleep(0.3)
 
     recent_all.sort(key=lambda t: t["time"], reverse=True)
+    popular_all = [t for t in popular_all if t["likes"] + t["reposts"] + t["replies"] > 0]
     popular_all.sort(key=lambda t: t["likes"] + t["reposts"] * 2, reverse=True)
 
     recent_final  = recent_all[:60]
