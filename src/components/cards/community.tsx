@@ -336,14 +336,14 @@ export function CommunityCard() {
       <div style={{ display:"flex", gap:6, borderBottom:"1px solid var(--separator)", paddingBottom:12 }}>
         {([
           { id:"overview",     label:"Overview",     icon:<img src="/67logo.png" alt="67" style={{ width:14, height:14, borderRadius:"50%", objectFit:"cover" }} /> },
-          { id:"leaderboard",  label:"Leaderboard",  icon:"⚔️" },
+          { id:"leaderboard",  label:"Leaderboard",  icon:null },
         ] as { id: "overview" | "leaderboard"; label: string; icon: React.ReactNode }[]).map(t => (
           <button key={t.id} onClick={() => setSection(t.id)}
             style={{ display:"flex", alignItems:"center", gap:6, padding:"6px 14px", borderRadius:99, border:"none", cursor:"pointer", fontSize:"0.75rem", fontWeight:700, transition:"all 0.15s",
               background: section === t.id ? "#09090B" : "transparent",
               color: section === t.id ? "#fff" : "var(--secondary)",
             }}>
-            <span>{t.icon}</span>{t.label}
+            {t.icon && <span style={{ display:"flex" }}>{t.icon}</span>}{t.label}
           </button>
         ))}
       </div>

@@ -1,13 +1,13 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Megaphone, Plus, Copy, Check, Trash2, Wand2 } from "lucide-react"
+import { Megaphone, Plus, Copy, Check, Trash2 } from "lucide-react"
 import { DashboardCard } from "@/components/ui/dashboard-card"
 import { aiHeaders } from "@/lib/ai-settings"
 
 type AnnChannel  = "discord" | "telegram" | "x" | "all"
-type AnnStatus   = "draft" | "approved" | "posted"
-type AnnType     = "general" | "price" | "raid" | "event" | "listing" | "milestone"
+type AnnStatus   = "posted"
+type AnnType     = "general" | "raid"
 
 interface Announcement {
   id:        string
@@ -29,26 +29,20 @@ const CH_CONFIG: Record<AnnChannel, { emoji: string; label: string; color: strin
 
 
 // Send targets
-type SendTarget = "discord" | "telegram" | "raid"
-const SEND_TARGETS: Record<SendTarget, { emoji: string; label: string }> = {
-  discord:  { emoji: "", label: "Discord"  },
-  telegram: { emoji: "", label: "Telegram" },
-  raid:     { emoji: "", label: "Raid"     },
+type SendTarget = "telegram_main" | "telegram_raid" | "discord"
+const SEND_TARGETS: Record<SendTarget, { label: string; color: string }> = {
+  telegram_main: { label: "TG Main",  color: "#2AABEE" },
+  telegram_raid: { label: "TG Raid",  color: "#EF4444" },
+  discord:       { label: "Discord",  color: "#5865F2" },
 }
 
 const TYPE_CONFIG: Record<AnnType, { label: string; color: string }> = {
-  general:   { label: "General",   color: "var(--tertiary)" },
-  price:     { label: "Price 📈",  color: "#059669" },
-  raid:      { label: "Raid ⚔️",   color: "#EF4444" },
-  event:     { label: "Event 📅",  color: "#7C3AED" },
-  listing:   { label: "Listing 🏦",color: "#D97706" },
-  milestone: { label: "Milestone 🏆",color:"#F5A623" },
+  raid:    { label: "Raid",    color: "#EF4444"         },
+  general: { label: "General", color: "var(--tertiary)" },
 }
 
 const STATUS_CONFIG: Record<AnnStatus, { label: string; color: string; bg: string }> = {
-  draft:    { label: "Draft",     color: "var(--tertiary)", bg: "#F4F4F5"                },
-  approved: { label: "Approved ✓",color: "#2563EB", bg: "rgba(37,99,235,0.08)"  },
-  posted:   { label: "Posted ✅", color: "#059669", bg: "rgba(5,150,105,0.08)"  },
+  posted: { label: "Sent", color: "#059669", bg: "rgba(5,150,105,0.08)" },
 }
 
 function CopyBtn({ text, label = "Copy" }: { text: string; label?: string }) {
@@ -65,13 +59,16 @@ function CopyBtn({ text, label = "Copy" }: { text: string; label?: string }) {
   )
 }
 
-function AnnRow({ a, onStatus, onDelete, onSend, sending, sendRes, sendTarget, onTargetChange }: {
-  a: Announcement; onStatus:(id:string,s:AnnStatus)=>void; onDelete:(id:string)=>void
-  onSend:(a:Announcement)=>void; sending:boolean; sendRes:string
-  sendTarget:SendTarget; onTargetChange:(t:SendTarget)=>void
+function AnnRow({ a, onDelete, onSend, sending, sendRes }: {
+  a: Announcement; onDelete:(id:string)=>void
+  onSend:(a:Announcement, targets:SendTarget[])=>void; sending:boolean; sendRes:string
 }) {
+  const [selected, setSelected] = useState<Set<SendTarget>>(new Set(["telegram_main"]))
+  const toggle = (t: SendTarget) => setSelected(prev => {
+    const n = new Set(prev); n.has(t) ? n.delete(t) : n.add(t); return n
+  })
   const cc = CH_CONFIG[a.channel]
-  const sc = STATUS_CONFIG[a.status]
+  const sc = STATUS_CONFIG["posted"]
   return (
     <div className="inset-cell" style={{ display:"flex", flexDirection:"column", gap:8 }}>
       <div style={{ display:"flex", alignItems:"flex-start", gap:8 }}>
@@ -95,33 +92,29 @@ function AnnRow({ a, onStatus, onDelete, onSend, sending, sendRes, sendTarget, o
 
       <div style={{ display:"flex", gap:6, paddingLeft:28, flexWrap:"wrap" }}>
         <CopyBtn text={a.body} label="Copy Text" />
-        {a.status === "draft" && (
-          <button onClick={e => { e.stopPropagation(); onStatus(a.id, "approved") }}
-            style={{ padding:"5px 12px", borderRadius:8, border:"none", cursor:"pointer",
-              background:"#2563EB", color:"#fff", fontSize:"0.75rem", fontWeight:700 }}>
-            Approve ✓
-          </button>
-        )}
-        {a.status === "approved" && (
-          <button onClick={e => { e.stopPropagation(); onStatus(a.id, "posted") }}
-            style={{ padding:"5px 12px", borderRadius:8, border:"none", cursor:"pointer",
-              background:"#059669", color:"#fff", fontSize:"0.75rem", fontWeight:700 }}>
-            Mark Posted ✅
-          </button>
-        )}
+        
         {/* Send */}
-        <div style={{ display:"flex", gap:6, alignItems:"center", marginLeft:"auto" }}>
-          <select value={sendTarget} onChange={e=>{e.stopPropagation();onTargetChange(e.target.value as SendTarget)}}
-            style={{padding:"4px 8px",borderRadius:8,border:"1.5px solid var(--separator)",
-              fontSize:"0.75rem",fontFamily:"inherit",background:"var(--input-bg)",cursor:"pointer"}}>
-            {Object.entries(SEND_TARGETS).map(([k,v])=>(
-              <option key={k} value={k}>{v.label}</option>
-            ))}
-          </select>
-          <button onClick={e=>{e.stopPropagation();onSend(a)}} disabled={sending}
-            style={{padding:"5px 12px",borderRadius:8,border:"none",cursor:sending?"wait":"pointer",
-              background:sending?"#9CA3AF":"#F5A623",color:sending?"#fff":"#000",fontSize:"0.75rem",fontWeight:700}}>
-            {sending?"Gönderiliyor…":"Gönder →"}
+        <div style={{ display:"flex", gap:6, alignItems:"center", flexWrap:"wrap", marginLeft:"auto" }}>
+          {(Object.entries(SEND_TARGETS) as [SendTarget, {label:string;color:string}][]).map(([k, v]) => (
+            <label key={k} onClick={e => e.stopPropagation()}
+              style={{ display:"flex", alignItems:"center", gap:4, cursor:"pointer",
+                padding:"4px 10px", borderRadius:8, fontSize:"0.75rem", fontWeight:700,
+                border:`1.5px solid ${selected.has(k) ? v.color : "var(--separator)"}`,
+                color: selected.has(k) ? v.color : "var(--secondary)",
+                background: selected.has(k) ? `${v.color}18` : "transparent",
+                transition:"all 0.15s" }}>
+              <input type="checkbox" checked={selected.has(k)} onChange={() => toggle(k)}
+                style={{ width:12, height:12, accentColor:v.color, cursor:"pointer" }} />
+              {v.label}
+            </label>
+          ))}
+          <button onClick={e=>{e.stopPropagation(); if(selected.size>0) onSend(a,[...selected])}}
+            disabled={sending || selected.size===0}
+            style={{padding:"5px 14px",borderRadius:8,border:"none",
+              cursor:(sending||selected.size===0)?"not-allowed":"pointer",
+              background:(sending||selected.size===0)?"#9CA3AF":"#F5A623",
+              color:"#000",fontSize:"0.75rem",fontWeight:700}}>
+            {sending ? "Sending…" : "Send →"}
           </button>
           <button onClick={e=>{e.stopPropagation();onDelete(a.id)}}
             style={{background:"none",border:"none",cursor:"pointer",color:"var(--secondary)",display:"flex",alignItems:"center"}}>
@@ -140,12 +133,11 @@ export function AnnouncementsCard() {
   const [title,   setTitle]   = useState("")
   const [body,    setBody]    = useState("")
   const [channel, setChannel] = useState<AnnChannel>("discord")
-  const [type,    setType]    = useState<AnnType>("general")
+  const [type,    setType]    = useState<AnnType>("raid")
   const [filter,  setFilter]  = useState<AnnStatus | "all">("all")
   const [genning, setGenning] = useState(false)
   const [sending, setSending] = useState<Record<string, boolean>>({})
   const [sendRes, setSendRes] = useState<Record<string, string>>({})
-  const [sendTarget, setSendTarget] = useState<SendTarget>("telegram")
 
   useEffect(() => {
     try {
@@ -160,9 +152,9 @@ export function AnnouncementsCard() {
   }
 
   function add() {
-    if (!title.trim() || !body.trim()) return
-    save([{ id: Date.now().toString(), title: title.trim(), body: body.trim(),
-      channel, type, status: "draft", createdAt: new Date().toISOString() }, ...anns])
+    if (!body.trim()) return
+    save([{ id: Date.now().toString(), title: body.trim().slice(0,60), body: body.trim(),
+      channel, type, status: "posted", createdAt: new Date().toISOString(), postedAt: new Date().toISOString() }, ...anns])
     setTitle(""); setBody(""); setAddOpen(false)
   }
 
@@ -181,19 +173,21 @@ export function AnnouncementsCard() {
   }
 
 
-  async function sendAnn(a: Announcement) {
-    if (sendTarget === "discord") { setSendRes(r => ({...r, [a.id]: "❌ Discord henüz aktif değil"})); return }
+  async function sendAnn(a: Announcement, targets: SendTarget[]) {
+    if (targets.includes("discord")) {
+      setSendRes(r => ({...r, [a.id]: "❌ Discord not active yet"})); return
+    }
     setSending(s => ({...s, [a.id]: true}))
     setSendRes(r => ({...r, [a.id]: ""}))
     try {
       const res = await fetch("/api/send-announcement", {
         method: "POST", headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({ channel: sendTarget, body: a.body }),
+        body: JSON.stringify({ body: a.body, targets }),
       })
       const data = await res.json()
-      if (data.ok) { setSendRes(r => ({...r, [a.id]: "✅ Gönderildi!"})); updateStatus(a.id, "posted") }
-      else setSendRes(r => ({...r, [a.id]: "❌ " + (data.error ?? "Hata")}))
-    } catch { setSendRes(r => ({...r, [a.id]: "❌ Bağlantı hatası"})) }
+      const msgs = Object.values(data.results ?? {}) as string[]
+      setSendRes(r => ({...r, [a.id]: msgs.join(" | ") || "✅ Sent!"}))
+    } catch { setSendRes(r => ({...r, [a.id]: "❌ Connection error"})) }
     setSending(s => ({...s, [a.id]: false}))
   }
 
@@ -202,23 +196,15 @@ export function AnnouncementsCard() {
   }
   function deleteAnn(id: string) { save(anns.filter(a => a.id !== id)) }
 
-  const pending  = anns.filter(a => a.status !== "posted").length
-  const filtered = filter === "all" ? anns : anns.filter(a => a.status === filter)
+  const pending  = anns.length
+  const filtered = anns
 
   const collapsed = (
     <div style={{ display:"flex", flexDirection:"column", gap:14 }}>
-      <div style={{ display:"flex", gap:8 }}>
-        {[
-          { n: anns.filter(a=>a.status==="draft").length,    l:"Draft",    c:"#8E8E93" },
-          { n: anns.filter(a=>a.status==="approved").length, l:"Approved", c:"#2563EB" },
-          { n: anns.filter(a=>a.status==="posted").length,   l:"Posted",   c:"#059669" },
-        ].map(({ n,l,c }) => (
-          <div key={l} className="inset-cell" style={{ flex:1, textAlign:"center" }}>
-            <p style={{ fontSize:"1.5rem", fontWeight:800, color:c, lineHeight:1 }}>{n}</p>
-            <p style={{ fontSize:"0.625rem", color:"var(--tertiary)", fontWeight:600,
-              textTransform:"uppercase", letterSpacing:"0.06em", marginTop:3 }}>{l}</p>
-          </div>
-        ))}
+      <div className="inset-cell" style={{ textAlign:"center" }}>
+        <p style={{ fontSize:"1.5rem", fontWeight:800, color:"#059669", lineHeight:1 }}>{anns.length}</p>
+        <p style={{ fontSize:"0.625rem", color:"var(--tertiary)", fontWeight:600,
+          textTransform:"uppercase", letterSpacing:"0.06em", marginTop:3 }}>Sent</p>
       </div>
 
       <div onClick={e => e.stopPropagation()}>
@@ -264,7 +250,7 @@ export function AnnouncementsCard() {
                   background: !title.trim() ? "#E5E5EA" : "#F5A623",
                   color: !title.trim() ? "#A1A1AA" : "#000",
                   fontSize:"0.6875rem", fontWeight:700 }}>
-                <Wand2 style={{ width:11, height:11 }} />
+                
                 {genning ? "Writing…" : "AI Draft"}
               </button>
             </div>
@@ -285,7 +271,7 @@ export function AnnouncementsCard() {
 
       {anns.filter(a=>a.status!=="posted").slice(0,2).map(a => (
         <div key={a.id} onClick={e => e.stopPropagation()}>
-          <AnnRow a={a} onStatus={updateStatus} onDelete={deleteAnn} onSend={sendAnn} sending={!!sending[a.id]} sendRes={sendRes[a.id]??""} sendTarget={sendTarget} onTargetChange={setSendTarget} />
+          <AnnRow a={a} onDelete={deleteAnn} onSend={sendAnn} sending={!!sending[a.id]} sendRes={sendRes[a.id]??""} />
         </div>
       ))}
     </div>
@@ -294,22 +280,18 @@ export function AnnouncementsCard() {
   const expanded = (
     <div style={{ display:"flex", flexDirection:"column", gap:14 }}>
       <div style={{ display:"flex", gap:4 }}>
-        {(["all","draft","approved","posted"] as const).map(f => {
+        {([["all","All","#F5A623"], ["posted","Sent","#059669"]] as const).map(([f, label, color]) => {
           const cnt = f==="all" ? anns.length : anns.filter(a=>a.status===f).length
-          const cfg = f==="all" ? null : STATUS_CONFIG[f]
           const active = filter===f
           return (
-            <button key={f} onClick={()=>setFilter(f)}
+            <button key={f} onClick={()=>setFilter(f as "all"|"posted")}
               style={{ flex:1, padding:"7px 4px", borderRadius:10, border:"none", cursor:"pointer",
-                background: active ? (cfg?.bg ?? "#F5A62322") : "#F4F4F5",
-                outline: active ? `1.5px solid ${cfg?.color ?? "#F5A623"}` : "none",
+                background: active ? `${color}18` : "#F4F4F5",
+                outline: active ? `1.5px solid ${color}` : "none",
                 display:"flex", flexDirection:"column", alignItems:"center", gap:2 }}>
-              <span style={{ fontSize:"0.875rem", fontWeight:800,
-                color: active ? (cfg?.color ?? "#F5A623") : "#1D1D1F" }}>{cnt}</span>
+              <span style={{ fontSize:"0.875rem", fontWeight:800, color: active ? color : "#1D1D1F" }}>{cnt}</span>
               <span style={{ fontSize:"0.5rem", fontWeight:700, textTransform:"uppercase",
-                letterSpacing:"0.05em", color: active ? (cfg?.color ?? "#F5A623") : "#A1A1AA" }}>
-                {f==="all"?"All":f}
-              </span>
+                letterSpacing:"0.05em", color: active ? color : "#A1A1AA" }}>{label}</span>
             </button>
           )
         })}
@@ -358,7 +340,7 @@ export function AnnouncementsCard() {
                 background: !title.trim() ? "#E5E5EA" : "#F5A623",
                 color: !title.trim() ? "#A1A1AA" : "#000",
                 fontSize:"0.75rem", fontWeight:700 }}>
-              <Wand2 style={{ width:12, height:12 }} />
+              
               {genning ? "Writing…" : "AI Draft"}
             </button>
           </div>
@@ -379,7 +361,7 @@ export function AnnouncementsCard() {
       <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
         {filtered.length === 0
           ? <p style={{ textAlign:"center", color:"var(--secondary)", fontSize:"0.875rem", padding:"20px 0" }}>No announcements yet.</p>
-          : filtered.map(a => <AnnRow key={a.id} a={a} onStatus={updateStatus} onDelete={deleteAnn} />)}
+          : filtered.map(a => <AnnRow key={a.id} a={a} onDelete={deleteAnn} onSend={sendAnn} sending={!!sending[a.id]} sendRes={sendRes[a.id]??""} />)}
       </div>
     </div>
   )
