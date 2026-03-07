@@ -370,7 +370,7 @@ export function SocialMediaSpotlightCard() {
 
   return (
     <DashboardCard
-      title="Social Media Spotlight"
+      title="Social"
       subtitle="TikTok · YouTube · Instagram · News"
       liveTag="Live"
       icon={
