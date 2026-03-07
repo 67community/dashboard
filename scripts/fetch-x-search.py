@@ -14,11 +14,14 @@ QUERIES = [
     "67coin solana",
     "maverick 67 coin",
     "#67meme",
+    '"Six Seven" solana',
+    '"Six Seven" coin',
 ]
 
 RELEVANT_TERMS = [
     "67coin", "#67", "$67", "67 coin", "six seven",
     "maverick 67", "67kid", "67to67", "67meme", "67 solana",
+    "six and seven",
 ]
 
 # Spam / irrelevant keyword blacklist
@@ -124,6 +127,14 @@ def is_valid(t: dict) -> bool:
     in_first = any(t in first for t in core_terms)
     if not in_first and total_eng == 0:
         return False  # Hashtag stuffing with no engagement
+
+    # For generic terms like "six seven", require crypto context
+    generic_matches = ["six seven", "six and seven"]
+    if any(g in low for g in generic_matches):
+        crypto_ctx = ["solana", "coin", "crypto", "token", "sol", "wallet",
+                      "pump", "buy", "sell", "market", "chart", "mc", "holder"]
+        if not any(c in low for c in crypto_ctx):
+            return False
 
     return True
 
