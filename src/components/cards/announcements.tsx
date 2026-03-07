@@ -135,7 +135,8 @@ export function AnnouncementsCard() {
   const [channel, setChannel] = useState<AnnChannel>("telegram")
   const [type,    setType]    = useState<AnnType>("raid")
   const [filter,      setFilter]      = useState<AnnStatus | "all">("all")
-  const [multiTarget, setMultiTarget] = useState<Set<string>>(new Set(["announce"]))
+  const [selectedBot,      setSelectedBot]      = useState<"announce"|"raid">("announce")
+  const [selectedChannels, setSelectedChannels] = useState<Set<string>>(new Set(["tg_main"]))
   const [formSending, setFormSending] = useState(false)
   const [formRes,     setFormRes]     = useState("")
   const [genning, setGenning] = useState(false)
@@ -161,13 +162,12 @@ export function AnnouncementsCard() {
       createdAt: new Date().toISOString(), postedAt: new Date().toISOString() }
     save([ann, ...anns])
 
-    const autoTargets = [...multiTarget]
+    const autoTargets = [...selectedChannels]
     setFormSending(true); setFormRes("")
     try {
       const res = await fetch("/api/send-announcement", {
         method: "POST", headers: {"Content-Type":"application/json"},
-        body: JSON.stringify({ body: type === "raid" ? `Raid ${ann.body}` : ann.body,
-          targets: autoTargets, type }),
+        body: JSON.stringify({ body: ann.body, bot: selectedBot, channels: autoTargets }),
       })
       const data = await res.json()
       const msgs = Object.values(data.results ?? {}) as string[]
@@ -254,16 +254,29 @@ export function AnnouncementsCard() {
                       fontSize:"0.7rem", color:"var(--secondary)" }}>✕</button>
                 )}
               </div>
-              <div style={{ display:"flex", gap:6 }}>
-                {([["announce","AnnounceBot","#2AABEE"],["raid","RaidBot","#EF4444"]] as const).map(([v,label,color]) => (
-                  <button key={v} onClick={()=>setMultiTarget(prev=>{const n=new Set(prev);n.has(v)?n.delete(v):n.add(v);return n})}
-                    style={{ flex:1, padding:"7px 0", borderRadius:8, fontSize:"0.8125rem", fontWeight:700,
-                      border:`1.5px solid ${multiTarget.has(v) ? color : "var(--separator)"}`,
-                      background: multiTarget.has(v) ? `${color}18` : "transparent",
-                      color: multiTarget.has(v) ? color : "var(--secondary)", cursor:"pointer" }}>
-                    {label}
-                  </button>
-                ))}
+              <div style={{ display:"flex", flexDirection:"column", gap:6 }}>
+                <div style={{ display:"flex", gap:6 }}>
+                  {([["announce","AnnounceBot","#2AABEE"],["raid","RaidBot","#EF4444"]] as const).map(([v,label,color]) => (
+                    <button key={v} onClick={()=>setSelectedBot(v)}
+                      style={{ flex:1, padding:"6px 0", borderRadius:8, fontSize:"0.75rem", fontWeight:700,
+                        border:`1.5px solid ${selectedBot===v ? color : "var(--separator)"}`,
+                        background: selectedBot===v ? `${color}18` : "transparent",
+                        color: selectedBot===v ? color : "var(--secondary)", cursor:"pointer" }}>
+                      {label}
+                    </button>
+                  ))}
+                </div>
+                <div style={{ display:"flex", gap:6 }}>
+                  {([["tg_main","TG Main","#2AABEE"],["tg_raid","TG Raid","#EF4444"]] as const).map(([v,label,color]) => (
+                    <button key={v} onClick={()=>setSelectedChannels(prev=>{const n=new Set(prev);n.has(v)?n.delete(v):n.add(v);return n})}
+                      style={{ flex:1, padding:"6px 0", borderRadius:8, fontSize:"0.75rem", fontWeight:700,
+                        border:`1.5px solid ${selectedChannels.has(v) ? color : "var(--separator)"}`,
+                        background: selectedChannels.has(v) ? `${color}18` : "transparent",
+                        color: selectedChannels.has(v) ? color : "var(--secondary)", cursor:"pointer" }}>
+                      {label}
+                    </button>
+                  ))}
+                </div>
               </div>
               {formRes && <p style={{ fontSize:"0.75rem", fontWeight:600,
                 color: formRes.startsWith("✅") ? "#059669" : "#EF4444" }}>{formRes}</p>}
@@ -338,16 +351,29 @@ export function AnnouncementsCard() {
                   fontSize:"0.7rem", color:"var(--secondary)" }}>✕</button>
             )}
           </div>
-          <div style={{ display:"flex", gap:6 }}>
-            {([["announce","AnnounceBot","#2AABEE"],["raid","RaidBot","#EF4444"]] as const).map(([v,label,color]) => (
-              <button key={v} onClick={()=>setMultiTarget(prev=>{const n=new Set(prev);n.has(v)?n.delete(v):n.add(v);return n})}
-                style={{ flex:1, padding:"7px 0", borderRadius:8, fontSize:"0.8125rem", fontWeight:700,
-                  border:`1.5px solid ${multiTarget.has(v) ? color : "var(--separator)"}`,
-                  background: multiTarget.has(v) ? `${color}18` : "transparent",
-                  color: multiTarget.has(v) ? color : "var(--secondary)", cursor:"pointer" }}>
-                {label}
-              </button>
-            ))}
+          <div style={{ display:"flex", flexDirection:"column", gap:6 }}>
+            <div style={{ display:"flex", gap:6 }}>
+              {([["announce","AnnounceBot","#2AABEE"],["raid","RaidBot","#EF4444"]] as const).map(([v,label,color]) => (
+                <button key={v} onClick={()=>setSelectedBot(v)}
+                  style={{ flex:1, padding:"6px 0", borderRadius:8, fontSize:"0.75rem", fontWeight:700,
+                    border:`1.5px solid ${selectedBot===v ? color : "var(--separator)"}`,
+                    background: selectedBot===v ? `${color}18` : "transparent",
+                    color: selectedBot===v ? color : "var(--secondary)", cursor:"pointer" }}>
+                  {label}
+                </button>
+              ))}
+            </div>
+            <div style={{ display:"flex", gap:6 }}>
+              {([["tg_main","TG Main","#2AABEE"],["tg_raid","TG Raid","#EF4444"]] as const).map(([v,label,color]) => (
+                <button key={v} onClick={()=>setSelectedChannels(prev=>{const n=new Set(prev);n.has(v)?n.delete(v):n.add(v);return n})}
+                  style={{ flex:1, padding:"6px 0", borderRadius:8, fontSize:"0.75rem", fontWeight:700,
+                    border:`1.5px solid ${selectedChannels.has(v) ? color : "var(--separator)"}`,
+                    background: selectedChannels.has(v) ? `${color}18` : "transparent",
+                    color: selectedChannels.has(v) ? color : "var(--secondary)", cursor:"pointer" }}>
+                  {label}
+                </button>
+              ))}
+            </div>
           </div>
           {formRes && <p style={{ fontSize:"0.75rem", fontWeight:600,
             color: formRes.startsWith("✅") ? "#059669" : "#EF4444" }}>{formRes}</p>}

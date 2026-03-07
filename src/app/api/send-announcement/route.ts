@@ -1,34 +1,39 @@
 import { NextRequest, NextResponse } from "next/server"
 
-const BOTS = {
-  announce: { token: "8783028314:AAGlhdjo0JRJVC66rH-MDUvWfSTiu86gj9I", chatId: "-1003158749697", label: "AnnounceBot" },
-  raid:     { token: "8736950965:AAEgGRJaT1uwvSCA0GF6I88vwKGTkPNinM4", chatId: "-1003708062172", label: "RaidBot"     },
+const TOKENS = {
+  announce: "8783028314:AAGlhdjo0JRJVC66rH-MDUvWfSTiu86gj9I",
+  raid:     "8736950965:AAEgGRJaT1uwvSCA0GF6I88vwKGTkPNinM4",
+}
+const CHATS = {
+  tg_main: "-1003158749697",
+  tg_raid: "-1003708062172",
 }
 
 async function sendTelegram(chatId: string, text: string, token: string) {
   const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
+    method: "POST", headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ chat_id: chatId, text, parse_mode: "HTML" }),
   })
   const data = await res.json()
   if (!data.ok) throw new Error(data.description ?? "Telegram error")
-  return data
 }
 
 export async function POST(req: NextRequest) {
-  const { body, targets } = await req.json()
+  const { body, bot, channels } = await req.json()
   if (!body?.trim()) return NextResponse.json({ error: "Mesaj boş" }, { status: 400 })
 
+  const token = TOKENS[bot as keyof typeof TOKENS]
+  if (!token) return NextResponse.json({ error: "Geçersiz bot" }, { status: 400 })
+
   const results: Record<string, string> = {}
-  for (const key of (targets ?? []) as string[]) {
-    const bot = BOTS[key as keyof typeof BOTS]
-    if (!bot) continue
+  for (const ch of (channels ?? []) as string[]) {
+    const chatId = CHATS[ch as keyof typeof CHATS]
+    if (!chatId) continue
     try {
-      await sendTelegram(bot.chatId, body.trim(), bot.token)
-      results[key] = `✅ ${bot.label} gönderdi`
+      await sendTelegram(chatId, body.trim(), token)
+      results[ch] = "✅ Gönderildi"
     } catch (e: unknown) {
-      results[key] = `❌ ${e instanceof Error ? e.message : "Hata"}`
+      results[ch] = `❌ ${e instanceof Error ? e.message : "Hata"}`
     }
   }
   return NextResponse.json({ results })
