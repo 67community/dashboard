@@ -960,7 +960,7 @@ async function sbGet(key: string): Promise<unknown | null> {
 
 // ── main ──────────────────────────────────────────────────────────────────────
 export async function GET() {
-  const [pair, cg, cgTickers, cmc, holders, discord, tgMembers, discordActivity, youtubeVideos, youtubeAnalytics, newsFeed, marketData, raidFeed, liveTrades, sbXRecent, sbXPopular] = await Promise.all([
+  const [pair, cg, cgTickers, cmc, holders, discord, tgMembers, discordActivity, youtubeVideos, youtubeAnalytics, newsFeed, marketData, raidFeed, liveTrades, sbXRecent, sbXPopular, sbTokenHealth, sbHolders, sbSocialCounts, sbMarketData] = await Promise.all([
     safe(fetchDex),
     safe(fetchCG),
     safe(fetchCGTickers),
@@ -977,6 +977,10 @@ export async function GET() {
     safe(fetchBiggestTradesLive),
     sbGet("x_recent"),
     sbGet("x_popular"),
+    sbGet("token_health"),
+    sbGet("holders"),
+    sbGet("social_counts"),
+    sbGet("market_data"),
   ])
 
   if (!pair && !cg) {
@@ -1151,7 +1155,7 @@ export async function GET() {
     instagram_spotlight: static_?.instagram_spotlight ?? [],
     raid_feed:           (raidFeed as unknown[])?.length ? raidFeed : (static_?.raid_feed ?? []),
     news_feed:           (newsFeed as unknown[])?.length ? newsFeed : (static_?.news_feed ?? []),
-    market_data:         (marketData as unknown[])?.length ? marketData : (static_?.market_data ?? []),
+    market_data:         (sbMarketData as unknown[]) ?? (marketData as unknown[])?.length ? marketData : (static_?.market_data ?? []),
     x_recent:            (sbXRecent as unknown[]) ?? static_?.x_recent  ?? [],
     x_popular:           (sbXPopular as unknown[]) ?? static_?.x_popular ?? [],
     map_features:        static_?.map_features ?? { type:"FeatureCollection", features:[] },
