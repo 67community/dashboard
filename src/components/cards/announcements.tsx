@@ -90,39 +90,13 @@ function AnnRow({ a, onDelete, onSend, sending, sendRes }: {
       <p style={{ fontSize:"0.8125rem", color:"var(--foreground)", lineHeight:1.55,
         paddingLeft:28, whiteSpace:"pre-wrap" }}>{a.body}</p>
 
-      <div style={{ display:"flex", gap:6, paddingLeft:28, flexWrap:"wrap" }}>
+      <div style={{ display:"flex", gap:6, paddingLeft:28, alignItems:"center" }}>
         <CopyBtn text={a.body} label="Copy Text" />
-        
-        {/* Send */}
-        <div style={{ display:"flex", gap:6, alignItems:"center", flexWrap:"wrap", marginLeft:"auto" }}>
-          {(Object.entries(SEND_TARGETS) as [SendTarget, {label:string;color:string}][]).map(([k, v]) => (
-            <label key={k} onClick={e => e.stopPropagation()}
-              style={{ display:"flex", alignItems:"center", gap:4, cursor:"pointer",
-                padding:"4px 10px", borderRadius:8, fontSize:"0.75rem", fontWeight:700,
-                border:`1.5px solid ${selected.has(k) ? v.color : "var(--separator)"}`,
-                color: selected.has(k) ? v.color : "var(--secondary)",
-                background: selected.has(k) ? `${v.color}18` : "transparent",
-                transition:"all 0.15s" }}>
-              <input type="checkbox" checked={selected.has(k)} onChange={() => toggle(k)}
-                style={{ width:12, height:12, accentColor:v.color, cursor:"pointer" }} />
-              {v.label}
-            </label>
-          ))}
-          <button onClick={e=>{e.stopPropagation(); if(selected.size>0) onSend(a,[...selected])}}
-            disabled={sending || selected.size===0}
-            style={{padding:"5px 14px",borderRadius:8,border:"none",
-              cursor:(sending||selected.size===0)?"not-allowed":"pointer",
-              background:(sending||selected.size===0)?"#9CA3AF":"#F5A623",
-              color:"#000",fontSize:"0.75rem",fontWeight:700}}>
-            {sending ? "Sending…" : "Send →"}
-          </button>
-          <button onClick={e=>{e.stopPropagation();onDelete(a.id)}}
-            style={{background:"none",border:"none",cursor:"pointer",color:"var(--secondary)",display:"flex",alignItems:"center"}}>
-            <Trash2 style={{width:14,height:14}}/>
-          </button>
-        </div>
+        <button onClick={e=>{e.stopPropagation();onDelete(a.id)}}
+          style={{background:"none",border:"none",cursor:"pointer",color:"var(--secondary)",display:"flex",alignItems:"center",marginLeft:"auto"}}>
+          <Trash2 style={{width:14,height:14}}/>
+        </button>
       </div>
-      {sendRes&&<p style={{fontSize:"0.75rem",fontWeight:600,color:sendRes.startsWith("✅")?"#059669":"#EF4444",paddingLeft:28}}>{sendRes}</p>}
     </div>
   )
 }
