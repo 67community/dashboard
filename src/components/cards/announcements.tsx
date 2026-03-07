@@ -275,23 +275,7 @@ export function AnnouncementsCard() {
 
   const expanded = (
     <div style={{ display:"flex", flexDirection:"column", gap:14 }}>
-      <div style={{ display:"flex", gap:4 }}>
-        {([["all","All","#F5A623"], ["posted","Sent","#059669"]] as const).map(([f, label, color]) => {
-          const cnt = f==="all" ? anns.length : anns.filter(a=>a.status===f).length
-          const active = filter===f
-          return (
-            <button key={f} onClick={()=>setFilter(f as "all"|"posted")}
-              style={{ flex:1, padding:"7px 4px", borderRadius:10, border:"none", cursor:"pointer",
-                background: active ? `${color}18` : "#F4F4F5",
-                outline: active ? `1.5px solid ${color}` : "none",
-                display:"flex", flexDirection:"column", alignItems:"center", gap:2 }}>
-              <span style={{ fontSize:"0.875rem", fontWeight:800, color: active ? color : "#1D1D1F" }}>{cnt}</span>
-              <span style={{ fontSize:"0.5rem", fontWeight:700, textTransform:"uppercase",
-                letterSpacing:"0.05em", color: active ? color : "#A1A1AA" }}>{label}</span>
-            </button>
-          )
-        })}
-      </div>
+
 
       <button onClick={() => setAddOpen(v => !v)}
         style={{ display:"flex", alignItems:"center", gap:6, padding:"8px 12px",
