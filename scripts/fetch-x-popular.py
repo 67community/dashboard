@@ -63,7 +63,3 @@ def main():
 main()
 
 
-import subprocess
-subprocess.run(["git","-C",str(Path(__file__).parent.parent),"add","public/data.json"],capture_output=True)
-subprocess.run(["git","-C",str(Path(__file__).parent.parent),"commit","-m","data: auto-sync x_news"],capture_output=True)
-subprocess.run(["git","-C",str(Path(__file__).parent.parent),"push","origin","main"],capture_output=True)
