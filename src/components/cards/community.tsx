@@ -570,17 +570,7 @@ export function CommunityCard() {
               ))}
 
             </div>
-            {/* Views + Likes totals */}
-            {(totalViews > 0 || totalLikes > 0) && (
-              <div style={{ display:"flex", gap:6, flexWrap:"wrap", marginTop:8 }}>
-                <span style={{ display:"inline-flex", alignItems:"center", gap:5, background:"rgba(255,255,255,0.1)", borderRadius:99, padding:"4px 10px", fontSize:"0.75rem", fontWeight:700, color:"rgba(255,255,255,0.9)" }}>
-                  👁 {totalViews.toLocaleString()} views
-                </span>
-                <span style={{ display:"inline-flex", alignItems:"center", gap:5, background:"rgba(255,255,255,0.1)", borderRadius:99, padding:"4px 10px", fontSize:"0.75rem", fontWeight:700, color:"rgba(255,255,255,0.9)" }}>
-                  ❤️ {totalLikes.toLocaleString()} likes
-                </span>
-              </div>
-            )}
+
           </div>
 
           {/* Follower Chart */}
@@ -629,54 +619,55 @@ export function CommunityCard() {
             </div>
           )}
 
-          {/* Engagement Rate + Content Performance */}
-          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:0 }}>
-            <div style={{ padding:"14px 16px", borderRight:"1px solid rgba(0,0,0,0.06)" }}>
-              <p style={{ fontSize:"0.625rem", fontWeight:800, color:"var(--tertiary)", textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:8 }}>Engagement Rate</p>
-              <div style={{ display:"flex", alignItems:"baseline", gap:4 }}>
-                <span style={{ fontSize:"2rem", fontWeight:900, color: xEngagement > 2 ? "#059669" : "#F5A623", lineHeight:1 }}>{xEngagement > 0 ? xEngagement.toFixed(1) : "—"}</span>
-                {xEngagement > 0 && <span style={{ fontSize:"1rem", fontWeight:700, color:"var(--tertiary)" }}>%</span>}
-              </div>
-              <div style={{ display:"flex", gap:10, marginTop:8, flexWrap:"wrap" }}>
-                {[
-                  { v: sp?.avg_engagement?.toLocaleString() ?? "—", l: "Avg / Tweet" },
-                  { v: sp?.total_engagement_7d?.toLocaleString() ?? "—", l: "Total 7d" },
-                  { v: String(sp?.posting_streak_days ?? "—"), l: "Day Streak" },
-                ].map(({ v, l }) => (
-                  <div key={l}>
-                    <p style={{ fontSize:"0.875rem", fontWeight:700, color:"var(--foreground)", margin:0 }}>{v}</p>
-                    <p style={{ fontSize:"0.6rem", color:"var(--tertiary)", fontWeight:600 }}>{l}</p>
-                  </div>
-                ))}
-              </div>
+          {/* Weekly Performance — Views · Likes · Engagement · Avg · Streak */}
+          <div style={{ borderTop:"1px solid rgba(0,0,0,0.06)" }}>
+            <div style={{ padding:"10px 16px 6px", display:"flex", alignItems:"center", justifyContent:"space-between" }}>
+              <p style={{ fontSize:"0.6rem", fontWeight:800, color:"var(--tertiary)", textTransform:"uppercase", letterSpacing:"0.08em", margin:0 }}>Weekly Performance</p>
+              <p style={{ fontSize:"0.6rem", color:"var(--tertiary)", margin:0 }}>Last 7 days · @67coinX</p>
             </div>
-            <div style={{ padding:"14px 16px" }}>
-              <p style={{ fontSize:"0.625rem", fontWeight:800, color:"var(--tertiary)", textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:8 }}>Content Performance</p>
-              {sp?.content_type_stats && Object.keys(sp.content_type_stats).length > 0 ? (
-                <div style={{ display:"flex", flexDirection:"column", gap:6 }}>
-                  {Object.entries(sp.content_type_stats)
-                    .sort(([,a],[,b]) => (b as {avg_eng:number}).avg_eng - (a as {avg_eng:number}).avg_eng)
-                    .slice(0, 4)
-                    .map(([type, s]) => {
-                      const stat = s as { count: number; avg_eng: number }
-                      const maxEng = Math.max(...Object.values(sp.content_type_stats).map(v => (v as {avg_eng:number}).avg_eng))
-                      const p = maxEng > 0 ? (stat.avg_eng / maxEng) * 100 : 0
-                      return (
-                        <div key={type}>
-                          <div style={{ display:"flex", justifyContent:"space-between", marginBottom:2 }}>
-                            <span style={{ fontSize:"0.75rem", fontWeight:600, color:"var(--foreground)", textTransform:"capitalize" }}>{type}</span>
-                            <span style={{ fontSize:"0.75rem", fontWeight:700, color:"#F5A623" }}>{stat.avg_eng.toFixed(0)}</span>
-                          </div>
-                          <div style={{ height:4, borderRadius:99, background:"rgba(0,0,0,0.06)" }}>
-                            <div style={{ height:"100%", borderRadius:99, background:"#F5A623", width:`${p}%` }} />
-                          </div>
-                        </div>
-                      )
-                    })}
+            <div style={{ display:"grid", gridTemplateColumns:"repeat(5,1fr)", gap:0 }}>
+              {[
+                { label:"Views",       value: totalViews > 0 ? totalViews.toLocaleString() : "—",                        color:"#6366F1" },
+                { label:"Likes",       value: totalLikes > 0 ? totalLikes.toLocaleString() : "—",                        color:"#EF4444" },
+                { label:"Engagement",  value: xEngagement > 0 ? `${xEngagement.toFixed(1)}%` : "—",                     color: xEngagement > 2 ? "#059669" : "#F5A623" },
+                { label:"Avg / Tweet", value: sp?.avg_engagement != null ? sp.avg_engagement.toLocaleString() : "—",    color:"#F5A623" },
+                { label:"Day Streak",  value: sp?.posting_streak_days != null ? String(sp.posting_streak_days) : "—",   color:"#8B5CF6" },
+              ].map((s, i) => (
+                <div key={s.label} style={{ padding:"12px 10px", borderRight: i < 4 ? "1px solid rgba(0,0,0,0.06)" : "none", textAlign:"center" }}>
+                  <p style={{ fontSize:"1.125rem", fontWeight:800, letterSpacing:"-0.04em", color:s.color, lineHeight:1, margin:0 }}>{s.value}</p>
+                  <p style={{ fontSize:"0.575rem", fontWeight:600, color:"var(--tertiary)", marginTop:4, textTransform:"uppercase", letterSpacing:"0.05em" }}>{s.label}</p>
                 </div>
-              ) : <p style={{ fontSize:"0.875rem", color:"var(--tertiary)" }}>No data yet</p>}
+              ))}
             </div>
           </div>
+
+          {/* Content Performance */}
+          {sp?.content_type_stats && Object.keys(sp.content_type_stats).length > 0 && (
+            <div style={{ padding:"14px 16px", borderTop:"1px solid rgba(0,0,0,0.06)" }}>
+              <p style={{ fontSize:"0.625rem", fontWeight:800, color:"var(--tertiary)", textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:10 }}>Content Performance</p>
+              <div style={{ display:"flex", flexDirection:"column", gap:6 }}>
+                {Object.entries(sp.content_type_stats)
+                  .sort(([,a],[,b]) => (b as {avg_eng:number}).avg_eng - (a as {avg_eng:number}).avg_eng)
+                  .slice(0, 4)
+                  .map(([type, s]) => {
+                    const stat = s as { count: number; avg_eng: number }
+                    const maxEng = Math.max(...Object.values(sp.content_type_stats).map(v => (v as {avg_eng:number}).avg_eng))
+                    const p = maxEng > 0 ? (stat.avg_eng / maxEng) * 100 : 0
+                    return (
+                      <div key={type}>
+                        <div style={{ display:"flex", justifyContent:"space-between", marginBottom:3 }}>
+                          <span style={{ fontSize:"0.75rem", fontWeight:600, color:"var(--foreground)", textTransform:"capitalize" }}>{type}</span>
+                          <span style={{ fontSize:"0.75rem", fontWeight:700, color:"#F5A623" }}>{stat.avg_eng.toFixed(0)} avg</span>
+                        </div>
+                        <div style={{ height:5, borderRadius:99, background:"rgba(0,0,0,0.06)" }}>
+                          <div style={{ height:"100%", borderRadius:99, background:"linear-gradient(90deg,#F5A623,#FB923C)", width:`${p}%` }} />
+                        </div>
+                      </div>
+                    )
+                  })}
+              </div>
+            </div>
+          )}
 
         </div>
 
