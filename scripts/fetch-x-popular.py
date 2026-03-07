@@ -6,6 +6,23 @@ from datetime import datetime, timezone
 
 RAPIDAPI_KEY = "4b393aa0cemsh6895fd899d6eedcp1a441djsnfe89097510cd"
 DATA_JSON    = Path(__file__).parent.parent / "public/data.json"
+
+# ── Supabase sync ──────────────────────────────────────────────
+import urllib.request as _ur
+_SB_URL = "https://oqqwwccercxiwtyedwqm.supabase.co"
+_SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9xcXd3Y2NlcmN4aXd0eWVkd3FtIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3MjIyMjgyOSwiZXhwIjoyMDg3Nzk4ODI5fQ.Gox3T828yW7HEP51ijpN8SkImMIzFXFw8o5_FEXt3FU"
+def sb_upsert(key, value):
+    body = json.dumps({"key": key, "value": value}).encode()
+    req = _ur.Request(f"{_SB_URL}/rest/v1/kv_store", data=body, headers={
+        "apikey": _SB_KEY, "Authorization": f"Bearer {_SB_KEY}",
+        "Content-Type": "application/json", "Prefer": "resolution=merge-duplicates"
+    }, method="POST")
+    try:
+        with _ur.urlopen(req, timeout=10): pass
+        print("  ✅ Supabase synced")
+    except Exception as e:
+        print(f"  ⚠️ Supabase error: {e}")
+
 TAGS = ["67","Six Seven","Six and Seven","6/7","$67","67to67billion"]
 CUTOFF = 86400  # 24h
 
@@ -55,6 +72,7 @@ def main():
     results.sort(key=lambda t: t["likes"], reverse=True)
     print(f"✅ Popular: {len(results)} tweets (last 24h)")
 
+    sb_upsert("x_popular", results)
     with open(DATA_JSON) as f: d = json.load(f)
     d["x_popular"] = results
     d["x_popular_updated"] = datetime.now(timezone.utc).isoformat()
