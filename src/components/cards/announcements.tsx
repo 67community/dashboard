@@ -135,7 +135,7 @@ export function AnnouncementsCard() {
   const [channel, setChannel] = useState<AnnChannel>("telegram")
   const [type,    setType]    = useState<AnnType>("raid")
   const [filter,      setFilter]      = useState<AnnStatus | "all">("all")
-  const [multiTarget, setMultiTarget] = useState<Set<string>>(new Set(["general"]))
+  const [multiTarget, setMultiTarget] = useState<Set<string>>(new Set(["announce"]))
   const [formSending, setFormSending] = useState(false)
   const [formRes,     setFormRes]     = useState("")
   const [genning, setGenning] = useState(false)
@@ -161,7 +161,7 @@ export function AnnouncementsCard() {
       createdAt: new Date().toISOString(), postedAt: new Date().toISOString() }
     save([ann, ...anns])
 
-    const autoTargets = [...multiTarget].map(t => t === "raid" ? "telegram_raid" : "telegram_main")
+    const autoTargets = [...multiTarget]
     setFormSending(true); setFormRes("")
     try {
       const res = await fetch("/api/send-announcement", {
@@ -255,7 +255,7 @@ export function AnnouncementsCard() {
                 )}
               </div>
               <div style={{ display:"flex", gap:6 }}>
-                {([["general","TG Main","#2AABEE"],["raid","TG Raid","#EF4444"]] as const).map(([v,label,color]) => (
+                {([["announce","AnnounceBot","#2AABEE"],["raid","RaidBot","#EF4444"]] as const).map(([v,label,color]) => (
                   <button key={v} onClick={()=>setMultiTarget(prev=>{const n=new Set(prev);n.has(v)?n.delete(v):n.add(v);return n})}
                     style={{ flex:1, padding:"7px 0", borderRadius:8, fontSize:"0.8125rem", fontWeight:700,
                       border:`1.5px solid ${multiTarget.has(v) ? color : "var(--separator)"}`,
@@ -339,7 +339,7 @@ export function AnnouncementsCard() {
             )}
           </div>
           <div style={{ display:"flex", gap:6 }}>
-            {([["general","TG Main","#2AABEE"],["raid","TG Raid","#EF4444"]] as const).map(([v,label,color]) => (
+            {([["announce","AnnounceBot","#2AABEE"],["raid","RaidBot","#EF4444"]] as const).map(([v,label,color]) => (
               <button key={v} onClick={()=>setMultiTarget(prev=>{const n=new Set(prev);n.has(v)?n.delete(v):n.add(v);return n})}
                 style={{ flex:1, padding:"7px 0", borderRadius:8, fontSize:"0.8125rem", fontWeight:700,
                   border:`1.5px solid ${multiTarget.has(v) ? color : "var(--separator)"}`,
