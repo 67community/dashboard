@@ -605,7 +605,23 @@ export function CommunityCard() {
 
           {/* Follower Chart */}
           <div style={{ padding:"14px 16px", borderBottom:"1px solid rgba(0,0,0,0.06)" }}>
-            <p style={{ fontSize:"0.625rem", fontWeight:800, color:"var(--tertiary)", textTransform:"uppercase", letterSpacing:"0.07em", margin:"0 0 10px" }}>Follower History</p>
+            <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:10 }}>
+              <p style={{ fontSize:"0.625rem", fontWeight:800, color:"var(--tertiary)", textTransform:"uppercase", letterSpacing:"0.07em", margin:0 }}>Follower History</p>
+              {(() => {
+                const snap7 = (data as unknown as Record<string,unknown>)?._snapshot_7d as Record<string,unknown> | undefined
+                const prev  = snap7?.twitter_followers as number | undefined
+                const curr  = sp?.twitter_followers ?? 0
+                if (!prev || !curr) return null
+                const diff = curr - prev
+                return (
+                  <span style={{ fontSize:"0.6875rem", fontWeight:700, borderRadius:99, padding:"3px 9px",
+                    color: diff >= 0 ? "#059669" : "#EF4444",
+                    background: diff >= 0 ? "rgba(5,150,105,0.1)" : "rgba(239,68,68,0.1)" }}>
+                    {diff >= 0 ? "+" : ""}{diff.toLocaleString()} vs last week
+                  </span>
+                )
+              })()}
+            </div>
             {sp?.follower_history && sp.follower_history.length > 1 ? (
               <FollowerChart history={sp.follower_history.slice(-14)} />
             ) : (
