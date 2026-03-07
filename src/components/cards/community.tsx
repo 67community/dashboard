@@ -2,7 +2,7 @@
 import { useState } from "react"
 import React from "react"
 import type { BestTweet } from "@/lib/use-data"
-import { AreaChart, Area, ResponsiveContainer, Tooltip, XAxis } from "recharts"
+import { AreaChart, Area, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts"
 
 import { Heart, MessageCircle, Users, Mic, Calendar, Zap, Trophy, Shield } from "lucide-react"
 import { DashboardCard } from "@/components/ui/dashboard-card"
@@ -103,6 +103,36 @@ function timeToEvent(iso: string): string {
   const h = Math.floor(m / 60)
   if (h < 24) return `in ${h}h`
   return `in ${Math.floor(h / 24)}d`
+}
+
+
+// ── Follower Chart ─────────────────────────────────────────────────────────
+function FollowerChart({ history }: { history: { date: string; count: number }[] }) {
+  const counts = history.map(h => h.count)
+  const minC   = Math.min(...counts)
+  const maxC   = Math.max(...counts)
+  const pad    = Math.max(10, Math.round((maxC - minC) * 0.3))
+  return (
+    <ResponsiveContainer width="100%" height={100}>
+      <AreaChart data={history} margin={{ top:8, right:4, left:0, bottom:0 }}>
+        <defs>
+          <linearGradient id="commFGrad2" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="5%"  stopColor="#F5A623" stopOpacity={0.35} />
+            <stop offset="95%" stopColor="#F5A623" stopOpacity={0}    />
+          </linearGradient>
+        </defs>
+        <XAxis dataKey="date" tick={{ fontSize:9, fill:"#C7C7CC" }} tickLine={false} axisLine={false}
+          tickFormatter={(v: string) => v.slice(5)} interval="preserveStartEnd" />
+        <YAxis domain={[minC - pad, maxC + pad]} hide />
+        <Tooltip
+          contentStyle={{ background:"var(--card)", border:"1px solid #F0F0F2", borderRadius:8, fontSize:12, padding:"6px 10px" }}
+          formatter={(v: number | undefined) => [(v ?? 0).toLocaleString(), "Followers"]} />
+        <Area type="monotone" dataKey="count" stroke="#F5A623" strokeWidth={2.5} fill="url(#commFGrad2)"
+          dot={{ r:3, fill:"#F5A623", strokeWidth:0 }}
+          activeDot={{ r:5, fill:"#F5A623" }} />
+      </AreaChart>
+    </ResponsiveContainer>
+  )
 }
 
 // ── Main Component ────────────────────────────────────────────────────────────
@@ -577,19 +607,7 @@ export function CommunityCard() {
           <div style={{ padding:"14px 16px", borderBottom:"1px solid rgba(0,0,0,0.06)" }}>
             <p style={{ fontSize:"0.625rem", fontWeight:800, color:"var(--tertiary)", textTransform:"uppercase", letterSpacing:"0.07em", margin:"0 0 10px" }}>Follower History</p>
             {sp?.follower_history && sp.follower_history.length > 1 ? (
-              <ResponsiveContainer width="100%" height={80}>
-                <AreaChart data={sp.follower_history.slice(-14)} margin={{ top:2, right:0, left:0, bottom:0 }}>
-                  <defs>
-                    <linearGradient id="commFGrad2" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%"  stopColor="#F5A623" stopOpacity={0.3} />
-                      <stop offset="95%" stopColor="#F5A623" stopOpacity={0} />
-                    </linearGradient>
-                  </defs>
-                  <XAxis dataKey="date" tick={{ fontSize:9, fill:"#C7C7CC" }} tickLine={false} axisLine={false} tickFormatter={(v: string) => v.slice(5)} interval="preserveStartEnd" />
-                  <Tooltip contentStyle={{ background:"var(--card)", border:"1px solid #F0F0F2", borderRadius:8, fontSize:12, padding:"6px 10px" }} formatter={(v: number | undefined) => [(v ?? 0).toLocaleString(), "Followers"]} />
-                  <Area type="monotone" dataKey="count" stroke="#F5A623" strokeWidth={2} fill="url(#commFGrad2)" dot={false} />
-                </AreaChart>
-              </ResponsiveContainer>
+              <FollowerChart history={sp.follower_history.slice(-14)} />
             ) : (
               <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:8 }}>
                 {[{ label:"20h", val:xDelta }, { label:"3 days", val:xDelta3d }, { label:"7 days", val:xDelta7d }].map(({ label, val }) => (
