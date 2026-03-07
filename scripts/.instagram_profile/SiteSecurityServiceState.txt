@@ -1,0 +1,4 @@
+www.instagram.com^partitionKey=%28http%2Cinstagram.com%29:HSTS	0	20519	1804450689557,1,0
+graph.instagram.com^partitionKey=%28http%2Cinstagram.com%29:HSTS	0	20519	1804450573009,1,1
+contile.services.mozilla.com:HSTS	0	20519	1804450372214,1,0
+location.services.mozilla.com:HSTS	0	20519	1804450372003,1,0
