@@ -71,29 +71,50 @@ export function XRaidCard() {
 
       {/* X News Recent */}
       {tab === "xrecent" && (
-        <div style={{ maxHeight:300, overflowY:"auto", display:"flex", flexDirection:"column", gap:8 }}>
+        <div style={{ maxHeight:600, overflowY:"auto", display:"flex", flexDirection:"column", gap:8 }}>
           {xLoading && xRecent.length === 0
             ? <div style={{ padding:20, textAlign:"center", color:"var(--secondary)", fontSize:"0.75rem" }}>🔄 Loading...</div>
             : xRecent.length === 0
             ? <div style={{ padding:20, textAlign:"center", color:"var(--secondary)", fontSize:"0.75rem" }}>😴 No results found</div>
             : xRecent.slice(0,30).map((item, i) => (
               <a key={i} href={item.link} target="_blank" rel="noopener noreferrer"
-                style={{ textDecoration:"none", display:"block", padding:"8px 10px",
-                  borderRadius:10, background:"var(--fill-primary)", border:"1px solid var(--separator)" }}>
-                <div style={{ display:"flex", justifyContent:"space-between", marginBottom:4 }}>
-                  <span style={{ fontSize:"0.5625rem", fontWeight:800, color:"var(--foreground)" }}>{item.user}</span>
-                  <span style={{ fontSize:"0.5625rem", color:"var(--secondary)" }}>
-                    {item.time ? new Date(item.time).toLocaleString("en-GB", { day:"2-digit", month:"2-digit", year:"numeric", hour:"2-digit", minute:"2-digit" }) : ""}
-                  </span>
-                </div>
-                <p style={{ fontSize:"0.6875rem", color:"var(--foreground)", lineHeight:1.4, margin:"0 0 6px",
-                  display:"-webkit-box", WebkitLineClamp:2, WebkitBoxOrient:"vertical" as any, overflow:"hidden" }}>
-                  {item.text}
-                </p>
-                <div style={{ display:"flex", gap:10 }}>
-                  <span style={{ fontSize:"0.5rem", color:"var(--tertiary)" }}>❤️ {item.likes||0}</span>
-                  <span style={{ fontSize:"0.5rem", color:"var(--tertiary)" }}>🔁 {item.reposts||0}</span>
-                  <span style={{ fontSize:"0.5rem", color:"var(--tertiary)" }}>💬 {item.replies||0}</span>
+                onClick={e => e.stopPropagation()}
+                style={{ textDecoration:"none", display:"block", padding:"10px 12px",
+                  borderRadius:12, background:"var(--card)", border:"1px solid var(--separator)",
+                  boxShadow:"0 1px 4px rgba(0,0,0,0.06)" }}>
+                <div style={{ display:"flex", gap:10, alignItems:"flex-start" }}>
+                  <img
+                    src={`https://unavatar.io/twitter/${item.user}`}
+                    alt={item.user}
+                    width={36} height={36}
+                    style={{ borderRadius:"50%", flexShrink:0, objectFit:"cover", background:"var(--fill-primary)", width:36, height:36 }}
+                    onError={e => { (e.target as HTMLImageElement).src = "https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png" }}
+                  />
+                  <div style={{ flex:1, minWidth:0 }}>
+                    <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:5 }}>
+                      <div style={{ display:"flex", alignItems:"center", gap:6, flexWrap:"wrap" }}>
+                        <span style={{ fontSize:"0.75rem", fontWeight:800, color:"var(--foreground)" }}>{item.user}</span>
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="var(--tertiary)" opacity="0.5"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.739l7.73-8.835L1.254 2.25H8.08l4.258 5.63 5.906-5.63Z"/></svg>
+                        {item.tag && (
+                          <span style={{ fontSize:"0.5625rem", fontWeight:700, padding:"1px 7px",
+                            borderRadius:99, background:"rgba(0,0,0,0.06)", color:"var(--secondary)" }}>
+                            {item.tag}
+                          </span>
+                        )}
+                      </div>
+                      <span style={{ fontSize:"0.5625rem", color:"var(--tertiary)", flexShrink:0 }}>
+                        {item.time ? new Date(item.time).toLocaleString("en-GB", { day:"2-digit", month:"2-digit", hour:"2-digit", minute:"2-digit" }) : ""}
+                      </span>
+                    </div>
+                    <p style={{ fontSize:"0.75rem", color:"var(--foreground)", lineHeight:1.45, margin:"0 0 7px" }}>
+                      {item.text}
+                    </p>
+                    <div style={{ display:"flex", gap:14, borderTop:"1px solid var(--separator)", paddingTop:8 }}>
+                      <span style={{ fontSize:"0.6875rem", color:"#EF4444", fontWeight:700 }}>♡ {(item.likes||0).toLocaleString()}</span>
+                      <span style={{ fontSize:"0.6875rem", color:"#22C55E", fontWeight:700 }}>↺ {(item.reposts||0).toLocaleString()}</span>
+                      <span style={{ fontSize:"0.6875rem", color:"var(--secondary)", fontWeight:700 }}>💬 {(item.replies||0).toLocaleString()}</span>
+                    </div>
+                  </div>
                 </div>
               </a>
             ))}
@@ -102,29 +123,50 @@ export function XRaidCard() {
 
       {/* X News Popular */}
       {tab === "xpop" && (
-        <div style={{ maxHeight:300, overflowY:"auto", display:"flex", flexDirection:"column", gap:8 }}>
+        <div style={{ maxHeight:600, overflowY:"auto", display:"flex", flexDirection:"column", gap:8 }}>
           {xLoading && xPop.length === 0
             ? <div style={{ padding:20, textAlign:"center", color:"var(--secondary)", fontSize:"0.75rem" }}>🔄 Loading...</div>
             : xPop.length === 0
             ? <div style={{ padding:20, textAlign:"center", color:"var(--secondary)", fontSize:"0.75rem" }}>😴 No results found</div>
             : xPop.slice(0,20).map((item, i) => (
               <a key={i} href={item.link} target="_blank" rel="noopener noreferrer"
-                style={{ textDecoration:"none", display:"block", padding:"8px 10px",
-                  borderRadius:10, background:"var(--fill-primary)", border:"1px solid var(--separator)" }}>
-                <div style={{ display:"flex", justifyContent:"space-between", marginBottom:4 }}>
-                  <span style={{ fontSize:"0.5625rem", fontWeight:800, color:"var(--foreground)" }}>{item.user}</span>
-                  <span style={{ fontSize:"0.5625rem", color:"var(--secondary)" }}>
-                    {item.time ? new Date(item.time).toLocaleString("en-GB", { day:"2-digit", month:"2-digit", year:"numeric", hour:"2-digit", minute:"2-digit" }) : ""}
-                  </span>
-                </div>
-                <p style={{ fontSize:"0.6875rem", color:"var(--foreground)", lineHeight:1.4, margin:"0 0 6px",
-                  display:"-webkit-box", WebkitLineClamp:2, WebkitBoxOrient:"vertical" as any, overflow:"hidden" }}>
-                  {item.text}
-                </p>
-                <div style={{ display:"flex", gap:10 }}>
-                  <span style={{ fontSize:"0.5rem", color:"var(--tertiary)" }}>❤️ {item.likes||0}</span>
-                  <span style={{ fontSize:"0.5rem", color:"var(--tertiary)" }}>🔁 {item.reposts||0}</span>
-                  <span style={{ fontSize:"0.5rem", color:"var(--tertiary)" }}>💬 {item.replies||0}</span>
+                onClick={e => e.stopPropagation()}
+                style={{ textDecoration:"none", display:"block", padding:"10px 12px",
+                  borderRadius:12, background:"var(--card)", border:"1px solid var(--separator)",
+                  boxShadow:"0 1px 4px rgba(0,0,0,0.06)" }}>
+                <div style={{ display:"flex", gap:10, alignItems:"flex-start" }}>
+                  <img
+                    src={`https://unavatar.io/twitter/${item.user}`}
+                    alt={item.user}
+                    width={36} height={36}
+                    style={{ borderRadius:"50%", flexShrink:0, objectFit:"cover", background:"var(--fill-primary)", width:36, height:36 }}
+                    onError={e => { (e.target as HTMLImageElement).src = "https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png" }}
+                  />
+                  <div style={{ flex:1, minWidth:0 }}>
+                    <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:5 }}>
+                      <div style={{ display:"flex", alignItems:"center", gap:6, flexWrap:"wrap" }}>
+                        <span style={{ fontSize:"0.75rem", fontWeight:800, color:"var(--foreground)" }}>{item.user}</span>
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="var(--tertiary)" opacity="0.5"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.739l7.73-8.835L1.254 2.25H8.08l4.258 5.63 5.906-5.63Z"/></svg>
+                        {item.tag && (
+                          <span style={{ fontSize:"0.5625rem", fontWeight:700, padding:"1px 7px",
+                            borderRadius:99, background:"rgba(0,0,0,0.06)", color:"var(--secondary)" }}>
+                            {item.tag}
+                          </span>
+                        )}
+                      </div>
+                      <span style={{ fontSize:"0.5625rem", color:"var(--tertiary)", flexShrink:0 }}>
+                        {item.time ? new Date(item.time).toLocaleString("en-GB", { day:"2-digit", month:"2-digit", hour:"2-digit", minute:"2-digit" }) : ""}
+                      </span>
+                    </div>
+                    <p style={{ fontSize:"0.75rem", color:"var(--foreground)", lineHeight:1.45, margin:"0 0 7px" }}>
+                      {item.text}
+                    </p>
+                    <div style={{ display:"flex", gap:14, borderTop:"1px solid var(--separator)", paddingTop:8 }}>
+                      <span style={{ fontSize:"0.6875rem", color:"#EF4444", fontWeight:700 }}>♡ {(item.likes||0).toLocaleString()}</span>
+                      <span style={{ fontSize:"0.6875rem", color:"#22C55E", fontWeight:700 }}>↺ {(item.reposts||0).toLocaleString()}</span>
+                      <span style={{ fontSize:"0.6875rem", color:"var(--secondary)", fontWeight:700 }}>💬 {(item.replies||0).toLocaleString()}</span>
+                    </div>
+                  </div>
                 </div>
               </a>
             ))}
@@ -133,7 +175,7 @@ export function XRaidCard() {
 
       {/* X Notifications */}
       {tab === "notif" && (
-        <div style={{ maxHeight:300, overflowY:"auto", display:"flex", flexDirection:"column", gap:8 }}>
+        <div style={{ maxHeight:600, overflowY:"auto", display:"flex", flexDirection:"column", gap:8 }}>
           {items.length === 0
             ? <div style={{ padding:20, textAlign:"center", color:"var(--secondary)", fontSize:"0.75rem" }}>😴 No notifications yet</div>
             : items.map(item => (
@@ -155,7 +197,7 @@ export function XRaidCard() {
 
       {/* Telegram Raid */}
       {tab === "tg" && (
-        <div style={{ maxHeight:300, overflowY:"auto", display:"flex", flexDirection:"column", gap:8 }}>
+        <div style={{ maxHeight:600, overflowY:"auto", display:"flex", flexDirection:"column", gap:8 }}>
           {feed.length === 0
             ? <div style={{ padding:20, textAlign:"center", color:"var(--secondary)", fontSize:"0.75rem" }}>😴 No raids yet</div>
             : feed.map((item, i) => <TweetRow key={i} item={item} compact />)}
@@ -172,7 +214,7 @@ export function XRaidCard() {
       accentColor="#0A0A0A"
       collapsed={panel}
       expanded={panel}
-      expandedMaxWidth={700}
+      expandedMaxWidth={1200}
       noAutoOpen
     />
   )
