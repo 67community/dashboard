@@ -1,8 +1,8 @@
 import asyncio
+import os
 import re
 import json
 import hashlib
-import subprocess
 from pathlib import Path
 from datetime import datetime, timezone
 
@@ -12,15 +12,22 @@ from playwright.async_api import async_playwright, TimeoutError as PlaywrightTim
 # CONFIG
 # =========================
 X_NOTIFICATIONS_URL = "https://x.com/notifications"
+X_LOGIN_URL         = "https://x.com/login"
+POLL_SECONDS        = int(os.getenv("POLL_SECONDS", "20"))
 
-POLL_SECONDS = 600  # 10 dakika
-
-STATE_DIR          = Path(__file__).parent / "state"
+STATE_DIR           = Path("state")
 STATE_DIR.mkdir(exist_ok=True)
-STORAGE_STATE_PATH = Path(__file__).parent / "67coinx_session.json"
-SEEN_DB_PATH       = STATE_DIR / "seen_hashes.json"
-DATA_JSON          = Path(__file__).parent.parent / "public" / "data.json"
-REPO_DIR           = Path(__file__).parent.parent
+
+STORAGE_STATE_PATH  = STATE_DIR / "x_storage_state.json"
+SEEN_DB_PATH        = STATE_DIR / "seen_hashes.json"
+
+# Mission Control feed — JSON file read by /api/raid-feed
+FEED_PATH = Path(os.getenv(
+    "RAID_FEED_PATH",
+    "/Users/oscarbrendon/67agent-mission-control/x_notif_feed.json"
+))
+
+FIREFOX_NIGHTLY_PATH = os.getenv("FIREFOX_NIGHTLY_PATH", r"C:\Program Files\Firefox Nightly\firefox.exe")
 
 # =========================
 # HELPERS
@@ -43,38 +50,66 @@ def load_seen() -> set:
         try:
             data = json.loads(SEEN_DB_PATH.read_text(encoding="utf-8"))
             return set(data if isinstance(data, list) else [])
-        except:
+        except Exception:
             return set()
     return set()
 
 def save_seen(seen: set) -> None:
-    lst = list(seen)[-5000:]
-    SEEN_DB_PATH.write_text(json.dumps(lst, ensure_ascii=False, indent=2), encoding="utf-8")
+    lst = list(seen)
+    if len(lst) > 5000:
+        lst = lst[-5000:]
+    SEEN_DB_PATH.write_text(json.dumps(lst, indent=2), encoding="utf-8")
 
-def send_to_dashboard(tweet: dict):
-    """Telegram yerine data.json'a yaz ve git push yap"""
+# Supabase config
+import urllib.request as _ur
+SB_URL = "https://oqqwwccercxiwtyedwqm.supabase.co"
+SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9xcXd3Y2NlcmN4aXd0eWVkd3FtIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3MjIyMjgyOSwiZXhwIjoyMDg3Nzk4ODI5fQ.Gox3T828yW7HEP51ijpN8SkImMIzFXFw8o5_FEXt3FU"
+
+def sb_get_feed() -> list:
     try:
-        data = json.loads(DATA_JSON.read_text())
-    except:
-        data = {}
+        req = _ur.Request(f"{SB_URL}/rest/v1/kv_store?key=eq.x_raid_feed&select=value",
+            headers={"apikey": SB_KEY, "Authorization": f"Bearer {SB_KEY}"})
+        with _ur.urlopen(req, timeout=10) as r:
+            rows = json.load(r)
+        return rows[0]["value"] if rows else []
+    except: return []
 
-    notifs = data.get("x_notifications", [])
-    # Duplicate kontrolü
-    if any(n.get("id") == tweet["id"] for n in notifs):
-        return
-    notifs.insert(0, tweet)
-    data["x_notifications"] = notifs[:30]
-    DATA_JSON.write_text(json.dumps(data, ensure_ascii=True))
+def sb_upsert_feed(feed: list) -> None:
+    body = json.dumps({"key": "x_raid_feed", "value": feed}).encode()
+    req = _ur.Request(f"{SB_URL}/rest/v1/kv_store", data=body, headers={
+        "apikey": SB_KEY, "Authorization": f"Bearer {SB_KEY}",
+        "Content-Type": "application/json", "Prefer": "resolution=merge-duplicates"
+    }, method="POST")
+    with _ur.urlopen(req, timeout=10): pass
 
-    # Git push
-    try:
-        subprocess.run(["git", "add", "public/data.json"], cwd=REPO_DIR, check=True)
-        subprocess.run(["git", "commit", "-m", f"data: new x notif {tweet['id']}",
-                        "--author=Nova <team@67coin.com>"], cwd=REPO_DIR, check=True)
-        subprocess.run(["git", "push", "origin", "main"], cwd=REPO_DIR, check=True)
-        print("✅ Dashboard'a gönderildi")
-    except Exception as e:
-        print(f"⚠️ Git push hatası: {e}")
+def append_to_feed(tweet: dict) -> None:
+    """Append new tweet to Supabase x_raid_feed (max 200 items)."""
+    feed = sb_get_feed()
+    entry = {
+        "id":   extract_status_id(tweet["link"]) or hash_text(tweet["link"]),
+        "text": tweet["text"],
+        "link": tweet["link"],
+        "time": now_utc_str(),
+    }
+    feed.insert(0, entry)
+    if len(feed) > 200:
+        feed = feed[:200]
+    sb_upsert_feed(feed)
+    print(f"💾 Supabase x_raid_feed updated ({len(feed)} items)")
+
+# =========================
+# LOGIN CHECK
+# =========================
+async def ensure_logged_in(page):
+    await page.goto(X_NOTIFICATIONS_URL, wait_until="domcontentloaded")
+    await page.wait_for_timeout(2000)
+    if "login" in page.url.lower():
+        print("🔐 Login gerekiyor. Manuel giriş yap...")
+        await page.goto(X_LOGIN_URL)
+        print("⏳ 90 saniye login süresi...")
+        await page.wait_for_timeout(90_000)
+        await page.goto(X_NOTIFICATIONS_URL)
+        await page.wait_for_timeout(3000)
 
 # =========================
 # CLICK NOTIFICATION
@@ -82,25 +117,15 @@ def send_to_dashboard(tweet: dict):
 async def click_new_post_notification(page) -> bool:
     try:
         await page.wait_for_selector('[data-testid="notification"]', timeout=10000)
-
         notif = page.locator('[data-testid="notification"]:has-text("yeni gönderi")').first
         if await notif.count() == 0:
-            notif = page.locator('[data-testid="notification"]:has-text("new post")').first
-
-        if await notif.count() == 0:
-            print("ℹ️ 'Yeni gönderi' yok")
+            print("ℹ️ 'New post' yok")
             return False
-
-        print("🆕 'Yeni gönderi' → tıklanıyor")
+        print("🆕 'New post' → tıklanıyor")
         await notif.click()
         await page.wait_for_timeout(1500)
         await page.wait_for_selector('article:has(a[href*="/status/"])', timeout=15000)
-        print("✅ Post listesi açıldı")
         return True
-
-    except PlaywrightTimeoutError:
-        print("⚠️ Timeout")
-        return False
     except Exception as e:
         print("⚠️ Click hatası:", e)
         return False
@@ -114,14 +139,13 @@ async def extract_open_tweet(page):
         article = page.locator('article:has(a[href*="/status/"])').first
         raw_text = await article.inner_text()
         text = normalize_text(raw_text)
-        href = await article.locator('a[href*="/status/"]').first.get_attribute("href")
-        if not href or not text:
+        status_a = article.locator('a[href*="/status/"]').first
+        href = await status_a.get_attribute("href")
+        if not href or len(text) < 1:
             return None
-        link = "https://x.com" + href
-        print("✅ Tweet extract edildi:", link)
-        return {"text": text, "link": link}
+        return {"text": text, "link": "https://x.com" + href}
     except Exception as e:
-        print("⚠️ Extract hatası:", e)
+        print("⚠️ extract_open_tweet hatası:", e)
         return None
 
 # =========================
@@ -129,65 +153,59 @@ async def extract_open_tweet(page):
 # =========================
 async def main():
     seen = load_seen()
-    print(f"🚀 ensonraid başladı | seen: {len(seen)}")
+    print(f"🧠 Seen DB: {len(seen)}")
+    print(f"📂 Feed path: {FEED_PATH}")
 
     async with async_playwright() as p:
-        browser = await p.chromium.launch(headless=True)
+        browser = await p.firefox.launch(
+            headless=True,
+            executable_path=FIREFOX_NIGHTLY_PATH if Path(FIREFOX_NIGHTLY_PATH).exists() else None
+        )
         context = await browser.new_context(
-            storage_state=str(STORAGE_STATE_PATH),
+            storage_state=str(STORAGE_STATE_PATH) if STORAGE_STATE_PATH.exists() else None,
             viewport={"width": 1280, "height": 900}
         )
         page = await context.new_page()
-        page.set_default_navigation_timeout(60000)
+        await ensure_logged_in(page)
 
-        await page.goto(X_NOTIFICATIONS_URL, wait_until="domcontentloaded")
-        await page.wait_for_timeout(3000)
+        try:
+            await context.storage_state(path=str(STORAGE_STATE_PATH))
+            print("💾 Session kaydedildi")
+        except Exception:
+            pass
 
-        if "login" in page.url or "flow" in page.url:
-            print("❌ Session expired")
-            await browser.close()
-            return
-
-        print("👂 Dinleniyor...")
+        print("👂 Notifications dinleniyor → Mission Control feed yazılıyor...")
         last_refresh = datetime.now()
 
         while True:
             try:
                 await page.wait_for_timeout(3000)
-
-                if (datetime.now() - last_refresh).total_seconds() > 50:
-                    print("🔄 Refresh...")
+                now = datetime.now()
+                if (now - last_refresh).total_seconds() > 50:
+                    print("🔄 Refresh")
                     await page.goto(X_NOTIFICATIONS_URL, wait_until="domcontentloaded")
                     await page.wait_for_timeout(4000)
-                    last_refresh = datetime.now()
+                    last_refresh = now
 
-                print(f"\n🔁 {now_utc_str()}")
-
+                print(f"\n🔁 Döngü → {page.url}")
                 clicked = await click_new_post_notification(page)
                 tweet = await extract_open_tweet(page) if clicked else None
 
                 if tweet:
                     status_id = extract_status_id(tweet["link"])
-                    if status_id:
-                        hh = hash_text(status_id)
-                        if hh not in seen:
-                            seen.add(hh)
-                            print("🆕 Yeni tweet → dashboard'a gönderiliyor")
-                            send_to_dashboard({
-                                "id": status_id,
-                                "text": tweet["text"],
-                                "link": tweet["link"],
-                                "time": now_utc_str()
-                            })
-                            save_seen(seen)
-                        else:
-                            print("⏭ Duplicate → skip")
+                    h = hash_text(status_id or tweet["link"])
+                    if h in seen:
+                        print("⏭ Duplicate → skip")
+                    else:
+                        seen.add(h)
+                        append_to_feed(tweet)
+                        save_seen(seen)
+                        print(f"✅ Yeni tweet → {tweet['link']}")
 
                 await asyncio.sleep(POLL_SECONDS)
 
                 if "/status/" in page.url or "/i/timeline" in page.url:
                     await page.goto(X_NOTIFICATIONS_URL)
-                    last_refresh = datetime.now()
 
             except KeyboardInterrupt:
                 print("\n🛑 Durduruldu")
