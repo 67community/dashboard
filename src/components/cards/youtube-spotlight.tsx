@@ -137,7 +137,7 @@ function TrafficSources({ sources }: { sources: { source: string; views: number;
   if (!sources?.length) return null
   return (
     <div style={{ display:"flex", flexDirection:"column", gap:7 }}>
-      {sources.slice(0,5).map((s, i) => (
+      {sources.slice(0, 30).map((s, i) => (
         <div key={i}>
           <div style={{ display:"flex", justifyContent:"space-between", marginBottom:3 }}>
             <span style={{ fontSize:"0.75rem", fontWeight:600, color:"var(--foreground)" }}>{s.source}</span>
@@ -157,7 +157,7 @@ function TopCountries({ countries }: { countries: { country: string; code?: stri
   const FLAGS: Record<string,string> = { US:"🇺🇸",GB:"🇬🇧",CA:"🇨🇦",AU:"🇦🇺",TR:"🇹🇷",DE:"🇩🇪",FR:"🇫🇷",BR:"🇧🇷",IN:"🇮🇳",NG:"🇳🇬",PH:"🇵🇭",MX:"🇲🇽",AR:"🇦🇷",VN:"🇻🇳",ID:"🇮🇩",KR:"🇰🇷",JP:"🇯🇵",RU:"🇷🇺",UA:"🇺🇦",PL:"🇵🇱" }
   return (
     <div style={{ display:"flex", flexDirection:"column", gap:5 }}>
-      {countries.slice(0,6).map((c, i) => {
+      {countries.slice(0, 30).map((c, i) => {
         const flag = (c as { flag?: string }).flag ?? FLAGS[c.code ?? c.country] ?? "🌐"
         return (
           <div key={i} style={{ display:"flex", alignItems:"center", gap:8 }}>
@@ -185,7 +185,7 @@ function PublicAggregateStats({ videos }: { videos: YoutubeVideo[] }) {
   const channels = [...new Map(videos.map(v => [v.channel_id, v])).values()]
 
   // Sort videos by views for bar chart
-  const sorted = [...videos].sort((a,b) => (b.views??0) - (a.views??0)).slice(0, 10)
+  const sorted = [...videos].sort((a,b) => (b.views??0) - (a.views??0)).slice(0, 30)
   const maxViews = sorted[0]?.views ?? 1
 
   return (
@@ -236,7 +236,7 @@ function PublicAggregateStats({ videos }: { videos: YoutubeVideo[] }) {
       <div className="inset-cell">
         <SectionLabel icon={<Users style={{ width:12, height:12 }} />} label={`Channels Covering $67coin (${channels.length})`} />
         <div style={{ display:"flex", flexDirection:"column", gap:6 }}>
-          {channels.slice(0, 10).map((v) => (
+          {channels.slice(0, 30).map((v) => (
             <div key={v.channel_id} style={{ display:"flex", alignItems:"center", justifyContent:"space-between" }}>
               <a href={v.channel_url} target="_blank" rel="noopener noreferrer" onClick={e=>e.stopPropagation()}
                 style={{ fontSize:"0.8125rem", fontWeight:600, color:"var(--foreground)", textDecoration:"none",
@@ -287,7 +287,7 @@ export function YouTubeSpotlightCard() {
       {/* Preview grid */}
       {popularVideos.length > 0 ? (
         <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8 }}>
-          {popularVideos.slice(0,4).map((v,i) => <VideoTile key={i} v={v} />)}
+          {popularVideos.slice(0, 30).map((v,i) => <VideoTile key={i} v={v} />)}
         </div>
       ) : (
         <div style={{ display:"flex", alignItems:"center", gap:10, borderTop:"1px solid var(--separator)", paddingTop:14 }}>
