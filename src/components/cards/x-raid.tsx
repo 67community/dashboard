@@ -27,6 +27,17 @@ export function XRaidCard() {
   const xPop:    any[] = (data?.x_popular ?? []) as any[]
   const xLoading = false
 
+  // Today's counts
+  const todayStr = new Date().toISOString().slice(0,10)
+  const todayCount = (arr: any[]) => arr.filter(t => {
+    const time = t.time || t.created_at || ""
+    return time.startsWith(todayStr) || (t.time && t.time.slice(0,10) === todayStr)
+  }).length
+  const xRecentToday = todayCount(xRecent)
+  const xPopToday    = todayCount(xPop)
+  const xRaidToday   = items.filter(i => i.time?.startsWith(todayStr) || i.time?.slice(0,10) === todayStr).length
+  const tgRaidToday  = feed.filter(i => ((i as any).date || (i as any).time || "").slice(0,10) === todayStr).length
+
   useEffect(() => {
     function load(initial = false) {
       fetch("/api/raid-feed").then(r=>r.json()).then((d: RaidNotif[]) => {
@@ -49,17 +60,20 @@ export function XRaidCard() {
       {/* Tab bar */}
       <div style={{ display:"flex", gap:4, marginBottom:12, flexWrap:"wrap" }}>
         {([
-          { key:"xrecent", label:"X News Last" },
-          { key:"xpop",    label:"X News Popular" },
-          { key:"notif",   label:"𝕏 Raid" },
-          { key:"tg",      label:"TG Raid" },
-        ] as const).map(({ key, label }) => (
+          { key:"xrecent", label:"X News Last",    count: xRecentToday },
+          { key:"xpop",    label:"X News Popular", count: xPopToday    },
+          { key:"notif",   label:"𝕏 Raid",         count: xRaidToday   },
+          { key:"tg",      label:"TG Raid",         count: tgRaidToday  },
+        ] as const).map(({ key, label, count }) => (
           <button key={key} onClick={() => setTab(key as any)}
             style={{ flex:1, padding:"6px 6px", borderRadius:10, border:"none", cursor:"pointer",
               background: tab===key ? "var(--foreground)" : "var(--fill-primary)",
               color: tab===key ? "var(--card)" : "var(--secondary)",
               fontSize:"0.5625rem", fontWeight:700, position:"relative", whiteSpace:"nowrap" }}>
-            {label}
+            <span style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:1 }}>
+              <span>{label}</span>
+              {count > 0 && <span style={{ fontSize:"0.5rem", opacity:0.75 }}>{count} today</span>}
+            </span>
             {key==="notif" && newCount > 0 && (
               <span style={{ position:"absolute", top:-4, right:-4,
                 background:"#EF4444", color:"#fff", fontSize:"0.5rem",
