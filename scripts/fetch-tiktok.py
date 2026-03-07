@@ -14,12 +14,12 @@ SB_KEY = "***REMOVED_SERVICE_KEY***"
 
 # Profile + hashtag pages to scrape
 SOURCES = [
-    ("tag", "https://www.tiktok.com/tag/67",                       '[data-e2e="challenge-item"]'),
-    ("tag", "https://www.tiktok.com/tag/67coin",                   '[data-e2e="challenge-item"]'),
-    ("tag", "https://www.tiktok.com/tag/maverick",                 '[data-e2e="challenge-item"]'),
-    ("tag", "https://www.tiktok.com/tag/trevillian",               '[data-e2e="challenge-item"]'),
-    ("tag", "https://www.tiktok.com/tag/theofficialsixtysevencoin",'[data-e2e="challenge-item"]'),
-    ("tag", "https://www.tiktok.com/tag/67kids",                   '[data-e2e="challenge-item"]'),
+    ("tag", "https://www.tiktok.com/tag/67",                       '[data-e2e="video-item"]'),
+    ("tag", "https://www.tiktok.com/tag/67coin",                   '[data-e2e="video-item"]'),
+    ("tag", "https://www.tiktok.com/tag/maverick",                 '[data-e2e="video-item"]'),
+    ("tag", "https://www.tiktok.com/tag/trevillian",               '[data-e2e="video-item"]'),
+    ("tag", "https://www.tiktok.com/tag/theofficialsixtysevencoin",'[data-e2e="video-item"]'),
+    ("tag", "https://www.tiktok.com/tag/67kids",                   '[data-e2e="video-item"]'),
 ]
 
 def sb_upsert(key, value):
@@ -29,6 +29,20 @@ def sb_upsert(key, value):
         "Content-Type": "application/json", "Prefer": "resolution=merge-duplicates"
     }, method="POST")
     with urllib.request.urlopen(req, timeout=10): pass
+
+STORAGE_BASE = f"{SB_URL}/storage/v1/object/public/tiktok-thumbs"
+
+def upload_thumb(filename: str, data: bytes) -> str:
+    try:
+        req = urllib.request.Request(
+            f"{SB_URL}/storage/v1/object/tiktok-thumbs/{filename}",
+            data=data, method="POST",
+            headers={"apikey": SB_KEY, "Authorization": f"Bearer {SB_KEY}",
+                     "Content-Type": "image/jpeg", "x-upsert": "true"}
+        )
+        with urllib.request.urlopen(req, timeout=15): pass
+        return f"{STORAGE_BASE}/{filename}"
+    except: return ""
 
 def sb_get(key):
     try:
@@ -44,7 +58,7 @@ async def run():
 
     async with async_playwright() as p:
         ctx = await p.firefox.launch_persistent_context(
-            str(PROFILE_DIR), headless=True,
+            str(PROFILE_DIR), headless=False,
             user_agent="Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1",
             viewport={"width": 390, "height": 844},
         )
@@ -100,10 +114,10 @@ async def run():
                         body = await resp.body()
                         if len(body) > 1000:
                             filepath.write_bytes(body)
-                            local_thumb = f"/tiktok-thumbs/{uid}.jpg"
+                            local_thumb = upload_thumb(f"{uid}.jpg", body) or f"/tiktok-thumbs/{uid}.jpg"
                 except: pass
             elif filepath.exists():
-                local_thumb = f"/tiktok-thumbs/{uid}.jpg"
+                local_thumb = f"{STORAGE_BASE}/{uid}.jpg"
 
             old = old_map.get(uid, {})
             result.append({
