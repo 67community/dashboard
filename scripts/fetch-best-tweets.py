@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-@67coinX best tweets via Twitter241 RapidAPI — no Playwright, no proxy.
-Uses user-tweets endpoint (user ID) for @67coinX posts + search for community.
+@67coinX best tweets via Twitter241 RapidAPI.
+ONLY @67coinX official tweets — best in 48h and 7 days by likes.
 """
 import json, urllib.request, urllib.parse
 from pathlib import Path
@@ -10,7 +10,6 @@ from datetime import datetime, timezone, timedelta
 RAPIDAPI_KEY  = "4b393aa0cemsh6895fd899d6eedcp1a441djsnfe89097510cd"
 DATA_JSON     = Path(__file__).parent.parent / "public/data.json"
 USER_ID_67CON = "1993727649202814976"   # @67coinX
-SEARCH_QUERIES = ["67coin", "#67coin"]
 
 now = datetime.now(timezone.utc)
 
@@ -23,7 +22,7 @@ def api_get(endpoint, params):
     with urllib.request.urlopen(req, timeout=15) as r:
         return json.load(r)
 
-def parse_tweets(data, screen_name="67coinX"):
+def parse_tweets(data):
     tweets = []
     for inst in data.get("result", {}).get("timeline", {}).get("instructions", []):
         for entry in inst.get("entries", []):
@@ -41,10 +40,9 @@ def parse_tweets(data, screen_name="67coinX"):
             except:
                 continue
             tid = leg.get("id_str", "")
-            sn  = tw.get("core", {}).get("user_results", {}).get("result", {}).get("legacy", {}).get("screen_name", screen_name)
             tweets.append({
                 "tweet_id":  tid,
-                "tweet_url": f"https://x.com/{sn}/status/{tid}",
+                "tweet_url": f"https://x.com/67coinX/status/{tid}",
                 "text":      text[:280],
                 "likes":     int(leg.get("favorite_count", 0)),
                 "replies":   int(leg.get("reply_count", 0)),
@@ -55,59 +53,31 @@ def parse_tweets(data, screen_name="67coinX"):
     return tweets
 
 def main():
-    print("Fetching @67coinX tweets via API...")
-    all_tweets = []
+    print("Fetching @67coinX official tweets...")
 
-    # 1. Official @67coinX tweets via user-tweets endpoint
     try:
         data = api_get("user-tweets", {"user": USER_ID_67CON, "count": 40})
-        tweets = parse_tweets(data, "67coinX")
-        all_tweets.extend(tweets)
+        tweets = parse_tweets(data)
         print(f"  ✅ @67coinX user-tweets → {len(tweets)} tweets")
     except Exception as e:
         print(f"  ❌ user-tweets error: {e}")
+        return
 
-    # 2. Community mentions via search
-    for q in SEARCH_QUERIES:
-        try:
-            data = api_get("search", {"query": q, "type": "Latest", "count": 20})
-            tweets = parse_tweets(data)
-            all_tweets.extend(tweets)
-            print(f"  ✅ search '{q}' → {len(tweets)} tweets")
-        except Exception as e:
-            print(f"  ❌ search '{q}' error: {e}")
+    cutoff_48h = now - timedelta(hours=48)
+    cutoff_7d  = now - timedelta(days=7)
 
-    # Deduplicate by tweet_id
-    seen = set()
-    unique = []
-    for t in all_tweets:
-        if t["tweet_id"] not in seen:
-            seen.add(t["tweet_id"])
-            unique.append(t)
+    tweets_48h = [t for t in tweets if t["dt"] >= cutoff_48h]
+    tweets_7d  = [t for t in tweets if t["dt"] >= cutoff_7d]
 
-    # Filter by time
-    cutoff_48h  = now - timedelta(hours=48)
-    cutoff_7d   = now - timedelta(days=7)
+    best_48h = max(tweets_48h, key=lambda t: t["likes"], default=None)
+    best_7d  = max(tweets_7d,  key=lambda t: t["likes"], default=None)
 
-    tweets_48h = [t for t in unique if t["dt"] >= cutoff_48h]
-    tweets_7d  = [t for t in unique if t["dt"] >= cutoff_7d]
-
-    # Best from @67coinX only (official account)
-    official_48h = [t for t in tweets_48h if "67coinX" in t["tweet_url"]]
-    official_7d  = [t for t in tweets_7d  if "67coinX" in t["tweet_url"]]
-
-    best_48h = max(official_48h, key=lambda t: t["likes"], default=None) or \
-               max(tweets_48h,   key=lambda t: t["likes"], default=None)
-    best_7d  = max(official_7d,  key=lambda t: t["likes"], default=None) or \
-               max(tweets_7d,    key=lambda t: t["likes"], default=None)
-
-    print(f"\n📊 Total unique: {len(unique)} | 48h: {len(tweets_48h)} | 7d: {len(tweets_7d)}")
+    print(f"\n📊 48h: {len(tweets_48h)} tweets | 7d: {len(tweets_7d)} tweets")
     if best_48h:
-        print(f"⭐ Best 48h: {best_48h['likes']} likes — {best_48h['text'][:60]}")
+        print(f"⭐ Best 48h: {best_48h['likes']} likes — {best_48h['text'][:70]}")
     if best_7d:
-        print(f"⭐ Best 7d:  {best_7d['likes']} likes — {best_7d['text'][:60]}")
+        print(f"⭐ Best 7d:  {best_7d['likes']} likes — {best_7d['text'][:70]}")
 
-    # Update data.json
     with open(DATA_JSON) as f:
         data = json.load(f)
 
