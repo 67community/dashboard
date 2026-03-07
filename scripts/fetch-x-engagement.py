@@ -79,8 +79,10 @@ def main():
     tweets_7d = [t for t in tweets if t["dt"] >= cutoff_7d]
 
     # Engagement rate = total_engagement / total_views (×100) or per-tweet avg
-    total_eng_7d = sum(t["engagement"] for t in tweets_7d)
-    total_views  = sum(t["views"] for t in tweets_7d)
+    total_eng_7d  = sum(t["engagement"] for t in tweets_7d)
+    total_views   = sum(t["views"] for t in tweets_7d)
+    all_views     = sum(t["views"] for t in tweets)
+    all_likes     = sum(t["likes"] for t in tweets)
     avg_eng      = round(total_eng_7d / len(tweets_7d), 1) if tweets_7d else 0
     eng_rate     = round((total_eng_7d / total_views * 100), 3) if total_views > 0 else round(avg_eng / 10, 3)
 
@@ -112,6 +114,8 @@ def main():
     print(f"  ✅ Total 7d: {total_eng_7d}")
     print(f"  ✅ Posting streak: {streak} days")
     print(f"  ✅ Content types: {list(ct_stats.keys())}")
+    print(f"  ✅ Total views (recent): {all_views:,}")
+    print(f"  ✅ Total likes (recent): {all_likes:,}")
 
     with open(DATA_JSON) as f:
         d = json.load(f)
@@ -121,6 +125,8 @@ def main():
     sp["total_engagement_7d"]  = total_eng_7d
     sp["posting_streak_days"]  = streak
     sp["content_type_stats"]   = ct_stats
+    sp["total_views_recent"]   = all_views
+    sp["total_likes_recent"]   = all_likes
     d["social_pulse"] = sp
     with open(DATA_JSON, "w") as f:
         json.dump(d, f, indent=2)
