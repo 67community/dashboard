@@ -6,7 +6,7 @@ from datetime import datetime, timezone
 
 RAPIDAPI_KEY = "4b393aa0cemsh6895fd899d6eedcp1a441djsnfe89097510cd"
 DATA_JSON    = Path(__file__).parent.parent / "public/data.json"
-TAGS = ["67","Six Seven","6-7","Six and Seven","6/7","$67","67to67billion"]
+TAGS = ["67","Six Seven","Six and Seven","6/7","$67","67to67billion"]
 CUTOFF = 86400  # 24h
 
 def search(query, count=20):
