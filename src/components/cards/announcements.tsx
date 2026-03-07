@@ -135,7 +135,6 @@ export function AnnouncementsCard() {
   const [channel, setChannel] = useState<AnnChannel>("telegram")
   const [type,    setType]    = useState<AnnType>("raid")
   const [filter,      setFilter]      = useState<AnnStatus | "all">("all")
-  const [formTargets, setFormTargets] = useState<Set<SendTarget>>(new Set(["telegram_main"]))
   const [formSending, setFormSending] = useState(false)
   const [formRes,     setFormRes]     = useState("")
   const [genning, setGenning] = useState(false)
@@ -161,20 +160,20 @@ export function AnnouncementsCard() {
       createdAt: new Date().toISOString(), postedAt: new Date().toISOString() }
     save([ann, ...anns])
 
-    if (formTargets.size > 0) {
-      setFormSending(true); setFormRes("")
-      try {
-        const res = await fetch("/api/send-announcement", {
-          method: "POST", headers: {"Content-Type":"application/json"},
-          body: JSON.stringify({ body: type === "raid" ? `Raid ${ann.body}` : ann.body,
-            targets: [...formTargets], type }),
-        })
-        const data = await res.json()
-        const msgs = Object.values(data.results ?? {}) as string[]
-        setFormRes(msgs.join(" | ") || "✅ Gönderildi")
-      } catch { setFormRes("❌ Bağlantı hatası") }
-      setFormSending(false)
-    }
+    // Auto-target: Raid → telegram_raid, General → telegram_main
+    const autoTargets = type === "raid" ? ["telegram_raid"] : ["telegram_main"]
+    setFormSending(true); setFormRes("")
+    try {
+      const res = await fetch("/api/send-announcement", {
+        method: "POST", headers: {"Content-Type":"application/json"},
+        body: JSON.stringify({ body: type === "raid" ? `Raid ${ann.body}` : ann.body,
+          targets: autoTargets, type }),
+      })
+      const data = await res.json()
+      const msgs = Object.values(data.results ?? {}) as string[]
+      setFormRes(msgs.join(" | ") || "✅ Gönderildi")
+    } catch { setFormRes("❌ Bağlantı hatası") }
+    setFormSending(false)
     setTitle(""); setBody("")
     setTimeout(() => { setAddOpen(false); setFormRes("") }, 1500)
   }
@@ -267,23 +266,6 @@ export function AnnouncementsCard() {
                   {Object.entries(CH_CONFIG).map(([k,v]) => <option key={k} value={k}>{v.label}</option>)}
                 </select>
               </div>
-              {/* Target checkboxes */}
-              <div style={{ display:"flex", gap:6, flexWrap:"wrap" }}>
-                {(Object.entries(SEND_TARGETS) as [SendTarget,{label:string;color:string}][])
-                  .filter(([k]) => k !== "discord")
-                  .map(([k,v]) => (
-                  <label key={k} style={{ display:"flex", alignItems:"center", gap:4, cursor:"pointer",
-                    padding:"4px 10px", borderRadius:8, fontSize:"0.75rem", fontWeight:700,
-                    border:`1.5px solid ${formTargets.has(k) ? v.color : "var(--separator)"}`,
-                    color: formTargets.has(k) ? v.color : "var(--secondary)",
-                    background: formTargets.has(k) ? `${v.color}18` : "transparent" }}>
-                    <input type="checkbox" checked={formTargets.has(k)}
-                      onChange={() => setFormTargets(prev => { const n=new Set(prev); n.has(k)?n.delete(k):n.add(k); return n })}
-                      style={{ width:12, height:12, accentColor:v.color, cursor:"pointer" }} />
-                    {v.label}
-                  </label>
-                ))}
-              </div>
               {formRes && <p style={{ fontSize:"0.75rem", fontWeight:600,
                 color: formRes.startsWith("✅") ? "#059669" : "#EF4444" }}>{formRes}</p>}
               <div style={{ display:"flex", gap:6 }}>
@@ -368,23 +350,6 @@ export function AnnouncementsCard() {
                 outline:"none", fontSize:"0.8125rem", fontFamily:"inherit", background:"var(--input-bg)" }}>
               {Object.entries(CH_CONFIG).map(([k,v]) => <option key={k} value={k}>{v.label}</option>)}
             </select>
-          </div>
-          {/* Target checkboxes */}
-          <div style={{ display:"flex", gap:6, flexWrap:"wrap" }}>
-            {(Object.entries(SEND_TARGETS) as [SendTarget,{label:string;color:string}][])
-              .filter(([k]) => k !== "discord")
-              .map(([k,v]) => (
-              <label key={k} style={{ display:"flex", alignItems:"center", gap:4, cursor:"pointer",
-                padding:"4px 10px", borderRadius:8, fontSize:"0.75rem", fontWeight:700,
-                border:`1.5px solid ${formTargets.has(k) ? v.color : "var(--separator)"}`,
-                color: formTargets.has(k) ? v.color : "var(--secondary)",
-                background: formTargets.has(k) ? `${v.color}18` : "transparent" }}>
-                <input type="checkbox" checked={formTargets.has(k)}
-                  onChange={() => setFormTargets(prev => { const n=new Set(prev); n.has(k)?n.delete(k):n.add(k); return n })}
-                  style={{ width:12, height:12, accentColor:v.color, cursor:"pointer" }} />
-                {v.label}
-              </label>
-            ))}
           </div>
           {formRes && <p style={{ fontSize:"0.75rem", fontWeight:600,
             color: formRes.startsWith("✅") ? "#059669" : "#EF4444" }}>{formRes}</p>}
