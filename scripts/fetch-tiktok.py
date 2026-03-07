@@ -1,113 +1,127 @@
 #!/usr/bin/env python3
-"""Scrape TikTok @67coin videos, download thumbnails immediately, update data.json."""
-import json, os, asyncio, re, hashlib
+"""Scrape TikTok videos by tags → Supabase. Every 1 hour."""
+import json, asyncio
 from pathlib import Path
+import urllib.request
 
-REPO_ROOT = Path(__file__).parent.parent
-DATA_JSON = REPO_ROOT / "public/data.json"
-THUMB_DIR = REPO_ROOT / "public/tiktok-thumbs"
+REPO_ROOT   = Path(__file__).parent.parent
+THUMB_DIR   = REPO_ROOT / "public/tiktok-thumbs"
 PROFILE_DIR = REPO_ROOT / ".tiktok_browser_profile"
 THUMB_DIR.mkdir(exist_ok=True)
+
+SB_URL = "https://oqqwwccercxiwtyedwqm.supabase.co"
+SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9xcXd3Y2NlcmN4aXd0eWVkd3FtIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3MjIyMjgyOSwiZXhwIjoyMDg3Nzk4ODI5fQ.Gox3T828yW7HEP51ijpN8SkImMIzFXFw8o5_FEXt3FU"
+
+# Profile + hashtag pages to scrape
+SOURCES = [
+    ("profile", "https://www.tiktok.com/@67coin",               '[data-e2e="user-post-item"]'),
+    ("tag",     "https://www.tiktok.com/tag/67",                 '[data-e2e="challenge-item"]'),
+    ("tag",     "https://www.tiktok.com/tag/67coin",             '[data-e2e="challenge-item"]'),
+    ("tag",     "https://www.tiktok.com/tag/maverick67kids",     '[data-e2e="challenge-item"]'),
+    ("tag",     "https://www.tiktok.com/tag/trevillian",         '[data-e2e="challenge-item"]'),
+    ("tag",     "https://www.tiktok.com/tag/theofficialsixtysevencoin", '[data-e2e="challenge-item"]'),
+]
+
+def sb_upsert(key, value):
+    body = json.dumps({"key": key, "value": value}).encode()
+    req = urllib.request.Request(f"{SB_URL}/rest/v1/kv_store", data=body, headers={
+        "apikey": SB_KEY, "Authorization": f"Bearer {SB_KEY}",
+        "Content-Type": "application/json", "Prefer": "resolution=merge-duplicates"
+    }, method="POST")
+    with urllib.request.urlopen(req, timeout=10): pass
+
+def sb_get(key):
+    try:
+        req = urllib.request.Request(f"{SB_URL}/rest/v1/kv_store?key=eq.{key}&select=value",
+            headers={"apikey": SB_KEY, "Authorization": f"Bearer {SB_KEY}"})
+        with urllib.request.urlopen(req, timeout=10) as r:
+            rows = json.load(r)
+        return rows[0]["value"] if rows else []
+    except: return []
 
 async def run():
     from playwright.async_api import async_playwright
 
     async with async_playwright() as p:
         ctx = await p.firefox.launch_persistent_context(
-            str(PROFILE_DIR),
-            headless=True,
+            str(PROFILE_DIR), headless=True,
             user_agent="Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1",
             viewport={"width": 390, "height": 844},
         )
         page = await ctx.new_page()
 
-        async def scrape_videos(url, selector):
-            print(f"Loading {url}...")
-            await page.goto(url, wait_until="networkidle", timeout=30000)
-            await page.wait_for_timeout(3000)
-            for _ in range(3):
-                await page.evaluate("window.scrollBy(0, 800)")
-                await page.wait_for_timeout(1000)
-            return await page.evaluate(f"""() => {{
-                const cards = document.querySelectorAll('{selector}')
-                return Array.from(cards).slice(0, 12).map(card => {{
-                    const link = card.querySelector('a')
-                    const img = card.querySelector('img')
-                    const url = link?.href || ''
-                    const thumb = img?.src || img?.getAttribute('src') || ''
-                    const id = url.match(/video\\/([0-9]+)/)?.[1] || ''
-                    return {{ id, url, thumb }}
-                }})
-            }}""")
+        async def scrape(url, selector):
+            try:
+                await page.goto(url, wait_until="networkidle", timeout=30000)
+                await page.wait_for_timeout(3000)
+                for _ in range(3):
+                    await page.evaluate("window.scrollBy(0, 800)")
+                    await page.wait_for_timeout(800)
+                return await page.evaluate(f"""() => {{
+                    const cards = document.querySelectorAll('{selector}')
+                    return Array.from(cards).slice(0, 10).map(card => {{
+                        const link = card.querySelector('a')
+                        const img  = card.querySelector('img')
+                        const url  = link?.href || ''
+                        const thumb= img?.src || img?.getAttribute('src') || ''
+                        const id   = url.match(/video\\/([0-9]+)/)?.[1] || ''
+                        return {{ id, url, thumb }}
+                    }})
+                }}""")
+            except Exception as e:
+                print(f"  ⚠️ {url}: {e}")
+                return []
 
-        # @67coin profili + #67 tag sayfası
-        profile_videos = await scrape_videos("https://www.tiktok.com/@67coin", '[data-e2e="user-post-item"]')
-        tag_videos     = await scrape_videos("https://www.tiktok.com/tag/67",   '[data-e2e="challenge-item"]')
-
-        # Birleştir, deduplicate
         seen_ids = set()
-        videos = []
-        for v in profile_videos + tag_videos:
-            if v["id"] and v["id"] not in seen_ids:
-                seen_ids.add(v["id"])
-                videos.append(v)
+        all_videos = []
+        for kind, url, selector in SOURCES:
+            vids = await scrape(url, selector)
+            for v in vids:
+                if v["id"] and v["id"] not in seen_ids:
+                    seen_ids.add(v["id"])
+                    all_videos.append(v)
+            print(f"  {url} → {len(vids)} videos")
 
-        print(f"Found {len(videos)} videos")
+        # Old stats from Supabase
+        old_list = sb_get("tiktok_spotlight")
+        old_map  = {v.get("id",""): v for v in old_list}
 
-        # Also grab stats from API response captured during page load
-        # Try getting existing videos data
-        videos_with_stats = []
-        
-        with open(DATA_JSON) as f:
-            data = json.load(f)
-        
-        old_tiktoks = {v.get("id", ""): v for v in data.get("tiktok_spotlight", [])}
-
-        for v in videos:
-            if not v["id"]:
-                continue
-            
-            uid = v["id"]
-            filename = f"{uid}.jpg"
-            filepath = THUMB_DIR / filename
-            thumb_url = v["thumb"]
-
-            # Download thumbnail immediately while session is active
+        result = []
+        for v in all_videos:
+            if not v["id"]: continue
+            uid      = v["id"]
+            filepath = THUMB_DIR / f"{uid}.jpg"
             local_thumb = None
-            if thumb_url and not (THUMB_DIR / filename).exists():
+
+            if not filepath.exists() and v["thumb"]:
                 try:
-                    resp = await page.request.get(thumb_url, headers={"Referer": "https://www.tiktok.com/"})
+                    resp = await page.request.get(v["thumb"], headers={"Referer":"https://www.tiktok.com/"})
                     if resp.status == 200:
                         body = await resp.body()
                         if len(body) > 1000:
                             filepath.write_bytes(body)
-                            local_thumb = f"/tiktok-thumbs/{filename}"
-                            print(f"✅ Thumb {uid}: {len(body)//1024}KB")
-                except Exception as e:
-                    print(f"⚠️ Thumb {uid}: {e}")
-            elif (THUMB_DIR / filename).exists():
-                local_thumb = f"/tiktok-thumbs/{filename}"
+                            local_thumb = f"/tiktok-thumbs/{uid}.jpg"
+                except: pass
+            elif filepath.exists():
+                local_thumb = f"/tiktok-thumbs/{uid}.jpg"
 
-            # Merge with old stats if available
-            old = old_tiktoks.get(uid, {})
-            videos_with_stats.append({
-                "id": uid,
-                "video_url": v["url"],
-                "thumbnail_url": local_thumb or thumb_url or old.get("thumbnail_url", ""),
-                "plays": old.get("plays", 0),
-                "likes": old.get("likes", 0),
-                "comments": old.get("comments", 0),
-                "description": old.get("description", ""),
+            old = old_map.get(uid, {})
+            result.append({
+                "id":            uid,
+                "video_url":     v["url"],
+                "thumbnail_url": local_thumb or v["thumb"] or old.get("thumbnail_url",""),
+                "plays":         old.get("plays", 0),
+                "likes":         old.get("likes", 0),
+                "comments":      old.get("comments", 0),
+                "description":   old.get("description",""),
             })
 
         await ctx.close()
 
-        if videos_with_stats:
-            data["tiktok_spotlight"] = videos_with_stats
-            with open(DATA_JSON, "w") as f:
-                json.dump(data, f, indent=2)
-            print(f"\n✅ Saved {len(videos_with_stats)} TikTok videos to data.json")
-        else:
-            print("⚠️ No videos found — data.json unchanged")
+    if result:
+        sb_upsert("tiktok_spotlight", result)
+        print(f"\n✅ tiktok_spotlight synced ({len(result)} videos)")
+    else:
+        print("⚠️ No videos found")
 
 asyncio.run(run())
