@@ -51,7 +51,7 @@ export function XRaidCard() {
         {([
           { key:"xrecent", label:"X News Last" },
           { key:"xpop",    label:"X News Popular" },
-          { key:"notif",   label:"𝕏 Notifs" },
+          { key:"notif",   label:"𝕏 Raid" },
           { key:"tg",      label:"TG Raid" },
         ] as const).map(({ key, label }) => (
           <button key={key} onClick={() => setTab(key as any)}
@@ -183,7 +183,7 @@ export function XRaidCard() {
                   style={{ textDecoration:"none", display:"block", padding:"8px 10px",
                     borderRadius:10, background:"var(--fill-primary)", border:"1px solid var(--separator)" }}>
                   <div style={{ display:"flex", justifyContent:"space-between", marginBottom:4 }}>
-                    <span style={{ fontSize:"0.5625rem", fontWeight:800, color:"var(--foreground)" }}>𝕏 NOTIFICATION</span>
+                    <span style={{ fontSize:"0.5625rem", fontWeight:800, color:"var(--foreground)" }}>𝕏 RAID</span>
                     <span style={{ fontSize:"0.5625rem", color:"var(--secondary)" }}>{timeAgo(item.time)}</span>
                   </div>
                   <p style={{ fontSize:"0.6875rem", color:"var(--foreground)", lineHeight:1.4, margin:0,
