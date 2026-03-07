@@ -140,6 +140,7 @@ export function CommunityCard() {
   const xCommunity    = sp?.x_community_members  ?? 0
   const xCommunityDelta = sp?.x_community_delta_24h ?? 0
   const xEngagement   = sp?.engagement_rate      ?? 0
+  const communityTweets = sp?.community_tweets   ?? []
 
   // ── Collapsed view ──────────────────────────────────────────────────────────
   const collapsed = (
@@ -691,6 +692,42 @@ export function CommunityCard() {
                   </div>
                 </a>
               ) : null)}
+            </div>
+          </div>
+        )}
+
+
+        {/* X Community */}
+        {communityTweets.length > 0 && (
+          <div>
+            <p style={{ fontSize:"0.6875rem", fontWeight:800, color:"var(--tertiary)", textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:10 }}>X Community</p>
+            <div style={{ display:"flex", flexDirection:"column", gap:14 }}>
+              {communityTweets.map((t, i) => (
+                <a key={i} href={t.tweet_url} target="_blank" rel="noreferrer"
+                  style={{ textDecoration:"none", display:"flex", flexDirection:"column", background:"var(--card)", borderRadius:16, overflow:"hidden", border:"1px solid rgba(0,0,0,0.09)", boxShadow:"0 1px 4px rgba(0,0,0,0.06)" }}>
+                  <div style={{ padding:"14px 16px", display:"flex", flexDirection:"column", gap:8 }}>
+                    <div style={{ display:"flex", alignItems:"center", gap:8 }}>
+                      {t.avatar ? (
+                        <img src={t.avatar} alt={t.name ?? t.screen_name} width={26} height={26}
+                          style={{ borderRadius:"50%", objectFit:"cover", flexShrink:0 }}
+                          onError={(e) => { (e.target as HTMLImageElement).style.display = "none" }} />
+                      ) : null}
+                      <div style={{ flex:1, minWidth:0 }}>
+                        <p style={{ fontSize:"0.75rem", fontWeight:700, color:"var(--foreground)", margin:0, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>
+                          {t.name ?? t.screen_name}
+                        </p>
+                        <p style={{ fontSize:"0.625rem", color:"var(--tertiary)", margin:0 }}>@{t.screen_name} · {t.date}</p>
+                      </div>
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="#1D1D1F"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.739l7.73-8.835L1.254 2.25H8.08l4.258 5.63 5.906-5.63Z"/></svg>
+                    </div>
+                    <p style={{ fontSize:"0.875rem", color:"var(--foreground)", lineHeight:1.55, margin:0, display:"-webkit-box", WebkitLineClamp:3, WebkitBoxOrient:"vertical", overflow:"hidden" }}>{t.text}</p>
+                    <div style={{ display:"flex", gap:14, borderTop:"1px solid var(--separator)", paddingTop:8 }}>
+                      <span style={{ fontSize:"0.8125rem", color:"#EF4444", fontWeight:700 }}>❤️ {t.likes.toLocaleString()}</span>
+                      <span style={{ fontSize:"0.8125rem", color:"#60A5FA", fontWeight:700 }}>💬 {t.replies.toLocaleString()}</span>
+                    </div>
+                  </div>
+                </a>
+              ))}
             </div>
           </div>
         )}

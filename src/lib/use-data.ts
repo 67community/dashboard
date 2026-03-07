@@ -55,6 +55,9 @@ export interface TokenHealthData {
 }
 
 export interface BestTweet {
+  screen_name?: string
+  name?: string
+  avatar?: string
   tweet_id: string
   tweet_url: string
   text: string
@@ -96,6 +99,7 @@ export interface SocialPulseData {
   x_community_members?: number
   x_community_delta_24h?: number
   mentions?: Mention[]
+  community_tweets?: BestTweet[]
 }
 
 export interface ActivityItem {
