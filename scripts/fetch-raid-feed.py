@@ -3,7 +3,7 @@
 import json, re, time, urllib.request
 from datetime import datetime, timezone
 
-TG_RAID_BOT = "***REMOVED_TG_TOKEN***:AAEgGRJaT1uwvSCA0GF6I88vwKGTkPNinM4"
+TG_RAID_BOT = "***REMOVED_TG_TOKEN***:AAFFdKDuZp97NSITwClyw6MYI9WVhIO7nSo"
 TG_RAID_GROUP = "-1003708062172"
 POLL_INTERVAL = 10  # seconds
 
