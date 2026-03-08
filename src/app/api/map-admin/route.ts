@@ -1,34 +1,20 @@
 import { NextResponse } from "next/server"
 
-const LUIS_TOKEN = process.env.LUIS_TOKEN ?? "MTQ2ODcwOTkzODk1OTM1NjAwNw.GCb9C6.mefnTOPGTzVidoVHdLcE0M83HTOFZQMCrTtzs4"
-const MAP_ADMIN_CHANNEL = "1465826546882449471"
+const SB_URL = "https://oqqwwccercxiwtyedwqm.supabase.co"
+const SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9xcXd3Y2NlcmN4aXd0eWVkd3FtIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3MjIyMjgyOSwiZXhwIjoyMDg3Nzk4ODI5fQ.Gox3T828yW7HEP51ijpN8SkImMIzFXFw8o5_FEXt3FU"
 
 export async function GET() {
   try {
     const res = await fetch(
-      `https://discord.com/api/v10/channels/${MAP_ADMIN_CHANNEL}/messages?limit=50`,
-      { headers: { Authorization: LUIS_TOKEN }, cache: "no-store" }
+      `${SB_URL}/rest/v1/kv_store?key=eq.map_admin&select=value`,
+      { headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` }, cache: "no-store" }
     )
-    if (!res.ok) return NextResponse.json({ items: [], error: "Discord API error: " + res.status })
-    const msgs = await res.json()
-    const items = msgs
-      .filter((m: any) => m.author?.username === "m7-bot" || m.author?.bot)
-      .flatMap((m: any) => (m.embeds ?? []).map((e: any) => {
-        const fields: Record<string, string> = {}
-        for (const f of (e.fields ?? [])) fields[f.name] = f.value
-        return {
-          id: m.id,
-          title: fields["Title"] ?? e.title ?? "Untitled",
-          location: fields["Location"] ?? "",
-          description: e.description ?? "",
-          credit: fields["Credit"] ?? "",
-          time: m.timestamp,
-          image: e.image?.url ?? null,
-          media_count: parseInt((fields["Media"] ?? "0").replace(/\D/g,"")) || 0,
-        }
-      }))
-    return NextResponse.json({ items })
-  } catch (e) {
-    return NextResponse.json({ items: [], error: String(e) })
+    if (!res.ok) return NextResponse.json({ items: [] })
+    const rows = await res.json()
+    const v = rows?.[0]?.value
+    const data = typeof v === "string" ? JSON.parse(v) : v
+    return NextResponse.json({ items: data?.items ?? [] })
+  } catch {
+    return NextResponse.json({ items: [] })
   }
 }
