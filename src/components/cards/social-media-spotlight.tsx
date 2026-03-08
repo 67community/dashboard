@@ -136,13 +136,13 @@ export function SocialMediaSpotlightCard() {
 
   const ttViews = tiktoks.reduce((a, v) => a + (v.plays || v.views || 0), 0)
   const ytViews = youtubes.reduce((a, v) => a + (v.views || v.view_count || 0), 0)
-  const igLikes = instas.reduce((a, v) => a + (v.likes || v.like_count || 0), 0)
+  const igViews = instas.reduce((a, v) => a + (v.views || v.view_count || v.plays || 0), 0)
 
   const collapsed = (
     <div style={{ display:"flex", flexDirection:"column", gap:12 }}>
 
       {/* ── Media grid ── */}
-      <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr 1fr", gridTemplateRows:"120px 120px", gap:6 }}>
+      <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr 1fr", gridTemplateRows:"120px 120px", gap:6, overflow:"hidden", borderRadius:10 }}>
         {/* TikTok — tall portrait, spans 2 rows */}
         {tiktoks[0] && (
           <a href={tiktoks[0].video_url} target="_blank" rel="noopener noreferrer"
@@ -233,7 +233,7 @@ export function SocialMediaSpotlightCard() {
         {[
           { icon: <TikTokIcon size={11} />, label:"TikTok", val: fmt(ttViews), sub:"views", bg:"rgba(0,0,0,0.05)" },
           { icon: <YouTubeIcon size={11} />, label:"YouTube", val: fmt(ytViews), sub:"views", bg:"rgba(255,0,0,0.05)" },
-          { icon: <InstaIcon size={11} />, label:"Instagram", val: igLikes > 0 ? fmt(igLikes) : "—", sub:"likes", bg:"rgba(225,48,108,0.05)" },
+          { icon: <InstaIcon size={11} />, label:"Instagram", val: instas.length > 0 ? String(instas.length) : "—", sub:"posts", bg:"rgba(225,48,108,0.05)" },
         ].map((s, i) => (
           <div key={i} style={{ flex:1, background:s.bg, borderRadius:10, padding:"8px 10px" }}>
             <div style={{ display:"flex", alignItems:"center", gap:4, marginBottom:3 }}>
@@ -357,7 +357,7 @@ export function SocialMediaSpotlightCard() {
                 {(v.image_url||v.thumbnail) && <img src={v.image_url||v.thumbnail} alt="" style={{ width:"100%", height:"100%", objectFit:"cover" }} />}
                 <div style={{ position:"absolute", inset:0, background:"linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 50%)" }} />
                 <div style={{ position:"absolute", bottom:6, left:6, display:"flex", alignItems:"center", gap:3 }}>
-                  <Heart size={10} color="white" fill="white" /><span style={{ fontSize:"0.5625rem", color:"white", fontWeight:700 }}>{fmt(v.likes||0)}</span>
+                  <Eye size={10} color="white" /><span style={{ fontSize:"0.5625rem", color:"white", fontWeight:700 }}>{fmt(v.views||v.view_count||0)}</span>
                 </div>
               </div>
             </a>
