@@ -214,7 +214,7 @@ export function CommunityCard() {
       {/* Discord stats row */}
       <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:8, borderTop:"1px solid var(--separator)", paddingTop:16 }}>
         {[
-          { key:"joins",    label:"New Joins 24h", value: discordDelta != null ? String(Math.max(0, discordDelta)) : String(c?.new_joins_24h ?? "—") },
+          { key:"joins",    label:"Discord New Joins", value: discordDelta != null ? String(Math.max(0, discordDelta)) : String(c?.new_joins_24h ?? "—") },
           { key:"telegram", label:<span style={{display:"flex",alignItems:"center",gap:4,justifyContent:"center"}}><svg width="12" height="12" viewBox="0 0 24 24" fill="#0088cc"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L7.26 14.4l-2.965-.924c-.644-.204-.657-.644.136-.953l11.57-4.461c.537-.194 1.006.131.893.16z"/></svg>Telegram</span>, value: (c?.telegram_members ?? 0).toLocaleString(), delta: telegramDelta },
           { key:"active",   label:"Active Today",  value: activeToday > 0 ? String(activeToday) : "—" },
         ].map(s => (
@@ -401,7 +401,7 @@ export function CommunityCard() {
           {/* Stats grid */}
           <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:1, background:"rgba(88,101,242,0.08)" }}>
             {[
-              { label:"New Joins 24h", value: discordDelta != null ? String(Math.max(0, discordDelta)) : String(c?.new_joins_24h ?? "—"), color:"#2563EB" },
+              { label:"Discord New Joins", value: discordDelta != null ? String(Math.max(0, discordDelta)) : String(c?.new_joins_24h ?? "—"), color:"#2563EB" },
               { label:"Active Today",  value: activeToday > 0 ? String(activeToday) : "—", color:"#059669" },
               { label:"Telegram",      value: (c?.telegram_members ?? 0).toLocaleString(), color:"#0284C7", delta: telegramDelta },
               { label:"Online Now",    value: onlineNow.toLocaleString(), color:"#16A34A" },
