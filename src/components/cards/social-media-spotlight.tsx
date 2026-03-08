@@ -194,6 +194,27 @@ export function SocialMediaSpotlightCard() {
           </a>
         )}
 
+        {/* YouTube 2 or TikTok extra — col 3 row 1 */}
+        {(youtubes[1] || tiktoks[3]) && (() => {
+          const v = youtubes[1] || tiktoks[3]
+          const isYt = !!youtubes[1]
+          const href = isYt ? ((v as any).url||"#") : v.video_url
+          const thumb = isYt ? ((v as any).thumbnail_url||(v as any).thumbnail) : v.thumbnail_url
+          return (
+            <a href={href} target="_blank" rel="noopener noreferrer"
+              style={{ textDecoration:"none", gridColumn:"3 / 4", gridRow:"1 / 2" }}>
+              <div style={{ position:"relative", borderRadius:10, overflow:"hidden", height:"100%", background: isYt ? "#181818" : "linear-gradient(135deg, #010101 0%, #69C9D0 50%, #EE1D52 100%)" }}>
+                {thumb && <img src={thumb} alt="" style={{ width:"100%", height:"100%", objectFit:"cover", display:"block" }} />}
+                <div style={{ position:"absolute", inset:0, background:"linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 50%)" }} />
+                <div style={{ position:"absolute", top:5, left:5 }}>{isYt ? <YouTubeIcon size={9} /> : <TikTokIcon size={9} />}</div>
+                <div style={{ position:"absolute", bottom:4, left:5 }}>
+                  <span style={{ fontSize:"0.5rem", color:"white", fontWeight:700 }}>{isYt ? fmt((v as any).views||0) : fmt(v.plays||0)}</span>
+                </div>
+              </div>
+            </a>
+          )
+        })()}
+
         {/* TikTok 3 — top far right */}
         {tiktoks[2] && (
           <a href={tiktoks[2].video_url} target="_blank" rel="noopener noreferrer"
