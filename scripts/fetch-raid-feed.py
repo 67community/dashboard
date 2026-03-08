@@ -77,6 +77,7 @@ def main():
 
             if new_items:
                 existing = sb_get("raid_feed") or []
+                new_items.reverse()  # newest first
                 feed = new_items + existing
                 feed = feed[:200]
                 sb_upsert("raid_feed", feed)
