@@ -5,6 +5,17 @@ from pathlib import Path
 from datetime import datetime, timezone
 
 RAPIDAPI_KEY = "4b393aa0cemsh6895fd899d6eedcp1a441djsnfe89097510cd"
+
+SB_URL = "https://oqqwwccercxiwtyedwqm.supabase.co"
+SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9xcXd3Y2NlcmN4aXd0eWVkd3FtIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3MjIyMjgyOSwiZXhwIjoyMDg3Nzk4ODI5fQ.Gox3T828yW7HEP51ijpN8SkImMIzFXFw8o5_FEXt3FU"
+
+def sb_upsert(key, value):
+    body = json.dumps({"key": key, "value": value}).encode()
+    req = urllib.request.Request(f"{SB_URL}/rest/v1/kv_store", data=body, headers={
+        "apikey": SB_KEY, "Authorization": f"Bearer {SB_KEY}",
+        "Content-Type": "application/json", "Prefer": "resolution=merge-duplicates"
+    }, method="POST")
+    with urllib.request.urlopen(req, timeout=10): pass
 TARGET       = "67coinX"
 DATA_JSON    = Path(__file__).parent.parent / "public/data.json"
 
@@ -49,7 +60,7 @@ def main():
 
     # 7-day snapshot rotation
     snap7d = data.get("_snapshot_7d", {})
-    last_snap = snap3d.get("timestamp", 0)
+    last_snap = snap7d.get("timestamp", 0)
     if now_ts - last_snap >= 7 * 86400:  # 7 gün geçtiyse yeni snapshot
         data["_snapshot_7d"] = {
             "twitter_followers":   result,
@@ -88,5 +99,12 @@ def main():
         json.dump(data, f, indent=2)
 
     print(f"✅ data.json updated: {old:,} → {result:,}")
+
+    # Also sync to Supabase
+    try:
+        sb_upsert("social_counts_x", {"x_followers": result, "updated_at": datetime.now(timezone.utc).isoformat()})
+        print("✅ x_followers synced to Supabase")
+    except Exception as e:
+        print(f"❌ Supabase sync error: {e}")
 
 main()

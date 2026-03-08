@@ -231,7 +231,7 @@ export function AnnouncementsCard() {
                       All
                     </button>
                 <div style={{ display:"flex", gap:6 }}>
-                  {([["announce","Announce","#2AABEE"],["raid","Raid","#EF4444"]] as const).map(([v,label,color]) => (
+                  {([["raid","Raid","#EF4444"],["announce","Announce","#2AABEE"]] as const).map(([v,label,color]) => (
                     <button key={v} onClick={()=>setSelectedBot(v)}
                       style={{ flex:1, padding:"6px 0", borderRadius:8, fontSize:"0.75rem", fontWeight:700,
                         border:`1.5px solid ${selectedBot===v ? color : "var(--separator)"}`,
@@ -312,7 +312,7 @@ export function AnnouncementsCard() {
           </div>
           <div style={{ display:"flex", flexDirection:"column", gap:6 }}>
             <div style={{ display:"flex", gap:6 }}>
-              {([["announce","Announce","#2AABEE"],["raid","Raid","#EF4444"]] as const).map(([v,label,color]) => (
+              {([["raid","Raid","#EF4444"],["announce","Announce","#2AABEE"]] as const).map(([v,label,color]) => (
                 <button key={v} onClick={()=>setSelectedBot(v)}
                   style={{ flex:1, padding:"6px 0", borderRadius:8, fontSize:"0.75rem", fontWeight:700,
                     border:`1.5px solid ${selectedBot===v ? color : "var(--separator)"}`,
