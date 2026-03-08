@@ -9,7 +9,6 @@ GUILD_ID     = "1440077830456082545"
 TG_TOKEN     = "***REMOVED_TG_TOKEN***:AAGlhdjo0JRJVC66rH-MDUvWfSTiu86gj9I"
 TG_CHAT      = "-1003158749697"
 
-# Read Discord token from env file
 DISCORD_TOKEN = os.environ.get("DISCORD_TOKEN", "")
 if not DISCORD_TOKEN:
     env_path = os.path.expanduser("~/.openclaw/workspace/.env")

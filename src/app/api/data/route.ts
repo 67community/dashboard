@@ -960,7 +960,7 @@ async function sbGet(key: string): Promise<unknown | null> {
 
 // ── main ──────────────────────────────────────────────────────────────────────
 export async function GET() {
-  const [pair, cg, cgTickers, cmc, holders, discord, tgMembers, discordActivity, youtubeVideos, youtubeAnalytics, newsFeed, marketData, raidFeed, liveTrades, sbXRecent, sbXPopular, sbTokenHealth, sbHolders, sbSocialCounts, sbMarketData, sbYouTube, sbTikTok, sbNews, sbInstagram] = await Promise.all([
+  const [pair, cg, cgTickers, cmc, holders, discord, tgMembers, discordActivity, youtubeVideos, youtubeAnalytics, newsFeed, marketData, raidFeed, liveTrades, sbXRecent, sbXPopular, sbTokenHealth, sbHolders, sbSocialCounts, sbMarketData, sbYouTube, sbTikTok, sbNews, sbInstagram, sbXFollowers] = await Promise.all([
     safe(fetchDex),
     safe(fetchCG),
     safe(fetchCGTickers),
@@ -985,6 +985,7 @@ export async function GET() {
     sbGet("tiktok_spotlight"),
     sbGet("news_feed"),
     sbGet("instagram_posts"),
+    sbGet("social_counts_x"),
   ])
 
   if (!pair && !cg) {
@@ -1074,6 +1075,9 @@ export async function GET() {
     token_health,
     social_pulse: (() => {
       const sp = static_?.social_pulse ?? { twitter_followers: 0, follower_change_24h: 0, posting_streak_days: 0, engagement_rate: 0, avg_engagement: 0, total_engagement_7d: 0, best_content_type: "tweet", content_type_stats: {} }
+      // Override twitter_followers from Supabase social_counts if available
+      const xf = sbXFollowers?.x_followers ?? sbSocialCounts?.x_followers
+      if (xf) sp.twitter_followers = xf
       const hist: { date: string; count: number }[] = sp.follower_history ?? []
       const cur = sp.twitter_followers ?? 0
       // snapshot-based 24h delta
