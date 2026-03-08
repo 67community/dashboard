@@ -127,7 +127,7 @@ export function TopBar() {
         borderBottom: "1px solid rgba(255,255,255,0.06)",
         width: "100%",
       }}>
-        <div style={{ maxWidth:1440, margin:"0 auto", padding:"0 32px" }} className="topbar-inner">
+        <div style={{ maxWidth:"100%", margin:"0 auto", padding:"0 32px" }} className="topbar-inner">
           <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", height:52 }}>
 
             {/* Logo + name */}
