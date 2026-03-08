@@ -223,11 +223,11 @@ export function AnnouncementsCard() {
                 )}
               </div>
               <div style={{ display:"flex", flexDirection:"column", gap:6 }}>
-                <button onClick={()=>{if(selectedBot==="announce"&&selectedChannels.size===4){setSelectedBot("announce");setSelectedChannels(new Set())}else{setSelectedBot("announce");setSelectedChannels(new Set(["tg_main","tg_raid","d_coin_announce","d_community_announce"] as const))}}}
+                <button onClick={()=>{if(selectedBot==="announce"&&selectedChannels.size===5){setSelectedBot("announce");setSelectedChannels(new Set())}else{setSelectedBot("announce");setSelectedChannels(new Set(["tg_main","tg_raid","d_coin_announce","d_community_announce","x_chat"] as const))}}}
                       style={{ padding:"6px 12px", borderRadius:8, fontSize:"0.75rem", fontWeight:700,
-                        border: (selectedBot==="announce" && selectedChannels.size===4) ? "1.5px solid #F5A623" : "1.5px solid var(--separator)",
-                        background: (selectedBot==="announce" && selectedChannels.size===4) ? "#F5A62318" : "transparent",
-                        color: (selectedBot==="announce" && selectedChannels.size===4) ? "#F5A623" : "var(--secondary)", cursor:"pointer", marginBottom:4 }}>
+                        border: (selectedBot==="announce" && selectedChannels.size===5) ? "1.5px solid #F5A623" : "1.5px solid var(--separator)",
+                        background: (selectedBot==="announce" && selectedChannels.size===5) ? "#F5A62318" : "transparent",
+                        color: (selectedBot==="announce" && selectedChannels.size===5) ? "#F5A623" : "var(--secondary)", cursor:"pointer", marginBottom:4 }}>
                       All
                     </button>
                 <div style={{ display:"flex", gap:6 }}>
@@ -242,7 +242,7 @@ export function AnnouncementsCard() {
                   ))}
                 </div>
                 <div style={{ display:"flex", gap:6, flexWrap:"wrap" }}>
-                  {([["tg_main","TG Main","#2AABEE"],["tg_raid","TG Raid","#EF4444"],["d_coin_announce","D Coin Announce","#5865F2"],["d_community_announce","D Community Announce","#5865F2"]] as const).map(([v,label,color]) => (
+                  {([["tg_main","TG Main","#2AABEE"],["tg_raid","TG Raid","#EF4444"],["d_coin_announce","D Coin Announce","#5865F2"],["d_community_announce","D Community Announce","#5865F2"],["x_chat","𝕏 Chat","#000000"]] as const).map(([v,label,color]) => (
                     <button key={v} onClick={()=>setSelectedChannels(prev=>{const n=new Set(prev);n.has(v)?n.delete(v):n.add(v);return n})}
                       style={{ flex:1, padding:"6px 0", borderRadius:8, fontSize:"0.75rem", fontWeight:700,
                         border:`1.5px solid ${selectedChannels.has(v) ? color : "var(--separator)"}`,
@@ -323,7 +323,7 @@ export function AnnouncementsCard() {
               ))}
             </div>
             <div style={{ display:"flex", gap:6, flexWrap:"wrap" }}>
-              {([["tg_main","TG Main","#2AABEE"],["tg_raid","TG Raid","#EF4444"],["d_coin_announce","D Coin Announce","#5865F2"],["d_community_announce","D Community Announce","#5865F2"]] as const).map(([v,label,color]) => (
+              {([["tg_main","TG Main","#2AABEE"],["tg_raid","TG Raid","#EF4444"],["d_coin_announce","D Coin Announce","#5865F2"],["d_community_announce","D Community Announce","#5865F2"],["x_chat","𝕏 Chat","#000000"]] as const).map(([v,label,color]) => (
                 <button key={v} onClick={()=>setSelectedChannels(prev=>{const n=new Set(prev);n.has(v)?n.delete(v):n.add(v);return n})}
                   style={{ flex:1, padding:"6px 0", borderRadius:8, fontSize:"0.75rem", fontWeight:700,
                     border:`1.5px solid ${selectedChannels.has(v) ? color : "var(--separator)"}`,

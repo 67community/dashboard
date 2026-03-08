@@ -14,6 +14,18 @@ const DISCORD_CHANNELS: Record<string, string> = {
   d_community_announce: "1458844490239578265",
 }
 
+// X Chat (67 Chat group DM)
+
+async function sendXChat(text: string) {
+  const res = await fetch("http://localhost:9867/send", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ text }),
+  })
+  const data = await res.json()
+  if (!data.ok) throw new Error(data.message ?? "X Chat error")
+}
+
 async function sendDiscord(channelId: string, text: string) {
   const res = await fetch(`https://discord.com/api/v10/channels/${channelId}/messages`, {
     method: "POST",
@@ -42,6 +54,16 @@ export async function POST(req: NextRequest) {
 
   const results: Record<string, string> = {}
   for (const ch of (channels ?? []) as string[]) {
+    // X Chat
+    if (ch === "x_chat") {
+      try {
+        await sendXChat(body.trim())
+        results[ch] = "✅ Gönderildi"
+      } catch (e: unknown) {
+        results[ch] = `❌ ${e instanceof Error ? e.message : "X Chat hata"}`
+      }
+      continue
+    }
     // Discord channels
     if (ch in DISCORD_CHANNELS) {
       try {
