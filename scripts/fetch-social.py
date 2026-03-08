@@ -11,7 +11,7 @@ TG_CHAT      = "-1003158749697"
 
 DISCORD_TOKEN = os.environ.get("DISCORD_TOKEN", "")
 if not DISCORD_TOKEN:
-    env_path = os.path.expanduser("~/.openclaw/workspace/.env")
+    env_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), ".env.local")
     if os.path.exists(env_path):
         for line in open(env_path):
             if line.startswith("DISCORD_TOKEN="):

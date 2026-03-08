@@ -960,21 +960,7 @@ async function sbGet(key: string): Promise<unknown | null> {
 
 // ── main ──────────────────────────────────────────────────────────────────────
 export async function GET() {
-  const [pair, cg, cgTickers, cmc, holders, discord, tgMembers, discordActivity, youtubeVideos, youtubeAnalytics, newsFeed, marketData, raidFeed, liveTrades, sbXRecent, sbXPopular, sbTokenHealth, sbHolders, sbSocialCounts, sbMarketData, sbYouTube, sbTikTok, sbNews, sbInstagram, sbXFollowers, sbSnapshot24h, sbDiscordActivity, sbXCommunity, sbXEngagement] = await Promise.all([
-    safe(fetchDex),
-    safe(fetchCG),
-    safe(fetchCGTickers),
-    safe(fetchCMC),
-    safe(fetchHolders),
-    safe(fetchDiscord),
-    safe(fetchTelegram),
-    safe(fetchDiscordActivity),
-    safe(fetchYouTube),
-    safe(fetchYouTubeAnalytics),
-    safe(fetchNewsFeed),
-    safe(fetchMarketData),
-    safe(fetchRaidFeed),
-    safe(fetchBiggestTradesLive),
+  const [sbXRecent, sbXPopular, sbTokenHealth, sbHolders, sbSocialCounts, sbMarketData, sbYouTube, sbTikTok, sbNews, sbInstagram, sbXFollowers, sbSnapshot24h, sbDiscordActivity, sbXCommunity, sbXEngagement] = await Promise.all([
     sbGet("x_recent"),
     sbGet("x_popular"),
     sbGet("token_health"),
@@ -992,89 +978,57 @@ export async function GET() {
     sbGet("x_engagement"),
   ])
 
-  if (!pair && !cg) {
+  if (!sbTokenHealth && !sbHolders && !sbSocialCounts) {
     const static_ = readStaticJson()
     if (static_) return NextResponse.json(static_, { headers: { "Cache-Control": "no-store" } })
     return NextResponse.json({ error: "no data" }, { status: 500 })
   }
 
-  // CMC
-  const cmcCoin = cmc?.data?.["38918"]
-  const cmcUSD  = cmcCoin?.quote?.USD
-  const cmcRank = cmcCoin?.cmc_rank ?? 0
-
-  // Exchange volumes from CoinGecko tickers
-  const rawTickers: Record<string, unknown>[] = cgTickers?.tickers ?? []
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const exchange_volumes = rawTickers.slice(0, 12).map((t: any) => ({
-    exchange:   t.market?.name ?? "Unknown",
-    pair:       `${t.base ?? "67"}/${t.target ?? "USDT"}`,
-    volume_usd: t.converted_volume?.usd ?? 0,
-    is_dex:     (t.market?.identifier ?? "").toLowerCase().includes("swap") ||
-                (t.market?.identifier ?? "").toLowerCase().includes("dex") ||
-                (t.market?.identifier ?? "").toLowerCase().includes("pumpswap") ||
-                (t.market?.identifier ?? "").toLowerCase().includes("raydium") ||
-                (t.market?.identifier ?? "").toLowerCase().includes("orca") ||
-                (t.market?.identifier ?? "").toLowerCase().includes("meteora"),
-    logo:         t.market?.logo ?? undefined,
-    volume_delta: 0,  // computed below after static_ is available
-  }))
-
-  // Total volume = sum of all exchange volumes
-  const total_volume_24h = exchange_volumes.length > 0
-    ? exchange_volumes.reduce((s, e) => s + e.volume_usd, 0)
-    : (pair?.volume?.h24 ?? 0)
-
-  // Biggest trades — live from GeckoTerminal, fallback to static
+  // ── All data from Supabase (Mac mini cron writes, Vercel just reads) ──────────
   const static_      = readStaticJson()
-  // Prefer Supabase discord_activity over live fetch (Mac mini cron is more reliable)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const da: any = sbDiscordActivity ?? discordActivity
-
-  // Patch exchange volume deltas now that static_ is available
-  const snapExVols: Record<string, number> = {}
-  ;(static_?._snapshot_24h?.exchange_volumes ?? []).forEach((e: any) => {
-    if (e?.exchange) snapExVols[e.exchange] = e.volume_usd ?? 0
-  })
-  exchange_volumes.forEach((e: any) => {
-    const prev = snapExVols[e.exchange] ?? 0
-    e.volume_delta = prev ? Math.round((e.volume_usd - prev) * 100) / 100 : 0
-  })
-  const static_th    = static_?.token_health ?? {}
-  const biggest_trades = liveTrades ?? static_th.biggest_trades ?? {
-    biggest_buy_usd: 0, biggest_buy_tx: "",
-    biggest_sell_usd: 0, biggest_sell_tx: "",
-  }
+  const da: any = sbDiscordActivity ?? null
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const th: any = sbTokenHealth ?? static_?.token_health ?? {}
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const md: any = sbMarketData ?? static_?.market_data ?? {}
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const hld: any = sbHolders ?? {}
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const sc: any = sbSocialCounts ?? {}
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const snap: any = sbSnapshot24h ?? static_?._snapshot_24h ?? {}
+  const holdersCount = hld?.count ?? th?.holders ?? static_?.token_health?.holders ?? 0
+  const holderSnap = snap?.holders ?? holdersCount
 
   const token_health = {
-    price:             parseFloat(pair?.priceUsd ?? "0"),
-    price_change_24h:  pair?.priceChange?.h24 ?? 0,
-    price_change_1h:   pair?.priceChange?.h1  ?? 0,
-    price_change_6h:   pair?.priceChange?.h6  ?? 0,
-    price_change_7d:   cg?.market_data?.price_change_percentage_7d ?? 0,
-    market_cap:        pair?.marketCap ?? cg?.market_data?.market_cap?.usd ?? 0,
-    liquidity:         pair?.liquidity?.usd ?? 0,
-    volume_24h:        pair?.volume?.h24 ?? 0,
-    volume_1h:         pair?.volume?.h1  ?? 0,
-    buys_24h:          pair?.txns?.h24?.buys  ?? 0,
-    sells_24h:         pair?.txns?.h24?.sells ?? 0,
-    buys_1h:           pair?.txns?.h1?.buys   ?? 0,
-    sells_1h:          pair?.txns?.h1?.sells  ?? 0,
-    holders:           holders ?? 0,
-    holder_trend:      (() => { const snap = sbSnapshot24h?.holders ?? static_?._snapshot_24h?.holders; return snap ? (holders ?? 0) - snap : (static_th.holder_trend ?? 0) })(),
-    coingecko_rank:    cg?.market_cap_rank ?? 0,
-    cmc_rank:          cmcRank,
-    ath:               cg?.market_data?.ath?.usd ?? 0.04363,
-    ath_date:          cg?.market_data?.ath_date?.usd ?? "2025-11-19",
-    ath_change_pct:    cg?.market_data?.ath_change_percentage?.usd ?? 0,
-    total_volume_24h,
-    exchange_volumes,
-    biggest_trades,
+    price:             th.price ?? 0,
+    price_change_24h:  th.price_change_24h ?? 0,
+    price_change_1h:   th.price_change_1h  ?? 0,
+    price_change_6h:   th.price_change_6h  ?? 0,
+    price_change_7d:   th.price_change_7d  ?? 0,
+    market_cap:        th.market_cap ?? 0,
+    liquidity:         th.liquidity ?? 0,
+    volume_24h:        th.volume_24h ?? 0,
+    volume_1h:         th.volume_1h  ?? 0,
+    buys_24h:          th.buys_24h  ?? 0,
+    sells_24h:         th.sells_24h ?? 0,
+    buys_1h:           th.buys_1h   ?? 0,
+    sells_1h:          th.sells_1h  ?? 0,
+    holders:           holdersCount,
+    holder_trend:      holdersCount - holderSnap,
+    coingecko_rank:    th.coingecko_rank ?? 0,
+    cmc_rank:          th.cmc_rank ?? 0,
+    ath:               th.ath ?? 0.04363,
+    ath_date:          th.ath_date ?? "2025-11-19",
+    ath_change_pct:    th.ath_change_pct ?? 0,
+    total_volume_24h:  th.total_volume_24h ?? th.volume_24h ?? 0,
+    exchange_volumes:  th.exchange_volumes ?? md?.exchange_volumes ?? [],
+    biggest_trades:    th.biggest_trades ?? { biggest_buy_usd: 0, biggest_buy_tx: "", biggest_sell_usd: 0, biggest_sell_tx: "" },
     sentiment:         "Neutral",
-    // 24h snapshot deltas from static file
-    volume_change_pct:    static_th.volume_change_pct    ?? null,
-    mcap_change_pct:      static_th.mcap_change_pct      ?? null,
-    liquidity_change_pct: static_th.liquidity_change_pct ?? null,
+    volume_change_pct:    th.volume_change_pct    ?? null,
+    mcap_change_pct:      th.mcap_change_pct      ?? null,
+    liquidity_change_pct: th.liquidity_change_pct ?? null,
   }
 
   const out = {
@@ -1109,25 +1063,15 @@ export async function GET() {
     })(),
     community: {
       ...(static_?.community ?? { discord_members: 0, active_7d: 0, new_joins_24h: 0, open_tickets: 0, unanswered_posts: 0, telegram_members: 0, watchlist_count: 0 }),
-      // Live Discord data (overrides static when DISCORD_TOKEN env var is set)
-      ...(discord ? {
-        discord_members:    discord.members,
-        online_now:         discord.online,
-        // Delta = snapshot-based (cur members - 24h ago snapshot)
-        discord_delta_24h:  discord.members - (static_?._snapshot_24h?.discord_members ?? discord.members),
-        new_joins_24h:      da?.new_joins_24h ?? static_?.community?.new_joins_24h ?? 0,
-      } : {}),
-      // Live CoinGecko: telegram members + watchlist (no auth needed)
-      ...(cg ? {
-        watchlist_count:     cg.watchlist_portfolio_users ?? static_?.community?.watchlist_count ?? 0,
-        watchlist_delta_24h: (cg.watchlist_portfolio_users ?? 0) - (static_?._snapshot_24h?.watchlist_count ?? cg.watchlist_portfolio_users ?? 0),
-      } : {}),
-      // Telegram members: prefer Bot API (real-time), fallback CoinGecko — always snapshot-based delta
-      ...((() => {
-        const tgCur = tgMembers ?? cg?.community_data?.telegram_channel_user_count ?? static_?.community?.telegram_members ?? 0
-        const tgSnap = static_?._snapshot_24h?.telegram_members ?? tgCur
-        return tgCur ? { telegram_members: tgCur, telegram_delta_24h: tgCur - tgSnap } : {}
-      })()),
+      // All from Supabase social_counts (Mac mini cron)
+      discord_members:    sc?.discord_members ?? static_?.community?.discord_members ?? 0,
+      online_now:         sc?.discord_online ?? static_?.community?.online_now ?? 0,
+      discord_delta_24h:  (sc?.discord_members ?? 0) - (snap?.discord_members ?? sc?.discord_members ?? 0),
+      telegram_members:   sc?.telegram_members ?? static_?.community?.telegram_members ?? 0,
+      telegram_delta_24h: (sc?.telegram_members ?? 0) - (snap?.telegram_members ?? sc?.telegram_members ?? 0),
+      new_joins_24h:      da?.new_joins_24h ?? static_?.community?.new_joins_24h ?? 0,
+      watchlist_count:    th?.watchlist_count ?? static_?.community?.watchlist_count ?? 0,
+      watchlist_delta_24h: (th?.watchlist_count ?? 0) - (snap?.watchlist_count ?? th?.watchlist_count ?? 0),
       // Live Discord activity: real joins feed + active users today + channel stats + enriched data
       ...(da ? (() => {
         // If live Discord has no channel data, merge with static fallback
@@ -1168,12 +1112,12 @@ export async function GET() {
     recent_wins:       static_?.recent_wins       ?? [],
     next_target:       static_?.next_target       ?? null,
     tiktok_spotlight:  (sbTikTok as unknown[]) ?? static_?.tiktok_spotlight ?? [],
-    youtube_spotlight: (sbYouTube as unknown[]) ?? (youtubeVideos && (youtubeVideos as unknown[]).length > 0 ? youtubeVideos : (static_?.youtube_spotlight ?? [])),
-    youtube_analytics:   youtubeAnalytics ?? static_?.youtube_analytics ?? null,
+    youtube_spotlight: (sbYouTube as unknown[]) ?? static_?.youtube_spotlight ?? [],
+    youtube_analytics:   static_?.youtube_analytics ?? null,
     instagram_spotlight: (sbInstagram as unknown[])?.length ? sbInstagram : (static_?.instagram_spotlight ?? []),
-    raid_feed:           (raidFeed as unknown[])?.length ? raidFeed : (static_?.raid_feed ?? []),
+    raid_feed:           static_?.raid_feed ?? [],
     news_feed:           (sbNews as unknown[]) ?? [],
-    market_data:         (sbMarketData as unknown[]) ?? (marketData as unknown[])?.length ? marketData : (static_?.market_data ?? []),
+    market_data:         (sbMarketData as unknown) ?? static_?.market_data ?? [],
     x_recent:            (sbXRecent as unknown[]) ?? static_?.x_recent  ?? [],
     x_popular:           (sbXPopular as unknown[]) ?? static_?.x_popular ?? [],
     map_features:        static_?.map_features ?? { type:"FeatureCollection", features:[] },
