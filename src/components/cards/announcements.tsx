@@ -223,6 +223,13 @@ export function AnnouncementsCard() {
                 )}
               </div>
               <div style={{ display:"flex", flexDirection:"column", gap:6 }}>
+                <button onClick={()=>{if(selectedBot==="announce"&&selectedChannels.size===4){setSelectedBot("announce");setSelectedChannels(new Set())}else{setSelectedBot("announce");setSelectedChannels(new Set(["tg_main","tg_raid","d_coin_announce","d_community_announce"] as const))}}}
+                      style={{ padding:"6px 12px", borderRadius:8, fontSize:"0.75rem", fontWeight:700,
+                        border: (selectedBot==="announce" && selectedChannels.size===4) ? "1.5px solid #F5A623" : "1.5px solid var(--separator)",
+                        background: (selectedBot==="announce" && selectedChannels.size===4) ? "#F5A62318" : "transparent",
+                        color: (selectedBot==="announce" && selectedChannels.size===4) ? "#F5A623" : "var(--secondary)", cursor:"pointer", marginBottom:4 }}>
+                      All
+                    </button>
                 <div style={{ display:"flex", gap:6 }}>
                   {([["announce","Announce","#2AABEE"],["raid","Raid","#EF4444"]] as const).map(([v,label,color]) => (
                     <button key={v} onClick={()=>setSelectedBot(v)}
@@ -352,7 +359,7 @@ export function AnnouncementsCard() {
   return (
     <DashboardCard
       title="Communication"
-      subtitle="Announce Raid"
+      subtitle=""
       icon={<Megaphone style={{ width:16, height:16 }} />}
       accentColor="#F5A623"
       collapsed={collapsed}
