@@ -223,11 +223,11 @@ export function AnnouncementsCard() {
                 )}
               </div>
               <div style={{ display:"flex", flexDirection:"column", gap:6 }}>
-                <button onClick={()=>{if(selectedBot==="announce"&&selectedChannels.size===3){setSelectedBot("announce");setSelectedChannels(new Set())}else{setSelectedBot("announce");setSelectedChannels(new Set(["tg_main","tg_raid","x_chat"] as const))}}}
+                <button onClick={()=>{if(selectedChannels.size===3){setSelectedChannels(new Set())}else{setSelectedChannels(new Set(["tg_main","tg_raid","x_chat"] as const))}}}
                       style={{ padding:"6px 12px", borderRadius:8, fontSize:"0.75rem", fontWeight:700,
-                        border: (selectedBot==="announce" && selectedChannels.size===3) ? "1.5px solid #F5A623" : "1.5px solid var(--separator)",
-                        background: (selectedBot==="announce" && selectedChannels.size===3) ? "#F5A62318" : "transparent",
-                        color: (selectedBot==="announce" && selectedChannels.size===3) ? "#F5A623" : "var(--secondary)", cursor:"pointer", marginBottom:4 }}>
+                        border: selectedChannels.size===3 ? "1.5px solid #F5A623" : "1.5px solid var(--separator)",
+                        background: selectedChannels.size===3 ? "#F5A62318" : "transparent",
+                        color: selectedChannels.size===3 ? "#F5A623" : "var(--secondary)", cursor:"pointer", marginBottom:4 }}>
                       All
                     </button>
                 <div style={{ display:"flex", gap:6 }}>
