@@ -4,7 +4,7 @@ import path from "path"
 
 const PAIR    = "DMAFL613XTipuA3jFNYczavWT7XsiYf9cR3qmRMZQhB6"
 const TOKEN   = "9AvytnUKsLxPxFHFqS6VLxaxt5p6BhYNr53SD2Chpump"
-const CMC_KEY = process.env.CMC_API_KEY ?? "09873ed23c74499eb07885cb070f64e6"
+const CMC_KEY = process.env.CMC_API_KEY ?? "78022712d1174390a47b1ee92bc89939"
 const CG_ID   = "the-official-67-coin"
 
 // ── helpers ──────────────────────────────────────────────────────────────────
