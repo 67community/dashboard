@@ -960,7 +960,7 @@ async function sbGet(key: string): Promise<unknown | null> {
 
 // ── main ──────────────────────────────────────────────────────────────────────
 export async function GET() {
-  const [sbXRecent, sbXPopular, sbTokenHealth, sbHolders, sbSocialCounts, sbMarketData, sbYouTube, sbTikTok, sbNews, sbInstagram, sbXFollowers, sbSnapshot24h, sbDiscordActivity, sbXCommunity, sbXEngagement] = await Promise.all([
+  const [sbXRecent, sbXPopular, sbTokenHealth, sbHolders, sbSocialCounts, sbMarketData, sbYouTube, sbTikTok, sbNews, sbInstagram, sbXFollowers, sbSnapshot24h, sbDiscordActivity, sbXCommunity, sbXEngagement, sbRaidFeed] = await Promise.all([
     sbGet("x_recent"),
     sbGet("x_popular"),
     sbGet("token_health"),
@@ -976,6 +976,7 @@ export async function GET() {
     sbGet("discord_activity"),
     sbGet("x_community"),
     sbGet("x_engagement"),
+    sbGet("raid_feed"),
   ])
 
   if (!sbTokenHealth && !sbHolders && !sbSocialCounts) {
@@ -1115,7 +1116,7 @@ export async function GET() {
     youtube_spotlight: (sbYouTube as unknown[]) ?? static_?.youtube_spotlight ?? [],
     youtube_analytics:   static_?.youtube_analytics ?? null,
     instagram_spotlight: (sbInstagram as unknown[])?.length ? sbInstagram : (static_?.instagram_spotlight ?? []),
-    raid_feed:           static_?.raid_feed ?? [],
+    raid_feed:           (sbRaidFeed as unknown[]) ?? static_?.raid_feed ?? [],
     news_feed:           (sbNews as unknown[]) ?? [],
     market_data:         (sbMarketData as unknown) ?? static_?.market_data ?? [],
     x_recent:            (sbXRecent as unknown[]) ?? static_?.x_recent  ?? [],
