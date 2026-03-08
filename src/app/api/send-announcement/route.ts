@@ -16,14 +16,23 @@ const DISCORD_CHANNELS: Record<string, string> = {
 
 // X Chat (67 Chat group DM)
 
+const SB_URL = "https://oqqwwccercxiwtyedwqm.supabase.co"
+const SB_KEY = "***REMOVED_SERVICE_KEY***"
+
 async function sendXChat(text: string) {
-  const res = await fetch("http://localhost:9867/send", {
+  // Write to Supabase queue — Mac mini watcher picks it up and sends via Playwright
+  const res = await fetch(`${SB_URL}/rest/v1/kv_store?on_conflict=key`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ text }),
+    headers: {
+      apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}`,
+      "Content-Type": "application/json", Prefer: "resolution=merge-duplicates",
+    },
+    body: JSON.stringify({
+      key: "xchat_queue",
+      value: JSON.stringify({ text, ts: new Date().toISOString(), status: "pending" }),
+    }),
   })
-  const data = await res.json()
-  if (!data.ok) throw new Error(data.message ?? "X Chat error")
+  if (!res.ok) throw new Error("Supabase write failed")
 }
 
 async function sendDiscord(channelId: string, text: string) {
