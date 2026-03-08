@@ -99,7 +99,7 @@ export default function Dashboard() {
   }
 
   return (
-    <div>
+    <div style={{ width:"100%", maxWidth:"100%", padding:"0 24px", boxSizing:"border-box" }}>
       {/* ══ Slim identity strip ═════════════════════════════════ */}
       <div className="enter-1" style={{
         display:"flex", alignItems:"center", gap:8,
