@@ -954,13 +954,13 @@ async function sbGet(key: string): Promise<unknown | null> {
     )
     if (!res.ok) return null
     const rows = await res.json()
-    return rows?.[0]?.value ?? null
+    const v = rows?.[0]?.value ?? null; if (typeof v === "string") try { return JSON.parse(v) } catch { return v }; return v
   } catch { return null }
 }
 
 // ── main ──────────────────────────────────────────────────────────────────────
 export async function GET() {
-  const [pair, cg, cgTickers, cmc, holders, discord, tgMembers, discordActivity, youtubeVideos, youtubeAnalytics, newsFeed, marketData, raidFeed, liveTrades, sbXRecent, sbXPopular, sbTokenHealth, sbHolders, sbSocialCounts, sbMarketData, sbYouTube, sbTikTok, sbNews, sbInstagram, sbXFollowers] = await Promise.all([
+  const [pair, cg, cgTickers, cmc, holders, discord, tgMembers, discordActivity, youtubeVideos, youtubeAnalytics, newsFeed, marketData, raidFeed, liveTrades, sbXRecent, sbXPopular, sbTokenHealth, sbHolders, sbSocialCounts, sbMarketData, sbYouTube, sbTikTok, sbNews, sbInstagram, sbXFollowers, sbSnapshot24h, sbDiscordActivity, sbXCommunity, sbXEngagement] = await Promise.all([
     safe(fetchDex),
     safe(fetchCG),
     safe(fetchCGTickers),
@@ -986,6 +986,10 @@ export async function GET() {
     sbGet("news_feed"),
     sbGet("instagram_posts"),
     sbGet("social_counts_x"),
+    sbGet("snapshot_24h"),
+    sbGet("discord_activity"),
+    sbGet("x_community"),
+    sbGet("x_engagement"),
   ])
 
   if (!pair && !cg) {
@@ -1023,6 +1027,9 @@ export async function GET() {
 
   // Biggest trades — live from GeckoTerminal, fallback to static
   const static_      = readStaticJson()
+  // Prefer Supabase discord_activity over live fetch (Mac mini cron is more reliable)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const da: any = sbDiscordActivity ?? discordActivity
 
   // Patch exchange volume deltas now that static_ is available
   const snapExVols: Record<string, number> = {}
@@ -1054,7 +1061,7 @@ export async function GET() {
     buys_1h:           pair?.txns?.h1?.buys   ?? 0,
     sells_1h:          pair?.txns?.h1?.sells  ?? 0,
     holders:           holders ?? 0,
-    holder_trend:      static_th.holder_trend ?? 0,
+    holder_trend:      (() => { const snap = sbSnapshot24h?.holders ?? static_?._snapshot_24h?.holders; return snap ? (holders ?? 0) - snap : (static_th.holder_trend ?? 0) })(),
     coingecko_rank:    cg?.market_cap_rank ?? 0,
     cmc_rank:          cmcRank,
     ath:               cg?.market_data?.ath?.usd ?? 0.04363,
@@ -1083,16 +1090,21 @@ export async function GET() {
       // snapshot-based 24h delta
       const snap24  = static_?._snapshot_24h?.twitter_followers ?? cur
       const delta1d = cur - snap24
-      // history-based 3d / 7d deltas
-      const now = new Date()
-      const daysAgo = (n: number) => new Date(now.getTime() - n * 86_400_000).toISOString().slice(0,10)
-      const countAt = (daysBack: number) => {
-        const target = daysAgo(daysBack)
-        const entry = [...hist].reverse().find(h => h.date <= target)
-        return entry?.count ?? cur
-      }
-      const delta3d = cur - countAt(3)
-      const delta7d = cur - countAt(7)
+      // Use pre-calculated deltas from data.json, fallback to history-based
+      const delta3d = sp.follower_change_3d ?? 0
+      const delta7d = sp.follower_change_7d ?? 0
+      // Merge Supabase x_engagement + x_community
+      const eng = (sbXEngagement as Record<string, unknown>) ?? {}
+      const xc = (sbXCommunity as Record<string, unknown>) ?? {}
+      if (eng.engagement_rate !== undefined) sp.engagement_rate = eng.engagement_rate
+      if (eng.avg_engagement !== undefined) sp.avg_engagement = eng.avg_engagement
+      if (eng.total_engagement_7d !== undefined) sp.total_engagement_7d = eng.total_engagement_7d
+      if (eng.posting_streak_days !== undefined) sp.posting_streak_days = eng.posting_streak_days
+      if (eng.content_type_stats) sp.content_type_stats = eng.content_type_stats
+      if (eng.total_views_recent !== undefined) sp.total_views_recent = eng.total_views_recent
+      if (eng.total_likes_recent !== undefined) sp.total_likes_recent = eng.total_likes_recent
+      if (xc.x_community_members) sp.x_community_members = xc.x_community_members
+      if (xc.x_community_delta_24h !== undefined) sp.x_community_delta_24h = xc.x_community_delta_24h
       return { ...sp, follower_change_24h: delta1d, follower_change_3d: delta3d, follower_change_7d: delta7d, follower_change_20h: delta1d }
     })(),
     community: {
@@ -1103,7 +1115,7 @@ export async function GET() {
         online_now:         discord.online,
         // Delta = snapshot-based (cur members - 24h ago snapshot)
         discord_delta_24h:  discord.members - (static_?._snapshot_24h?.discord_members ?? discord.members),
-        new_joins_24h:      discordActivity?.new_joins_24h ?? static_?.community?.new_joins_24h ?? 0,
+        new_joins_24h:      da?.new_joins_24h ?? static_?.community?.new_joins_24h ?? 0,
       } : {}),
       // Live CoinGecko: telegram members + watchlist (no auth needed)
       ...(cg ? {
@@ -1117,21 +1129,21 @@ export async function GET() {
         return tgCur ? { telegram_members: tgCur, telegram_delta_24h: tgCur - tgSnap } : {}
       })()),
       // Live Discord activity: real joins feed + active users today + channel stats + enriched data
-      ...(discordActivity ? (() => {
+      ...(da ? (() => {
         // If live Discord has no channel data, merge with static fallback
         const staticActs = static_?.community?.recent_discord_activity ?? []
-        const liveJoins = discordActivity.recent_joins ?? []
-        const liveMod   = discordActivity.mod_events   ?? []
-        const liveContribs = discordActivity.top_contributors ?? []
-        const liveChs   = discordActivity.top_channels ?? []
+        const liveJoins = da.recent_joins ?? []
+        const liveMod   = da.mod_events   ?? []
+        const liveContribs = da.top_contributors ?? []
+        const liveChs   = da.top_channels ?? []
         return {
           recent_joins:       liveJoins.length    > 0 ? liveJoins    : staticActs.filter((a: {type:string}) => a.type === "join").slice(0, 8),
-          active_users_today: discordActivity.active_users_today,
+          active_users_today: da.active_users_today,
           top_channels:       liveChs.length      > 0 ? liveChs      : (static_?.community?.top_channels ?? []),
-          voice_channels:     discordActivity.voice_channels,
-          scheduled_events:   discordActivity.scheduled_events,
-          boost_level:        discordActivity.boost_level,
-          boost_count:        discordActivity.boost_count,
+          voice_channels:     da.voice_channels,
+          scheduled_events:   da.scheduled_events,
+          boost_level:        da.boost_level,
+          boost_count:        da.boost_count,
           mod_events:         liveMod.length      > 0 ? liveMod      : staticActs.filter((a: {type:string}) => a.type !== "join").slice(0, 8),
           top_contributors:   liveContribs.length > 0 ? liveContribs : (static_?.community?.top_contributors ?? []),
           recent_discord_activity: staticActs,
