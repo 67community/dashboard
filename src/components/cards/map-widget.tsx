@@ -92,7 +92,7 @@ export function MapWidgetCard() {
   useEffect(() => () => { if (rafRef.current) cancelAnimationFrame(rafRef.current) }, [])
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", width: "100%", height: "100%", background: "#111" }}>
+    <div style={{ display: "flex", flexDirection: "column", width: "100%", height: "100%", background: "var(--card-bg, #111)" }}>
       {/* Pin Admin only */}
       <MapAdminPanel />
     </div>
@@ -143,7 +143,7 @@ function MapAdminPanel() {
   const getStatus = (id: string) => approved.has(id) ? "approved" : rejected.has(id) ? "rejected" : "pending"
 
   return (
-    <div style={{ borderTop: "1px solid rgba(255,255,255,0.08)", background: "#111", maxHeight: 420, overflowY: "auto" }}>
+    <div style={{ borderTop: "1px solid rgba(255,255,255,0.08)", background: "var(--card-bg, #111)", maxHeight: 420, overflowY: "auto" }}>
       {/* Header */}
       <div style={{ padding: "10px 14px 8px", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>

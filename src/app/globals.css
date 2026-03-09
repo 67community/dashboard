@@ -31,11 +31,13 @@
   --gold-dark:       #C8820A;
   --radius-card:     18px;
   --radius-inner:    12px;
+  --card-bg:         #FFFFFF;
 }
 
 [data-theme="dark"] {
   --background:      #0A0A0B;
   --card:            #1A1A1C;
+  --card-bg:         #1A1A1C;
   --foreground:      #F5F5F7;
   --secondary:       #A1A1AA;
   --tertiary:        #71717A;

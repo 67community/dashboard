@@ -145,8 +145,8 @@ export function AnnouncementsCard() {
       })
       const data = await res.json()
       const msgs = Object.values(data.results ?? {}) as string[]
-      setFormRes(msgs.join(" | ") || "✅ Gönderildi")
-    } catch { setFormRes("❌ Bağlantı hatası") }
+      setFormRes(msgs.join(" | ") || "✅ Sent")
+    } catch { setFormRes("❌ Connection error") }
     setFormSending(false)
     setTitle(""); setBody("")
     setTimeout(() => { setAddOpen(false); setFormRes("") }, 1500)
@@ -262,7 +262,7 @@ export function AnnouncementsCard() {
                     background: (!body.trim()||formSending) ? "#E5E5EA" : "#F5A623",
                     color: (!body.trim()||formSending) ? "#A1A1AA" : "#000",
                     fontSize:"0.8125rem", fontWeight:700 }}>
-                  {formSending ? "Gönderiliyor…" : "Send"}
+                  {formSending ? "Sending…" : "Send"}
                 </button>
                 <button onClick={() => setAddOpen(false)}
                   style={{ padding:"8px 14px", borderRadius:8, border:"1.5px solid var(--separator)",
@@ -343,7 +343,7 @@ export function AnnouncementsCard() {
                 background: (!body.trim()||formSending) ? "#E5E5EA" : "#F5A623",
                 color: (!body.trim()||formSending) ? "#A1A1AA" : "#000",
                 fontSize:"0.8125rem", fontWeight:700 }}>
-              {formSending ? "Gönderiliyor…" : "Send"}
+              {formSending ? "Sending…" : "Send"}
             </button>
             <button onClick={() => setAddOpen(false)}
               style={{ padding:"8px 14px", borderRadius:8, border:"1.5px solid var(--separator)",

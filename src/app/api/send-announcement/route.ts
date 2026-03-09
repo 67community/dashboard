@@ -56,10 +56,10 @@ async function sendTelegram(chatId: string, text: string, token: string) {
 
 export async function POST(req: NextRequest) {
   const { body, bot, channels } = await req.json()
-  if (!body?.trim()) return NextResponse.json({ error: "Mesaj boş" }, { status: 400 })
+  if (!body?.trim()) return NextResponse.json({ error: "Message is empty" }, { status: 400 })
 
   const token = TOKENS[bot as keyof typeof TOKENS]
-  if (!token) return NextResponse.json({ error: "Geçersiz bot" }, { status: 400 })
+  if (!token) return NextResponse.json({ error: "Invalid bot" }, { status: 400 })
 
   const results: Record<string, string> = {}
   for (const ch of (channels ?? []) as string[]) {
@@ -67,9 +67,9 @@ export async function POST(req: NextRequest) {
     if (ch === "x_chat") {
       try {
         await sendXChat(body.trim())
-        results[ch] = "✅ Gönderildi"
+        results[ch] = "✅ Sent"
       } catch (e: unknown) {
-        results[ch] = `❌ ${e instanceof Error ? e.message : "X Chat hata"}`
+        results[ch] = `❌ ${e instanceof Error ? e.message : "X Chat error"}`
       }
       continue
     }
@@ -77,9 +77,9 @@ export async function POST(req: NextRequest) {
     if (ch in DISCORD_CHANNELS) {
       try {
         await sendDiscord(DISCORD_CHANNELS[ch], body.trim())
-        results[ch] = "✅ Gönderildi"
+        results[ch] = "✅ Sent"
       } catch (e: unknown) {
-        results[ch] = `❌ ${e instanceof Error ? e.message : "Discord hata"}`
+        results[ch] = `❌ ${e instanceof Error ? e.message : "Discord error"}`
       }
       continue
     }
@@ -88,9 +88,9 @@ export async function POST(req: NextRequest) {
     if (!chatId) continue
     try {
       await sendTelegram(chatId, body.trim(), token)
-      results[ch] = "✅ Gönderildi"
+      results[ch] = "✅ Sent"
     } catch (e: unknown) {
-      results[ch] = `❌ ${e instanceof Error ? e.message : "Hata"}`
+      results[ch] = `❌ ${e instanceof Error ? e.message : "Error"}`
     }
   }
   return NextResponse.json({ results })
