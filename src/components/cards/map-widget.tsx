@@ -143,44 +143,44 @@ function MapAdminPanel() {
   const getStatus = (id: string) => approved.has(id) ? "approved" : rejected.has(id) ? "rejected" : "pending"
 
   return (
-    <div style={{ borderTop: "1px solid rgba(255,255,255,0.08)", background: "var(--card-bg, #111)", maxHeight: 420, overflowY: "auto" }}>
+    <div style={{ borderTop: "1px solid var(--separator)", background: "var(--card-bg, #111)", maxHeight: 420, overflowY: "auto" }}>
       {/* Header */}
-      <div style={{ padding: "10px 14px 8px", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+      <div style={{ padding: "10px 14px 8px", borderBottom: "1px solid var(--separator)" }}>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
-          <span style={{ fontSize: 12, fontWeight: 700, color: "#fff" }}>📍 Pin Admin</span>
-          <span style={{ fontSize: 11, color: "rgba(255,255,255,0.4)" }}>{items.length} submissions</span>
+          <span style={{ fontSize: 12, fontWeight: 700, color: "var(--foreground)" }}>📍 Pin Admin</span>
+          <span style={{ fontSize: 11, color: "var(--secondary)" }}>{items.length} submissions</span>
         </div>
         <div style={{ display: "flex", gap: 6, marginBottom: 6 }}>
           {(["all","pending","approved"] as const).map(f => (
             <button key={f} onClick={() => setFilter(f)} style={{ padding: "3px 10px", borderRadius: 99, border: "none", cursor: "pointer", fontSize: 11, fontWeight: 600,
-              background: filter === f ? "#F5A623" : "rgba(255,255,255,0.08)", color: filter === f ? "#000" : "rgba(255,255,255,0.6)" }}>
+              background: filter === f ? "#F5A623" : "var(--separator)", color: filter === f ? "#000" : "rgba(255,255,255,0.6)" }}>
               {f.charAt(0).toUpperCase()+f.slice(1)}
             </button>
           ))}
         </div>
         <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search by title or credit…"
-          style={{ width: "100%", padding: "5px 10px", borderRadius: 8, border: "1px solid rgba(255,255,255,0.12)", background: "rgba(255,255,255,0.06)", color: "#fff", fontSize: 11, boxSizing: "border-box" as any }} />
+          style={{ width: "100%", padding: "5px 10px", borderRadius: 8, border: "1px solid var(--separator)", background: "var(--separator)", color: "var(--foreground)", fontSize: 11, boxSizing: "border-box" as any }} />
       </div>
 
       {/* List */}
       {loading ? (
-        <div style={{ padding: 20, textAlign: "center", color: "rgba(255,255,255,0.4)", fontSize: 12 }}>Loading…</div>
+        <div style={{ padding: 20, textAlign: "center", color: "var(--secondary)", fontSize: 12 }}>Loading…</div>
       ) : filtered.length === 0 ? (
-        <div style={{ padding: 20, textAlign: "center", color: "rgba(255,255,255,0.4)", fontSize: 12 }}>No submissions</div>
+        <div style={{ padding: 20, textAlign: "center", color: "var(--secondary)", fontSize: 12 }}>No submissions</div>
       ) : (
         filtered.map(sub => {
           const st = getStatus(sub.id)
           return (
             <div key={sub.id} style={{ display: "flex", gap: 10, padding: "10px 14px", borderBottom: "1px solid rgba(255,255,255,0.05)", alignItems: "flex-start" }}>
               {/* Image */}
-              <div style={{ width: 48, height: 48, borderRadius: 8, background: "rgba(255,255,255,0.06)", flexShrink: 0, overflow: "hidden" }}>
+              <div style={{ width: 48, height: 48, borderRadius: 8, background: "var(--separator)", flexShrink: 0, overflow: "hidden" }}>
                 {sub.image ? <img src={sub.image} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} /> : <span style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100%", fontSize: 18 }}>📍</span>}
               </div>
               {/* Info */}
               <div style={{ flex: 1, minWidth: 0 }}>
-                <p style={{ margin: "0 0 2px", fontSize: 12, fontWeight: 700, color: "#fff", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{sub.title || "Untitled"}</p>
-                {sub.location && <p style={{ margin: "0 0 1px", fontSize: 11, color: "rgba(255,255,255,0.5)" }}>📍 {sub.location}</p>}
-                {sub.credit && <p style={{ margin: "0 0 4px", fontSize: 11, color: "rgba(255,255,255,0.4)" }}>by {sub.credit}</p>}
+                <p style={{ margin: "0 0 2px", fontSize: 12, fontWeight: 700, color: "var(--foreground)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{sub.title || "Untitled"}</p>
+                {sub.location && <p style={{ margin: "0 0 1px", fontSize: 11, color: "var(--tertiary)" }}>📍 {sub.location}</p>}
+                {sub.credit && <p style={{ margin: "0 0 4px", fontSize: 11, color: "var(--secondary)" }}>by {sub.credit}</p>}
                 <span style={{ fontSize: 10, fontWeight: 700, padding: "2px 7px", borderRadius: 99,
                   background: st === "approved" ? "rgba(34,197,94,0.15)" : st === "rejected" ? "rgba(239,68,68,0.15)" : "rgba(245,166,35,0.15)",
                   color: st === "approved" ? "#22C55E" : st === "rejected" ? "#EF4444" : "#F5A623" }}>
