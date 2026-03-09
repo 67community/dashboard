@@ -203,7 +203,7 @@ export default function Dashboard() {
       </div>
 
       {/* ══ Season 2 Banner ════════════════════════════════════ */}
-      <div style={{ marginTop:0, borderRadius:20, position:"relative", overflow:"hidden" }}>
+      <div style={{ marginTop:40, borderRadius:20, position:"relative", overflow:"hidden", clear:"both" }}>
         {/* Map as background */}
         <div style={{ position:"absolute", inset:0, zIndex:0 }}>
           <MapBackground />
