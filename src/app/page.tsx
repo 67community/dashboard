@@ -99,7 +99,7 @@ export default function Dashboard() {
   }
 
   return (
-    <div style={{ width:"100%", maxWidth:"100%", padding:"0 24px", boxSizing:"border-box" }}>
+    <div style={{ width:"100%", maxWidth:"100%", padding:"0 24px", boxSizing:"border-box", display:"flex", flexDirection:"column", minHeight:"100vh" }}>
       {/* ══ Slim identity strip ═════════════════════════════════ */}
       <div className="enter-1" style={{
         display:"flex", alignItems:"center", gap:8,
@@ -174,7 +174,7 @@ export default function Dashboard() {
       `}</style>
 
       {/* ══ Main Layout: Left + Right ══════════════════════════ */}
-      <div className="main-layout" style={{ display:"flex", gap:20, alignItems:"flex-start" }}>
+      <div className="main-layout" style={{ display:"flex", gap:20, alignItems:"flex-start", flex:1 }}>
 
         {/* ── Left Section (2 cols) ── */}
         <div className="left-section" style={{ flex:1, minWidth:0, display:"flex", flexDirection:"column", gap:20 }}>
