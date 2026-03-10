@@ -364,11 +364,11 @@ export function FeatureRequestSection() {
         Feature Requests
       </p>
       <form onSubmit={submit} onClick={e => e.stopPropagation()} style={{ display:"flex", flexDirection:"column", gap:6 }}>
-        <input value={what} onChange={e => setWhat(e.target.value)} placeholder="What to build?" required
-          style={{ width:"100%", boxSizing:"border-box", padding:"7px 10px", borderRadius:8, border:"1.5px solid var(--separator)", fontSize:"0.75rem", fontFamily:"inherit", background:"var(--input-bg)", color:"var(--foreground)", outline:"none" }}
+        <textarea value={what} onChange={e => setWhat(e.target.value)} placeholder="What to build?" required rows={3}
+          style={{ width:"100%", boxSizing:"border-box", padding:"7px 10px", borderRadius:8, border:"1.5px solid var(--separator)", fontSize:"0.75rem", fontFamily:"inherit", background:"var(--input-bg)", color:"var(--foreground)", outline:"none", resize:"vertical", minHeight:60 }}
           onFocus={e => e.currentTarget.style.borderColor="#F5A623"} onBlur={e => e.currentTarget.style.borderColor="var(--separator)"} />
-        <input value={why} onChange={e => setWhy(e.target.value)} placeholder="Why? (value / problem)" required
-          style={{ width:"100%", boxSizing:"border-box", padding:"7px 10px", borderRadius:8, border:"1.5px solid var(--separator)", fontSize:"0.75rem", fontFamily:"inherit", background:"var(--input-bg)", color:"var(--foreground)", outline:"none" }}
+        <textarea value={why} onChange={e => setWhy(e.target.value)} placeholder="Why? (value / problem)" required rows={3}
+          style={{ width:"100%", boxSizing:"border-box", padding:"7px 10px", borderRadius:8, border:"1.5px solid var(--separator)", fontSize:"0.75rem", fontFamily:"inherit", background:"var(--input-bg)", color:"var(--foreground)", outline:"none", resize:"vertical", minHeight:60 }}
           onFocus={e => e.currentTarget.style.borderColor="#F5A623"} onBlur={e => e.currentTarget.style.borderColor="var(--separator)"} />
         <button type="submit" disabled={loading || !what.trim() || !why.trim()}
           style={{ padding:"7px 12px", borderRadius:8, border:"none", cursor:"pointer", background: (loading || !what.trim() || !why.trim()) ? "var(--input-bg)" : "#F5A623", color:(loading || !what.trim() || !why.trim()) ? "var(--secondary)" : "#fff", fontWeight:700, fontSize:"0.75rem", display:"flex", alignItems:"center", justifyContent:"center", gap:5 }}>
