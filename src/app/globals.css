@@ -555,3 +555,18 @@ img, svg { min-width: 0; flex-shrink: 0; }
     grid-template-columns: 1fr !important;
   }
 }
+
+/* ── Mobile: all cards width containment ─────────────────── */
+@media (max-width: 640px) {
+  .mc-card {
+    width: 100% !important;
+    max-width: calc(100vw - 24px) !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+  }
+  .vol-price {
+    width: auto !important;
+    font-size: 0.625rem !important;
+    white-space: nowrap !important;
+  }
+}

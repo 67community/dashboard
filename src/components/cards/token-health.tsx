@@ -250,7 +250,7 @@ export function TokenHealthCard() {
                   <div style={{ flex:1, height:5, background:"rgba(0,0,0,0.06)", borderRadius:99, overflow:"hidden" }}>
                     <div style={{ height:"100%", width:`${Math.max(4,(ex.volume_usd/max)*100)}%`, background:"#F5A623", borderRadius:99 }} />
                   </div>
-                  <span style={{ fontSize:"0.75rem", fontWeight:700, color:"var(--foreground)", width:48, textAlign:"right", flexShrink:0 }}>{fmt$(ex.volume_usd)}</span>
+                  <span className="vol-price" style={{ fontSize:"0.75rem", fontWeight:700, color:"var(--foreground)", width:48, textAlign:"right", flexShrink:0 }}>{fmt$(ex.volume_usd)}</span>
                 </div>
               ))}
             </div>
@@ -281,7 +281,7 @@ export function TokenHealthCard() {
                   <div style={{ flex:1, height:5, background:"rgba(0,0,0,0.06)", borderRadius:99, overflow:"hidden" }}>
                     <div style={{ height:"100%", width:`${Math.max(4,(ex.volume_usd/max)*100)}%`, background:"#7C3AED", borderRadius:99 }} />
                   </div>
-                  <span style={{ fontSize:"0.75rem", fontWeight:700, color:"var(--foreground)", width:48, textAlign:"right", flexShrink:0 }}>{fmt$(ex.volume_usd)}</span>
+                  <span className="vol-price" style={{ fontSize:"0.75rem", fontWeight:700, color:"var(--foreground)", width:48, textAlign:"right", flexShrink:0 }}>{fmt$(ex.volume_usd)}</span>
                 </div>
               ))}
             </div>
