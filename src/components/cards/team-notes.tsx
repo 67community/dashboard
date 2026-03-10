@@ -373,14 +373,17 @@ export function TeamNotesCard() {
   // ── Meeting state ───────────────────────────────────────────────────────────
   const MEETINGS = [
     {
-      date: "2026-03-03",
-      label: "Discord Voice — March 7, 2026",
-      duration: "52:31",
-      audio: "/meetings/meeting-2026-03-07.mp3",
+      date: "2026-03-10",
+      label: "Discord Voice — March 10, 2026",
+      duration: "38:45",
+      audio: "https://oqqwwccercxiwtyedwqm.supabase.co/storage/v1/object/public/meetings/meeting-2026-03-10.mp3",
       summary: [
-        "Dashboard cards presented to the team — Announcements, X Raid Panel, Team Notes, Kanban",
-        "Meaning of 67 Coin: Study Murad. Wednesday: everyone answers 'What does holding 67 mean?'",
-        "Switch to Claude: Cowork + Obsidian + Chrome Extension — your computer is the memory",
+        "Content pipeline: automate finding 67 videos from TikTok/Instagram/X — not just hand gestures, special/meaningful content",
+        "Use Claude for outreach: auto-send 50 intro emails to trending TikTokers every Monday",
+        "Brandon to post job listings on 15+ platforms using Claude — moderator candidate found ($200/wk)",
+        "Anti-spam automation requested — auto-detect + ban in Discord & X Community",
+        "Meeting recordings should auto-generate summaries + task lists",
+        "Phase 2 of Mission Control starting — all team members should use dashboard daily",
       ]
     }
   ]
@@ -461,9 +464,9 @@ export function TeamNotesCard() {
         <div style={{ background:"rgba(124,58,237,0.06)", border:"1px solid rgba(124,58,237,0.18)", borderRadius:10, padding:"8px 10px" }}>
           <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", gap:10, marginBottom:8 }}>
             <div>
-              <p style={{ margin:0, fontSize:"0.6875rem", fontWeight:700, color:"var(--foreground)" }}>Discord Voice — March 7, 2026</p>
+              <p style={{ margin:0, fontSize:"0.6875rem", fontWeight:700, color:"var(--foreground)" }}>Discord Voice — March 10, 2026</p>
               <p style={{ margin:"2px 0 0", fontSize:"0.5rem", color:"var(--tertiary)" }}>
-                {Math.floor(meetingTime/60)}:{String(Math.floor(meetingTime%60)).padStart(2,"0")} / 52:31
+                {Math.floor(meetingTime/60)}:{String(Math.floor(meetingTime%60)).padStart(2,"0")} / 38:45
               </p>
             </div>
             <button onClick={(e) => { e.stopPropagation(); e.preventDefault(); toggleMeeting("/meetings/meeting-2026-03-07.mp3") }}
