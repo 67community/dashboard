@@ -265,12 +265,14 @@ export function FeatureRequestCard() {
             { val: why,  set: setWhy,  ph: "Why does it matter?" },
             { val: how,  set: setHow,  ph: "How do you see it working? (optional)" },
           ].map(({ val, set, ph }) => (
-            <textarea key={ph} value={val} onChange={e => { set(e.target.value); const t=e.target; t.style.height="auto"; t.style.height=Math.max(38,t.scrollHeight)+"px" }} placeholder={ph} rows={1}
-              ref={el => { if(el){el.style.height="auto";el.style.height=Math.max(38,el.scrollHeight)+"px"} }}
+            <textarea key={ph} value={val}
+              onChange={e => set(e.target.value)}
+              onInput={e => { const t = e.currentTarget; t.style.height = "0"; t.style.height = t.scrollHeight + "px" }}
+              placeholder={ph} rows={1}
               style={{ width:"100%", padding:"9px 12px", borderRadius:10, fontSize:"0.875rem",
                 border:"1.5px solid var(--separator)", outline:"none", fontFamily:"inherit",
                 background:"var(--input-bg)", color:"var(--foreground)", boxSizing:"border-box",
-                resize:"none", overflow:"hidden", minHeight:38 }}
+                resize:"none", overflow:"hidden" }}
               onFocus={e => e.currentTarget.style.borderColor = "#F5A623"}
               onBlur={e  => e.currentTarget.style.borderColor = "rgba(0,0,0,0.1)"} />
           ))}
