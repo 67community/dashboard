@@ -350,7 +350,7 @@ export function CommunityCard() {
 
       {section === "leaderboard" && <LeaderboardPanel />}
 
-      {section === "overview" && <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:16, alignItems:"start" }}>
+      {section === "overview" && <div className="comm-expanded-grid">
 
       {/* ══════════════ LEFT — DISCORD ══════════════ */}
       <div style={{ display:"flex", flexDirection:"column", gap:14 }}>
