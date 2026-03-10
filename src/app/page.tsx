@@ -247,13 +247,12 @@ export default function Dashboard() {
 
           /* All cards full width on mobile */
           .main-layout div[style*="minWidth"] { width: 100% !important; min-width: 0 !important; }
-          .main-layout > .mob-order-0,
-          .main-layout > .mob-order-3,
-          .main-layout > .mob-order-7,
-          .main-layout > div[style*="borderRadius"] {
+          .main-layout > div,
+          .main-layout .mc-card {
             width: 100% !important;
-            max-width: 100% !important;
+            max-width: 100vw !important;
             box-sizing: border-box !important;
+            overflow: hidden !important;
           }
 
           /* Mobile ordering */
