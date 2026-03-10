@@ -212,7 +212,7 @@ export function CommunityCard() {
       </div>
 
       {/* Discord stats row */}
-      <div className="comm-stats-3" style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:8, borderTop:"1px solid var(--separator)", paddingTop:16 }}>
+      <div className="comm-stats-3" style={{ borderTop:"1px solid var(--separator)", paddingTop:16 }}>
         {[
           { key:"joins",    label:"Discord New Joins", value: discordDelta != null ? String(Math.max(0, discordDelta)) : String(c?.new_joins_24h ?? "—") },
           { key:"telegram", label:<span style={{display:"flex",alignItems:"center",gap:4,justifyContent:"center"}}><svg width="12" height="12" viewBox="0 0 24 24" fill="#0088cc"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L7.26 14.4l-2.965-.924c-.644-.204-.657-.644.136-.953l11.57-4.461c.537-.194 1.006.131.893.16z"/></svg>Telegram</span>, value: (c?.telegram_members ?? 0).toLocaleString(), delta: telegramDelta },
@@ -229,7 +229,7 @@ export function CommunityCard() {
       {/* X section */}
       <div style={{ borderTop:"1px solid var(--separator)", paddingTop:16, display:"flex", flexDirection:"column", gap:8 }}>
         {/* X Followers + Community */}
-        <div className="comm-stats-2" style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8 }}>
+        <div className="comm-stats-2">
           <div className="inset-cell" style={{ textAlign:"center" }}>
             <p style={{ fontSize:"0.9375rem", fontWeight:700, letterSpacing:"-0.03em", color:"var(--foreground)", margin:0 }}>{xFollowers > 0 ? xFollowers.toLocaleString() : "—"}</p>
             {xDelta !== 0 && <DeltaBadge value={xDelta} />}

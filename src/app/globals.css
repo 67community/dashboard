@@ -477,6 +477,18 @@ img, svg { min-width: 0; flex-shrink: 0; }
 
 
 
+/* ── Community card grids ────────────────────────────────── */
+.comm-stats-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+}
+.comm-stats-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
 /* ── Mobile: Community card & general card fixes ─────────── */
 @media (max-width: 640px) {
   .community-card .hero-number {
@@ -489,8 +501,5 @@ img, svg { min-width: 0; flex-shrink: 0; }
   .comm-stats-2 {
     grid-template-columns: 1fr !important;
     gap: 6px !important;
-  }
-  .inset-cell p {
-    font-size: 0.8125rem !important;
   }
 }
