@@ -59,11 +59,15 @@ function FeatureRequestMini() {
           border:"1px solid rgba(0,0,0,0.08)" }}>
         <p style={{ fontSize:"0.6875rem", fontWeight:800, color:"var(--foreground)", margin:0 }}>⚡ Feature Request</p>
         <form onSubmit={submit} style={{ display:"flex", flexDirection:"column", gap:8 }}>
-          <input value={what} onChange={e=>setWhat(e.target.value)} placeholder="What to build?"
-            style={{ fontSize:"0.75rem", padding:"7px 10px", borderRadius:8, border:"1.5px solid #E5E7EB", fontFamily:"inherit", background:"#F9F9F9", outline:"none", width:"100%", boxSizing:"border-box" }}
+          <textarea value={what} onChange={e=>setWhat(e.target.value)}
+            onInput={e=>{const t=e.currentTarget;t.style.height="0";t.style.height=t.scrollHeight+"px"}}
+            placeholder="What to build?" rows={1}
+            style={{ fontSize:"0.75rem", padding:"7px 10px", borderRadius:8, border:"1.5px solid #E5E7EB", fontFamily:"inherit", background:"#F9F9F9", outline:"none", width:"100%", boxSizing:"border-box", resize:"none", overflow:"hidden" }}
             onFocus={e=>e.currentTarget.style.borderColor="#F5A623"} onBlur={e=>e.currentTarget.style.borderColor="#E5E7EB"} />
-          <input value={why} onChange={e=>setWhy(e.target.value)} placeholder="Why? (value / problem)"
-            style={{ fontSize:"0.75rem", padding:"7px 10px", borderRadius:8, border:"1.5px solid #E5E7EB", fontFamily:"inherit", background:"#F9F9F9", outline:"none", width:"100%", boxSizing:"border-box" }}
+          <textarea value={why} onChange={e=>setWhy(e.target.value)}
+            onInput={e=>{const t=e.currentTarget;t.style.height="0";t.style.height=t.scrollHeight+"px"}}
+            placeholder="Why? (value / problem)" rows={1}
+            style={{ fontSize:"0.75rem", padding:"7px 10px", borderRadius:8, border:"1.5px solid #E5E7EB", fontFamily:"inherit", background:"#F9F9F9", outline:"none", width:"100%", boxSizing:"border-box", resize:"none", overflow:"hidden" }}
             onFocus={e=>e.currentTarget.style.borderColor="#F5A623"} onBlur={e=>e.currentTarget.style.borderColor="#E5E7EB"} />
           <button type="submit" disabled={!what.trim()||!why.trim()||sent}
             style={{ padding:"8px 12px", borderRadius:8, border:"none", cursor:"pointer", fontWeight:700, fontSize:"0.75rem",
