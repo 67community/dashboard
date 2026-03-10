@@ -517,3 +517,41 @@ img, svg { min-width: 0; flex-shrink: 0; }
     gap: 12px !important;
   }
 }
+
+/* ── Mobile: card overflow fix ───────────────────────────── */
+@media (max-width: 640px) {
+  html, body {
+    overflow-x: hidden !important;
+    width: 100% !important;
+    max-width: 100vw !important;
+  }
+  .mc-card, .mc-modal-sheet, .mc-card-body {
+    max-width: 100vw !important;
+    overflow-x: hidden !important;
+    box-sizing: border-box !important;
+  }
+  .mc-card-body * {
+    min-width: 0 !important;
+  }
+  .mc-card-body .hero-number {
+    font-size: 1.75rem !important;
+  }
+
+}
+
+/* ── Reusable grid classes ───────────────────────────────── */
+.grid-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+.grid-2col-8 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+@media (max-width: 480px) {
+  .grid-2col, .grid-2col-8 {
+    grid-template-columns: 1fr !important;
+  }
+}

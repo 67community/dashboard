@@ -191,7 +191,7 @@ export function TokenHealthCard() {
       <PriceChart currentPrice={price} />
 
       {/* Stats — compact 2x2 grid */}
-      <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:6, borderTop:"1px solid var(--separator)", paddingTop:10 }}>
+      <div className="grid-2col" style={{ borderTop:"1px solid var(--separator)", paddingTop:10 }}>
         {[
           { label:"Market Cap",  value: fmt$(mcap),                         pct: t?.mcap_change_pct },
           { label:"Volume 24h",  value: fmt$(t?.total_volume_24h ?? 0),     pct: t?.volume_change_pct },
@@ -299,7 +299,7 @@ export function TokenHealthCard() {
         return (
           <div style={{ borderTop:"1px solid var(--separator)", paddingTop:10 }}>
             <p style={{ fontSize:"0.5625rem", fontWeight:800, color:"var(--tertiary)", textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:8 }}>24h Transactions</p>
-            <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:6, marginBottom:8 }}>
+            <div className="grid-2col" style={{ marginBottom:8 }}>
               <div style={{ background:"rgba(52,211,153,0.12)", borderRadius:10, padding:"8px 10px" }}>
                 <p style={{ fontSize:"1rem", fontWeight:800, letterSpacing:"-0.03em", color:"#34D399", margin:0 }}>{(t?.buys_24h ?? 0).toLocaleString()}</p>
                 <p style={{ fontSize:"0.5625rem", fontWeight:600, color:"#34D399", margin:"2px 0 0" }}>Buys</p>
@@ -395,7 +395,7 @@ export function TokenHealthCard() {
       <PriceChart currentPrice={price} />
 
       {/* ── Stats grid ── */}
-      <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8 }}>
+      <div className="grid-2col-8">
         {[
           { label:"Market Cap",  value: fmt$(mcap),                         pct: t?.mcap_change_pct },
           { label:"Volume 24h",  value: fmt$(t?.total_volume_24h ?? 0),     pct: t?.volume_change_pct },
@@ -446,7 +446,7 @@ export function TokenHealthCard() {
             <p className="hero-label" style={{ marginBottom:12 }}>24h Transactions</p>
 
             {/* Buy / Sell count cards */}
-            <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8, marginBottom:14 }}>
+            <div className="grid-2col-8" style={{ marginBottom:14 }}>
               <div style={{ background:"rgba(52,211,153,0.12)", borderRadius:10, padding:"12px 14px" }}>
                 <p style={{ fontSize:"1.5rem", fontWeight:800, letterSpacing:"-0.04em", color:"#34D399" }}>
                   {(t?.buys_24h ?? 0).toLocaleString()}
@@ -526,7 +526,7 @@ export function TokenHealthCard() {
       <ExchangeSection />
 
       {/* ── Links — premium with logos ── */}
-      <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8 }}>
+      <div className="grid-2col-8">
         {[
           { label:"DexScreener",   url:"https://dexscreener.com/solana/DMAFl613xtipUA3JFNycZaVwT7XsIYf9CR3QmrmZqhB6", favicon:"https://dexscreener.com/favicon.ico" },
           { label:"Solscan",       url:"https://solscan.io/token/9AvytnUKsLxPxFHFqS6VLxaxt5p6BhYNr53SD2Chpump",   favicon:"https://solscan.io/favicon.ico" },
