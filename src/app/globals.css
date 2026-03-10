@@ -474,3 +474,23 @@ img, svg { min-width: 0; flex-shrink: 0; }
   .cards-grid { grid-template-columns: 1fr !important; gap: 10px !important; }
   .cards-grid > * { grid-column: 1 / -1 !important; }
 }
+
+
+
+/* ── Mobile: Community card & general card fixes ─────────── */
+@media (max-width: 640px) {
+  .community-card .hero-number {
+    font-size: 1.75rem !important;
+  }
+  .comm-stats-3 {
+    grid-template-columns: 1fr !important;
+    gap: 6px !important;
+  }
+  .comm-stats-2 {
+    grid-template-columns: 1fr !important;
+    gap: 6px !important;
+  }
+  .inset-cell p {
+    font-size: 0.8125rem !important;
+  }
+}
