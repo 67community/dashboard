@@ -118,7 +118,7 @@ export function FeatureRequestCard() {
   const [loading,  setLoading]      = useState(false)
   const [expandedId, setExpandedId] = useState<string | null>(null)
   const [quickPlan, setQuickPlan]   = useState<string | null>(null)
-  const inputRef = useRef<HTMLInputElement>(null)
+  const inputRef = useRef<HTMLTextAreaElement>(null)
 
   // Load from localStorage
   useEffect(() => {
@@ -180,30 +180,35 @@ export function FeatureRequestCard() {
       {/* Quick form */}
       <form onSubmit={submit} onClick={e => e.stopPropagation()}
         style={{ display:"flex", flexDirection:"column", gap:8 }}>
-        <input
-          ref={inputRef}
+        <textarea
           value={what}
           onChange={e => setWhat(e.target.value)}
+          onInput={e => { const t = e.currentTarget; t.style.height = "0"; t.style.height = t.scrollHeight + "px" }}
           placeholder="What do you need?"
+          rows={1}
           style={{
             width:"100%", padding:"9px 12px", borderRadius:10, fontSize:"0.875rem",
             border:"1.5px solid var(--separator)", outline:"none", fontFamily:"inherit",
             background:"var(--input-bg)", color:"var(--foreground)", boxSizing:"border-box",
+            resize:"none", overflow:"hidden",
           }}
-          onFocus={e => e.target.style.borderColor = "#F5A623"}
-          onBlur={e  => e.target.style.borderColor = "var(--separator)"}
+          onFocus={e => e.currentTarget.style.borderColor = "#F5A623"}
+          onBlur={e  => e.currentTarget.style.borderColor = "var(--separator)"}
         />
-        <input
+        <textarea
           value={why}
           onChange={e => setWhy(e.target.value)}
+          onInput={e => { const t = e.currentTarget; t.style.height = "0"; t.style.height = t.scrollHeight + "px" }}
           placeholder="Why does it matter?"
+          rows={1}
           style={{
             width:"100%", padding:"9px 12px", borderRadius:10, fontSize:"0.875rem",
             border:"1.5px solid var(--separator)", outline:"none", fontFamily:"inherit",
             background:"var(--input-bg)", color:"var(--foreground)", boxSizing:"border-box",
+            resize:"none", overflow:"hidden",
           }}
-          onFocus={e => e.target.style.borderColor = "#F5A623"}
-          onBlur={e  => e.target.style.borderColor = "var(--separator)"}
+          onFocus={e => e.currentTarget.style.borderColor = "#F5A623"}
+          onBlur={e  => e.currentTarget.style.borderColor = "var(--separator)"}
         />
         <button type="submit" disabled={!what.trim() || !why.trim() || loading}
           style={{
