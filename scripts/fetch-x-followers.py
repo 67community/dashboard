@@ -2,6 +2,7 @@
 """Fetch @67coinX follower count via Twitter241 RapidAPI — no Playwright, no proxy."""
 import json, urllib.request
 from pathlib import Path
+from typing import Optional
 from datetime import datetime, timezone
 
 RAPIDAPI_KEY = "4b393aa0cemsh6895fd899d6eedcp1a441djsnfe89097510cd"
@@ -19,7 +20,7 @@ def sb_upsert(key, value):
 TARGET       = "67coinX"
 DATA_JSON    = Path(__file__).parent.parent / "public/data.json"
 
-def fetch_followers() -> int | None:
+def fetch_followers() -> Optional[int]:
     url = f"https://twitter241.p.rapidapi.com/user?username={TARGET}"
     req = urllib.request.Request(url, headers={
         "x-rapidapi-host": "twitter241.p.rapidapi.com",
