@@ -1,12 +1,27 @@
 import { NextResponse } from "next/server"
 import { callAI } from "@/app/api/_lib/ai-call"
 
+async function notifyTG(what: string, why: string, how?: string) {
+  try {
+    await fetch("https://api.telegram.org/bot7935871592:AAGJjybAZqG3MPyM96FYmZ6CJYMc-rdhWY4/sendMessage", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        chat_id: 5772809020,
+        text: `⚡ New Feature Request\n\n📋 What: ${what}\n💡 Why: ${why}${how ? "\n🔧 How: " + how : ""}`,
+      })
+    })
+  } catch {}
+}
+
 export async function POST(req: Request) {
   const { what, why, how } = await req.clone().json()
 
   if (!what || !why) {
     return NextResponse.json({ error: "Missing required fields" }, { status: 400 })
   }
+
+  notifyTG(what, why, how)
 
   try {
     const result = await callAI({
@@ -50,7 +65,6 @@ Be practical. Consider that this is a Next.js dashboard. Keep it short and actio
       _provider: result.provider,
     })
   } catch {
-    // Mock response if no API key configured
     return NextResponse.json({
       plan: `**Implementation Plan**\n\n**What:** ${what}\n\n**Priority:** Medium\n\n**Steps:**\n1. Analyze requirements\n2. Design solution\n3. Build & test\n4. Deploy\n\n**Estimated effort:** 2-3 days`,
       priority: "medium",
