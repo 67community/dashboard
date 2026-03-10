@@ -469,7 +469,7 @@ export function TeamNotesCard() {
                 {Math.floor(meetingTime/60)}:{String(Math.floor(meetingTime%60)).padStart(2,"0")} / 38:45
               </p>
             </div>
-            <button onClick={(e) => { e.stopPropagation(); e.preventDefault(); toggleMeeting("/meetings/meeting-2026-03-07.mp3") }}
+            <button onClick={(e) => { e.stopPropagation(); e.preventDefault(); toggleMeeting(MEETINGS[0].audio) }}
               style={{ width:40, height:40, borderRadius:99, border:"none", cursor:"pointer", background:"#7C3AED", color:"#fff", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0, fontSize:14, position:"relative", zIndex:20 }}>
               {meetingPlaying ? "⏸" : "▶"}
             </button>
