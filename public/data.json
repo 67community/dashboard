@@ -42,8 +42,8 @@
     }
   },
   "social_pulse": {
-    "twitter_followers": 1689,
-    "follower_change_24h": 6,
+    "twitter_followers": 1698,
+    "follower_change_24h": 9,
     "posting_streak_days": 0,
     "engagement_rate": 4.862,
     "_source": "nitter_rss+twitter_cdn",
@@ -60,16 +60,16 @@
       "date": "2026-03-07"
     },
     "best_tweet_2d": {
-      "tweet_id": "2030659038409588777",
-      "tweet_url": "https://x.com/67coinX/status/2030659038409588777",
+      "tweet_id": "2031118201212354707",
+      "tweet_url": "https://x.com/67coinX/status/2031118201212354707",
       "screen_name": "67coinX",
       "name": "67coinX",
       "avatar": "",
-      "text": "Power of the youth. Children are learning how to 67 earlier and earlier these days. https://t.co/toadFM2MzP",
-      "likes": 75,
-      "replies": 22,
-      "retweets": 11,
-      "date": "2026-03-08"
+      "text": "Some 67 moments leave you speechless...\n\n#67to67billion https://t.co/cN55YAIDZu",
+      "likes": 69,
+      "replies": 17,
+      "retweets": 19,
+      "date": "2026-03-09"
     },
     "avg_engagement": 83.2,
     "twitter_followers_updated_at": "2026-03-01T21:30:22.077518Z",
@@ -118,6 +118,10 @@
       {
         "date": "2026-03-10",
         "count": 1689
+      },
+      {
+        "date": "2026-03-11",
+        "count": 1698
       }
     ],
     "follower_growth_7d": 31,
@@ -154,8 +158,8 @@
     "x_community_id": "1987949705322508569",
     "mentions": [],
     "x_community_last_scrape": 1772996555.780906,
-    "follower_change_3d": 19,
-    "follower_change_7d": 30,
+    "follower_change_3d": 15,
+    "follower_change_7d": 39,
     "community_tweets": [
       {
         "tweet_id": "2031013906425266617",
@@ -164,27 +168,27 @@
         "name": "",
         "avatar": "",
         "text": "punch was a bigger fumble then 67coin\n\n300 mil runner",
-        "likes": 280,
-        "replies": 36,
+        "likes": 342,
+        "replies": 38,
         "retweets": 16,
         "date": "2026-03-09"
       },
       {
-        "tweet_id": "2029268897698857094",
-        "tweet_url": "https://x.com//status/2029268897698857094",
+        "tweet_id": "2031082112082915487",
+        "tweet_url": "https://x.com//status/2031082112082915487",
         "screen_name": "",
         "name": "",
         "avatar": "",
-        "text": "Is now classed. \n\nCulture, Community, And General Consensus. The big three C's. \n\n#67coin #67meme #67to67billion https://t.co/LktYlC6fy1",
-        "likes": 14,
+        "text": "@prxnterr I think the Frasier one wins. I don't think any of these new chud coins can beat it. \n\n I get the criticism of it being not just simply -chud as a negative. But the 67 coin that won was 'the official 67 coin' instead of '67coin'. \n\nThe name matters, but the ticker matte",
+        "likes": 13,
         "replies": 1,
-        "retweets": 3,
-        "date": "2026-03-04"
+        "retweets": 2,
+        "date": "2026-03-09"
       }
     ],
     "total_views_recent": 30682,
     "total_likes_recent": 886,
-    "follower_change_3d_snap": 19
+    "follower_change_3d_snap": 28
   },
   "community": {
     "discord_members": 1449,
@@ -548,12 +552,12 @@
     "_source": "coinmarketcap"
   },
   "_snapshot_24h": {
-    "timestamp": "2026-03-09T18:30:01.374055+00:00",
-    "twitter_followers": 1683,
+    "timestamp": "2026-03-10T18:30:01.189473+00:00",
+    "twitter_followers": 1689,
     "x_community_members": 10028,
     "discord_members": 1449,
     "telegram_members": 2432,
-    "holders": 16660
+    "holders": 16644
   },
   "team_presence": {
     "767811814557089802": "idle",
@@ -1480,15 +1484,15 @@
   ],
   "x_recent": [
     {
-      "text": "#67 looking different lately.\n\nVolume's creeping up and the chart's tightening.\n\nSmart money already positioned while most are still sleeping on it.\n\nThis thing's gonna rip faces when it moves.\nhttps://t.co/g8CEhezrHe https://t.co/WK5xoe2YBy",
-      "user": "silence",
-      "handle": "watchitpump",
-      "time": "2026-03-09T16:05:45+00:00",
-      "link": "https://x.com/watchitpump/status/2031038743076061598",
-      "tweet_url": "https://x.com/watchitpump/status/2031038743076061598",
-      "likes": 26,
-      "reposts": 4,
-      "replies": 12
+      "text": "I have a feeling @67coinX will surprise many. It feels real not artificially hyped.\n\nI might be wrong but I'm having a gut feeling, I'm going to follow.\n\nZero or billions\n\n$Sixseven #67 #67to67billion $67 https://t.co/QsMcz3pBvn",
+      "user": "Truman Burbank ^^ USOA \ud83d\udc8e\ud83d\udc50",
+      "handle": "U_S_O_A_",
+      "time": "2026-03-10T16:26:56+00:00",
+      "link": "https://x.com/U_S_O_A_/status/2031406460404457523",
+      "tweet_url": "https://x.com/U_S_O_A_/status/2031406460404457523",
+      "likes": 1,
+      "reposts": 0,
+      "replies": 0
     },
     {
       "text": "@Ga__ke @adeadmarket excatly, @Ga__ke and @adeadmarket get it, $scuba is the runner, its the trend. people didnt buy \"67 kyle\" they bought #67coin",
@@ -1546,169 +1550,48 @@
       "replies": 2
     },
     {
-      "text": "\"I know, its my dream\". \ud83d\udd25 . \n\nForever the greatest pic in history \n\n#67coin #67meme #67to67billion https://t.co/8032mBiB02",
+      "text": "\"El 67 eh eterno(eternal) \". \n\nSo Someone in the chat told him 67 is going away. He said are you crazy? 67 is eternal. And whoever dont like it can suck my b***'s. \ud83d\ude06\n\n#67coin #67meme #67to67billion https://t.co/NdBazz7are",
       "user": "Jp-B\ud83d\ude8059",
       "handle": "Unc_Jazr",
-      "time": "2026-03-04T22:24:17+00:00",
-      "link": "https://x.com/Unc_Jazr/status/2029322062477533195",
-      "tweet_url": "https://x.com/Unc_Jazr/status/2029322062477533195",
-      "likes": 10,
+      "time": "2026-03-03T23:59:23+00:00",
+      "link": "https://x.com/Unc_Jazr/status/2028983610020069709",
+      "tweet_url": "https://x.com/Unc_Jazr/status/2028983610020069709",
+      "likes": 15,
+      "reposts": 1,
+      "replies": 0
+    },
+    {
+      "text": "\ud83c\udfaf\n\n#67coin #67meme #67to67billion https://t.co/L8owLdDehi",
+      "user": "Jp-B\ud83d\ude8059",
+      "handle": "Unc_Jazr",
+      "time": "2026-03-03T23:38:42+00:00",
+      "link": "https://x.com/Unc_Jazr/status/2028978402313511141",
+      "tweet_url": "https://x.com/Unc_Jazr/status/2028978402313511141",
+      "likes": 11,
       "reposts": 0,
       "replies": 0
     },
     {
-      "text": "67\n\n#67coin #67meme #67to67billion",
+      "text": "#67coin",
       "user": "Jp-B\ud83d\ude8059",
       "handle": "Unc_Jazr",
-      "time": "2026-03-04T21:38:30+00:00",
-      "link": "https://x.com/Unc_Jazr/status/2029310543153021258",
-      "tweet_url": "https://x.com/Unc_Jazr/status/2029310543153021258",
+      "time": "2026-03-03T19:26:48+00:00",
+      "link": "https://x.com/Unc_Jazr/status/2028915011762938239",
+      "tweet_url": "https://x.com/Unc_Jazr/status/2028915011762938239",
+      "likes": 4,
+      "reposts": 0,
+      "replies": 0
+    },
+    {
+      "text": "67 is everywhere \n#67to67billion https://t.co/DxMJJTjr6a",
+      "user": "Frances Harrod",
+      "handle": "HarrodFrances",
+      "time": "2026-03-03T09:52:45+00:00",
+      "link": "https://x.com/HarrodFrances/status/2028770544984723778",
+      "tweet_url": "https://x.com/HarrodFrances/status/2028770544984723778",
       "likes": 7,
-      "reposts": 0,
-      "replies": 0
-    },
-    {
-      "text": "67 not giving up on you\n\n#67coin #67meme #67to67billion https://t.co/XerHMX6L69",
-      "user": "Jp-B\ud83d\ude8059",
-      "handle": "Unc_Jazr",
-      "time": "2026-03-04T21:09:28+00:00",
-      "link": "https://x.com/Unc_Jazr/status/2029303233429094787",
-      "tweet_url": "https://x.com/Unc_Jazr/status/2029303233429094787",
-      "likes": 12,
-      "reposts": 0,
-      "replies": 0
-    },
-    {
-      "text": "Global campaign \n\n#67coin #67meme #67to67billion https://t.co/byzk2Lorrs",
-      "user": "Jp-B\ud83d\ude8059",
-      "handle": "Unc_Jazr",
-      "time": "2026-03-04T20:41:46+00:00",
-      "link": "https://x.com/Unc_Jazr/status/2029296264395853955",
-      "tweet_url": "https://x.com/Unc_Jazr/status/2029296264395853955",
-      "likes": 9,
       "reposts": 1,
       "replies": 1
-    },
-    {
-      "text": "Ment to post this one. Other edit still good, but this \ud83d\udd25\n\n#67coin #67meme #67to67billion https://t.co/2fxNJ7XvvV",
-      "user": "Jp-B\ud83d\ude8059",
-      "handle": "Unc_Jazr",
-      "time": "2026-03-04T19:27:36+00:00",
-      "link": "https://x.com/Unc_Jazr/status/2029277601382994276",
-      "tweet_url": "https://x.com/Unc_Jazr/status/2029277601382994276",
-      "likes": 9,
-      "reposts": 1,
-      "replies": 1
-    },
-    {
-      "text": "@yeekiddd #67to67billion",
-      "user": "Dede Novita Jumiarti",
-      "handle": "Dedenovitaj",
-      "time": "2026-03-04T19:05:22+00:00",
-      "link": "https://x.com/Dedenovitaj/status/2029272005439107078",
-      "tweet_url": "https://x.com/Dedenovitaj/status/2029272005439107078",
-      "likes": 0,
-      "reposts": 0,
-      "replies": 0
-    },
-    {
-      "text": "Such a good edit . \n\n#67coin #67meme #67to67billion https://t.co/o13RzSvUbn",
-      "user": "Jp-B\ud83d\ude8059",
-      "handle": "Unc_Jazr",
-      "time": "2026-03-04T19:05:15+00:00",
-      "link": "https://x.com/Unc_Jazr/status/2029271976720597093",
-      "tweet_url": "https://x.com/Unc_Jazr/status/2029271976720597093",
-      "likes": 13,
-      "reposts": 2,
-      "replies": 1
-    },
-    {
-      "text": "Is now classed. \n\nCulture, Community, And General Consensus. The big three C's. \n\n#67coin #67meme #67to67billion https://t.co/LktYlC6fy1",
-      "user": "Jp-B\ud83d\ude8059",
-      "handle": "Unc_Jazr",
-      "time": "2026-03-04T18:53:01+00:00",
-      "link": "https://x.com/Unc_Jazr/status/2029268897698857094",
-      "tweet_url": "https://x.com/Unc_Jazr/status/2029268897698857094",
-      "likes": 14,
-      "reposts": 3,
-      "replies": 1
-    },
-    {
-      "text": "@67coinX @Pumpfun #67to67billion",
-      "user": "Dede Novita Jumiarti",
-      "handle": "Dedenovitaj",
-      "time": "2026-03-04T17:55:16+00:00",
-      "link": "https://x.com/Dedenovitaj/status/2029254364615856459",
-      "tweet_url": "https://x.com/Dedenovitaj/status/2029254364615856459",
-      "likes": 0,
-      "reposts": 0,
-      "replies": 0
-    },
-    {
-      "text": "@Blancshu \ud83e\udef4\n    \ud83e\udef4\n\n#67to67Billion",
-      "user": "WJP",
-      "handle": "wjponchain",
-      "time": "2026-03-04T17:48:05+00:00",
-      "link": "https://x.com/wjponchain/status/2029252554174152886",
-      "tweet_url": "https://x.com/wjponchain/status/2029252554174152886",
-      "likes": 5,
-      "reposts": 0,
-      "replies": 0
-    },
-    {
-      "text": "The meme reaper dancing on my grave for now. Not for much longer \n\n#67coin #67meme #67to67billion https://t.co/VymepTZuCC",
-      "user": "Jp-B\ud83d\ude8059",
-      "handle": "Unc_Jazr",
-      "time": "2026-03-04T17:20:34+00:00",
-      "link": "https://x.com/Unc_Jazr/status/2029245628514009125",
-      "tweet_url": "https://x.com/Unc_Jazr/status/2029245628514009125",
-      "likes": 9,
-      "reposts": 1,
-      "replies": 1
-    },
-    {
-      "text": "@67coinX @Pumpfun \ud83e\udef4\n    \ud83e\udef4\n\n#67to67Billion",
-      "user": "WJP",
-      "handle": "wjponchain",
-      "time": "2026-03-04T16:53:26+00:00",
-      "link": "https://x.com/wjponchain/status/2029238801391075566",
-      "tweet_url": "https://x.com/wjponchain/status/2029238801391075566",
-      "likes": 1,
-      "reposts": 0,
-      "replies": 0
-    },
-    {
-      "text": "45M was the warm up.\nEarly. Season 2 loading...\n\ud83e\udef4\n    \ud83e\udef4\n\n#67to67Billion",
-      "user": "The Official 67 Coin",
-      "handle": "67coinX",
-      "time": "2026-03-04T16:51:43+00:00",
-      "link": "https://x.com/67coinX/status/2029238368824115654",
-      "tweet_url": "https://x.com/67coinX/status/2029238368824115654",
-      "likes": 52,
-      "reposts": 18,
-      "replies": 17
-    },
-    {
-      "text": "Few\n\n#67coin #67meme #67to67billion https://t.co/h6odMm1uCQ",
-      "user": "Jp-B\ud83d\ude8059",
-      "handle": "Unc_Jazr",
-      "time": "2026-03-04T13:50:51+00:00",
-      "link": "https://x.com/Unc_Jazr/status/2029192853201539486",
-      "tweet_url": "https://x.com/Unc_Jazr/status/2029192853201539486",
-      "likes": 10,
-      "reposts": 3,
-      "replies": 1
-    },
-    {
-      "text": "\"67 has generational written all over it\"\n\n#67coin #67meme #67to67billion https://t.co/x6ZUd8HDU1",
-      "user": "Jp-B\ud83d\ude8059",
-      "handle": "Unc_Jazr",
-      "time": "2026-03-04T01:59:16+00:00",
-      "link": "https://x.com/Unc_Jazr/status/2029013777157333325",
-      "tweet_url": "https://x.com/Unc_Jazr/status/2029013777157333325",
-      "likes": 12,
-      "reposts": 2,
-      "replies": 0
     },
     {
       "text": "\ud83c\udf82 \n\n#67coin #67meme #67to67billion https://t.co/WUd2Ch1OC7",
@@ -1744,6 +1627,83 @@
       "replies": 0
     },
     {
+      "text": "These cringy edits man, just won't stop. \n\n#67meme #67to67billion https://t.co/mWcKOMeT9J",
+      "user": "Jp-B\ud83d\ude8059",
+      "handle": "Unc_Jazr",
+      "time": "2026-03-02T17:19:42+00:00",
+      "link": "https://x.com/Unc_Jazr/status/2028520635673067558",
+      "tweet_url": "https://x.com/Unc_Jazr/status/2028520635673067558",
+      "likes": 11,
+      "reposts": 0,
+      "replies": 0
+    },
+    {
+      "text": "#67coin #67meme",
+      "user": "Jp-B\ud83d\ude8059",
+      "handle": "Unc_Jazr",
+      "time": "2026-03-02T17:03:37+00:00",
+      "link": "https://x.com/Unc_Jazr/status/2028516587737583628",
+      "tweet_url": "https://x.com/Unc_Jazr/status/2028516587737583628",
+      "likes": 1,
+      "reposts": 0,
+      "replies": 0
+    },
+    {
+      "text": "The over seas edits still coming in by the boat. \n\nA global campaign now, i'm convinced it's unlike anything we've ever seen, or will ever see again. \n\n#67coin #67meme #67to67billion https://t.co/zF0OlSlVYy",
+      "user": "Jp-B\ud83d\ude8059",
+      "handle": "Unc_Jazr",
+      "time": "2026-03-02T15:35:46+00:00",
+      "link": "https://x.com/Unc_Jazr/status/2028494482224869871",
+      "tweet_url": "https://x.com/Unc_Jazr/status/2028494482224869871",
+      "likes": 10,
+      "reposts": 1,
+      "replies": 1
+    },
+    {
+      "text": "You almost have to do it before you start having fun now. $67. \n\n#67coin #67meme #67to67billion https://t.co/IrV4SAobYz",
+      "user": "Jp-B\ud83d\ude8059",
+      "handle": "Unc_Jazr",
+      "time": "2026-03-01T20:34:44+00:00",
+      "link": "https://x.com/Unc_Jazr/status/2028207329917784375",
+      "tweet_url": "https://x.com/Unc_Jazr/status/2028207329917784375",
+      "likes": 8,
+      "reposts": 0,
+      "replies": 0
+    },
+    {
+      "text": "\"Bottom Formed\" \n\n#67coin #67meme #67to67billion $67",
+      "user": "Jp-B\ud83d\ude8059",
+      "handle": "Unc_Jazr",
+      "time": "2026-03-01T20:32:45+00:00",
+      "link": "https://x.com/Unc_Jazr/status/2028206830065693078",
+      "tweet_url": "https://x.com/Unc_Jazr/status/2028206830065693078",
+      "likes": 1,
+      "reposts": 0,
+      "replies": 0
+    },
+    {
+      "text": "The global campaign continues. \n\nThe meme not just heard around the world, but used. \n#67Coin #67meme #67to67billion https://t.co/ECQvhnRYdu",
+      "user": "Jp-B\ud83d\ude8059",
+      "handle": "Unc_Jazr",
+      "time": "2026-03-01T19:31:59+00:00",
+      "link": "https://x.com/Unc_Jazr/status/2028191540099625341",
+      "tweet_url": "https://x.com/Unc_Jazr/status/2028191540099625341",
+      "likes": 12,
+      "reposts": 2,
+      "replies": 1
+    },
+    {
+      "text": "Congrats @curmelmoton1 . 67 fam see you \n\n#67coin #67onchain #67to67Billion https://t.co/t5snIynGfk",
+      "user": "Jp-B\ud83d\ude8059",
+      "handle": "Unc_Jazr",
+      "time": "2026-03-01T17:06:56+00:00",
+      "link": "https://x.com/Unc_Jazr/status/2028155034496618755",
+      "tweet_url": "https://x.com/Unc_Jazr/status/2028155034496618755",
+      "likes": 15,
+      "reposts": 2,
+      "replies": 1
+    },
+    {
       "text": "@no0blette @solana Six Seven \ud83d\ude80 https://t.co/7lphwM4kEx",
       "user": "rolf tuchschmid",
       "handle": "RolfTumaro",
@@ -1767,11 +1727,11 @@
     },
     {
       "text": "@poopypee6741 @Z2izy Big BWAM, hallowed be your name in the trenches. May six seven, the glorious numbers will save Solana and the trenches. Amen",
-      "user": "0x",
-      "handle": "0x27070",
+      "user": "Charr",
+      "handle": "0x2707",
       "time": "2026-02-06T17:25:11+00:00",
-      "link": "https://x.com/0x27070/status/2019824705876988061",
-      "tweet_url": "https://x.com/0x27070/status/2019824705876988061",
+      "link": "https://x.com/0x2707/status/2019824705876988061",
+      "tweet_url": "https://x.com/0x2707/status/2019824705876988061",
       "likes": 2,
       "reposts": 0,
       "replies": 1
@@ -2038,7 +1998,7 @@
       "time": "2026-01-05T16:04:52+00:00",
       "link": "https://x.com/dojixsol/status/2008208082917278101",
       "tweet_url": "https://x.com/dojixsol/status/2008208082917278101",
-      "likes": 291,
+      "likes": 287,
       "reposts": 235,
       "replies": 305
     },
@@ -2049,9 +2009,31 @@
       "time": "2026-03-07T19:17:47+00:00",
       "link": "https://x.com/UziCryptoo/status/2030362292811129021",
       "tweet_url": "https://x.com/UziCryptoo/status/2030362292811129021",
-      "likes": 534,
+      "likes": 543,
       "reposts": 23,
-      "replies": 203
+      "replies": 207
+    },
+    {
+      "text": "The Official 67 Coin ($67) is now verified on Moonshot. https://t.co/dhpDRxAUoq",
+      "user": "Moonshot",
+      "handle": "moonshot",
+      "time": "2025-11-19T02:32:44+00:00",
+      "link": "https://x.com/moonshot/status/1990971475751285126",
+      "tweet_url": "https://x.com/moonshot/status/1990971475751285126",
+      "likes": 415,
+      "reposts": 78,
+      "replies": 140
+    },
+    {
+      "text": "Solana Memecoins with Highest Growth in the Last 7 Days \ud83c\udf1f \n\n\ud83d\udd38RALPH | $RALPH\n\ud83d\udd38SOLTOMATO | $SOLTOMATO\n\ud83d\udd38Groyper| @GroyperSol\n\ud83d\udd3867 | #67coin\n\ud83d\udd38HEGE | @HegeCoin\n\ud83d\udd38retire | @thelastplaysol\n\ud83d\udd38LOOK | @lookdotfun\n\ud83d\udd38ANONCOIN | @anoncoinit\n\ud83d\udd38MIM  | @mimcoinbtc\n\ud83d\udd38Clash | @GeorgePlayClash https://t.",
+      "user": "Solana Daily",
+      "handle": "solana_daily",
+      "time": "2026-01-16T11:03:57+00:00",
+      "link": "https://x.com/solana_daily/status/2012118622702125490",
+      "tweet_url": "https://x.com/solana_daily/status/2012118622702125490",
+      "likes": 244,
+      "reposts": 162,
+      "replies": 169
     },
     {
       "text": "52 days ago this wallet bought $430 67Coin and now $134,000 in profit which sold $62,200 so far. https://t.co/a3lo66LC0t",
@@ -2060,20 +2042,20 @@
       "time": "2025-09-08T08:27:24+00:00",
       "link": "https://x.com/kkashi_yt/status/1964968803814776914",
       "tweet_url": "https://x.com/kkashi_yt/status/1964968803814776914",
-      "likes": 430,
+      "likes": 431,
       "reposts": 13,
       "replies": 41
     },
     {
-      "text": "67COIN ($67) is now verified on Moonshot. https://t.co/2CtGw4Awup",
-      "user": "Moonshot",
-      "handle": "moonshot",
-      "time": "2025-08-26T16:18:20+00:00",
-      "link": "https://x.com/moonshot/status/1960376272846012891",
-      "tweet_url": "https://x.com/moonshot/status/1960376272846012891",
-      "likes": 258,
-      "reposts": 37,
-      "replies": 83
+      "text": "Been in $67 since 41.5k MC \nFeels good \ud83d\ude42\u200d\u2194\ufe0f #67 https://t.co/EtjjlNRaa3",
+      "user": "solina",
+      "handle": "sol_inaa",
+      "time": "2025-09-09T19:24:52+00:00",
+      "link": "https://x.com/sol_inaa/status/1965496646651007347",
+      "tweet_url": "https://x.com/sol_inaa/status/1965496646651007347",
+      "likes": 350,
+      "reposts": 8,
+      "replies": 40
     },
     {
       "text": "67 is still the biggest fumble of the trenches and it\u2019s not even close\n\nif you would\u2019ve let those TikTok cabal kids that push larp elon and trump coins every week run 67 instead, they would have sent it to a billion\n\nwhat would the trenches look like today with a 10 fig 67 coin?",
@@ -2082,20 +2064,9 @@
       "time": "2026-02-18T04:12:35+00:00",
       "link": "https://x.com/jackduval/status/2023973895829848278",
       "tweet_url": "https://x.com/jackduval/status/2023973895829848278",
-      "likes": 291,
+      "likes": 289,
       "reposts": 7,
       "replies": 84
-    },
-    {
-      "text": "Generational Bottom for Solana could be a double bottom at $67 #solana $sol https://t.co/HwBnmfxjwZ",
-      "user": "Enick \u30c4",
-      "handle": "EnickFutures",
-      "time": "2026-02-12T18:44:23+00:00",
-      "link": "https://x.com/EnickFutures/status/2022018965099483479",
-      "tweet_url": "https://x.com/EnickFutures/status/2022018965099483479",
-      "likes": 175,
-      "reposts": 27,
-      "replies": 30
     },
     {
       "text": "The Official 67 Coin\n\n7.2M -&gt; 42.2M and counting \n\nthis is the ultimate generational wealth play. you aren\u2019t late until it\u2019s at six seven billion \ud83d\udc8e https://t.co/NOlzvppZsk",
@@ -2120,15 +2091,15 @@
       "replies": 28
     },
     {
-      "text": "More dev buys to support the community.\n\nBuilding our treasury, just in time for Season 2.\n\n#67season2 #67to67billion https://t.co/GsTeU1UUUY",
-      "user": "The Official 67 Coin",
-      "handle": "67coinX",
-      "time": "2026-02-22T20:52:35+00:00",
-      "link": "https://x.com/67coinX/status/2025675106899333180",
-      "tweet_url": "https://x.com/67coinX/status/2025675106899333180",
-      "likes": 82,
-      "reposts": 19,
-      "replies": 21
+      "text": "Had to get off early yesterday, but made a calm 67 solanas\n\nToday we continue the grind\n\nLive trading here:\n\nhttps://t.co/UO4GG7v8Gs https://t.co/vlnppAhp34",
+      "user": "decu",
+      "handle": "notdecu",
+      "time": "2026-03-05T15:34:42+00:00",
+      "link": "https://x.com/notdecu/status/2029581375683154391",
+      "tweet_url": "https://x.com/notdecu/status/2029581375683154391",
+      "likes": 132,
+      "reposts": 11,
+      "replies": 38
     },
     {
       "text": "Two numbers to unite the world. 67 billion human beings.\n\n@duolingo \n\n#67to67billion https://t.co/NxWQIuCAZG",
@@ -2148,20 +2119,9 @@
       "time": "2025-12-10T11:19:52+00:00",
       "link": "https://x.com/solana_daily/status/1998714277553971617",
       "tweet_url": "https://x.com/solana_daily/status/1998714277553971617",
-      "likes": 81,
+      "likes": 82,
       "reposts": 8,
       "replies": 11
-    },
-    {
-      "text": "Some 67 moments leave you speechless...\n\n#67to67billion https://t.co/cN55YAIDZu",
-      "user": "The Official 67 Coin",
-      "handle": "67coinX",
-      "time": "2026-03-09T21:21:30+00:00",
-      "link": "https://x.com/67coinX/status/2031118201212354707",
-      "tweet_url": "https://x.com/67coinX/status/2031118201212354707",
-      "likes": 56,
-      "reposts": 18,
-      "replies": 16
     },
     {
       "text": "Pump and 67 on the streets. \n\n\ud83e\udef4\n    \ud83e\udef4\n\n#67to67Billion https://t.co/6NaCHHJZkJ",
@@ -2181,20 +2141,31 @@
       "time": "2026-03-04T16:51:43+00:00",
       "link": "https://x.com/67coinX/status/2029238368824115654",
       "tweet_url": "https://x.com/67coinX/status/2029238368824115654",
-      "likes": 52,
+      "likes": 53,
       "reposts": 18,
       "replies": 17
     },
     {
-      "text": "It's over. It's code in your heart, in your soul. You will never be the same after 67.\n\n#67mindvirus https://t.co/a28sI9xseg",
+      "text": "Austrians definitely know how to 67.\n\nThe biggest meme mindshare in human history. Period.\n\n#67to67billion https://t.co/qUYodxsv8w",
       "user": "The Official 67 Coin",
       "handle": "67coinX",
-      "time": "2026-03-04T00:50:12+00:00",
-      "link": "https://x.com/67coinX/status/2028996396666200508",
-      "tweet_url": "https://x.com/67coinX/status/2028996396666200508",
-      "likes": 45,
-      "reposts": 13,
-      "replies": 17
+      "time": "2026-03-04T14:46:46+00:00",
+      "link": "https://x.com/67coinX/status/2029206927318614276",
+      "tweet_url": "https://x.com/67coinX/status/2029206927318614276",
+      "likes": 55,
+      "reposts": 17,
+      "replies": 15
+    },
+    {
+      "text": "More submissions coming in for the 67 community Discord's sticker contest.\n\n1,500 members strong.\n\nRetail onboarding in real time.\n\nJoin at https://t.co/lJsmo7Ag4I\n\n#67to67billion https://t.co/vyASuB5eqT",
+      "user": "The Official 67 Coin",
+      "handle": "67coinX",
+      "time": "2026-02-20T18:21:26+00:00",
+      "link": "https://x.com/67coinX/status/2024912293541155314",
+      "tweet_url": "https://x.com/67coinX/status/2024912293541155314",
+      "likes": 44,
+      "reposts": 11,
+      "replies": 19
     },
     {
       "text": "$67\n\nsix-seven is going to $67M (and then higher)\n\n#67to67Billion https://t.co/4pmWys6yuw",
@@ -2203,20 +2174,9 @@
       "time": "2026-01-15T20:50:50+00:00",
       "link": "https://x.com/CryptoCurb/status/2011903928791896317",
       "tweet_url": "https://x.com/CryptoCurb/status/2011903928791896317",
-      "likes": 50,
+      "likes": 49,
       "reposts": 8,
       "replies": 22
-    },
-    {
-      "text": "Been tracking $67coin  for a bit \u2014 and the flow keeps tightening.\n\nWallet movement looks deliberate, not random.\nIf you want the source, here\u2019s where it starts:\n\ud83d\udd17 https://t.co/dMpzqkm5nD\n\n #67coin #Solana https://t.co/ZTJOms4Swa",
-      "user": "Good Boy",
-      "handle": "GutisBTC",
-      "time": "2025-12-19T15:59:36+00:00",
-      "link": "https://x.com/GutisBTC/status/2002046163298800111",
-      "tweet_url": "https://x.com/GutisBTC/status/2002046163298800111",
-      "likes": 42,
-      "reposts": 11,
-      "replies": 7
     },
     {
       "text": "Still holding my $Youngho and maybe it might take weeks as #67coin and $Whitewhale did to take of.\n\nDoubt it will die since the trend on tiktok is growing.\n\nMoon or dust.\n\nBmsRvPgXrgXXEn67RBBoAu3NCjDFE72Zb1nkMf7kpump",
@@ -2230,6 +2190,17 @@
       "replies": 7
     },
     {
+      "text": "Thanks for this candle, CZ.\n\n#67coin is not just a 2025 trending, you mean right? https://t.co/A9fK1HoOw1",
+      "user": "\ud83d\udd75\ufe0fGEM DETECTER\ud83d\udd75\ufe0f",
+      "handle": "gem_detecter",
+      "time": "2026-01-15T16:50:56+00:00",
+      "link": "https://x.com/gem_detecter/status/2011843554294059466",
+      "tweet_url": "https://x.com/gem_detecter/status/2011843554294059466",
+      "likes": 43,
+      "reposts": 6,
+      "replies": 39
+    },
+    {
       "text": "Gm 67whale CT \n\n#67Whale : $9.6 k MC and #67coin : $30 m MC\n\nWhen the CTO movement will start on 67Whale nothing should stop us.\n\nThe best projects come from CTOs\n\nCA :\n\n2TSC2PaXZDCkrBoxcNBiQyWh61dC9bRGqL8nKwfbpump\n\nBe ready to invade the internet 67 Whale Supporter. https://t.co",
       "user": "CyrDoge",
       "handle": "cyrdoge",
@@ -2239,17 +2210,6 @@
       "likes": 24,
       "reposts": 15,
       "replies": 9
-    },
-    {
-      "text": "I stick to it. $Youngho will be the Q1/Q2 token of 2026 and the next #67coin \n\nBmsRvPgXrgXXEn67RBBoAu3NCjDFE72Zb1nkMf7kpump\n\nhttps://t.co/HSXbxgVERd",
-      "user": "mrpatrickschmitt",
-      "handle": "mr_pschmitt",
-      "time": "2026-02-03T01:13:14+00:00",
-      "link": "https://x.com/mr_pschmitt/status/2018492944307626142",
-      "tweet_url": "https://x.com/mr_pschmitt/status/2018492944307626142",
-      "likes": 29,
-      "reposts": 5,
-      "replies": 5
     }
   ],
   "x_notifications": [
@@ -2363,6 +2323,6 @@
     "date": "2026-03-07"
   },
   "x_news_updated": "2026-03-07T02:45:14.859344+00:00",
-  "x_latest_updated": "2026-03-10T03:16:12.298586+00:00",
-  "x_popular_updated": "2026-03-10T00:35:18.280181+00:00"
+  "x_latest_updated": "2026-03-11T01:11:12.530801+00:00",
+  "x_popular_updated": "2026-03-11T00:35:19.302218+00:00"
 }

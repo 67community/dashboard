@@ -115,18 +115,11 @@ function MapAdminPanel() {
   useEffect(() => {
     fetch("/api/map-admin").then(r => r.json()).then(d => {
       const items = d.items ?? []
-      // Auto-approve items older than 7 days
-      const cutoff = Date.now() - 24 * 60 * 60 * 1000
-      const autoApproved = items
-        .filter((s: any) => new Date(s.time).getTime() < cutoff)
-        .map((s: any) => s.id)
-      if (autoApproved.length > 0) {
-        setApproved(prev => {
-          const next = new Set([...prev, ...autoApproved])
-          localStorage.setItem("map_approved", JSON.stringify([...next]))
-          return next
-        })
-      }
+      // Load status from Supabase data
+      const approvedIds = items.filter((s: any) => s.status === "approved").map((s: any) => s.id)
+      const rejectedIds = items.filter((s: any) => s.status === "rejected").map((s: any) => s.id)
+      if (approvedIds.length > 0) setApproved(new Set(approvedIds))
+      if (rejectedIds.length > 0) setRejected(new Set(rejectedIds))
       setItems(items)
       setLoading(false)
     }).catch(() => setLoading(false))
@@ -153,7 +146,7 @@ function MapAdminPanel() {
         <div style={{ display: "flex", gap: 6, marginBottom: 6 }}>
           {(["all","pending","approved"] as const).map(f => (
             <button key={f} onClick={() => setFilter(f)} style={{ padding: "3px 10px", borderRadius: 99, border: "none", cursor: "pointer", fontSize: 11, fontWeight: 600,
-              background: filter === f ? "#F5A623" : "var(--separator)", color: filter === f ? "#000" : "rgba(255,255,255,0.6)" }}>
+              background: filter === f ? "#F5A623" : "var(--separator)", color: filter === f ? "#000" : "var(--foreground)" }}>
               {f.charAt(0).toUpperCase()+f.slice(1)}
             </button>
           ))}
@@ -189,12 +182,12 @@ function MapAdminPanel() {
               </div>
               {/* Actions */}
               <div style={{ display: "flex", flexDirection: "column", gap: 4, flexShrink: 0 }}>
-                <button onClick={() => setApproved(p => { const n = new Set(p); n.add(sub.id); localStorage.setItem("map_approved", JSON.stringify([...n])); return n })} disabled={st === "approved"}
+                <button onClick={() => { fetch("/api/map-admin", { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id: sub.id, status: "approved" }) }).then(r => r.json()).then(() => setApproved(p => { const n = new Set(p); n.add(sub.id); return n })).catch(console.error) }} disabled={st === "approved"}
                   style={{ padding: "3px 8px", borderRadius: 6, border: "none", cursor: "pointer", fontSize: 10, fontWeight: 700,
                     background: st === "approved" ? "rgba(34,197,94,0.2)" : "#22C55E", color: st === "approved" ? "#22C55E" : "#fff", opacity: st === "rejected" ? 0.4 : 1 }}>
                   ✓ Approve
                 </button>
-                <button onClick={() => setRejected(p => { const n = new Set(p); n.add(sub.id); localStorage.setItem("map_rejected", JSON.stringify([...n])); return n })} disabled={st === "rejected"}
+                <button onClick={() => { fetch("/api/map-admin", { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id: sub.id, status: "rejected" }) }).then(r => r.json()).then(() => setRejected(p => { const n = new Set(p); n.add(sub.id); return n })).catch(console.error) }} disabled={st === "rejected"}
                   style={{ padding: "3px 8px", borderRadius: 6, cursor: "pointer", fontSize: 10, fontWeight: 700,
                     background: "transparent", border: "1px solid #EF4444", color: "#EF4444", opacity: st === "approved" ? 0.4 : 1 }}>
                   ✕ Reject
