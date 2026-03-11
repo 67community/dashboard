@@ -1060,6 +1060,7 @@ export async function GET() {
       if (eng.total_likes_recent !== undefined) sp.total_likes_recent = eng.total_likes_recent
       if (xc.x_community_members) sp.x_community_members = xc.x_community_members
       if (xc.x_community_delta_24h !== undefined) sp.x_community_delta_24h = xc.x_community_delta_24h
+      if (xc.community_tweets) sp.community_tweets = xc.community_tweets
       return { ...sp, follower_change_24h: delta1d, follower_change_3d: delta3d, follower_change_7d: delta7d, follower_change_20h: delta1d }
     })(),
     community: {

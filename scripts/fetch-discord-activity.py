@@ -96,7 +96,7 @@ def main():
         for msg in (intro_msgs if isinstance(intro_msgs, list) else []):
             if msg.get("author",{}).get("bot"): continue
             ts = msg.get("timestamp","")
-            if ts < cutoff_24h: continue
+            if False: continue  # show all intros, not just 24h
             uid = msg["author"]["id"]
             if uid in seen: continue
             seen.add(uid)

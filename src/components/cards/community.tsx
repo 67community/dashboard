@@ -308,7 +308,7 @@ export function CommunityCard() {
       {/* Recent Introductions preview */}
       {recentJoins.length > 0 && (
         <div style={{ borderTop:"1px solid var(--separator)", paddingTop:16 }}>
-          <p style={{ fontSize:"0.625rem", fontWeight:800, color:"var(--tertiary)", textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:10 }}>Recent Introductions (24h)</p>
+          <p style={{ fontSize:"0.625rem", fontWeight:800, color:"var(--tertiary)", textTransform:"uppercase", letterSpacing:"0.07em", marginBottom:10 }}>Recent Introductions</p>
           <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
             {recentJoins.slice(0,4).map(j => (
               <div key={j.user_id} style={{ display:"flex", alignItems:"center", gap:10, padding:"8px 10px", background:"rgba(0,0,0,0.02)", borderRadius:10 }}>
@@ -530,7 +530,7 @@ export function CommunityCard() {
         {/* Recent Introductions */}
         {recentJoins.length > 0 && (
           <div>
-            <SectionLabel icon={<span style={{ fontSize:"0.75rem" }}>👋</span>} label="Recent Introductions (24h)" />
+            <SectionLabel icon={<span style={{ fontSize:"0.75rem" }}>👋</span>} label="Recent Introductions" />
             <div style={{ display:"flex", flexDirection:"column", gap:6 }}>
               {recentJoins.map(j => (
                 <div key={j.user_id} style={{ display:"flex", alignItems:"center", gap:10, padding:"9px 12px", background:"rgba(0,0,0,0.02)", borderRadius:10 }}>

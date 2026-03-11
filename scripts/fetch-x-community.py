@@ -60,5 +60,65 @@ def main():
     sb_upsert("x_community", result)
     print(f"✅ Supabase: x_community (delta: {delta:+d})")
 
+def fetch_community_tweets():
+    """Fetch recent tweets from the 67 community via RapidAPI."""
+    print("Fetching community tweets...")
+    try:
+        url = f"https://twitter241.p.rapidapi.com/community-tweets?communityId={COMMUNITY_ID}&count=20"
+        req = urllib.request.Request(url, headers={
+            "x-rapidapi-host": "twitter241.p.rapidapi.com", "x-rapidapi-key": RAPIDAPI_KEY})
+        with urllib.request.urlopen(req, timeout=20) as r:
+            data = json.load(r)
+    except Exception as e:
+        print(f"❌ Community tweets error: {e}"); return []
+
+    tweets = []
+    instructions = data.get("result", {}).get("timeline", {}).get("instructions", [])
+    
+    for inst in instructions:
+        # Single pinned entry
+        entry = inst.get("entry")
+        if entry:
+            _parse_tweet_entry(entry, tweets)
+        # Multiple entries
+        for e in inst.get("entries", []):
+            _parse_tweet_entry(e, tweets)
+
+    print(f"  Found {len(tweets)} community tweets")
+    return tweets[:15]
+
+
+def _parse_tweet_entry(entry, tweets):
+    try:
+        result = entry.get("content", {}).get("itemContent", {}).get("tweet_results", {}).get("result", {})
+        if not result: return
+        legacy = result.get("legacy", {})
+        user = result.get("core", {}).get("user_results", {}).get("result", {}).get("legacy", {})
+        if not legacy.get("full_text") or not user: return
+        
+        tweet_id = legacy.get("id_str", "")
+        screen_name = user.get("screen_name", "")
+        
+        tweets.append({
+            "tweet_url": f"https://x.com/{screen_name}/status/{tweet_id}",
+            "screen_name": screen_name,
+            "name": user.get("name", screen_name),
+            "avatar": (user.get("profile_image_url_https", "") or "").replace("_normal", "_bigger"),
+            "text": legacy.get("full_text", ""),
+            "date": legacy.get("created_at", ""),
+            "likes": legacy.get("favorite_count", 0),
+            "replies": legacy.get("reply_count", 0),
+            "retweets": legacy.get("retweet_count", 0),
+        })
+    except Exception:
+        pass
+
+
 if __name__ == "__main__":
     main()
+    tweets = fetch_community_tweets()
+    if tweets:
+        existing = sb_get("x_community") or {}
+        existing["community_tweets"] = tweets
+        sb_upsert("x_community", existing)
+        print(f"✅ Supabase: community_tweets ({len(tweets)})")
