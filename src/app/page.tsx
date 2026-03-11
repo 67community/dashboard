@@ -190,7 +190,7 @@ export default function Dashboard() {
           </div>
 
           {/* Row 2: Social — full width */}
-          <div className="mob-order-5" style={{ display:"flex", minWidth:0, minHeight:420 }}><SocialMediaSpotlightCard /></div>
+          <div className="mob-order-5" style={{ display:"flex", minWidth:0, minHeight:620 }}><SocialMediaSpotlightCard /></div>
 
           {/* Row 3: Team Notes */}
           <div className="mob-order-4" style={{ display:"flex", minWidth:0, marginBottom:24 }}><TeamNotesCard /></div>

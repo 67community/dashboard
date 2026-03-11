@@ -89,7 +89,7 @@ function NewsRow({ item, compact = false }: { item: NewsItem; compact?: boolean 
   const isCP = item.kind === "crypto_rss"
   return (
     <a href={item.url} target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()} style={{ textDecoration:"none", display:"block" }}>
-      <div style={{ borderRadius:10, border:"1.5px solid var(--separator)", background:"var(--card)", padding: compact ? "8px 10px" : "10px 12px", transition:"box-shadow 0.15s" }}
+      <div style={{ borderRadius:10, border:"1.5px solid var(--separator)", background:"var(--card)", padding: compact ? "8px 10px" : "16px 20px", transition:"box-shadow 0.15s" }}
         onMouseEnter={e => (e.currentTarget.style.boxShadow = "0 2px 10px rgba(0,0,0,0.07)")}
         onMouseLeave={e => (e.currentTarget.style.boxShadow = "none")}>
         <div style={{ display:"flex", alignItems:"flex-start", gap:8 }}>
@@ -142,7 +142,7 @@ export function SocialMediaSpotlightCard() {
     <div style={{ display:"flex", flexDirection:"column", gap:12 }}>
 
       {/* ── Media grid ── */}
-      <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr 1fr", gridTemplateRows:"120px 120px", gap:6, overflow:"hidden", borderRadius:10 }}>
+      <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr 1fr", gridTemplateRows:"180px 180px", gap:6, overflow:"hidden", borderRadius:10 }}>
         {/* TikTok — tall portrait, spans 2 rows */}
         {tiktoks[0] && (
           <a href={tiktoks[0].video_url} target="_blank" rel="noopener noreferrer"
@@ -313,7 +313,7 @@ export function SocialMediaSpotlightCard() {
       </div>
 
       {tab === "tiktok" && (
-        <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:10 }}>
+        <div style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:8, maxHeight:700, overflowY:"auto" }}>
           {tiktoks.map((v, i) => (
             <a key={i} href={v.video_url} target="_blank" rel="noopener noreferrer" style={{ textDecoration:"none" }}>
               <div style={{ position:"relative", borderRadius:10, overflow:"hidden", aspectRatio:"9/16", background:"#000" }}>
@@ -336,7 +336,7 @@ export function SocialMediaSpotlightCard() {
         <div style={{ display:"flex", flexDirection:"column", gap:12 }}>
           {youtubes.map((v: any, i) => (
             <a key={i} href={v.url||"#"} target="_blank" rel="noopener noreferrer" style={{ textDecoration:"none", display:"flex", gap:12, alignItems:"flex-start" }}>
-              <div style={{ position:"relative", borderRadius:8, overflow:"hidden", width:140, flexShrink:0, aspectRatio:"16/9", background:"#000" }}>
+              <div style={{ position:"relative", borderRadius:8, overflow:"hidden", width:200, flexShrink:0, aspectRatio:"16/9", background:"#000" }}>
                 {(v.thumbnail_url || v.thumbnail) && <img src={v.thumbnail_url || v.thumbnail} alt="" style={{ width:"100%", height:"100%", objectFit:"cover" }} />}
                 <div style={{ position:"absolute", inset:0, display:"flex", alignItems:"center", justifyContent:"center" }}>
                   <div style={{ width:28, height:28, background:"rgba(255,0,0,0.85)", borderRadius:6, display:"flex", alignItems:"center", justifyContent:"center" }}>
@@ -371,7 +371,7 @@ export function SocialMediaSpotlightCard() {
       )}
 
       {tab === "instagram" && (
-        <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:8 }}>
+        <div style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:8, maxHeight:700, overflowY:"auto" }}>
           {instas.map((v: any, i) => (
             <a key={i} href={v.url||v.post_url||"#"} target="_blank" rel="noopener noreferrer" style={{ textDecoration:"none" }}>
               <div style={{ position:"relative", borderRadius:10, overflow:"hidden", aspectRatio:"1/1", background:"#222" }}>
@@ -404,6 +404,7 @@ export function SocialMediaSpotlightCard() {
         </div>
       }
       collapsed={collapsed}
+      expandedMaxWidth={1100}
       expanded={expanded}
     />
   )

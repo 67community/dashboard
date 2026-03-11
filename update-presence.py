@@ -118,6 +118,21 @@ def save(presence):
         except Exception as e:
             print(f"⚠️ {path}: {e}")
 
+    # Also write to Supabase
+    try:
+        import urllib.request
+        SB_URL = 'https://oqqwwccercxiwtyedwqm.supabase.co'
+        SB_KEY = '***REMOVED_SERVICE_KEY***'
+        sb_data = json.dumps({'key': 'team_presence', 'value': json.dumps(presence)}).encode()
+        req = urllib.request.Request(
+            f'{SB_URL}/rest/v1/kv_store?on_conflict=key', data=sb_data, method='POST',
+            headers={'apikey': SB_KEY, 'Authorization': f'Bearer {SB_KEY}',
+                     'Content-Type': 'application/json', 'Prefer': 'resolution=merge-duplicates'})
+        urllib.request.urlopen(req, timeout=10)
+        print(f'✅ Supabase: team_presence')
+    except Exception as e:
+        print(f'⚠️ Supabase presence: {e}')
+
 if __name__ == "__main__":
     presence = asyncio.run(fetch_presence())
     dots = {"online": "🟢", "idle": "🟡", "dnd": "🔴", "offline": "⚫"}

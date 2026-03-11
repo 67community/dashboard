@@ -82,12 +82,53 @@ async def run():
             try:
                 await page.goto(url, wait_until="networkidle", timeout=30000)
                 await page.wait_for_timeout(3000)
-                for _ in range(8):
+                # Wait for puzzle/captcha — try to solve automatically
+                for attempt in range(10):
+                    puzzle = await page.query_selector('div.captcha_verify_container, div[class*="captcha"], div[class*="puzzle"], div[id*="captcha"]')
+                    if not puzzle:
+                        break
+                    print(f'  🧩 Puzzle detected! Attempting auto-solve (attempt {attempt+1})...')
+                    # Screenshot the puzzle area
+                    await page.screenshot(path='/tmp/tiktok_puzzle.png')
+                    
+                    # TikTok slider puzzle: find the slider and drag it
+                    slider = await page.query_selector('div.secsdk-captcha-drag-icon, div[class*="slider"], button[class*="slider"]')
+                    if slider:
+                        box = await slider.bounding_box()
+                        if box:
+                            # Drag slider from left to approximate position
+                            import random
+                            start_x = box['x'] + box['width'] / 2
+                            start_y = box['y'] + box['height'] / 2
+                            # Try different drag distances
+                            distances = [150, 200, 180, 160, 220, 130, 170, 190, 140, 210]
+                            drag_dist = distances[attempt % len(distances)]
+                            
+                            await page.mouse.move(start_x, start_y)
+                            await page.mouse.down()
+                            # Move in small steps to simulate human
+                            steps = 20
+                            for step in range(steps):
+                                await page.mouse.move(
+                                    start_x + (drag_dist * (step + 1) / steps) + random.uniform(-2, 2),
+                                    start_y + random.uniform(-1, 1),
+                                )
+                                await page.wait_for_timeout(random.randint(10, 30))
+                            await page.mouse.up()
+                            print(f'    Dragged {drag_dist}px')
+                            await page.wait_for_timeout(3000)
+                    else:
+                        # Maybe click-based puzzle, try clicking verify
+                        verify = await page.query_selector('button[class*="verify"], div[class*="verify-btn"]')
+                        if verify:
+                            await verify.click()
+                        await page.wait_for_timeout(5000)
+                for _ in range(16):
                     await page.evaluate("window.scrollBy(0, 1200)")
                     await page.wait_for_timeout(600)
                 return await page.evaluate(f"""() => {{
                     const cards = document.querySelectorAll('{selector}')
-                    return Array.from(cards).slice(0, 30).map(card => {{
+                    return Array.from(cards).slice(0, 60).map(card => {{
                         const link = card.querySelector('a')
                         const img  = card.querySelector('img')
                         const url  = link?.href || ''

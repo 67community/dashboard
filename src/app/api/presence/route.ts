@@ -1,48 +1,22 @@
 import { NextResponse } from "next/server"
 
-// Team Discord IDs
-const TEAM_IDS = [
-  "1444130836415905993",  // brandon
-  "1440075589557158100",  // jamie
-  "682831521396031498",   // nick
-  "788495124061487154",   // wjp
-  "965681608604647514",   // gen
-  "767811814557089802",   // oscar
-  "201710326347988993",   // crispy
-]
-
-// Lanyard API — free, no auth, no bot needed
-// Requires: team members join discord.gg/lanyard (one-time)
-async function fetchLanyardPresence(userId: string): Promise<string> {
-  try {
-    const res = await fetch(`https://api.lanyard.rest/v1/users/${userId}`, {
-      next: { revalidate: 60 }
-    })
-    if (!res.ok) return "offline"
-    const data = await res.json()
-    if (!data.success) return "offline"
-    // discord_status: "online" | "idle" | "dnd" | "offline"
-    return data.data?.discord_status ?? "offline"
-  } catch {
-    return "offline"
-  }
-}
+const SB_URL = "https://oqqwwccercxiwtyedwqm.supabase.co"
+const SB_KEY = "***REMOVED_SERVICE_KEY***"
 
 export async function GET() {
-  // Fetch all team member presences in parallel
-  const results = await Promise.all(
-    TEAM_IDS.map(async (id) => ({
-      id,
-      status: await fetchLanyardPresence(id),
-    }))
-  )
-
-  const presence: Record<string, string> = {}
-  for (const { id, status } of results) {
-    presence[id] = status
+  try {
+    const res = await fetch(
+      `${SB_URL}/rest/v1/kv_store?key=eq.team_presence&select=value`,
+      { headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` }, cache: "no-store" }
+    )
+    if (!res.ok) return NextResponse.json({})
+    const rows = await res.json()
+    const v = rows?.[0]?.value
+    const data = typeof v === "string" ? JSON.parse(v) : (v ?? {})
+    return NextResponse.json(data, {
+      headers: { "Cache-Control": "no-store, max-age=0" }
+    })
+  } catch {
+    return NextResponse.json({})
   }
-
-  return NextResponse.json(presence, {
-    headers: { "Cache-Control": "no-store, max-age=0" }
-  })
 }

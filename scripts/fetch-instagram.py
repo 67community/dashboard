@@ -22,13 +22,26 @@ async def run():
         page = await ctx.new_page()
         await page.goto("https://www.instagram.com/explore/tags/67/", wait_until="networkidle", timeout=30000)
         await page.wait_for_timeout(4000)
-        for _ in range(5):
+        # Dismiss ads/cookie/notification popups
+        for _ in range(30):  # wait up to 2.5 min for manual dismiss
+            popup = await page.query_selector('button:has-text("OK"), button:has-text("Not Now"), button:has-text("Decline"), button:has-text("Accept"), div[role="dialog"] button')
+            if popup:
+                try:
+                    await popup.click()
+                    print("  ✅ Dismissed popup")
+                    await page.wait_for_timeout(2000)
+                except:
+                    print("  🖐️ Popup detected — dismiss it manually...")
+                    await page.wait_for_timeout(5000)
+            else:
+                break
+        for _ in range(15):
             await page.evaluate("window.scrollBy(0, 1000)")
             await page.wait_for_timeout(800)
 
         posts = await page.evaluate("""() => {
             const links = Array.from(document.querySelectorAll('a[href*="/p/"]'))
-            return links.slice(0, 30).map(a => {
+            return links.slice(0, 60).map(a => {
                 const img = a.querySelector('img')
                 return {
                     link: 'https://www.instagram.com' + a.getAttribute('href'),

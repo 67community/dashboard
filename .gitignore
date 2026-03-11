@@ -51,3 +51,8 @@ public/library/
 # Meme library (too large for git)
 public/library/
 public/meetings/*.mp3
+
+# Browser profiles
+scripts/.instagram_profile/
+scripts/.tiktok_browser_profile/
+.presence_token
