@@ -178,7 +178,7 @@ export function SocialMediaSpotlightCard() {
 
         {/* YouTube — wide landscape */}
         {youtubes[0] && (
-          <a href={(youtubes[0] as any).url||"#"} target="_blank" rel="noopener noreferrer"
+          <a href={(youtubes[0] as any).video_url||(youtubes[0] as any).url||"#"} target="_blank" rel="noopener noreferrer"
             style={{ textDecoration:"none", gridColumn:"2 / 4", gridRow:"2 / 3" }}>
             <div style={{ position:"relative", borderRadius:10, overflow:"hidden", height:"100%", background:"linear-gradient(135deg, #010101 0%, #69C9D0 50%, #EE1D52 100%)" }}>
               {((youtubes[0] as any).thumbnail_url || (youtubes[0] as any).thumbnail) && <img src={(youtubes[0] as any).thumbnail_url || (youtubes[0] as any).thumbnail} alt="" style={{ width:"100%", height:"100%", objectFit:"cover", display:"block" }} />}
@@ -198,7 +198,7 @@ export function SocialMediaSpotlightCard() {
         {(youtubes[1] || tiktoks[3]) && (() => {
           const v = youtubes[1] || tiktoks[3]
           const isYt = !!youtubes[1]
-          const href = isYt ? ((v as any).url||"#") : v.video_url
+          const href = isYt ? ((v as any).video_url||(v as any).url||"#") : v.video_url
           const thumb = isYt ? ((v as any).thumbnail_url||(v as any).thumbnail) : v.thumbnail_url
           return (
             <a href={href} target="_blank" rel="noopener noreferrer"
@@ -335,7 +335,7 @@ export function SocialMediaSpotlightCard() {
       {tab === "youtube" && (
         <div style={{ display:"flex", flexDirection:"column", gap:12 }}>
           {youtubes.map((v: any, i) => (
-            <a key={i} href={v.url||v.link||"#"} target="_blank" rel="noopener noreferrer" style={{ textDecoration:"none", display:"flex", gap:12, alignItems:"flex-start" }}>
+            <a key={i} href={v.video_url||v.url||v.link||"#"} target="_blank" rel="noopener noreferrer" style={{ textDecoration:"none", display:"flex", gap:12, alignItems:"flex-start" }}>
               <div style={{ position:"relative", borderRadius:8, overflow:"hidden", width:200, flexShrink:0, aspectRatio:"16/9", background:"#000" }}>
                 {(v.thumbnail_url || v.thumbnail) && <img src={v.thumbnail_url || v.thumbnail} alt="" style={{ width:"100%", height:"100%", objectFit:"cover" }} />}
                 <div style={{ position:"absolute", inset:0, display:"flex", alignItems:"center", justifyContent:"center" }}>
