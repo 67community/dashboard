@@ -7,6 +7,7 @@ import { Calendar, GripVertical, Trash2 } from "lucide-react"
 import { Task, Priority, Category } from "@/lib/types"
 import { TEAM_MEMBERS } from "@/lib/mock-data"
 import { TeamAvatar } from "@/components/team/team-avatar"
+import { usePresence } from "@/lib/use-presence"
 
 const PRIORITY: Record<Priority, { bg:string; color:string }> = {
   Low:    { bg:"rgba(113,113,122,0.12)", color:"#A1A1AA" },
@@ -49,6 +50,7 @@ export function TaskCard({ task, onOpen, onDelete, isDragOverlay = false }: Prop
   const urgency = getUrgency(task)
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: task.id })
   const assignee = TEAM_MEMBERS.find(m => m.id === task.assigneeId)
+  const presence = usePresence()
   const doneSubtasks = task.subtasks.filter(s => s.done).length
   const P = PRIORITY[task.priority]
   const C = CATEGORY[task.category]
@@ -129,7 +131,7 @@ export function TaskCard({ task, onOpen, onDelete, isDragOverlay = false }: Prop
               </div>
             )}
           </div>
-          {assignee && <TeamAvatar member={assignee} size="sm" />}
+          {assignee && <TeamAvatar member={assignee} size="sm" discordStatus={assignee.discord_id ? presence[assignee.discord_id] : undefined} />}
         </div>
       </div>
     </div>
