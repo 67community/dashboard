@@ -234,7 +234,7 @@ export function SocialMediaSpotlightCard() {
         {(instas[0] || tiktoks[3]) && (() => {
           const v = instas[0] || tiktoks[3]
           const isInsta = !!instas[0]
-          const href = isInsta ? (v.url||v.post_url||"#") : v.video_url
+          const href = isInsta ? (v.url||v.post_url||v.link||"#") : v.video_url
           const thumb = isInsta ? (v.image_url||v.thumbnail) : v.thumbnail_url
           return (
             <a href={href} target="_blank" rel="noopener noreferrer"
@@ -335,7 +335,7 @@ export function SocialMediaSpotlightCard() {
       {tab === "youtube" && (
         <div style={{ display:"flex", flexDirection:"column", gap:12 }}>
           {youtubes.map((v: any, i) => (
-            <a key={i} href={v.url||"#"} target="_blank" rel="noopener noreferrer" style={{ textDecoration:"none", display:"flex", gap:12, alignItems:"flex-start" }}>
+            <a key={i} href={v.url||v.link||"#"} target="_blank" rel="noopener noreferrer" style={{ textDecoration:"none", display:"flex", gap:12, alignItems:"flex-start" }}>
               <div style={{ position:"relative", borderRadius:8, overflow:"hidden", width:200, flexShrink:0, aspectRatio:"16/9", background:"#000" }}>
                 {(v.thumbnail_url || v.thumbnail) && <img src={v.thumbnail_url || v.thumbnail} alt="" style={{ width:"100%", height:"100%", objectFit:"cover" }} />}
                 <div style={{ position:"absolute", inset:0, display:"flex", alignItems:"center", justifyContent:"center" }}>
@@ -373,7 +373,7 @@ export function SocialMediaSpotlightCard() {
       {tab === "instagram" && (
         <div style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:8, maxHeight:700, overflowY:"auto" }}>
           {instas.map((v: any, i) => (
-            <a key={i} href={v.url||v.post_url||"#"} target="_blank" rel="noopener noreferrer" style={{ textDecoration:"none" }}>
+            <a key={i} href={v.url||v.post_url||v.link||"#"} target="_blank" rel="noopener noreferrer" style={{ textDecoration:"none" }}>
               <div style={{ position:"relative", borderRadius:10, overflow:"hidden", aspectRatio:"1/1", background:"#222" }}>
                 {(v.image_url||v.thumbnail) && <img src={v.image_url||v.thumbnail} alt="" style={{ width:"100%", height:"100%", objectFit:"cover" }} />}
                 <div style={{ position:"absolute", inset:0, background:"linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 50%)" }} />
