@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import os
+from pathlib import Path; from dotenv import load_dotenv; load_dotenv(Path(__file__).resolve().parent.parent / '.env')
 """Holders — Solana RPC → Supabase. Every 10 min."""
 import json, urllib.request, base64
 from datetime import datetime, timezone

@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import os
+from pathlib import Path; from dotenv import load_dotenv; load_dotenv(Path(__file__).resolve().parent.parent / '.env')
 """X News Last — runs every 5 min. Last 24h, newest first."""
 import json, urllib.request, urllib.parse
 from pathlib import Path

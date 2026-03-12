@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import os
+from pathlib import Path; from dotenv import load_dotenv; load_dotenv(Path(__file__).resolve().parent.parent / '.env')
 """Fetch @67coinX follower count via Twitter241 RapidAPI — no Playwright, no proxy."""
 import json, urllib.request
 from pathlib import Path

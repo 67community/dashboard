@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 import os
+from pathlib import Path; from dotenv import load_dotenv; load_dotenv(Path(__file__).resolve().parent.parent / '.env')
 """Poll Telegram '67 Raider' group for raid links → Supabase. Runs as daemon."""
 import json, re, time, urllib.request
 from datetime import datetime, timezone
 
-TG_RAID_BOT = "***REMOVED_TG_TOKEN***:AAFFdKDuZp97NSITwClyw6MYI9WVhIO7nSo"
+TG_RAID_BOT = "8671419325:AAFFdKDuZp97NSITwClyw6MYI9WVhIO7nSo"
 TG_RAID_GROUP = "-1003708062172"
 POLL_INTERVAL = 10  # seconds
 

@@ -41,6 +41,7 @@ async def run():
 
         posts = await page.evaluate("""() => {
 import os
+from pathlib import Path; from dotenv import load_dotenv; load_dotenv(Path(__file__).resolve().parent.parent / '.env')
             const links = Array.from(document.querySelectorAll('a[href*="/p/"]'))
             return links.slice(0, 60).map(a => {
                 const img = a.querySelector('img')

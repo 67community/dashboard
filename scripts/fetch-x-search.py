@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import os
+from pathlib import Path; from dotenv import load_dotenv; load_dotenv(Path(__file__).resolve().parent.parent / '.env')
 """X search via Twitter241 RapidAPI — $67 coin targeted, spam filtered."""
 import json, urllib.request, urllib.parse, time
 from pathlib import Path

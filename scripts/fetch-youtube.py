@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 import os
+from pathlib import Path; from dotenv import load_dotenv; load_dotenv(Path(__file__).resolve().parent.parent / '.env')
 """YouTube videos → Supabase. Every 1 hour."""
 import json, urllib.request, urllib.parse
 from datetime import datetime, timezone
 
 SB_URL  = os.environ["SUPABASE_URL"]
 SB_KEY  = os.environ["SUPABASE_SERVICE_KEY"]
-YT_KEY  = "***REMOVED_YT_KEY***"
+YT_KEY  = os.environ.get("YOUTUBE_API_KEY", "")
 YT_BASE = "https://www.googleapis.com/youtube/v3"
 
 QUERIES = ["67"]

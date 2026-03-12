@@ -6,7 +6,7 @@ import Map, { Source, Layer } from "react-map-gl"
 import type { LayerProps } from "react-map-gl"
 import "mapbox-gl/dist/mapbox-gl.css"
 
-const TOKEN = "***REMOVED_MAPBOX_TOKEN***"
+const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || ""
 const COMMUNITY_IMG = "https://www.67coin.com/page-logo/community.png"
 
 const clusterLayer: LayerProps = {

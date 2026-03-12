@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import os
+from pathlib import Path; from dotenv import load_dotenv; load_dotenv(Path(__file__).resolve().parent.parent / '.env')
 """Fetch 67coin-related news from RSS → Supabase. Every 24 hours."""
 import json, urllib.request, xml.etree.ElementTree as ET
 from datetime import datetime, timezone, timedelta

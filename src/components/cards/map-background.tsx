@@ -3,7 +3,7 @@ import { useCallback, useEffect, useRef } from "react"
 import Map from "react-map-gl"
 import "mapbox-gl/dist/mapbox-gl.css"
 
-const TOKEN = "***REMOVED_MAPBOX_TOKEN***"
+const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || ""
 
 export function MapBackground() {
   const mapRef = useRef<any>(null)

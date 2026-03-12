@@ -3,6 +3,7 @@
 @67coinX best tweets + X Community top tweets via Twitter241 RapidAPI.
 """
 import os
+from pathlib import Path; from dotenv import load_dotenv; load_dotenv(Path(__file__).resolve().parent.parent / '.env')
 import json, urllib.request, urllib.parse
 from pathlib import Path
 from datetime import datetime, timezone, timedelta

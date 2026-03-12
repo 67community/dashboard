@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+import os
+from pathlib import Path; from dotenv import load_dotenv; load_dotenv(Path(__file__).resolve().parent.parent / ".env")
 """
 X Notifications Daemon — lightweight polling, no Playwright, no proxy.
 Runs forever, checks every 60s, writes new notifs to data.json.
@@ -22,7 +24,7 @@ def fetch_notifs(cookies):
         return []
 
     headers = {
-        "authorization":  "Bearer ***REMOVED_X_GUEST_TOKEN***",
+        "authorization":  f"Bearer {os.environ.get('X_GUEST_TOKEN', 'AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8xnZz4puTs%3D1Zv7ttfk8LW81O0q0LfVoSTPITPVBFtWPUk7p4lIgEOVgWlUoE')}",
         "x-csrf-token":   ct0,
         "cookie":         "; ".join(f"{k}={v}" for k, v in cookies.items()),
         "user-agent":     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 Chrome/122 Safari/537.36",

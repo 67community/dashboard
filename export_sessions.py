@@ -34,7 +34,7 @@ for i, sf in enumerate(pick, 1):
 
 print("\n" + "=" * 60)
 print("Also add these secrets (if not already set):")
-print("  PROXY_SERVER = gw.dataimpulse.com:823")
-print("  PROXY_USER   = ***REMOVED_PROXY_USER***")
+print("  PROXY_SERVER = (from .env)")
+print("  PROXY_USER   = (from .env)")
 print("  PROXY_PASS   = (check .env file)")
 print("=" * 60)

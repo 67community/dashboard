@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import os
+from pathlib import Path; from dotenv import load_dotenv; load_dotenv(Path(__file__).resolve().parent.parent / '.env')
 """Fetch map-admin pins from Discord → Supabase. Every 5 hours."""
 import json, os, urllib.request
 from datetime import datetime, timezone

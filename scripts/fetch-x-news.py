@@ -4,6 +4,7 @@ Fetch X News for Raid card — Latest & Popular.
 Each tag searched separately, round-robin merged so all tags represented.
 """
 import os
+from pathlib import Path; from dotenv import load_dotenv; load_dotenv(Path(__file__).resolve().parent.parent / '.env')
 import json, urllib.request, urllib.parse
 from pathlib import Path
 from datetime import datetime, timezone

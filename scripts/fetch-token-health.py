@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import os
+from pathlib import Path; from dotenv import load_dotenv; load_dotenv(Path(__file__).resolve().parent.parent / '.env')
 """Token Health — DexScreener + CoinGecko + CMC → Supabase. Every 2 min."""
 import json, urllib.request
 from datetime import datetime, timezone

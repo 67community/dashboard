@@ -4,7 +4,7 @@ import sys, json, re, random
 from pathlib import Path
 from playwright.sync_api import sync_playwright
 
-PROXY = {"server":"http://gw.dataimpulse.com:823","username":"***REMOVED_PROXY_USER***","password":"***REMOVED_PROXY_PASS***"}
+PROXY = {"server": os.environ.get("PROXY_URL", "http://gw.dataimpulse.com:823"), "username": os.environ.get("PROXY_USER", ""), "password": os.environ.get("PROXY_PASS", "")}
 mode  = sys.argv[1] if len(sys.argv) > 1 else "recent"
 tab   = "live" if mode == "recent" else "top"
 MAX   = 60

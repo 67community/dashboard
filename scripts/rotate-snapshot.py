@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import os
+from pathlib import Path; from dotenv import load_dotenv; load_dotenv(Path(__file__).resolve().parent.parent / '.env')
 """Rotate _snapshot_24h — runs once daily. Copies current values as the 24h baseline."""
 import json, urllib.request
 from pathlib import Path

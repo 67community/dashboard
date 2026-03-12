@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import os
+from pathlib import Path; from dotenv import load_dotenv; load_dotenv(Path(__file__).resolve().parent.parent / '.env')
 """Compute @67coinX engagement stats → Supabase."""
 import json, urllib.request, urllib.parse
 from datetime import datetime, timezone, timedelta

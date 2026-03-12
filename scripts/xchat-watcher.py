@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import os
+from pathlib import Path; from dotenv import load_dotenv; load_dotenv(Path(__file__).resolve().parent.parent / '.env')
 """Poll Supabase xchat_queue every 5s, forward to xchat-server on localhost:9867."""
 import json, time, urllib.request
 

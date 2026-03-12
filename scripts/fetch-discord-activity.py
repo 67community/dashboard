@@ -5,6 +5,7 @@ and write to Supabase kv_store key: discord_activity
 Runs every 5 minutes from Mac mini cron.
 """
 import os
+from pathlib import Path; from dotenv import load_dotenv; load_dotenv(Path(__file__).resolve().parent.parent / '.env')
 import json, os, re, time, urllib.request, urllib.error
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
