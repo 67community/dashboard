@@ -4,7 +4,7 @@ import path from "path"
 
 const PAIR    = "DMAFL613XTipuA3jFNYczavWT7XsiYf9cR3qmRMZQhB6"
 const TOKEN   = "9AvytnUKsLxPxFHFqS6VLxaxt5p6BhYNr53SD2Chpump"
-const CMC_KEY = process.env.CMC_API_KEY ?? "***REMOVED_CMC_KEY***"
+const CMC_KEY = process.env.CMC_API_KEY!
 const CG_ID   = "the-official-67-coin"
 
 // ── helpers ──────────────────────────────────────────────────────────────────
@@ -943,8 +943,8 @@ function readStaticJson() {
 }
 
 // ── Supabase KV reader ───────────────────────────────────────────────────────
-const SB_URL = "https://oqqwwccercxiwtyedwqm.supabase.co"
-const SB_KEY = "***REMOVED_SERVICE_KEY***"
+const SB_URL = process.env.SUPABASE_URL!
+const SB_KEY = process.env.SUPABASE_SERVICE_KEY!
 
 async function sbGet(key: string): Promise<unknown | null> {
   try {

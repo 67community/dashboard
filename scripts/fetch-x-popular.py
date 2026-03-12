@@ -1,16 +1,17 @@
 #!/usr/bin/env python3
+import os
 """X News Popular — runs every 1 hour. Last 24h, most liked first."""
 import json, urllib.request, urllib.parse
 from pathlib import Path
 from datetime import datetime, timezone
 
-RAPIDAPI_KEY = "4b393aa0cemsh6895fd899d6eedcp1a441djsnfe89097510cd"
+RAPIDAPI_KEY = os.environ["RAPIDAPI_KEY"]
 DATA_JSON    = Path(__file__).parent.parent / "public/data.json"
 
 # ── Supabase sync ──────────────────────────────────────────────
 import urllib.request as _ur
-_SB_URL = "https://oqqwwccercxiwtyedwqm.supabase.co"
-_SB_KEY = "***REMOVED_SERVICE_KEY***"
+_SB_URL = os.environ["SUPABASE_URL"]
+_SB_KEY = os.environ["SUPABASE_SERVICE_KEY"]
 def sb_upsert(key, value):
     body = json.dumps({"key": key, "value": value}).encode()
     req = _ur.Request(f"{_SB_URL}/rest/v1/kv_store", data=body, headers={

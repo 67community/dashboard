@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
+import os
 """Poll Supabase xchat_queue every 5s, forward to xchat-server on localhost:9867."""
 import json, time, urllib.request
 
-SB_URL = "https://oqqwwccercxiwtyedwqm.supabase.co"
-SB_KEY = "***REMOVED_SERVICE_KEY***"
+SB_URL = os.environ["SUPABASE_URL"]
+SB_KEY = os.environ["SUPABASE_SERVICE_KEY"]
 
 def sb_get(key):
     req = urllib.request.Request(

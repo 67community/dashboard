@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server"
 
-const BOT_TOKEN = "***REMOVED_TG_TOKEN***:AAGlhdjo0JRJVC66rH-MDUvWfSTiu86gj9I"
+const BOT_TOKEN = process.env.TG_ANNOUNCE_BOT_TOKEN!
 const MEME_CHAT = "-1003343009902"
 const BASE = `https://api.telegram.org/bot${BOT_TOKEN}`
 

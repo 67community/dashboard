@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
+import os
 """Holders — Solana RPC → Supabase. Every 10 min."""
 import json, urllib.request, base64
 from datetime import datetime, timezone
 
-SB_URL = "https://oqqwwccercxiwtyedwqm.supabase.co"
-SB_KEY = "***REMOVED_SERVICE_KEY***"
+SB_URL = os.environ["SUPABASE_URL"]
+SB_KEY = os.environ["SUPABASE_SERVICE_KEY"]
 TOKEN = "9AvytnUKsLxPxFHFqS6VLxaxt5p6BhYNr53SD2Chpump"
 
 def sb_upsert(key, value):

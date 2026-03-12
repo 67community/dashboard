@@ -3,11 +3,11 @@
 import json, urllib.request
 from datetime import datetime, timezone
 
-RAPIDAPI_KEY = "4b393aa0cemsh6895fd899d6eedcp1a441djsnfe89097510cd"
+RAPIDAPI_KEY = os.environ["RAPIDAPI_KEY"]
 COMMUNITY_ID = "1987949705322508569"
 
-SB_URL = "https://oqqwwccercxiwtyedwqm.supabase.co"
-SB_KEY = "***REMOVED_SERVICE_KEY***"
+SB_URL = os.environ["SUPABASE_URL"]
+SB_KEY = os.environ["SUPABASE_SERVICE_KEY"]
 
 def sb_upsert(key, value):
     data = json.dumps({"key": key, "value": json.dumps(value)}).encode()
@@ -62,6 +62,7 @@ def main():
 
 def fetch_community_tweets():
     """Fetch recent tweets from the 67 community via RapidAPI."""
+import os
     print("Fetching community tweets...")
     try:
         url = f"https://twitter241.p.rapidapi.com/community-tweets?communityId={COMMUNITY_ID}&count=20"

@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import os
 """Fetch map-admin pins from Discord → Supabase. Every 5 hours."""
 import json, os, urllib.request
 from datetime import datetime, timezone
@@ -6,8 +7,8 @@ from pathlib import Path
 
 MAP_ADMIN_CHANNEL = "1465826546882449471"
 
-SB_URL = "https://oqqwwccercxiwtyedwqm.supabase.co"
-SB_KEY = "***REMOVED_SERVICE_KEY***"
+SB_URL = os.environ["SUPABASE_URL"]
+SB_KEY = os.environ["SUPABASE_SERVICE_KEY"]
 
 DISCORD_TOKEN = os.environ.get("DISCORD_TOKEN", "")
 if not DISCORD_TOKEN:

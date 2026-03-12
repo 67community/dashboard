@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
+import os
 """Compute @67coinX engagement stats → Supabase."""
 import json, urllib.request, urllib.parse
 from datetime import datetime, timezone, timedelta
 
-RAPIDAPI_KEY  = "4b393aa0cemsh6895fd899d6eedcp1a441djsnfe89097510cd"
+RAPIDAPI_KEY  = os.environ["RAPIDAPI_KEY"]
 USER_ID_67CON = "1993727649202814976"
 
-SB_URL = "https://oqqwwccercxiwtyedwqm.supabase.co"
-SB_KEY = "***REMOVED_SERVICE_KEY***"
+SB_URL = os.environ["SUPABASE_URL"]
+SB_KEY = os.environ["SUPABASE_SERVICE_KEY"]
 
 now = datetime.now(timezone.utc)
 

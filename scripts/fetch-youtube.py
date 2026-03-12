@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
+import os
 """YouTube videos → Supabase. Every 1 hour."""
 import json, urllib.request, urllib.parse
 from datetime import datetime, timezone
 
-SB_URL  = "https://oqqwwccercxiwtyedwqm.supabase.co"
-SB_KEY  = "***REMOVED_SERVICE_KEY***"
+SB_URL  = os.environ["SUPABASE_URL"]
+SB_KEY  = os.environ["SUPABASE_SERVICE_KEY"]
 YT_KEY  = "***REMOVED_YT_KEY***"
 YT_BASE = "https://www.googleapis.com/youtube/v3"
 

@@ -1,14 +1,14 @@
 import { NextRequest, NextResponse } from "next/server"
 
 const TOKENS = {
-  announce: "***REMOVED_TG_TOKEN***:AAGlhdjo0JRJVC66rH-MDUvWfSTiu86gj9I",
-  raid:     "***REMOVED_TG_TOKEN***:AAEgGRJaT1uwvSCA0GF6I88vwKGTkPNinM4",
+  announce: process.env.TG_ANNOUNCE_BOT_TOKEN!,
+  raid:     process.env.TG_RAID_BOT_TOKEN!,
 }
 const CHATS = {
   tg_main: "-1003158749697",
   tg_raid: "-1003708062172",
 }
-const DISCORD_BOT_TOKEN = "MTQ3OTI0NDQ5NjM2MDMwODczNg.GCHgwk.UcGR9RqolR86JMfCDbqbR-CndwNHQn4uhi9Y8A"
+const DISCORD_BOT_TOKEN = process.env.DISCORD_BOT_TOKEN!
 const DISCORD_CHANNELS: Record<string, string> = {
   d_coin_announce:      "1458850588271050857",
   d_community_announce: "1458844490239578265",
@@ -16,8 +16,8 @@ const DISCORD_CHANNELS: Record<string, string> = {
 
 // X Chat (67 Chat group DM)
 
-const SB_URL = "https://oqqwwccercxiwtyedwqm.supabase.co"
-const SB_KEY = "***REMOVED_SERVICE_KEY***"
+const SB_URL = process.env.SUPABASE_URL!
+const SB_KEY = process.env.SUPABASE_SERVICE_KEY!
 
 async function sendXChat(text: string) {
   // Write to Supabase queue — Mac mini watcher picks it up and sends via Playwright

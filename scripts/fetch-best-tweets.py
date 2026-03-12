@@ -2,11 +2,12 @@
 """
 @67coinX best tweets + X Community top tweets via Twitter241 RapidAPI.
 """
+import os
 import json, urllib.request, urllib.parse
 from pathlib import Path
 from datetime import datetime, timezone, timedelta
 
-RAPIDAPI_KEY  = "4b393aa0cemsh6895fd899d6eedcp1a441djsnfe89097510cd"
+RAPIDAPI_KEY  = os.environ["RAPIDAPI_KEY"]
 DATA_JSON     = Path(__file__).parent.parent / "public/data.json"
 USER_ID_67CON = "1993727649202814976"   # @67coinX
 SEARCH_QUERIES = ["67coin", "#67coin"]

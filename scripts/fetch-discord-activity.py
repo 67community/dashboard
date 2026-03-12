@@ -4,6 +4,7 @@ Fetch Discord activity (joins, top channels, contributors, voice, events, boost,
 and write to Supabase kv_store key: discord_activity
 Runs every 5 minutes from Mac mini cron.
 """
+import os
 import json, os, re, time, urllib.request, urllib.error
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
@@ -14,8 +15,8 @@ NML_CH    = "1470525026347385114"
 MOD_BOT_ID = "1474483702812643359"
 MOD_CH_IDS = {"1458846146415034460", "1451275835649560646"}
 
-SB_URL  = "https://oqqwwccercxiwtyedwqm.supabase.co"
-SB_KEY  = "***REMOVED_SERVICE_KEY***"
+SB_URL  = os.environ["SUPABASE_URL"]
+SB_KEY  = os.environ["SUPABASE_SERVICE_KEY"]
 
 DISCORD_TOKEN = os.environ.get("DISCORD_TOKEN", "")
 if not DISCORD_TOKEN:

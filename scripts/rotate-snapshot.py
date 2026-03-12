@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
+import os
 """Rotate _snapshot_24h — runs once daily. Copies current values as the 24h baseline."""
 import json, urllib.request
 from pathlib import Path
 from datetime import datetime, timezone
 
 DATA_JSON = Path(__file__).parent.parent / "public/data.json"
-SB_URL = "https://oqqwwccercxiwtyedwqm.supabase.co"
-SB_KEY = "***REMOVED_SERVICE_KEY***"
+SB_URL = os.environ["SUPABASE_URL"]
+SB_KEY = os.environ["SUPABASE_SERVICE_KEY"]
 
 def sb_get(key):
     req = urllib.request.Request(f"{SB_URL}/rest/v1/kv_store?key=eq.{key}&select=value",

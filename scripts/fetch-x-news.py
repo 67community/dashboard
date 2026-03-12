@@ -3,11 +3,12 @@
 Fetch X News for Raid card — Latest & Popular.
 Each tag searched separately, round-robin merged so all tags represented.
 """
+import os
 import json, urllib.request, urllib.parse
 from pathlib import Path
 from datetime import datetime, timezone
 
-RAPIDAPI_KEY = "4b393aa0cemsh6895fd899d6eedcp1a441djsnfe89097510cd"
+RAPIDAPI_KEY = os.environ["RAPIDAPI_KEY"]
 DATA_JSON    = Path(__file__).parent.parent / "public/data.json"
 
 TAGS = [

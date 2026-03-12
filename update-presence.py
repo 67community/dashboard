@@ -121,8 +121,8 @@ def save(presence):
     # Also write to Supabase
     try:
         import urllib.request
-        SB_URL = 'https://oqqwwccercxiwtyedwqm.supabase.co'
-        SB_KEY = '***REMOVED_SERVICE_KEY***'
+        SB_URL = os.environ["SUPABASE_URL"]
+        SB_KEY = os.environ["SUPABASE_SERVICE_KEY"]
         sb_data = json.dumps({'key': 'team_presence', 'value': json.dumps(presence)}).encode()
         req = urllib.request.Request(
             f'{SB_URL}/rest/v1/kv_store?on_conflict=key', data=sb_data, method='POST',

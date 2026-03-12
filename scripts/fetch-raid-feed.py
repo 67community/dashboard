@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import os
 """Poll Telegram '67 Raider' group for raid links → Supabase. Runs as daemon."""
 import json, re, time, urllib.request
 from datetime import datetime, timezone
@@ -7,8 +8,8 @@ TG_RAID_BOT = "***REMOVED_TG_TOKEN***:AAFFdKDuZp97NSITwClyw6MYI9WVhIO7nSo"
 TG_RAID_GROUP = "-1003708062172"
 POLL_INTERVAL = 10  # seconds
 
-SB_URL = "https://oqqwwccercxiwtyedwqm.supabase.co"
-SB_KEY = "***REMOVED_SERVICE_KEY***"
+SB_URL = os.environ["SUPABASE_URL"]
+SB_KEY = os.environ["SUPABASE_SERVICE_KEY"]
 
 offset = 0
 

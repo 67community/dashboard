@@ -62,8 +62,8 @@ def save_seen(seen: set) -> None:
 
 # Supabase config
 import urllib.request as _ur
-SB_URL = "https://oqqwwccercxiwtyedwqm.supabase.co"
-SB_KEY = "***REMOVED_SERVICE_KEY***"
+SB_URL = os.environ["SUPABASE_URL"]
+SB_KEY = os.environ["SUPABASE_SERVICE_KEY"]
 
 def sb_get_feed() -> list:
     try:

@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
+import os
 """Token Health — DexScreener + CoinGecko + CMC → Supabase. Every 2 min."""
 import json, urllib.request
 from datetime import datetime, timezone
 
-SB_URL = "https://oqqwwccercxiwtyedwqm.supabase.co"
-SB_KEY = "***REMOVED_SERVICE_KEY***"
+SB_URL = os.environ["SUPABASE_URL"]
+SB_KEY = os.environ["SUPABASE_SERVICE_KEY"]
 PAIR    = "DMAFL613XTipuA3jFNYczavWT7XsiYf9cR3qmRMZQhB6"
 TOKEN   = "9AvytnUKsLxPxFHFqS6VLxaxt5p6BhYNr53SD2Chpump"
-CMC_KEY = "***REMOVED_CMC_KEY***"
+CMC_KEY = os.environ["CMC_API_KEY"]
 CG_ID   = "the-official-67-coin"
 
 def fetch(url, headers={}):

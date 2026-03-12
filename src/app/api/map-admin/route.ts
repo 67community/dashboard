@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server"
 
-const SB_URL = "https://oqqwwccercxiwtyedwqm.supabase.co"
-const SB_KEY = "***REMOVED_SERVICE_KEY***"
+const SB_URL = process.env.SUPABASE_URL!
+const SB_KEY = process.env.SUPABASE_SERVICE_KEY!
 const SB_HEADERS = { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}`, "Content-Type": "application/json" }
 
 export async function GET() {

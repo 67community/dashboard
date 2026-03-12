@@ -3,8 +3,8 @@
 import json, asyncio, urllib.request
 from pathlib import Path
 
-SB_URL = "https://oqqwwccercxiwtyedwqm.supabase.co"
-SB_KEY = "***REMOVED_SERVICE_KEY***"
+SB_URL = os.environ["SUPABASE_URL"]
+SB_KEY = os.environ["SUPABASE_SERVICE_KEY"]
 PROFILE = Path("/Users/oscarbrendon/67agent-mission-control/scripts/.instagram_profile")
 
 def sb_upsert(key, value):
@@ -40,6 +40,7 @@ async def run():
             await page.wait_for_timeout(800)
 
         posts = await page.evaluate("""() => {
+import os
             const links = Array.from(document.querySelectorAll('a[href*="/p/"]'))
             return links.slice(0, 60).map(a => {
                 const img = a.querySelector('img')

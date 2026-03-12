@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
+import os
 """Fetch 67coin-related news from RSS → Supabase. Every 24 hours."""
 import json, urllib.request, xml.etree.ElementTree as ET
 from datetime import datetime, timezone, timedelta
 from email.utils import parsedate_to_datetime
 
-SB_URL = "https://oqqwwccercxiwtyedwqm.supabase.co"
-SB_KEY = "***REMOVED_SERVICE_KEY***"
+SB_URL = os.environ["SUPABASE_URL"]
+SB_KEY = os.environ["SUPABASE_SERVICE_KEY"]
 
 RSS_FEEDS = [
     "https://news.google.com/rss/search?q=67&hl=en-US&gl=US&ceid=US:en",

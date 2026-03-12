@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """Social counts — Discord + Telegram → Supabase. Every 5 min."""
-import json, urllib.request, os
+import json, os, urllib.request
 from datetime import datetime, timezone
 
-SB_URL       = "https://oqqwwccercxiwtyedwqm.supabase.co"
-SB_KEY       = "***REMOVED_SERVICE_KEY***"
+SB_URL       = os.environ["SUPABASE_URL"]
+SB_KEY       = os.environ["SUPABASE_SERVICE_KEY"]
 GUILD_ID     = "1440077830456082545"
-TG_TOKEN     = "***REMOVED_TG_TOKEN***:AAGlhdjo0JRJVC66rH-MDUvWfSTiu86gj9I"
+TG_TOKEN     = os.environ["TG_ANNOUNCE_BOT_TOKEN"]
 TG_CHAT      = "-1003158749697"
 
 DISCORD_TOKEN = os.environ.get("DISCORD_TOKEN", "")

@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
+import os
 """Market data — Yahoo Finance → Supabase. Every 5 min."""
 import json, urllib.request
 from datetime import datetime, timezone
 
-SB_URL = "https://oqqwwccercxiwtyedwqm.supabase.co"
-SB_KEY = "***REMOVED_SERVICE_KEY***"
+SB_URL = os.environ["SUPABASE_URL"]
+SB_KEY = os.environ["SUPABASE_SERVICE_KEY"]
 
 SYMBOLS = [
     ("BTC-USD","Bitcoin","crypto","₿"),

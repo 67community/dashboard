@@ -9,8 +9,8 @@ THUMB_DIR   = REPO_ROOT / "public/tiktok-thumbs"
 PROFILE_DIR = REPO_ROOT / ".tiktok_browser_profile"
 THUMB_DIR.mkdir(exist_ok=True)
 
-SB_URL = "https://oqqwwccercxiwtyedwqm.supabase.co"
-SB_KEY = "***REMOVED_SERVICE_KEY***"
+SB_URL = os.environ["SUPABASE_URL"]
+SB_KEY = os.environ["SUPABASE_SERVICE_KEY"]
 
 # Profile + hashtag pages to scrape
 SOURCES = [
@@ -127,6 +127,7 @@ async def run():
                     await page.evaluate("window.scrollBy(0, 1200)")
                     await page.wait_for_timeout(600)
                 return await page.evaluate(f"""() => {{
+import os
                     const cards = document.querySelectorAll('{selector}')
                     return Array.from(cards).slice(0, 60).map(card => {{
                         const link = card.querySelector('a')

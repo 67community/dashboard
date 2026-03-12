@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
+import os
 """Fetch @67coinX follower count via Twitter241 RapidAPI — no Playwright, no proxy."""
 import json, urllib.request
 from pathlib import Path
 from typing import Optional
 from datetime import datetime, timezone
 
-RAPIDAPI_KEY = "4b393aa0cemsh6895fd899d6eedcp1a441djsnfe89097510cd"
+RAPIDAPI_KEY = os.environ["RAPIDAPI_KEY"]
 
-SB_URL = "https://oqqwwccercxiwtyedwqm.supabase.co"
-SB_KEY = "***REMOVED_SERVICE_KEY***"
+SB_URL = os.environ["SUPABASE_URL"]
+SB_KEY = os.environ["SUPABASE_SERVICE_KEY"]
 
 def sb_upsert(key, value):
     body = json.dumps({"key": key, "value": value}).encode()
