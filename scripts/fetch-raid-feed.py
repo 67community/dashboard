@@ -5,7 +5,7 @@ from pathlib import Path; from dotenv import load_dotenv; load_dotenv(Path(__fil
 import json, re, time, urllib.request
 from datetime import datetime, timezone
 
-TG_RAID_BOT = "8671419325:AAFFdKDuZp97NSITwClyw6MYI9WVhIO7nSo"
+TG_RAID_BOT = os.environ.get("TG_RAID_BOT_TOKEN", "")
 TG_RAID_GROUP = "-1003708062172"
 POLL_INTERVAL = 10  # seconds
 

@@ -24,7 +24,7 @@ def fetch_notifs(cookies):
         return []
 
     headers = {
-        "authorization":  f"Bearer {os.environ.get('X_GUEST_TOKEN', 'AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8xnZz4puTs%3D1Zv7ttfk8LW81O0q0LfVoSTPITPVBFtWPUk7p4lIgEOVgWlUoE')}",
+        "authorization":  f"Bearer {os.environ.get('X_GUEST_TOKEN', os.environ.get('X_GUEST_TOKEN', ''))}",
         "x-csrf-token":   ct0,
         "cookie":         "; ".join(f"{k}={v}" for k, v in cookies.items()),
         "user-agent":     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 Chrome/122 Safari/537.36",
