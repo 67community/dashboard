@@ -61,3 +61,5 @@ scripts/.tiktok_browser_profile/
 state/x_storage_state.json
 state/*.json
 ..bfg-report
+.instagram_session/
+.instagram_browser_profile/
