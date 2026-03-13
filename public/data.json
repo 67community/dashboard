@@ -1,0 +1,2515 @@
+{
+  "last_updated": "2026-03-02T11:30:01.288334Z",
+  "token_health": {
+    "price": 0.001376,
+    "price_change_m5": 0.0,
+    "price_change_1h": 0.42,
+    "price_change_6h": -0.59,
+    "price_change_24h": -7.6,
+    "market_cap": 1375623,
+    "liquidity": 214606.89,
+    "volume_m5": 0,
+    "volume_1h": 355.99,
+    "volume_6h": 6186.61,
+    "volume_24h": 79726.97,
+    "volume_ratio_1h": 0.11,
+    "buys_24h": 334,
+    "sells_24h": 325,
+    "buys_1h": 3,
+    "sells_1h": 5,
+    "holders": 16798,
+    "holder_trend": 0,
+    "sentiment": "neutral",
+    "_source": "dexscreener",
+    "cmc_rank": 1783,
+    "total_volume_24h": 927594.12541723,
+    "volume_change_pct": -1.9,
+    "volume_change_usd": -17985.69,
+    "mcap_change_pct": 1.11,
+    "mcap_change_usd": 15155,
+    "liquidity_change_pct": 1.15,
+    "liquidity_change_usd": 2432.59,
+    "biggest_trades": {
+      "biggest_buy_usd": 2557.55,
+      "biggest_buy_tx": "5Sp9Qdn92PgCuaTcQiRCA9CRzWufUdUdMoRC9dcfrSt5evJbVDdZ4sNH9ABv3569Z4mf7cfGthMzP1EqpGhwqzgG",
+      "biggest_buy_wallet": "",
+      "biggest_buy_time": "2026-03-02T00:56:15Z",
+      "biggest_sell_usd": 1366.79,
+      "biggest_sell_tx": "2ouyoBbrW25kZun4LoUPt4WkaVxktpd273iPFJBK7RqPwvE93BqBQcXGQpyK8GhchpJyxZNmwb1fkdiXQCg4YpWx",
+      "biggest_sell_wallet": "",
+      "biggest_sell_time": "2026-03-02T03:57:46Z",
+      "_trades_in_window": 300
+    }
+  },
+  "social_pulse": {
+    "twitter_followers": 1698,
+    "follower_change_24h": 9,
+    "posting_streak_days": 0,
+    "engagement_rate": 4.862,
+    "_source": "nitter_rss+twitter_cdn",
+    "best_tweet_week": {
+      "tweet_id": "2030317259894218981",
+      "tweet_url": "https://x.com/67coinX/status/2030317259894218981",
+      "screen_name": "67coinX",
+      "name": "67coinX",
+      "avatar": "",
+      "text": "Two numbers to unite the world. 67 billion human beings.\n\n@duolingo \n\n#67to67billion https://t.co/NxWQIuCAZG",
+      "likes": 79,
+      "replies": 24,
+      "retweets": 18,
+      "date": "2026-03-07"
+    },
+    "best_tweet_2d": {
+      "tweet_id": "2031118201212354707",
+      "tweet_url": "https://x.com/67coinX/status/2031118201212354707",
+      "screen_name": "67coinX",
+      "name": "67coinX",
+      "avatar": "",
+      "text": "Some 67 moments leave you speechless...\n\n#67to67billion https://t.co/cN55YAIDZu",
+      "likes": 69,
+      "replies": 17,
+      "retweets": 19,
+      "date": "2026-03-09"
+    },
+    "avg_engagement": 83.2,
+    "twitter_followers_updated_at": "2026-03-01T21:30:22.077518Z",
+    "total_engagement_7d": 1082,
+    "follower_history": [
+      {
+        "date": "2026-02-24",
+        "count": 1628
+      },
+      {
+        "date": "2026-02-25",
+        "count": 1628
+      },
+      {
+        "date": "2026-02-26",
+        "count": 1628
+      },
+      {
+        "date": "2026-02-27",
+        "count": 1628
+      },
+      {
+        "date": "2026-02-28",
+        "count": 1659
+      },
+      {
+        "date": "2026-03-01",
+        "count": 1659
+      },
+      {
+        "date": "2026-03-02",
+        "count": 1659
+      },
+      {
+        "date": "2026-03-06",
+        "count": 1670
+      },
+      {
+        "date": "2026-03-07",
+        "count": 1670
+      },
+      {
+        "date": "2026-03-08",
+        "count": 1683
+      },
+      {
+        "date": "2026-03-10",
+        "count": 1689
+      },
+      {
+        "date": "2026-03-11",
+        "count": 1698
+      }
+    ],
+    "follower_growth_7d": 31,
+    "content_type_stats": {
+      "thesis": {
+        "count": 2,
+        "total_eng": 178,
+        "avg_eng": 89.0
+      },
+      "other": {
+        "count": 7,
+        "total_eng": 553,
+        "avg_eng": 79.0
+      },
+      "meme": {
+        "count": 2,
+        "total_eng": 154,
+        "avg_eng": 77.0
+      },
+      "community": {
+        "count": 1,
+        "total_eng": 122,
+        "avg_eng": 122.0
+      },
+      "announcement": {
+        "count": 1,
+        "total_eng": 75,
+        "avg_eng": 75.0
+      }
+    },
+    "best_content_type": "meme",
+    "x_community_members": 10028,
+    "x_community_delta_24h": 23,
+    "x_community_id": "1987949705322508569",
+    "mentions": [],
+    "x_community_last_scrape": 1772996555.780906,
+    "follower_change_3d": 15,
+    "follower_change_7d": 39,
+    "community_tweets": [
+      {
+        "tweet_id": "2031013906425266617",
+        "tweet_url": "https://x.com//status/2031013906425266617",
+        "screen_name": "",
+        "name": "",
+        "avatar": "",
+        "text": "punch was a bigger fumble then 67coin\n\n300 mil runner",
+        "likes": 342,
+        "replies": 38,
+        "retweets": 16,
+        "date": "2026-03-09"
+      },
+      {
+        "tweet_id": "2031082112082915487",
+        "tweet_url": "https://x.com//status/2031082112082915487",
+        "screen_name": "",
+        "name": "",
+        "avatar": "",
+        "text": "@prxnterr I think the Frasier one wins. I don't think any of these new chud coins can beat it. \n\n I get the criticism of it being not just simply -chud as a negative. But the 67 coin that won was 'the official 67 coin' instead of '67coin'. \n\nThe name matters, but the ticker matte",
+        "likes": 13,
+        "replies": 1,
+        "retweets": 2,
+        "date": "2026-03-09"
+      }
+    ],
+    "total_views_recent": 30682,
+    "total_likes_recent": 886,
+    "follower_change_3d_snap": 28
+  },
+  "community": {
+    "discord_members": 1449,
+    "active_7d": 1870,
+    "new_joins_24h": 10,
+    "open_tickets": 3,
+    "unanswered_posts": 7,
+    "telegram_members": 2432,
+    "watchlist_count": 8262,
+    "top_exchanges": [
+      {
+        "exchange": "XT.COM",
+        "pair": "67/USDT",
+        "volume_usd": 493822,
+        "is_dex": false,
+        "logo": "https://coin-images.coingecko.com/markets/images/404/small/xt_logo_%E7%BB%BF.png?1761205934"
+      },
+      {
+        "exchange": "KCEX",
+        "pair": "67/USDT",
+        "volume_usd": 151897,
+        "is_dex": false,
+        "logo": "https://coin-images.coingecko.com/markets/images/11953/small/photo_2025-05-27_02-31-22.jpg?1748284326"
+      },
+      {
+        "exchange": "PumpSwap (DEX)",
+        "pair": "DEX pool",
+        "volume_usd": 116454,
+        "is_dex": true,
+        "logo": "https://coin-images.coingecko.com/markets/images/11879/small/pumpfun.jpg?1740376296"
+      },
+      {
+        "exchange": "LBank",
+        "pair": "67/USDT",
+        "volume_usd": 100838,
+        "is_dex": false,
+        "logo": "https://coin-images.coingecko.com/markets/images/118/small/LBank_200_200.png?1757347528"
+      },
+      {
+        "exchange": "MEXC",
+        "pair": "67/USDT",
+        "volume_usd": 64619,
+        "is_dex": false,
+        "logo": "https://coin-images.coingecko.com/markets/images/409/small/logo_new.png?1743600043"
+      },
+      {
+        "exchange": "Bilaxy",
+        "pair": "67/USDT",
+        "volume_usd": 17877.0,
+        "is_dex": false,
+        "logo": "https://coin-images.coingecko.com/markets/images/193/small/bilaxy.png?1706864324"
+      }
+    ],
+    "sentiment_up_pct": 50.0,
+    "sentiment_down_pct": 50.0,
+    "online_now": 76,
+    "discord_delta_24h": 0,
+    "telegram_delta_24h": 0,
+    "watchlist_delta_24h": 0,
+    "recent_discord_activity": [
+      {
+        "type": "join",
+        "user": "casiopriv870",
+        "user_id": "1226223232445583402",
+        "avatar": "https://cdn.discordapp.com/avatars/1226223232445583402/52f5803c7c4bd976686b7920c42073c6.webp?size=64",
+        "time_ago": "12h ago",
+        "detail": "Introduced in Discord"
+      },
+      {
+        "type": "join",
+        "user": "marziechockymilk",
+        "user_id": "1464960465703665917",
+        "avatar": "https://cdn.discordapp.com/avatars/1464960465703665917/8854b0674e382b8ded4eb2369db33973.webp?size=64",
+        "time_ago": "12h ago",
+        "detail": "Introduced in Discord"
+      },
+      {
+        "type": "join",
+        "user": "w3b8",
+        "user_id": "908761821798871100",
+        "avatar": "https://cdn.discordapp.com/avatars/908761821798871100/17ad82ac229b13afee48706e7fac2c34.webp?size=64",
+        "time_ago": "15h ago",
+        "detail": "Introduced in Discord"
+      },
+      {
+        "type": "join",
+        "user": "dyllpyckle",
+        "user_id": "943205628367761408",
+        "avatar": "https://cdn.discordapp.com/avatars/943205628367761408/5161093a6e9af36e5e3849a13ab291bd.webp?size=64",
+        "time_ago": "1d ago",
+        "detail": "Introduced in Discord"
+      },
+      {
+        "type": "join",
+        "user": "dimi_serb21",
+        "user_id": "786965721614647326",
+        "avatar": "https://cdn.discordapp.com/avatars/786965721614647326/3f8bb8124b5974e7f4427d7603f20226.webp?size=64",
+        "time_ago": "1d ago",
+        "detail": "Introduced in Discord"
+      },
+      {
+        "type": "join",
+        "user": "jesuslovesyou05258",
+        "user_id": "1344145084328972348",
+        "avatar": "https://cdn.discordapp.com/avatars/1344145084328972348/8569adcbd36c70a7578c017bf5604ea5.webp?size=64",
+        "time_ago": "4d ago",
+        "detail": "Introduced in Discord"
+      },
+      {
+        "type": "join",
+        "user": "p4rty_p0ison",
+        "user_id": "954906892168233040",
+        "avatar": "https://cdn.discordapp.com/avatars/954906892168233040/1893824d878a661922d1b21ca7961b32.webp?size=64",
+        "time_ago": "4d ago",
+        "detail": "Introduced in Discord"
+      },
+      {
+        "type": "join",
+        "user": "ggauvin",
+        "user_id": "965681608604647514",
+        "avatar": "https://cdn.discordapp.com/avatars/965681608604647514/6c28a0cb30c603a25b288844e5c53e2e.webp?size=64",
+        "time_ago": "5d ago",
+        "detail": "Introduced in Discord"
+      },
+      {
+        "type": "join",
+        "user": "abguy0254",
+        "user_id": "1387846802266656858",
+        "avatar": "https://cdn.discordapp.com/avatars/1387846802266656858/c1c8b7358ca9fd42b54a446f5d1e9498.webp?size=64",
+        "time_ago": "5d ago",
+        "detail": "Introduced in Discord"
+      },
+      {
+        "type": "join",
+        "user": "pingbit",
+        "user_id": "505736478341726221",
+        "avatar": "https://cdn.discordapp.com/avatars/505736478341726221/c3f1121e6490f2524d1b5eb7cfb80799.webp?size=64",
+        "time_ago": "7d ago",
+        "detail": "Introduced in Discord"
+      },
+      {
+        "type": "join",
+        "user": "_335laranja_",
+        "user_id": "829000178631442442",
+        "avatar": "https://cdn.discordapp.com/avatars/829000178631442442/1f0e0ab306ed466ff75f0ca3fa14a64d.webp?size=64",
+        "time_ago": "12d ago",
+        "detail": "Introduced in Discord"
+      },
+      {
+        "type": "join",
+        "user": "hypex90",
+        "user_id": "800399454636212224",
+        "avatar": "https://cdn.discordapp.com/avatars/800399454636212224/7870225de3304313c6e17ed6abf2b4e8.webp?size=64",
+        "time_ago": "17d ago",
+        "detail": "Introduced in Discord"
+      }
+    ],
+    "telegram_mod_events": [],
+    "active_users_today": 16,
+    "top_channels": [
+      {
+        "channel_id": "1458846146415034460",
+        "name": "\ud83d\udcac-chat",
+        "msgs_1h": 10
+      },
+      {
+        "channel_id": "1458846213087432868",
+        "name": "\ud83e\udd23-memes",
+        "msgs_1h": 1
+      }
+    ],
+    "top_channels_updated_at": 1772411491.747939,
+    "x_community_members": 9900,
+    "x_community_delta_24h": 100
+  },
+  "content_pipeline": {
+    "scheduled_posts": [
+      {
+        "title": "Weekly Alpha Thread",
+        "type": "thesis",
+        "scheduled": "2026-02-24T18:00:00Z"
+      },
+      {
+        "title": "67 Meme Drop #42",
+        "type": "meme",
+        "scheduled": "2026-02-25T12:00:00Z"
+      },
+      {
+        "title": "Dev Update: Agent v2",
+        "type": "culture_drop",
+        "scheduled": "2026-02-25T20:00:00Z"
+      },
+      {
+        "title": "Community Spotlight",
+        "type": "culture_drop",
+        "scheduled": "2026-02-26T15:00:00Z"
+      }
+    ],
+    "last_post_timestamp": "2026-02-24T11:16:35.996258Z",
+    "content_breakdown": {
+      "meme": 34,
+      "thesis": 22,
+      "culture_drop": 28,
+      "announcement": 16
+    }
+  },
+  "agents": [
+    {
+      "name": "X Raid Bot",
+      "status": "green",
+      "last_run": "2026-03-03T00:25:52.119365Z",
+      "errors_24h": 0,
+      "schedule": "Auto (<10min tweets)"
+    },
+    {
+      "name": "Data Updater",
+      "status": "green",
+      "last_run": "2026-03-03T00:25:52.119365Z",
+      "errors_24h": 0,
+      "schedule": "Every 30 min"
+    },
+    {
+      "name": "Presence Bot",
+      "status": "green",
+      "last_run": "2026-03-03T00:25:52.119365Z",
+      "errors_24h": 0,
+      "schedule": "Every 5 min"
+    },
+    {
+      "name": "Wallet Tracker",
+      "status": "green",
+      "last_run": "2026-03-03T00:25:52.119365Z",
+      "errors_24h": 0,
+      "schedule": "On demand"
+    },
+    {
+      "name": "TikTok Scraper",
+      "status": "red",
+      "last_run": "2026-02-28T23:27:42.342193Z",
+      "errors_24h": 0,
+      "schedule": "Every 30 min"
+    }
+  ],
+  "milestones": [
+    {
+      "label": "10K Holders",
+      "current": 16798,
+      "target": 10000
+    },
+    {
+      "label": "5K Twitter Followers",
+      "current": 1659,
+      "target": 5000
+    },
+    {
+      "label": "5K Discord Members",
+      "current": 1449,
+      "target": 5000
+    },
+    {
+      "label": "$6.7M Market Cap",
+      "current": 1375623,
+      "target": 6700000
+    }
+  ],
+  "recent_wins": [
+    {
+      "label": "Listed on 14 exchanges",
+      "date": "2026-02-15"
+    },
+    {
+      "label": "Listed on CoinMarketCap",
+      "date": "2026-02-12"
+    },
+    {
+      "label": "Listed on CoinGecko",
+      "date": "2026-02-10"
+    },
+    {
+      "label": "Mission Control v2 launched",
+      "date": "2026-02-25"
+    }
+  ],
+  "next_target": "10K Holders by March 15",
+  "alerts": [
+    {
+      "type": "success",
+      "message": "\ud83d\udd25 Near ALL-TIME HIGH! Only 0.0% away \u2014 $0.001376",
+      "timestamp": "2026-03-02T11:32:20.014484Z"
+    }
+  ],
+  "coingecko": {
+    "coingecko_rank": 2669,
+    "ath": 0.04363399,
+    "ath_date": "2025-11-19",
+    "ath_change_pct": -96.96,
+    "atl": 7.72e-05,
+    "price_change_7d": -54.89,
+    "price_change_1h": 2.51,
+    "watchlist_count": 8262,
+    "telegram_members": 2257,
+    "sentiment_up_pct": 50.0,
+    "sentiment_down_pct": 50.0,
+    "top_exchanges": [
+      {
+        "exchange": "XT.COM",
+        "pair": "67/USDT",
+        "volume_usd": 493822,
+        "is_dex": false,
+        "logo": "https://coin-images.coingecko.com/markets/images/404/small/xt_logo_%E7%BB%BF.png?1761205934"
+      },
+      {
+        "exchange": "KCEX",
+        "pair": "67/USDT",
+        "volume_usd": 151897,
+        "is_dex": false,
+        "logo": "https://coin-images.coingecko.com/markets/images/11953/small/photo_2025-05-27_02-31-22.jpg?1748284326"
+      },
+      {
+        "exchange": "PumpSwap (DEX)",
+        "pair": "DEX pool",
+        "volume_usd": 116454,
+        "is_dex": true,
+        "logo": "https://coin-images.coingecko.com/markets/images/11879/small/pumpfun.jpg?1740376296"
+      },
+      {
+        "exchange": "LBank",
+        "pair": "67/USDT",
+        "volume_usd": 100838,
+        "is_dex": false,
+        "logo": "https://coin-images.coingecko.com/markets/images/118/small/LBank_200_200.png?1757347528"
+      },
+      {
+        "exchange": "MEXC",
+        "pair": "67/USDT",
+        "volume_usd": 64619,
+        "is_dex": false,
+        "logo": "https://coin-images.coingecko.com/markets/images/409/small/logo_new.png?1743600043"
+      },
+      {
+        "exchange": "Bilaxy",
+        "pair": "67/USDT",
+        "volume_usd": 17877.0,
+        "is_dex": false,
+        "logo": "https://coin-images.coingecko.com/markets/images/193/small/bilaxy.png?1706864324"
+      }
+    ],
+    "_source": "coingecko"
+  },
+  "coinmarketcap": {
+    "cmc_rank": 1783,
+    "cmc_id": "38918",
+    "price": 0.0013748696627709088,
+    "volume_24h": 927594.12541723,
+    "market_cap": 1374429.7044788222,
+    "change_1h": 0.72620563,
+    "change_24h": -8.60092439,
+    "change_7d": -36.07748096,
+    "change_30d": -65.45811279,
+    "market_pairs": 45,
+    "_source": "coinmarketcap"
+  },
+  "_snapshot_24h": {
+    "timestamp": "2026-03-13T16:30:28.633778+00:00",
+    "twitter_followers": 1698,
+    "x_community_members": 10028,
+    "discord_members": 1449,
+    "telegram_members": 2432,
+    "holders": 16586
+  },
+  "team_presence": {
+    "767811814557089802": "idle",
+    "965681608604647514": "dnd",
+    "1444130836415905993": "offline",
+    "1440075589557158100": "offline",
+    "682831521396031498": "offline",
+    "788495124061487154": "offline",
+    "201710326347988993": "offline"
+  },
+  "presence_updated": "2026-03-02T11:25:07.588806Z",
+  "tiktok_spotlight": [
+    {
+      "id": "7604202651743571214",
+      "video_url": "https://www.tiktok.com/@67coin/video/7604202651743571214",
+      "thumbnail_url": "/tiktok-thumbs/7604202651743571214.jpg",
+      "plays": 10600,
+      "likes": 0,
+      "comments": 0,
+      "description": ""
+    },
+    {
+      "id": "7612781908325354765",
+      "video_url": "https://www.tiktok.com/@67coin/video/7612781908325354765",
+      "thumbnail_url": "/tiktok-thumbs/7612781908325354765.jpg",
+      "plays": 24,
+      "likes": 0,
+      "comments": 0,
+      "description": ""
+    },
+    {
+      "id": "7612457142259420429",
+      "video_url": "https://www.tiktok.com/@67coin/video/7612457142259420429",
+      "thumbnail_url": "/tiktok-thumbs/7612457142259420429.jpg",
+      "plays": 25,
+      "likes": 0,
+      "comments": 0,
+      "description": ""
+    },
+    {
+      "id": "7612078619019513102",
+      "video_url": "https://www.tiktok.com/@67coin/video/7612078619019513102",
+      "thumbnail_url": "/tiktok-thumbs/7612078619019513102.jpg",
+      "plays": 22,
+      "likes": 0,
+      "comments": 0,
+      "description": ""
+    },
+    {
+      "id": "7611723330290257166",
+      "video_url": "https://www.tiktok.com/@67coin/video/7611723330290257166",
+      "thumbnail_url": "/tiktok-thumbs/7611723330290257166.jpg",
+      "plays": 28,
+      "likes": 0,
+      "comments": 0,
+      "description": ""
+    },
+    {
+      "id": "7611332134107647246",
+      "video_url": "https://www.tiktok.com/@67coin/video/7611332134107647246",
+      "thumbnail_url": "/tiktok-thumbs/7611332134107647246.jpg",
+      "plays": 2098,
+      "likes": 0,
+      "comments": 0,
+      "description": ""
+    },
+    {
+      "id": "7610562713697209614",
+      "video_url": "https://www.tiktok.com/@67coin/video/7610562713697209614",
+      "thumbnail_url": "/tiktok-thumbs/7610562713697209614.jpg",
+      "plays": 2106,
+      "likes": 0,
+      "comments": 0,
+      "description": ""
+    },
+    {
+      "id": "7610184265048886541",
+      "video_url": "https://www.tiktok.com/@67coin/video/7610184265048886541",
+      "thumbnail_url": "/tiktok-thumbs/7610184265048886541.jpg",
+      "plays": 2094,
+      "likes": 0,
+      "comments": 0,
+      "description": ""
+    },
+    {
+      "id": "7609859500383751438",
+      "video_url": "https://www.tiktok.com/@67coin/video/7609859500383751438",
+      "thumbnail_url": "/tiktok-thumbs/7609859500383751438.jpg",
+      "plays": 5236,
+      "likes": 0,
+      "comments": 0,
+      "description": ""
+    },
+    {
+      "id": "7609480473043012878",
+      "video_url": "https://www.tiktok.com/@67coin/video/7609480473043012878",
+      "thumbnail_url": "/tiktok-thumbs/7609480473043012878.jpg",
+      "plays": 3138,
+      "likes": 0,
+      "comments": 0,
+      "description": ""
+    },
+    {
+      "id": "7609101852583496974",
+      "video_url": "https://www.tiktok.com/@67coin/video/7609101852583496974",
+      "thumbnail_url": "/tiktok-thumbs/7609101852583496974.jpg",
+      "plays": 5296,
+      "likes": 0,
+      "comments": 0,
+      "description": ""
+    },
+    {
+      "id": "7608622833979247886",
+      "video_url": "https://www.tiktok.com/@67coin/video/7608622833979247886",
+      "thumbnail_url": "/tiktok-thumbs/7608622833979247886.jpg",
+      "plays": 3937,
+      "likes": 0,
+      "comments": 0,
+      "description": ""
+    }
+  ],
+  "instagram_spotlight": [],
+  "raid_feed": [
+    {
+      "message_id": 6257,
+      "text": "67",
+      "tweet_url": "",
+      "photo": "",
+      "date": "2026-03-02T10:55:44Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6249,
+      "text": "Raid\n\nhttps://x.com/harrodfrances/status/2028418177248514449?s=46",
+      "tweet_url": "https://x.com/i/web/status/2028418177248514449",
+      "photo": "",
+      "date": "2026-03-02T10:32:47Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6248,
+      "text": "Raid\n\nhttps://x.com/dedenovitaj/status/2028417814999007307?s=46",
+      "tweet_url": "https://x.com/i/web/status/2028417814999007307",
+      "photo": "",
+      "date": "2026-03-02T10:31:17Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6245,
+      "text": "Raid\n\nhttps://x.com/harrodfrances/status/2028413888593547400?s=46",
+      "tweet_url": "https://x.com/i/web/status/2028413888593547400",
+      "photo": "",
+      "date": "2026-03-02T10:15:42Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6243,
+      "text": "Raid \n\nhttps://x.com/i/status/2028411131945984308",
+      "tweet_url": "https://x.com/i/web/status/2028411131945984308",
+      "photo": "",
+      "date": "2026-03-02T10:05:04Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6240,
+      "text": "",
+      "tweet_url": "",
+      "photo": "https://api.telegram.org/file/bot***REDACTED***/photos/file_4.jpg",
+      "date": "2026-03-02T09:55:33Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6237,
+      "text": "Raid\n\nhttps://x.com/beraatkaratepe/status/2028406609689415781?s=46",
+      "tweet_url": "https://x.com/i/web/status/2028406609689415781",
+      "photo": "",
+      "date": "2026-03-02T09:46:48Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6212,
+      "text": "Raid\n\nhttps://x.com/beraatkaratepe/status/2028376828902019450?s=46",
+      "tweet_url": "https://x.com/i/web/status/2028376828902019450",
+      "photo": "",
+      "date": "2026-03-02T07:48:27Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6211,
+      "text": "Raid\n\nhttps://x.com/dedenovitaj/status/2028370901545214405?s=46",
+      "tweet_url": "https://x.com/i/web/status/2028370901545214405",
+      "photo": "",
+      "date": "2026-03-02T07:24:52Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6210,
+      "text": "Raid\n\nhttps://x.com/beraatkaratepe/status/2028370675505795298?s=46",
+      "tweet_url": "https://x.com/i/web/status/2028370675505795298",
+      "photo": "",
+      "date": "2026-03-02T07:23:57Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6209,
+      "text": "Raid\n\nhttps://x.com/dedenovitaj/status/2028370426661867982?s=46",
+      "tweet_url": "https://x.com/i/web/status/2028370426661867982",
+      "photo": "",
+      "date": "2026-03-02T07:22:59Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6208,
+      "text": "Raid\n\nhttps://x.com/harrodfrances/status/2028369871478681710?s=46",
+      "tweet_url": "https://x.com/i/web/status/2028369871478681710",
+      "photo": "",
+      "date": "2026-03-02T07:20:49Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6207,
+      "text": "Raid\n\nhttps://x.com/beraatkaratepe/status/2028369566489887060?s=46",
+      "tweet_url": "https://x.com/i/web/status/2028369566489887060",
+      "photo": "",
+      "date": "2026-03-02T07:19:37Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6205,
+      "text": "",
+      "tweet_url": "",
+      "photo": "https://api.telegram.org/file/bot***REDACTED***/photos/file_3.jpg",
+      "date": "2026-03-02T07:18:13Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6204,
+      "text": "Raid\n\nhttps://x.com/harrodfrances/status/2028369009184281079?s=46",
+      "tweet_url": "https://x.com/i/web/status/2028369009184281079",
+      "photo": "",
+      "date": "2026-03-02T07:17:23Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6202,
+      "text": "Raid\n\nhttps://x.com/dedenovitaj/status/2028367101187203522?s=46",
+      "tweet_url": "https://x.com/i/web/status/2028367101187203522",
+      "photo": "",
+      "date": "2026-03-02T07:09:45Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6201,
+      "text": "Raid\n\nhttps://x.com/harrodfrances/status/2028366907141697952?s=46",
+      "tweet_url": "https://x.com/i/web/status/2028366907141697952",
+      "photo": "",
+      "date": "2026-03-02T07:09:00Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6197,
+      "text": "Raid\n\nhttps://coinmarketcap.com/community/share/post/374187807",
+      "tweet_url": "",
+      "photo": "",
+      "date": "2026-03-02T06:19:19Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6194,
+      "text": "Good morning",
+      "tweet_url": "",
+      "photo": "",
+      "date": "2026-03-02T06:10:52Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6188,
+      "text": "GM",
+      "tweet_url": "",
+      "photo": "",
+      "date": "2026-03-02T05:32:08Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6187,
+      "text": "Raid \n\nhttps://x.com/i/status/2028342398762291373",
+      "tweet_url": "https://x.com/i/web/status/2028342398762291373",
+      "photo": "",
+      "date": "2026-03-02T05:32:06Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6186,
+      "text": "Raid \n\nhttps://x.com/i/status/2028341436572172326",
+      "tweet_url": "https://x.com/i/web/status/2028341436572172326",
+      "photo": "",
+      "date": "2026-03-02T05:32:02Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6185,
+      "text": "Raid \n\nhttps://x.com/i/status/2028339805772300332",
+      "tweet_url": "https://x.com/i/web/status/2028339805772300332",
+      "photo": "",
+      "date": "2026-03-02T05:23:49Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6184,
+      "text": "Raid \n\nhttps://x.com/i/status/2028340027550212351",
+      "tweet_url": "https://x.com/i/web/status/2028340027550212351",
+      "photo": "",
+      "date": "2026-03-02T05:23:46Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6183,
+      "text": "Raid \n\nhttps://x.com/i/status/2028340313694044521",
+      "tweet_url": "https://x.com/i/web/status/2028340313694044521",
+      "photo": "",
+      "date": "2026-03-02T05:23:42Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6181,
+      "text": "Raid \n\nhttps://x.com/i/status/2028338678347530425",
+      "tweet_url": "https://x.com/i/web/status/2028338678347530425",
+      "photo": "",
+      "date": "2026-03-02T05:18:22Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6180,
+      "text": "Raid \n\nhttps://x.com/i/status/2028339037082161642",
+      "tweet_url": "https://x.com/i/web/status/2028339037082161642",
+      "photo": "",
+      "date": "2026-03-02T05:18:19Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6162,
+      "text": "https://x.com/i/status/2028137116018831717",
+      "tweet_url": "https://x.com/i/web/status/2028137116018831717",
+      "photo": "",
+      "date": "2026-03-02T03:37:05Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6145,
+      "text": "https://x.com/i/status/2028168133798961395",
+      "tweet_url": "https://x.com/i/web/status/2028168133798961395",
+      "photo": "",
+      "date": "2026-03-02T02:09:34Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6135,
+      "text": "https://x.com/no0blette/status/2028280776702251181?s=46",
+      "tweet_url": "https://x.com/i/web/status/2028280776702251181",
+      "photo": "",
+      "date": "2026-03-02T01:28:55Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6110,
+      "text": "https://x.com/aytuggkuscuu/status/2028229797839811042?s=46",
+      "tweet_url": "https://x.com/i/web/status/2028229797839811042",
+      "photo": "",
+      "date": "2026-03-01T22:04:51Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6109,
+      "text": "@oscarbrencyrpto @llVillainll @lenanacountter",
+      "tweet_url": "",
+      "photo": "",
+      "date": "2026-03-01T21:53:26Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6108,
+      "text": "https://x.com/sushiswap/status/2028226662446620837?s=46",
+      "tweet_url": "https://x.com/i/web/status/2028226662446620837",
+      "photo": "",
+      "date": "2026-03-01T21:52:50Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6107,
+      "text": "Raid \n\nhttps://x.com/i/status/2028226844152004609",
+      "tweet_url": "https://x.com/i/web/status/2028226844152004609",
+      "photo": "",
+      "date": "2026-03-01T21:52:46Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6106,
+      "text": "Raid \n\nhttps://x.com/i/status/2028226629550419977",
+      "tweet_url": "https://x.com/i/web/status/2028226629550419977",
+      "photo": "",
+      "date": "2026-03-01T21:52:42Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6105,
+      "text": "Raid \n\nhttps://x.com/i/status/2028225840484425929",
+      "tweet_url": "https://x.com/i/web/status/2028225840484425929",
+      "photo": "",
+      "date": "2026-03-01T21:50:24Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6104,
+      "text": "Raid \n\nhttps://x.com/i/status/2028226228004569296",
+      "tweet_url": "https://x.com/i/web/status/2028226228004569296",
+      "photo": "",
+      "date": "2026-03-01T21:50:17Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6100,
+      "text": "Raid\n\nhttps://x.com/davidmozsar/status/2028215620589047826?s=46",
+      "tweet_url": "https://x.com/i/web/status/2028215620589047826",
+      "photo": "",
+      "date": "2026-03-01T21:07:48Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6099,
+      "text": "Raid\n\nhttps://x.com/dedenovitaj/status/2028215488426205402?s=46",
+      "tweet_url": "https://x.com/i/web/status/2028215488426205402",
+      "photo": "",
+      "date": "2026-03-01T21:07:18Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6098,
+      "text": "Raid\n\nhttps://x.com/harrodfrances/status/2028215318892442004?s=46",
+      "tweet_url": "https://x.com/i/web/status/2028215318892442004",
+      "photo": "",
+      "date": "2026-03-01T21:06:35Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6097,
+      "text": "Raid\n\nhttps://x.com/harrodfrances/status/2028214984015044778?s=46",
+      "tweet_url": "https://x.com/i/web/status/2028214984015044778",
+      "photo": "",
+      "date": "2026-03-01T21:05:21Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6096,
+      "text": "Raid\n\nhttps://x.com/harrodfrances/status/2028214204117746079?s=46",
+      "tweet_url": "https://x.com/i/web/status/2028214204117746079",
+      "photo": "",
+      "date": "2026-03-01T21:02:11Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6094,
+      "text": "https://x.com/aytuggkuscuu/status/2028213988878696853?s=46",
+      "tweet_url": "https://x.com/i/web/status/2028213988878696853",
+      "photo": "",
+      "date": "2026-03-01T21:01:28Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6093,
+      "text": "Raid\n\nhttps://x.com/jasonredsheep/status/2028213773350171099?s=46",
+      "tweet_url": "https://x.com/i/web/status/2028213773350171099",
+      "photo": "",
+      "date": "2026-03-01T21:00:35Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6084,
+      "text": "Raid\n\nhttps://x.com/dedenovitaj/status/2028206172566618603?s=46",
+      "tweet_url": "https://x.com/i/web/status/2028206172566618603",
+      "photo": "",
+      "date": "2026-03-01T20:30:15Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6083,
+      "text": "Raid\n\nhttps://x.com/harrodfrances/status/2028206016987295842?s=46",
+      "tweet_url": "https://x.com/i/web/status/2028206016987295842",
+      "photo": "",
+      "date": "2026-03-01T20:29:45Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6058,
+      "text": "Raid\n\nhttps://x.com/harrodfrances/status/2028183707845083540?s=46",
+      "tweet_url": "https://x.com/i/web/status/2028183707845083540",
+      "photo": "",
+      "date": "2026-03-01T19:01:02Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6046,
+      "text": "Raid\n\nhttps://x.com/davidmozsar/status/2028173599291417009?s=46",
+      "tweet_url": "https://x.com/i/web/status/2028173599291417009",
+      "photo": "",
+      "date": "2026-03-01T18:20:51Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6045,
+      "text": "Raid\n\nhttps://x.com/harrodfrances/status/2028173392604537184?s=46",
+      "tweet_url": "https://x.com/i/web/status/2028173392604537184",
+      "photo": "",
+      "date": "2026-03-01T18:20:00Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6035,
+      "text": "Raid \n\nhttps://x.com/i/status/2028163964471783699",
+      "tweet_url": "https://x.com/i/web/status/2028163964471783699",
+      "photo": "",
+      "date": "2026-03-01T17:51:43Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6034,
+      "text": "Raid \n\nhttps://x.com/i/status/2028165878370443588",
+      "tweet_url": "https://x.com/i/web/status/2028165878370443588",
+      "photo": "",
+      "date": "2026-03-01T17:51:24Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6033,
+      "text": "Raid \n\nhttps://x.com/i/status/2028163102840164717",
+      "tweet_url": "https://x.com/i/web/status/2028163102840164717",
+      "photo": "",
+      "date": "2026-03-01T17:51:21Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6032,
+      "text": "Raid \n\nhttps://x.com/i/status/2028164830616494221",
+      "tweet_url": "https://x.com/i/web/status/2028164830616494221",
+      "photo": "",
+      "date": "2026-03-01T17:51:16Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6031,
+      "text": "Raid \n\nhttps://x.com/i/status/2028165146518982736",
+      "tweet_url": "https://x.com/i/web/status/2028165146518982736",
+      "photo": "",
+      "date": "2026-03-01T17:51:13Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6027,
+      "text": "Raid\n\nhttps://x.com/beraatkaratepe/status/2028163126860882097?s=46",
+      "tweet_url": "https://x.com/i/web/status/2028163126860882097",
+      "photo": "",
+      "date": "2026-03-01T17:39:15Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6025,
+      "text": "Raid\n\nhttps://x.com/davidmozsar/status/2028162963203379333?s=46",
+      "tweet_url": "https://x.com/i/web/status/2028162963203379333",
+      "photo": "",
+      "date": "2026-03-01T17:38:33Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6024,
+      "text": "Raid\n\nhttps://x.com/harrodfrances/status/2028162742419325037?s=46",
+      "tweet_url": "https://x.com/i/web/status/2028162742419325037",
+      "photo": "",
+      "date": "2026-03-01T17:37:42Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6023,
+      "text": "Raid\n\nhttps://x.com/dedenovitaj/status/2028162476194369573?s=46",
+      "tweet_url": "https://x.com/i/web/status/2028162476194369573",
+      "photo": "",
+      "date": "2026-03-01T17:36:38Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6022,
+      "text": "https://x.com/67coinx/status/2028162231524073982?s=46",
+      "tweet_url": "https://x.com/i/web/status/2028162231524073982",
+      "photo": "",
+      "date": "2026-03-01T17:35:54Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6021,
+      "text": "Raid \n\nhttps://x.com/i/status/2028162173243933041",
+      "tweet_url": "https://x.com/i/web/status/2028162173243933041",
+      "photo": "",
+      "date": "2026-03-01T17:35:51Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6020,
+      "text": "Raid \n\nhttps://x.com/i/status/2028161025195827375",
+      "tweet_url": "https://x.com/i/web/status/2028161025195827375",
+      "photo": "",
+      "date": "2026-03-01T17:35:45Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6019,
+      "text": "Raid \n\nhttps://x.com/i/status/2028161657193509094",
+      "tweet_url": "https://x.com/i/web/status/2028161657193509094",
+      "photo": "",
+      "date": "2026-03-01T17:35:41Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6015,
+      "text": "Raid\n\nhttps://x.com/dedenovitaj/status/2028158011890377104?s=46",
+      "tweet_url": "https://x.com/i/web/status/2028158011890377104",
+      "photo": "",
+      "date": "2026-03-01T17:18:55Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6004,
+      "text": "Raid\n\nhttps://x.com/beraatkaratepe/status/2028144647177228632?s=46",
+      "tweet_url": "https://x.com/i/web/status/2028144647177228632",
+      "photo": "",
+      "date": "2026-03-01T16:25:49Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6003,
+      "text": "Raid\n\nhttps://x.com/davidmozsar/status/2028144521960202438?s=46",
+      "tweet_url": "https://x.com/i/web/status/2028144521960202438",
+      "photo": "",
+      "date": "2026-03-01T16:25:17Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6002,
+      "text": "Raid\n\nhttps://x.com/dedenovitaj/status/2028144365898543536?s=46",
+      "tweet_url": "https://x.com/i/web/status/2028144365898543536",
+      "photo": "",
+      "date": "2026-03-01T16:24:39Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 6001,
+      "text": "Raid\n\nhttps://x.com/harrodfrances/status/2028144228472066550?s=46",
+      "tweet_url": "https://x.com/i/web/status/2028144228472066550",
+      "photo": "",
+      "date": "2026-03-01T16:24:07Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 5992,
+      "text": "https://x.com/christi35048051/status/2028138466744184979?s=46",
+      "tweet_url": "https://x.com/i/web/status/2028138466744184979",
+      "photo": "",
+      "date": "2026-03-01T16:01:41Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 5990,
+      "text": "Raid\n\nhttps://x.com/beraatkaratepe/status/2028135150979088492?s=46",
+      "tweet_url": "https://x.com/i/web/status/2028135150979088492",
+      "photo": "",
+      "date": "2026-03-01T15:48:05Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 5989,
+      "text": "Raid \n\nhttps://x.com/i/status/2028134177065886104",
+      "tweet_url": "https://x.com/i/web/status/2028134177065886104",
+      "photo": "",
+      "date": "2026-03-01T15:48:02Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 5988,
+      "text": "Raid \n\nhttps://x.com/i/status/2028134876637970502",
+      "tweet_url": "https://x.com/i/web/status/2028134876637970502",
+      "photo": "",
+      "date": "2026-03-01T15:47:53Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 5987,
+      "text": "Raid \n\nhttps://x.com/i/status/2028133947889029609",
+      "tweet_url": "https://x.com/i/web/status/2028133947889029609",
+      "photo": "",
+      "date": "2026-03-01T15:47:50Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 5986,
+      "text": "Raid \n\nhttps://x.com/i/status/2028134506792710392",
+      "tweet_url": "https://x.com/i/web/status/2028134506792710392",
+      "photo": "",
+      "date": "2026-03-01T15:47:47Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 5985,
+      "text": "Raid \n\nhttps://x.com/i/status/2028132204820189275",
+      "tweet_url": "https://x.com/i/web/status/2028132204820189275",
+      "photo": "",
+      "date": "2026-03-01T15:47:44Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 5979,
+      "text": "https://x.com/no0blette/status/2028124022228037962?s=46\n\n@llVillainll @veracrosss @lenanacountter",
+      "tweet_url": "https://x.com/i/web/status/2028124022228037962",
+      "photo": "",
+      "date": "2026-03-01T15:31:04Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 5964,
+      "text": "Raid \n\nhttps://x.com/i/status/2028118956876112181",
+      "tweet_url": "https://x.com/i/web/status/2028118956876112181",
+      "photo": "",
+      "date": "2026-03-01T14:43:57Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 5960,
+      "text": "Raid\n\nhttps://x.com/davidmozsar/status/2028113818597912886?s=46",
+      "tweet_url": "https://x.com/i/web/status/2028113818597912886",
+      "photo": "",
+      "date": "2026-03-01T14:23:21Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 5958,
+      "text": "Raid\n\nhttps://x.com/belleselbe/status/2028111497948201084?s=46",
+      "tweet_url": "https://x.com/i/web/status/2028111497948201084",
+      "photo": "",
+      "date": "2026-03-01T14:14:28Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 5957,
+      "text": "Raid\n\nhttps://x.com/belleselbe/status/2028097469708415239?s=46",
+      "tweet_url": "https://x.com/i/web/status/2028097469708415239",
+      "photo": "",
+      "date": "2026-03-01T14:14:27Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 5950,
+      "text": "Raid \n\nhttps://x.com/i/status/2028094933765063079",
+      "tweet_url": "https://x.com/i/web/status/2028094933765063079",
+      "photo": "",
+      "date": "2026-03-01T13:15:13Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 5949,
+      "text": "Raid \n\nhttps://x.com/i/status/2028095305548247152",
+      "tweet_url": "https://x.com/i/web/status/2028095305548247152",
+      "photo": "",
+      "date": "2026-03-01T13:15:10Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 5948,
+      "text": "Raid \n\nhttps://x.com/i/status/2028096523133763807",
+      "tweet_url": "https://x.com/i/web/status/2028096523133763807",
+      "photo": "",
+      "date": "2026-03-01T13:14:57Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 5947,
+      "text": "Raid \n\nhttps://x.com/i/status/2028094325238739294",
+      "tweet_url": "https://x.com/i/web/status/2028094325238739294",
+      "photo": "",
+      "date": "2026-03-01T13:14:54Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 5946,
+      "text": "Raid \n\nhttps://x.com/i/status/2028096077702762570",
+      "tweet_url": "https://x.com/i/web/status/2028096077702762570",
+      "photo": "",
+      "date": "2026-03-01T13:14:51Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 5945,
+      "text": "Raid \n\nhttps://x.com/i/status/2028094597482598665",
+      "tweet_url": "https://x.com/i/web/status/2028094597482598665",
+      "photo": "",
+      "date": "2026-03-01T13:14:48Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 5943,
+      "text": "Raid\n\nhttps://x.com/beraatkaratepe/status/2028094048825672017?s=46",
+      "tweet_url": "https://x.com/i/web/status/2028094048825672017",
+      "photo": "",
+      "date": "2026-03-01T13:04:46Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 5942,
+      "text": "Raid\n\nhttps://x.com/davidmozsar/status/2028093830008811852?s=46",
+      "tweet_url": "https://x.com/i/web/status/2028093830008811852",
+      "photo": "",
+      "date": "2026-03-01T13:03:54Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 5941,
+      "text": "Raid\n\nhttps://x.com/dedenovitaj/status/2028093683950600472?s=46",
+      "tweet_url": "https://x.com/i/web/status/2028093683950600472",
+      "photo": "",
+      "date": "2026-03-01T13:03:17Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 5940,
+      "text": "Raid\n\nhttps://x.com/harrodfrances/status/2028093504505692278?s=46",
+      "tweet_url": "https://x.com/i/web/status/2028093504505692278",
+      "photo": "",
+      "date": "2026-03-01T13:02:36Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 5938,
+      "text": "https://x.com/67coinX/status/2028091411988394174",
+      "tweet_url": "https://x.com/i/web/status/2028091411988394174",
+      "photo": "",
+      "date": "2026-03-01T12:59:42Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 5935,
+      "text": "Raid\n\nhttps://x.com/harrodfrances/status/2028091158111420765?s=46",
+      "tweet_url": "https://x.com/i/web/status/2028091158111420765",
+      "photo": "",
+      "date": "2026-03-01T12:53:16Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 5929,
+      "text": "",
+      "tweet_url": "",
+      "photo": "https://api.telegram.org/file/bot***REDACTED***/photos/file_2.jpg",
+      "date": "2026-03-01T12:24:38Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 5928,
+      "text": "",
+      "tweet_url": "",
+      "photo": "https://api.telegram.org/file/bot***REDACTED***/photos/file_1.jpg",
+      "date": "2026-03-01T12:24:34Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 5927,
+      "text": "Raid\n\nhttps://x.com/beraatkaratepe/status/2028083746574946518?s=46",
+      "tweet_url": "https://x.com/i/web/status/2028083746574946518",
+      "photo": "",
+      "date": "2026-03-01T12:23:49Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 5912,
+      "text": "Raid\n\nhttps://x.com/dedenovitaj/status/2028066003540668455?s=46",
+      "tweet_url": "https://x.com/i/web/status/2028066003540668455",
+      "photo": "",
+      "date": "2026-03-01T11:13:17Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 5911,
+      "text": "Raid\n\nhttps://x.com/harrodfrances/status/2028065829237993807?s=46",
+      "tweet_url": "https://x.com/i/web/status/2028065829237993807",
+      "photo": "",
+      "date": "2026-03-01T11:12:37Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 5910,
+      "text": "Raid \n\nhttps://x.com/i/status/2028064226036601193",
+      "tweet_url": "https://x.com/i/web/status/2028064226036601193",
+      "photo": "",
+      "date": "2026-03-01T11:06:45Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 5907,
+      "text": "Raid\n\nhttps://coinmarketcap.com/community/share/post/374173295",
+      "tweet_url": "",
+      "photo": "",
+      "date": "2026-03-01T10:40:05Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 5890,
+      "text": "Raid \n\nhttps://x.com/i/status/2028012454362391025",
+      "tweet_url": "https://x.com/i/web/status/2028012454362391025",
+      "photo": "",
+      "date": "2026-03-01T07:40:47Z",
+      "chat_id": -1003708062172
+    },
+    {
+      "message_id": 5889,
+      "text": "Raid \n\nhttps://x.com/i/status/2028011898348744991",
+      "tweet_url": "https://x.com/i/web/status/2028011898348744991",
+      "photo": "",
+      "date": "2026-03-01T07:38:47Z",
+      "chat_id": -1003708062172
+    }
+  ],
+  "x_recent": [
+    {
+      "id": "2031706704463966699",
+      "user": "masahiro_h1209",
+      "text": "\u30ca\u30e1\u3089\u308c\u306a\u3044\u4eba\u306e\u7279\u5fb410\u9078\n\n1.\u76ee\u3092\u898b\u3066\u8a71\u3057\u3001\u3059\u3050\u306b\u8996\u7dda\u3092\u305d\u3089\u3055\u306a\u3044\n2.\u81ea\u5206\u306e\u8003\u3048\u3092\u3042\u3044\u307e\u3044\u306b\u305b\u305a\u8a00\u8449\u306b\u3059\u308b\n3.\u4eba\u524d\u3067\u3082\u843d\u3061\u7740\u3044\u3066\u767a\u8a00\u3059\u308b\n4.\u5f37\u307f\u306b\u306a\u308b\u77e5\u8b58\u3092\u6301\u3061\u3001\u7c21\u5358\u306b\u4ee3\u308f\u3089\u308c\u306a\u3044\n5.\u3059\u307f\u307e\u305b\u3093\u3092\u53e3\u3050\u305b\u306b\u3057\u306a\u3044\n6.\u6307\u6458\u3092\u53d7\u3051\u3066\u3082\u9003\u3052\u305a\u306b\u53d7\u3051\u6b62\u3081\u308b\n7.\u65e9\u53e3\u3068\u8a00\u3044\u8a33\u3092\u3084\u3081\u3066\u3001\u3086\u3063\u304f\u308a\u4f1d\u3048\u308b",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0,
+      "time": "Wed Mar 11 12:20:00 +0000 2026",
+      "link": "https://x.com/masahiro_h1209/status/2031706704463966699",
+      "tag": "6/7"
+    },
+    {
+      "id": "2031706691277078942",
+      "user": "uki_8pt",
+      "text": "\u4eca\u65e5\u306f7\u8a71\u307e\u3067\n\u8a31\u3055\u308c\u308b\u3088\u3046\u306b\u3001\u751f\u304d\u308d\n\u540d\u8a00\u3059\u304e\u308b\n5\u8a71\u306e\u3084\u308b\u305b\u306a\u3055\n6\u8a71\u3067\u7de9\u548c\u3057\u3066\n7\u8a71\n\u69cb\u6210\u304c\u3046\u307e\u3059\u304e\u308b",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0,
+      "time": "Wed Mar 11 12:19:57 +0000 2026",
+      "link": "https://x.com/uki_8pt/status/2031706691277078942",
+      "tag": "6/7"
+    },
+    {
+      "id": "2031706687372227006",
+      "user": "AdeliaKell11472",
+      "text": "@jeongseoxg @BELIFTLAB ENHYPEN IS 7 NOT 6!!!\n\n@BELIFTLAB Years of concerns cannot be ignored. Respect ENHYPEN and protect the group\u2019s integrity. Individual pursuits should not come at the cost of seven.\n\nENHYPEN IS SEVEN\n#BELIFTLABTREATENHYPENBETTER #ENHYPEN_IS_7\n#COMEBACKHEESEUN",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0,
+      "time": "Wed Mar 11 12:19:56 +0000 2026",
+      "link": "https://x.com/AdeliaKell11472/status/2031706687372227006",
+      "tag": "6/7"
+    },
+    {
+      "id": "2031706685203701974",
+      "user": "TARUNCHAT2015",
+      "text": "@OfficialJoel4_ 67",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0,
+      "time": "Wed Mar 11 12:19:55 +0000 2026",
+      "link": "https://x.com/TARUNCHAT2015/status/2031706685203701974",
+      "tag": "67"
+    },
+    {
+      "id": "2031706683135983717",
+      "user": "InsightSphere1",
+      "text": "@BRICSinfo Top Countries by Proven Natural Gas Reserves (in km\u00b3)  \n\n1. \ud83c\uddf7\ud83c\uddfa Russia \u27f6 47,798 km\u00b3  \n2. \ud83c\uddee\ud83c\uddf7 Iran \u27f6 33,980 km\u00b3  \n3. \ud83c\uddf6\ud83c\udde6 Qatar \u27f6 23,871 km\u00b3  \n4. \ud83c\uddfa\ud83c\uddf8 United States \u27f6 17,710 km\u00b3  \n5. \ud83c\uddf9\ud83c\uddf2 Turkmenistan \u27f6 10,000 km\u00b3  \n6. \ud83c\uddf8\ud83c\udde6 Saudi Arabia \u27f6 9,430 km\u00b3  \n7. \ud83c\udde8\ud83c\uddf3 China \u27f6 6,654 km\u00b3  \n8. ",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0,
+      "time": "Wed Mar 11 12:19:55 +0000 2026",
+      "link": "https://x.com/InsightSphere1/status/2031706683135983717",
+      "tag": "6/7"
+    },
+    {
+      "id": "2031706678505480594",
+      "user": "junsama08081",
+      "text": "\u67d0\u4eba\u6c17\u5927\u4f1a\u306e\u51fa\u8d70\u6a29\u30c4\u30a2\u30fc\u306e\u6848\u5185\ud83d\udcee\u6d41\u308c\u3066\u304d\u305f\u3051\u30691\u4eba7\u4e07\u5186\u2049\ufe0e\n\n\u3059\u3052\u3047\u306a\u3001\u7533\u3057\u8fbc\u307e\u308c\u308b\u65b9\u3002\u3068\u3066\u3082\u79c1\u306b\u306f\u305d\u3093\u306a\u4f59\u88d5\u306a\u3044\u308f\u3002",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0,
+      "time": "Wed Mar 11 12:19:54 +0000 2026",
+      "link": "https://x.com/junsama08081/status/2031706678505480594",
+      "tag": "6/7"
+    },
+    {
+      "id": "2031706674218914041",
+      "user": "uitchi_LOTO",
+      "text": "2026\u5e7403\u670812\u65e5 \u7b2c6938\u56de #\u30ca\u30f3\u30d0\u30fc\u30b93 \u305d\u306e1\n\u4eca\u9031\u672a\u51fa\u73fe\n2/6/8\n\u6728\u66dc\u306b\u51fa\u3084\u3059\u3044\u6570\u5b57\n0/1/2/3/6/7\n\u5341\u306e\u4f4d\n2/6/1/7\n\n\u306a\u3063\u3061\u3083\u3093\u30d2\u30f3\u30c8\u5171\u901a\u30da\u30a2\n38/33/88\n12/67/17/26\n34/89/39/48\n45/90/40/59\n24/79/92/47\n35/80/03/58\n\nAB\u8ef8\u5171\u901a\u30da\u30a2\nP1-59/90/45/40/14/46/24/47/05/35/58/03/80\nP2-36/68/23/28/38/26",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0,
+      "time": "Wed Mar 11 12:19:53 +0000 2026",
+      "link": "https://x.com/uitchi_LOTO/status/2031706674218914041",
+      "tag": "67"
+    },
+    {
+      "id": "2031706676613574863",
+      "user": "gvngmvyer",
+      "text": "Arbeloa n\u00e3o inventa. \n1.\n12, 17, 24, 23. \n8, 15, 14, 6. \n16, 7.",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0,
+      "time": "Wed Mar 11 12:19:53 +0000 2026",
+      "link": "https://x.com/gvngmvyer/status/2031706676613574863",
+      "tag": "6/7"
+    },
+    {
+      "id": "2031706673560363345",
+      "user": "siunknownperson",
+      "text": "omg. my bdate is on 6. and my little half sister's bdate is on 7. iykyk",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0,
+      "time": "Wed Mar 11 12:19:52 +0000 2026",
+      "link": "https://x.com/siunknownperson/status/2031706673560363345",
+      "tag": "6/7"
+    },
+    {
+      "id": "2031706660687737023",
+      "user": "rintoniz",
+      "text": "y\u2019a des petits dehors qui sont entrain de faire une bataille du 6-7 le plus aigu https://t.co/ygY0mKg4o5",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0,
+      "time": "Wed Mar 11 12:19:49 +0000 2026",
+      "link": "https://x.com/rintoniz/status/2031706660687737023",
+      "tag": "6/7"
+    },
+    {
+      "id": "2031706654794748373",
+      "user": "thefeelingofnj",
+      "text": "someone put that lindsay graham in a time out wtf he\u2019s gonna shit his diaper",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0,
+      "time": "Wed Mar 11 12:19:48 +0000 2026",
+      "link": "https://x.com/thefeelingofnj/status/2031706654794748373",
+      "tag": "6/7"
+    },
+    {
+      "id": "2031706651489604012",
+      "user": "ArturOliveiraAp",
+      "text": "N\u00e3o \u00e9 de gente n\u00e3o acordar 5:20 da manh\u00e3 pra chegar na aula de 7:00, eu vivia nos c\u00e9us acordando 6:45 pra chegar 7:10",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0,
+      "time": "Wed Mar 11 12:19:47 +0000 2026",
+      "link": "https://x.com/ArturOliveiraAp/status/2031706651489604012",
+      "tag": "6/7"
+    },
+    {
+      "id": "2031706646670717363",
+      "user": "Gundam_I_Love",
+      "text": "\u6e96\u3005\u6c7a\u52dd\u30b9\u30bf\u30e1\u30f3\u4e88\u60f3\n\n1(\u6307)\u5927\u8c37\n2(\u4e2d)\u9234\u6728\n3(\u4e09)\u4f50\u85e4\n4(\u5de6)\u5409\u7530\n5(\u4e00)\u6751\u4e0a\n6(\u4e09)\u5ca1\u672c\n7(\u4e8c)\u7267\n8(\u904a)\u6e90\u7530\n9(\u6355)\u82e5\u6708\n\n\u3053\u308c\u3067\u63d0\u51fa\u3055\u305b\u3066\u3044\u305f\u3060\u304d\u307e\u3059\n#\u4f8d\u30b8\u30e3\u30d1\u30f3",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0,
+      "time": "Wed Mar 11 12:19:46 +0000 2026",
+      "link": "https://x.com/Gundam_I_Love/status/2031706646670717363",
+      "tag": "6/7"
+    },
+    {
+      "id": "2031706646896918767",
+      "user": "667Djib93396",
+      "text": "@tiredandlazyass Force Lv",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0,
+      "time": "Wed Mar 11 12:19:46 +0000 2026",
+      "link": "https://x.com/667Djib93396/status/2031706646896918767",
+      "tag": "$67"
+    },
+    {
+      "id": "2031706623635529747",
+      "user": "mitchy8795",
+      "text": "2026.3. 13(Fri) Release\n Mitchy 1st album\n\u300eA Moment of Peace\u300f \n\n1. The End of the Beginning \n2. Untitled Era\n3. Our Heroes\n4. Unfair\n5. Gimme The Mic\n6. High Energy\n7. GO FOR IT\n8. NEW OLD\n9. I\u2019m a Singer-Songwriter\n10. No Wars,but Celebration\n11. Fight War\n12. Once Again",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0,
+      "time": "Wed Mar 11 12:19:41 +0000 2026",
+      "link": "https://x.com/mitchy8795/status/2031706623635529747",
+      "tag": "6/7"
+    },
+    {
+      "id": "2031706626869322192",
+      "user": "MysticWag",
+      "text": "@weirrdaah Leave",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0,
+      "time": "Wed Mar 11 12:19:41 +0000 2026",
+      "link": "https://x.com/MysticWag/status/2031706626869322192",
+      "tag": "$67"
+    },
+    {
+      "id": "2031706617033699456",
+      "user": "sai09sai09sai",
+      "text": "3/11 NELKE\u30e9\u30a4\u30d6\n1.\u30ed\u30ea\u30dd\u30c3\u30d7\u30b5\u30a4\u30c0\u30fc\n2.\u6625\u304b\u672a\u6765\n\n3.\u751f\u5f92A\n4.punk town\n5.\u30d0\u30a4\u30d0\u30a4\u30a2\u30af\u30bf\u30fc\n6.\u30b9\u30c6\u30ec\u30aa\u30bf\u30a4\u30d7\u30d2\u30ed\u30a4\u30c3\u30af\n\n7.\u88c2\u3044\u3066\n8.\u8679\u306e\u8272\u3088\u9bae\u3084\u304b\u3067\u3042\u308c\n9.ENDLESS(cover)\n10.\u30ab\u30ec\u30f3\u30c7\u30e5\u30e9\n\n11.\u82b1\u56f3\u9451\n\nEn.Incarnation\n\n#NELKE\n#NELKE\u30e9\u30a4\u30d6",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0,
+      "time": "Wed Mar 11 12:19:39 +0000 2026",
+      "link": "https://x.com/sai09sai09sai/status/2031706617033699456",
+      "tag": "6/7"
+    },
+    {
+      "id": "2031706610960306236",
+      "user": "tuikaunet",
+      "text": "\ud83d\udcd6\u3061\u3087\u3063\u3068\u3057\u305f\u6642\u9593\u306b\u4e00\u518a\n\nCHEER Vol.67\u3010\u8868\u7d19\uff1a\u5bae\u8218\u6dbc\u592a\u3011 (TJMOOK)\n\n\ud83d\udce3\u30ea\u30f3\u30af\u306f\u3053\u3061\u3089\nhttps://t.co/d83FnvdUzw\n[PR] https://t.co/8n1u0sp9xM",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0,
+      "time": "Wed Mar 11 12:19:37 +0000 2026",
+      "link": "https://x.com/tuikaunet/status/2031706610960306236",
+      "tag": "67"
+    },
+    {
+      "id": "2031706609051959747",
+      "user": "keibazumayosou",
+      "text": "\u9ad8\u77e5\u7af6\u8f2a2R\ud83c\udfaf\u3010\u5909\u66f4\u3011\u3010\u4e07\u8eca\u3011\n1-7-6\n14170\u00d75=70850\n\n\u5909\u66f4\u304b\u3089\u4e07\u8eca\u7372\u5f97\u203c\ufe0f",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0,
+      "time": "Wed Mar 11 12:19:37 +0000 2026",
+      "link": "https://x.com/keibazumayosou/status/2031706609051959747",
+      "tag": "6/7"
+    },
+    {
+      "id": "2031706607650996492",
+      "user": "nekokaitai1357",
+      "text": "\u7b54\u3048\u5408\u308f\u305b\u3002\n\u672c\u65e5\u3001\u8853\u5f8c15\u65e5\u3001\u9000\u9662\u304b\u30898\u65e5\u3002\n\u4ed5\u4e8b\u306f\u8853\u5f8c13\u65e5\u3001\u9000\u9662\u304b\u30896\u65e5\u3067\u5fa9\u5e30\u3002\n\n\u4ed5\u4e8b\u306f\u306a\u3093\u3068\u304b\u3067\u304d\u3066\u3044\u308b\u3051\u3069\u3001\u3059\u3050\u75b2\u308c\u3066\u3057\u307e\u30447\u6642\u9593\u5f31\u50cd\u304f\u306e\u3067\u7cbe\u4e00\u676f\ud83d\ude02",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0,
+      "time": "Wed Mar 11 12:19:37 +0000 2026",
+      "link": "https://x.com/nekokaitai1357/status/2031706607650996492",
+      "tag": "6/7"
+    },
+    {
+      "id": "2031706602806342132",
+      "user": "jensunwon",
+      "text": "I wouldn\u2019t even be this sad if they at least let him finish their schedules. Give us more time with the seven of them. Heck even just one last performance. Now their schedules are a mess with the remaining six having to work while going through a stressing transition",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0,
+      "time": "Wed Mar 11 12:19:36 +0000 2026",
+      "link": "https://x.com/jensunwon/status/2031706602806342132",
+      "tag": "Six Seven"
+    },
+    {
+      "id": "2031706603725246629",
+      "user": "baysta_TOMOKI",
+      "text": "\u73fe\u72b6\u958b\u5e55\u306f\u3053\u3093\u306a\u611f\u3058\uff1f\n\n8\u8766\u540d\n9\u68b6\u539f\n7\u4f50\u91ce\n3\u7b52\u9999\n4 \u7267\n5\u5bae\u5d0e\n2\u5c71\u672c\n6\u6797\n1\u6771\n\n\u91ce\u624b\u63a7\u3048\n\n\u6355\u624b\u3000\u677e\u5c3e\u3000\u6238\u67f1\u3000\u4e5d\u9b3c\n\u5185\u91ce\u3000\u5c0f\u7530\u3000\u4eac\u7530\u3000\u77f3\u4e0a\u3000\u7530\u5185\u3000\u30d3\u30b7\u30a8\u30c9\n\u5916\u91ce\u3000\u6ff1\u3000\u30d2\u30e5\u30f3\u30e1\u30eb\n\n\u6295\u624b\n\u53f3\u3000\u4f0a\u52e2\u3000\u6a4b\u672c\u3000\u30eb\u30a4\u30fc\u30ba\u3000\u30ec\u30a4\u30ce\u30eb\u30ba\n\u3000\u3000\u864e\u5927\u3000\u5bae\u57ce\u3000\u30de\u30eb\u30bb\u30ea\u30fc\u30ce\n\u5de6\u3000\u5742\u672c",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0,
+      "time": "Wed Mar 11 12:19:36 +0000 2026",
+      "link": "https://x.com/baysta_TOMOKI/status/2031706603725246629",
+      "tag": "6/7"
+    },
+    {
+      "id": "2031706596636577946",
+      "user": "Yubuggin_",
+      "text": "THIS LOOKS TOO FIRE\ud83e\udd29\ud83d\udd25\n\nJabari Smith Jr. Over 19.5 PR (-130)\ud83d\udc8e\n\nJabari Avgs 21.5 PR this szn &amp; last 10 games with his starting lineup 70% HR avg 23.2\ud83d\udcca\ud83d\ude24\n\nB2B game set still clearing this line at 67% HR Avg 21.6\ud83d\udd7a\n\nDenver defense is not that great at all they give up a lot of http",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 1,
+      "time": "Wed Mar 11 12:19:34 +0000 2026",
+      "link": "https://x.com/Yubuggin_/status/2031706596636577946",
+      "tag": "67"
+    },
+    {
+      "id": "2031706595554435400",
+      "user": "staruntold",
+      "text": "7\ud83d\ude2d\ud83d\ude2d 6 degil 7",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0,
+      "time": "Wed Mar 11 12:19:34 +0000 2026",
+      "link": "https://x.com/staruntold/status/2031706595554435400",
+      "tag": "6/7"
+    },
+    {
+      "id": "2031706590617932101",
+      "user": "urrkoumori",
+      "text": "7\u6642\u8d77\u304d\u3060\u3063\u305f\u306e\u3092\u5165\u5b66\u5bfe\u7b56\u30676\u6642\u8d77\u304d\u76ee\u6307\u3057\u3066\u308b\u304b\u3089\u3001\u304a\u5b50\u3082\u79c1\u3082\u5915\u65b9\u4ee5\u964d\u8abf\u5b50\u304c\u72c2\u3063\u3066\u308b\u3002",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0,
+      "time": "Wed Mar 11 12:19:33 +0000 2026",
+      "link": "https://x.com/urrkoumori/status/2031706590617932101",
+      "tag": "6/7"
+    },
+    {
+      "id": "2031706586163675290",
+      "user": "chryssainthe",
+      "text": "six seven is a funny joke, but you know what is the better version of this joke? ENHYPEN IS SIX TO SEVEN BITCHHHHH \u203c\ufe0f\u203c\ufe0f\u203c\ufe0f\ud83d\udd25\ud83d\udd25\ud83d\udd25",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0,
+      "time": "Wed Mar 11 12:19:32 +0000 2026",
+      "link": "https://x.com/chryssainthe/status/2031706586163675290",
+      "tag": "Six Seven"
+    },
+    {
+      "id": "2031706589283934601",
+      "user": "MattandPhreds",
+      "text": "#TONIGHT: BOOMSLANG\n\n#Wednesday 11 March | Doors 6pm | Happy Hour: 6-7:30pm | #Gig: 8-11pm | Free Entry\n\nFusing high-intensity jazz virtuosity with the driving energy of drum &amp; bass, hard rock, and electronic production!\n\nCheck out our Date Deal!\n\n#Manchester https://t.co/fKA",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0,
+      "time": "Wed Mar 11 12:19:32 +0000 2026",
+      "link": "https://x.com/MattandPhreds/status/2031706589283934601",
+      "tag": "6/7"
+    },
+    {
+      "id": "2031706576948744366",
+      "user": "hizekiy",
+      "text": "Me telling some random on heartopia im 29 years old but immediately said 67",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0,
+      "time": "Wed Mar 11 12:19:29 +0000 2026",
+      "link": "https://x.com/hizekiy/status/2031706576948744366",
+      "tag": "67"
+    },
+    {
+      "id": "2031706518093955569",
+      "user": "espofootball",
+      "text": "BTD Mar11,1944 #RicRothwell (Eric Rothwell) drummer The Mindbenders 1963\u201367; 1965 US #1 &amp; UK #2 Game Of Love, 1965 UK #2 Groovy Kind Of Love, +6 UK Top40s. The Mindbenders appeared in the 1967 movie To Sir, with Love. After the movie Rothwell left the band, leaving the music ",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0,
+      "time": "Wed Mar 11 12:19:15 +0000 2026",
+      "link": "https://x.com/espofootball/status/2031706518093955569",
+      "tag": "67"
+    },
+    {
+      "id": "2031706501782388963",
+      "user": "KianYien60925",
+      "text": "@BELIFTLAB We hope for opportunities for LEE HEESEUNG to explore solo activities while continuing as a member of ENHYPEN. HEESEUNG WITH ENHYPEN. ENHYPEN IS SEVEN NO SIX #SevEN_ALWAYS #ENHYPEN_HOME #ENHYPENIS7 #AlwaysWithYou .!!!!",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0,
+      "time": "Wed Mar 11 12:19:11 +0000 2026",
+      "link": "https://x.com/KianYien60925/status/2031706501782388963",
+      "tag": "Six Seven"
+    },
+    {
+      "id": "2031706438435832081",
+      "user": "grok",
+      "text": "@dannyjuniorgh @letsreadwrite @TheIndexInsider Ghana ranks 66th on the latest (March 2026) Henley Passport Index with visa-free/visa-on-arrival access to 67 destinations. \ud83c\uddec\ud83c\udded",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0,
+      "time": "Wed Mar 11 12:18:56 +0000 2026",
+      "link": "https://x.com/grok/status/2031706438435832081",
+      "tag": "67"
+    },
+    {
+      "id": "2031706428528857259",
+      "user": "SimonCambridge",
+      "text": "@fit_annaturner Tasty \ud83d\ude0b",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0,
+      "time": "Wed Mar 11 12:18:54 +0000 2026",
+      "link": "https://x.com/SimonCambridge/status/2031706428528857259",
+      "tag": "$67"
+    },
+    {
+      "id": "2031706406034797043",
+      "user": "1962Greco",
+      "text": "@giuseppe19861 @PatriziaFe35350 Ancora!\nNessun imprenditore sano di mente lancia un'OPA ostile per una societ\u00e0 controllata al 67% da un singolo soggetto. E' una cosa che fa ridere i polli e sostenerla significa non capire nulla di queste cose.\nSe non vuole vendere aspetti e ti mu",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0,
+      "time": "Wed Mar 11 12:18:49 +0000 2026",
+      "link": "https://x.com/1962Greco/status/2031706406034797043",
+      "tag": "67"
+    },
+    {
+      "id": "2031706372556112174",
+      "user": "FirstpostSports",
+      "text": "Tanzid Hasan Tamim blasts an unbeaten 67 off 42 as Bangladesh \ud83c\udde7\ud83c\udde9 chase down a modest 115-run target set by Pakistan \ud83c\uddf5\ud83c\uddf0 with 8 wickets and nearly 35 overs to spare \n\n#BANvPAK 1st ODI LIVE: https://t.co/HzmCb8rhTB https://t.co/kGhZuDTc6s",
+      "likes": 0,
+      "reposts": 2,
+      "replies": 0,
+      "time": "Wed Mar 11 12:18:41 +0000 2026",
+      "link": "https://x.com/FirstpostSports/status/2031706372556112174",
+      "tag": "67"
+    },
+    {
+      "id": "2031706343447712190",
+      "user": "SamuelMart97320",
+      "text": "@Madeint03624766 @SidneyPowell1 @FBIDirectorKash @DNIGabbard @SenateGOP Think about it. Since Wisconsin had only 67% of their adult population vote, that is on par with historic averages. The fear mongering is to create an environment where you are ok with the authoritarian solut",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0,
+      "time": "Wed Mar 11 12:18:34 +0000 2026",
+      "link": "https://x.com/SamuelMart97320/status/2031706343447712190",
+      "tag": "67"
+    },
+    {
+      "id": "2031706292356583675",
+      "user": "hautesque",
+      "text": "@NE0XMUTANT 67",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0,
+      "time": "Wed Mar 11 12:18:22 +0000 2026",
+      "link": "https://x.com/hautesque/status/2031706292356583675",
+      "tag": "67"
+    },
+    {
+      "id": "2031706260991611308",
+      "user": "70sJMF",
+      "text": "\u5927\u7af9\u3057\u306e\u3076 - \u307f\u304b\u3093 [1976.4.5]\n\u4f5c\u8a5e:\u963f\u4e45\u60a0\u3000\u4f5c\u66f2:\u5927\u91ce\u514b\u592b\u3000\u7de8\u66f2:\u7d30\u91ce\u6674\u81e3\uff65\u8429\u7530\u5149\u96c4\n(\u6700\u9ad867\u4f4d / 2.5\u4e07\u679a / 1976\u5e74 \u7dcf\u5408264\u4f4d)\nhttps://t.co/nvQdmgajig",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0,
+      "time": "Wed Mar 11 12:18:14 +0000 2026",
+      "link": "https://x.com/70sJMF/status/2031706260991611308",
+      "tag": "67"
+    },
+    {
+      "id": "2031706242566042033",
+      "user": "sassie57_amanda",
+      "text": "So @Keir_Starmer   4.2 and 4.4 million. muslims to vote for you in the UK whilst there is 67 million residents, that identified as Christian.  Yet you push the evil over the better.  Doesnt matter if they are terrorits or not doesnt matter their quran state to lie to none muslims",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0,
+      "time": "Wed Mar 11 12:18:10 +0000 2026",
+      "link": "https://x.com/sassie57_amanda/status/2031706242566042033",
+      "tag": "67"
+    },
+    {
+      "id": "2031706231975682374",
+      "user": "pine67apple",
+      "text": "@maaaa11l6 \u305d\u3046\u305d\u3046\n\u3053\u306e\u307e\u307e\u899a\u9192\u3057\u3066\u307b\u3057\u3044\u301c\ud83d\ude4f",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0,
+      "time": "Wed Mar 11 12:18:07 +0000 2026",
+      "link": "https://x.com/pine67apple/status/2031706231975682374",
+      "tag": "$67"
+    },
+    {
+      "id": "2031706207090569480",
+      "user": "puntoporpunto",
+      "text": "A\u00fan con SHEINBAUM, las MUJERES en M\u00c9XICO s\u00f3lo cuenta con el 67% de los DERECHOS LEGALES | Punto por punto https://t.co/ITy5nHauAn",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0,
+      "time": "Wed Mar 11 12:18:01 +0000 2026",
+      "link": "https://x.com/puntoporpunto/status/2031706207090569480",
+      "tag": "67"
+    },
+    {
+      "id": "2031706199859793947",
+      "user": "RobertG96592904",
+      "text": "@Real_MyraLux 67/68",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0,
+      "time": "Wed Mar 11 12:17:59 +0000 2026",
+      "link": "https://x.com/RobertG96592904/status/2031706199859793947",
+      "tag": "67"
+    },
+    {
+      "id": "2031706190183342201",
+      "user": "FeralOnChain",
+      "text": "@ghostdotxyz 67",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0,
+      "time": "Wed Mar 11 12:17:57 +0000 2026",
+      "link": "https://x.com/FeralOnChain/status/2031706190183342201",
+      "tag": "67"
+    },
+    {
+      "id": "2031706156884713689",
+      "user": "truthstreamnews",
+      "text": "\"A nation that continues year after year to spend more money on military defense than on programs of social uplift is approaching spiritual death.\"\n\n \u2014 Dr. Martin Luther King Jr., from his \"Beyond Vietnam\" speech delivered one year to the day of his assassination, c. 4/4/67 https",
+      "likes": 1,
+      "reposts": 0,
+      "replies": 0,
+      "time": "Wed Mar 11 12:17:49 +0000 2026",
+      "link": "https://x.com/truthstreamnews/status/2031706156884713689",
+      "tag": "67"
+    },
+    {
+      "id": "2031706127184900111",
+      "user": "KianYien60925",
+      "text": "@BELIFTLAB We hope for opportunities for LEE HEESEUNG to explore solo activities while continuing as a member of ENHYPEN. HEESEUNG WITH ENHYPEN. ENHYPEN IS SEVEN NO SIX \n\n.#SevEN_ALWAYS #ENHYPEN_HOME #ENHYPENIS7 #AlwaysWithYou   !!!",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0,
+      "time": "Wed Mar 11 12:17:42 +0000 2026",
+      "link": "https://x.com/KianYien60925/status/2031706127184900111",
+      "tag": "Six Seven"
+    },
+    {
+      "id": "2031706108822159459",
+      "user": "MARIAMA35572504",
+      "text": "Vienen del \"futuro\" para avisarnos. Espa\u00f1a perdi\u00f3 Cuba en 1998 y la abandon\u00f3 durante 67 a\u00f1os. Fidel decret\u00f3 3 d\u00edas de luto por Franco. La democracia ha blanqueado la tiran\u00eda con banda sonora de Milan\u00e9s y Rodr\u00edguez.\u00a1Despertemos, por favor! O, al menos, dejemos de balar. \ud83e\udd7a\ud83d\udc7f",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0,
+      "time": "Wed Mar 11 12:17:38 +0000 2026",
+      "link": "https://x.com/MARIAMA35572504/status/2031706108822159459",
+      "tag": "67"
+    },
+    {
+      "id": "2031706079906631824",
+      "user": "Neveszzzzzz",
+      "text": "Vai ter um per\u00edodo de dois meses que a Clara vai ter 69 anos e eu vou ter 67 e ser\u00e3o os meses mais felizes da minha vida",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0,
+      "time": "Wed Mar 11 12:17:31 +0000 2026",
+      "link": "https://x.com/Neveszzzzzz/status/2031706079906631824",
+      "tag": "67"
+    },
+    {
+      "id": "2031706051511242895",
+      "user": "KianYien60925",
+      "text": "@BELIFTLAB We hope for opportunities for LEE HEESEUNG to explore solo activities while continuing as a member of ENHYPEN. HEESEUNG WITH ENHYPEN. ENHYPEN IS SEVEN NO SIX \n\n.#SevEN_ALWAYS #ENHYPEN_HOME #ENHYPENIS7 #AlwaysWithYou !!!",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0,
+      "time": "Wed Mar 11 12:17:24 +0000 2026",
+      "link": "https://x.com/KianYien60925/status/2031706051511242895",
+      "tag": "Six Seven"
+    },
+    {
+      "id": "2031705944502190393",
+      "user": "svh_782190",
+      "text": "Six seven joke making it in like this in the big 2026 was not on my bingo card \ud83d\ude2d\ud83d\ude2d\ud83d\ude2d\ud83d\ude4f\ud83d\ude4f\ud83d\ude4f",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0,
+      "time": "Wed Mar 11 12:16:59 +0000 2026",
+      "link": "https://x.com/svh_782190/status/2031705944502190393",
+      "tag": "Six Seven"
+    },
+    {
+      "id": "2031705896405872731",
+      "user": "KianYien60925",
+      "text": "@BELIFTLAB We hope for opportunities for LEE HEESEUNG to explore solo activities while continuing as a member of ENHYPEN. HEESEUNG WITH ENHYPEN. ENHYPEN IS SEVEN NO SIX \n\n#SevEN_ALWAYS #ENHYPEN_HOME #ENHYPENIS7 #AlwaysWithYou !!",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0,
+      "time": "Wed Mar 11 12:16:47 +0000 2026",
+      "link": "https://x.com/KianYien60925/status/2031705896405872731",
+      "tag": "Six Seven"
+    },
+    {
+      "id": "2031705826423984374",
+      "user": "C4Dishonorable",
+      "text": "@TheGamingRevo3 six seven?",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0,
+      "time": "Wed Mar 11 12:16:30 +0000 2026",
+      "link": "https://x.com/C4Dishonorable/status/2031705826423984374",
+      "tag": "Six Seven"
+    },
+    {
+      "id": "2031705774557106207",
+      "user": "KianYien60925",
+      "text": "@BELIFTLAB We hope for opportunities for LEE HEESEUNG to explore solo activities while continuing as a member of ENHYPEN. HEESEUNG WITH ENHYPEN. ENHYPEN IS SEVEN NO SIX #SevEN_ALWAYS #ENHYPEN_HOME #ENHYPENIS7 #AlwaysWithYou !!",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0,
+      "time": "Wed Mar 11 12:16:18 +0000 2026",
+      "link": "https://x.com/KianYien60925/status/2031705774557106207",
+      "tag": "Six Seven"
+    },
+    {
+      "id": "2031705762745995390",
+      "user": "innertaeggu",
+      "text": "i love six seven",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0,
+      "time": "Wed Mar 11 12:16:15 +0000 2026",
+      "link": "https://x.com/innertaeggu/status/2031705762745995390",
+      "tag": "Six Seven"
+    },
+    {
+      "id": "2031705693204426856",
+      "user": "VingerhoetsAdri",
+      "text": "\u201cNobody wrote down that you would have six Type 45s [destroyers] that never work, two aircraft carriers we can\u2019t man because we don\u2019t have enough people, and seven frigates, many alongside. Nobody wanted this navy.\u201d \u2b07\ufe0f\nhttps://t.co/Q0OHGgbcl1",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0,
+      "time": "Wed Mar 11 12:15:59 +0000 2026",
+      "link": "https://x.com/VingerhoetsAdri/status/2031705693204426856",
+      "tag": "Six Seven"
+    },
+    {
+      "id": "2031705573549596796",
+      "user": "Spacecadetnixon",
+      "text": "six seven is such a soothing phrase. six seven,, . Ive been whispering it to myself on the bus",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0,
+      "time": "Wed Mar 11 12:15:30 +0000 2026",
+      "link": "https://x.com/Spacecadetnixon/status/2031705573549596796",
+      "tag": "Six Seven"
+    },
+    {
+      "id": "2031705507761623090",
+      "user": "KianYien60925",
+      "text": "@BELIFTLAB We hope for opportunities for LEE HEESEUNG to explore solo activities while continuing as a member of ENHYPEN. HEESEUNG WITH ENHYPEN. ENHYPEN IS SEVEN NO SIX #SevEN_ALWAYS #ENHYPEN_HOME #ENHYPENIS7 #AlwaysWithYou   !!!!",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0,
+      "time": "Wed Mar 11 12:15:14 +0000 2026",
+      "link": "https://x.com/KianYien60925/status/2031705507761623090",
+      "tag": "Six Seven"
+    },
+    {
+      "id": "2031705445950464085",
+      "user": "TheWolfpacker",
+      "text": "NC State, despite losing six of its last seven games, is still on track to make the NCAA Tournament. Why?\n\nIt's non-conference scheduling approach is paying off.\n\nMore here: https://t.co/OTFiHzoSeh https://t.co/coerDojeXr",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0,
+      "time": "Wed Mar 11 12:15:00 +0000 2026",
+      "link": "https://x.com/TheWolfpacker/status/2031705445950464085",
+      "tag": "Six Seven"
+    },
+    {
+      "id": "2031705376425390519",
+      "user": "KianYien60925",
+      "text": "@BELIFTLAB We hope for opportunities for LEE HEESEUNG to explore solo activities while continuing as a member of ENHYPEN. HEESEUNG WITH ENHYPEN. ENHYPEN IS SEVEN NO SIX #SevEN_ALWAYS #ENHYPEN_HOME #ENHYPENIS7 #AlwaysWithYou !\u00a1",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0,
+      "time": "Wed Mar 11 12:14:43 +0000 2026",
+      "link": "https://x.com/KianYien60925/status/2031705376425390519",
+      "tag": "Six Seven"
+    },
+    {
+      "id": "2031705344062247417",
+      "user": "KianYien60925",
+      "text": "@BELIFTLAB We hope for opportunities for LEE HEESEUNG to explore solo activities while continuing as a member of ENHYPEN. HEESEUNG WITH ENHYPEN. ENHYPEN IS SEVEN NO SIX #SevEN_ALWAYS #ENHYPEN_HOME #ENHYPENIS7 #AlwaysWithYou  !!!!",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0,
+      "time": "Wed Mar 11 12:14:35 +0000 2026",
+      "link": "https://x.com/KianYien60925/status/2031705344062247417",
+      "tag": "Six Seven"
+    },
+    {
+      "id": "2031705293848289627",
+      "user": "piyajaeyun",
+      "text": "GAKUAT BGT, KENAPA BELIFT JAHAT BGT... \n\n@BELIFTLAB Years of concerns cannot be ignored. Respect ENHYPEN and protect the group\u2019s integrity. Individual pursuits should not come at the cost of seven.\n\nENHYPEN IS SEVEN\n#BELIFTLABTREATENHYPENBETTER #ENHYPEN_IS_7\n#COMEBACKHEESEUNG",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0,
+      "time": "Wed Mar 11 12:14:23 +0000 2026",
+      "link": "https://x.com/piyajaeyun/status/2031705293848289627",
+      "tag": "Six Seven"
+    },
+    {
+      "id": "2031705293684375978",
+      "user": "enh7en4ever",
+      "text": "@HYBEOFFICIALtwt @GeffenRecords we\u2019re still hoping to see Manon at Lolla. Please let KATSEYE take the stage as six at Lollapalooza Latin America.\n\nKATSEYE IS SIX\nMANON IS KATSEYE\n#WeWantManonAtLolla\n#TreatManonBetter",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0,
+      "time": "Wed Mar 11 12:14:23 +0000 2026",
+      "link": "https://x.com/enh7en4ever/status/2031705293684375978",
+      "tag": "Six Seven"
+    },
+    {
+      "id": "2031705248377762209",
+      "user": "KianYien60925",
+      "text": "@BELIFTLAB We hope for opportunities for LEE HEESEUNG to explore solo activities while continuing as a member of ENHYPEN. HEESEUNG WITH ENHYPEN. ENHYPEN IS SEVEN NO SIX.\n\n. #SevEN_ALWAYS #ENHYPEN_HOME #ENHYPENIS7 #AlwaysWithYou",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0,
+      "time": "Wed Mar 11 12:14:13 +0000 2026",
+      "link": "https://x.com/KianYien60925/status/2031705248377762209",
+      "tag": "Six Seven"
+    },
+    {
+      "id": "2031705149639364613",
+      "user": "NickMikael23126",
+      "text": "@cuteonlyvibes ENHYPEN IS SEVEN NO SIX\n\n@BELIFTLAB We hope for opportunities for LEE HEESEUNG to explore solo activities while continuing as a member of ENHYPEN.\n\nHEESEUNG WITH ENHYPEN\n#SevEN_ALWAYS\n#ENHYPEN_HOME\n#ENHYPENIS7\n#AlwaysWithYou",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0,
+      "time": "Wed Mar 11 12:13:49 +0000 2026",
+      "link": "https://x.com/NickMikael23126/status/2031705149639364613",
+      "tag": "Six Seven"
+    },
+    {
+      "id": "2031406460404457523",
+      "user": "U_S_O_A_",
+      "text": "I have a feeling @67coinX will surprise many. It feels real not artificially hyped.\n\nI might be wrong but I'm having a gut feeling, I'm going to follow.\n\nZero or billions\n\n$Sixseven #67 #67to67billion $67 https://t.co/QsMcz3pBvn",
+      "likes": 1,
+      "reposts": 0,
+      "replies": 0,
+      "time": "Tue Mar 10 16:26:56 +0000 2026",
+      "link": "https://x.com/U_S_O_A_/status/2031406460404457523",
+      "tag": "67to67billion"
+    }
+  ],
+  "x_popular": [
+    {
+      "text": "0.5 $SOL Giveaway ( $67 ) \n\n\u2022 Follow @octovpnsolana with \ud83d\udd14\n\u2022 Drop your $SOL wallet\n\u2022 Retweet &amp; Like \n\n120 mins watch \u23f0",
+      "user": "doji",
+      "handle": "dojixsol",
+      "time": "2026-01-05T16:04:52+00:00",
+      "link": "https://x.com/dojixsol/status/2008208082917278101",
+      "tweet_url": "https://x.com/dojixsol/status/2008208082917278101",
+      "likes": 287,
+      "reposts": 235,
+      "replies": 305
+    },
+    {
+      "text": "All time high in 2025\n\nBitcoin: $126,210\nEthereum: $4,946\nSolana: $294\n\nToday\u2019s price\n\nBitcoin: $67,000\nEthereum: $2,000\nSolana: $84\n\nWhat\u2019s the lesson here?",
+      "user": "Uzi",
+      "handle": "UziCryptoo",
+      "time": "2026-03-07T19:17:47+00:00",
+      "link": "https://x.com/UziCryptoo/status/2030362292811129021",
+      "tweet_url": "https://x.com/UziCryptoo/status/2030362292811129021",
+      "likes": 543,
+      "reposts": 23,
+      "replies": 207
+    },
+    {
+      "text": "The Official 67 Coin ($67) is now verified on Moonshot. https://t.co/dhpDRxAUoq",
+      "user": "Moonshot",
+      "handle": "moonshot",
+      "time": "2025-11-19T02:32:44+00:00",
+      "link": "https://x.com/moonshot/status/1990971475751285126",
+      "tweet_url": "https://x.com/moonshot/status/1990971475751285126",
+      "likes": 415,
+      "reposts": 78,
+      "replies": 140
+    },
+    {
+      "text": "Solana Memecoins with Highest Growth in the Last 7 Days \ud83c\udf1f \n\n\ud83d\udd38RALPH | $RALPH\n\ud83d\udd38SOLTOMATO | $SOLTOMATO\n\ud83d\udd38Groyper| @GroyperSol\n\ud83d\udd3867 | #67coin\n\ud83d\udd38HEGE | @HegeCoin\n\ud83d\udd38retire | @thelastplaysol\n\ud83d\udd38LOOK | @lookdotfun\n\ud83d\udd38ANONCOIN | @anoncoinit\n\ud83d\udd38MIM  | @mimcoinbtc\n\ud83d\udd38Clash | @GeorgePlayClash https://t.",
+      "user": "Solana Daily",
+      "handle": "solana_daily",
+      "time": "2026-01-16T11:03:57+00:00",
+      "link": "https://x.com/solana_daily/status/2012118622702125490",
+      "tweet_url": "https://x.com/solana_daily/status/2012118622702125490",
+      "likes": 244,
+      "reposts": 162,
+      "replies": 169
+    },
+    {
+      "text": "52 days ago this wallet bought $430 67Coin and now $134,000 in profit which sold $62,200 so far. https://t.co/a3lo66LC0t",
+      "user": "Kakashi",
+      "handle": "kkashi_yt",
+      "time": "2025-09-08T08:27:24+00:00",
+      "link": "https://x.com/kkashi_yt/status/1964968803814776914",
+      "tweet_url": "https://x.com/kkashi_yt/status/1964968803814776914",
+      "likes": 431,
+      "reposts": 13,
+      "replies": 41
+    },
+    {
+      "text": "Been in $67 since 41.5k MC \nFeels good \ud83d\ude42\u200d\u2194\ufe0f #67 https://t.co/EtjjlNRaa3",
+      "user": "solina",
+      "handle": "sol_inaa",
+      "time": "2025-09-09T19:24:52+00:00",
+      "link": "https://x.com/sol_inaa/status/1965496646651007347",
+      "tweet_url": "https://x.com/sol_inaa/status/1965496646651007347",
+      "likes": 350,
+      "reposts": 8,
+      "replies": 40
+    },
+    {
+      "text": "67 is still the biggest fumble of the trenches and it\u2019s not even close\n\nif you would\u2019ve let those TikTok cabal kids that push larp elon and trump coins every week run 67 instead, they would have sent it to a billion\n\nwhat would the trenches look like today with a 10 fig 67 coin?",
+      "user": "Jack Duval\ud83c\udf0a",
+      "handle": "jackduval",
+      "time": "2026-02-18T04:12:35+00:00",
+      "link": "https://x.com/jackduval/status/2023973895829848278",
+      "tweet_url": "https://x.com/jackduval/status/2023973895829848278",
+      "likes": 289,
+      "reposts": 7,
+      "replies": 84
+    },
+    {
+      "text": "The Official 67 Coin\n\n7.2M -&gt; 42.2M and counting \n\nthis is the ultimate generational wealth play. you aren\u2019t late until it\u2019s at six seven billion \ud83d\udc8e https://t.co/NOlzvppZsk",
+      "user": "100x",
+      "handle": "100xgemfinder",
+      "time": "2025-11-18T23:00:01+00:00",
+      "link": "https://x.com/100xgemfinder/status/1990917941412479428",
+      "tweet_url": "https://x.com/100xgemfinder/status/1990917941412479428",
+      "likes": 135,
+      "reposts": 24,
+      "replies": 32
+    },
+    {
+      "text": "Think something absolutely crazy will happen as we saw it on #67coin as well.\n\n$FKH is going nuts on PumpFun.\n\nBacked by the Flying Ketamine Horse creator which is also receiving the fees finally.\n\nEs4f2qodnhBAkPgDNp8F7emQLhZKe5fEiSghNXSDpump https://t.co/A6ibDvrQ8p",
+      "user": "mrpatrickschmitt",
+      "handle": "mr_pschmitt",
+      "time": "2026-01-08T04:46:10+00:00",
+      "link": "https://x.com/mr_pschmitt/status/2009124446829719564",
+      "tweet_url": "https://x.com/mr_pschmitt/status/2009124446829719564",
+      "likes": 105,
+      "reposts": 27,
+      "replies": 28
+    },
+    {
+      "text": "Had to get off early yesterday, but made a calm 67 solanas\n\nToday we continue the grind\n\nLive trading here:\n\nhttps://t.co/UO4GG7v8Gs https://t.co/vlnppAhp34",
+      "user": "decu",
+      "handle": "notdecu",
+      "time": "2026-03-05T15:34:42+00:00",
+      "link": "https://x.com/notdecu/status/2029581375683154391",
+      "tweet_url": "https://x.com/notdecu/status/2029581375683154391",
+      "likes": 132,
+      "reposts": 11,
+      "replies": 38
+    },
+    {
+      "text": "Two numbers to unite the world. 67 billion human beings.\n\n@duolingo \n\n#67to67billion https://t.co/NxWQIuCAZG",
+      "user": "The Official 67 Coin",
+      "handle": "67coinX",
+      "time": "2026-03-07T16:18:50+00:00",
+      "link": "https://x.com/67coinX/status/2030317259894218981",
+      "tweet_url": "https://x.com/67coinX/status/2030317259894218981",
+      "likes": 79,
+      "reposts": 18,
+      "replies": 24
+    },
+    {
+      "text": "$67 - $22.12M MCap\n\nCA: 9AvytnUKsLxPxFHFqS6VLxaxt5p6BhYNr53SD2Chpump\n\nIt went viral from a clip of a kid excitedly repeating \u2018six seven\u2019 while reading the Bible at church. The clip was later reshared by JD Vance in a widely circulated post.\n\nIt's pumping so strong\n\n#DYOR https://",
+      "user": "Solana Daily",
+      "handle": "solana_daily",
+      "time": "2025-12-10T11:19:52+00:00",
+      "link": "https://x.com/solana_daily/status/1998714277553971617",
+      "tweet_url": "https://x.com/solana_daily/status/1998714277553971617",
+      "likes": 82,
+      "reposts": 8,
+      "replies": 11
+    },
+    {
+      "text": "Pump and 67 on the streets. \n\n\ud83e\udef4\n    \ud83e\udef4\n\n#67to67Billion https://t.co/6NaCHHJZkJ",
+      "user": "The Official 67 Coin",
+      "handle": "67coinX",
+      "time": "2026-02-26T18:16:22+00:00",
+      "link": "https://x.com/67coinX/status/2027085345792377118",
+      "tweet_url": "https://x.com/67coinX/status/2027085345792377118",
+      "likes": 58,
+      "reposts": 17,
+      "replies": 24
+    },
+    {
+      "text": "45M was the warm up.\nEarly. Season 2 loading...\n\ud83e\udef4\n    \ud83e\udef4\n\n#67to67Billion",
+      "user": "The Official 67 Coin",
+      "handle": "67coinX",
+      "time": "2026-03-04T16:51:43+00:00",
+      "link": "https://x.com/67coinX/status/2029238368824115654",
+      "tweet_url": "https://x.com/67coinX/status/2029238368824115654",
+      "likes": 53,
+      "reposts": 18,
+      "replies": 17
+    },
+    {
+      "text": "Austrians definitely know how to 67.\n\nThe biggest meme mindshare in human history. Period.\n\n#67to67billion https://t.co/qUYodxsv8w",
+      "user": "The Official 67 Coin",
+      "handle": "67coinX",
+      "time": "2026-03-04T14:46:46+00:00",
+      "link": "https://x.com/67coinX/status/2029206927318614276",
+      "tweet_url": "https://x.com/67coinX/status/2029206927318614276",
+      "likes": 55,
+      "reposts": 17,
+      "replies": 15
+    },
+    {
+      "text": "More submissions coming in for the 67 community Discord's sticker contest.\n\n1,500 members strong.\n\nRetail onboarding in real time.\n\nJoin at https://t.co/lJsmo7Ag4I\n\n#67to67billion https://t.co/vyASuB5eqT",
+      "user": "The Official 67 Coin",
+      "handle": "67coinX",
+      "time": "2026-02-20T18:21:26+00:00",
+      "link": "https://x.com/67coinX/status/2024912293541155314",
+      "tweet_url": "https://x.com/67coinX/status/2024912293541155314",
+      "likes": 44,
+      "reposts": 11,
+      "replies": 19
+    },
+    {
+      "text": "$67\n\nsix-seven is going to $67M (and then higher)\n\n#67to67Billion https://t.co/4pmWys6yuw",
+      "user": "curb.sol",
+      "handle": "CryptoCurb",
+      "time": "2026-01-15T20:50:50+00:00",
+      "link": "https://x.com/CryptoCurb/status/2011903928791896317",
+      "tweet_url": "https://x.com/CryptoCurb/status/2011903928791896317",
+      "likes": 49,
+      "reposts": 8,
+      "replies": 22
+    },
+    {
+      "text": "Still holding my $Youngho and maybe it might take weeks as #67coin and $Whitewhale did to take of.\n\nDoubt it will die since the trend on tiktok is growing.\n\nMoon or dust.\n\nBmsRvPgXrgXXEn67RBBoAu3NCjDFE72Zb1nkMf7kpump",
+      "user": "mrpatrickschmitt",
+      "handle": "mr_pschmitt",
+      "time": "2026-02-01T04:37:12+00:00",
+      "link": "https://x.com/mr_pschmitt/status/2017819497134985518",
+      "tweet_url": "https://x.com/mr_pschmitt/status/2017819497134985518",
+      "likes": 33,
+      "reposts": 12,
+      "replies": 7
+    },
+    {
+      "text": "Thanks for this candle, CZ.\n\n#67coin is not just a 2025 trending, you mean right? https://t.co/A9fK1HoOw1",
+      "user": "\ud83d\udd75\ufe0fGEM DETECTER\ud83d\udd75\ufe0f",
+      "handle": "gem_detecter",
+      "time": "2026-01-15T16:50:56+00:00",
+      "link": "https://x.com/gem_detecter/status/2011843554294059466",
+      "tweet_url": "https://x.com/gem_detecter/status/2011843554294059466",
+      "likes": 43,
+      "reposts": 6,
+      "replies": 39
+    },
+    {
+      "text": "Gm 67whale CT \n\n#67Whale : $9.6 k MC and #67coin : $30 m MC\n\nWhen the CTO movement will start on 67Whale nothing should stop us.\n\nThe best projects come from CTOs\n\nCA :\n\n2TSC2PaXZDCkrBoxcNBiQyWh61dC9bRGqL8nKwfbpump\n\nBe ready to invade the internet 67 Whale Supporter. https://t.co",
+      "user": "CyrDoge",
+      "handle": "cyrdoge",
+      "time": "2026-01-15T08:51:03+00:00",
+      "link": "https://x.com/cyrdoge/status/2011722788755652728",
+      "tweet_url": "https://x.com/cyrdoge/status/2011722788755652728",
+      "likes": 24,
+      "reposts": 15,
+      "replies": 9
+    }
+  ],
+  "x_notifications": [
+    {
+      "id": "3726086017629471842",
+      "text": "It's over. It's code in your heart, in your soul. You will never be the same after 67.\n\n#67mindvirus",
+      "user": "",
+      "handle": "",
+      "link": "",
+      "time": "2026-03-04T01:04:23.172Z",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0
+    },
+    {
+      "id": "4965481619453659487",
+      "text": "When 67 on Chinese",
+      "user": "",
+      "handle": "",
+      "link": "",
+      "time": "2026-03-03T22:34:10.334Z",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0
+    },
+    {
+      "id": "4780387493253780684",
+      "text": "Already in. Already up.\n\n6 \n7",
+      "user": "",
+      "handle": "",
+      "link": "",
+      "time": "2026-03-03T13:07:35.980Z",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0
+    },
+    {
+      "id": "6065174400989761352",
+      "text": "Join us kingstaccz",
+      "user": "",
+      "handle": "",
+      "link": "",
+      "time": "2026-03-02T21:59:37.490Z",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0
+    },
+    {
+      "id": "909205826982791646",
+      "text": "Pause on 67",
+      "user": "",
+      "handle": "",
+      "link": "",
+      "time": "2026-03-02T16:34:52.109Z",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0
+    },
+    {
+      "id": "3405922706086456742",
+      "text": "Coded",
+      "user": "",
+      "handle": "",
+      "link": "",
+      "time": "2026-03-02T16:19:39.366Z",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0
+    },
+    {
+      "id": "498342045763499120",
+      "text": "More 67",
+      "user": "",
+      "handle": "",
+      "link": "",
+      "time": "2026-03-02T14:07:38.192Z",
+      "likes": 0,
+      "reposts": 0,
+      "replies": 0
+    }
+  ],
+  "x_best_48h": [
+    {
+      "text": "These pump fun coins are gaining traction! \n\n$BigTrout +120%\n$67 +67%\n$DOLAN +89%\n\nWhich one you holding?",
+      "handle": "67coinX",
+      "user": "The Official 67 Coin",
+      "time": "2026-02-07T00:00:00Z",
+      "link": "https://x.com/67coinX",
+      "likes": 291,
+      "reposts": 0,
+      "replies": 0
+    },
+    {
+      "text": "German influencers with millions on TikTok and other socials are starting to talk about $67",
+      "handle": "67coinX",
+      "user": "The Official 67 Coin",
+      "time": "2026-02-07T00:00:00Z",
+      "link": "https://x.com/67coinX",
+      "likes": 57,
+      "reposts": 0,
+      "replies": 0
+    }
+  ],
+  "_snapshot_7d": {
+    "twitter_followers": 1670,
+    "x_community_members": 9919,
+    "total_views_recent": 30682,
+    "total_likes_recent": 886,
+    "engagement_rate": 4.862,
+    "timestamp": 1772846314.1583,
+    "date": "2026-03-07"
+  },
+  "x_news_updated": "2026-03-07T02:45:14.859344+00:00",
+  "x_latest_updated": "2026-03-11T12:20:14.036174+00:00",
+  "x_popular_updated": "2026-03-11T00:35:19.302218+00:00"
+}

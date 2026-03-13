@@ -60,4 +60,3 @@ scripts/.tiktok_browser_profile/
 .presence_token
 state/x_storage_state.json
 state/*.json
-public/data.json
