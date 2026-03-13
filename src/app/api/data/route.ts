@@ -537,7 +537,9 @@ async function fetchYouTubeAnalytics() {
 }
 
 // ── Discord — live member & online count ──────────────────────────────────────
-const DISCORD_TOKEN  = process.env.DISCORD_TOKEN ?? ""
+const _RAW_DISCORD    = process.env.DISCORD_TOKEN ?? ""
+const DISCORD_TOKEN   = _RAW_DISCORD
+const DISCORD_AUTH    = _RAW_DISCORD.startsWith("Bot ") ? _RAW_DISCORD : `Bot ${_RAW_DISCORD}`
 const DISCORD_GUILD  = "1440077830456082545"
 const TG_BOT_TOKEN   = process.env.OFFICIAL67_BOT_TOKEN ?? process.env.TG_RAID_BOT_TOKEN ?? ""
 const TG_CHANNEL_ID  = "-1003158749697"
@@ -619,7 +621,7 @@ async function fetchDiscord(): Promise<{ members: number; online: number } | nul
     const res = await fetch(
       `https://discord.com/api/v10/guilds/${DISCORD_GUILD}?with_counts=true`,
       {
-        headers: { Authorization: `Bot ${DISCORD_TOKEN}`, "User-Agent": "Mozilla/5.0" },
+        headers: { Authorization: DISCORD_AUTH, "User-Agent": "Mozilla/5.0" },
         next: { revalidate: 60 },   // refresh every 60s for accurate online count
       }
     )
@@ -681,7 +683,7 @@ async function fetchDiscordActivity(): Promise<{
   top_contributors: { user: string; user_id: string; avatar: string; msg_count: number }[]
 } | null> {
   if (!DISCORD_TOKEN) return null
-  const headers = { Authorization: `Bot ${DISCORD_TOKEN}`, "User-Agent": "Mozilla/5.0" }
+  const headers = { Authorization: DISCORD_AUTH, "User-Agent": "Mozilla/5.0" }
 
   try {
     // ── 0. Fetch all channels + guild info + scheduled events in parallel ─────
