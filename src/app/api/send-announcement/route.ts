@@ -1,14 +1,10 @@
 import { NextRequest, NextResponse } from "next/server"
+import { getSecret } from "@/app/api/_lib/secrets"
 
-const TOKENS = {
-  announce: process.env.TG_ANNOUNCE_BOT_TOKEN!,
-  raid:     process.env.TG_RAID_BOT_TOKEN!,
-}
 const CHATS = {
   tg_main: "-1003158749697",
   tg_raid: "-1003708062172",
 }
-const DISCORD_BOT_TOKEN = process.env.DISCORD_BOT_TOKEN!
 const DISCORD_CHANNELS: Record<string, string> = {
   d_coin_announce:      "1458850588271050857",
   d_community_announce: "1458844490239578265",
@@ -35,10 +31,10 @@ async function sendXChat(text: string) {
   if (!res.ok) throw new Error("Supabase write failed")
 }
 
-async function sendDiscord(channelId: string, text: string) {
+async function sendDiscord(channelId: string, text: string, discordBotToken: string) {
   const res = await fetch(`https://discord.com/api/v10/channels/${channelId}/messages`, {
     method: "POST",
-    headers: { "Authorization": `Bot ${DISCORD_BOT_TOKEN}`, "Content-Type": "application/json" },
+    headers: { "Authorization": `Bot ${discordBotToken}`, "Content-Type": "application/json" },
     body: JSON.stringify({ content: text }),
   })
   const data = await res.json()
@@ -58,6 +54,17 @@ export async function POST(req: NextRequest) {
   const { body, bot, channels } = await req.json()
   if (!body?.trim()) return NextResponse.json({ error: "Message is empty" }, { status: 400 })
 
+  const [tgAnnounceToken, tgRaidToken, discordBotToken] = await Promise.all([
+    getSecret("TG_ANNOUNCE_BOT_TOKEN"),
+    getSecret("TG_RAID_BOT_TOKEN"),
+    getSecret("DISCORD_BOT_TOKEN"),
+  ])
+
+  const TOKENS: Record<string, string> = {
+    announce: tgAnnounceToken,
+    raid:     tgRaidToken,
+  }
+
   const token = TOKENS[bot as keyof typeof TOKENS]
   if (!token) return NextResponse.json({ error: "Invalid bot" }, { status: 400 })
 
@@ -76,7 +83,7 @@ export async function POST(req: NextRequest) {
     // Discord channels
     if (ch in DISCORD_CHANNELS) {
       try {
-        await sendDiscord(DISCORD_CHANNELS[ch], body.trim())
+        await sendDiscord(DISCORD_CHANNELS[ch], body.trim(), discordBotToken)
         results[ch] = "✅ Sent"
       } catch (e: unknown) {
         results[ch] = `❌ ${e instanceof Error ? e.message : "Discord error"}`

@@ -1,20 +1,19 @@
 import { NextResponse } from "next/server"
 import { createServerClient } from "@supabase/ssr"
 import { cookies } from "next/headers"
+import { getSecret } from "@/app/api/_lib/secrets"
 
-// Allowed Discord user IDs — only these users can access the dashboard
-const ALLOWED_USER_IDS = new Set(
-  (process.env.DASHBOARD_USER_IDS ?? "").split(",").filter(Boolean).concat([
-    "767811814557089802",  // Oscar
-    "788495124061487154",  // WJP
-    "1440075589557158100", // Jamie
-    "1444130836415905993", // Brandon
-    "965681608604647514",  // Gen
-    "201710326347988993",  // Crispy
-    "682831521396031498",  // Nick
-    "901472204745740298",  // N1
-  ])
-)
+// Hardcoded allowed Discord user IDs — team members with dashboard access
+const HARDCODED_USER_IDS = [
+  "767811814557089802",  // Oscar
+  "788495124061487154",  // WJP
+  "1440075589557158100", // Jamie
+  "1444130836415905993", // Brandon
+  "965681608604647514",  // Gen
+  "201710326347988993",  // Crispy
+  "682831521396031498",  // Nick
+  "901472204745740298",  // N1
+]
 
 export async function GET(req: Request) {
   const url = new URL(req.url)
@@ -51,6 +50,11 @@ export async function GET(req: Request) {
     console.error("Auth callback error:", error)
     return NextResponse.redirect(`${origin}/login?error=auth`)
   }
+
+  // Load any additional allowed IDs from secrets (comma-separated)
+  const extraIds = await getSecret("DASHBOARD_USER_IDS")
+  const extraList = extraIds.split(",").map(s => s.trim()).filter(Boolean)
+  const ALLOWED_USER_IDS = new Set([...HARDCODED_USER_IDS, ...extraList])
 
   // Check if user's Discord ID is in the allowed list
   const discordUserId = data.session.user?.user_metadata?.provider_id
