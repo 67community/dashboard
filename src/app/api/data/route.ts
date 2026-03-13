@@ -122,9 +122,9 @@ export async function GET() {
     exchange_volumes:     th.exchange_volumes ?? md?.exchange_volumes ?? [],
     biggest_trades:       th.biggest_trades ?? { biggest_buy_usd: 0, biggest_buy_tx: "", biggest_sell_usd: 0, biggest_sell_tx: "" },
     sentiment:            "Neutral",
-    volume_change_pct:    th.volume_change_pct    ?? null,
-    mcap_change_pct:      th.mcap_change_pct      ?? null,
-    liquidity_change_pct: th.liquidity_change_pct ?? null,
+    volume_change_pct:    th.volume_change_pct    ?? 0,
+    mcap_change_pct:      th.mcap_change_pct      ?? 0,
+    liquidity_change_pct: th.liquidity_change_pct ?? 0,
   }
 
   const out = {
