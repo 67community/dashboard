@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fetch Instagram #67coin posts via Playwright persistent Firefox profile → Supabase kv_store
+"""Fetch Instagram #67 posts via Playwright persistent Firefox profile → Supabase kv_store
 Login with 2FA, then scrape hashtag page.
 """
 import os, json, time, urllib.request
@@ -69,8 +69,8 @@ def main():
             print("  ✅ Already logged in (session active)")
 
         # Navigate to hashtag page
-        print("  Loading #67coin hashtag...")
-        page.goto("https://www.instagram.com/explore/tags/67coin/", wait_until="domcontentloaded", timeout=30000)
+        print("  Loading #67 hashtag...")
+        page.goto("https://www.instagram.com/explore/tags/67/", wait_until="domcontentloaded", timeout=30000)
         time.sleep(5)
 
         # Scroll to load more posts
