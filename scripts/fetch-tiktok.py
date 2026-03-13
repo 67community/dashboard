@@ -1,15 +1,13 @@
 #!/usr/bin/env python3
-"""Fetch TikTok @67coin videos via Playwright persistent Firefox profile → Supabase kv_store
-Run every 6h. If Cloudflare puzzle appears, solve manually, then script continues.
-"""
+"""Fetch #67 hashtag latest videos via Playwright → Supabase"""
 import os, json, time, urllib.request
 from pathlib import Path
 from dotenv import load_dotenv
-load_dotenv(Path(__file__).resolve().parent.parent / '.env')
+load_dotenv(Path("/Users/oscarbrendon/67agent-mission-control/.env"))
 
 SB_URL  = os.environ["SUPABASE_URL"]
 SB_KEY  = os.environ["SUPABASE_SERVICE_KEY"]
-PROFILE_DIR = str(Path(__file__).parent / ".tiktok_browser_profile")
+PROFILE_DIR = "/Users/oscarbrendon/67agent-mission-control/scripts/.tiktok_browser_profile"
 
 def sb_upsert(key, value):
     data = json.dumps({"key": key, "value": json.dumps(value)}).encode()
@@ -21,126 +19,94 @@ def sb_upsert(key, value):
 
 def main():
     from playwright.sync_api import sync_playwright
-    
-    print("🎬 TikTok scraper starting (Playwright + persistent profile)...")
-    
+
+    print("🎬 TikTok #67 hashtag scrape (180+ videos)...")
+
     with sync_playwright() as p:
         browser = p.firefox.launch_persistent_context(
-            PROFILE_DIR,
-            headless=False,
+            PROFILE_DIR, headless=False,
             viewport={"width": 1280, "height": 900},
             user_agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:120.0) Gecko/20100101 Firefox/120.0",
         )
-        
         page = browser.pages[0] if browser.pages else browser.new_page()
-        
-        # Navigate to profile
-        print("  Loading @67coin profile...")
-        page.goto("https://www.tiktok.com/@67coin", wait_until="domcontentloaded", timeout=30000)
-        
-        # Wait for CF if needed (user solves manually)
+        page.goto("https://www.tiktok.com/tag/67", wait_until="domcontentloaded", timeout=30000)
         time.sleep(5)
-        
-        # Check if CF challenge
-        if "challenge" in page.url or "captcha" in page.content().lower():
-            print("⚠️  Cloudflare puzzle detected — solve it manually!")
-            print("    Waiting up to 120 seconds...")
+
+        # CF check
+        if "challenge" in page.url or "captcha" in page.content().lower()[:2000]:
+            print("⚠️  CF puzzle — solve manually!")
             for i in range(24):
                 time.sleep(5)
-                if "67coin" in page.url:
-                    print("  ✅ Puzzle solved!")
-                    break
+                if "tag" in page.url:
+                    print("  ✅ Solved!"); break
             else:
-                print("  ❌ Timeout — puzzle not solved")
-                browser.close()
-                return
-        
-        # Wait for content to load
+                print("  ❌ Timeout"); browser.close(); return
+
         time.sleep(3)
-        
-        # Extract data from page
-        data = page.evaluate("""() => {
-            // Try to get SIGI_STATE or __UNIVERSAL_DATA
-            const scripts = document.querySelectorAll('script');
-            for (const s of scripts) {
-                if (s.id === '__UNIVERSAL_DATA_FOR_REHYDRATION__' || s.id === 'SIGI_STATE') {
-                    try { return JSON.parse(s.textContent); } catch(e) {}
-                }
-            }
-            return null;
-        }""")
-        
-        stats = {}
-        videos = []
-        
-        if data:
-            # Extract from __UNIVERSAL_DATA
-            default_scope = data.get("__DEFAULT_SCOPE__", {})
-            user_detail = default_scope.get("webapp.user-detail", {})
-            user_info = user_detail.get("userInfo", {})
-            stats = user_info.get("stats", {})
-            user = user_info.get("user", {})
-            
-            print(f"  Followers: {stats.get('followerCount')}, Videos: {stats.get('videoCount')}, Likes: {stats.get('heartCount')}")
-        
-        # Scroll to load videos
-        print("  Scrolling to load videos...")
-        for i in range(8):
+        print(f"  URL: {page.url}")
+
+        # Scroll to load 180+ videos
+        prev_count = 0
+        stall_count = 0
+        for i in range(60):
             page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
-            time.sleep(2)
-        
-        # Extract video elements
+            time.sleep(1.5)
+            count = page.evaluate("() => document.querySelectorAll('a[href*=\"/video/\"]').length")
+            if i % 5 == 0: print(f"  Scroll {i}: {count} videos")
+            if count >= 180:
+                print(f"  ✅ {count} videos!"); break
+            if count == prev_count:
+                stall_count += 1
+                if stall_count >= 5:
+                    print(f"  Stalled at {count}"); break
+            else: stall_count = 0
+            prev_count = count
+
+        # Extract
         video_data = page.evaluate("""() => {
-            const items = document.querySelectorAll('[data-e2e="user-post-item"], [class*="DivItemContainer"]');
-            const results = [];
-            items.forEach(item => {
-                const link = item.querySelector('a');
-                const desc = item.querySelector('[class*="title"], [class*="desc"], [data-e2e="video-desc"]');
-                const views = item.querySelector('[class*="video-count"], [data-e2e="video-views"]');
-                if (link) {
-                    results.push({
-                        url: link.href,
-                        desc: desc ? desc.textContent.trim().slice(0, 120) : '',
-                        views_text: views ? views.textContent.trim() : '0',
-                        thumbnail: (item.querySelector('img') || {}).src || '',
-                    });
-                }
+            const results = []; const seen = new Set();
+            document.querySelectorAll('a[href*="/video/"]').forEach(link => {
+                const href = link.getAttribute('href');
+                if (!href || seen.has(href)) return;
+                seen.add(href);
+                const img = link.querySelector('img');
+                const viewsEl = link.querySelector('[data-e2e="video-views"], strong');
+                results.push({
+                    url: href.startsWith('http') ? href : 'https://www.tiktok.com' + href,
+                    thumbnail: img ? img.src : '',
+                    views_text: viewsEl ? viewsEl.textContent.trim() : '0',
+                    alt: img ? (img.alt || '') : '',
+                });
             });
             return results;
         }""")
-        
-        for v in (video_data or [])[:30]:
-            vid_id = v.get("url", "").split("/")[-1].split("?")[0]
-            # Parse views text (e.g., "1.2M", "45K", "123")
-            vt = v.get("views_text", "0").replace(",", "")
+
+        print(f"  Extracted {len(video_data)} videos")
+
+        videos = []
+        for v in video_data:
+            vid_id = v.get("url","").split("/video/")[-1].split("?")[0]
+            vt = v.get("views_text","0").replace(",","")
             try:
-                if "M" in vt: view_count = int(float(vt.replace("M","")) * 1000000)
-                elif "K" in vt: view_count = int(float(vt.replace("K","")) * 1000)
-                else: view_count = int(vt) if vt.isdigit() else 0
-            except: view_count = 0
-            
+                if "M" in vt: vc = int(float(vt.replace("M",""))*1000000)
+                elif "K" in vt: vc = int(float(vt.replace("K",""))*1000)
+                elif vt.isdigit(): vc = int(vt)
+                else: vc = 0
+            except: vc = 0
             videos.append({
-                "id": vid_id,
-                "desc": v.get("desc", ""),
-                "url": v.get("url", ""),
-                "thumbnail": v.get("thumbnail", ""),
-                "views": view_count,
+                "id": vid_id, "desc": v.get("alt","")[:120],
+                "url": v.get("url",""), "thumbnail": v.get("thumbnail",""), "views": vc,
             })
-        
+
         browser.close()
-    
+
     result = {
-        "followers": stats.get("followerCount", 0),
-        "following": stats.get("followingCount", 0),
-        "video_count": stats.get("videoCount", 0),
-        "total_likes": stats.get("heartCount", 0),
-        "nickname": "67coin",
+        "hashtag": "67",
         "videos": videos,
         "updated_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
     }
-    
     sb_upsert("tiktok_spotlight", result)
-    print(f"✅ Supabase: tiktok_spotlight ({len(videos)} videos, {stats.get('followerCount')} followers)")
+    print(f"✅ Supabase: tiktok_spotlight ({len(videos)} videos from #67)")
 
 if __name__ == "__main__":
     main()
