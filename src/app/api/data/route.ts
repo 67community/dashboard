@@ -213,6 +213,8 @@ export async function GET() {
     x_popular:           (sbXPopular   as unknown[]) ?? static_?.x_popular            ?? [],
     map_features:        (sbMapAdmin   as unknown)   ?? static_?.map_features         ?? { type: "FeatureCollection", features: [] },
     xchat_queue:         (sbXChatQueue as unknown[]) ?? [],
+    discord_activity:    (sbDiscordActivity as Record<string,unknown>) ?? static_?.discord_activity ?? {},
+    x_feed:              (sbXRecent as unknown[]) ?? static_?.x_feed ?? [],
   }
 
   return NextResponse.json(out, { headers: { "Cache-Control": "no-store, max-age=0" } })
