@@ -327,6 +327,36 @@ export function TopBar() {
               </div>
 
               <div className="topbar-avatars"><TeamAvatarGroup /></div>
+
+              {/* Logout */}
+              <form action="/api/auth/logout" method="POST">
+                <button
+                  type="submit"
+                  title="Sign out"
+                  style={{
+                    background: "none",
+                    border: "1px solid rgba(255,255,255,0.1)",
+                    borderRadius: 8,
+                    cursor: "pointer",
+                    padding: "5px 10px",
+                    color: "rgba(255,255,255,0.4)",
+                    fontSize: "0.75rem",
+                    fontWeight: 500,
+                    letterSpacing: "0.02em",
+                    transition: "all 0.15s",
+                  }}
+                  onMouseEnter={e => {
+                    e.currentTarget.style.borderColor = "rgba(239,68,68,0.4)"
+                    e.currentTarget.style.color = "#EF4444"
+                  }}
+                  onMouseLeave={e => {
+                    e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)"
+                    e.currentTarget.style.color = "rgba(255,255,255,0.4)"
+                  }}
+                >
+                  Sign out
+                </button>
+              </form>
             </div>
 
           </div>
