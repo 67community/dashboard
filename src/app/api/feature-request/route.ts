@@ -3,7 +3,7 @@ import { callAI } from "@/app/api/_lib/ai-call"
 
 async function notifyTG(what: string, why: string, how?: string) {
   try {
-    await fetch("https://api.telegram.org/bot7935871592:AAGJjybAZqG3MPyM96FYmZ6CJYMc-rdhWY4/sendMessage", {
+    await fetch(`https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
