@@ -9,8 +9,8 @@ import json, time, requests, signal, sys
 from pathlib import Path
 from datetime import datetime, timezone
 
-SESSION_FILE = Path("/Users/oscarbrendon/.openclaw/workspace/mission-control/scripts/67coinx_session.json")
-DATA_FILE    = Path("/Users/oscarbrendon/67agent-mission-control/public/data.json")
+SESSION_FILE = Path("os.environ.get("WORKSPACE", os.path.dirname(os.path.abspath(__file__)))/scripts/67coinx_session.json")
+DATA_FILE    = Path("os.environ.get("PROJECT_DIR", os.path.dirname(os.path.dirname(os.path.abspath(__file__))))/public/data.json")
 POLL_SECS    = 60
 
 def load_cookies():

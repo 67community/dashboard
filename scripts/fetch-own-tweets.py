@@ -5,8 +5,8 @@ from pathlib import Path
 from playwright.sync_api import sync_playwright
 from datetime import datetime, timezone, timedelta
 
-SESSION   = Path("/Users/oscarbrendon/.openclaw/workspace/mission-control/scripts/67coinx_session.json")
-DATA_JSON = Path("/Users/oscarbrendon/67agent-mission-control/public/data.json")
+SESSION   = Path("os.environ.get("WORKSPACE", os.path.dirname(os.path.abspath(__file__)))/scripts/67coinx_session.json")
+DATA_JSON = Path("os.environ.get("PROJECT_DIR", os.path.dirname(os.path.dirname(os.path.abspath(__file__))))/public/data.json")
 
 storage = json.loads(SESSION.read_text())
 now     = datetime.now(timezone.utc)

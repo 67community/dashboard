@@ -5,7 +5,7 @@ from pathlib import Path
 
 SB_URL = os.environ["SUPABASE_URL"]
 SB_KEY = os.environ["SUPABASE_SERVICE_KEY"]
-PROFILE = Path("/Users/oscarbrendon/67agent-mission-control/scripts/.instagram_profile")
+PROFILE = Path("os.environ.get("PROJECT_DIR", os.path.dirname(os.path.dirname(os.path.abspath(__file__))))/scripts/.instagram_profile")
 
 def sb_upsert(key, value):
     body = json.dumps({"key": key, "value": value}).encode()

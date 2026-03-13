@@ -7,9 +7,9 @@ import json, re
 from pathlib import Path
 from playwright.sync_api import sync_playwright
 
-PROXY    = {"server": os.environ.get("PROXY_URL", "http://gw.dataimpulse.com:823"), "username": os.environ.get("PROXY_USER", ""), "password": os.environ.get("PROXY_PASS", "")}
-SESSION  = Path("/Users/oscarbrendon/.openclaw/workspace/mission-control/scripts/67coinx_session.json")
-DATA_FILE = Path("/Users/oscarbrendon/.openclaw/workspace/mission-control/public/data.json")
+PROXY    = {"server": os.environ.get("PROXY_URL", ""), "username": os.environ.get("PROXY_USER", ""), "password": os.environ.get("PROXY_PASS", "")}
+SESSION  = Path("os.environ.get("WORKSPACE", os.path.dirname(os.path.abspath(__file__)))/scripts/67coinx_session.json")
+DATA_FILE = Path("os.environ.get("WORKSPACE", os.path.dirname(os.path.abspath(__file__)))/public/data.json")
 
 storage = json.loads(SESSION.read_text())
 
