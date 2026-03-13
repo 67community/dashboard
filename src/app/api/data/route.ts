@@ -539,7 +539,7 @@ async function fetchYouTubeAnalytics() {
 // ── Discord — live member & online count ──────────────────────────────────────
 const _RAW_DISCORD    = process.env.DISCORD_TOKEN ?? ""
 const DISCORD_TOKEN   = _RAW_DISCORD
-const DISCORD_AUTH    = _RAW_DISCORD.startsWith("Bot ") ? _RAW_DISCORD : `Bot ${_RAW_DISCORD}`
+const DISCORD_AUTH    = _RAW_DISCORD
 const DISCORD_GUILD  = "1440077830456082545"
 const TG_BOT_TOKEN   = process.env.OFFICIAL67_BOT_TOKEN ?? process.env.TG_RAID_BOT_TOKEN ?? ""
 const TG_CHANNEL_ID  = "-1003158749697"
