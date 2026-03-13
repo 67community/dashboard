@@ -619,7 +619,7 @@ async function fetchDiscord(): Promise<{ members: number; online: number } | nul
     const res = await fetch(
       `https://discord.com/api/v10/guilds/${DISCORD_GUILD}?with_counts=true`,
       {
-        headers: { Authorization: DISCORD_TOKEN, "User-Agent": "Mozilla/5.0" },
+        headers: { Authorization: `Bot ${DISCORD_TOKEN}`, "User-Agent": "Mozilla/5.0" },
         next: { revalidate: 60 },   // refresh every 60s for accurate online count
       }
     )
@@ -681,7 +681,7 @@ async function fetchDiscordActivity(): Promise<{
   top_contributors: { user: string; user_id: string; avatar: string; msg_count: number }[]
 } | null> {
   if (!DISCORD_TOKEN) return null
-  const headers = { Authorization: DISCORD_TOKEN, "User-Agent": "Mozilla/5.0" }
+  const headers = { Authorization: `Bot ${DISCORD_TOKEN}`, "User-Agent": "Mozilla/5.0" }
 
   try {
     // ── 0. Fetch all channels + guild info + scheduled events in parallel ─────
