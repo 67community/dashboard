@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-03-02T11:30:01.288334Z",
+  "last_updated": "2026-03-14T01:55:00Z",
   "token_health": {
     "price": 0.001376,
     "price_change_m5": 0.0,
@@ -191,12 +191,12 @@
     "follower_change_3d_snap": 28
   },
   "community": {
-    "discord_members": 1449,
+    "discord_members": 0,
     "active_7d": 1870,
     "new_joins_24h": 10,
     "open_tickets": 3,
     "unanswered_posts": 7,
-    "telegram_members": 2432,
+    "telegram_members": 0,
     "watchlist_count": 8262,
     "top_exchanges": [
       {
@@ -244,7 +244,7 @@
     ],
     "sentiment_up_pct": 50.0,
     "sentiment_down_pct": 50.0,
-    "online_now": 76,
+    "online_now": 0,
     "discord_delta_24h": 0,
     "telegram_delta_24h": 0,
     "watchlist_delta_24h": 0,
