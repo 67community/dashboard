@@ -2,8 +2,6 @@ import { NextResponse } from "next/server"
 import { createServerClient } from "@supabase/ssr"
 import { cookies } from "next/headers"
 
-const DISCORD_SERVER_ID = "1238523987413274654"
-
 // Allowed Discord user IDs — only these users can access the dashboard
 const ALLOWED_USER_IDS = new Set(
   (process.env.DASHBOARD_USER_IDS ?? "").split(",").filter(Boolean).concat([
@@ -54,49 +52,20 @@ export async function GET(req: Request) {
     return NextResponse.redirect(`${origin}/login?error=auth`)
   }
 
-  // Check Discord guild membership using the provider access token
-  const discordAccessToken = data.session.provider_token
-  if (!discordAccessToken) {
-    return NextResponse.redirect(`${origin}/login?error=no_token`)
-  }
-
-  let isMember = false
-  try {
-    const guildsRes = await fetch("https://discord.com/api/users/@me/guilds", {
-      headers: { Authorization: `Bearer ${discordAccessToken}` },
-    })
-
-    if (guildsRes.ok) {
-      const guilds: Array<{ id: string }> = await guildsRes.json()
-      isMember = guilds.some((g) => g.id === DISCORD_SERVER_ID)
-    } else {
-      console.error("Discord guilds API error:", guildsRes.status)
-    }
-  } catch (e) {
-    console.error("Guild check failed:", e)
-  }
-
-  if (!isMember) {
-    await supabase.auth.signOut()
-    return NextResponse.redirect(`${origin}/login?error=guild`)
-  }
-
   // Check if user's Discord ID is in the allowed list
   const discordUserId = data.session.user?.user_metadata?.provider_id
-    ?? data.session.user?.identities?.[0]?.id
+    ?? data.session.user?.user_metadata?.sub
     ?? ""
-  
+
   if (!ALLOWED_USER_IDS.has(discordUserId)) {
+    console.error("User not allowed:", discordUserId)
     await supabase.auth.signOut()
     return NextResponse.redirect(`${origin}/login?error=not_allowed`)
   }
 
-  // Store verification in user metadata so middleware can fast-check
+  // Store verification in user metadata
   await supabase.auth.updateUser({
-    data: {
-      guild_verified: true,
-      guild_id: DISCORD_SERVER_ID,
-    },
+    data: { dashboard_authorized: true },
   })
 
   return NextResponse.redirect(`${origin}${next}`)

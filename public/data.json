@@ -552,12 +552,12 @@
     "_source": "coinmarketcap"
   },
   "_snapshot_24h": {
-    "timestamp": "2026-03-12T18:30:00.798173+00:00",
+    "timestamp": "2026-03-13T16:30:28.633778+00:00",
     "twitter_followers": 1698,
     "x_community_members": 10028,
     "discord_members": 1449,
     "telegram_members": 2432,
-    "holders": 16605
+    "holders": 16586
   },
   "team_presence": {
     "767811814557089802": "idle",

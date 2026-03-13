@@ -2,8 +2,6 @@ import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
 import { createServerClient } from "@supabase/ssr"
 
-const DISCORD_SERVER_ID = "1238523987413274654"
-
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl
 
@@ -50,17 +48,13 @@ export async function middleware(req: NextRequest) {
     return NextResponse.redirect(loginUrl)
   }
 
-  // Check guild membership flag stored in session user metadata
-  // This is set by the callback route after Discord API check
-  const guildVerified = session.user.user_metadata?.guild_verified === true
-  const guildId = session.user.user_metadata?.guild_id
+  // Check dashboard_authorized flag (set by callback route)
+  const authorized = session.user.user_metadata?.dashboard_authorized === true
 
-  if (!guildVerified || guildId !== DISCORD_SERVER_ID) {
-    // Re-verify on every request would be expensive; we rely on callback setting metadata.
-    // If metadata missing, force re-login.
+  if (!authorized) {
     const loginUrl = req.nextUrl.clone()
     loginUrl.pathname = "/login"
-    loginUrl.searchParams.set("error", "guild")
+    loginUrl.searchParams.set("error", "not_allowed")
     return NextResponse.redirect(loginUrl)
   }
 
