@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server"
 import { createServerClient } from "@supabase/ssr"
 import { cookies } from "next/headers"
-import { getSecret } from "@/app/api/_lib/secrets"
 
 // Hardcoded allowed Discord user IDs — team members with dashboard access
 const HARDCODED_USER_IDS = [
@@ -51,8 +50,8 @@ export async function GET(req: Request) {
     return NextResponse.redirect(`${origin}/login?error=auth`)
   }
 
-  // Load any additional allowed IDs from secrets (comma-separated)
-  const extraIds = await getSecret("DASHBOARD_USER_IDS")
+  // Load any additional allowed IDs from env (comma-separated)
+  const extraIds = process.env.DASHBOARD_USER_IDS ?? ""
   const extraList = extraIds.split(",").map(s => s.trim()).filter(Boolean)
   const ALLOWED_USER_IDS = new Set([...HARDCODED_USER_IDS, ...extraList])
 

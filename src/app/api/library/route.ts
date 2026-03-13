@@ -1,17 +1,16 @@
 import { NextResponse } from "next/server"
-import { getSecret } from "@/app/api/_lib/secrets"
-
 const MEME_CHAT = "-1003343009902"
 
-async function getBase(): Promise<string> {
-  const token = await getSecret("TG_ANNOUNCE_BOT_TOKEN")
-  return `https://api.telegram.org/bot${token}`
+const TG_ANNOUNCE_BOT_TOKEN = process.env.TG_ANNOUNCE_BOT_TOKEN
+
+function getBase(): string {
+  return `https://api.telegram.org/bot${TG_ANNOUNCE_BOT_TOKEN}`
 }
 
 async function getFileUrl(file_id: string): Promise<string | null> {
   try {
-    const BASE = await getBase()
-    const token = await getSecret("TG_ANNOUNCE_BOT_TOKEN")
+    const BASE = getBase()
+    const token = TG_ANNOUNCE_BOT_TOKEN
     const r = await fetch(`${BASE}/getFile?file_id=${file_id}`)
     const d = await r.json()
     if (!d.ok) return null
@@ -24,7 +23,7 @@ export async function GET(req: Request) {
   const offsetId = searchParams.get("offset") ?? "0"
 
   try {
-    const BASE = await getBase()
+    const BASE = getBase()
     // getHistory via bot — use getChatHistory workaround with forwardMessages
     // Telegram Bot API doesn't have getHistory, use updates approach
     // Instead: fetch from our prebuilt JSON if available, else return empty

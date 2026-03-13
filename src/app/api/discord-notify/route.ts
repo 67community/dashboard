@@ -1,10 +1,9 @@
 import { NextResponse } from "next/server"
-import { getSecret } from "@/app/api/_lib/secrets"
 
 export async function POST(req: Request) {
-  const webhookUrl = await getSecret("DISCORD_WEBHOOK_URL")
+  const webhookUrl = process.env.DISCORD_WEBHOOK_URL
   if (!webhookUrl) {
-    return NextResponse.json({ ok: false, reason: "DISCORD_WEBHOOK_URL not configured in secrets" })
+    return NextResponse.json({ ok: false, reason: "DISCORD_WEBHOOK_URL not configured" })
   }
 
   const { message, type } = await req.json()

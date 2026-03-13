@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server"
-import { getSecret } from "@/app/api/_lib/secrets"
 
 const CHATS = {
   tg_main: "-1003158749697",
@@ -54,11 +53,9 @@ export async function POST(req: NextRequest) {
   const { body, bot, channels } = await req.json()
   if (!body?.trim()) return NextResponse.json({ error: "Message is empty" }, { status: 400 })
 
-  const [tgAnnounceToken, tgRaidToken, discordBotToken] = await Promise.all([
-    getSecret("TG_ANNOUNCE_BOT_TOKEN"),
-    getSecret("TG_RAID_BOT_TOKEN"),
-    getSecret("DISCORD_BOT_TOKEN"),
-  ])
+  const tgAnnounceToken = process.env.TG_ANNOUNCE_BOT_TOKEN ?? ""
+  const tgRaidToken = process.env.TG_RAID_BOT_TOKEN ?? ""
+  const discordBotToken = process.env.DISCORD_TOKEN ?? ""
 
   const TOKENS: Record<string, string> = {
     announce: tgAnnounceToken,

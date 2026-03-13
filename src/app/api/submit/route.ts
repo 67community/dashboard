@@ -1,11 +1,10 @@
 import { NextResponse } from "next/server"
-import { getSecret } from "@/app/api/_lib/secrets"
 
 export async function POST(req: Request) {
   const { title, platform, url, handle, note } = await req.json()
   if (!title) return NextResponse.json({ error: "Missing title" }, { status: 400 })
 
-  const webhookUrl = await getSecret("DISCORD_WEBHOOK_URL")
+  const webhookUrl = process.env.DISCORD_WEBHOOK_URL
   const platformEmoji: Record<string, string> = {
     tiktok:"🎵", instagram:"📸", youtube:"▶️", x:"𝕏", reddit:"🤖", news:"📰", irl:"📍", other:"⭐",
   }

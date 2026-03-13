@@ -1,7 +1,5 @@
 import { NextResponse } from "next/server"
 import { callAIRaw, resolveAIConfig, type AIProvider } from "@/app/api/_lib/ai-call"
-import { getSecret } from "@/app/api/_lib/secrets"
-
 // ── Types ─────────────────────────────────────────────────────────────────────
 
 interface DiscoveredTarget {
@@ -18,7 +16,7 @@ interface DiscoveredTarget {
 // ── YouTube search ────────────────────────────────────────────────────────────
 
 async function searchYouTube(query: string, type: "creator" | "music"): Promise<DiscoveredTarget[]> {
-  const apiKey = await getSecret("YOUTUBE_API_KEY")
+  const apiKey = process.env.YOUTUBE_API_KEY
   if (!apiKey) return []
 
   try {
