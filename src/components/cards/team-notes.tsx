@@ -373,10 +373,27 @@ export function TeamNotesCard() {
   // ── Meeting state ───────────────────────────────────────────────────────────
   const MEETINGS = [
     {
+      date: "2026-03-14",
+      label: "Discord Voice — March 14, 2026",
+      duration: "41:25",
+      audio: "/meetings/meeting-2026-03-14.mp3",
+      transcript: "/meetings/2026-03-14-team-meeting.md",
+      summary: [
+        "Season 2 vision: Give Power to the Youth — 67 becomes crypto infrastructure for youth",
+        "67 Market: Amazon-style niche marketplace for Roblox levels, games, apps, merch — 30% cut to treasury",
+        "Crypto payment infrastructure (WJP built over 1 year) — Stripe to crypto treasury flow",
+        "Open source strategy: public GitHub, anyone can build on top — white-label tools",
+        "Staking mechanism: lock coin for week/3mo/year — supply control without burning",
+        "Treasury at ~$5K, 1.5-2 weeks runway — need speculation to drive volume up",
+        "Content direction: stop reposting memes, paint vision publicly, build mystery",
+      ]
+    },
+    {
       date: "2026-03-10",
       label: "Discord Voice — March 10, 2026",
       duration: "38:45",
       audio: "https://oqqwwccercxiwtyedwqm.supabase.co/storage/v1/object/public/meetings/meeting-2026-03-10.mp3",
+      transcript: null as string | null,
       summary: [
         "Content pipeline: automate finding 67 videos from TikTok/Instagram/X — not just hand gestures, special/meaningful content",
         "Use Claude for outreach: auto-send 50 intro emails to trending TikTokers every Monday",
@@ -532,6 +549,15 @@ export function TeamNotesCard() {
                 </div>
               ))}
             </div>
+            {m.transcript && (
+              <a href={m.transcript} download
+                style={{ display:"inline-flex", alignItems:"center", gap:6, marginTop:8, padding:"6px 12px",
+                  borderRadius:8, border:"1.5px solid rgba(124,58,237,0.25)", background:"rgba(124,58,237,0.06)",
+                  color:"#7C3AED", fontSize:"0.6875rem", fontWeight:700, textDecoration:"none", cursor:"pointer",
+                  width:"fit-content" }}>
+                Download Transcript
+              </a>
+            )}
           </div>
         ))}
       </div>
