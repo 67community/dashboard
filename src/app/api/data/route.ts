@@ -51,6 +51,8 @@ export async function GET() {
     sbXRaidFeed,
     sbTeamPresence,
     sbMapAdmin,
+    sbOfficialTweets,
+    sbCommunityTweets,
     sbXChatQueue,
   ] = await Promise.all([
     sbGet("x_recent"),
@@ -72,6 +74,8 @@ export async function GET() {
     sbGet("x_raid_feed"),
     sbGet("team_presence"),
     sbGet("map_admin"),
+    sbGet("official_tweets"),
+    sbGet("community_tweets"),
     sbGet("xchat_queue"),
   ])
 
@@ -132,6 +136,11 @@ export async function GET() {
     token_health,
     social_pulse: (() => {
       const sp = static_?.social_pulse ?? { twitter_followers: 0, follower_change_24h: 0, posting_streak_days: 0, engagement_rate: 0, avg_engagement: 0, total_engagement_7d: 0, best_content_type: "tweet", content_type_stats: {} }
+      const ot = sbOfficialTweets as Record<string, unknown> | null
+      const ct = sbCommunityTweets as Record<string, unknown> | null
+      if (ot?.best_tweet_2d) sp.best_tweet_2d = ot.best_tweet_2d as typeof sp.best_tweet_2d
+      if (ot?.best_tweet_week) sp.best_tweet_week = ot.best_tweet_week as typeof sp.best_tweet_week
+      if (ct?.community_tweets) sp.community_tweets = ct.community_tweets as typeof sp.community_tweets
       const xf = (sbXFollowers as Record<string, unknown> | null)?.x_followers ?? sc?.x_followers
       if (xf) sp.twitter_followers = xf
       const cur     = sp.twitter_followers ?? 0
