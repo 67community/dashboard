@@ -376,7 +376,7 @@ export function TeamNotesCard() {
       date: "2026-03-14",
       label: "Discord Voice — March 14, 2026",
       duration: "41:25",
-      audio: "/meetings/meeting-2026-03-14.mp3",
+      audio: "https://oqqwwccercxiwtyedwqm.supabase.co/storage/v1/object/public/meetings/meeting-2026-03-14.mp3",
       transcript: "/meetings/2026-03-14-team-meeting.md",
       summary: [
         "Season 2 vision: Give Power to the Youth — 67 becomes crypto infrastructure for youth",
@@ -475,25 +475,24 @@ export function TeamNotesCard() {
         </div>
       )}
 
-      {/* Meeting Recordings preview */}
+      {/* Meeting Recordings preview — latest only */}
       <div style={{ borderTop:"1px solid var(--separator)", paddingTop:10, position:"relative", zIndex:10 }} onClick={e => e.stopPropagation()}>
-        <p style={{ fontSize:"0.5625rem", fontWeight:800, color:"var(--secondary)", textTransform:"uppercase", letterSpacing:"0.08em", margin:"0 0 6px" }}>🎙️ Meeting Recordings</p>
+        <p style={{ fontSize:"0.5625rem", fontWeight:800, color:"var(--secondary)", textTransform:"uppercase", letterSpacing:"0.08em", margin:"0 0 6px" }}>Meeting Recordings</p>
         <div style={{ background:"rgba(124,58,237,0.06)", border:"1px solid rgba(124,58,237,0.18)", borderRadius:10, padding:"8px 10px" }}>
-          <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", gap:10, marginBottom:8 }}>
+          <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", gap:10, marginBottom:6 }}>
             <div>
-              <p style={{ margin:0, fontSize:"0.6875rem", fontWeight:700, color:"var(--foreground)" }}>Discord Voice — March 10, 2026</p>
+              <p style={{ margin:0, fontSize:"0.6875rem", fontWeight:700, color:"var(--foreground)" }}>{MEETINGS[0].label}</p>
               <p style={{ margin:"2px 0 0", fontSize:"0.5rem", color:"var(--tertiary)" }}>
-                {Math.floor(meetingTime/60)}:{String(Math.floor(meetingTime%60)).padStart(2,"0")} / 38:45
+                {Math.floor(meetingTime/60)}:{String(Math.floor(meetingTime%60)).padStart(2,"0")} / {MEETINGS[0].duration}
               </p>
             </div>
             <button onClick={(e) => { e.stopPropagation(); e.preventDefault(); toggleMeeting(MEETINGS[0].audio) }}
-              style={{ width:40, height:40, borderRadius:99, border:"none", cursor:"pointer", background:"#7C3AED", color:"#fff", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0, fontSize:14, position:"relative", zIndex:20 }}>
+              style={{ width:36, height:36, borderRadius:99, border:"none", cursor:"pointer", background:"#7C3AED", color:"#fff", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0, fontSize:12, position:"relative", zIndex:20 }}>
               {meetingPlaying ? "⏸" : "▶"}
             </button>
           </div>
-          {/* Seekable progress bar */}
           <div
-            style={{ height:6, background:"rgba(124,58,237,0.15)", borderRadius:99, cursor:"pointer", position:"relative" }}
+            style={{ height:4, background:"rgba(124,58,237,0.15)", borderRadius:99, cursor:"pointer", position:"relative" }}
             onClick={(e) => {
               if (!meetingAudio) return
               const rect = (e.currentTarget as HTMLDivElement).getBoundingClientRect()
