@@ -387,21 +387,6 @@ export function TeamNotesCard() {
         "Treasury at ~$5K, 1.5-2 weeks runway — need speculation to drive volume up",
         "Content direction: stop reposting memes, paint vision publicly, build mystery",
       ]
-    },
-    {
-      date: "2026-03-10",
-      label: "Discord Voice — March 10, 2026",
-      duration: "38:45",
-      audio: "https://oqqwwccercxiwtyedwqm.supabase.co/storage/v1/object/public/meetings/meeting-2026-03-10.mp3",
-      transcript: null as string | null,
-      summary: [
-        "Content pipeline: automate finding 67 videos from TikTok/Instagram/X — not just hand gestures, special/meaningful content",
-        "Use Claude for outreach: auto-send 50 intro emails to trending TikTokers every Monday",
-        "Brandon to post job listings on 15+ platforms using Claude — moderator candidate found ($200/wk)",
-        "Anti-spam automation requested — auto-detect + ban in Discord & X Community",
-        "Meeting recordings should auto-generate summaries + task lists",
-        "Phase 2 of Mission Control starting — all team members should use dashboard daily",
-      ]
     }
   ]
 
