@@ -25,7 +25,7 @@ SEEN_DB_PATH        = STATE_DIR / "seen_hashes.json"
 # Mission Control feed — JSON file read by /api/raid-feed
 FEED_PATH = Path(os.getenv(
     "RAID_FEED_PATH",
-    "os.environ.get("PROJECT_DIR", os.path.dirname(os.path.dirname(os.path.abspath(__file__))))/x_notif_feed.json"
+    os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "x_notif_feed.json")
 ))
 
 FIREFOX_NIGHTLY_PATH = os.getenv("FIREFOX_NIGHTLY_PATH", r"C:\Program Files\Firefox Nightly\firefox.exe")
