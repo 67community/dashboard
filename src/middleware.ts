@@ -41,6 +41,15 @@ export async function middleware(req: NextRequest) {
 
   const { data: { session } } = await supabase.auth.getSession()
 
+  // Check Telegram session first
+  const tgSession = req.cookies.get("tg_session")?.value
+  if (tgSession) {
+    try {
+      const tg = JSON.parse(tgSession)
+      if (tg.authorized === true) return response
+    } catch {}
+  }
+
   if (!session) {
     const loginUrl = req.nextUrl.clone()
     loginUrl.pathname = "/login"
