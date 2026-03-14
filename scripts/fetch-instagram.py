@@ -7,7 +7,7 @@ load_dotenv(Path("/Users/oscarbrendon/67agent-mission-control/.env"))
 
 SB_URL  = os.environ["SUPABASE_URL"]
 SB_KEY  = os.environ["SUPABASE_SERVICE_KEY"]
-IG_USER = os.environ.get("IG_USERNAME", "")
+IG_USER = os.environ.get("IG_USERNAME", "bawosay454")
 IG_PASS = os.environ.get("IG_PASSWORD", "")
 IG_2FA_SEED = os.environ.get("IG_2FA_SEED", "")
 PROFILE_DIR = "/Users/oscarbrendon/67agent-mission-control/scripts/.instagram_browser_profile"
