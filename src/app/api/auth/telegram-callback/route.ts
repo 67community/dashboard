@@ -2,18 +2,30 @@ import { NextResponse } from "next/server"
 import { cookies } from "next/headers"
 import crypto from "crypto"
 
-// Allowed Telegram user IDs — same team members
-// To find your Telegram ID: message @userinfobot on Telegram
-const ALLOWED_TG_IDS = new Set([
-  // Add team Telegram IDs here as strings
-  // e.g., "123456789"
-])
+// Check if user is a member of the mod group
+const MOD_GROUP_ID = "-1003681688688"
 
-// Also allow by Discord ID mapping — env var TG_ALLOWED_IDS (comma-separated)
-function getAllowedIds(): Set<string> {
+async function isGroupMember(tgUserId: string): Promise<boolean> {
+  // First check env whitelist
   const extra = process.env.TG_ALLOWED_IDS ?? ""
   const extraList = extra.split(",").map(s => s.trim()).filter(Boolean)
-  return new Set([...ALLOWED_TG_IDS, ...extraList])
+  if (extraList.length > 0 && extraList.includes(tgUserId)) return true
+
+  // Then check mod group membership via bot API
+  const botToken = process.env.TELEGRAM_BOT_TOKEN
+  if (!botToken) return false
+
+  try {
+    const res = await fetch(
+      `https://api.telegram.org/bot${botToken}/getChatMember?chat_id=${MOD_GROUP_ID}&user_id=${tgUserId}`
+    )
+    const data = await res.json()
+    if (!data.ok) return false
+    const status = data.result?.status
+    return ["creator", "administrator", "member", "restricted"].includes(status)
+  } catch {
+    return false
+  }
 }
 
 function verifyTelegramAuth(params: Record<string, string>, botToken: string): boolean {
@@ -64,10 +76,10 @@ export async function GET(req: Request) {
   const tgUsername = params.username ?? ""
   const tgFirstName = params.first_name ?? ""
 
-  // Check whitelist
-  const allowed = getAllowedIds()
-  if (allowed.size > 0 && !allowed.has(tgUserId)) {
-    console.error("Telegram user not allowed:", tgUserId, tgUsername)
+  // Check mod group membership
+  const isMember = await isGroupMember(tgUserId)
+  if (!isMember) {
+    console.error("Telegram user not in mod group:", tgUserId, tgUsername)
     return NextResponse.redirect(`${origin}/login?error=tg_not_allowed`)
   }
 
