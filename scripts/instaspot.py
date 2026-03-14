@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Instagram #67 scraper — Playwright Firefox, slow scroll, API intercept, max 100 posts → Supabase"""
+"""Instagram #67 scraper v2 — collect posts during scroll (DOM recycles), max 100"""
 import os, json, time, urllib.request
 from pathlib import Path
 from dotenv import load_dotenv
@@ -24,7 +24,7 @@ def main():
     from playwright.sync_api import sync_playwright
     import pyotp
 
-    print("📸 Instagram #67 scraper (slow scroll + API intercept, max 100)...")
+    print("📸 Instagram #67 v2 — collect during scroll, max 100...")
 
     with sync_playwright() as p:
         browser = p.firefox.launch_persistent_context(
@@ -34,68 +34,65 @@ def main():
         )
         page = browser.pages[0] if browser.pages else browser.new_page()
 
+        # API intercept for stats
         post_stats = {}
         def handle_response(response):
             try:
                 url = response.url
-                if "graphql" in url or "api/v1/tags" in url or "web_info" in url or "sections" in url:
+                if any(x in url for x in ["graphql", "api/v1/tags", "sections", "web_info", "feed/tag"]):
                     data = response.json()
-                    def extract_posts(obj, depth=0):
-                        if depth > 6 or not isinstance(obj, (dict, list)): return
+                    def extract(obj, depth=0):
+                        if depth > 8 or not isinstance(obj, (dict, list)): return
                         if isinstance(obj, dict):
-                            if "shortcode" in obj:
-                                sc = obj["shortcode"]
+                            if "shortcode" in obj or "code" in obj:
+                                sc = obj.get("shortcode") or obj.get("code", "")
+                                if not sc: return
                                 cap = ""
                                 if isinstance(obj.get("caption"), dict):
                                     cap = obj["caption"].get("text", "")[:120]
                                 elif isinstance(obj.get("edge_media_to_caption"), dict):
                                     edges = obj["edge_media_to_caption"].get("edges", [])
                                     if edges: cap = edges[0].get("node", {}).get("text", "")[:120]
-                                else:
-                                    cap = str(obj.get("caption", ""))[:120]
                                 
-                                thumb = obj.get("thumbnail_src", obj.get("display_url", ""))
+                                thumb = obj.get("thumbnail_src") or obj.get("display_url") or ""
                                 if not thumb:
-                                    iv2 = obj.get("image_versions2", {})
-                                    cands = iv2.get("candidates", [])
+                                    cands = obj.get("image_versions2", {}).get("candidates", [])
                                     if cands: thumb = cands[0].get("url", "")
-
+                                
                                 post_stats[sc] = {
                                     "likes": obj.get("edge_liked_by", {}).get("count", obj.get("like_count", 0)),
                                     "comments": obj.get("edge_media_to_comment", {}).get("count", obj.get("comment_count", 0)),
                                     "views": obj.get("video_view_count", obj.get("play_count", 0)),
                                     "thumbnail": thumb,
                                     "caption": cap,
-                                    "is_video": obj.get("is_video", False),
+                                    "is_video": obj.get("is_video", obj.get("media_type", 0) == 2),
                                     "timestamp": obj.get("taken_at_timestamp", obj.get("taken_at", 0)),
                                 }
                             for v in obj.values():
-                                extract_posts(v, depth+1)
+                                extract(v, depth+1)
                         elif isinstance(obj, list):
                             for item in obj:
-                                extract_posts(item, depth+1)
-                    extract_posts(data)
-                    if post_stats:
-                        print(f"  📡 API intercept — {len(post_stats)} posts with stats")
+                                extract(item, depth+1)
+                    extract(data)
             except:
                 pass
 
         page.on("response", handle_response)
 
+        # Login check
         page.goto("https://www.instagram.com/", wait_until="domcontentloaded", timeout=30000)
         time.sleep(3)
-
         if "login" in page.url or page.query_selector('input[name="username"]'):
             print("  Logging in...")
             page.fill('input[name="username"]', IG_USER)
             page.fill('input[name="password"]', IG_PASS)
             page.click('button[type="submit"]')
             time.sleep(5)
-            twofa_input = page.query_selector('input[name="verificationCode"]')
-            if twofa_input:
+            twofa = page.query_selector('input[name="verificationCode"]')
+            if twofa:
                 code = pyotp.TOTP(IG_2FA_SEED).now()
                 print(f"  2FA: {code}")
-                twofa_input.fill(code)
+                twofa.fill(code)
                 page.click('button:has-text("Confirm")')
                 time.sleep(5)
             try: page.click('button:has-text("Not Now")', timeout=5000)
@@ -108,50 +105,54 @@ def main():
         page.goto("https://www.instagram.com/explore/tags/67/", wait_until="domcontentloaded", timeout=30000)
         time.sleep(5)
 
-        prev_count = 0; stall = 0
-        for i in range(60):
-            page.evaluate("window.scrollBy(0, window.innerHeight * 0.8)")
-            time.sleep(2.5)
-            page.evaluate("() => document.querySelectorAll('img').forEach(img => { if (!img.complete) img.loading = 'eager'; })")
-            time.sleep(0.5)
-            count = page.evaluate("() => document.querySelectorAll('a[href*=\"/p/\"], a[href*=\"/reel/\"]').length")
-            if i % 10 == 0: print(f"  Scroll {i}: {count} posts, {len(post_stats)} with stats")
-            if count >= 100: print(f"  ✅ {count} posts!"); break
-            if count == prev_count: stall += 1
-            else: stall = 0
-            if stall >= 8: print(f"  Stalled at {count}"); break
-            prev_count = count
-
-        print("  ⬆️ Re-scrolling for thumbnails...")
-        for _ in range(20):
-            page.evaluate("window.scrollBy(0, -window.innerHeight * 2)")
-            time.sleep(0.3)
-        time.sleep(1)
-        for _ in range(20):
-            page.evaluate("window.scrollBy(0, window.innerHeight * 2)")
-            time.sleep(0.3)
-        time.sleep(2)
-
-        dom_posts = page.evaluate("""() => {
-            const posts = []; const seen = new Set();
-            document.querySelectorAll('a[href*="/p/"], a[href*="/reel/"]').forEach(link => {
-                const href = link.getAttribute('href');
-                if (!href || seen.has(href)) return;
-                seen.add(href);
-                const shortcode = (href.split('/p/')[1] || href.split('/reel/')[1] || '').replace('/', '');
-                const img = link.querySelector('img');
-                posts.push({
-                    shortcode: shortcode,
-                    url: 'https://www.instagram.com' + href,
-                    thumbnail: img ? (img.src || '') : '',
-                    alt: img ? (img.alt || '') : '',
+        # Inject collector that runs continuously in page
+        page.evaluate("""() => {
+            window.__ig_collected = window.__ig_collected || {};
+            window.__ig_collector = setInterval(() => {
+                document.querySelectorAll('a[href*="/p/"], a[href*="/reel/"]').forEach(link => {
+                    const href = link.getAttribute('href');
+                    if (!href) return;
+                    const sc = (href.split('/p/')[1] || href.split('/reel/')[1] || '').replace('/', '');
+                    if (!sc || window.__ig_collected[sc]) return;
+                    const img = link.querySelector('img');
+                    window.__ig_collected[sc] = {
+                        shortcode: sc,
+                        url: 'https://www.instagram.com' + href,
+                        thumbnail: img ? (img.src || '') : '',
+                        alt: img ? (img.alt || '') : '',
+                    };
                 });
-            });
-            return posts;
+            }, 500);
         }""")
 
+        # Slow scroll — collector grabs posts before DOM recycles them
+        stall = 0; prev_collected = 0
+        for i in range(80):
+            page.evaluate("window.scrollBy(0, window.innerHeight * 0.6)")
+            time.sleep(2)
+            
+            collected = page.evaluate("() => Object.keys(window.__ig_collected).length")
+            if i % 10 == 0:
+                print(f"  Scroll {i}: {collected} collected, {len(post_stats)} with stats")
+            if collected >= 100:
+                print(f"  ✅ {collected} posts collected!")
+                break
+            if collected == prev_collected:
+                stall += 1
+                if stall >= 10:
+                    print(f"  Stalled at {collected}")
+                    break
+            else:
+                stall = 0
+            prev_collected = collected
+
+        # Stop collector, get results
+        page.evaluate("() => clearInterval(window.__ig_collector)")
+        dom_posts = page.evaluate("() => Object.values(window.__ig_collected)")
+        
         browser.close()
 
+        # Merge
         posts = []
         for p_data in dom_posts[:100]:
             sc = p_data.get("shortcode", "")
