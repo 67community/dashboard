@@ -35,12 +35,15 @@ def main():
     holders_data = sb_get("holders")
     holders = holders_data.get("count", 0) if holders_data else data.get("token_health", {}).get("holders", 0)
     
+    # Get Discord/Telegram from Supabase social_counts
+    sc_raw = sb_get("social_counts") or "{}"
+    social_counts = json.loads(sc_raw) if isinstance(sc_raw, str) else sc_raw
     snapshot = {
         "timestamp": datetime.now(timezone.utc).isoformat(),
         "twitter_followers": sp.get("twitter_followers", 0),
         "x_community_members": sp.get("x_community_members", 0),
-        "discord_members": data.get("community", {}).get("discord_members", 0),
-        "telegram_members": data.get("community", {}).get("telegram_members", 0),
+        "discord_members": social_counts.get("discord_members", 0),
+        "telegram_members": social_counts.get("telegram_members", 0),
         "holders": holders,
     }
     
