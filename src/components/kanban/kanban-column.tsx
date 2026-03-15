@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import Image from "next/image"
 import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable"
 import { useDroppable } from "@dnd-kit/core"
 import { Plus } from "lucide-react"
@@ -87,8 +88,8 @@ export function KanbanColumnComponent({ column, tasks, onOpenTask, onAddTask, on
                   style={{ padding:0, background:"none", border:"none", cursor:"pointer", borderRadius:"50%",
                     outline: assigneeId === m.id ? `2px solid #F5A623` : "2px solid transparent",
                     outlineOffset: 1, transition:"outline 0.15s" }}>
-                  <img src={m.avatar} alt={m.name}
-                    style={{ width:26, height:26, borderRadius:"50%", objectFit:"cover", display:"block",
+                  <Image src={m.avatar} alt={m.name} width={26} height={26}
+                    style={{ borderRadius:"50%", objectFit:"cover", display:"block",
                       opacity: assigneeId && assigneeId !== m.id ? 0.35 : 1, transition:"opacity 0.15s" }} />
                 </button>
               ))}

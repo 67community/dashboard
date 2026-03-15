@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import Image from "next/image"
 import { TeamMember } from "@/lib/types"
 import { TEAM_MEMBERS } from "@/lib/mock-data"
 import { usePresence, STATUS_COLOR, STATUS_LABEL, type DiscordStatus } from "@/lib/use-presence"
@@ -34,7 +35,7 @@ export function TeamAvatar({ member, size = "md", discordStatus }: { member: Tea
       position:"relative", zIndex: hover ? 10 : 1,
     }}>
       {member.avatar
-        ? <img src={member.avatar} alt={member.name}
+        ? <Image src={member.avatar} alt={member.name} width={px} height={px}
             style={{ width:"100%", height:"100%", borderRadius:"50%", objectFit:"cover" }} />
         : member.initials
       }

@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import Image from "next/image"
 import {
   DndContext, DragEndEvent, DragOverEvent, DragOverlay,
   DragStartEvent, PointerSensor, useSensor, useSensors, closestCorners,
@@ -60,8 +61,8 @@ function FilterBar({ filters, setFilters }: { filters: Filters; setFilters: (f: 
             boxShadow:  filters.assignee === m.id ? `0 1px 4px ${m.color}55` : "none",
           }}>
           {m.avatar
-            ? <img src={m.avatar} alt={m.initials}
-                style={{ width:22, height:22, borderRadius:"50%", objectFit:"cover", flexShrink:0 }} />
+            ? <Image src={m.avatar} alt={m.initials} width={22} height={22}
+                style={{ borderRadius:"50%", objectFit:"cover", flexShrink:0 }} />
             : <span style={{
                 width:22, height:22, borderRadius:"50%", background: m.color,
                 display:"flex", alignItems:"center", justifyContent:"center",
