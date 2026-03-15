@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 """Social counts — Discord + Telegram → Supabase. Every 5 min."""
+from pathlib import Path; from dotenv import load_dotenv; load_dotenv(Path(__file__).resolve().parent.parent / ".env")
 import json, os, urllib.request
 from datetime import datetime, timezone
 
 SB_URL       = os.environ["SUPABASE_URL"]
 SB_KEY       = os.environ["SUPABASE_SERVICE_KEY"]
 GUILD_ID     = "1440077830456082545"
-TG_TOKEN     = os.environ["TG_ANNOUNCE_BOT_TOKEN"]
+TG_TOKEN     = os.environ.get("TG_ANNOUNCE_BOT_TOKEN", os.environ.get("TELEGRAM_BOT_TOKEN", ""))
 TG_CHAT      = "-1003158749697"
 
 DISCORD_TOKEN = os.environ.get("DISCORD_TOKEN", "")

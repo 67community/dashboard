@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+import os
+from pathlib import Path; from dotenv import load_dotenv; load_dotenv(Path(__file__).resolve().parent.parent / ".env")
 """Fetch 67 Community member count via Twitter241 RapidAPI → Supabase."""
 import json, urllib.request
 from datetime import datetime, timezone
@@ -62,8 +64,6 @@ def main():
 
 def fetch_community_tweets():
     """Fetch recent tweets from the 67 community via RapidAPI."""
-import os
-from pathlib import Path; from dotenv import load_dotenv; load_dotenv(Path(__file__).resolve().parent.parent / '.env')
     print("Fetching community tweets...")
     try:
         url = f"https://twitter241.p.rapidapi.com/community-tweets?communityId={COMMUNITY_ID}&count=20"
