@@ -51,14 +51,14 @@ export async function GET(req: Request) {
   }
 
   // Load any additional allowed IDs from env (comma-separated)
-  const extraIds = process.env.DASHBOARD_USER_IDS ?? ""
+  const extraIds = process.env.DASHBOARD_USER_IDS ?? "")
   const extraList = extraIds.split(",").map(s => s.trim()).filter(Boolean)
   const ALLOWED_USER_IDS = new Set([...HARDCODED_USER_IDS, ...extraList])
 
   // Check if user's Discord ID is in the allowed list
-  const discordUserId = data.session.user?.user_metadata?.provider_id
+  const discordUserId = String(data.session.user?.user_metadata?.provider_id
     ?? data.session.user?.user_metadata?.sub
-    ?? ""
+    ?? "")
 
   if (!ALLOWED_USER_IDS.has(discordUserId)) {
     console.error("User not allowed:", discordUserId)
